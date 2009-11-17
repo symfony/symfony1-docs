@@ -559,7 +559,7 @@ Zend Luceneライブラリ自身はあきらかにテストしませんが、`Jo
 
 今日は、1時間以内に多く野機能を持つ検索エンジンを実装しました。
 プロジェクトに新しい機能を追加したいと思うたびに、他のどこかで未解決であることを確認します。
-最初に、[symfonyフレームワーク](http://www.symfony-project.org/api/1_3/)でネイティブに実装されてないことをチェックし、[symfonyプラグイン](http://www.symfony-project.org/plugins/)をチェックします。
+最初に、[symfonyフレームワーク](http://www.symfony-project.org/api/1_4/)でネイティブに実装されてないことをチェックし、[symfonyプラグイン](http://www.symfony-project.org/plugins/)をチェックします。
 [Zend Frameworkライブラリ](http://framework.zend.com/manual/ja/)と[ezComponent](http://ezcomponents.org/docs)をチェックするのはお忘れなく。
 
 明日は、ユーザーが検索ボックスで入力する際にリアルタイムで検索結果を更新することで検索エンジンのレスポンスを強化するために慎ましくJavaScriptを使います。

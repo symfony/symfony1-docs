@@ -415,7 +415,7 @@ And create the corresponding action:
 The `process()` method of `sfFormLanguage` takes care of changing the user
 culture, based on the user form submission.
 
-![Internationalized Footer](http://www.symfony-project.org/images/jobeet/1_3/19/footer.png)
+![Internationalized Footer](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
 
 Internationalization
 --------------------
@@ -522,7 +522,7 @@ and most symfony plugins.
 
 >**NOTE**
 >Other catalogue stores are ~`gettext`~, `MySQL`, and `SQLite`. As always, have
->a look at the [i18n API](http://www.symfony-project.org/api/1_3/i18n) for
+>a look at the [i18n API](http://www.symfony-project.org/api/1_4/i18n) for
 >more details.
 
 ### `i18n:extract`
@@ -1047,7 +1047,7 @@ embeds the translated category slug:
 For the backend, we want the French and the English translations to be edited
 in the same form:
 
-![Backend categories](http://www.symfony-project.org/images/jobeet/1_3/19/backend_categories.png)
+![Backend categories](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
 Embedding an ~i18n form|Forms (Translation)~ can be done by using the 
 `embedI18N()` method:
@@ -1139,7 +1139,7 @@ Supporting different cultures also means supporting different way to format
 dates and numbers. In a template, several helpers are at your disposal to help
 take all these differences into account, based on the current user culture:
 
-In the [`Date`](http://www.symfony-project.org/api/1_3/DateHelper) helper
+In the [`Date`](http://www.symfony-project.org/api/1_4/DateHelper) helper
 group:
 
  | Helper                         | Description                                                |
@@ -1150,7 +1150,7 @@ group:
  | `distance_of_time_in_words()`  | Displays the elapsed time between two dates in words       |
  | `format_daterange()`           | Formats a range of dates                                   |
 
-In the [`Number`](http://www.symfony-project.org/api/1_3/NumberHelper) helper
+In the [`Number`](http://www.symfony-project.org/api/1_4/NumberHelper) helper
 group:
 
  | Helper              | Description        |
@@ -1158,7 +1158,7 @@ group:
  | `format_number()`   | Formats a number   |
  | `format_currency()` | Formats a currency |
 
-In the [`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper) helper
+In the [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper) helper
 group:
 
  | Helper              | Description                     |
@@ -1171,18 +1171,18 @@ group:
 The form framework provides several ~widgets|Widgets (I18n)~ and
 ~validators|Validators (I18n)~ for localized data:
 
- * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDate)
- * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDateTime)
- * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nTime)
+ * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
+ * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
+ * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
 
- * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCountry)
- * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCurrency)
- * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceLanguage)
- * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceTimezone)
+ * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCountry)
+ * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCurrency)
+ * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceLanguage)
+ * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceTimezone)
 
- * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceCountry)
- * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceLanguage)
- * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceTimezone)
+ * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
+ * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
 
 See you Tomorrow
 ----------------

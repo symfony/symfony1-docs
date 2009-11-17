@@ -36,7 +36,7 @@ useremo lo script `check_configuration.php` fornito da symfony.
 Poiché non installeremo symfony sul server di produzione, scarichiamo
 il file direttamente dal sito di symfony:
 
-    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+    http://trac.symfony-project.org/browser/branches/1.4/data/bin/check_configuration.php?format=raw
 
 Copiamo il file nella cartella principale del web ed eseguiamolo nel
 browser **e** dalla linea di comando:
@@ -111,22 +111,22 @@ cartella `lib/vendor/symfony/`. Se symfony è già stato installato
 da un archivio, cancellare i file attuali e sostituirli con quelli nuovi.
 
 Se si usa ~Subversion~ per il progetto, si può anche collegare il progetto
-all'ultimo tag di symfony 1.2:
+all'ultimo tag di symfony 1.4:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0/
 
 Aggiornare symfony è allora semplice come cambiare il tag dell'ultima
 versione di symfony.
 
-Si può anche usare il ramo 1.2 per avere gli aggiornamenti in
+Si può anche usare il ramo 1.4 per avere gli aggiornamenti in
 tempo reale:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/branches/1.2/
+      # symfony http://svn.symfony-project.com/branches/1.4/
 
 Ora, ogni volta che si fa un `svn up`, si avrà l'ultima versione di
-symfony 1.2.
+symfony 1.4.
 
 Quando si aggiorna ad una nuova versione, si consiglia di pulire sempre
 la cache, specialmente nell'ambiente di produzione:

@@ -137,7 +137,7 @@ Oppure usare il task `test:unit`:
 
     $ php symfony test:unit Jobeet
 
-![Test su linea di comando](http://www.symfony-project.org/images/jobeet/1_3/08/cli_tests.png)
+![Test su linea di comando](http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png)
 
 >**Note**: la linea di comando di ~Windows~ sfortunatamente non è in grado di
 >evidenziare i risultati dei test in rosso o in verde. Ma se si usa Cygwin,
@@ -182,7 +182,7 @@ Ora si può eseguire il file del test. Se tutti i test passano, come ci aspettia
 si potrà gustare la "*barra verde*". Se no, l'infame "*barra rossa*" avvertirà
 che alcuni test non sono passati e che sarà necessario sistemarli.
 
-![test slugify()](http://www.symfony-project.org/images/jobeet/1_3/08/slugify.png)
+![test slugify()](http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png)
 
 Se un test fallisce, l'output fornirà alcune informazioni sul perché; ma se si
 hanno centinaia di test in un file, può essere difficoltoso identificare
@@ -213,7 +213,7 @@ messaggi al file dei test `slugify`:
     $t->is(Jobeet::slugify('paris,france'), 'paris-france',
      ➥ '::slugify() replaces non-ASCII characters by a -');
 
-![test slugify() con messaggi](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_doc.png)
+![test slugify() con messaggi](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
 La stringa di descrizione del test è anche uno strumento prezioso quando
 si prova ad immaginare cosa testare. Si può vedere uno schema nelle stringhe
@@ -311,7 +311,7 @@ Prima, aggiungiamo un test:
     $t->is(Jobeet::slugify(' - '), 'n-a',
      ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
 
-![bug slugify()](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_bug.png)
+![bug slugify()](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png)
 
 Dopo aver controllato che il test non passa, modifichiamo la classe `Jobeet`
 e spostiamo il controllo della stringa vuota alla fine del metodo:
@@ -490,7 +490,7 @@ ogni volta che sono eseguiti, per porre il database in uno stato conosciuto.
 
 <propel>
 Il task `propel:data-load` usa internamente la classe
-[`sfPropelData`](http://www.symfony-project.org/api/1_3/sfPropelData)
+[`sfPropelData`](http://www.symfony-project.org/api/1_4/sfPropelData)
 per caricare i dati:
 
     [php]
@@ -683,7 +683,7 @@ unitari per un progetto:
 
 Il task mostra per ogni file se i test passano o falliscono:
 
-![Test unitari](http://www.symfony-project.org/images/jobeet/1_3/08/test_harness.png)
+![Test unitari](http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png)
 
 >**TIP**
 >Se il task `test:unit` restituisce uno stato "~dubious~" per un file, vuol dire

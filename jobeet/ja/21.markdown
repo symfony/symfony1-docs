@@ -133,14 +133,14 @@ JobeetのホームページはWebサイトの中でおそらくもっとも訪�
 
 ブラウザーでページを更新すると、コンテンツがキャッシュされたことを示すボックスが表示されているのがわかります:
 
-![新しいキャッシュ](http://www.symfony-project.org/images/jobeet/1_3/21/fresh_cache.png)
+![新しいキャッシュ](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
 
 ボックスには、キャッシュの有効期間や経過時間など、キャッシュキーに関するデバッグのための貴重な情報が表示されます。
 
 ページを再度更新すると、ボックスの色が緑から黄色に変わります。
 これはページがキャッシュから読み込まれたことを示します:
 
-![キャッシュ](http://www.symfony-project.org/images/jobeet/1_3/21/cache.png)
+![キャッシュ](http://www.symfony-project.org/images/jobeet/1_4/21/cache.png)
 
 2番目のケースでは、Webデバッグツールバーで示されるように、データベースへのリクエストが行われなかったことがわかります。
 
@@ -150,7 +150,7 @@ JobeetのホームページはWebサイトの中でおそらくもっとも訪�
 ページがキャッシュ可能で、キャッシュがまだ存在しない場合、symfonyはリクエスト処理の最後でレスポンスオブジェクトをキャッシュに保存します。
 これ以降のすべてのリクエストでは、symfonyはコントローラーを呼び出さずにキャッシュされたレスポンスを送信します:
 
-![ページキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_page.png)
+![ページキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
 [JMeter](http://jakarta.apache.org/jmeter/)のようなツールを利用することで、~パフォーマンス~が大きく変化することを自分自身で測定できます。
 
@@ -187,7 +187,7 @@ JobeetのホームページはWebサイトの中でおそらくもっとも訪�
 
 変更を行うたびにキャッシュをクリアする代わりに、クエリ文字列をURLに追加するか、Webデバッグツールバーから"Ignore cache"ボタンを使うことでキャッシュを無効にできます:
 
-![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_3/21/debug.png)
+![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_4/21/debug.png)
 
 アクションキャッシュ
 ----------------------
@@ -218,11 +218,11 @@ Jobeetアプリケーションでは、"history job"バーがあるためにペ�
 
 違いを確認するためにブラウザーのページを更新します:
 
-![アクションキャッシュ](http://www.symfony-project.org/images/jobeet/1_3/21/action_cache.png)
+![アクションキャッシュ](http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png)
 
 簡略化されたダイアグラムではリクエストのフローがレイアウトありの場合とよく似ていますが、レイアウトなしのキャッシュでは、はるかにリソースを集約します。
 
-![アクションキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_action.png)
+![アクションキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png)
 
 ~パーシャル|パーシャルテンプレート~と~コンポーネント~のキャッシュ
 ---------------------------------------------------------------
@@ -231,7 +231,7 @@ Jobeetアプリケーションでは、"history job"バーがあるためにペ�
 これらのケースでは、キャッシュをきめ細かく設定する方法が必要になります。
 ありがたいことに、パーシャルとコンポーネントもキャッシュできます。
 
-![パーシャルキャッシュ](http://www.symfony-project.org/images/jobeet/1_3/21/partial_cache.png)
+![パーシャルキャッシュ](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
 
 `language`コンポーネントをキャッシュできるように、`sfJobeetLanguage`モジュール用の`cache.yml`ファイルを作りましょう:
 
@@ -243,7 +243,7 @@ Jobeetアプリケーションでは、"history job"バーがあるためにペ�
 パーシャルもしくはコンポーネントに対してキャッシュを設定するには、設定ファイルに名前つきのエントリーを追加します。
 この種類のキャッシュでは、`with_layout`オプションは意味がないので指定しても無視されます:
 
-![パーシャルとコンポーネントキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_partial.png)
+![パーシャルとコンポーネントキャッシュのフロー](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
 
 >**SIDEBAR**
 >~コンテキスト依存|コンテキスト上のキャッシュ~であるか？
@@ -269,7 +269,7 @@ Jobeetアプリケーションでは、"history job"バーがあるためにペ�
 それから、セッションCookieをクリアし、求人の投稿を試します。 
 "~CSRF~攻撃"を警告するエラーメッセージが表示されます:
 
-![CSRFとキャッシュ](http://www.symfony-project.org/images/jobeet/1_3/21/csrf.png)
+![CSRFとキャッシュ](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
 
 なぜでしょうか？
 フロントエンドアプリケーションを作成したときCSRF用の秘密の文字列を設定したので、symfonyはすべてのフォームにCSRFトークンを埋め込みます。

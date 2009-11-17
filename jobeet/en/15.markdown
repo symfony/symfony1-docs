@@ -438,7 +438,7 @@ Before trying it, you must create a layout for YAML format:
     // apps/frontend/templates/layout.yaml.php
     <?php echo $sf_content ?>
 
-![404](http://www.symfony-project.org/images/jobeet/1_3/16/404.png)
+![404](http://www.symfony-project.org/images/jobeet/1_4/16/404.png)
 
 >**TIP**
 >Overriding the 404 error and ~exception|Exception Handling~ templates for
@@ -648,7 +648,7 @@ option.
 As emails and URLs tend to be quite longer than the default size of an input
 tag, default HTML attributes can be set by using the `setAttribute()` method.
 
-![Affiliate form](http://www.symfony-project.org/images/jobeet/1_3/16/affiliate_form.png)
+![Affiliate form](http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png)
 
 ### Tests
 
@@ -934,7 +934,7 @@ The only other code to write is for the `activate`, `deactivate` actions:
       // ...
     }
 
-![Affiliate backend](http://www.symfony-project.org/images/jobeet/1_3/16/backend.png)
+![Affiliate backend](http://www.symfony-project.org/images/jobeet/1_4/16/backend.png)
 
 See you Tomorrow
 ----------------

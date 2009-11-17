@@ -46,7 +46,7 @@ symfonyのフォームは1つ以上のフィールドから構成されるクラ
 `configure()`メソッド内で、`setValidators()`と`setWidgets()`メソッドを使ってフォームフィールドを定義します。
 
 >**TIP**
->フォームフレームワークには、多くの[ウィジェット](http://www.symfony-project.org/api/1_3/widget)と[バリデーター](http://www.symfony-project.org/api/1_3/validator)が搭載されています。
+>フォームフレームワークには、多くの[ウィジェット](http://www.symfony-project.org/api/1_4/widget)と[バリデーター](http://www.symfony-project.org/api/1_4/validator)が搭載されています。
 >APIでは、すべてのオプション、エラーとデフォルトエラーメッセージが広範囲にわたって説明されています。
 
 ウィジェットとバリデーターのクラス名はきわめて明確です: 
@@ -520,7 +520,7 @@ symfonyはデータベースモデルに関するすべての内容を知って�
 
 すべてのフォームには次のようなライフサイクルがあります:
 
-![フォームのフロー](http://www.symfony-project.org/images/jobeet/1_3/10/form_flow.png)
+![フォームのフロー](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
 5日前に`job`モジュール用の##ORM##ルートコレクションを作ったので、フォーム管理メソッド用のコードを次のように簡略化できます:
 
@@ -786,9 +786,9 @@ jobに関連するすべてのルートは、`job_show_user`のものを除い�
 
 管理バーには、求人のステータスに合わせて異なるアクションが表示されます:
 
-![無効な求人](http://www.symfony-project.org/images/jobeet/1_3/10/not_activated.png)
+![無効な求人](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
 
-![有効な求人](http://www.symfony-project.org/images/jobeet/1_3/10/activated.png)
+![有効な求人](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
 
 >**NOTE**
 >次のセクションの後で"activated"バーを見ることができます。

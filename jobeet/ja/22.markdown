@@ -28,7 +28,7 @@
 1日目に関して、symfonyによって提供される`check_configuration.php`スクリプトを使います。
 symfonyを運用サーバーにインストールしないので、symfony公式サイトからファイルを直接ダウンロードします:
 
-    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+    http://trac.symfony-project.org/browser/branches/1.4/data/bin/check_configuration.php?format=raw
 
 Webのルートディレクトリにファイルをコピーしてブラウザー**と**コマンドラインから実行します:
 
@@ -81,19 +81,19 @@ symfonyは相対パスのみを使用するのでプロジェクトで何も変�
 symfonyのアップグレード作業は`lib/vendor/symfony/`ディレクトリの内容を変更するだけなのでシンプルです。
 アーカイブでsymfonyをインストールする場合、現在のファイルを削除して最新のものに置き換えます。
 
-プロジェクトで~Subversion~を使う場合、プロジェクトを最新のsymfony1.2のタグにリンクすることもできます:
+プロジェクトで~Subversion~を使う場合、プロジェクトを最新のsymfony1.4のタグにリンクすることもできます:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_1/
 
 symfonyのアップグレード作業はタグを最新バージョンに変更するだけなのでシンプルです。
 
-リアルタイムで修正される1.2系のブランチも利用できます:
+リアルタイムで修正される1.4系のブランチも利用できます:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/branches/1.2/
+      # symfony http://svn.symfony-project.com/branches/1.4/
 
-`svn up`を実行するたびに、最新のsymfony 1.2が手に入ります。
+`svn up`を実行するたびに、最新のsymfony 1.4が手に入ります。
 
 新しいバージョンにアップグレードするとき、とりわけ運用環境では、常にキャッシュをクリアすることをお勧めします:
 

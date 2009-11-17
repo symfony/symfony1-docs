@@ -111,7 +111,7 @@ ouvrant un navigateur et en tapant `http://localhost:8080/index.php/`, or
 `http://www.myproject.com.localhost/index.php/` en fonction de la configuration d'Apache que
 vous avez choisi dans la section précédente.
 
-![Félicitations](http://www.symfony-project.org/images/getting-started/1_3/congratulations.png)
+![Félicitations](http://www.symfony-project.org/images/getting-started/1_4/congratulations.png)
 
 >**TIP**
 >Si vous avez le module Apache `mod_rewrite` installé, vous pouvez retirer
@@ -127,7 +127,7 @@ l'adresse URL suivante:
 La barre d'outils web de débogage devrait apparaître dans le coin supérieur droit, incluant
 de petites icônes, prouvant que la configuration de votre alias `sf/` est correct.
 
-![La barre d'outils web de débogage](http://www.symfony-project.org/images/getting-started/1_3/web_debug_toolbar.png)
+![La barre d'outils web de débogage](http://www.symfony-project.org/images/getting-started/1_4/web_debug_toolbar.png)
 
 >**Note**
 >La configuration est un peu différente si vous voulez faire tourner Symfony sur un serveur IIS dans

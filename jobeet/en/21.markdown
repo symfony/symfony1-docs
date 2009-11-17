@@ -158,7 +158,7 @@ Create a `cache.yml` file for the `sfJobeetJob` module:
 If you refresh your browser, you will see that symfony has decorated the page
 with a box indicating that the content has been cached:
 
-![Fresh Cache](http://www.symfony-project.org/images/jobeet/1_3/21/fresh_cache.png)
+![Fresh Cache](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
 
 The box gives some precious information about the cache key for debugging,
 like the lifetime of the cache, and the age of it.
@@ -166,7 +166,7 @@ like the lifetime of the cache, and the age of it.
 If you refresh the page again, the color of the box changed from green to
 yellow, indicating that the page has been retrieved from the cache:
 
-![Cache](http://www.symfony-project.org/images/jobeet/1_3/21/cache.png)
+![Cache](http://www.symfony-project.org/images/jobeet/1_4/21/cache.png)
 
 Also notice that no database request has been made in the second case, as
 shown in the web debug toolbar.
@@ -180,7 +180,7 @@ the response object in the cache at the end of the request. For all other
 future requests, symfony will send the cached response without calling the
 controller:
 
-![Page Cache Flow](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_page.png)
+![Page Cache Flow](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
 This has a great impact on ~performance|Performances~ as you can measure for 
 yourself by using tools like [JMeter](http://jakarta.apache.org/jmeter/).
@@ -225,7 +225,7 @@ Instead of clearing the cache each time you make a change, you can also
 disable the cache by adding any query string to the URL, or by using the
 "Ignore cache" button from the web debug toolbar:
 
-![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_3/21/debug.png)
+![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_4/21/debug.png)
 
 Action Cache
 ------------
@@ -259,12 +259,12 @@ Clear the cache:
 
 Refresh your browser to see the difference:
 
-![Action Cache](http://www.symfony-project.org/images/jobeet/1_3/21/action_cache.png)
+![Action Cache](http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png)
 
 Even if the flow of the request is quite similar in the simplified diagram,
 caching without the layout is much more resource intensive.
 
-![Action Cache Flow](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_action.png)
+![Action Cache Flow](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png)
 
 ~Partial|Partial Templates~ and ~Component~ Cache
 -------------------------------------------------
@@ -274,7 +274,7 @@ whole action template. For those cases, you need a way to configure the cache
 at the finer-grained level. Thankfully, partials and components can also be
 cached.
 
-![Partial Cache](http://www.symfony-project.org/images/jobeet/1_3/21/partial_cache.png)
+![Partial Cache](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
 
 Let's cache the `language` component by creating a `cache.yml` file for the
 `sfJobeetLanguage` module:
@@ -288,7 +288,7 @@ Configuring the cache for a partial or a component is as simple as adding an
 entry with its name. The `with_layout` option is not taken into account for this
 type of cache as it does not make any sense:
 
-![Partial and Component Cache Flow](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_partial.png)
+![Partial and Component Cache Flow](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
 
 >**SIDEBAR**
 >~Contextual|Contextual Caching~ or not?
@@ -318,7 +318,7 @@ form. To better understand the problem, go to the "Post a Job" page in your
 browser to seed the cache. Then, clear your session cookie, and try to submit
 a job. You must see an error message alerting you of a "~CSRF~ attack":
 
-![CSRF and Cache](http://www.symfony-project.org/images/jobeet/1_3/21/csrf.png)
+![CSRF and Cache](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
 
 Why? As we have configured a CSRF secret when we created the frontend
 application, symfony embeds a CSRF token in all forms. To protect you against

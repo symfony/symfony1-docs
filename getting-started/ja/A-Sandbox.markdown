@@ -12,11 +12,11 @@ symfonyを経験する最速の方法はsymfonyのサンドボックスをイン
 >サンドボックスはデータベースエンジンとしてSQLiteを使うようにあらかじめ設定されているので、PHPがSQLiteをサポートすることをチェックする必要があります([前提要件](02-Prerequisites#chapter_02)の章を参照)。
 >サンドボックスによって使われるデータベースを変更する方法を学ぶために[データベースを設定する](05-Project-Setup#chapter_05_sub_configuring_the_database)のセクションを読むこともできます。
 
-symfonyの[インストールページ](http://www.symfony-project.org/installation/1_3)からもしくは次のURLでsymfonyのサンドボックスを`.tgz`もしくは`.zip`フォーマットでダウンロードできます:
+symfonyの[インストールページ](http://www.symfony-project.org/installation/1_4)からもしくは次のURLでsymfonyのサンドボックスを`.tgz`もしくは`.zip`フォーマットでダウンロードできます:
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.tgz
+    http://www.symfony-project.org/get/sf_sandbox_1_4.tgz
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.zip
+    http://www.symfony-project.org/get/sf_sandbox_1_4.zip
 
 Web公開ディレクトリのルートの下のどこかでファイルを展開すれば、作業はお終いです。
 これでsymfonyプロジェクトはブラウザーから`web/index.php`スクリプトをリクエストすることでアクセスできます。

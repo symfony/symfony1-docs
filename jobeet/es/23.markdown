@@ -146,8 +146,8 @@ El framework de formularios proporciona
 Los Formularios 
 ---------------
 
-Como la gestión de formularios es uno de las más tediosas tareas para un desarrollador web, symfony proporciona un [sub-framework de formularios](#chapter_10_the_form_framework). El framework de formularios viene con un montón de [widgets](http://www.symfony-project.org/api/1_3/widget)
-y [validadores](http://www.symfony-project.org/api/1_3/validator). Una de las fortalezas del sub-framework de formularios es que las plantillas son muy fácilmente [personalizables](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form).
+Como la gestión de formularios es uno de las más tediosas tareas para un desarrollador web, symfony proporciona un [sub-framework de formularios](#chapter_10_the_form_framework). El framework de formularios viene con un montón de [widgets](http://www.symfony-project.org/api/1_4/widget)
+y [validadores](http://www.symfony-project.org/api/1_4/validator). Una de las fortalezas del sub-framework de formularios es que las plantillas son muy fácilmente [personalizables](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form).
 
 Si usas ##ORM##, el framework de formularios también facilita la
 <propel>
@@ -271,7 +271,7 @@ tiempo o moneda, lo que sea... Elije uno y empieza implementandolo con lo
 que ya sabes hoy. Usa la tarea de ayuda para aprender las diferentes
 opciones, busca código generado por symfony, usa un editor que tenga
 auto-completion de PHP como [Eclipse](http://www.eclipse.org/), y lee la 
-[guía de referencia](http://www.symfony-project.org/reference/1_3/) para buscar
+[guía de referencia](http://www.symfony-project.org/reference/1_4/) para buscar
 toda la configuración del framework.
 
 Disfruta de todo el material que tienes a tu disposición para aprender mas de 

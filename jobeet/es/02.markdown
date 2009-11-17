@@ -3,7 +3,7 @@
 
 No hemos escrito una sola línea de PHP aún, pero ayer, configuramos el entorno, creamos un proyecto symfony vacío, y nos aseguramos de iniciar con una buena seguridad por defecto. Si seguiste todo, tienes que buscar en la pantalla de entonces, ya que se muestra la hermosa página por defecto de symfony para las nuevas aplicaciones.
 
-![Página de Felicitaciones](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Página de Felicitaciones](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 Pero quieres más. ¿Quieres saber todos los detalles de symfony para el desarrollo de aplicaciones? Por lo tanto, vamos a reanudar nuestro viaje al nirvana del desarrollo symfony.
 
@@ -56,7 +56,7 @@ Para cada categoría, la lista sólo muestra los primeros 10 puestos de trabajo 
 
 En la página principal, el usuario puede refinar la lista de puestos (Caso de Uso F2), o enviar un nuevo puesto de trabajo (*Caso de Uso F5*).
 
-![Mockup de la Página de Inicio](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+![Mockup de la Página de Inicio](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
 
 ### Caso de Uso F2: Un usuario puede solicitar todos los puestos de trabajo de una categoría determinada
 
@@ -67,7 +67,7 @@ Cuando un usuario hace clic en el nombre de una categoría o en un enlace "more 
 
 La lista está paginada, con 20 puestos de trabajo por página.
 
-![La Página Categoría](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+![La Página Categoría](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
 
 ### Caso de Uso F3: Un usuario refina la lista con algunas palabras clave
 
@@ -77,7 +77,7 @@ El usuario puede introducir algunas palabras clave para refinar su búsqueda. La
 
 El usuario puede seleccionar un trabajo de la lista para ver información más detallada.
 
-![La Página del Puesto de Trabajo](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+![La Página del Puesto de Trabajo](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
 
 ### Caso de Uso F5: Un usuario envía un puesto de trabajo
 
@@ -103,7 +103,7 @@ Incluso si el usuario no tiene cuenta, un puesto de trabajo pueden ser modificad
 
 Cada puesto de trabajo está en línea durante 30 días (esto es configurable por el administrador - ver (*Caso de Uso B2*). Un usuario puede volver a activar y extender la validez de un puesto de trabajo por 30 días extra pero sólo cuando el trabajo expira y entonces tiene menos de 5 días para hacerlo.
 
-![La Página de Creación de Puestos de Trabajo](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+![La Página de Creación de Puestos de Trabajo](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
 
 ### Caso de Uso F6: Un usuario se registra para ser un afiliado
 

@@ -44,7 +44,7 @@ installées : l'une pour la ligne de commande, et une autre pour le web.
 
 Ensuite, téléchargez le script de contrôle de la configuration de symfony à l'adresse suivante :
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 Enregistrez le script quelque part sur la racine de votre répertoire Web actuel.
 

@@ -11,7 +11,7 @@ symfonyが多くの作業を我々の代わりにやってくれるので、PHP�
 昨日のユーザーストーリーではプロジェクトの主要なオブジェクト: jobs(求人)、affiliates(アフィリエイト)、categories(カテゴリ)を詳しく説明しました。
 下図は対応するエンティティ関係図です:
 
-![ER図](http://www.symfony-project.org/images/jobeet/1_3/03/diagram.png)
+![ER図](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
 ストーリーで説明したカラムに加えて、いくつかのテーブルには`created_at`フィールドが追加されています。
 このフィールドには、レコードが生成されたときの現在のシステム時刻がsymfonyによって自動的にセットされます。
@@ -600,7 +600,7 @@ symfonyでは、指定したモデル用の、基本的な操作機能を提供�
 
      http://jobeet.localhost/frontend_dev.php/job
 
-![jobモジュール](http://www.symfony-project.org/images/jobeet/1_3/03/job.png)
+![jobモジュール](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
 求人情報を編集しようとすると、カテゴリオブジェクトのテキスト表現が必要なため、例外が表示されます。
@@ -664,7 +664,7 @@ Doctrineは`title`、`name`、`subject`など説明用のカラム名を推測�
 必須項目を空にしたり、無効な日付を入力して保存してみてください。
 symfonyによって、データベーススキーマから基本的なバリデーションルールが自動生成されていることが分かります。
 
-![バリデーション](http://www.symfony-project.org/images/jobeet/1_3/03/validation.png)
+![バリデーション](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
 明日お会いしましょう
 --------------------

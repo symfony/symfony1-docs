@@ -198,12 +198,12 @@ Jobeetホームページをリフレッシュしても、求人情報へのリ�
 ルートクラス
 -----------
 
-~`routing.yml`~で定義されている各ルートは内部で[`sfRoute`](http://www.symfony-project.org/api/1_3/sfRoute)オブジェクトに変換されます。
+~`routing.yml`~で定義されている各ルートは内部で[`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute)オブジェクトに変換されます。
 このクラスはルート定義の`class`エントリで定義することで変更可能です。
 ~HTTP~プロトコルをよく知っているのなら、`~GET|GET(HTTPメソッド)~`、`~POST|POST(HTTPメソッド)~`、`~HEAD|HEAD(HTTPメソッド)~`、`~DELETE|DELETE(HTTPメソッド)~`と`~PUT|PUT(HTTPメソッド)~`のようなメソッドを定義することもできます。
 最初の3つ(`GET`、`POST`、`HEAD`)は全てのブラウザーでサポートされますが、それ以外の2つ(`DELETE`、`PUT`）はサポートされていません。
 
-あるリクエストメソッドだけにマッチするようルートを制限するには、[`sfRequestRoute`](http://www.symfony-project.org/api/1_3/sfRequestRoute)クラスを使うように
+あるリクエストメソッドだけにマッチするようルートを制限するには、[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute)クラスを使うように
 ルートクラスを変更して、`sf_method`変数をrequirementsエントリに追加できます:
 
     [yml]
@@ -224,7 +224,7 @@ Jobeetホームページをリフレッシュしても、求人情報へのリ�
 
 求人用の新しい内部URIはとても長くて書くのが退屈ですが(`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`)、
 前のセクションで学んだように、ルートクラスは変更できます。
-`job_show_user`ルートに関しては、[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_3/sfPropelRoute)を使うほうがよいです。
+`job_show_user`ルートに関しては、[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_4/sfPropelRoute)を使うほうがよいです。
 このクラスが##ORM##オブジェクトもしくは##ORM##オブジェクトのコレクションを表すルート用に最適化されているからです:
 
     [yml]
@@ -344,7 +344,7 @@ Jobeetホームページをリフレッシュしても、求人情報へのリ�
 
 もし未知の`id`の求人情報を取得しようとするなら~404エラー~ページが表示されますが、エラーメッセージが変更されているでしょう:
 
-![sfPropelRouteでの404エラー](http://www.symfony-project.org/images/jobeet/1_3/05/404_propel_route.png)
+![sfPropelRouteでの404エラー](http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png)
 
 この理由は404エラーが`getRoute()`メソッドによって自動で投げられるからです。
 なので`executeShow()`メソッドはもっと単純にできます:
@@ -419,7 +419,7 @@ Jobeetホームページをリフレッシュしても、求人情報へのリ�
 
 すべての`job`アクションは`JobeetJob`モデルクラスに関連しており、`show`アクションに対してはすべて行っているので、それぞれに対してカスタムの~`sfPropelRoute`~ルートを簡単に定義できます。
 
-`job`モジュールはモデル用に古典的な7つのアクションを定義するので、[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_3/sfPropelRouteCollection)クラスも使えます。
+`job`モジュールはモデル用に古典的な7つのアクションを定義するので、[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_4/sfPropelRouteCollection)クラスも使えます。
 
 `routing.yml`ファイルを開き次のように修正します:
 

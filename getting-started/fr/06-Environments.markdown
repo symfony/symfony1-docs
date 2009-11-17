@@ -32,14 +32,14 @@ exception se produit. Pour aider le développeur à déboguer le problème plus 
 affiche l'exception avec toutes les informations qu'elle a sur la requête
 courante dans le navigateur :
 
-![Une exception dans l'environnement de dev](http://www.symfony-project.org/images/getting-started/1_3/exception_dev.png)
+![Une exception dans l'environnement de dev](http://www.symfony-project.org/images/getting-started/1_4/exception_dev.png)
 
 Par contre sur l'environnement de production, la couche du cache doit être activé, et
 bien entendu, l'application doit afficher les messages d'erreurs à la place des
 exceptions. Ainsi, l'environnement de production doit être optimisé pour la performance
 et l'expérience utilisateur.
 
-![Une exception dans l'environnement de prod](http://www.symfony-project.org/images/getting-started/1_3/exception_prod.png)
+![Une exception dans l'environnement de prod](http://www.symfony-project.org/images/getting-started/1_4/exception_prod.png)
 
 >**TIP**
 >Si vous ouvrez les fichiers des contrôleurs frontaux, vous verrez que leur contenu est

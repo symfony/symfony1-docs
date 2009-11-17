@@ -376,7 +376,7 @@ cultureを変更するユーザーのために、言語~フォーム~はレイ�
 
 `sfFormLanguage`クラスの`process()`メソッドは、ユーザーのフォーム投稿に基づいて、ユーザーcultureの変更を考慮します。
 
-![国際化されたフッター](http://www.symfony-project.org/images/jobeet/1_3/19/footer.png)
+![国際化されたフッター](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
 
 国際化
 ------
@@ -472,7 +472,7 @@ symfonyがテンプレートをレンダリングするとき、`__()`ヘルパ�
 
 >**NOTE**
 >保存する他のカタログは~`gettext`~、`MySQL`と`SQLite`です。
->いつものことですが、詳細は[i18n API](http://www.symfony-project.org/api/1_3/i18n)をご覧ください。
+>いつものことですが、詳細は[i18n API](http://www.symfony-project.org/api/1_4/i18n)をご覧ください。
 
 ### `i18n:extract`
 
@@ -957,7 +957,7 @@ Doctrineはモデルのすべてのカラム用のマジックファインダー
 
 バックエンドに関して、英語とフランス語を同じフォームで編集できるようにすることを考えます:
 
-![バックエンドカテゴリ](http://www.symfony-project.org/images/jobeet/1_3/19/backend_categories.png)
+![バックエンドカテゴリ](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
 `embedI18N()`メソッドを使うことで~国際化フォーム|フォーム(翻訳)~を埋め込むことができます:
 
@@ -1039,7 +1039,7 @@ adminジェネレーターの翻訳ファイルは、`fr/messages.xml`の代わ�
 異なるcultureをサポートすることは日付と数値をフォーマットする異なる方法もサポートすることを意味します。
 テンプレートにおいて、現在のユーザーcultureに基づいて、これらすべての違いを考慮することを手助けしてくれるいくつかのヘルパーを自由に使えます:
 
-[`Date`](http://www.symfony-project.org/api/1_3/DateHelper)ヘルパーグループ:
+[`Date`](http://www.symfony-project.org/api/1_4/DateHelper)ヘルパーグループ:
 
  | ヘルパー                       | 説明                                           |
  | ----------------------------- | ---------------------------------------------- |
@@ -1049,14 +1049,14 @@ adminジェネレーターの翻訳ファイルは、`fr/messages.xml`の代わ�
  | `distance_of_time_in_words()` | 単語で2つの日付の間の経過時間を表示する          |
  | `format_daterange()`          | 日付の範囲をフォーマットする                    |
 
-[`Number`](http://www.symfony-project.org/api/1_3/NumberHelper)ヘルパーグループ:
+[`Number`](http://www.symfony-project.org/api/1_4/NumberHelper)ヘルパーグループ:
 
  | ヘルパー            | 説明                   |
  | ------------------- | ---------------------- |
  | `format_number()`   | 数値をフォーマットする |
  | `format_currency()` | 通貨をフォーマットする |
 
-[`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper)ヘルパーグループ
+[`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper)ヘルパーグループ
 において:
 
  | ヘルパー            | 説明                 |
@@ -1068,18 +1068,18 @@ adminジェネレーターの翻訳ファイルは、`fr/messages.xml`の代わ�
 
 フォームフレームワークはローカライズされたデータ用の~ウィジェット|ウィジェット(I18n)~と~バリデーター|バリデーター(I18n)~をいくつか提供します:
 
- * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDate)
- * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDateTime)
- * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nTime)
+ * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
+ * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
+ * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
 
- * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCountry)
- * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCurrency)
- * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceLanguage)
- * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceTimezone)
+ * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCountry)
+ * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCurrency)
+ * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceLanguage)
+ * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceTimezone)
 
- * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceCountry)
- * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceLanguage)
- * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceTimezone)
+ * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
+ * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
 
 また明日
 --------

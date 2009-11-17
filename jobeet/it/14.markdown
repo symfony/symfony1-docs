@@ -44,7 +44,7 @@ Entrambi gli URL sono equivalenti perché le rotte generate dalla classe
 il formato standard è `html`. Potete verificarlo personalmente
 utilizzando il task `app:routes`.
 
-![Cli](http://www.symfony-project.org/images/jobeet/1_3/15/cli.png)
+![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
 
 Feed
 ----
@@ -244,7 +244,7 @@ Il metodo `getHost()` dell'oggetto request (`$sf_request`) restituisce
 l'host corrente, che torna utile per creare un link assoluto per il
 logo della società.
 
-![Feed](http://www.symfony-project.org/images/jobeet/1_3/15/feed.png)
+![Feed](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
 
 >**TIP**
 >Creando un feed, il ~debug|Debug~ è più semplice se si usano gli strumenti da
@@ -403,7 +403,7 @@ per una categoria:
       // ...
     }
 
-![Category Feed](http://www.symfony-project.org/images/jobeet/1_3/15/category_feed.png)
+![Category Feed](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
 
 A domani
 --------

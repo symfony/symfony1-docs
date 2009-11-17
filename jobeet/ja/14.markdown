@@ -35,7 +35,7 @@ symfonyフレームワークは~フォーマット~と~MIME-Type|MIME Type~を�
 `sfPropelRouteCollection`クラスによって生成されたルートは拡張子として`sf_format`を持ち`html`はデフォルトのフォーマットだからです。
 `app:routes`タスクを実行することであなた自身で確認できます:
 
-![Cli](http://www.symfony-project.org/images/jobeet/1_3/15/cli.png)
+![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
 
 フィード
 --------
@@ -226,7 +226,7 @@ Atomテンプレートヘッダーを次のコードで置き換えます:
 リクエストオブジェクト(`$sf_request`)の`getHost()`メソッドは現在のホストを返します。
 企業ロゴの絶対パスを作る際に重宝します。
 
-![フィード](http://www.symfony-project.org/images/jobeet/1_3/15/feed.png)
+![フィード](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
 
 >**TIP**
 >フィードを作成する際に、[`curl`](http://curl.haxx.se/)もしくは[`wget`](http://www.gnu.org/software/wget/)のようなコマンドラインツールを使えばフィードの実際の内容を見れるので~デバッグ~作業が楽になります。
@@ -378,7 +378,7 @@ Jobeetのゴールの1つはよりターゲットを絞った求人情報を見�
       // ...
     }
 
-![カテゴリフィード](http://www.symfony-project.org/images/jobeet/1_3/15/category_feed.png)
+![カテゴリフィード](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
 
 また明日
 --------

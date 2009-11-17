@@ -151,7 +151,7 @@ Sustituye el contenido por defecto del `layout.php` con el siguiente:
 
 Este layout usa una hoja de estilos `admin.css`. Este archivo debe estar presente en `web/css/` ya que se instaló con el resto de las hojas de estilo durante el día 4.
 
-![El Aspecto del Generador de Admin](http://www.symfony-project.org/images/jobeet/1_3/12/look_and_feel.png)
+![El Aspecto del Generador de Admin](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
 Eventualmente, cambia la página de inicio por defecto en symfony en `routing.yml`:
 
@@ -271,7 +271,7 @@ Los títulos de las secciones `list`, `edit`, y `new` del módulo `category` se 
 El `title` para la sección `edit` contiene valores dinámicos: todas las cadenas
 encerradas entre `%%` se sustituyen por los correspondientes valores de las columnas del objeto.
 
-![Títulos](http://www.symfony-project.org/images/jobeet/1_3/12/title.png)
+![Títulos](http://www.symfony-project.org/images/jobeet/1_4/12/title.png)
 
 La configuración para el módulo `job` es muy similar:
 
@@ -303,7 +303,7 @@ La configuración por defecto de los campos pueden ser personalizada con la secc
         is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
         is_public:    { label: Public? }
 
-![Configuración de los Campos](http://www.symfony-project.org/images/jobeet/1_3/12/fields.png)
+![Configuración de los Campos](http://www.symfony-project.org/images/jobeet/1_4/12/fields.png)
 
 La sección `fields` sobreecribe la configuración de los campos para todas las vistas, lo que significa que `label` para `is_activated` se modificó para las vistas `list`, `edit`, y `new`.
 
@@ -344,7 +344,7 @@ La opción `display` sobreescribe lo predefinido ordenando las columnas a mostra
 
 El signo `=` antes del `nombre` de la columna es una convención para convertir la cadena en un enlace.
 
-![Tabla list](http://www.symfony-project.org/images/jobeet/1_3/12/list_columns.png)
+![Tabla list](http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png)
 
 Vamos a hacer lo mismo para el módulo `job` para que sea más legible:
 
@@ -393,7 +393,7 @@ Sin embargo, la clase `JobeetJob` ya tiene un método `getJobeetCategory()` que 
     %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
      (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
 
-![Stacked layout](http://www.symfony-project.org/images/jobeet/1_3/12/stacked_layout.png)
+![Stacked layout](http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png)
 
 ### `sort`
 
@@ -415,7 +415,7 @@ De forma predeterminada, la lista es paginada, y cada página contiene 20 items.
       list:
         max_per_page: 10
 
-![Máximo por Página](http://www.symfony-project.org/images/jobeet/1_3/12/max_per_page.png)
+![Máximo por Página](http://www.symfony-project.org/images/jobeet/1_4/12/max_per_page.png)
 
 ### `batch_actions`
 
@@ -427,7 +427,7 @@ En una lista, una acción se puede ejecutar sobre varios objetos. Estas acciones
       list:
         batch_actions: {}
 
-![Remover batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/no_batch_actions.png)
+![Remover batch actions](http://www.symfony-project.org/images/jobeet/1_4/12/no_batch_actions.png)
 
 La opción `batch_actions` define la lista de acciones por lote. Un array
 vacío permite eliminar las características.
@@ -512,7 +512,7 @@ Actualiza el método `extend()` para tomar este nuevo argumento en cuenta:
 
 Después de que todos los puestos de trabajo se han ampliado, el usuario es redirigido al módulo `job`.
 
-![Perzonalizar batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/custom_batch_actions.png)
+![Perzonalizar batch actions](http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png)
 
 ### `object_actions`
 En la lista, hay una columna adicional para las acciones que puede ejecutarse en un único objeto. Para el módulo `category` , vamos a eliminarlos ya que tenemos un enlace con el nombre de la categoría para editarlo, y que realmente no necesitamos ser capaces de borrar una directamente de la lista:
@@ -553,7 +553,7 @@ Como para las batch actions, las acciones `_delete` y `_edit` son las definidas 
       // ...
     }
 
-![Perzonalizar object action](http://www.symfony-project.org/images/jobeet/1_3/12/custom_object_actions.png)
+![Perzonalizar object action](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
 
 ### `actions`
 
@@ -613,7 +613,7 @@ Hemos reutilizado el método `JobeetJobTable::cleanup()` definido el día de aye
 >     [yml]
 >     deleteNeverActivated: { label: Delete never activated jobs, action: foo }
 
-![Acciones](http://www.symfony-project.org/images/jobeet/1_3/12/actions.png)
+![Acciones](http://www.symfony-project.org/images/jobeet/1_4/12/actions.png)
 
 <propel>
 ### `peer_method`
@@ -624,7 +624,7 @@ Hemos reutilizado el método `JobeetJobTable::cleanup()` definido el día de aye
 
 El número de consultas a la base de datos para mostrar el listado de los puestos de trabajo es 13, como muestra la barra de depuración web.
 
-![Número de consultas antes](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_before.png)
+![Número de consultas antes](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png)
 
 Si haces clic en ese número, se verá que la mayoría de las peticiones son para recuperar el nombre de la categoría para cada trabajo.
 
@@ -668,7 +668,7 @@ El método `retrieveBackendJobList()` agrega un join entre las tablas `job` y `c
 
 The number of requests is now down to three:
 
-![Número de consultas después](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_after.png)
+![Número de consultas después](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_after.png)
 
 Configuración de las Vistas Form
 --------------------------------
@@ -693,7 +693,7 @@ La opción `display` para vistas form también se puede utilizar para organizar 
 La configuración anterior define dos grupos (`Content` y `Admin`), each
 que contienen un subconjunto de los campos del formulario.
 
-![Campos agrupados](http://www.symfony-project.org/images/jobeet/1_3/12/fields_grouping.png)
+![Campos agrupados](http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png)
 
 El Generador de Admin tiene soporte para la relación muchos a muchos. En el formilario categoría, tienes un input para el nombre, uno para el slug, y un cuadro desplegable para los afiliados relacionados. Como no tiene sentido editar esta relación en esta página, vamos a eliminarla:
 
@@ -842,7 +842,7 @@ El widget `sfWidgetFormInputFileEditable` tiene varias opciones para modificar s
   * `with_delete`: Si se desea mostrar una casilla de verificación para eliminar
   * `template`:    La plantilla a utilizar para mostrar el widget
 
-![Carga de Archivos](http://www.symfony-project.org/images/jobeet/1_3/12/file_upload.png)
+![Carga de Archivos](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
 >**TIP**
 >El aspecto del Generador de Admin puede ser ajustado muy fácilmente ya que las
@@ -887,7 +887,7 @@ Para el módulo `job` , vamos a eliminar algunos de ellos:
 
 Como los filtros son siempre opcional, no hay necesidad de sobreescribir clase filtro para configurar los campos que se mostrarán.
 
-![Filtros](http://www.symfony-project.org/images/jobeet/1_3/12/filters.png)
+![Filtros](http://www.symfony-project.org/images/jobeet/1_4/12/filters.png)
 
 Acciones Personalizadas
 -----------------------

@@ -34,7 +34,7 @@ PHPの設定は異なるOSのあいだはもちろんのこと、異なるLinux�
 
 それから、次のURLでsymfonyの設定チェックスクリプトをダウンロードします:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 スクリプトを現在のWeb公開ディレクトリのルートに保存します。
 

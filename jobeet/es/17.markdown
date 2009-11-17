@@ -552,7 +552,7 @@ La tarea remueve todos los puestos de trabajo vencidos del índice y, a continua
 Nos vemos mañana
 ----------------
 
-Hoy, hemos implementado un completo motor de búsqueda con muchas características en menos de una hora. Cada vez que desees añadir una nueva función para tus proyectos, debes comprobar que todavía no se haya resuelto en algún otro lugar. En primer lugar, comprobar si es algo que no se haya implementado de forma nativa en el [framework Symfony](http://www.symfony-project.org/api/1_3/). Luego, busca en los 
+Hoy, hemos implementado un completo motor de búsqueda con muchas características en menos de una hora. Cada vez que desees añadir una nueva función para tus proyectos, debes comprobar que todavía no se haya resuelto en algún otro lugar. En primer lugar, comprobar si es algo que no se haya implementado de forma nativa en el [framework Symfony](http://www.symfony-project.org/api/1_4/). Luego, busca en los 
 [plugins symfony](http://www.symfony-project.org/plugins/). Y no olvides visitar las [bibliotecas del Zend Framework ](http://framework.zend.com/manual/en/)
 y los [ezComponent](http://ezcomponents.org/docs) también.
 

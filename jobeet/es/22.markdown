@@ -22,7 +22,7 @@ En esta sección, se supone que ya ha instalado el servidor web, servidor de bas
 
 En primer lugar, necesitas comprobar que PHP está instalado con todas las extensiones necesarias y está correctamente configurado. Como con el día 1, haremos uso del script `check_configuration.php` provisto con Symfony. Como no vamos a instalar Symfony en el servidor de producción, descarga el archivo directamente desde la página web Symfony:
 
-    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+    http://trac.symfony-project.org/browser/branches/1.4/data/bin/check_configuration.php?format=raw
 
 Copia el archivo en el directorio root Web y ejecutalo desde tu navegador **y** desde la línea de comandos:
 
@@ -74,19 +74,19 @@ Tu deseas actualizar Symfony a la última versión menor de vez en cuando, ya qu
 Actualizar Symfony es tan sencillo como cambiar el contenido del
 directorio `lib/vendor/symfony/`. Si has instalado Symfony con el archivo, elimina los archivos actuales y reemplazalos con las nuevas versiones.
 
-Si utilizas Subversion para tu proyecto, también puedes enlazar tu proyecto con la últimas etiquetas de Symfony 1.3:
+Si utilizas Subversion para tu proyecto, también puedes enlazar tu proyecto con la últimas etiquetas de Symfony 1.4:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0/
 
 Actualizar Symfony es tan simple como cambiar la etiqueta a la última versión de Symfony.
 
-También puedes utilizar la rama 1.3 para tener los arreglos en tiempo real:
+También puedes utilizar la rama 1.4 para tener los arreglos en tiempo real:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/branches/1.3/
+      # symfony http://svn.symfony-project.com/branches/1.4/
 
-Ahora, cada vez que hacemos un `svn up`, tendrás la última versión de Symfony 1.3.
+Ahora, cada vez que hacemos un `svn up`, tendrás la última versión de Symfony 1.4.
 
 Cuando se actualiza a una nueva versión, se aconseja siempre que se limpie el cache, especialmente en el entorno de producción:
 

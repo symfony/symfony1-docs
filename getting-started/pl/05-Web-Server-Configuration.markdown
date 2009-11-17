@@ -110,7 +110,7 @@ poprzez otwarcie przeglądarki i wpisanie `http://localhost:8080/index.php/`, lu
 `http://www.myproject.com.localhost/index.php/` w zależności od ustawionej konfiguracji 
 Apacha, jaką wybrałeś w poprzednim podrozdziale.  
 
-![Konfiguracja](http://www.symfony-project.org/images/getting-started/1_3/congratulations.png)
+![Konfiguracja](http://www.symfony-project.org/images/getting-started/1_4/congratulations.png)
 
 >**TIP**
 >Jeżeli posiadasz zainstalowany moduł `mod_rewrite`, możesz usunąć część
@@ -125,7 +125,7 @@ Możesz również spróbować otworzyć aplikację w środowisku programistyczny
 Toolbar debugowania powinien się pojawić w prawym górnym rogu, razem z małymi 
 ikonami, które świadczą o tym, że alias `sf` został skonfigurowany poprawnie. 
 
-![toolbar debugowania](http://www.symfony-project.org/images/getting-started/1_3/web_debug_toolbar.png)
+![toolbar debugowania](http://www.symfony-project.org/images/getting-started/1_4/web_debug_toolbar.png)
 
 >**Note**
 >Konfiguracja jest trochę inna, jeżeli próbujesz ustawić symfony na serwerze IIS

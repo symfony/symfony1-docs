@@ -12,7 +12,7 @@ Mensajes Flashes del Usuario
 
 Ya hemos visto el objeto de usuario en acción con los mensajes flashes. Un flash es un efímero mensaje almacenado en la sesión de usuario que se eliminará automáticamente después de la próxima petición. Es muy útil cuando se necesita mostrar un mensaje al usuario después de un redireccionamiento. El generador de administración utiliza flashes para mostrar información al usuario cuando se guarda un puesto de trabajo, se borra o extiende su validez.
 
-![Flashes](http://www.symfony-project.org/images/jobeet/1_3/13/flashes.png)
+![Flashes](http://www.symfony-project.org/images/jobeet/1_4/13/flashes.png)
 
 Un flash se establece utilizando el método `setFlash()` de `sfUser`:
 
@@ -110,7 +110,7 @@ El método `getAttribute()` también tiene un valor predeterminado opcional a de
 ### La Clase `myUser` 
 
 Lo mejor respeto a la separación de las capas, es mover el código a la clase `myUser`. La clase `myUser` sobreescribe la clase por defecto base symfony 
-[`sfUser`](http://www.symfony-project.org/api/1_3/sfUser) con comportamientos específicos de la aplicación:
+[`sfUser`](http://www.symfony-project.org/api/1_4/sfUser) con comportamientos específicos de la aplicación:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -207,7 +207,7 @@ El layout usa un nuevo método `getJobHistory()` para obtener el historial job:
 EL método `getJobHistory()` usa el método propel `retrieveByPKs()` para recuperar varios objetos `JobeetJob` en una llamada.
 </propel>
 
-![Historial de Job](http://www.symfony-project.org/images/jobeet/1_3/13/job_history.png)
+![Historial de Job](http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png)
 
 ### El `sfParameterHolder`
 
@@ -229,7 +229,7 @@ Los atributos del usuario son gestionados por un objeto de la clase `sfParameter
 `getParameterHolder()->get()` y `getParameterHolder()->set()`. Como el método `remove()` no tiene método proxy en `sfUser`, necesitas usar el objeto del contenedor de parámetros directamente.
 
 >**NOTE**
->La clase [`sfParameterHolder`](http://www.symfony-project.org/api/1_3/sfParameterHolder)
+>La clase [`sfParameterHolder`](http://www.symfony-project.org/api/1_4/sfParameterHolder)
 >es también utilizada por `sfRequest` para almacenar sus parámetros.
 
 Seguridad de la Aplicación 
@@ -246,14 +246,14 @@ Al igual que muchas otras características, la seguridad es manejada por un arch
 Si cambia el `is_secure` a `true`, toda la aplicación backend
 necesitará que el usuario deba autenticarse.
 
-![Login](http://www.symfony-project.org/images/jobeet/1_3/13/login.png)
+![Login](http://www.symfony-project.org/images/jobeet/1_4/13/login.png)
 
 >**TIP**
 >En un archivo YAML, un Booleano puede expresarse con la cadena `true` o `false`.
 
 Si echas un vistazo a los registros en la barra web de depuración, se puede observar que el método `executeLogin()` de la clase `defaultActions` se llama por cada página que intentas acceder.
 
-![Web debug](http://www.symfony-project.org/images/jobeet/1_3/13/web_debug.png)
+![Web debug](http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png)
 
 Cuando un usuario no-autenticado intenta acceder a una acción segura, Symfony remite la peticióna la acción `login` configurada en `settings.yml`:
 
@@ -282,7 +282,7 @@ Cuando un usuario no-autenticado intenta acceder a una acción segura, Symfony r
 >       is_secure: true
 
 De forma predeterminada, la clase `myUser` hereda de
-[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_3/sfBasicSecurityUser),
+[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_4/sfBasicSecurityUser),
 y no de `sfUser`. `sfBasicSecurityUser` proporciona métodos para gestionar la autenticación de usuario y autorización.
 
 Para gestionar la autenticación de usuario, utiliza los métodos `isAuthenticated()` y `setAuthenticated()`:
@@ -465,7 +465,7 @@ Edita el archivo `settings.yml` para cambiar la acción por defecto empleada por
 
 Como los plugins son compartidos entre todas las aplicaciones de un proyecto, tiene que permitir explícitamente los módulos que desea utilizar agregando el item `enabled_modules`.
 
-![sfGuardPlugin login](http://www.symfony-project.org/images/jobeet/1_3/13/sf_guard_login.png)
+![sfGuardPlugin login](http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png)
 
 El último paso es crear un usuario administrador:
 
@@ -515,7 +515,7 @@ Añadir un enlace en el menú:
     // apps/backend/templates/layout.php
     <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
 
-![Backend menu](http://www.symfony-project.org/images/jobeet/1_3/13/menu.png)
+![Backend menu](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 
 Terminamos!
 
@@ -524,7 +524,7 @@ Probando al Usuario
 
 El tutorial de hoy no termina ya que no hemos aún hablado de las pruebas al usuario.
 Como el symfony browser simula las cookies, es bastante fácil de probar el comportamiento del usuario mediante el uso del tester 
-[`sfTesterUser`](http://symfony-project.org/api/1_3/sfTesterUser).
+[`sfTesterUser`](http://symfony-project.org/api/1_4/sfTesterUser).
 
 Vamos a actualizar la pruebas funcionales para el menú que hemos añadido hoy.
 Agrega el código siguiente al final del módulo de pruebas funcionales `job`:

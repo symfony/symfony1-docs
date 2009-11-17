@@ -39,7 +39,7 @@ La classe `sfBrowser`
 ---------------------
 
 In symfony i test funzionali vengono eseguiti attraverso un ~browser|Browser~ speciale
-implementato dalla classe [`sfBrowser`](http://www.symfony-project.org/api/1_3/sfBrowser).
+implementato dalla classe [`sfBrowser`](http://www.symfony-project.org/api/1_4/sfBrowser).
 Esso si comporta come un browser realizzato per la vostra applicazione e direttamente
 connesso ad essa, senza il bisogno di un server web. Vi dà l'accesso a tutti gli
 oggetti di symfony prima e dopo ogni richiesta, dandovi l'opportunità di analizzarli
@@ -94,7 +94,7 @@ di `sfBrowser` come `getResponse()` e `getRequest()`, ma symfony mette a
 disposizione una via migliore.
 
 I metodi di test sono forniti da un'altra classe,
-[`sfTestFunctional`](http://www.symfony-project.org/api/1_3/sfTestFunctional)
+[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)
 che accetta un'istanza di `sfBrowser` nel suo costruttore. La classe `sfTestFunctional`
 delega i test agli oggetti **~tester|Tester~**. Svariati tester sono distribuiti con 
 symfony, inoltre potete realizzarne di vostri.
@@ -195,7 +195,7 @@ per analizzare e testare gli oggetti `sfWebResponse`:
  | `isValid()`        | Controlla se una risposta è in XML ben formato (passando `true` come argomento, si valida la risposta anche su come deve essere il tipo di documento)
 
 >**NOTE**
->Descriveremo altre classi [tester](http://www.symfony-project.org/api/1_3/test)
+>Descriveremo altre classi [tester](http://www.symfony-project.org/api/1_4/test)
 >nei prossimi giorni (per form, user, cache, ...).
 
 Eseguire Test funzionali
@@ -210,7 +210,7 @@ O utilizzando il task `test:functional`:
 
     $ php symfony test:functional frontend categoryActions
 
-![Test su linea di comando](http://www.symfony-project.org/images/jobeet/1_3/09/cli_tests.png)
+![Test su linea di comando](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
 
 Dati da testare
 ---------------
@@ -658,7 +658,7 @@ funzionali per un'applicazione:
 
 Il task mostra una riga per ogni file di test:
 
-![Test funzionali](http://www.symfony-project.org/images/jobeet/1_3/09/test_harness.png)
+![Test funzionali](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
 
 Insieme di test
 ---------------
@@ -668,7 +668,7 @@ un progetto (unitari e funzionali):
 
     $ php symfony test:all
 
-![Tutti i test](http://www.symfony-project.org/images/jobeet/1_3/09/tests_harness.png)
+![Tutti i test](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
 
 Quando si ha una grande suite di test, può essere necessario molto tempo per lanciare
 tutti i test ogni volta che si apporta una modifica, in particolare se alcuni test

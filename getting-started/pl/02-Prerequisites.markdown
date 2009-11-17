@@ -43,7 +43,7 @@ wersje PHP: jedną w pasku komend i inną na stronie.
 
 Następnie pobierz plik weryfikujący konfigurację z adresu URL:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 Zapisz skrypt gdzieś w katalogu domowym serwera stron.
 

@@ -17,7 +17,7 @@ Le user story che abbiamo scritto ieri descrivono le entità principali
 del nostro progetto: annunci di lavoro, affiliati, categorie. Di seguito 
 abbiamo il corrispondente diagramma Entità-Relazione:
 
-![Diagramma E-R](http://www.symfony-project.org/images/jobeet/1_3/03/diagram.png)
+![Diagramma E-R](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
 In aggiunta alle colonne descritte nelle user stories, abbiamo aggiunto
 il campo `created_at` ad alcune tabelle. Symfony riconosce questi campi e ne
@@ -704,7 +704,7 @@ Ora si può provare il modulo `job` in un browser:
 
      http://jobeet.localhost/frontend_dev.php/job
 
-![Modulo Job](http://www.symfony-project.org/images/jobeet/1_3/03/job.png)
+![Modulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
 Se si prova a modificare un lavoro, si avrà un'eccezione, perché symfony ha bisogno di una
@@ -761,7 +761,7 @@ Ora potete creare e modificare i lavori. Provate a lasciare vuoto un campo richi
 a immettere una data non valida. Tutto bene, symfony ha creato delle regole di
 validazione di base, partendo dallo schema del database.
 
-![Validazione](http://www.symfony-project.org/images/jobeet/1_3/03/validation.png)
+![Validazione](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
 A domani
 --------

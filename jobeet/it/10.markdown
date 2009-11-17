@@ -55,8 +55,8 @@ metodi `setValidators()` e `setWidgets()`.
 
 >**TIP**
 >Il form framework viene distribuito assieme a molti
->[widgets](http://www.symfony-project.org/api/1_3/widget) e
->[validatori](http://www.symfony-project.org/api/1_3/validator). Le API
+>[widgets](http://www.symfony-project.org/api/1_4/widget) e
+>[validatori](http://www.symfony-project.org/api/1_4/validator). Le API
 >li descrivono in modo piuttosto completo con tutte le opzioni, gli errori e i 
 >messaggi d'errore di default.
 
@@ -544,7 +544,7 @@ Il form del lavoro è gestito da cinque metodi del modulo `job`:
 
 Tutti i form hanno il seguente ciclo di vita:
 
-![flusso del Form](http://www.symfony-project.org/images/jobeet/1_3/10/form_flow.png)
+![flusso del Form](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
 Avendo creato un insieme di rotte per ##ORM## 5 giorni fa per il modulo `job`,
 possiamo semplificare il codice per i metodi di gestione del form:
@@ -834,9 +834,9 @@ scorciatoia alla classe `JobeetJob`:
 La barra di amministrazione mostra le diverse azioni, a seconda
 dello stato del lavoro:
 
-![Lavoro non attivato](http://www.symfony-project.org/images/jobeet/1_3/10/not_activated.png)
+![Lavoro non attivato](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
 
-![Lavoro attivato](http://www.symfony-project.org/images/jobeet/1_3/10/activated.png)
+![Lavoro attivato](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
 
 >**NOTE**
 >Si potrà vedere la barra "attivata" dopo la prossima sezione.

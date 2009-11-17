@@ -32,14 +32,14 @@ exception occurs. To help the developer debug the issue faster, symfony
 displays the exception with all the information it has about the current
 request right into the browser:
 
-![An exception in the dev environment](http://www.symfony-project.org/images/getting-started/1_3/exception_dev.png)
+![An exception in the dev environment](http://www.symfony-project.org/images/getting-started/1_4/exception_dev.png)
 
 But on the production environment, the cache layer must be activated and, of
 course, the application must display customized error messages instead of raw
 exceptions. So, the production environment must be optimized for performance
 and the user experience.
 
-![An exception in the prod environment](http://www.symfony-project.org/images/getting-started/1_3/exception_prod.png)
+![An exception in the prod environment](http://www.symfony-project.org/images/getting-started/1_4/exception_prod.png)
 
 >**TIP**
 >If you open the front controller files, you will see that their content is

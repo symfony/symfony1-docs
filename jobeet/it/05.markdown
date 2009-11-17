@@ -226,7 +226,7 @@ Classi di rotte
 ---------------
 
 Ogni rotta definita in ~`routing.yml`~ viene internamente convertita in un oggetto
-della classe [`sfRoute`](http://www.symfony-project.org/api/1_3/sfRoute). Questa
+della classe [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute). Questa
 classe può essere cambiata definendo una voce `class` nella definizione della
 rotta. Se avete familiarità col protocollo ~HTTP~, forse saprete che definisce
 diversi "metodi", come `~GET~`, `~POST~`, `~HEAD~`, `~DELETE~` e `~PUT~`. I primi tre
@@ -234,7 +234,7 @@ sono supportati da tutti i browser, mentre gli altri due no.
 
 Per restringere una rotta a corrispondere solo ad alcuni metodi di richiesta,
 si può cambiare la classe della rotta in
-[`sfRequestRoute`](http://www.symfony-project.org/api/1_3/sfRequestRoute) ed
+[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute) ed
 aggiungere un requisito per la variabile virtuale `sf_method`:
 
     [yml]
@@ -259,7 +259,7 @@ Il nuovo URI interno per un lavoro è un po' lungo e difficile da scrivere
 (`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`),
 ma come abbiamo appena imparato nella sezione precedente, la classe della
 rotta può essere cambiata. Per la rotta `job_show_user`, è meglio usare
-[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_3/sfPropelRoute),
+[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_4/sfPropelRoute),
 essendo la classe ottimizzata per rotte che rappresentano oggetti ##ORM##
 o insiemi di oggetti ##ORM##:
 
@@ -397,7 +397,7 @@ recuperare l'oggetto `Jobeet`:
 Se si prova a recuperare un lavoro per una `id` sconosciuta, si otterrà
 una pagina di errore 404, ma il messaggio di errore è cambiato:
 
-![404 con sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_3/05/404_propel_route.png)
+![404 con sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png)
 
 Questo perché l'~errore 404|Errore 404~ è stato lanciato automaticamente dal metodo
 `getRoute()`. Quindi possiamo semplificare ulteriormente il metodo
@@ -480,7 +480,7 @@ Siccome tutte le azioni `job` sono legate alla classe del modello `JobeetJob`,
 possiamo definire facilmente una rotta personalizzata ~`sfPropelRoute`~ per ciascuno,
 come abbiamo già fatto per l'azione `show`. Ma siccome il modulo `job` definisce
 le classiche sette azioni possibili per un modello, possiamo anche usare la classe
-[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_3/sfPropelRouteCollection).
+[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_4/sfPropelRouteCollection).
 Apriamo il file `routing.yml` e modifichiamolo come segue:
 
     [yml]

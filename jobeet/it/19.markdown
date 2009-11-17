@@ -426,7 +426,7 @@ E creiamo l'azione corrispondente:
 Il metodo `process()` di `sfFormLanguage` si prende cura di cambiare
 la cultura dell'utente, basandosi sui valori del form inviati dall'utente.
 
-![Footer internazionalzzato](http://www.symfony-project.org/images/jobeet/1_3/19/footer.png)
+![Footer internazionalzzato](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
 
 Internazionalizzazione
 ----------------------
@@ -536,7 +536,7 @@ generator e dalla maggior parte dei plugin di symfony.
 
 >**NOTE**
 >Altri metodi di catalogazione sono `gettext`, `MySQL` e `SQLite`.
->Come sempre, uno sguardo alle [API i18n](http://www.symfony-project.org/api/1_3/i18n)
+>Come sempre, uno sguardo alle [API i18n](http://www.symfony-project.org/api/1_4/i18n)
 >è utile per avere più dettagli.
 
 ### `i18n:extract`
@@ -1076,7 +1076,7 @@ include lo slug tradotto della categoria:
 Per il backend, vogliamo che le traduzioni Francese ed Inglese siano
 modificate nello stesso form:
 
-![categorie nel backend](http://www.symfony-project.org/images/jobeet/1_3/19/backend_categories.png)
+![categorie nel backend](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
 Si può inserire un ~form i18n|Form (Traduzione)~ usando il metodo `embedI18N()`:
 
@@ -1168,7 +1168,7 @@ di formattare date e numeri. In un template, diversi helper sono
 a disposizione per tenere in considerazione tutte queste
 differenze, a seconda della cultura dell'utente:
 
-Nel gruppo di helper [`Date`](http://www.symfony-project.org/api/1_3/DateHelper):
+Nel gruppo di helper [`Date`](http://www.symfony-project.org/api/1_4/DateHelper):
 
  | Helper                         | Descrizione                                              |
  | ------------------------------ | -------------------------------------------------------- |
@@ -1178,14 +1178,14 @@ Nel gruppo di helper [`Date`](http://www.symfony-project.org/api/1_3/DateHelper)
  | `distance_of_time_in_words()`  | Mostra il tempo trascorso tra due date, a parole         |
  | `format_daterange()`           | Formatta un intervallo di date                           |
 
-Nel gruppo di helper [`Number`](http://www.symfony-project.org/api/1_3/NumberHelper):
+Nel gruppo di helper [`Number`](http://www.symfony-project.org/api/1_4/NumberHelper):
 
  | Helper              | Descrizione         |
  | ------------------- | ------------------- |
  | `format_number()`   | Formatta un numero  |
  | `format_currency()` | Formatta una valuta |
 
-Nel gruppo di helper [`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper):
+Nel gruppo di helper [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper):
 
  | Helper              | Descrizione                  |
  | ------------------- | ---------------------------- |
@@ -1197,18 +1197,18 @@ Nel gruppo di helper [`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper)
 Il framework dei form fornisce diversi ~widget|Widget (I18n)~ e
 ~validatori|Validatori (I18n)~ per dati localizzati:
 
- * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDate)
- * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDateTime)
- * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nTime)
+ * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
+ * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
+ * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
 
- * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCountry)
- * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceCurrency)
- * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceLanguage)
- * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nChoiceTimezone)
+ * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCountry)
+ * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCurrency)
+ * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceLanguage)
+ * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceTimezone)
 
- * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceCountry)
- * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceLanguage)
- * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceTimezone)
+ * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
+ * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
 
 A domani
 --------

@@ -19,12 +19,12 @@ symfony sans les tracas d'une installation appropriée qui respecte les meilleur
 >pour savoir comment modifier la base de données utilisée par le bac à sable.
 
 Vous pouvez télécharger le bac à sable sous les formats `.tgz` ou `.zip` sur la
-[page d'installation](http://www.symfony-project.org/installation/1_3) symfony
+[page d'installation](http://www.symfony-project.org/installation/1_4) symfony
 ou aux adresses suivantes:
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.tgz
+    http://www.symfony-project.org/get/sf_sandbox_1_4.tgz
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.zip
+    http://www.symfony-project.org/get/sf_sandbox_1_4.zip
 
 Décompresser les fichiers quelque part sous votre répertoire racine Web, et vous avez
 terminé. Votre projet symfony est désormais accessible en lançant le script `web/index.php`

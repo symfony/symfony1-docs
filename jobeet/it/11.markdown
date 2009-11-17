@@ -24,7 +24,7 @@ framework dei form.
 >I componenti che sono indipendenti da symfony formano la
 >**~piattaforma symfony~**:
 >
->![La piattaforma symfony](http://www.symfony-project.org/images/jobeet/1_3/11/platform.png)
+>![La piattaforma symfony](http://www.symfony-project.org/images/jobeet/1_4/11/platform.png)
 
 Inviare un Form
 ---------------

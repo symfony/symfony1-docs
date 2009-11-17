@@ -7,7 +7,7 @@ ci siamo assicurati di partire con buone impostazioni di default riguardanti la 
 Se avete seguito tutti i passaggi, state guardando il monitor estasiati, visto che 
 vi mostra la bellissima pagina di default che symfony propone per le nuove applicazioni.
 
-![Pagina di congratulazioni](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Pagina di congratulazioni](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 Ma volete di più. Volete imparare tutti i minimi dettagli sullo sviluppo delle applicazioni
 con symfony. Quindi riprendiamo il nostro viaggio nel nirvana dello
@@ -80,7 +80,7 @@ di visualizzare tutti i lavori per una data categoria (*storia F3*).
 Sulla homepage l'utente può restringere la lista dei lavori (*storia F3*) o inserire una
 nuova opportunità di lavoro (*storia F5*).
 
-![Mockup della homepage](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+![Mockup della homepage](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
 
 ### Storia F2: un utente può richiedere tutti i lavori di una data categoria
 
@@ -89,7 +89,7 @@ vedrà tutti gli annunci per quella categoria ordinati per data..
 
 La lista è dotata di paginazione con 20 offerte per pagina.
 
-![La pagina della categoria](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+![La pagina della categoria](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
 
 ### Storia F3: un utente restringe la ricerca con alcune parole chiave
 
@@ -101,7 +101,7 @@ o nella società.
 
 L'utente può selezionare un lavoro dalla lista per vedere i dettagli su quell'offerta.
 
-![La pagina del lavoro](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+![La pagina del lavoro](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
 
 ### Storia F5: un utente inserisce un'offerta di lavoro
 
@@ -134,7 +134,7 @@ dagli amministratori - vedi *storia B2*). Un utente può tornare per riattivare 
 validità di un lavoro per ulteriori 30 giorni solo quando l'inserzione starà per scadere
 in meno di 5 giorni.
 
-![La pagina di creazione di un lavoro](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+![La pagina di creazione di un lavoro](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
 
 ### Storia F6: un utente richiede l'affiliazione
 

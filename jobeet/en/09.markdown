@@ -37,7 +37,7 @@ The `sfBrowser` class
 
 In symfony, functional tests are run through a special ~browser|Browser~,
 implemented by the
-[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_3/sfBrowser)
+[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_4/sfBrowser)
 class. It acts as a browser tailored for your application and directly
 connected to it, without the need for a web server. It gives you access to all
 symfony objects before and after each request, giving you the opportunity to
@@ -91,7 +91,7 @@ the actual testing. It can be done with lime and some `sfBrowser` methods like
 `getResponse()` and `getRequest()` but symfony provides a better way.
 
 The test methods are provided by another class,
-[`sfTestFunctional`](http://www.symfony-project.org/api/1_3/sfTestFunctional)
+[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)
 that takes a `sfBrowser` instance in its constructor. The `sfTestFunctional`
 class delegates the tests to **~tester|Testers~** objects. Several testers are
 bundled with symfony, and you can also create your own.
@@ -192,7 +192,7 @@ tester methods against the `sfWebResponse` object:
  | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
 
 >**NOTE**
->We will describe more [testers](http://www.symfony-project.org/api/1_3/test)
+>We will describe more [testers](http://www.symfony-project.org/api/1_4/test)
 >classes in the coming days (for forms, user, cache, ...).
 
 Running Functional Tests
@@ -207,7 +207,7 @@ Or by using the `test:functional` task:
 
     $ php symfony test:functional frontend categoryActions
 
-![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_3/09/cli_tests.png)
+![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
 
 Test Data
 ---------
@@ -647,7 +647,7 @@ an application:
 
 The task outputs a single line for each test file:
 
-![Functional tests harness](http://www.symfony-project.org/images/jobeet/1_3/09/test_harness.png)
+![Functional tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
 
 Tests Harness
 -------------
@@ -657,7 +657,7 @@ As you may expect, there is also a task to launch all tests for a project
 
     $ php symfony test:all
 
-![Tests harness](http://www.symfony-project.org/images/jobeet/1_3/09/tests_harness.png)
+![Tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
 
 When you have a large suite of tests, it can be very time consuming to launch
 all tests every time you make a change, especially if some tests fail. That's

@@ -25,7 +25,7 @@ need to display a message to the user after a ~redirect|Redirection~. The
 admin generator uses flashes a lot to display feedback to the user whenever a
 job is saved, deleted, or extended.
 
-![Flashes](http://www.symfony-project.org/images/jobeet/1_3/13/flashes.png)
+![Flashes](http://www.symfony-project.org/images/jobeet/1_4/13/flashes.png)
 
 A flash is set by using the `setFlash()` method of `sfUser`:
 
@@ -134,7 +134,7 @@ the identifier is not yet defined.
 
 To better respect the separation of concerns, let's move the code to the
 `myUser` class. The ~`myUser` class~ overrides the default symfony base
-[`sfUser`](http://www.symfony-project.org/api/1_3/sfUser) class with
+[`sfUser`](http://www.symfony-project.org/api/1_4/sfUser) class with
 application specific behaviors:
 
     [php]
@@ -237,7 +237,7 @@ The `getJobHistory()` method uses the Propel `retrieveByPKs()` method to
 retrieve several `JobeetJob` objects in one call.
 </propel>
 
-![Job history](http://www.symfony-project.org/images/jobeet/1_3/13/job_history.png)
+![Job history](http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png)
 
 ### `sfParameterHolder`
 
@@ -262,7 +262,7 @@ The user attributes are managed by an object of class `sfParameterHolder`. The
 parameter holder object directly.
 
 >**NOTE**
->The [`sfParameterHolder`](http://www.symfony-project.org/api/1_3/sfParameterHolder)
+>The [`sfParameterHolder`](http://www.symfony-project.org/api/1_4/sfParameterHolder)
 >class is also used by `sfRequest` to store its parameters.
 
 Application Security
@@ -282,7 +282,7 @@ for the backend application in the `config/` directory:
 If you switch the `is_secure` entry to `true`, the entire backend application
 will require the user to be authenticated.
 
-![Login](http://www.symfony-project.org/images/jobeet/1_3/13/login.png)
+![Login](http://www.symfony-project.org/images/jobeet/1_4/13/login.png)
 
 >**TIP**
 >In a YAML file, a Boolean can be expressed with the strings `true` and
@@ -292,7 +292,7 @@ If you have a look at the logs in the web debug toolbar, you will notice that
 the `executeLogin()` method of the `defaultActions` class is called for every
 page you try to access.
 
-![Web debug](http://www.symfony-project.org/images/jobeet/1_3/13/web_debug.png)
+![Web debug](http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png)
 
 When an un-authenticated user tries to access a ~secured action|Security~, 
 symfony forwards the request to the `login` action configured in `settings.yml`:
@@ -322,7 +322,7 @@ symfony forwards the request to the `login` action configured in `settings.yml`:
 >       is_secure: true
 
 By default, the `myUser` class extends
-[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_3/sfBasicSecurityUser),
+[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_4/sfBasicSecurityUser),
 and not `sfUser`. `sfBasicSecurityUser` provides additional methods to manage user
 authentication and authorization.
 
@@ -556,7 +556,7 @@ As plugins are shared amongst all applications of a project, you need to
 explicitly enable the ~modules|Module~ you want to use by adding them in the
 ~`enabled_modules` setting|`enabled_modules` (Setting)~.
 
-![sfGuardPlugin login](http://www.symfony-project.org/images/jobeet/1_3/13/sf_guard_login.png)
+![sfGuardPlugin login](http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png)
 
 The last step is to create an administrator user:
 
@@ -614,7 +614,7 @@ Add a link in the menu:
     // apps/backend/templates/layout.php
     <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
 
-![Backend menu](http://www.symfony-project.org/images/jobeet/1_3/13/menu.png)
+![Backend menu](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 
 We are done!
 
@@ -624,7 +624,7 @@ User Testing
 Today's tutorial is not over as we have not yet talked about user testing. As
 the symfony browser simulates ~cookies|Cookies~, it is quite easy to test user
 behaviors by using the built-in
-[`sfTesterUser`](http://symfony-project.org/api/1_3/sfTesterUser) tester.
+[`sfTesterUser`](http://symfony-project.org/api/1_4/sfTesterUser) tester.
 
 Let's update the ~functional tests|Functional Testing~ for the menu feature we
 have added today. Add the following code at the end of the `job` module

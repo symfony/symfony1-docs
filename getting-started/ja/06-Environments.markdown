@@ -22,12 +22,12 @@
 最良の例は例外が起きるときです。
 開発者が問題を速くデバッグするのを手助けするために、symfonyは現在のリクエストに関するすべての情報を持つ例外をブラウザーに表示します:
 
-![開発環境の例外](http://www.symfony-project.org/images/getting-started/1_3/exception_dev.png)
+![開発環境の例外](http://www.symfony-project.org/images/getting-started/1_4/exception_dev.png)
 
 しかし開発環境では、キャッシュレイヤーは有効にしなければならず、もちろんアプリケーションは生の例外の代わりにカスタマイズされたエラーメッセージを表示しなければなりません。
 ですので、運用環境ではパフォーマンスとユーザーエクスペリエンスのために最適化しなければなりません。
 
-![運用環境の例外](http://www.symfony-project.org/images/getting-started/1_3/exception_prod.png)
+![運用環境の例外](http://www.symfony-project.org/images/getting-started/1_4/exception_prod.png)
 
 >**TIP**
 >フロントコントローラーのファイルを開くと、環境設定以外の内容が同じであることがわかります:

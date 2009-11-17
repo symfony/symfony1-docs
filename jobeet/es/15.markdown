@@ -401,7 +401,7 @@ Antes de probarlo, debes crear un layout para el formato YAML:
     // apps/frontend/templates/layout.yaml.php
     <?php echo $sf_content ?>
 
-![404](http://www.symfony-project.org/images/jobeet/1_3/16/404.png)
+![404](http://www.symfony-project.org/images/jobeet/1_4/16/404.png)
 
 >**TIP**
 >Sobreescribiendo las plantillas por defecto de error 404 y de excepción es tan
@@ -586,7 +586,7 @@ Por defecto, esta relación es mostrada como un cuadro desplegable gracias al wi
 
 Como emails y URLs tienden a ser bastante más largo que el tamaño predeterminado de una etiqueta input, los atributos de HTML por defecto se puede configurar utilizando el método `setAttribute()`.
 
-![fFormulario de Afiliado](http://www.symfony-project.org/images/jobeet/1_3/16/affiliate_form.png)
+![fFormulario de Afiliado](http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png)
 
 ### Las Pruebas
 
@@ -840,7 +840,7 @@ El único otro código a escribir es para las acciones `activate`, `deactivate` 
       // ...
     }
 
-![Backend para Afiliados](http://www.symfony-project.org/images/jobeet/1_3/16/backend.png)
+![Backend para Afiliados](http://www.symfony-project.org/images/jobeet/1_4/16/backend.png)
 
 Nos vemos mañana
 ----------------

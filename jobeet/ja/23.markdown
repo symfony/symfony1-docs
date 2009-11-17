@@ -132,7 +132,7 @@ symfonyフレームワークは[XSS](#chapter_01_sub_application_creation)と[CS
 ----------
 
 Web開発者にとってフォームの管理がもっとも退屈なタスクの1つなので、symfonyは[フォームサブフレームワーク](#chapter_10_the_form_framework)を提供します。
-フォームフレームワークはたくさんの[ウィジェット](http://www.symfony-project.org/api/1_3/widget)と[バリデーター](http://www.symfony-project.org/api/1_3/validator)を搭載しています。
+フォームフレームワークはたくさんの[ウィジェット](http://www.symfony-project.org/api/1_4/widget)と[バリデーター](http://www.symfony-project.org/api/1_4/validator)を搭載しています。
 
 フォームサブフレームワークの強みの1つはテンプレートがとても簡単に[カスタマイズ可能](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form)であることです。
 
@@ -244,7 +244,7 @@ symfonyフレームワークには、どのソフトウェアのピースと同�
 それが今日始められることです。
 ToDoリストマネージャー、シンプルなblog、時間もしくは通貨コンバーター、などなんらかの価値を提供するWebプロジェクトを考えてください。 
 1つ選び今日知っている知識で実装を始めてください。
-異なるオプションを学ぶためにタスクのヘルプメッセージを使い、symfonyによって生成されるコードを眺め、[Eclipse](http://www.eclipse.org/)のような、PHPの自動入力補完があるテキストエディタを使います auto-completion support like [Eclipse](http://www.eclipse.org/)、symfonyによって提供されるすべてのコンフィギュレーションを眺めるために[リファレンスガイド](http://www.symfony-project.org/reference/1_3/)を参照します。
+異なるオプションを学ぶためにタスクのヘルプメッセージを使い、symfonyによって生成されるコードを眺め、[Eclipse](http://www.eclipse.org/)のような、PHPの自動入力補完があるテキストエディタを使います auto-completion support like [Eclipse](http://www.eclipse.org/)、symfonyによって提供されるすべてのコンフィギュレーションを眺めるために[リファレンスガイド](http://www.symfony-project.org/reference/1_4/)を参照します。
 
 symfonyをより学ぶために自由にできるすべての無料の素材を楽しんでください。
 

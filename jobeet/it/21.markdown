@@ -162,7 +162,7 @@ Create un file `cache.yml` per il modulo `sfJobeetJob`:
 Se aggiornate la pagina nel browser, vedrete che symfony ha decorato la pagina
 con un box che indica i contenuti inseriti in cache:
 
-![Cache pulita](http://www.symfony-project.org/images/jobeet/1_3/21/fresh_cache.png)
+![Cache pulita](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
 
 Il box offre alcune preziose informazioni riguardo la cache per il debugging, 
 come la durata di vita della cache e la sua età.
@@ -170,7 +170,7 @@ come la durata di vita della cache e la sua età.
 Se aggiornate ancora la pagina il colore del box cambia da verde a giallo 
 indicando che la pagina è stata recuperata dalla cache:
 
-![Cache](http://www.symfony-project.org/images/jobeet/1_3/21/cache.png)
+![Cache](http://www.symfony-project.org/images/jobeet/1_4/21/cache.png)
 
 Notate inoltre che nessuna richiesta a database è stata effettuate nel secondo
 caso come mostrato nella web debug toolbar.
@@ -183,7 +183,7 @@ Quando una pagina è memorizzabile in cache e se la cache non esiste ancora, sym
 l'oggetto di risposta nella cache alla fine della richiesta. Per tutte le richieste
 future symfony invierà la risposta in cache senza richiamare il controllore:
 
-![Flusso della cache di una paginaw](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_page.png)
+![Flusso della cache di una paginaw](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
 Questo ha un grosso impatto sulle ~performance|Performance~, come potete constatare personalmente
 usando strumenti come [JMeter](http://jakarta.apache.org/jmeter/).
@@ -228,7 +228,7 @@ Invece di pulire la cache ogni volta che fate delle modifiche potete disabilitar
 la cache aggiungendo ogni query string nell'URL o utilizzando il pulsante 
 "Ignore cache" della web debug toolbar:
 
-![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_3/21/debug.png)
+![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_4/21/debug.png)
 
 Cache dell'azione
 -----------------
@@ -263,12 +263,12 @@ Pulite la cache:
 
 Ricaricate la pagina nel browser per vederne le differenze:
 
-![Cache azione](http://www.symfony-project.org/images/jobeet/1_3/21/action_cache.png)
+![Cache azione](http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png)
 
 Anche se il flusso della richiesta è molto simile nel diagramma semplificato, 
 usare la cache senza il layout è molto più dispendioso dal lato delle risorse.
 
-![Flusso della cache dell'azione](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_action.png)
+![Flusso della cache dell'azione](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png)
 
 Cache di ~Partial~ e ~Component~
 --------------------------------
@@ -278,7 +278,7 @@ template dell'azione. Per questi casi avete bisogno di configurare la cache ad u
 livello di granularità maggiore. Fortunatamente anche partial e component possono
 essere inseriti in cache.
 
-![Cache di partial](http://www.symfony-project.org/images/jobeet/1_3/21/partial_cache.png)
+![Cache di partial](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
 
 Inseriamo in cache il component `language` creando un file `cache.yml` per il 
 modulo `sfJobeetLanguage`:
@@ -292,7 +292,7 @@ Configurare la cache per un partial o un component è semplice quanto aggiungere
 una riga con il suo nome. L'opzione `with_layout` non viene presa in considerazione
 per questo tipo di cache visto che non nè avrebbe alcun senso:
 
-![Flusso della cache di Partial e Component](http://www.symfony-project.org/images/jobeet/1_3/21/flow_cache_partial.png)
+![Flusso della cache di Partial e Component](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
 
 >**SIDEBAR**
 >~Contestuale|Cache contestuale~ o no?
@@ -326,7 +326,7 @@ Quindi cancellate il cookie di sessione e provate di nuovo ad inviare
 il form. Dovreste vedere un messaggio di errore che vi avverte di
 un attacco ~CSRF~:
 
-![CSRF e Cache](http://www.symfony-project.org/images/jobeet/1_3/21/csrf.png)
+![CSRF e Cache](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
 
 Perché? Siccome abbiamo configurato un segreto CSRF quando abbiamo creato
 l'applicazione frontend, symfony inserisce un token CSRF in tutti i form.

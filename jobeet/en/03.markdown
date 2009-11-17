@@ -15,7 +15,7 @@ The user stories we have written yesterday describe the main objects of our
 project: jobs, affiliates, and categories. Here is the corresponding entity
 relationship diagram:
 
-![Entity relationship diagram](http://www.symfony-project.org/images/jobeet/1_3/03/diagram.png)
+![Entity relationship diagram](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
 In addition to the columns described in the stories, we have also added a
 `created_at` field to some tables. Symfony recognizes such fields and sets the
@@ -686,7 +686,7 @@ You can now test the job module in a browser:
 
      http://jobeet.localhost/frontend_dev.php/job
 
-![Job module](http://www.symfony-project.org/images/jobeet/1_3/03/job.png)
+![Job module](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
 If you try to edit a job, you will have an exception because symfony needs a
@@ -755,7 +755,7 @@ You can now create and edit jobs. Try to leave a required field blank, or try
 to enter an invalid date. That's right, symfony has created basic validation
 rules by introspecting the database schema.
 
-![validation](http://www.symfony-project.org/images/jobeet/1_3/03/validation.png)
+![validation](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
 See you Tomorrow
 ----------------

@@ -5,7 +5,7 @@ PHPを一行も書いていませんが、昨日、開発環境をセットア�
 話についてきているのであれば、新しいsymfonyアプリケーションの美しいページが表示されたので、お喜びのことでしょう。
 
 
-![初期ページ](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![初期ページ](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 しかし、あなたはもっとサイトをよくしたいとお考えでしょう。
 symfonyアプリケーション開発の本格的な詳細内容を学習したいと。
@@ -72,7 +72,7 @@ backendアプリケーションはセキュアでアクセスするには証明�
 
 ホームページにおいて、ユーザーは求人一覧(*ストーリー F3*)を改訂し、新しい求人を投稿(*ストーリー F5*)できます。
 
-![ホームページのモックアップ](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+![ホームページのモックアップ](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
 
 ### ストーリー F2:ユーザーはカテゴリに属する全ての求人情報を見ることができる
 
@@ -80,7 +80,7 @@ backendアプリケーションはセキュアでアクセスするには証明�
 
 一覧ページにはページ番号がつけられていて1ページには20件の求人が表示されます。
 
-![カテゴリページ](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+![カテゴリページ](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
 
 ### ストーリー F3:ユーザーはキーワードで求人一覧を絞り込める
 
@@ -91,7 +91,7 @@ backendアプリケーションはセキュアでアクセスするには証明�
 
 一覧ページから見たい仕事を選択することで詳細な情報を見ることができます。
 
-![求人ページ](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+![求人ページ](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
 
 ### ストーリー F5:ユーザーは求人情報を掲載できる
 
@@ -120,7 +120,7 @@ backendアプリケーションはセキュアでアクセスするには証明�
 それぞれの求人情報は30日間オンラインに表示されます(これは管理者が設定できます - *ストーリー B2*を参照)。
 求人情報の有効期限が5日以内に切れるときのみ30日の延期をするために求人情報を再度有効もしくは拡張するために戻ることが可能です。
 
-![求人ページの作成ページ](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+![求人ページの作成ページ](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
 
 ### ストーリー F6: ユーザーがアフィリエイトの申し込みをする
 

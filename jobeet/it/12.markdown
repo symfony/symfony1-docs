@@ -197,7 +197,7 @@ Questo layout usa un foglio di stile `admin.css`. Questo file deve essere
 già presente in `web/css/`, perché installato con gli altri fogli di
 stile durante il giorno 4.
 
-![aspetto admin generator](http://www.symfony-project.org/images/jobeet/1_3/12/look_and_feel.png)
+![aspetto admin generator](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
 Alla fine cambiate l'~homepage|Homepage~ di default nel file `routing.yml`:
 
@@ -325,7 +325,7 @@ personalizzati definendo l'opzione `title`:
 Il `title` per la sezione `edit` contiene valori dinamici: tutte le stringhe
 racchiuse tra `%%` sono rimpiazzate dai valori delle colonne dell'oggetto corrispondenti.
 
-![Titoli](http://www.symfony-project.org/images/jobeet/1_3/12/title.png)
+![Titoli](http://www.symfony-project.org/images/jobeet/1_4/12/title.png)
 
 La configurazione per il modulo `job` è simile:
 
@@ -356,7 +356,7 @@ La configurazione dei campi di default può essere personalizzata nella sezione 
         is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
         is_public:    { label: Public?, help: Whether the job can also be published on affiliate websites, or not }
 
-![Configurazione dei campi](http://www.symfony-project.org/images/jobeet/1_3/12/fields.png)
+![Configurazione dei campi](http://www.symfony-project.org/images/jobeet/1_4/12/fields.png)
 
 La sezione `fields` sovrascrive la configurazione dei campi per tutte le viste,
 ciò significa che la `label` per il campo `is_activated` sarà cambiata per le
@@ -403,7 +403,7 @@ il loro ordine:
 Il segno `=` prima della colonna `name` è una convenzione per convertire la stringa
 in un ~link|Link~.
 
-![Tabella della lista](http://www.symfony-project.org/images/jobeet/1_3/12/list_columns.png)
+![Tabella della lista](http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png)
 
 Facciamo lo stesso per rendere il modulo `job` più leggibile:
 
@@ -459,7 +459,7 @@ l'oggetto in una stringa.
     %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
      (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
 
-![Layout impilato](http://www.symfony-project.org/images/jobeet/1_3/12/stacked_layout.png)
+![Layout impilato](http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png)
 
 ### `sort`
 
@@ -481,7 +481,7 @@ può essere modificato con l'opzione `~max_per_page~`:
       list:
         max_per_page: 10
 
-![Max per pagina](http://www.symfony-project.org/images/jobeet/1_3/12/max_per_page.png)
+![Max per pagina](http://www.symfony-project.org/images/jobeet/1_4/12/max_per_page.png)
 
 ### `batch_actions`
 
@@ -493,7 +493,7 @@ non sono necessarie per il modulo `category`, così rimuoviamole:
       list:
         batch_actions: {}
 
-![Rimuovere le azioni batch](http://www.symfony-project.org/images/jobeet/1_3/12/no_batch_actions.png)
+![Rimuovere le azioni batch](http://www.symfony-project.org/images/jobeet/1_4/12/no_batch_actions.png)
 
 L'opzione `batch_actions` definisce la lista di azioni batch. Un array vuoto
 rimuoverà questa opzione.
@@ -588,7 +588,7 @@ metodo `extend()` per utilizzare questo nuovo parametro:
 Dopo che tutti i lavori saranno stati estesi, l'utente sarà reindirizzato
 all'homepage del modulo `job`.
 
-![Azioni batch personalizzate](http://www.symfony-project.org/images/jobeet/1_3/12/custom_batch_actions.png)
+![Azioni batch personalizzate](http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png)
 
 ### `object_actions`
 
@@ -635,7 +635,7 @@ il link `extend`:
       // ...
     }
 
-![Azioni personalizzate](http://www.symfony-project.org/images/jobeet/1_3/12/custom_object_actions.png)
+![Azioni personalizzate](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
 
 ### `actions`
 
@@ -704,7 +704,7 @@ Questo è un altro grande esempio della riusabilità fornita dal pattern MVC.
 >     [yml]
 >     deleteNeverActivated: { label: Delete never activated jobs, action: foo }
 
-![Azioni](http://www.symfony-project.org/images/jobeet/1_3/12/actions.png)
+![Azioni](http://www.symfony-project.org/images/jobeet/1_4/12/actions.png)
 
 <propel>
 ### `peer_method`
@@ -719,7 +719,7 @@ lista dei lavori è 14, come mostrato dalla ~web debug toolbar|Web debug toolbar
 Se si clicca sul numero, si vedrà che la maggior parte delle richieste
 è per recuperare il nome della categoria per ogni lavoro.
 
-![Numero di richieste prima](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_before.png)
+![Numero di richieste prima](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png)
 
 Per ridurre il numero di richieste, possiamo cambiare il metodo di default
 usato per recuperare i lavori, usando l'opzione
@@ -766,7 +766,7 @@ ad ogni lavoro.
 
 Il numero di richieste ora è ridotto a quattro:
 
-![Numero di richieste dopo](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_after.png)
+![Numero di richieste dopo](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_after.png)
 
 Configurazione delle viste del form
 -----------------------------------
@@ -795,7 +795,7 @@ i campi:
 La configurazione qui sopra definisce due gruppi (`Content` e `Admin`), ciascuno
 dei quali contiene un sottoinsieme dei campi del form.
 
-![Gruppi di campi](http://www.symfony-project.org/images/jobeet/1_3/12/fields_grouping.png)
+![Gruppi di campi](http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png)
 
 L'admin generator ha un supporto incluso per le relazioni molti a molti. Nel form
 della categoria, si ha un input per il nome, uno per lo slug, ed un menù a
@@ -959,7 +959,7 @@ le sue caratteristiche e la sua resa:
   * `with_delete`: Se visualizzare il checkbox per la cancellazione
   * `template`:    Il template da usare per rendere il widget
 
-![Invio di file](http://www.symfony-project.org/images/jobeet/1_3/12/file_upload.png)
+![Invio di file](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
 >**TIP**
 >L'aspetto dell'admin generator può essere modificato in modo veramente facile, dato che
@@ -1009,7 +1009,7 @@ Per il modulo `job`, rimuoviamone alcune:
 Dato che i filtri sono sempre opzionali non c'è nessuna necessità di sovrascrivere
 le classi dei filtri per i form per configurare quali campi devono essere visualizzati.
 
-![Filtri](http://www.symfony-project.org/images/jobeet/1_3/12/filters.png)
+![Filtri](http://www.symfony-project.org/images/jobeet/1_4/12/filters.png)
 
 Personalizzazione delle azioni
 ------------------------------

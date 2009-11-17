@@ -40,8 +40,8 @@ Los campos del formulario se configuran en el método `configure()`, usando los 
 
 >**TIP**
 >El framework de formularios trae incluida una gran cantidad de
->[widgets](http://www.symfony-project.org/api/1_3/widget) y
->[validators](http://www.symfony-project.org/api/1_3/validator). La API
+>[widgets](http://www.symfony-project.org/api/1_4/widget) y
+>[validators](http://www.symfony-project.org/api/1_4/validator). La API
 >los describe muy ampliamente con todas las opciones, los errores, y 
 >mensajes de error por defecto.
 
@@ -474,7 +474,7 @@ El formulario job es gestionado por cinco métodos en el módulo `job`:
 
 Todos los formularios tienen el siguieten ciclo de vida:
 
-![Form flow](http://www.symfony-project.org/images/jobeet/1_3/10/form_flow.png)
+![Form flow](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
 Como hemos creado una colección de rutas ##ORM## 5 días atras para el módulo `job`,
 podemos simplificar el código del formulario y sus métodos de gestión:
@@ -735,9 +735,9 @@ Para hacer la plantilla más fácil de leer, hemos añadido un montón de métod
 
 La barra de admin muestra diferentes acciones, dependiendo del estado del puesto de trabajo:
 
-![Sin Puesto de Trabajo Activado](http://www.symfony-project.org/images/jobeet/1_3/10/not_activated.png)
+![Sin Puesto de Trabajo Activado](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
 
-![Puesto de Trabajo Activado](http://www.symfony-project.org/images/jobeet/1_3/10/activated.png)
+![Puesto de Trabajo Activado](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
 
 Activación y Publicación del Puesto de Trabajo
 ----------------------------------------------

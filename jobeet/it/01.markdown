@@ -132,7 +132,7 @@ due diverse versioni di PHP installati: uno per la riga di comando e un altro pe
 Dopo, scaricare lo script di symfony per verificare la configurazione, al seguente
 indirizzo web:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 Salvare lo script da qualche parte sotto la cartella principale del server web.
 
@@ -245,7 +245,7 @@ dare la possibilità di configurare le fonti esterne di Subversion.
 I conservatori possono legare il progetto a una versione specifica (un tag
 Subversion):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Ogni volta che esce una nuova versione (annunciata nel [blog](http://www.symfony-project.org/blog/))
 di symfony, sarà necessario cambiare l'URL alla nuova versione.
@@ -531,7 +531,7 @@ il browser e digitando `http://localhost:8080/index.php/` o
 `http://jobeet.localhost/index.php/` in base alla configurazione di Apache 
 selezionata nella sezione precedente.
 
-![Congratulazioni](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Congratulazioni](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 >**TIP**
 >Se avete il modulo di Apache `~mod_rewrite~` installato, potete
@@ -546,7 +546,7 @@ Digitate il seguente URL:
 La web debug toolbar dovrebbe apparire nell'angolo in alto a destra, incluse delle piccole icone
 a riprova del fatto che la configurazione dell'alias `sf/` è corretta.
 
-![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/01/web_debug_toolbar.png)
+![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
 >**Note**
 >La configurazioe è leggermente differente se si vuole lanciare symfony su un server IIS in
@@ -588,7 +588,7 @@ sollevata un'eccezione. Per aiutare lo sviluppatore nel debug del problema,
 symfony mostra l'eccezione con tutte le informazioni disponibili sulla
 richiesta corrente all'interno del browser:
 
-![Un'eccezione nell'ambiente di sviluppo](http://www.symfony-project.org/images/jobeet/1_3/01/exception_dev.png)
+![Un'eccezione nell'ambiente di sviluppo](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
 
 Ma nell'ambiente di produzione la cache deve essere abilitata, e
 l'applicazione deve mostrare messaggi di errore personalizzati,
@@ -596,7 +596,7 @@ piuttosto che semplici eccezioni. In questo modo l'ambiente di
 produzione deve essere ottimizzato per le performance e per
 la user experience dell'utente finale.
 
-![Un'eccezione nell'ambiente di produzione](http://www.symfony-project.org/images/jobeet/1_3/01/exception_prod.png)
+![Un'eccezione nell'ambiente di produzione](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
 
 >**TIP**
 >Se aprite i file dei front controller, potrete notare che il contenuto

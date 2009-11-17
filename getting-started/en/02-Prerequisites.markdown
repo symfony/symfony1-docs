@@ -44,7 +44,7 @@ installed: one for the command line, and another for the web.
 
 Then, download the symfony configuration checker script at the following URL:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 Save the script somewhere under your current web root directory.
 

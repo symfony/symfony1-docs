@@ -428,7 +428,7 @@ Prima di provare, occorre creare un layout per il formato YAML:
     // apps/frontend/templates/layout.yaml.php
     <?php echo $sf_content ?>
 
-![404](http://www.symfony-project.org/images/jobeet/1_3/16/404.png)
+![404](http://www.symfony-project.org/images/jobeet/1_4/16/404.png)
 
 >**TIP**
 >Sovrascrivere i template dell'errore 404 e delle ~eccezioni|Gestione delle eccezioni~
@@ -634,7 +634,7 @@ Le email e gli URL tendono ad essere un po' più lunghi della dimensione
 predefinita di un tag input, ma gli attributi HTML possono essere impostati
 usando il metodo `setAttribute()`.
 
-![Form affiliati](http://www.symfony-project.org/images/jobeet/1_3/16/affiliate_form.png)
+![Form affiliati](http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png)
 
 ### Test
 
@@ -915,7 +915,7 @@ Il solo codice da scrivere è per le azioni `activate` e `deactivate`:
       // ...
     }
 
-![Backend affiliati](http://www.symfony-project.org/images/jobeet/1_3/16/backend.png)
+![Backend affiliati](http://www.symfony-project.org/images/jobeet/1_4/16/backend.png)
 
 
 

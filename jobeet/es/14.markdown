@@ -28,7 +28,7 @@ Esta URL es equivalente a:
 Ambas URL son equivalentes porque las rutas generadas por la clase 
 `sfPropelRouteCollection` tienen la `sf_format` como extension. Puedes comprobarlo por tí mismo ejecutando la tarea `app:routes`:
 
-![Cli](http://www.symfony-project.org/images/jobeet/1_3/15/cli.png)
+![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
 
 Feeds
 -----
@@ -215,7 +215,7 @@ Los items del feed se pueden generar con el siguiente código:
 
 El método `getHost()` del objeto request (`$sf_request`) devuelve el actual host, que viene muy bien para crear un vínculo absoluto para el logo de la empresa.
 
-![Feed](http://www.symfony-project.org/images/jobeet/1_3/15/feed.png)
+![Feed](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
 
 >**TIP**
 >Cuando se crea un feed, la depuración es más fácil si utiliza herramientas de línea de comandos como
@@ -368,7 +368,7 @@ Para el feed principal, necesitamos la fecha del último puesto de trabajo para 
       // ...
     }
 
-![Category Feed](http://www.symfony-project.org/images/jobeet/1_3/15/category_feed.png)
+![Category Feed](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
 
 Nos vemos mañana
 ----------------

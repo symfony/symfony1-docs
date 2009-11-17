@@ -191,8 +191,8 @@ Il framework dei form fornisce anche delle
 
 Siccome la gestione dei form è uno dei compiti più noiosi per uno
 sviluppatore web, symfony fornisce un [sotto-framework](#chapter_10_il_framework_dei_form).
-Il framework dei form è distribuito con molti [widget](http://www.symfony-project.org/api/1_3/widget)
-e [validatori](http://www.symfony-project.org/api/1_3/validator). Uno dei
+Il framework dei form è distribuito con molti [widget](http://www.symfony-project.org/api/1_4/widget)
+e [validatori](http://www.symfony-project.org/api/1_4/validator). Uno dei
 punti di forza del sotto-framework dei form è la grande facilità di
 [personalizzazione](#chapter_10_sidebar_personalizzare_l_aspetto_di_un_form)
 dei template.
@@ -368,7 +368,7 @@ convertitore di tempo o di valuta, qualunque cosa... Sceglietene uno e iniziate 
 con le conoscenze che avete oggi. Usate i messaggi di aiuto dei task per imparare le differenti
 opzioni, guardate il codice generato da symfony, usate un editor di testi che abbia il supporto
 all'auto-completamento del PHP come [Eclipse](http://www.eclipse.org/), e andate a vedere
-nella [guida di riferimento](http://www.symfony-project.org/reference/1_3/) tutte le
+nella [guida di riferimento](http://www.symfony-project.org/reference/1_4/) tutte le
 configurazioni previste dal framework.
 
 Fruite di tutto il materiale gratuito che avete a vostra disposizione per imparare di più

@@ -161,7 +161,7 @@ di log ogni volta che si ha bisogno di testare un cambiamento. Grazie alla
 barra di debug di symfony, tutte le informazioni necessarie sono comodamente
 disponibili all'interno del browser:
 
-![query SQL nella web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/06/web_debug_sql.png)
+![query SQL nella web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/06/web_debug_sql.png)
 
 ~Serializzazione~ degli oggetti
 -------------------------------
@@ -722,7 +722,7 @@ ed aggiungiamo una nuova impostazione in `app.yml`:
       active_days:          30
       max_jobs_on_homepage: 10
 
-![Homepage ordinata per categoria](http://www.symfony-project.org/images/jobeet/1_3/06/homepage.png)
+![Homepage ordinata per categoria](http://www.symfony-project.org/images/jobeet/1_4/06/homepage.png)
 
 Fixture dinamiche
 -----------------
@@ -776,7 +776,7 @@ la categoria `Programming`. Nella seguente schermata, abbiamo cambiato
 il numero massimo di lavori a cinque per rendere l'immagine più
 piccola:
 
-![Paginazione](http://www.symfony-project.org/images/jobeet/1_3/06/pagination.png)
+![Paginazione](http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png)
 
 
 Rendere sicura la pagina del lavoro
@@ -855,7 +855,7 @@ Il metodo `retrieveActiveJob` riceverà l'oggetto `Doctrine_Query` costruito dal
 
 Se ora si prova ad ottenere un lavoro scaduto, si verrà rimandati ad una pagina 404.
 
-![404 per un lavoro scaduto](http://www.symfony-project.org/images/jobeet/1_3/06/exception.png)
+![404 per un lavoro scaduto](http://www.symfony-project.org/images/jobeet/1_4/06/exception.png)
 
 
 Link alla pagina della categoria
@@ -872,8 +872,8 @@ A domani
 --------
 
 Lavorate ad un'implementazione del vostro progetto Jobeet in locale. Abusate pure
-della [documentazione ~API~](http://www.symfony-project.org/api/1_3/) online e di
-tutta la [~documentazione~](http://www.symfony-project.org/doc/1_3/) liberamente
+della [documentazione ~API~](http://www.symfony-project.org/api/1_4/) online e di
+tutta la [~documentazione~](http://www.symfony-project.org/doc/1_4/) liberamente
 disponibile sul sito di symfony per aiutarvi. Ci vediamo domani con la nostra
 implementazione.
 

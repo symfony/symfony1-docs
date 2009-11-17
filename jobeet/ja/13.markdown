@@ -21,7 +21,7 @@ flashつきのアクションでユーザーオブジェクトをすでに見て
 ~リダイレクト~した後でユーザーにメッセージを表示する必要があるときにとても役立ちます。 
 jobが保存される、削除もしくは延長されるときに、ユーザーにフィードバックを表示するためにadminジェネレーターはflashをたくさん使います。
 
-![flash](http://www.symfony-project.org/images/jobeet/1_3/13/flashes.png)
+![flash](http://www.symfony-project.org/images/jobeet/1_4/13/flashes.png)
 
 flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
 
@@ -118,7 +118,7 @@ flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
 ### `myUser`クラス
 
 関心の分離をより順守するために、コードを~`myUser`クラス~に移動させましょう。
-`myUser`クラスはデフォルトの[`sfUser`](http://www.symfony-project.org/api/1_3/sfUser)基底クラスをアプリケーション固有のふるまいでオーバーライドします:
+`myUser`クラスはデフォルトの[`sfUser`](http://www.symfony-project.org/api/1_4/sfUser)基底クラスをアプリケーション固有のふるまいでオーバーライドします:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -215,7 +215,7 @@ flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
 1つの呼び出しで`JobeetJob`オブジェクトを読み取るために`getJobHistory()`メソッドはPropelの`retrieveByPKs()`メソッドを使います。
 </propel>
 
-![求人履歴](http://www.symfony-project.org/images/jobeet/1_3/13/job_history.png)
+![求人履歴](http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png)
 
 ### sfParameterHolder
 
@@ -238,7 +238,7 @@ flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
 `remove()`メソッドは`sfUser`のプロキシメソッドを持たないので、パラメーターホルダーオブジェクトを直接使う必要があります。
 
 >**NOTE**
->[`sfParameterHolder`](http://www.symfony-project.org/api/1_3/sfParameterHolder)クラスはパラメーターを保存するために`sfRequest`によっても使われます。
+>[`sfParameterHolder`](http://www.symfony-project.org/api/1_4/sfParameterHolder)クラスはパラメーターを保存するために`sfRequest`によっても使われます。
 
 アプリケーションのセキュリティ
 ------------------------------
@@ -255,14 +255,14 @@ flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
 
 `is_secure`エントリーを`true`に切り替える場合、バックエンドアプリケーション全体でユーザーを認証することが求められます。
 
-![ログイン](http://www.symfony-project.org/images/jobeet/1_3/13/login.png)
+![ログイン](http://www.symfony-project.org/images/jobeet/1_4/13/login.png)
 
 >**TIP**
 >YAMLファイルにおいて、ブール値は`true`と`false`の文字列で表現されます。
 
 Webデバッグツールバーのログを見ると、ページにアクセスしようとするたびに`defaultActions`クラスの`executeLogin()`メソッドが呼び出されることに気がつきます。
 
-![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_3/13/web_debug.png)
+![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png)
 
 認証されていないユーザーが~セキュアなアクション|セキュリティ~にアクセスしようとすると、symfonyは`settings.yml`で設定される`login`アクションにリクエストを転送します:
 
@@ -289,7 +289,7 @@ Webデバッグツールバーのログを見ると、ページにアクセス�
 >     all:
 >       is_secure: true
 
-デフォルトでは、`myUser`クラスは[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_3/sfBasicSecurityUser)を継承し、`sfUser`は継承しません。
+デフォルトでは、`myUser`クラスは[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_4/sfBasicSecurityUser)を継承し、`sfUser`は継承しません。
 `sfBasicSecurityUser`はユーザーの認証と認可を管理するための追加メソッドを提供します。
 
 ユーザーの認証を管理するには、`isAuthenticated()`と`setAuthenticated()`メソッドを使います:
@@ -481,7 +481,7 @@ symfonyフレークワークの大きな強みの1つは[プラグインのエ�
 
 プラグインは1つのプロジェクトのすべてのアプリケーションで共有されるので、~モジュール~を~`enabled_modules`設定|`enabled_modules`(設定)~に追加することで使いたいモジュールを明示的に有効にする必要があります。
 
-![sfGuardPluginのログイン](http://www.symfony-project.org/images/jobeet/1_3/13/sf_guard_login.png)
+![sfGuardPluginのログイン](http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png)
 
 最後のステップは管理者ユーザーを作成することです:
 
@@ -538,7 +538,7 @@ Jobeetバックエンドにさらに磨きをかけるには、管理者ユー�
     // apps/backend/templates/layout.php
     <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
 
-![バックエンドのメニュー](http://www.symfony-project.org/images/jobeet/1_3/13/menu.png)
+![バックエンドのメニュー](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 
 やりました！
 
@@ -546,7 +546,7 @@ Jobeetバックエンドにさらに磨きをかけるには、管理者ユー�
 ----------------
 
 ユーザーのテストの話をしていないので今日のチュートリアルは終わっていません。
-symfonyブラウザーは~Cookie~をシミュレートするので、組み込みの[`sfTesterUser`](http://symfony-project.org/api/1_3/sfTesterUser)テスターによって使われるユーザーのふるまいをテストするのはとても簡単です。
+symfonyブラウザーは~Cookie~をシミュレートするので、組み込みの[`sfTesterUser`](http://symfony-project.org/api/1_4/sfTesterUser)テスターによって使われるユーザーのふるまいをテストするのはとても簡単です。
 
 今日追加したメニュー機能用の~機能テスト~を更新しましょう。
 `job`モジュールの機能テストの末尾に次のコードを追加します:

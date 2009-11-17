@@ -602,7 +602,7 @@ Today, we implemented a full search engine with many features in less than an
 hour. Every time you want to add a new feature to your projects, check that it
 has not yet been solved somewhere else. First, check if something is not
 implemented natively in the
-[symfony framework](http://www.symfony-project.org/api/1_3/). Then, check the
+[symfony framework](http://www.symfony-project.org/api/1_4/). Then, check the
 [symfony plugins](http://www.symfony-project.org/plugins/). And don't forget
 to check the [Zend Framework libraries](http://framework.zend.com/manual/en/)
 and the [ezComponent](http://ezcomponents.org/docs) ones too.

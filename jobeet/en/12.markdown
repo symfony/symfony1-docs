@@ -193,7 +193,7 @@ Replace the default `~layout|Layout~.php` file content with the code below:
 This layout uses an `admin.css` stylesheet. This file must already be present
 in `web/css/` as it was installed with the other stylesheets during day 4.
 
-![The admin generator look and feel](http://www.symfony-project.org/images/jobeet/1_3/12/look_and_feel.png)
+![The admin generator look and feel](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
 Eventually, change the default symfony ~homepage|Homepage~ in `routing.yml`:
 
@@ -325,7 +325,7 @@ The `title` for the `edit` section contains dynamic values: all strings
 enclosed between `%%` are replaced by their corresponding object column
 values.
 
-![Titles](http://www.symfony-project.org/images/jobeet/1_3/12/title.png)
+![Titles](http://www.symfony-project.org/images/jobeet/1_4/12/title.png)
 
 The configuration for the `job` module is quite similar:
 
@@ -359,7 +359,7 @@ The default fields configuration can be customized with the `fields` section:
         is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
         is_public:    { label: Public?, help: Whether the job can also be published on affiliate websites, or not }
 
-![Fields Configuration](http://www.symfony-project.org/images/jobeet/1_3/12/fields.png)
+![Fields Configuration](http://www.symfony-project.org/images/jobeet/1_4/12/fields.png)
 
 The `fields` section overrides the fields configuration for all views, which
 means that the `label` for the `is_activated` field will be changed for the
@@ -407,7 +407,7 @@ defining the ordered columns to be displayed:
 The `=` sign before the `name` column is a convention to convert the string to
 a ~link|Links~.
 
-![Table list](http://www.symfony-project.org/images/jobeet/1_3/12/list_columns.png)
+![Table list](http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png)
 
 Let's do the same for the `job` module to make it more readable:
 
@@ -467,7 +467,7 @@ converts the object to a string.
     %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
      (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
 
-![Stacked layout](http://www.symfony-project.org/images/jobeet/1_3/12/stacked_layout.png)
+![Stacked layout](http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png)
 
 ### `sort`
 
@@ -492,7 +492,7 @@ items. This can be changed with the `~max_per_page~` option:
       list:
         max_per_page: 10
 
-![Max per page](http://www.symfony-project.org/images/jobeet/1_3/12/max_per_page.png)
+![Max per page](http://www.symfony-project.org/images/jobeet/1_4/12/max_per_page.png)
 
 ### `batch_actions`
 
@@ -505,7 +505,7 @@ not needed for the `category` module, so, let's remove them:
       list:
         batch_actions: {}
 
-![Remove the batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/no_batch_actions.png)
+![Remove the batch actions](http://www.symfony-project.org/images/jobeet/1_4/12/no_batch_actions.png)
 
 The `batch_actions` option defines the list of batch actions. The empty array
 allows the removal of the feature.
@@ -601,7 +601,7 @@ Update the `extend()` method to take this new argument into account:
 After all jobs have been extended, the user is redirected to the `job` module
 homepage.
 
-![Custom batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/custom_batch_actions.png)
+![Custom batch actions](http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png)
 
 ### `object_actions`
 
@@ -654,7 +654,7 @@ by the framework. We need to define the `listExtend()` action to make the
       // ...
     }
 
-![Custom object action](http://www.symfony-project.org/images/jobeet/1_3/12/custom_object_actions.png)
+![Custom object action](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
 
 ### `actions`
 
@@ -729,7 +729,7 @@ another great example of the reusability provided by the MVC pattern.
 >     [yml]
 >     deleteNeverActivated: { label: Delete never activated jobs, action: foo }
 
-![Actions](http://www.symfony-project.org/images/jobeet/1_3/12/actions.png)
+![Actions](http://www.symfony-project.org/images/jobeet/1_4/12/actions.png)
 
 <propel>
 ### `peer_method`
@@ -744,7 +744,7 @@ shown by the ~web debug toolbar|Web Debug Toolbar~.
 If you click on that number, you will see that most requests are to retrieve
 the category name for each job:
 
-![Number of requests before](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_before.png)
+![Number of requests before](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png)
 
 To reduce the number of requests, we can change the default method used to get
 <propel>
@@ -791,7 +791,7 @@ each job.
 
 The number of requests is now down to four:
 
-![Number of requests after](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_after.png)
+![Number of requests after](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_after.png)
 
 Form Views Configuration
 ------------------------
@@ -821,7 +821,7 @@ groups:
 The above configuration defines two groups (`Content` and `Admin`), each
 containing a subset of the form fields.
 
-![Fields grouping](http://www.symfony-project.org/images/jobeet/1_3/12/fields_grouping.png)
+![Fields grouping](http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png)
 
 >**NOTE**
 >The columns in the `Admin` group do not show up in the browser yet because
@@ -993,7 +993,7 @@ its features and rendering:
   * `with_delete`: Whether to display the delete checkbox
   * `template`:    The template to use to render the widget
 
-![File upload](http://www.symfony-project.org/images/jobeet/1_3/12/file_upload.png)
+![File upload](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
 >**TIP**
 >The look of the admin generator can be tweaked very easily as the generated
@@ -1044,7 +1044,7 @@ For the `job` module, let's remove some of them:
 As filters are always optional, there is no need to override the filter form
 class to configure the fields to be displayed.
 
-![Filters](http://www.symfony-project.org/images/jobeet/1_3/12/filters.png)
+![Filters](http://www.symfony-project.org/images/jobeet/1_4/12/filters.png)
 
 Actions Customization
 ---------------------

@@ -102,7 +102,7 @@ O usar la tarea `test:unit`:
 
     $ php symfony test:unit Jobeet
 
-![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_3/08/cli_tests.png)
+![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png)
 
 >**Note**: Los comandos de linea de Windows desafortunadamente no pueden resaltar los resultados 
 >de la prueba en colores rojo ni verde. Pero su utilizas Cygwin, puedes forzar a Symfony a usar 
@@ -140,7 +140,7 @@ Si miras de cerca las pruebas que hemos escrito, notarás que cada linea solo pr
 
 Puedes ahora ejecutar el archivo de pruebas. Si todas pruebas pasan, como esperamos que sea, te alegrará ver una "*barra verde*". Sino, la infame "*barra roja*" te alertará que algunas pruebas no pasaron y que necesitas arreglar.
 
-![slugify() tests](http://www.symfony-project.org/images/jobeet/1_3/08/slugify.png)
+![slugify() tests](http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png)
 
 Si una prueba falla, la salida te dará alguna información acerca del porque ésta falló; pero si tienes cientos de pruebas en un archivo, puede ser difícil identificar rápidamente cual falló.
 
@@ -159,7 +159,7 @@ Todos los métodos de prueba lime toman una cadena como su último argumento que
     $t->is(Jobeet::slugify('sensio  '), 'sensio', '::slugify() removes - at the end of a string');
     $t->is(Jobeet::slugify('paris,france'), 'paris-france', '::slugify() replaces non-ASCII characters by a -');
 
-![slugify() tests with messages](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_doc.png)
+![slugify() tests with messages](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
 La descripción de la prueba es también una herramienta importante cuando tratas de mostrar qué vamos a probar. Puedes ver un patrón en las cadenas de pruebas: ellas son sentencias que describen como el método se comporta y ellas siempre comienzan con el nombre del método a probar.
 
@@ -224,7 +224,7 @@ Digamos que el tiempo ha pasado y uno de tus usuarios informa de un extraño err
     [php]
     $t->is(Jobeet::slugify(' - '), 'n-a', '::slugify() converts a string that only contains non-ASCII characters to n-a');
 
-![slugify() bug](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_bug.png)
+![slugify() bug](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png)
 
 Después de comprobar que la prueba no pasa, edita la clase `Jobeet` y pasa la cadena vacía a comprobar al final del método:
 
@@ -563,7 +563,7 @@ La tarea `test:unit` también se puede utilizar para poner en marcha todas las p
 
 Esta tarea muestra si ha pasado o ha fallado cada uno de los archivos de pruebas:
 
-![pruebas unitarias harness](http://www.symfony-project.org/images/jobeet/1_3/08/test_harness.png)
+![pruebas unitarias harness](http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png)
 
 >**TIP**
 >Si la tarea `test:unit` devuelve un estado "dubious" para un archivo, esto indica

@@ -527,7 +527,7 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
       }
     }
 
-イベントの通知はイベントディスパッチャーオブジェクトである[`sfEventDispatcher`](http://www.symfony-project.org/api/1_3/sfEventDispatcher)によって管理されます。
+イベントの通知はイベントディスパッチャーオブジェクトである[`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher)によって管理されます。
 `connect()`メソッドを呼び出せばリスナーが登録されます。
 `connect()`メソッドはイベントの名前をPHP callableに結びつけます。
 
@@ -611,7 +611,7 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
       }
     }
 
-ディスパッチャが`methodNotFound()`メソッドを呼び出すとき、[`sfEvent`](http://www.symfony-project.org/api/1_3/sfEvent)オブジェクトを渡します。
+ディスパッチャが`methodNotFound()`メソッドを呼び出すとき、[`sfEvent`](http://www.symfony-project.org/api/1_4/sfEvent)オブジェクトを渡します。
 
 `JobeetUser`クラスにメソッドが存在する場合、このメソッドが呼び出され、その後で戻り値は通知元オブジェクトに返されます。 
 そうではない場合、symfonyは次に登録されたリスナーを試すもしくは例外を投げます。
@@ -623,7 +623,7 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
 
 プラグインのアーキテクチャを利用することで異なる方法でコードを編成できます:
 
-![プラグインのアーキテクチャ](http://www.symfony-project.org/images/jobeet/1_3/20/plugin_architecture.png)
+![プラグインのアーキテクチャ](http://www.symfony-project.org/images/jobeet/1_4/20/plugin_architecture.png)
 
 プラグインを使う
 ----------------
@@ -757,9 +757,9 @@ symfonyの公開プラグインを探すには、symfony公式サイトの[プ�
         <package>
           <name>symfony</name>
           <channel>pear.symfony-project.com</channel>
-          <min>1.2.0</min>
-          <max>1.3.0</max>
-          <exclude>1.3.0</exclude>
+          <min>1.3.0</min>
+          <max>1.5.0</max>
+          <exclude>1.5.0</exclude>
         </package>
       </required>
     </dependencies>

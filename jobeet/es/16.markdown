@@ -12,7 +12,7 @@ completamente integrada con Symfony, con algunas características interesantes
 agregadas por encima de las caracteríticas predeterminadas.
 
 >**NOTE**
->Symfony 1.3 usa ~Swift Mailer~ versión 4.1.
+>Symfony 1.3/1.4 usa ~Swift Mailer~ versión 4.1.
 
 Envíando Emails simples
 -----------------------

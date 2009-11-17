@@ -102,15 +102,15 @@ Crea un directorio para alojar los archivos del framework Symfony:
 
 La [página de instalación](http://www.symfony-project.org/installation) en el sitio web de Symfony listas y compara todas las versiones disponibles de Symfony.
 
-Ya que este libro fue escrito para Symfony 1.3,
-ve a la página de instalación de [Symfony 1.3](http://www.symfony-project.org/installation/1_3).
+Ya que este libro fue escrito para Symfony 1.4,
+ve a la página de instalación de [Symfony 1.4](http://www.symfony-project.org/installation/1_4).
 
 Bajo la sección "**Source Download**", vas a encontrar el archivo en formato `.tgz` o en formato `.zip`. Descarga el archivo y colocarlo bajo el directorio `lib/vendor` que acabas de crear y descomprimelo:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.3.0.tgz
-    $ mv symfony-1.3.0 symfony
-    $ rm symfony-1.3.0.tgz
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
 
 En Windows puedes descomprimirlo en el explorador de archivos. Una vez que hayas renombrado el directorio a `symfony`, la ruta debería ser la siguiente: `c:\development\sfprojects\jobeet\lib\vendor\symfony`.
 
@@ -124,7 +124,7 @@ Si hay un problema, la salida te dará consejos sobre cómo solucionarlo. Tambi�
 
     $ rm web/check_configuration.php
 
-![Comprobar la Configuración](http://www.symfony-project.org/images/jobeet/1_3/01/configuration_check.png)
+![Comprobar la Configuración](http://www.symfony-project.org/images/jobeet/1_4/01/configuration_check.png)
 
 Si el script no muestra ningún error, comprueba que Symfony se ha instalado correctamente usando la línea de comandos para mostrar la versión (nota la letra `V` mayúscula):
 
@@ -286,11 +286,11 @@ Ambos archivos apuntan a la misma aplicación pero para distintos entornos. Cuan
 
 ¿Qué hace que un entorno sea único? En el entorno de desarrollo, la aplicación necesita registrar todos los detalles de una petición para facilitar la depuración, debe mostrar la excepción en el navegador, pero la cache debe ser deshabilitada para que todos los cambios realizados al código se tengan en cuenta de inmediato. El entorno de desarrollo debe ser optimizado para el desarrollador:
 
-![Una excepción en el entorno de desarrollo](http://www.symfony-project.org/images/jobeet/1_3/01/exception_dev.png)
+![Una excepción en el entorno de desarrollo](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
 
 En el entorno de la producción, la aplicación deberá mostrar mensajes de error personalizados en lugar de excepciones, y por supuesto, la capa del cache debe estar activada. El entorno de producción debe ser optimizado para el rendimiento y la experiencia del usuario final.
 
-![Una excepción en el entorno de producción](http://www.symfony-project.org/images/jobeet/1_3/01/exception_prod.png)
+![Una excepción en el entorno de producción](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
 
 Un entorno symfony es un conjunto único de ajustes de configuración. El 
 framework Symfony incluye tres de ellos: `dev`, `test`, y `prod`. En el 
@@ -399,7 +399,7 @@ XP, este archivo se encuentra en el directorio `C:\WINDOWS\system32\drivers\etc\
 
 Reinicia Apache, y comprueba que ahora tienes acceso a la nueva aplicación abriendo un navegador y escribiendo `http://localhost:8080/index.php/`, o `http://jobeet.localhost/index.php/` dependiendo de la configuración de Apache que has elegido en la sección anterior.
 
-![Felicitaciones](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Felicitaciones](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 >**Note**: 
 >Si tienes el módulo Apache `mod_rewrite` instalado, puedes remover la parte /index.php/ 
@@ -412,7 +412,7 @@ Deberías tratar de acceder a la aplicación en el entorno de desarrollo. Escrib
 
 La web debug toolbar o barra de herramientas de depuración web debería mostrarse en la esquina superior derecha, incluidos los iconos,  demostrando que tu configuración alias `sf/` es correcta.
 
-![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/01/web_debug_toolbar.png)
+![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
 Subversion
 ----------

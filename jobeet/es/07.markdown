@@ -193,7 +193,7 @@ En el método `countActiveJobs()`, en vez de usar `execute()` y recién contar e
 
 Hemos cambiado un montón de archivos, recién para esta simple funcionalidad. Pero cada vez que debas agregar algún código, tenemos que tratar de ponerlo en la capa correcta de la aplicación y también tratar de hace el código más reusable. En el proceso, tenemos que rectorizar algún código existente. Ese es el típico workflow cuando trabajamos en un proyecto symfony.
 
-![Página de Inicio](http://www.symfony-project.org/images/jobeet/1_3/07/homepage.png)
+![Página de Inicio](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
 
 Creación del Módulo Category
 ----------------------------
@@ -551,7 +551,7 @@ La mayor parte de este código se refiere a los enlaces a otras páginas. Aquí 
   * `getNextPage()`: Devuelve el número de la siguiente página
   * `getLastPage()`: Devuelve el número de la última página
 
-![Paginación](http://www.symfony-project.org/images/jobeet/1_3/07/pagination.png)
+![Paginación](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
 
 Nos vemos mañana
 ----------------

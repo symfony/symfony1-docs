@@ -57,7 +57,7 @@ code according to its nature. This pattern separates the code into
     controllers delegate the real work to **actions**. As we saw yesterday,
     these actions are logically grouped into **modules**.
 
-![MVC](http://www.symfony-project.org/images/jobeet/1_3/04/mvc.png)
+![MVC](http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png)
 
 Today, we will use the mockup defined in day 2 to customize the homepage and
 the job page. We will also make them dynamic. Along the way, we will tweak a
@@ -75,7 +75,7 @@ prevent these common view elements from resulting in code duplication.
 One way to solve the problem is to define a header and a footer and include
 them in each template:
 
-![Header and footer](http://www.symfony-project.org/images/jobeet/1_3/04/header_footer.png)
+![Header and footer](http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png)
 
 But here the header and the footer files do not contain valid HTML. There must
 be a better way. Instead of reinventing the wheel, we will use another design
@@ -85,7 +85,7 @@ The decorator design pattern resolves the problem the other way around: the
 template is decorated after the content is rendered by a global template,
 called a **~layout|Layout~** in symfony:
 
-![Layout](http://www.symfony-project.org/images/jobeet/1_3/04/layout.png)
+![Layout](http://www.symfony-project.org/images/jobeet/1_4/04/layout.png)
 
 The default layout of an application is called `layout.php` and can be found
 in the `apps/frontend/templates/` directory. This directory contains all the
@@ -197,7 +197,7 @@ archive and put them into the `web/css/` directory.
 >[download the Jobeet one](http://www.symfony-project.org/get/jobeet/favicon.ico)
 >and put it under the `web/` directory.
 
-![The job module with a layout and assets](http://www.symfony-project.org/images/jobeet/1_3/04/job_layout_assets.png)
+![The job module with a layout and assets](http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png)
 
 >**TIP**
 >By default, the `generate:project` task has created three directories for the
@@ -496,7 +496,7 @@ Let's clean this up a bit to only display a sub-set of the available columns:
       </table>
     </div>
 
-![Homepage](http://www.symfony-project.org/images/jobeet/1_3/04/homepage.png)
+![Homepage](http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png)
 
 The `url_for()` function call in this template is a symfony helper that we
 will discuss tomorrow.
@@ -598,7 +598,7 @@ its first argument:
 >belongs to the `Text` helper group, which is not loaded by default, we have
 >loaded it manually by using the ~`use_helper()` helper~.
 
-![Job page](http://www.symfony-project.org/images/jobeet/1_3/04/job.png)
+![Job page](http://www.symfony-project.org/images/jobeet/1_4/04/job.png)
 
 ~Slot~s
 -------
@@ -615,7 +615,7 @@ company name and the job position.
 In symfony, when a zone of the layout depends on the template to be displayed,
 you need to define a slot:
 
-![Slots](http://www.symfony-project.org/images/jobeet/1_3/04/layout_slots.png)
+![Slots](http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png)
 
 Add a slot to the layout to allow the title to be dynamic:
 
@@ -739,9 +739,9 @@ afterwards.
 As for ~exceptions|Exception Handling~, the page displayed to the user is 
 different in the `prod` ~environment|Environments~ and in the `dev` environment:
 
-![404 error in the dev environment](http://www.symfony-project.org/images/jobeet/1_3/05/404_dev.png)
+![404 error in the dev environment](http://www.symfony-project.org/images/jobeet/1_4/05/404_dev.png)
 
-![404 error in the prod environment](http://www.symfony-project.org/images/jobeet/1_3/05/404_prod.png)
+![404 error in the prod environment](http://www.symfony-project.org/images/jobeet/1_4/05/404_prod.png)
 
 >**NOTE**
 >Before you deploy the Jobeet website to the production server, you will learn
@@ -857,11 +857,11 @@ Earlier today we saw how to manage stylesheets and JavaScripts in both the
 object `addStylesheet()` and `addJavascript()` methods.
 
 >**TIP**
->The [`sfAction`](http://www.symfony-project.org/api/1_3/sfAction),
->[`sfRequest`](http://www.symfony-project.org/api/1_3/sfRequest), and
->[`sfResponse`](http://www.symfony-project.org/api/1_3/sfResponse) classes
+>The [`sfAction`](http://www.symfony-project.org/api/1_4/sfAction),
+>[`sfRequest`](http://www.symfony-project.org/api/1_4/sfRequest), and
+>[`sfResponse`](http://www.symfony-project.org/api/1_4/sfResponse) classes
 >provide a lot of other useful methods. Don't hesitate to browse the
->[API documentation](http://www.symfony-project.org/api/1_3/) to learn more
+>[API documentation](http://www.symfony-project.org/api/1_4/) to learn more
 >about all symfony internal classes.
 
 See you Tomorrow

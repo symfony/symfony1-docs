@@ -148,7 +148,7 @@ Doctrineが`created_at` column(`WHERE j.created_at > ?`)に対してWHERE句を�
 しかし変更点のテストのため毎回ブラウザー、IDE、ログファイルの間を行ったりきたりするのは少し面倒です。
 symfonyのWebデバッグツールバーのおかげで、必要な全ての情報がブラウザー上で快適に利用できます:
 
-![WebデバッグツールバーでのSQLステートメント](http://www.symfony-project.org/images/jobeet/1_3/06/web_debug_sql.png)
+![WebデバッグツールバーでのSQLステートメント](http://www.symfony-project.org/images/jobeet/1_4/06/web_debug_sql.png)
 
 オブジェクトの~シリアライズ~
 ----------------------------
@@ -681,7 +681,7 @@ indexアクションを適宜変更します:
       active_days:          30
       max_jobs_on_homepage: 10
 
-![カテゴリでソートされるホームページ](http://www.symfony-project.org/images/jobeet/1_3/06/homepage.png)
+![カテゴリでソートされるホームページ](http://www.symfony-project.org/images/jobeet/1_4/06/homepage.png)
 
 動的なフィクスチャ
 -----------------
@@ -733,7 +733,7 @@ YAMLファイルにPHPコードを追加する場合の簡単なティップス�
 `propel:data-load`タスクでフィクスチャファイルをリロードしてホームページで`Programming`カテゴリに関して`10`件の求人だけが表示されるか見ます。
 次のスクリーンショットにおいて、画像を小さくするために求人の最大数を`5`件に変更しました:
 
-![ページ分割](http://www.symfony-project.org/images/jobeet/1_3/06/pagination.png)
+![ページ分割](http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png)
 
 求人ページの保護
 ----------------
@@ -810,7 +810,7 @@ YAMLファイルにPHPコードを追加する場合の簡単なティップス�
 
 これで、無効になった求人ページにアクセスすると404エラーページに転送されるようになっているでしょう。
 
-![期限切れした求人用の404エラーページ](http://www.symfony-project.org/images/jobeet/1_3/06/exception.png)
+![期限切れした求人用の404エラーページ](http://www.symfony-project.org/images/jobeet/1_4/06/exception.png)
 
 カテゴリページへのリンク
 -----------------------
@@ -827,8 +827,8 @@ YAMLファイルにPHPコードを追加する場合の簡単なティップス�
 --------
 
 ローカルなJobeetプロジェクトで実装に取り組んでください。
-symfony公式サイトで利用できるオンラインの[~API~ドキュメント](http://www.symfony-project.org/api/1_3/)と
-すべての[~ドキュメント~](http://www.symfony-project.org/doc/1_3/)を遊んでみてください。
+symfony公式サイトで利用できるオンラインの[~API~ドキュメント](http://www.symfony-project.org/api/1_4/)と
+すべての[~ドキュメント~](http://www.symfony-project.org/doc/1_4/)を遊んでみてください。
 
 我々の実装と共に明日またお会いしましょう。
 

@@ -46,7 +46,7 @@ Web開発の分野では近年コーディングのための最適解として�
 これらフロントコントローラーは実際の動作は**アクション(action)**で行われます。
 昨日見たようにこれらアクションは**モジュール(module)**で論理的にグループ化されます。
 
-![MVC](http://www.symfony-project.org/images/jobeet/1_3/04/mvc.png)
+![MVC](http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png)
 
 今日は、ホームページと求人ページをカスタマイズするために2日目で定義したモックアップを使います。
 これらを動的なものにもします。
@@ -61,7 +61,7 @@ PHPやHTMLであろうとなかろうと、コードの重複は悪いことで�
 
 この問題を解決する1つの方法として各テンプレートでヘッダーとフッターを定義する方法があります:
 
-![ヘッダーとフッター](http://www.symfony-project.org/images/jobeet/1_3/04/header_footer.png)
+![ヘッダーとフッター](http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png)
 
 しかしこの場合ヘッダーやフッターは有効なHTMLを含んでいません。
 よい方法であることは違いありません。
@@ -73,7 +73,7 @@ Decoratorデザインパターンは別のやり方で問題を解決します�
 
 symfonyではグローバルテンプレートを**~レイアウト~**と呼びます:
 
-![レイアウト](http://www.symfony-project.org/images/jobeet/1_3/04/layout.png)
+![レイアウト](http://www.symfony-project.org/images/jobeet/1_4/04/layout.png)
 
 アプリケーションのデフォルトテンプレートとして`layout.php`が呼び出されます。
 それは`apps/frontend/templates`ディレクトリにあります。
@@ -179,7 +179,7 @@ symfonyの~テンプレート~は単なるプレーンなPHPファイルです�
 >レイアウトにおいて、*ファビコン(favicon)*を含めることができます。
 >[Jobeetのファビコンをダウンロードして](http://www.symfony-project.org/get/jobeet/favicon.ico)`web/`ディレクトリに設置します。
 
-![レイアウトとアセットつきのjobモジュール](http://www.symfony-project.org/images/jobeet/1_3/04/job_layout_assets.png)
+![レイアウトとアセットつきのjobモジュール](http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png)
 
 >**TIP**
 >標準では、`generate:project`タスクはプロジェクトのアセットとして3つのディレクトリを生成します。
@@ -445,7 +445,7 @@ ControllerからのデータをViewに渡すには、下記のように新しい
       </table>
     </div>
 
-![ホームページ](http://www.symfony-project.org/images/jobeet/1_3/04/homepage.png)
+![ホームページ](http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png)
 
 テンプレートの中で呼び出されている`url_for()`関数はsymfonyのヘルパーで、明日詳しく説明します。
 
@@ -539,7 +539,7 @@ Propel~アクセサー~の中には引数を受け取るものがあることに
 >たとえば、改行を`<br />`へ置き換えます。
 >このヘルパーは`Text`ヘルパーグループに属しており、デフォルトではロードされないので~`use_helper()`ヘルパー~を使って手動でロードさせています。
 
-![求人ページ](http://www.symfony-project.org/images/jobeet/1_3/04/job.png)
+![求人ページ](http://www.symfony-project.org/images/jobeet/1_4/04/job.png)
 
 ~スロット~
 ----------
@@ -553,7 +553,7 @@ Propel~アクセサー~の中には引数を受け取るものがあることに
 
 symfonyではレイアウトの領域が表示されるテンプレートに依存するとき、スロットを定義する必要があります:
 
-![スロット](http://www.symfony-project.org/images/jobeet/1_3/04/layout_slots.png)
+![スロット](http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png)
 
 動的にタイトルを変更するためにレイアウトにスロットを追加します:
 
@@ -661,9 +661,9 @@ symfonyではレイアウトの領域が表示されるテンプレートに依�
 
 ~例外|例外処理~に関して、ユーザーに表示されるページは`prod`~環境~と`dev`環境で異なります:
 
-![dev環境の404エラー](http://www.symfony-project.org/images/jobeet/1_3/05/404_dev.png)
+![dev環境の404エラー](http://www.symfony-project.org/images/jobeet/1_4/05/404_dev.png)
 
-![prod環境の404エラー](http://www.symfony-project.org/images/jobeet/1_3/05/404_prod.png)
+![prod環境の404エラー](http://www.symfony-project.org/images/jobeet/1_4/05/404_prod.png)
 
 >**NOTE**
 >JobeetのWebサイトを運用サーバーにデプロイする前に、デフォルトの404エラーページをカスタマイズする方法を学びます。
@@ -761,8 +761,8 @@ symfonyはオブジェクト指向フレームワークであるのでレスポ�
 結局2つのテクニックともレスポンスオブジェクトの`addStylesheet()`と`addJavascript()`メソッドを使います。
 
 >**TIP**
->[`sfAction`](http://www.symfony-project.org/api/1_3/sfAction)、[`sfRequest`](http://www.symfony-project.org/api/1_3/sfRequest)、[`sfResponse`](http://www.symfony-project.org/api/1_3/sfResponse)クラスもたくさんの有用なメソッドを提供します。
->[APIドキュメント](http://www.symfony-project.org/api/1_3/)を読んでsymfonyの内部クラスをもっと学習しましょう。
+>[`sfAction`](http://www.symfony-project.org/api/1_4/sfAction)、[`sfRequest`](http://www.symfony-project.org/api/1_4/sfRequest)、[`sfResponse`](http://www.symfony-project.org/api/1_4/sfResponse)クラスもたくさんの有用なメソッドを提供します。
+>[APIドキュメント](http://www.symfony-project.org/api/1_4/)を読んでsymfonyの内部クラスをもっと学習しましょう。
 
 また明日
 --------

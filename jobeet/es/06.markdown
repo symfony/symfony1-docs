@@ -129,7 +129,7 @@ Puedes ver por tí mismo que Doctrine tiene una claúsula where para la columna 
 
 Esto esta bueno, pero es bastante molesto tener que cambiar del navegador , al IDE, y el archivo log cada vez que necesitas probar un cambio. Gracias a la barra web de depuración de symfony, toda la información que necesitas esta también disponible dentro de la comodidad de tu navegador:
 
-![Sentencias SQL en la web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/06/web_debug_sql.png)
+![Sentencias SQL en la web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/06/web_debug_sql.png)
 
 Serialización de Objetos
 ------------------------
@@ -640,7 +640,7 @@ y agrega esta nueva configuración en `app.yml`:
       active_days:          30
       max_jobs_on_homepage: 10
 
-![Página de Inicio ordenada por Categoría](http://www.symfony-project.org/images/jobeet/1_3/06/homepage.png)
+![Página de Inicio ordenada por Categoría](http://www.symfony-project.org/images/jobeet/1_4/06/homepage.png)
 
 Datos Dinámicos
 ---------------
@@ -690,7 +690,7 @@ Manten en mente los siguientes simples tips cuando añadas código PHP a un arch
 Puedes ahora recargar los archivos de datos con la tarea `propel:data-load` y ver si solo  `10` puestos de trabajo son mostrados en la página de inicio para la categoría `Programming`.
 En la siguiente captura de pantalla, tenemos modificado el número máximo de puestos de trabajo a cinco para hacer una imágen mas pequeña:
 
-![Paginación](http://www.symfony-project.org/images/jobeet/1_3/06/pagination.png)
+![Paginación](http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png)
 
 Asegurar la Página
 ------------------
@@ -762,7 +762,7 @@ El método `retrieveActiveJob` recibirá el objeto `Doctrine_Query` ya listo por
 
 Ahora, si tratas de ontener un puesto de trabajo expirado, serás enviadoa una página 404.
 
-![Error 404 para un puesto de trabajo expirado](http://www.symfony-project.org/images/jobeet/1_3/06/exception.png)
+![Error 404 para un puesto de trabajo expirado](http://www.symfony-project.org/images/jobeet/1_4/06/exception.png)
 
 Enlazar a la Página de la Categoría
 -----------------------------------
@@ -775,7 +775,7 @@ Pero, aguarda un minuto. La hora no terminó aun y ya hemos trabajado mucho. Por
 Nos vemos Mañana
 ----------------
 
-Para trabajar sobre una implementación en tu proyecto local. Por favor, usa la [API documentation](http://www.symfony-project.org/api/1_3/) y toda la [documentation](http://www.symfony-project.org/doc/1_3/) disponible en el sitio web de Symfony para ayudarte. Nos veremos tra vez mañana con nuestra implementación.
+Para trabajar sobre una implementación en tu proyecto local. Por favor, usa la [API documentation](http://www.symfony-project.org/api/1_4/) y toda la [documentation](http://www.symfony-project.org/doc/1_4/) disponible en el sitio web de Symfony para ayudarte. Nos veremos tra vez mañana con nuestra implementación.
 
 ¡Suerte!
 

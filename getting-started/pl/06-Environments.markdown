@@ -32,14 +32,14 @@ dla programistów. Najlepszy przykładem może być wystąpienie wyjątku.
 Aby ułatwić programiście szybsze znalezienie problemu, symfony pokazuje wyjątek, 
 wraz z wszystkimi infromacjami dot. zapytania, bezpośrednio do przeglądarki:
 
-![Błąd w środowisku programistycznym](http://www.symfony-project.org/images/getting-started/1_3/exception_dev.png)
+![Błąd w środowisku programistycznym](http://www.symfony-project.org/images/getting-started/1_4/exception_dev.png)
 
 Ale za to w środowisku produkcyjnym, cache musi zostać aktywowane i co jest istotne, 
 aplikacja musi wyświetlić dostosowany komunikat błędu, bez pokazywania treści całego
 wyjątku. Czyli, środowisko produkcyjne musi być zoptymalizowane na wydajność
 oraz przyjazność użytkownika. 
 
-![Bład w środowisku produkcyjnym](http://www.symfony-project.org/images/getting-started/1_3/exception_prod.png)
+![Bład w środowisku produkcyjnym](http://www.symfony-project.org/images/getting-started/1_4/exception_prod.png)
 
 >**TIP**
 >Jeżeli spróbujesz podejrzeć kontrolery w obu środowiskach, zobaczysz, że są one 

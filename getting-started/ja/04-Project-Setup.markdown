@@ -112,7 +112,7 @@ Doctrineによって使われるデータベースを設定するのは簡単で
 
     [php]
     // config/ProjectConfiguration.class.php
-    require_once '/Users/fabien/symfony-1.3/lib/autoload/sfCoreAutoload.class.php';
+    require_once '/Users/fabien/symfony-1.4/lib/autoload/sfCoreAutoload.class.php';
 
 よりよいポータビリティのために、symfonyのインストールの絶対パスを相対パスに変更します:
 

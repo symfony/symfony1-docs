@@ -92,7 +92,7 @@ Webのグッドプラクティスによれば、Web公開ディレクトリの�
 Apacheを再起動し、ブラウザーを開き`http://localhost:8080/index.php/`もしくは`http://sfproject.localhost/index.php/`から新しいアプリケーションにアクセスできることを確認します。
 URLは前のセクションで選んだApacheの設定方法によります。
 
-![初期ページ](http://www.symfony-project.org/images/getting-started/1_3/congratulations.png)
+![初期ページ](http://www.symfony-project.org/images/getting-started/1_4/congratulations.png)
 
 >**TIP**
 >Apacheの`mod_rewrite`モジュールをインストールしていれば、URLの`index.php/`の部分を取り除くことができます。
@@ -106,7 +106,7 @@ URLは前のセクションで選んだApacheの設定方法によります。
 Webデバッグツールバーは右上コーナーに表示されます。
 小さなアイコンが含まれるのは`sf/`エイリアスが正しいことを証明します。
 
-![Webデバッグツールバー](http://www.symfony-project.org/images/getting-started/1_3/web_debug_toolbar.png)
+![Webデバッグツールバー](http://www.symfony-project.org/images/getting-started/1_4/web_debug_toolbar.png)
 
 >**Note**
 >Windows環境のIISでsymfonyを稼働させたい場合、セットアップ方法は少し異なります。

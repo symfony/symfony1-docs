@@ -7,7 +7,7 @@ some good security defaults. If you followed along, you have been looking at
 your screen delightedly since then, as it displays the beautiful default
 symfony page for new applications.
 
-![Congratulation page](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Congratulation page](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 But you want more. You want to learn all the nitty gritty details of symfony
 application development. So, let's resume our trip to symfony development
@@ -81,7 +81,7 @@ to list all the jobs for a given category (*Story F2*).
 On the homepage, the user can refine the job list (*Story F3*), or post a new
 job (*Story F5*).
 
-![Homepage Mockup](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+![Homepage Mockup](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
 
 ### Story F2: A user can ask for all the jobs in a given category
 
@@ -90,7 +90,7 @@ homepage, he sees all the jobs for this category sorted by date.
 
 The list is paginated with 20 jobs per page.
 
-![The Category Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+![The Category Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
 
 ### Story F3: A user refines the list with some keywords
 
@@ -101,7 +101,7 @@ found in the location, the position, the category, or the company fields.
 
 The user can select a job from the list to see more detailed information.
 
-![The Job Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+![The Job Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
 
 ### Story F5: A user posts a job
 
@@ -132,7 +132,7 @@ Each job post is online for 30 days (this is configurable by the admin - see
 *Story B2*). A user can come back to re-activate or extend the validity of the
 job ad for an extra 30 days but only when the job expires in less than 5 days.
 
-![The Job Creation Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+![The Job Creation Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
 
 ### Story F6: A user applies to become an affiliate
 

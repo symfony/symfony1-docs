@@ -20,12 +20,12 @@ praktykami.
 >aby zobaczyć jak zmienić bazę danych w Sandboxie.
 
 Możesz pobrać sandbox symfony w formatach `.tgz` lub `.zip` na stronie instalacji
-symfony, na [stronie instalacji](http://www.symfony-project.org/installation/1_3)
+symfony, na [stronie instalacji](http://www.symfony-project.org/installation/1_4)
 lub też przechodząc na:
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.tgz
+    http://www.symfony-project.org/get/sf_sandbox_1_4.tgz
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.zip
+    http://www.symfony-project.org/get/sf_sandbox_1_4.zip
 
 Rozpakuj plik, gdzieś w Twoim katalogu domowym serwera stron, i gotowe. 
 Twój projekt symfony jest już dostępny, gdy otworzysz skrypt `web/index.php`

@@ -55,8 +55,8 @@ Form fields are configured in the `configure()` method, by using the
 
 >**TIP**
 >The form framework comes bundled with a lot of
->[widgets](http://www.symfony-project.org/api/1_3/widget) and
->[validators](http://www.symfony-project.org/api/1_3/validator). The API
+>[widgets](http://www.symfony-project.org/api/1_4/widget) and
+>[validators](http://www.symfony-project.org/api/1_4/validator). The API
 >describes them quite extensively with all the options, errors, and default
 >error messages.
 
@@ -583,7 +583,7 @@ The job form is managed by five methods in the `job` module:
 
 All forms have the following life-cycle:
 
-![Form flow](http://www.symfony-project.org/images/jobeet/1_3/10/form_flow.png)
+![Form flow](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
 As we have created a ##ORM## route collection 5 days ago for the `job` module,
 we can simplify the code for the form management methods:
@@ -868,9 +868,9 @@ in the `JobeetJob` class:
 
 The admin bar displays the different actions depending on the job status:
 
-![Not activated job](http://www.symfony-project.org/images/jobeet/1_3/10/not_activated.png)
+![Not activated job](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
 
-![Activated job](http://www.symfony-project.org/images/jobeet/1_3/10/activated.png)
+![Activated job](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
 
 >**NOTE**
 >You will be able to see the "activated" bar after the next section.

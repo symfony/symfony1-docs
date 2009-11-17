@@ -199,7 +199,7 @@
 これはsymfonyプロジェクトに取り組む際の典型的なワークフローです。
 次のスクリーンショットでは短くするために5件の求人を表示しており、10件を見ることになります(`max_jobs_on_homepage`設定):
 
-![ホームページ](http://www.symfony-project.org/images/jobeet/1_3/07/homepage.png)
+![ホームページ](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
 
 求人のcategoryモジュールの作成
 -----------------------------
@@ -381,7 +381,7 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
   "リストはページごとに20件の求人でページ分割される"
 
 ##ORM##オブジェクトのリストをページ分割するために、symfonyは専用のクラス:
-[`sfPropelPager`](http://www.symfony-project.org/api/1_3/sfPropelPager)を提供します。
+[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager)を提供します。
 `category`アクションにおいて、`showSuccess`テンプレートにjobオブジェクトを渡す代わりに、ページャーを渡します:
 
     [php]
@@ -567,7 +567,7 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
 you can use `count()` function to get the number of results instead of the
 `getNbResults()` method.
 
-![ページ分割](http://www.symfony-project.org/images/jobeet/1_3/07/pagination.png)
+![ページ分割](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
 
 また明日
 --------

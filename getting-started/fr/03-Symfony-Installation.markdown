@@ -37,7 +37,7 @@ stables, vous devez choisir celle que vous souhaitez installer en lisant la
 [page d'installation](http://www.symfony-project.org/installation) sur le
 site de symfony.
 
-Ce tutoriel suppose que vous voulez installer symfony 1.3.
+Ce tutoriel suppose que vous voulez installer symfony 1.4.
 
 Choisir le lieu d'installation de symfony
 -------------------------------------------
@@ -62,16 +62,16 @@ Installation de symfony
 Le moyen le plus simple d'installer symfony est de télécharger l'archive pour la version
 que vous avez choisie sur le site de symfony. Aller à la page d'installation de la
 version que vous venez de choisir, symfony
-[1.3](http://www.symfony-project.org/installation/1_3) par exemple.
+[1.4](http://www.symfony-project.org/installation/1_4) par exemple.
 
 Sous la section "**Source Download**", vous trouverez l'archive sous le format `.tgz`
 ou `.zip`. Téléchargez l'archive, puis mettez-la sous le nouveau répertoire créé
 `lib/vendor/`, décompressez la, et renommez le répertoire en `symfony` :
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.3.0.tgz
-    $ mv symfony-1.3.0 symfony
-    $ rm symfony-1.3.0.tgz
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
 
 Sous Windows, décompressez le fichier zip en utilisant l'Explorateur Windows.
 Après avoir renommé le répertoire en symfony, vous devriez y avoir une structure
@@ -94,15 +94,15 @@ la possibilité de configurer les sources extérieures Subversion.
 Si vous êtes conservateur, liez votre projet à une version release (un tag de
 subversion) :
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0 
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0 
 
 Chaque fois qu'une nouvelle version sort (comme annoncé sur le
 [blog](http://www.symfony-project.org/blog/) de Symfony), vous devrez modifier l'URL
 vers la nouvelle version.
 
-Si vous voulez aller sur la route de l'avant-garde, utilisez la branche 1.3 :
+Si vous voulez aller sur la route de l'avant-garde, utilisez la branche 1.4 :
 
-    symfony http://svn.symfony-project.com/branches/1.3/
+    symfony http://svn.symfony-project.com/branches/1.4/
 
 Grâce à l'utilisation de cette branche, votre projet bénéficie des corrections de bogues automatiquement
 chaque fois que vous exécutez `svn update`.

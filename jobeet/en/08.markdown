@@ -140,7 +140,7 @@ Or use the `test:unit` task:
 
     $ php symfony test:unit Jobeet
 
-![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_3/08/cli_tests.png)
+![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png)
 
 >**Note**
 >~Windows~ command line unfortunately cannot highlight test results in
@@ -186,7 +186,7 @@ You can now execute the test file. If all tests pass, as we expect them to,
 you will enjoy the "*green bar*". If not, the infamous "*red bar*" will alert
 you that some tests do not pass and that you need to fix them.
 
-![slugify() tests](http://www.symfony-project.org/images/jobeet/1_3/08/slugify.png)
+![slugify() tests](http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png)
 
 If a test fails, the output will give you some information about why it
 failed; but if you have hundreds of tests in a file, it can be difficult to
@@ -217,7 +217,7 @@ messages to the `slugify` test file:
     $t->is(Jobeet::slugify('paris,france'), 'paris-france',
      ➥ '::slugify() replaces non-ASCII characters by a -');
 
-![slugify() tests with messages](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_doc.png)
+![slugify() tests with messages](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
 The test description string is also an valuable tool when trying to figure out
 what to test. You can see a pattern in the test strings: they are sentences
@@ -312,7 +312,7 @@ test:
     $t->is(Jobeet::slugify(' - '), 'n-a',
      ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
 
-![slugify() bug](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_bug.png)
+![slugify() bug](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png)
 
 After checking that the test does not pass, edit the `Jobeet` class and move
 the empty string check to the end of the method:
@@ -485,7 +485,7 @@ to put the database in a known state.
 
 <propel>
 The `propel:data-load` task internally uses
-the [`sfPropelData`](http://www.symfony-project.org/api/1_3/sfPropelData)
+the [`sfPropelData`](http://www.symfony-project.org/api/1_4/sfPropelData)
 class to load the data:
 
     [php]
@@ -681,7 +681,7 @@ project:
 
 The task outputs whether each test file passes or fails:
 
-![Unit tests harness](http://www.symfony-project.org/images/jobeet/1_3/08/test_harness.png)
+![Unit tests harness](http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png)
 
 >**TIP**
 >If the `test:unit` task returns a "~dubious status|Dubious Status~" for a

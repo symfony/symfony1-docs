@@ -131,7 +131,7 @@ installed: one for the command line, and another for the web.
 
 Then, download the symfony configuration checker script at the following URL:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 Save the script somewhere under your current web root directory.
 
@@ -246,7 +246,7 @@ you the opportunity to configure the external Subversion sources.
 If you are conservative, tie your project to a specific release (a subversion
 tag):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Whenever a new release comes out (as announced on the symfony
 [blog](http://www.symfony-project.org/blog/)), you will need to change the URL
@@ -528,7 +528,7 @@ opening a browser and typing `http://localhost:8080/index.php/`, or
 `http://www.jobeet.com.localhost/index.php/` depending on the Apache configuration
 you chose in the previous section.
 
-![Congratulations](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+![Congratulations](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 >**TIP**
 >If you have the Apache `mod_rewrite` module installed, you can remove
@@ -544,7 +544,7 @@ following URL:
 The web debug toolbar should show in the top right corner, including small
 icons proving that your `sf/` alias configuration is correct.
 
-![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/01/web_debug_toolbar.png)
+![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
 >**Note**
 >The setup is a little different if you want to run symfony on an IIS server in
@@ -585,14 +585,14 @@ optimized for the developer. The best example is certainly when an
 faster, symfony displays the exception with all the information it has about
 the current request right into the browser:
 
-![An exception in the dev environment](http://www.symfony-project.org/images/jobeet/1_3/01/exception_dev.png)
+![An exception in the dev environment](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
 
 But on the production environment, the cache layer must be activated and, of
 course, the application must display customized error messages instead of raw
 exceptions. So, the production environment must be optimized for performance
 and the user experience.
 
-![An exception in the prod environment](http://www.symfony-project.org/images/jobeet/1_3/01/exception_prod.png)
+![An exception in the prod environment](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
 
 >**TIP**
 >If you open the front controller files, you will see that their content is

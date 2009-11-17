@@ -23,7 +23,7 @@ Las Pruebas Funcionales en Symfony proporcionar un método sencillo para describ
 La Clase `sfBrowser` 
 ---------------------
 
-En Symfony, las pruebas funcionales se ejecutan a través de un navegador especial, ejecutadas por la clase [`sfBrowser`](http://www.symfony-project.org/api/1_3/sfBrowser). Esta actúa como un navegador adaptado para tu aplicación y directamente conectada a ella,
+En Symfony, las pruebas funcionales se ejecutan a través de un navegador especial, ejecutadas por la clase [`sfBrowser`](http://www.symfony-project.org/api/1_4/sfBrowser). Esta actúa como un navegador adaptado para tu aplicación y directamente conectada a ella,
 sin la necesidad de un servidor web. Te da acceso a todos los objetos Symfony antes y después de cada petición, dándote la oportunidad de inspeccionarlos y hacer los controles que deseas programaticamente.
 
 `sfBrowser` brinda métodos de navegación que simula lo que hace el clásico navegador:
@@ -170,7 +170,7 @@ O usando la tarea `test:functional`:
 
     $ php symfony test:functional frontend categoryActions
 
-![Tests en la línea de comandos](http://www.symfony-project.org/images/jobeet/1_3/09/cli_tests.png)
+![Tests en la línea de comandos](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
 
 Probar los Datos
 ----------------
@@ -577,7 +577,7 @@ La tarea `test:functional` también se puede utilizar para poner en marcha todas
 
 La tarea muestra una sola linea por cada archivo de prueba:
 
-![Functional tests harness](http://www.symfony-project.org/images/jobeet/1_3/09/test_harness.png)
+![Functional tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
 
 Grupo de Pruebas
 ----------------
@@ -586,7 +586,7 @@ Como puedes esperar, también hay una tarea para poner en marcha todas las prueb
 
     $ php symfony test:all
 
-![Tests harness](http://www.symfony-project.org/images/jobeet/1_3/09/tests_harness.png)
+![Tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
 
 Nos vemos mañana
 ----------------

@@ -35,7 +35,7 @@ and is correctly configured. As for day 1, we will use the
 symfony on the production server, download the file directly from the symfony
 website:
 
-    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+    http://trac.symfony-project.org/browser/branches/1.4/data/bin/check_configuration.php?format=raw
 
 Copy the file to the web root directory and run it from your browser **and**
 from the command line:
@@ -106,20 +106,20 @@ Upgrading symfony is as simple as changing the content of the
 archive, remove the current files and replace them with the newest ones.
 
 If you use ~Subversion~ for your project, you can also link your project to the
-latest symfony 1.2 tag:
+latest symfony 1.4 tag:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0/
 
 Upgrading symfony is then as simple as changing the tag to the latest
 symfony version.
 
-You can also use the 1.2 branch to have fixes in real-time:
+You can also use the 1.4 branch to have fixes in real-time:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/branches/1.2/
+      # symfony http://svn.symfony-project.com/branches/1.4/
 
-Now, each time you do an `svn up`, you will have the latest symfony 1.2
+Now, each time you do an `svn up`, you will have the latest symfony 1.4
 version.
 
 When upgrading to a new version, you are advised to always clear the cache,

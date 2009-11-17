@@ -58,7 +58,7 @@ codice secondo la sua natura. Questo pattern separa il codice in **tre strati**:
     Questi front controller delegano il vero lavoro alle **azioni**. Come
     abbiamo visto ieri queste azioni sono raggruppate in **moduli**.
 
-![MVC](http://www.symfony-project.org/images/jobeet/1_3/04/mvc.png)
+![MVC](http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png)
 
 Oggi utilizzeremo il mockup definito il giorno 2 per personalizzare l'homepage
 e la pagina delle offerte di lavoro. Inoltre le renderemo dinamiche. Lungo la strada 
@@ -77,7 +77,7 @@ implichino duplicazione del codice.
 Un modo per risolvere questo problema è quello di definire un header e un footer
 includendoli in ogni template:
 
-![Header e footer](http://www.symfony-project.org/images/jobeet/1_3/04/header_footer.png)
+![Header e footer](http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png)
 
 Ma qui i file di header e footer non contengono HTML valido. Deve esserci una
 strada migliore. Invece di reinventate la ruota, utilizzeremo un altro design
@@ -87,7 +87,7 @@ Il design pattern decorator risolve il problema agendo al contrario: il template
 viene decorato dopo che il contenuto è stato reso da un template globale,
 in symfony questo è definito come un **~layout~**:
 
-![Layout](http://www.symfony-project.org/images/jobeet/1_3/04/layout.png)
+![Layout](http://www.symfony-project.org/images/jobeet/1_4/04/layout.png)
 
 Il layout di default di un'applicazione è chiamato `layout.php` e può
 essere trovato nella cartella `apps/frontend/templates/`. Questa cartella
@@ -200,7 +200,7 @@ e metteteli nella cartella `web/css/`.
 >[scaricare quella di Jobeet](http://www.symfony-project.org/images/jobeet/favicon.ico)
 >e metterla nella cartella `web/`.
 
-![Il modulo job con layout ed elementi grafici](http://www.symfony-project.org/images/jobeet/1_3/04/job_layout_assets.png)
+![Il modulo job con layout ed elementi grafici](http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png)
 
 >**TIP**
 >Di default, il task `generate:project` ha creato tre cartelle per i file degli
@@ -492,7 +492,7 @@ Ripuliamolo un po', per visualizzare solo un sottoinsieme di colonne disponibili
       </table>
     </div>
 
-![Homepage](http://www.symfony-project.org/images/jobeet/1_3/04/homepage.png)
+![Homepage](http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png)
 
 La funzione `url_for()` in questo template è un helper che verrà discusso domani.
 
@@ -589,7 +589,7 @@ suo primo argomento:
 >gruppo di helper `Text`, che non è caricato di default, l'abbiamo caricato manualmente
 >usando l'helper `~use_helper~()`.
 
-![Pagina del lavoro](http://www.symfony-project.org/images/jobeet/1_3/04/job.png)
+![Pagina del lavoro](http://www.symfony-project.org/images/jobeet/1_4/04/job.png)
 
 Gli ~slot~
 ----------
@@ -605,7 +605,7 @@ nome della compagnia e la posizione del lavoro.
 In symfony, quando una zona del layout dipende dal template che deve essere
 visualizzato, occorre definire uno slot:
 
-![Slot](http://www.symfony-project.org/images/jobeet/1_3/04/layout_slots.png)
+![Slot](http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png)
 
 Aggiungiamo uno slot al layout per avere un titolo dinamico:
 
@@ -724,9 +724,9 @@ successivamente.
 Come per le eccezioni, la pagina mostrata all'utente è diversa negli ~ambienti~
 `prod` e `dev`:
 
-![404 errore in ambiente dev](http://www.symfony-project.org/images/jobeet/1_3/05/404_dev.png)
+![404 errore in ambiente dev](http://www.symfony-project.org/images/jobeet/1_4/05/404_dev.png)
 
-![404 errore in ambiente prod](http://www.symfony-project.org/images/jobeet/1_3/05/404_prod.png)
+![404 errore in ambiente prod](http://www.symfony-project.org/images/jobeet/1_4/05/404_prod.png)
 
 >**NOTE**
 >Prima di pubblicare il sito Jobeet su un server di produzione, impareremo a
@@ -843,7 +843,7 @@ usano i metodi dell'oggetto risposta `addStylesheet()` e `addJavascript()`.
 >**TIP**
 >Le classi `sfAction`, `sfRequest` e `sfResponse` forniscono molti altri
 >metodi utili. Non esitate a consultare la
-[documentazione delle API](http://www.symfony-project.org/api/1_3/) per saperne
+[documentazione delle API](http://www.symfony-project.org/api/1_4/) per saperne
 >di più su tutte le classi interne di symfony.
 
 A domani

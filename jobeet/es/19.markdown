@@ -348,7 +348,7 @@ Y crea la acción correspondiente:
 
 El método `process()` de `sfFormLanguage` se encarga de cambiar la cultura del usuario, basado en el formulario envíado por el usuario.
 
-![Internationalized Footer](http://www.symfony-project.org/images/jobeet/1_3/19/footer.png)
+![Internationalized Footer](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
 
 Internacionalización
 --------------------
@@ -429,7 +429,7 @@ Todas las traducciones se almacenan en un catálogo. El framework i18n proporcio
 
 >**NOTE**
 >Oros Catálogos son `gettext`, `MySQL`, y `SQLite`. Como siempre, echa
->una mirada a la [i18n API](http://www.symfony-project.org/api/1_3/i18n) para
+>una mirada a la [i18n API](http://www.symfony-project.org/api/1_4/i18n) para
 >más detalles.
 
 ### `i18n:extract`
@@ -897,7 +897,7 @@ Ahora la ruta `category` se encuentra internacionalizado y la URL de una categor
 
 Para el backend, queremos que las traducciones de el francés y el Inglés sean editadas en el mismo formulario:
 
-![Backend categories](http://www.symfony-project.org/images/jobeet/1_3/19/backend_categories.png)
+![Backend categories](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
 Incluir un formulario i18n se puede hacer mediante el uso del método  `embedI18N()`:
 
@@ -975,7 +975,7 @@ Localización
 
 Soportando diferentes culturas también significa soportar a las diferentes manera de formatear fechas y números. En una plantilla, varios helpers están a tut disposición para ayudar a tomar en cuenta todas estas diferencias, basado en la actual cultura del usuario:
 
-En el grupo de helper [`Date`](http://www.symfony-project.org/api/1_3/DateHelper) 
+En el grupo de helper [`Date`](http://www.symfony-project.org/api/1_4/DateHelper) 
 :
 
  | Helper                        | Descripción                                                         |
@@ -987,14 +987,14 @@ En el grupo de helper [`Date`](http://www.symfony-project.org/api/1_3/DateHelper
  | `format_daterange()`          | Formatos de un rango de fechas                                      |
  
 
-En el grupo de helper [`Number`](http://www.symfony-project.org/api/1_3/NumberHelper) :
+En el grupo de helper [`Number`](http://www.symfony-project.org/api/1_4/NumberHelper) :
 
  | Helper              | Descripción        |
  | ------------------- | ------------------ |
  | `format_number()`   | Formatos un número |
  | `format_currency()` | Formatos de moneda |
 
-En el grupo de helper [`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper) :
+En el grupo de helper [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper) :
 
  | Helper              | Descripción                    |
  | ------------------- | ------------------------------ |
@@ -1005,16 +1005,16 @@ En el grupo de helper [`I18N`](http://www.symfony-project.org/api/1_3/I18NHelper
 
 El framework de formualrios da varios widgets y los validadores para datos localizados:
 
- * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDate)
- * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nDateTime)
- * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nTime)
+ * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
+ * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
+ * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
 
- * [`sfWidgetFormI18nSelectCountry`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nSelectCountry)
- * [`sfWidgetFormI18nSelectCurrency`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nSelectCurrency)
- * [`sfWidgetFormI18nSelectLanguage`](http://www.symfony-project.org/api/1_3/sfWidgetFormI18nSelectLanguage)
+ * [`sfWidgetFormI18nSelectCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectCountry)
+ * [`sfWidgetFormI18nSelectCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectCurrency)
+ * [`sfWidgetFormI18nSelectLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectLanguage)
 
- * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceCountry)
- * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_3/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
+ * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
 
 Nos vemos mañana
 ----------------

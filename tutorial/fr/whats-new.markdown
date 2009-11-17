@@ -1,22 +1,22 @@
-﻿Quoi de neuf dans symfony 1.3?
-==========================
+﻿Quoi de neuf dans symfony 1.3/1.4 ?
+===================================
 
-Ce tutoriel est une rapide introduction technique pour symfony 1.3.
+Ce tutoriel est une rapide introduction technique pour symfony 1.3/1.4.
 Il est destiné aux développeurs qui ont déjà travaillé avec symfony 1.2
-et qui veulent apprendre rapidement les nouvelles fonctionnalités de symfony 1.3.
+et qui veulent apprendre rapidement les nouvelles fonctionnalités de symfony 1.3/1.4.
 
-Tout d'abord, merci de noter que symfony 1.3 est compatible avec PHP 5.2.4 ou ultérieur.
+Tout d'abord, merci de noter que symfony 1.3/1.4 est compatible avec PHP 5.2.4 ou ultérieur.
 
 Si vous souhaitez mettre à niveau la 1.2, merci de lire le fichier
 [UPGRADE](http://www.symfony-project.org/tutorial/1_3/en/upgrade)
 qui se trouve dans la distribution symfony.
 Vous avez toutes les informations nécessaires pour mettre à niveau
-en toute sécurité vos projets en symfony 1.3.
+en toute sécurité vos projets en symfony 1.3/1.4.
 
 Logiciel de messagerie
 ------
 
-A partir de symfony 1.3, il existe par défaut un nouveau logiciel de messagerie basé sur le projet SwiftMailer 4.1.
+A partir de symfony 1.3/1.4, il existe par défaut un nouveau logiciel de messagerie basé sur le projet SwiftMailer 4.1.
 
 L'envoi d'un courriel est aussi simple que d'utiliser la méthode `composeAndSend()` à partir
 d'une action :
@@ -246,7 +246,7 @@ par `self::$dispatcher`. Les événements de formulaire suivants sont à présen
 
 ### `BaseForm`
 
-Chaque nouveau projet symfony 1.3 inclut la classe `BaseForm` que vous pouvez utiliser pour
+Chaque nouveau projet symfony 1.3/1.4 inclut la classe `BaseForm` que vous pouvez utiliser pour
 étendre l'élément du formulaire ou ajouter des fonctionnalités spécifiques au projet. Les formulaires
 générés par `sfDoctrinePlugin` et `sfPropelPlugin` sont automatiquement étendus de cette
 classe. Si vous créez des classes de formulaire supplémentaires, elles doivent maintenant étendre `BaseForm`
@@ -309,7 +309,7 @@ tous les tests à chaque fois que vous effectuez un changement, surtout si certa
 parce que chaque fois que vous corriger un test, vous devez exécuter de nouveau la série de tests
 pour vous assurer que vous n'avez pas cassé autre chose. Mais tant que ces tests ne sont pas
 corrigés, il est inutile de ré-exécuter toutes les autres tests. A partir de
-symfony 1.3, les tâches `test:all et `symfony:test` ont l'option `--only-failed`
+symfony 1.3/1.4, les tâches `test:all et `symfony:test` ont l'option `--only-failed`
 (`-f` comme raccourci) qui force la tâche à seulement ré-exécuter les tests qui
 ont échoués au cours de l'exécution précédente :
 
@@ -355,7 +355,7 @@ passer l'option `--trace` pour avoir une sortie détaillée sur les échecs :
 
 ### La colorisation des résultats de lime
 
-A partir de symfony 1.3, lime fait ce qu'il faut quand la colorisation est
+A partir de symfony 1.3/1.4, lime fait ce qu'il faut quand la colorisation est
 concernée. Cela signifie que vous pouvez presque toujours omettre le deuxième argument
 `lime_test` du constructeur de lime :
 
@@ -454,7 +454,7 @@ d'informations).
 
 De temps en temps, les développeurs ont besoin d'exécuter une suite de test pour vérifier que
 symfony fonctionne bien sur leur plate-forme spécifique. Jusqu'à présent, ils devaient connaître le
-script `prove.php` livré avec symfony pour le faire. A partir de symfony 1.3, c'est
+script `prove.php` livré avec symfony pour le faire. A partir de symfony 1.3/1.4, c'est
 une tâche intégrée, `symfony:test` lance une suite de test du noyau de symfony
 depuis la ligne de commande, comme les autres tâches :
 
@@ -473,7 +473,7 @@ l'identification du problème.
 
 ### `generate:project`
 
-A partir de symfony 1.3, Doctrine est l'ORM par défaut configuré lors de l'exécution de
+A partir de symfony 1.3/1.4, Doctrine est l'ORM par défaut configuré lors de l'exécution de
 la tâche `generate:project` :
 
     $ php /path/to/symfony generate:project foo
@@ -713,7 +713,7 @@ l'outil CLI de symfony. Mais parfois, symfony devine à tort, par exemple lorsqu
 utilisez Cygwin (parce que la colorisation est toujours éteint sur la plateforme
 Windows).
 
-A partir de symfony 1.3, vous pouvez forcer l'utilisation des couleurs pour la sortie en
+A partir de symfony 1.3/1.4, vous pouvez forcer l'utilisation des couleurs pour la sortie en
 passant l'option globale `--color`.
 
 I18N
@@ -735,7 +735,7 @@ Tous les tris dépendants de la localisation sont désormais également effectu�
 Plugins
 -------
 
-Avant symfony 1.3, tous les plugins étaient activés par défaut, sauf pour
+Avant symfony 1.3/1.4, tous les plugins étaient activés par défaut, sauf pour
 `sfDoctrinePlugin` et `sfCompat10Plugin` :
 
     [php]
@@ -748,7 +748,7 @@ Avant symfony 1.3, tous les plugins étaient activés par défaut, sauf pour
       }
     }
 
-Pour les projets fraîchement créés avec symfony 1.3, les plugins doivent être explicitement
+Pour les projets fraîchement créés avec symfony 1.3/1.4, les plugins doivent être explicitement
 activés dans la classe `ProjectConfiguration` pour pouvoir les utiliser :
 
     [php]
@@ -771,7 +771,7 @@ dans la classe `ProjectConfiguration`.
 >**NOTE**
 >Si vous mettez à niveau un projet à partir de la 1.2, l'ancien comportement sera encore
 >actif car la tâche de mise à niveau ne modifie pas le fichier `ProjectConfiguration`.
->Le changement de comportement est seulement pour les nouveaux projets symfony 1.3.
+>Le changement de comportement est seulement pour les nouveaux projets symfony 1.3/1.4.
 
 ### `sfPluginConfiguration::connectTests()`
 
@@ -792,7 +792,7 @@ Paramètres
 
 ### `sf_file_link_format`
 
-Symfony 1.3 formate les chemins des fichiers sous forme de liens cliquables chaque fois que c'est possible (par exemple
+Symfony 1.3/1.4 formate les chemins des fichiers sous forme de liens cliquables chaque fois que c'est possible (par exemple
 le template du débogueur d'exception). Le `sf_file_link_format` est utilisé à cette fin,
 si elle est définie, sinon symfony va chercher la valeur de configuration de PHP de
 `xdebug.file_link_format`.
@@ -810,7 +810,7 @@ réservé `%l` sera remplacé par le numéro de ligne.
 
 ### `sf_asset_timestamp`
 
-Symfony 1.3 permet d'ajouter automatiquement un horodatage de tous les actifs à l'intérieur du
+Symfony 1.3/1.4 permet d'ajouter automatiquement un horodatage de tous les actifs à l'intérieur du
 `sf_web_dir` par la mise de `sf_asset_timestamp` à `true`. Ce faisant, vous pouvez utiliser
 par exemple `mod_expires` pour que les actifs n'expirent jamais. Pour livrer une nouvelle version
 de l'actif, symfony vérifie l'heure de modification et change un paramètre GET.

@@ -38,7 +38,7 @@ i powinieneś wybrać, która z nich chcesz zainstalować, po przeczytaniu
 [instalation page](http://www.symfony-project.org/installation) na na oficjalnej 
 stronie symfony.
 
-W tym przewodniku zakładamy, że chcesz zainstalować symfony w wersji 1.3.
+W tym przewodniku zakładamy, że chcesz zainstalować symfony w wersji 1.4.
 
 Wybór katalogu do instalacji symfony
 -------------------------------------
@@ -62,7 +62,7 @@ Instalacja Symfony
 
 Najłatwiejszą formą instalacji symfony, jest pobranie spakowanego pliku z wybraną
 na stronie wersją symfony. Aby to zrobić, przejdź na stronę instalacyjną wersji
-symfony [1.3](http://www.symfony-project.org/installation/1_3) for instance.
+symfony [1.4](http://www.symfony-project.org/installation/1_4) for instance.
 
 
 Pod linkiem "**Źródło**" lub "**Source Download**", znajdziesz pliki archiwum `.tgz`
@@ -70,9 +70,9 @@ lub `.zip`. Pobierz plik archiwum i umieść go w nowo utworzonym katalogu
 `lib/vendor/`, rozpakuj go i zmień nazwę katalogu na `symfony`:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.3.0.tgz
-    $ mv symfony-1.3.0 symfony
-    $ rm symfony-1.3.0.tgz
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
 
 W Windowsie, możesz rozpakować plik zip, korzystając Explorera Windows.
 Po zmianie nazwy katalogu na `symfony`, struktura katalogów powinna być
@@ -96,15 +96,15 @@ dostęp do konfiguracji zewnętrznego repozytorium Subversion.
 Jeśli jesteś tradycjonallistą, możesz również ograniczyć się do ściśle określonego
 wydania (subversion tag):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Za każdym razem, gdy zostanie wydana nowa wersja (dowiesz się o tym na oficjalnym
 [blogu](http://www.symfony-project.org/blog/)), wtedy będziesz musiał/a zmienić adres URL
 na nową wersję. 
 
-Jeśli chcesz zaufać naszym aktualizacjion, skorzystać z branchy 1.3:
+Jeśli chcesz zaufać naszym aktualizacjion, skorzystać z branchy 1.4:
 
-    symfony http://svn.symfony-project.com/branches/1.3/
+    symfony http://svn.symfony-project.com/branches/1.4/
 
 Korzystając z branchy, ustrzeżesz projekt od odkrytych błędów dzięki automatycznej
 aktualizacji, za każdym razem gdy wywołasz `svn update`.

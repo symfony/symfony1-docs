@@ -163,7 +163,7 @@ adminジェネレーターはパッケージを設定するシンプルなバッ
 レイアウトは`admin.css`スタイルシートを使います。
 4日目の間にこれは他のスタイルシートと一緒にインストールしたので、このファイルは`web/css/`の中に存在しなければなりません。
 
-![adminジェネレーターの外見](http://www.symfony-project.org/images/jobeet/1_3/12/look_and_feel.png)
+![adminジェネレーターの外見](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
 最終的に、`routing.yml`でデフォルトの~ホームページ~を変更します:
 
@@ -287,7 +287,7 @@ adminモジュールは`generator.yml`ファイルの`config`キーを編集す�
 `edit`セクション用の`title`は動的な値を含みます:
 `%%`で囲まれるすべての文字列は対応するオブジェクトのカラムの値で置き換えられます。
 
-![タイトル](http://www.symfony-project.org/images/jobeet/1_3/12/title.png)
+![タイトル](http://www.symfony-project.org/images/jobeet/1_4/12/title.png)
 
 `job`モジュール用のコンフィギュレーションはとてもよく似ています:
 
@@ -320,7 +320,7 @@ adminモジュールは`generator.yml`ファイルの`config`キーを編集す�
         is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
         is_public:    { label: Public?, help: Whether the job can also be published on affiliate websites, or not }
 
-![フィールドのコンフィギュレーション](http://www.symfony-project.org/images/jobeet/1_3/12/fields.png)
+![フィールドのコンフィギュレーション](http://www.symfony-project.org/images/jobeet/1_4/12/fields.png)
 
 `fields`セクションはすべてのビュー用のフィールドコンフィギュレーションをオーバーライドします。
 このことは`is_activated`フィールド用の~ラベル|フォームラベル~が`list`、`edit`と`new`ビュー用に変更されることを意味します。
@@ -362,7 +362,7 @@ listビューのコンフィギュレーション
 
 `name`カラムの前の`=`記号は文字列を~リンク~に変換するための慣習です。
 
-![テーブルのリスト](http://www.symfony-project.org/images/jobeet/1_3/12/list_columns.png)
+![テーブルのリスト](http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png)
 
 読みやすくするために`job`モジュールに同じことをやってみましょう:
 
@@ -416,7 +416,7 @@ adminジェネレーターはモデルクラスの関連ゲッターを見つけ
     %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
      (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
 
-![stackedレイアウト](http://www.symfony-project.org/images/jobeet/1_3/12/stacked_layout.png)
+![stackedレイアウト](http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png)
 
 ### `sort`
 
@@ -440,7 +440,7 @@ adminジェネレーターはモデルクラスの関連ゲッターを見つけ
       list:
         max_per_page: 10
 
-![ページごとの最大数](http://www.symfony-project.org/images/jobeet/1_3/12/max_per_page.png)
+![ページごとの最大数](http://www.symfony-project.org/images/jobeet/1_4/12/max_per_page.png)
 
 ### `batch_actions`
 
@@ -454,7 +454,7 @@ adminジェネレーターはモデルクラスの関連ゲッターを見つけ
       list:
         batch_actions: {}
 
-![バッチアクションを削除する](http://www.symfony-project.org/images/jobeet/1_3/12/no_batch_actions.png)
+![バッチアクションを削除する](http://www.symfony-project.org/images/jobeet/1_4/12/no_batch_actions.png)
 
 `batch_actions`オプションはバッチアクションのリストを定義します。
 空の配列によって機能の削除ができます。
@@ -539,7 +539,7 @@ adminジェネレーターはモデルクラスの関連ゲッターを見つけ
 
 すべての求人期間が延長された後で、ユーザーは`job`モジュールのホームページにリダイレクトされます。
 
-![カスタムのバッチアクション](http://www.symfony-project.org/images/jobeet/1_3/12/custom_batch_actions.png)
+![カスタムのバッチアクション](http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png)
 
 ### `object_actions`
 
@@ -588,7 +588,7 @@ listにおいて、単独のオブジェクトで実行できるアクション�
       // ...
     }
 
-![カスタムのオブジェクトアクション](http://www.symfony-project.org/images/jobeet/1_3/12/custom_object_actions.png)
+![カスタムのオブジェクトアクション](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
 
 ### `actions`
 
@@ -660,7 +660,7 @@ listにおいて、単独のオブジェクトで実行できるアクション�
 >     [yml]
 >     deleteNeverActivated: { label: Delete never activated jobs, action: foo }
 
-![アクション](http://www.symfony-project.org/images/jobeet/1_3/12/actions.png)
+![アクション](http://www.symfony-project.org/images/jobeet/1_4/12/actions.png)
 
 <propel>
 ### `peer_method`
@@ -673,7 +673,7 @@ listにおいて、単独のオブジェクトで実行できるアクション�
 
 その数字をクリックすると、それぞれの求人に対してカテゴリの名前を読み取るための最新のリクエスト回数がわかります:
 
-![修正前のリクエスト回数](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_before.png)
+![修正前のリクエスト回数](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png)
 
 リクエストの回数を減らすには、
 <propel>
@@ -715,7 +715,7 @@ listにおいて、単独のオブジェクトで実行できるアクション�
 
 リクエストの回数は4回に減ります:
 
-![修正後のリクエスト回数](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_after.png)
+![修正後のリクエスト回数](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_after.png)
 
 フォームビューのコンフィギュレーション
 -------------------------------------
@@ -741,7 +741,7 @@ listにおいて、単独のオブジェクトで実行できるアクション�
 
 上記のコンフィギュレーションでは2つのグループ(`Content`と`Admin`)が定義され、それぞれはフォームフィールドのサブセットを含みます。
 
-![フィールドのグルーピング](http://www.symfony-project.org/images/jobeet/1_3/12/fields_grouping.png)
+![フィールドのグルーピング](http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png)
 
 >**NOTE**
 >`Admin`グループのカラムはまだブラウザーには表示されません。
@@ -902,7 +902,7 @@ adminジェネレーターによって使われるデフォルトの~フォー�
   * `with_delete`: 削除用のチェックボックスを表示するか
   * `template`:    ウィジェットをレンダリングするために使うテンプレート
 
-![ファイルのアップロード](http://www.symfony-project.org/images/jobeet/1_3/12/file_upload.png)
+![ファイルのアップロード](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
 >**TIP**
 >生成されたテンプレートはたくさんの`class`と`id`属性を定義するので、adminジェネレーターの見た目はとても簡単に調整できます。
@@ -947,7 +947,7 @@ adminジェネレーターによって使われるデフォルトの~フォー�
 
 フィルターは常にオプションなので、フィールドが表示されるように設定するために、フィルターフォームクラスをオーバーライドする必要はありません。
 
-![フィルター](http://www.symfony-project.org/images/jobeet/1_3/12/filters.png)
+![フィルター](http://www.symfony-project.org/images/jobeet/1_4/12/filters.png)
 
 アクションのカスタマイズ
 ------------------------

@@ -29,7 +29,7 @@ En resumen, el patrón de diseño MVC define una manera de organizar el código 
 
   * El **Controlador** es la pieza de código que llama al Modelo para obtener algunos datos que le pasa a la Vista para la presentación al cliente. Cuando instalamos Symfony el primer día, vimos que todas las solicitudes son gestionadas por un controlador frontal (`index.php` y `frontend_dev.php`). Estos controladores frontales delegadan la verdadera labor a las **acciones**. Como vimos ayer, estas acciones son, lógicamente, agrupadas en **módulos**.
 
-![MVC](http://www.symfony-project.org/images/jobeet/1_3/04/mvc.png)
+![MVC](http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png)
 
 Hoy, usaremos el mockup definido el día 2 para personalizar la página principal y la página de puestos de trabajos. Vamos hacerlas dinámicas. A lo largo del camino, vamos a modificar un montón de cosas en diferentes archivos para demostrar la estructura de directorios symfony y la forma de separar el código entre las capas.
 
@@ -40,13 +40,13 @@ En primer lugar, si miraste de cerca los mockups, te darás cuenta de que gran p
 
 Una forma de resolver el problema es definir un encabezado y un pie de página y lo incluyes en cada plantilla:
 
-![Header and footer](http://www.symfony-project.org/images/jobeet/1_3/04/header_footer.png)
+![Header and footer](http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png)
 
 Pero los archivos de la cabecera y el pie de página no contienen HTML válido. Debe haber una mejor manera. En lugar de reinventar la rueda, vamos a utilizar otro patrón de diseño para resolver este problema: el 
 [patrón de diseño decorador](http://en.wikipedia.org/wiki/Decorator_pattern).
 El patrón de diseño decorador resuelve el problema al revés: la plantilla es decorada después de que el contenido es mostrado por una plantilla global, llamada **layout** en Symfony:
 
-![Layout](http://www.symfony-project.org/images/jobeet/1_3/04/layout.png)
+![Layout](http://www.symfony-project.org/images/jobeet/1_4/04/layout.png)
 
 El layout de una aplicación se llama `layout.php` y se puede encontrar en el directorio `apps/frontend/templates/`. Este directorio contiene todas las plantillas globales para una aplicación.
 
@@ -150,7 +150,7 @@ y copiarlos dentro del directorio `web/css/`.
 >[descargarlo de Jobeet](http://www.symfony-project.org/get/jobeet/favicon.ico)
 >y ponerlo bajo el directorio `web/`.
 
-![El módulo job con un layout y recursos](http://www.symfony-project.org/images/jobeet/1_3/04/job_layout_assets.png)
+![El módulo job con un layout y recursos](http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png)
 
 >**TIP**
 >Por defecto, la tarea `generate:project` ha creado tres directorios para los recusos de 
@@ -402,7 +402,7 @@ Vamos a limpiar esto un poco para mostrar sólo un subconjunto de las columnas d
       </table>
     </div>
 
-![Página de inicio](http://www.symfony-project.org/images/jobeet/1_3/04/homepage.png)
+![Página de inicio](http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png)
 
 La función `url_for()` en esta plantilla es un helper symfony que vamos a discutir mañana.
 
@@ -488,7 +488,7 @@ Observa que algunos métodos de acceso de Propel toman argumentos. Como hemos de
 >pertenece al grupo de helper `Text`, que no se carga por defecto, tenemos
 >que cargarlo manualmente utilizando el helper `use_helper()`.
 
-![Página del Puesto de Trabajo](http://www.symfony-project.org/images/jobeet/1_3/04/job.png)
+![Página del Puesto de Trabajo](http://www.symfony-project.org/images/jobeet/1_4/04/job.png)
 
 Los Slots
 ---------
@@ -502,7 +502,7 @@ Sin embargo, para la página de puestos de trabajo, queremos darle más informac
 
 En Symfony, cuando una zona del layout depende de la plantilla para mostrarse, necesitas definir un slot:
 
-![Slots](http://www.symfony-project.org/images/jobeet/1_3/04/layout_slots.png)
+![Slots](http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png)
 
 Añade un slot al layout para permitir que el título sea dinámico:
 
@@ -593,9 +593,9 @@ Si el puesto de trabajo no existe en la base de datos, queremos llevar al usuari
 
 En cuanto a las excepciones, la página que aparece al usuario es diferente en el entorno `prod` del entorno `dev`:
 
-![error 404 en el entorno dev](http://www.symfony-project.org/images/jobeet/1_3/05/404_dev.png)
+![error 404 en el entorno dev](http://www.symfony-project.org/images/jobeet/1_4/05/404_dev.png)
 
-![error 404 en el entorno prod](http://www.symfony-project.org/images/jobeet/1_3/05/404_prod.png)
+![error 404 en el entorno prod](http://www.symfony-project.org/images/jobeet/1_4/05/404_prod.png)
 
 >**NOTE**
 >Antes de implementar el sitio web Jobeet para el servidor de producción, aprenderás
@@ -702,11 +702,11 @@ Hoy hemos visto cómo gestionar hojas de estilo y JavaScripts tanto en el `view.
 >[API documentation](http://www.symfony-project.org/api/1_2/) para aprender más
 >acerca de todas las clases internas de Symfony.
 >**TIP**
->Las clases [`sfAction`](http://www.symfony-project.org/api/1_3/sfAction),
->[`sfRequest`](http://www.symfony-project.org/api/1_3/sfRequest), y
->[`sfResponse`](http://www.symfony-project.org/api/1_3/sfResponse) 
+>Las clases [`sfAction`](http://www.symfony-project.org/api/1_4/sfAction),
+>[`sfRequest`](http://www.symfony-project.org/api/1_4/sfRequest), y
+>[`sfResponse`](http://www.symfony-project.org/api/1_4/sfResponse) 
 >dan muchos otros métodos útiles. No dudes en navegar por la 
->[documentación API](http://www.symfony-project.org/api/1_3/) para aprender más
+>[documentación API](http://www.symfony-project.org/api/1_4/) para aprender más
 >acerca de todas las clases internas de Symfony.
 
 Nos vemos mañana

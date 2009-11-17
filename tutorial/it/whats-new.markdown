@@ -1,23 +1,23 @@
-Che c'è di nuovo in symfony 1.3?
-================================
+Che c'è di nuovo in symfony 1.3/1.4?
+====================================
 
-Questo tutorial è una rapida introduzione tecnica a symfony 1.3.
+Questo tutorial è una rapida introduzione tecnica a symfony 1.3/1.4.
 È pensata per sviluppatori che hanno già lavorato con symfony 1.2 e
-che vogliono conoscere in poco tempo le nuove caratteristiche di symfony 1.3.
+che vogliono conoscere in poco tempo le nuove caratteristiche di symfony 1.3/1.4.
 
-Prima di tutto, si prega di notare che symfony 1.3 è compatibile con PHP 5.2.4
+Prima di tutto, si prega di notare che symfony 1.3/1.4 è compatibile con PHP 5.2.4
 o successivi.
 
 Se si vuole aggiornare dalla versione 1.2, si prega di leggere il file
 [UPGRADE](http://www.symfony-project.org/tutorial/1_3/it/upgrade) che si trova
 nella distribuzione di symfony.
 Vi si troveranno tutte le informazioni necessarie per aggiornare senza
-problemi i propri progetti a symfony 1.3.
+problemi i propri progetti a symfony 1.3/1.4.
 
 Mailer
 ------
 
-Da symfony 1.3, c'è un nuovo mailer predefinito, basato su SwiftMailer 4.1.
+Da symfony 1.3/1.4, c'è un nuovo mailer predefinito, basato su SwiftMailer 4.1.
 
 L'invio di messaggi email è facile, basta usare il metodo `composeAndSend()`
 in un'azione:
@@ -249,7 +249,7 @@ form. Si può accedere al dispatcher da dentro le proprie classi di form tramite
 
 ### `BaseForm`
 
-Ogni nuovo progetto in symfony 1.3 include una classe `BaseForm` che si può
+Ogni nuovo progetto in symfony 1.3/1.4 include una classe `BaseForm` che si può
 usare per estendere il componente Form o per aggiungere funzionalità
 specifiche a livello di progetto. I form generati automaticamente da
 `sfDoctrinePlugin` e `sfPropelPlugin` estendono questa classe. Se si creano
@@ -314,7 +314,7 @@ molto tempo, specialmente quando alcuni test falliscono. Questo perché
 ogni volta che si sistema un test, si dovrebbe rieseguire da capo l'intera lista
 di test per assicurarsi di non aver creato problemi altrove. Ma finché
 i test falliti non sono sistemati, non serve eseguire di nuovo tutti gli
-altri test. Da symfony 1.3, i task `test:all` e `symfony:test` hanno un'opzione
+altri test. Da symfony 1.3/1.4, i task `test:all` e `symfony:test` hanno un'opzione
 `--only-failed` (scorciatoia: `-f`), che forza i task ad eseguire nuovamente
 solo i test falliti durante la precedente esecuzione:
 
@@ -363,7 +363,7 @@ dei fallimenti:
 
 ### Colorazione dell'Output di Lime
 
-Da symfony 1.3, lime si comporta bene riguardo alla colorazione. Questo vuol
+Da symfony 1.3/1.4, lime si comporta bene riguardo alla colorazione. Questo vuol
 dire che si può omettere quasi sempre il secondo parametro del costruttore
 `lime_test`:
 
@@ -465,7 +465,7 @@ per maggiori informazioni).
 Di tanto in tanto, gli sviluppatori hanno bisogno di eseguire l'insieme di test
 di symfony, per verificare che symfony funzioni a dovere sulle loro
 specifiche piattaforme. Finora, erano costretti a conoscere lo script
-`prove.php`, distribuito con symfony, per farlo. Da symfony 1.3, c'è
+`prove.php`, distribuito con symfony, per farlo. Da symfony 1.3/1.4, c'è
 un task `symfony:test`, che lancia l'insieme dei test di symfony dalla
 linea di comando, come ogni altro task:
 
@@ -484,7 +484,7 @@ per una migliore identificazione dei problemi.
 
 ### `generate:project`
 
-Da symfony 1.3, Doctrine è l'ORM predefinito durante l'esecuzione del
+Da symfony 1.3/1.4, Doctrine è l'ORM predefinito durante l'esecuzione del
 task `generate:project`:
 
     $ php /path/to/symfony generate:project pippo
@@ -729,7 +729,7 @@ Symfony prova ad indovinare se la console supporta i colori, quando si usano
 gli strumenti della CLI. Ma a volte symfony si sbaglia; ad esempio quando si
 usa Cygwin (poiché la colorazione è sempre spenta su Windows).
 
-Da symfony 1.3, si può forzare l'uso di colori per l'output, passando l'opzione
+Da symfony 1.3/1.4, si può forzare l'uso di colori per l'output, passando l'opzione
 globale `--color`.
 
 
@@ -752,7 +752,7 @@ alla localizzazione stessa. A tale scopo si può usare `sfCultureInfo->sortArray
 Plugin
 ------
 
-Prima di symfony 1.3, tutti i plugin erano abilitati in modo predefinito, eccetto
+Prima di symfony 1.3/1.4, tutti i plugin erano abilitati in modo predefinito, eccetto
 `sfDoctrinePlugin` e `sfCompat10Plugin`:
 
     [php]
@@ -765,7 +765,7 @@ Prima di symfony 1.3, tutti i plugin erano abilitati in modo predefinito, eccett
       }
     }
 
-Per i nuovi progetti creati con symfony 1.3, i plugin devono essere
+Per i nuovi progetti creati con symfony 1.3/1.4, i plugin devono essere
 esplicitamente abilitati nella classe `ProjectConfiguration` per poter
 essere usati:
 
@@ -790,7 +790,7 @@ nella classe `ProjectConfiguration`.
 >Se si aggiorna un progetto dalla versione 1.2, il vecchio comportamento
 >sarà ancora attivo, perché il task di aggiornamento non modifica il file
 >`ProjectConfiguration`. Il cambio di comportamento è solo per i nuovi
->progetti basati su symfony 1.3.
+>progetti basati su symfony 1.3/1.4.
 
 ### `sfPluginConfiguration::connectTests()`
 
@@ -812,7 +812,7 @@ Impostazioni
 
 ### `sf_file_link_format`
 
-Symfony 1.3 formatta i percorsi dei file come link cliccabili, ovunque sia
+Symfony 1.3/1.4 formatta i percorsi dei file come link cliccabili, ovunque sia
 possibile (ad esempio nel template dell'eccezione). A questo scopo viene
 usato `sf_file_link_format`, se impostato, altrimenti symfony cercherà
 il valore `xdebug.file_link_format` nella configurazione di PHP.

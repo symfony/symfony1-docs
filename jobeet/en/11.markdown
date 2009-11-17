@@ -22,7 +22,7 @@ form framework.
 >The components that are symfony independent form the 
 >**~symfony platform|Symfony Platform~**:
 >
->![The symfony platform](http://www.symfony-project.org/images/jobeet/1_3/11/platform.png)
+>![The symfony platform](http://www.symfony-project.org/images/jobeet/1_4/11/platform.png)
 
 Submitting a Form
 -----------------

@@ -8,7 +8,7 @@ El Modelo Relacional
 
 Los casos de uso que escribimos ayer describen los principales objetos de nuestro proyecto: puestos de trabajo, afiliados, y las categorías. Aquí está el correspondiente diagrama de entidad relación:
 
-![Diagrama de Entidad Relación](http://www.symfony-project.org/images/jobeet/1_3/03/diagram.png)
+![Diagrama de Entidad Relación](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
 Además de las columnas descritas en los casos de uso, también hemos añadido un campo `created_at` a algunas tablas. Symfony reconoce estos campos y establece el valor de la hora actual de sistema cuando un registro es creado. Esto es lo mismo para el campo `updated_at`: su valor se establece siempre a la hora del sistema en que el registro se actualiza.
 
@@ -599,7 +599,7 @@ Ahora puedes probar el módulo job en un navegador:
 
      http://jobeet.localhost/frontend_dev.php/job
 
-![El módulo Job](http://www.symfony-project.org/images/jobeet/1_3/03/job.png)
+![El módulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
 Si intentas editar un puesto de trabajo, tendrás una excepción porque Symfony necesita de un texto que represente una categoría. Un objeto de PHP se representa definiendo el método mágico PHP `__toString()`. El texto de representación de una categoría
@@ -658,7 +658,7 @@ columna descriptiva de nombre como ser, `title`, `name`, `subject`, etc. Si quie
 
 Ahora puedes editar y crear puestos de trabajo. Trata de dejar un campo obligatorio en blanco, o tratar de dar una fecha no válida. Así es, Symfony ha creado básicas reglas de validación analizando el esquema de base de datos.
 
-![Validación](http://www.symfony-project.org/images/jobeet/1_3/03/validation.png)
+![Validación](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
 Nos vemos mañana
 ----------------

@@ -166,11 +166,11 @@ La anterior linea `requirements` fuerza a que el `id` sea un valor numérico. Si
 La Clase Route
 --------------
 
-Cada ruta definida en `routing.yml` es internamente convertida en un objecto de la clase [`sfRoute`](http://www.symfony-project.org/api/1_3/sfRoute). Esta clase se puede cambiar mediante una linea `class` en la definición de la ruta. Si estás familiarizado con el protocolo HTTP, sabes que éste define varios "métodos",
+Cada ruta definida en `routing.yml` es internamente convertida en un objecto de la clase [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute). Esta clase se puede cambiar mediante una linea `class` en la definición de la ruta. Si estás familiarizado con el protocolo HTTP, sabes que éste define varios "métodos",
 como `GET`, `POST`, `HEAD`, `DELETE`, y `PUT`. Los tres primeros cuentan con soporte en todos los navegadores, mientras que los otros dos no.
 
 Para restringir una ruta a sólo la coincidencia con algunos métodos, puedes modificar la clase de enrutamiento a
-[`sfRequestRoute`](http://www.symfony-project.org/api/1_3/sfRequestRoute) y añadir un requisito para la variable virtual `sf_method`:
+[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute) y añadir un requisito para la variable virtual `sf_method`:
 
     [yml]
     job_show_user:
@@ -190,7 +190,7 @@ Para restringir una ruta a sólo la coincidencia con algunos métodos, puedes mo
 El Objecto de la Clase Route
 ----------------------------
 
-La nuevo URI interno para un puesto de trabajo es bastante largo y tedioso de escribir, (`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`), pero como acabamos de aprender en la sección anterior, la clase route puede ser modificada. Para la ruta `job_show_user`, es mejor utilizar [`sfPropelRoute`](http://www.symfony-project.org/api/1_3/sfPropelRoute) ya que la clase está optimizada para las rutas que representan objetos ##ORM## o colecciones de objetos ##ORM##:
+La nuevo URI interno para un puesto de trabajo es bastante largo y tedioso de escribir, (`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`), pero como acabamos de aprender en la sección anterior, la clase route puede ser modificada. Para la ruta `job_show_user`, es mejor utilizar [`sfPropelRoute`](http://www.symfony-project.org/api/1_4/sfPropelRoute) ya que la clase está optimizada para las rutas que representan objetos ##ORM## o colecciones de objetos ##ORM##:
 
     [yml]
     job_show_user:
@@ -304,7 +304,7 @@ Pero esa es sólo la mitad de la historia. La ruta es capaz de generar una URL s
 
 Si intentas obtener un job para un desconocido `id`, verás una página de error 404 pero el mensaje de error ha cambiado:
 
-![404 with sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_3/05/404_propel_route.png)
+![404 with sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png)
 
 Esto es así porque el error 404 ha sido lanzado de forma automática por el método
 `getRoute()`. Así, podemos simplificar el método `executeShow` aún más:
@@ -380,7 +380,7 @@ and `delete`) están aun gestionadas por la ruta `default`:
 
 La ruta `default` es una gran manera de comenzar la codificación sin definir demasiadas rutas. Pero como la ruta actúa como un "catch-all", no puede ser configurada para necesidades específicas.
 
-Como todas las acciones `job` están relacionadas con el modelo de la clase `JobeetJob`, podemos facilmente definir una ruta particular `sfPropelRoute` para cada uno de ellas como ya lo hemos hecho para la acción `show`. Sin embargo, como el módulo `job` define las clásicas siete posibles acciones para un modelo, también podemos utilizar la clase [`sfPropelRouteCollection`](http://www.symfony-project.org/api/1_3/sfPropelRouteCollection). Abre el archivo `routing.yml` y modificalo para que se lea como sigue:
+Como todas las acciones `job` están relacionadas con el modelo de la clase `JobeetJob`, podemos facilmente definir una ruta particular `sfPropelRoute` para cada uno de ellas como ya lo hemos hecho para la acción `show`. Sin embargo, como el módulo `job` define las clásicas siete posibles acciones para un modelo, también podemos utilizar la clase [`sfPropelRouteCollection`](http://www.symfony-project.org/api/1_4/sfPropelRouteCollection). Abre el archivo `routing.yml` y modificalo para que se lea como sigue:
 
     [yml]
     # apps/frontend/config/routing.yml

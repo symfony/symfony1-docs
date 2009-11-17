@@ -29,7 +29,7 @@ symfonyの機能テストはシナリオを簡単に書く方法を提供しま�
 `sfBrowser`クラス
 -----------------
 
-symfonyにおいて、機能テストは[~`sfBrowser`|ブラウザー~](http://www.symfony-project.org/api/1_3/sfBrowser)クラスによって実装される、特別な~ブラウザー~をとおして実行されます。
+symfonyにおいて、機能テストは[~`sfBrowser`|ブラウザー~](http://www.symfony-project.org/api/1_4/sfBrowser)クラスによって実装される、特別な~ブラウザー~をとおして実行されます。
 これはアプリケーション用に仕立てられたブラウザーとしてふるまい、Webサーバーに接続しなくてもアプリケーションに直接接続します。 
 これによってリクエスト前後でsymfonyのすべてのオブジェクトにアクセスできるのでこれらをイントロスペクトしてプログラミング言語でこれらのチェックができます。
 
@@ -79,7 +79,7 @@ symfonyにおいて、機能テストは[~`sfBrowser`|ブラウザー~](http://w
 これはlimeおよび`getResponse()`と`getRequest()`などのメソッドを備える`sfBrowser`で行うことができます。
 symfonyはより優れた方法を提供します。
 
-テストメソッドは別のクラス、[`sfTestFunctional`](http://www.symfony-project.org/api/1_3/sfTestFunctional)によって提供されます。
+テストメソッドは別のクラス、[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)によって提供されます。
 このクラスはコンストラクターで`sfBrowser`インスタンスを受け取ります。
 `sfTestFunctional`クラスは**~テスター~(tester)**オブジェクトのテストをデリゲートします。
 いくつかのテスターがsymfonyに搭載されていますが、独自のものを作ることもできます。
@@ -176,7 +176,7 @@ Jobeetに関しては、それぞれのアプリケーションが独自のサ�
  | `isValid()`        | レスポンスが整形式XMLであるかチェックする(`true`を引数として渡すことでドキュメントの種類のレスポンスをバリデートすることもできます)
 
 >**NOTE**
->後の日程で[テスター](http://www.symfony-project.org/api/1_3/test)クラス(フォーム、ユーザー、キャッシュ、...)をより詳しく説明します。
+>後の日程で[テスター](http://www.symfony-project.org/api/1_4/test)クラス(フォーム、ユーザー、キャッシュ、...)をより詳しく説明します。
 
 機能テストを実行する
 --------------------
@@ -189,7 +189,7 @@ Jobeetに関しては、それぞれのアプリケーションが独自のサ�
 
     $ php symfony test:functional frontend categoryActions
 
-![コマンドラインでのテスト](http://www.symfony-project.org/images/jobeet/1_3/09/cli_tests.png)
+![コマンドラインでのテスト](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
 
 テストデータ
 ------------
@@ -609,7 +609,7 @@ symfonyはグラフィカルなインターフェイスをシミュレートす�
 
 タスクはそれぞれのテストファイルに対して単独の行を出力します:
 
-![機能テストのハーネス](http://www.symfony-project.org/images/jobeet/1_3/09/test_harness.png)
+![機能テストのハーネス](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
 
 テストハーネス
 --------------
@@ -618,7 +618,7 @@ symfonyはグラフィカルなインターフェイスをシミュレートす�
 
     $ php symfony test:all
 
-![テストハーネス](http://www.symfony-project.org/images/jobeet/1_3/09/tests_harness.png)
+![テストハーネス](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
 
 大きなテストスイートがある場合、とりわけテストの一部が通らない場合、変更をするたびにすべてのテストを立ち上げるのはとても時間がかかる可能性があります。 
 これはテストを修正するたびに、何かが壊れていないことを保証するためにテストスイート全体を実行します。

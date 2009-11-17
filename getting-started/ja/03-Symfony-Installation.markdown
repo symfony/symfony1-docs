@@ -33,15 +33,15 @@ symfonyをインストールする必要があります。
 symfonyフレームワークにはいくつかの安定ブランチが存在しsymfony公式サイトの[インストールの手引きのページ](http://www.symfony-project.org/installation)を読みインストールしたいブランチを選ぶ必要があります。
 
 
-たとえば[symfony 1.2](http://www.symfony-project.org/installation/1_3)など選んだバージョン用のインストールの手引きのページに進みます。
+たとえば[symfony 1.2](http://www.symfony-project.org/installation/1_4)など選んだバージョン用のインストールの手引きのページに進みます。
 
 "**Source Download**"セクションの下で、`.tgz`フォーマットもしくは`.zip`フォーマットでアーカイブが見つかります。
 アーカイブをダウンロードし`lib/vendor/`ディレクトリの下に設置し再度展開します:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.3.0.tgz
-    $ mv symfony-1.3.0 symfony
-    $ rm symfony-1.3.0.tgz
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
 
 Windows環境ではzipファイルをエクスプローラで展開できます。
 ディレクトリを`symfony`にリネームすると、ディレクトリのフルパスは`c:\dev\sfproject\lib\vendor\symfony`になります。
@@ -49,7 +49,7 @@ Windows環境ではzipファイルをエクスプローラで展開できます�
 >**TIP**
 >Subversionを使う場合、プロジェクトの`lib/vendor/`にsymfonyを置き、安定ブランチのバグ修正を自動的に反映させるために`svn:externals`プロパティを使うほうがよいです:
 >
->     http://svn.symfony-project.com/branches/1.3/
+>     http://svn.symfony-project.com/branches/1.4/
 
 symfonyのバージョンを表示するコマンドを使うことでsymfonyが正しくインストールされていることを確認します(大文字の`V`に注意):
 

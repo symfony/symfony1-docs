@@ -225,7 +225,7 @@ Route Class
 -----------
 
 Each route defined in ~`routing.yml`~ is internally converted to an object of
-class [`sfRoute`](http://www.symfony-project.org/api/1_3/sfRoute). This class
+class [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute). This class
 can be changed by defining a `class` entry in the route definition. If you are
 familiar with the ~HTTP~ protocol, you know that it defines several "methods",
 like `~GET|GET (HTTP Method)~`, `~POST|POST (HTTP Method)~`, `~HEAD|HEAD (HTTP
@@ -234,7 +234,7 @@ first three are supported by all browsers, while the other two are not.
 
 To restrict a route to only match for certain request methods, you can change
 the route class to
-[`sfRequestRoute`](http://www.symfony-project.org/api/1_3/sfRequestRoute) and
+[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute) and
 add a requirement for the virtual `sf_method` variable:
 
     [yml]
@@ -259,7 +259,7 @@ The new internal URI for a job is quite long and tedious to write
 (`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`),
 but as we have just learned in the previous section, the route class can be
 changed. For the `job_show_user` route, it is better to use
-[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_3/sfPropelRoute) as
+[~`sfPropelRoute`~](http://www.symfony-project.org/api/1_4/sfPropelRoute) as
 the class is optimized for routes that represent ##ORM## objects or
 collections of ##ORM## objects:
 
@@ -395,7 +395,7 @@ method to use the route object to retrieve the `Jobeet` object:
 If you try to get a job for an unknown `id`, you will see a 404 error page but
 the error message has changed:
 
-![404 with sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_3/05/404_propel_route.png)
+![404 with sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png)
 
 That's because the ~404|404 Error~ error has been thrown for you automatically
 by the `getRoute()` method. So, we can simplify the `executeShow` method even
@@ -480,7 +480,7 @@ As all `job` actions are related to the `JobeetJob` model class, we can easily
 define a custom ~`sfPropelRoute`~ route for each as we have already done for
 the `show` action. But as the `job` module defines the classic seven actions
 possible for a model, we can also use the
-[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_3/sfPropelRouteCollection)
+[~`sfPropelRouteCollection`~](http://www.symfony-project.org/api/1_4/sfPropelRouteCollection)
 class. Open the `routing.yml` file and modify it to read as follows:
 
     [yml]

@@ -20,7 +20,7 @@ framework de formularios.
 >
 >Los componentes symfony-independentes de la **Plataforma Symfony** son:
 >
->![La Plataforma Symfony](http://www.symfony-project.org/images/jobeet/1_3/11/platform.png)
+>![La Plataforma Symfony](http://www.symfony-project.org/images/jobeet/1_4/11/platform.png)
 
 Enviando un Formulario
 ----------------------

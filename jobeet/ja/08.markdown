@@ -119,7 +119,7 @@ limeフレームワークで書かれたユニットテストは同じコード�
 
     $ php symfony test:unit Jobeet
 
-![コマンドラインでテストする](http://www.symfony-project.org/images/jobeet/1_3/08/cli_tests.png)
+![コマンドラインでテストする](http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png)
 
 >**Note**:
 >不幸にして~Windows~のコマンドラインはテストの結果を赤もしくは緑色でハイライトできません。
@@ -161,7 +161,7 @@ ASCIIではないすべての文字列をダッシュ(`-`)に変換するもし�
 すべてのテストが期待通りにパスする場合、"*緑色のバー*"を楽しめます。 
 そうでなければ、悪名高い"*赤いバー*"がテストが通らなくて、それらを修正するように警告します。
 
-![slugify()テスト](http://www.symfony-project.org/images/jobeet/1_3/08/slugify.png)
+![slugify()テスト](http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png)
 
 テストが失敗すると、失敗した理由に関する情報が出力されます; 
 しかし1つのファイルで数百のテストがある場合、どれが失敗するふるまいなのか素早く特定するのが困難になる可能性があります。
@@ -190,7 +190,7 @@ ASCIIではないすべての文字列をダッシュ(`-`)に変換するもし�
     $t->is(Jobeet::slugify('paris,france'), 'paris-france',
      ➥ '::slugify() replaces non-ASCII characters by a -');
 
-![メッセージつきのslugify()テスト](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_doc.png)
+![メッセージつきのslugify()テスト](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
 テストの説明文字列は何をテストするのか理解しようとするときにも貴重なツールです。
 テストの文字列でパターンがわかります: 
@@ -273,7 +273,7 @@ ASCIIではないすべての文字列をダッシュ(`-`)に変換するもし�
     $t->is(Jobeet::slugify(' - '), 'n-a',
      ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
 
-![slugify()のバグ](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_bug.png)
+![slugify()のバグ](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png)
 
 テストがパスしないことをチェックした後で、`Jobeet`クラスを編集して空の文字列のチェックをメソッドの末端に移動させます:
 
@@ -432,7 +432,7 @@ ASCIIではないすべての文字列をダッシュ(`-`)に変換するもし�
 3日目において、`propel:data-load`~タスク~の使い方を学んだとおり、テストに関しては、データベースを既知の状態するためにテストを実行するたびにデータをリロードする必要があります。
 
 <propel>
-`propel:data-load`タスクは内部でデータをロードするために[`sfPropelData`](http://www.symfony-project.org/api/1_3/sfPropelData)クラスを使います:
+`propel:data-load`タスクは内部でデータをロードするために[`sfPropelData`](http://www.symfony-project.org/api/1_4/sfPropelData)クラスを使います:
 
     [php]
     $loader = new sfPropelData();
@@ -617,7 +617,7 @@ ASCIIではないすべての文字列をダッシュ(`-`)に変換するもし�
 
 タスクはそれぞれのテストファイルがパスするか失敗するかを出力します:
 
-![ユニットテストのハーネス](http://www.symfony-project.org/images/jobeet/1_3/08/test_harness.png)
+![ユニットテストのハーネス](http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png)
 
 >**TIP**
 >`test:unit`タスクがファイルの"~あいまいなステータス~"を返すとき、これは終わる前に停止したスクリプトを示します。

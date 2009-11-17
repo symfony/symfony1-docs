@@ -137,7 +137,7 @@ PHPのコンフィギュレーションはOSごと、Linuxディストリビュ�
 
 それから、次のURLからsymfonyのコンフィギュレーションチェッカースクリプトをダウンロードします:
 
-    http://sf-to.org/1.3/check.php
+    http://sf-to.org/1.4/check.php
 
 スクリプトは現在のWeb公開ディレクトリのルートのどこかに保存してください。
 
@@ -230,7 +230,7 @@ Subversionを使うのであれば、プロジェクトの`lib/vendor/`ディレ
 
 慎重に利用するのであれば、プロジェクトを特定のリリースに結びつけます(subversionタグ):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 新しいリリースが公開されるときに(symfonyの公式
 [blog](http://www.symfony-project.org/blog/)でアナウンスされるたびに)、URLを新しいバージョンに変更する必要があります。

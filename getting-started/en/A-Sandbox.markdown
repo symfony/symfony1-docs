@@ -20,12 +20,12 @@ practices.
 >section to learn how to change the database used by the sandbox.
 
 You can download the symfony sandbox in `.tgz` or `.zip` format from the
-symfony [installation page](http://www.symfony-project.org/installation/1_3)
+symfony [installation page](http://www.symfony-project.org/installation/1_4)
 or at the following URLs:
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.tgz
+    http://www.symfony-project.org/get/sf_sandbox_1_4.tgz
 
-    http://www.symfony-project.org/get/sf_sandbox_1_3.zip
+    http://www.symfony-project.org/get/sf_sandbox_1_4.zip
 
 Un-archive the files somewhere under your web root directory, and you are
 done. Your symfony project is now accessible by requesting the `web/index.php`

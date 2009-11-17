@@ -12,7 +12,7 @@ is fully integrated with symfony, with some cool features added on top of its
 default features.
 
 >**NOTE**
->Symfony 1.3 uses ~Swift Mailer~ version 4.1.
+>Symfony 1.3/1.4 uses ~Swift Mailer~ version 4.1.
 
 Sending simple Emails
 ---------------------
