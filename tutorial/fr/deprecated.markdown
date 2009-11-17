@@ -27,6 +27,9 @@ ou versions antérieures, et seront retirées dans Symfony 1.4:
 
   * `sfToolkit::getTmpDir()` : Vous pouvez remplacer toutes les occurences de cette 
     méthode par `sys_get_temp_dir()`
+ 
+  * `sfToolkit::removeArrayValueForPath()`, 
+    `sfToolkit::hasArrayValueForPath()`, et `getArrayValueForPathByRef()`
 
   * `sfValidatorBase::setInvalidMessage()` : Vous pouvez remplacer tous les appels à cette méthode 
     par un appel à la nouvelle méthode `sfValidatorBase::setDefaultMessage()`
