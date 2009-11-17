@@ -35,7 +35,6 @@ Paramètres
 
   * `.settings`
 
-    * [`asset_timestamp`](#chapter_04_sub_asset_timestamp)
     * [`cache`](#chapter_04_sub_cache)
     * [`charset`](#chapter_04_sub_charset)
     * [`check_lock`](#chapter_04_sub_check_lock)
@@ -239,13 +238,6 @@ Le paramètre `cache` active ou désactive le modèle de mise en cache.
 Le paramètre `etag` active ou désactive la génération automatique d'en-têtes `ETag` HTTP.
 Le ETag généré par symfony est un simple MD5 du contenu des
 réponses.
-
-### ~`asset_timestamp`~
-
-*Par défaut* : `false`
-
-Le paramètre `asset_timestamp` active automatiquement l'ajout d'un horodatage pour tous les
-actifs à l'intérieur de `web_dir` lorsque qu'ils sont utilisés avec le `AssetHelper`.
 
 ### ~`i18n`~
 

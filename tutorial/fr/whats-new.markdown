@@ -808,16 +808,6 @@ Par exemple, si vous voulez ouvrir des fichiers dans TextMate, ajoutez ceci à
 L'espace réservé `%f` sera remplacé par le chemin absolu du fichier et l'espace
 réservé `%l` sera remplacé par le numéro de ligne.
 
-### `sf_asset_timestamp`
-
-Symfony 1.3/1.4 permet d'ajouter automatiquement un horodatage de tous les actifs à l'intérieur du
-`sf_web_dir` par la mise de `sf_asset_timestamp` à `true`. Ce faisant, vous pouvez utiliser
-par exemple `mod_expires` pour que les actifs n'expirent jamais. Pour livrer une nouvelle version
-de l'actif, symfony vérifie l'heure de modification et change un paramètre GET.
-Si cela a changé, le navigateur va charger la nouvelle ressource.
-Si vous n'avez que peu d'actifs que vous voulez pour la version, vous devez le faire
-manuellement, car la modification par le temps pour vérifier tous les actifs, sera un peu plus lent.
-
 Intégration de Doctrine
 --------------------
 
