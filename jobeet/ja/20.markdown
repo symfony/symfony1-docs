@@ -1,0 +1,822 @@
+20日目: プラグイン
+==================
+
+昨日は、symfonyアプリケーションの国際化とローカライゼーションのしかたを学びました。
+再度繰り返しますが、ICU標準とたくさんのヘルパーのおかげで、symfonyではこの作業は本当に楽です。
+
+今日は、~プラグイン~は何ができ、プラグインに何をまとめることができるのか、何のために使うことができるのかについて説明します。
+
+プラグイン
+----------
+
+### symfonyのプラグイン
+
+symfonyプラグインはプロジェクトファイルのサブセットのパッケージを作成して配布する方法を提供します。
+プロジェクトのように、プラグインはクラス、ヘルパー、設定、タスク、モジュール、スキーマとアセットさえも格納できます。
+
+### ~プライベートプラグイン~
+
+プラグインの最初の使い方は複数のアプリケーションもしくは異なるプロジェクトの間でコードを楽に共有できるようにすることです。
+symfonyアプリケーションはモデルのみを共有することを思い思い出してください。
+プラグインはさらに複数のアプリケーションの間でコンポーネントを共有する方法を提供します。
+
+異なるプロジェクトもしくは同じモジュールの同じスキーマを~再利用する|コードの再利用~場合、これらをプラグインに移動させます。
+プラグインは単なるディレクトリなので、SVNリポジトリを作り`svn:externals`を指定するもしくは1つのプロジェクトから他のプロジェクトにファイルをコピーすることでプラグインを移動させることができます。
+
+私たちはこれらを"プライベート(非公開の)プラグイン"と呼んでいます。
+これらの用途は1人の開発者もしくは企業に限定されているからです。
+これらは公に利用できません。
+
+>**TIP**
+>プライベートプラグインから~パッケージ|パッケージ作成~を作ることもできます。
+>独自のsymfonyプラグインチャンネルを作成し、`plugin:install`タスクをとおしてこれらをインストールします。
+
+### ~公開プラグイン~
+
+公開プラグインは~コミュニティ~でダウンロードとインストールができます。
+<propel>
+このチュートリアルでは、ひとくみの公開プラグイン: `sfGuardPlugin`と`sfFormExtraPlugin`を使いました。
+</propel>
+<doctrine>
+このチュートリアルでは、ひとくみの公開プラグイン: `sfDoctrineGuardPlugin`と`sfFormExtraPlugin`を使いました。
+</doctrine>
+
+これらはプライベートプラグインとまったく同じです。
+唯一の違いは誰でもプロジェクトにインストールできることです。
+後で公開プラグインを公開してsymfonyの公式サイトでホストする方法を見ることになります。
+
+### ~コードを編成する|コードの編成~異なる方法
+
+プラグインを考え出す方法とそれらの使い方はいろいろあります。
+再利用と共有を忘れましょう。プラグインはあなたのコードを編成するための異なる方法として利用できます。
+レイヤーごとにファイルを編成する代わりに: `lib/model/`ディレクトリのすべてのモデル、`templates/`ディレクトリのテンプレートなど; ファイルは機能ごとにまとめられます: すべてのjobファイルのセット(モデル、モジュール、テンプレート)、すべてのCMSファイルのセットなど。
+
+プラグインのファイル構造
+------------------------
+
+プラグインはファイルの性質に応じて、あらかじめ定義された~構造~にわかれるファイルを持つ単なるディレクトリ構造です。
+今日は、Jobeet用に書いてきた大部分のコードを`sfJobeetPlugin`に移動させます。
+使用する基本的なレイヤーは次の通りです:
+
+    sfJobeetPlugin/
+<propel>
+      config/
+        sfJobeetPluginConfiguration.class.php // プラグインの初期化
+        schema.yml                            // データベーススキーマ
+        routing.yml                           // ルーティング
+</propel>
+<doctrine>
+      config/
+        sfJobeetPluginConfiguration.class.php // プラグインの初期化
+        routing.yml                           // ルーティング
+        doctrine/
+          schema.yml                          // データベーススキーマ
+</doctrine>
+      lib/
+        Jobeet.class.php                      // クラス
+        helper/                               // ヘルパー
+        filter/                               // フィルタークラス
+        form/                                 // フォームクラス
+        model/                                // モデルクラス
+        task/                                 // タスク
+      modules/
+        job/                                  // モジュール
+          actions/
+          config/
+          templates/
+      web/                                    // JS、CSSと画像のようなアセット
+
+Jobeetプラグイン
+----------------
+
+プラグインのブートストラップはシンプルで`plugins/`の下で新しいディレクトリを作ります。
+Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
+
+    $ mkdir plugins/sfJobeetPlugin
+
+>**NOTE**
+>すべてのプラグインの名前は`Plugin`で終わらなければなりません。
+>義務ではありませんが、~プレフィックス~として`sf`をつけるのはよい習慣です。
+
+### Model
+
+<propel>
+最初に、`config/schema.yml`ファイルを`plugins/sfJobeetPlugin/config/`に移動させます:
+</propel>
+<doctrine>
+最初に、`config/doctrine/schema.yml`ファイルを`plugins/sfJobeetPlugin/config/`に移動させます:
+</doctrine>
+
+    $ mkdir plugins/sfJobeetPlugin/config/
+<propel>
+    $ mv config/schema.yml plugins/sfJobeetPlugin/config/schema.yml
+</propel>
+<doctrine>
+    $ mkdir plugins/sfJobeetPlugin/config/doctrine
+    $ mv config/doctrine/schema.yml plugins/sfJobeetPlugin/config/doctrine/schema.yml
+</doctrine>
+
+>**NOTE**
+>すべてのコマンドはUnix系環境のものです。
+>Windowsを利用しているのであれば、Explorerでファイルをドラッグ＆ドロップできます。
+>コードを管理するのに~Subversion~、もしくは他のツールを使う場合、
+>これらが提供する組み込みのツールを使います(ファイルを移動させる`svn mv`など)。
+
+モデル、フォーム、フィルターファイルを`plugins/sfJobeetPlugin/lib/`に移動させます:
+
+    $ mkdir plugins/sfJobeetPlugin/lib/
+    $ mv lib/model/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/form/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<doctrine>
+モデル、フォームとフィルターを移動させた後でクラスを抽象クラスにし、リネームしてプレフィックスとして`Plugin`をつけなければなりません。
+
+>**TIP**
+>~プレフィックス~の`Plugin`をつけるのは自動生成クラスのみですべてのクラスではありません。
+>たとえば手で書いたクラスにはプレフィックスをつけないでください。
+>プレフィックスが必要なのは自動生成されたクラスのみです。
+
+`JobeetAffiliate`と`JobeetAffiliateTable`クラスを移動させる例は次の通りです。
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
+
+コードは次のように更新されます:
+
+    [php]
+    abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function preValidate($event)
+      {
+        $object = $event->getInvoker();
+
+        if (!$object->getToken())
+        {
+          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+        }
+      }
+
+      // ...
+    }
+
+`JobeetAffiliateTable`クラスを移動させましょう:
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliateTable.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliateTable.class.php
+
+クラスの定義は次のようになります:
+
+    [php]
+    abstract class PluginJobeetAffiliateTable extends Doctrine_Table
+    {
+      // ...
+    }
+
+フォームとフィルタークラスにも同じことを行います。
+`Plugin`をプレフィックスとしてつけるためにこれらをリネームします。
+
+`form`、`filter`と`model`ディレクトリに対して`plugins/sfJobeetPlugin/lib/*/doctrine/`の`base`ディレクトリを必ず削除してください:
+
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/base
+
+フォーム、フィルターとモデルクラスを移動させ、リネームして一部を削除したのですべてのクラスをリビルドするタスクを実行します:
+
+    $ php symfony doctrine:build --all-classes
+
+いくつかの新しく作成されたディレクトリが`lib/model/doctrine/sfJobeetPlugin/`に格納されるスキーマから作成されたモデルを保有こしていることがわかります。
+
+このディレクトリはスキーマから生成されたトップレベルのモデルと基底クラスを含みます。
+たとえば`JobeetJob`モデルは次のようなクラス構造を持ちます:
+
+  * `JobeetJob` (`PluginJobeetJob`を継承)
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
+    すべてのプロジェクトの機能が設定できるトップレベルのクラスです。
+    ここは機能を追加したりプラグインモデルに付属する機能をオーバーライドできる場所です。
+
+  * `PluginJobeetJob` (`BaseJobeetJob`を継承)
+    `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
+    このクラスはプラグイン固有の機能すべてを格納します。
+    `JobeetJob`クラスを修正することでこのクラスと基底クラスをオーバーライドできます。
+
+  * `BaseJobeetJob` (`sfDoctrineRecord`を継承)
+    `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
+    `doctrine:build --model`を実行するたびにYAMLスキーマファイルから自動生成される基底クラス。
+
+  * `JobeetJobTable` (`PluginJobeetJobTable`を継承)
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+     `Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンスであることを除いて`JobeetJob`クラスと同じ
+
+  * `PluginJobeetJobTable` (`Doctrine_Table`を継承)
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+    このクラスは`Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンス用のプラグイン固有の機能をすべて含みます
+
+この生成された構造によってトップレベルの`JobeetJob`クラスを編集することでプラグインのモデルをカスタマイズできます。
+`setTableDefinition()`と`setUp()`メソッドをオーバーライドすることでスキーマとカラムをカスタマイズし、リレーションを追加できます。
+
+>**NOTE**
+>フォームクラスを移動させるとき、かならず`configure()`メソッドを`setup()`メソッドに変更し`parent::setup()`を呼び出してください。
+>下記のコードは例です。
+>
+>     [php]
+>     abstract class PluginJobeetAffiliateForm extends BaseJobeetAffiliateForm
+>     {
+>       public function setup()
+>       {
+>         parent::setup();
+>       }
+>       
+>       // ...
+>     }
+</doctrine>
+
+<propel>
+`propel:build-model`タスクを実行する場合、symfonyは`lib/model/`の下でファイルを生成しますが、これは私たちが望むことではありません。
+Propelの出力ディレクトリは`package`オプションを追加することで設定できます。
+`schema.yml`を開き次のコンフィギュレーションを追加します:
+
+    [yml]
+    # plugins/sfJobeetPlugin/config/schema.yml
+    propel:
+      _attributes:      { package: plugins.sfJobeetPlugin.lib.model }
+
+これでsymfonyは`plugins/sfJobeetPlugin/lib/model/`ディレクトリの下でファイルを生成します。
+フォームとフィルタービルダーはファイルを生成する際にこの設定も考慮します。
+
+`propel:build-sql`タスクはテーブルを作成するSQLファイルを生成します。
+ファイルはパッケージの名前からつけられるので、現在のファイルを削除します:
+
+    $ rm data/sql/lib.model.schema.sql
+
+`propel:build-all-load`を実行する場合、symfonyはプラグインの`lib/model/`ディレクトリの下でファイルを生成します:
+
+    $ php symfony propel:build-all-load --no-confirmation
+
+タスクを実行した後で、`lib/model/`ディレクトリが作成されなかったことを確認します。
+タスクは`lib/form/`と`lib/filter/`ディレクトリを作成しました。
+これらは両方ともプロジェクトのPropelフォーム用の基底クラスを格納します。
+
+これらのファイルはプロジェクトに対してグローバルなので、プラグインからこれらのファイルを削除します:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseFormPropel.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/BaseFormFilterPropel.class.php
+</propel>
+<doctrine>
+すべてのDoctrineフォームが基底クラスを持たないことを確認する必要があります。
+これらのファイルはプロジェクトに対してグローバルであり`doctrine:build --forms`と`doctrine:build --filters`で再生成されます。
+
+プラグインからファイルを削除します:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/BaseFormDoctrine.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/BaseFormFilterDoctrine.class.php
+</doctrine>
+
+`Jobeet.class.php`ファイルをプラグインに移動させることもできます:
+
+    $ mv lib/Jobeet.class.php plugins/sfJobeetPlugin/lib/
+
+ファイルを移動させたので、キャッシュをクリアします:
+
+    $ php symfony cc
+
+>**TIP**
+>APCのようなPHPアクセラレーターを利用している場合はこの時点で動作がおかしくなるので、Apacheを再起動させます。
+
+すべてのモデルファイルはプラグインに移動させたので、すべてがきちんと動作するのか確認するためにテストを実行します:
+
+    $ php symfony test:all
+
+### ControllerとView
+
+次のロジックのステップはモジュールをプラグインに移動させることです。
+モジュールの名前の衝突を避けるために、モジュールの名前に~プレフィックス~としてプラグインの名前をつけるのは常によい習慣です:
+
+    $ mkdir plugins/sfJobeetPlugin/modules/
+    $ mv apps/frontend/modules/affiliate plugins/sfJobeetPlugin/modules/sfJobeetAffiliate
+    $ mv apps/frontend/modules/api plugins/sfJobeetPlugin/modules/sfJobeetApi
+    $ mv apps/frontend/modules/category plugins/sfJobeetPlugin/modules/sfJobeetCategory
+    $ mv apps/frontend/modules/job plugins/sfJobeetPlugin/modules/sfJobeetJob
+    $ mv apps/frontend/modules/language plugins/sfJobeetPlugin/modules/sfJobeetLanguage
+
+それぞれのモジュールに対して、すべての`actions.class.php`と`components.class.php`ファイルのクラスの名前を変更することも必要です(たとえば、`affiliateActions`クラスは`sfJobeetAffiliateActions`にリネームする必要があります)。
+
+次のテンプレートの`include_partial()`と`include_component()`呼び出しも変更しなければなりません:
+
+  * `sfJobeetAffiliate/templates/_form.php` (`affiliate`を`sfJobeetAffiliate`に変更する)
+  * `sfJobeetCategory/templates/showSuccess.atom.php`
+  * `sfJobeetCategory/templates/showSuccess.php`
+  * `sfJobeetJob/templates/indexSuccess.atom.php`
+  * `sfJobeetJob/templates/indexSuccess.php`
+  * `sfJobeetJob/templates/searchSuccess.php`
+  * `sfJobeetJob/templates/showSuccess.php`
+  * `apps/frontend/templates/layout.php`
+
+`search`と`delete`アクションを更新します:
+
+    [php]
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
+    class sfJobeetJobActions extends sfActions
+    {
+      public function executeSearch(sfWebRequest $request)
+      {
+        if (!$query = $request->getParameter('query'))
+        {
+          return $this->forward('sfJobeetJob', 'index');
+        }
+
+<propel>
+        $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+        $this->jobs = Doctrine::getTable('JobeetJob')
+          ➥ ->getForLuceneQuery($query);
+</doctrine>
+
+        if ($request->isXmlHttpRequest())
+        {
+          if ('*' == $query || !$this->jobs)
+          {
+            return $this->renderText('No results.');
+          }
+          else
+          {
+            return $this->renderPartial('sfJobeetJob/list',
+             ➥ array('jobs' => $this->jobs));
+          }
+        }
+      }
+
+      public function executeDelete(sfWebRequest $request)
+      {
+        $request->checkCSRFProtection();
+
+        $jobeet_job = $this->getRoute()->getObject();
+        $jobeet_job->delete();
+
+        $this->redirect('sfJobeetJob/index');
+      }
+
+      // ...
+    }
+
+最後に、これらの修正が考慮されるように`routing.yml`ファイルを修正します:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    affiliate:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetAffiliate
+        actions:        [new, create]
+        object_actions: { wait: GET }
+        prefix_path:    /:sf_culture/affiliate
+        module:         sfJobeetAffiliate
+      requirements:
+        sf_culture: (?:fr|en)
+
+    api_jobs:
+      url:     /api/:token/jobs.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetApi, action: list }
+      options: { model: JobeetJob, type: list, method: getForToken }
+      requirements:
+        sf_format: (?:xml|json|yaml)
+
+    category:
+      url:     /:sf_culture/category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetCategory, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object, method: doSelectForSlug }
+      requirements:
+        sf_format: (?:html|atom)
+        sf_culture: (?:fr|en)
+
+    job_search:
+      url:   /:sf_culture/search
+      param: { module: sfJobeetJob, action: search }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    job:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: PUT, extend: PUT }
+        prefix_path:    /:sf_culture/job
+        module:         sfJobeetJob
+      requirements:
+        token: \w+
+        sf_culture: (?:fr|en)
+
+    job_show_user:
+      url:     /:sf_culture/job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+<propel>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_criteria: doSelectActive
+</propel>
+<doctrine>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_query: retrieveActiveJob
+</doctrine>
+      param:   { module: sfJobeetJob, action: show }
+      requirements:
+        id:        \d+
+        sf_method: GET
+        sf_culture: (?:fr|en)
+
+    change_language:
+      url:   /change_language
+      param: { module: sfJobeetLanguage, action: changeLanguage }
+
+    localized_homepage:
+      url:   /:sf_culture/
+      param: { module: sfJobeetJob, action: index }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    homepage:
+      url:   /
+      param: { module: sfJobeetJob, action: index }
+
+最後に、`plugin:install`タスクを通してインストールされなかったので、`ProjectConfiguration.class.php`でプラグインを手作業で有効にします:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+<propel>
+        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</propel>
+<doctrine>
+        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</doctrine>
+      }
+    }
+
+JobeetのWebサイトを見ようとすると、モジュールが有効にされていないことを知らせる例外が表示されます。
+プラグインはプロジェクトのすべてのアプリケーションの間で共有されるので、アプリケーションに必要なモジュールを`settings.yml`設定ファイルで有効にする必要があります:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules:
+          - default
+          - sfJobeetAffiliate
+          - sfJobeetApi
+          - sfJobeetCategory
+          - sfJobeetJob
+          - sfJobeetLanguage
+
+マイグレーションの最後のステップはモジュールの名前に対してテストする機能テストを修正することです。
+
+### タスク
+
+タスクはプラグインに簡単に移動させることができます:
+
+    $ mv lib/task plugins/sfJobeetPlugin/lib/
+
+### 国際化ファイル
+
+プラグインはXLIFFファイルも格納できます:
+
+    $ mv apps/frontend/i18n plugins/sfJobeetPlugin/
+
+### ルーティング
+
+プラグインはルーティングルールも格納できます:
+
+    $ mv apps/frontend/config/routing.yml plugins/sfJobeetPlugin/config/
+
+### アセット
+
+少し直感に反していますが、プラグインは、画像、スタイルシートとJavaScriptのようなWebアセットも格納できます。
+Jobeetプラグインを配布したくないので、本当に意味がありませんが、`plugins/sfJobeetPlugin/web/`ディレクトリを作ることで実現できます。
+
+プラグインのアセットはブラウザーから閲覧可能なプロジェクトの`web/`ディレクトリからアクセスできなければなりません。
+`plugin:publish-assets`はUnixシステムではシンボリックリンクの作成、Windowsプラットフォームではファイルをコピーすることでこれに対処します:
+
+    $ php symfony plugin:publish-assets
+
+### ユーザー
+
+求人履歴を扱う`myUser`クラスメソッドを移動させることは少し手間がかかります。
+`JobeetUser`クラスを作成し`myUser`を継承させることもできます。
+しかし、とりわけいくつかのプラグインが新しいメソッドをクラスに追加したい場合、ベターな方法があります。
+
+リスニングできるライフサイクルの間にsymfonyのコアオブジェクトはイベントを通知します。
+我々の事例では、未定義のメソッドが`sfUser`オブジェクトに呼び出されるときに起きる`user.method_not_found`イベントをリスニングする必要があります。
+
+symfonyが初期化されるときにプラグインのコンフィギュレーションクラスがある場合、すべてのプラグインも初期化されます:
+
+    [php]
+    // plugins/sfJobeetPlugin/config/sfJobeetPluginConfiguration.class.php
+    class sfJobeetPluginConfiguration extends sfPluginConfiguration
+    {
+      public function initialize()
+      {
+        $this->dispatcher->connect('user.method_not_found', array('JobeetUser', 'methodNotFound'));
+      }
+    }
+
+イベントの通知はイベントディスパッチャーオブジェクトである[`sfEventDispatcher`](http://www.symfony-project.org/api/1_3/sfEventDispatcher)によって管理されます。
+`connect()`メソッドを呼び出せばリスナーが登録されます。
+`connect()`メソッドはイベントの名前をPHP callableに結びつけます。
+
+>**NOTE**
+>[PHP callable](http://www.php.net/manual/ja/function.is-callable.php)はPHP変数で`call_user_func()`関数によって使われ`is_callable()`関数に渡されるときに`true`を返します。
+>文字列は関数を表し、配列はオブジェクトメソッドもしくはクラスメソッドを表します。
+
+上記のコードによって、`myUser`オブジェクトはメソッドを見つけられないときは`JobeetUser`クラスの`methodNotFound()`スタティックメソッドを呼び出します。
+見つからないメソッドを処理するもしくは処理しないのは`methodNotFound()`メソッド次第です。
+
+`myUser`クラスからすべてのメソッドを削除し`JobeetUser`クラスを作成します:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+    }
+
+    // plugins/sfJobeetPlugin/lib/JobeetUser.class.php
+    class JobeetUser
+    {
+      static public function methodNotFound(sfEvent $event)
+      {
+        if (method_exists('JobeetUser', $event['method']))
+        {
+          $event->setReturnValue(call_user_func_array(
+            array('JobeetUser', $event['method']),
+            array_merge(array($event->getSubject()), $event['arguments'])
+          ));
+
+          return true;
+        }
+      }
+
+      static public function isFirstRequest(sfUser $user, $boolean = null)
+      {
+        if (is_null($boolean))
+        {
+          return $user->getAttribute('first_request', true);
+        }
+        else
+        {
+          $user->setAttribute('first_request', $boolean);
+        }
+      }
+
+      static public function addJobToHistory(sfUser $user, JobeetJob $job)
+      {
+        $ids = $user->getAttribute('job_history', array());
+
+        if (!in_array($job->getId(), $ids))
+        {
+          array_unshift($ids, $job->getId());
+          $user->setAttribute('job_history', array_slice($ids, 0, 3));
+        }
+      }
+
+      static public function getJobHistory(sfUser $user)
+      {
+<propel>
+        return JobeetJobPeer::retrieveByPks($user->getAttribute('job_history', array()));
+</propel>
+<doctrine>
+        $ids = $user->getAttribute('job_history', array());
+
+        if (!empty($ids))
+        {
+          return Doctrine::getTable('JobeetJob')
+            ->createQuery('a')
+            ->whereIn('a.id', $ids)
+            ->execute();
+        } else {
+          return array();
+        }
+</doctrine>
+      }
+
+      static public function resetJobHistory(sfUser $user)
+      {
+        $user->getAttributeHolder()->remove('job_history');
+      }
+    }
+
+ディスパッチャが`methodNotFound()`メソッドを呼び出すとき、[`sfEvent`](http://www.symfony-project.org/api/1_3/sfEvent)オブジェクトを渡します。
+
+`JobeetUser`クラスにメソッドが存在する場合、このメソッドが呼び出され、その後で戻り値は通知元オブジェクトに返されます。 
+そうではない場合、symfonyは次に登録されたリスナーを試すもしくは例外を投げます。
+
+`getSubject()`メソッドはイベントの通知元オブジェクトを返します。
+この場合現在の`myUser`オブジェクトです。
+
+### デフォルト構造 vs プラグインアーキテクチャ
+
+プラグインのアーキテクチャを利用することで異なる方法でコードを編成できます:
+
+![プラグインのアーキテクチャ](http://www.symfony-project.org/images/jobeet/1_3/20/plugin_architecture.png)
+
+プラグインを使う
+----------------
+
+新しい機能の実装を始めるとき、もしくはWebの古典的な問題を解決しようとする場合、おそらく誰かが同じ問題をすでに解決していてsymfonyのプラグインとして解決方法をパッケージにしています。
+symfonyの公開プラグインを探すには、symfony公式サイトの[プラグインセクション](http://www.symfony-project.org/plugins/)に移動します。
+
+プラグインはディレクトリに内蔵されるので、インストールする方法は複数あります:
+
+  * `plugin:install`タスクを使う(プラグインの開発者がプラグインパッケージを作りsymfonyの公式サイトにアップロードする場合のみ機能する)
+  * パッケージをダウンロードして`plugins/`ディレクトリの下で手動で解凍する(開発者がパッケージをアップロードすることも必要)
+  * `plugins/`でプラグイン用の`svn:externals`を作る(プラグインの作者がSuversionでプラグインをホストする場合のみ機能する)
+
+後者の2つの方法は簡単ですが柔軟性に欠けます。
+最初の方法でプロジェクトのsymfonyのバージョンに合わせて最新バージョンをインストールして、
+最新の安定版に簡単にアップグレードする、そして簡単にプラグイン間の依存関係を管理できます。
+
+プラグインを寄付する
+--------------------
+
+### プラグインのパッケージを作成する
+
+プラグインパッケージを作成するには、必須のファイルをプラグインのディレクトリ構造に追加する必要があります。
+最初に、プラグインのルートディレクトリで`README`ファイルを作りプラグインのインストール方法、これが何を提供するもの、しないものを記述します。
+`README`ファイルは[Markdownフォーマット](http://daringfireball.net/projects/markdown/syntax)でフォーマットしなければなりません。
+このファイルはsymfony公式サイトでドキュメントのメインピースとして使われます。
+[symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus)を利用してREADMEファイルをHTMLに変換することができます。
+
+>**SIDEBAR**
+>プラグイン開発のタスク
+>
+>プライベートかつ/もしくは公開プラグインをよく作ることに気がついたら、[sfTaskExtraPlugin](http://www.symfony-project.com/plugins/sfTaskExtraPlugin)のタスクのいくつかを利用することを考えてください。
+>このプラグインは、コアチームによって維持され、プラグインのライフサイクルの効率化を手助けするたくさんのタスクを含みます:
+>
+> * `generate:plugin`
+> * `plugin:package`
+
+`LICENSE`ファイルを作ることも必要です。
+ライセンスの選択は簡単な作業ではありませんが、symfonyのプラグインセクションはsymfonyのライセンス(MIT、BSD、LGPL、とPHP)と似たライセンスでリリースされたプラグインのみを表示します。
+`LICENSE`ファイルの内容はプラグインの公開ページのlicenseタブの下で表示されます。
+
+最後のステップはプラグインディレクトリのルートで`package.xml`ファイルを作ることです。
+この`package.xml`ファイルは[PEARパッケージ構文](http://pear.php.net/manual/en/guide-developers.php)に従います。
+
+>**NOTE**
+>`package.xml`の構文を学ぶベストな方法は[既存のプラグイン](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml)で使われるファイルをコピーすることです。
+
+`package.xml`ファイルはいくつかの部分で構成されます。
+このテンプレートの例は次のようなものです:
+
+    [xml]
+    <!-- plugins/sfJobeetPlugin/package.xml -->
+    <?xml version="1.0" encoding="UTF-8"?>
+    <package packagerversion="1.4.1" version="2.0"
+       xmlns="http://pear.php.net/dtd/package-2.0"
+       xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+       http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0
+       http://pear.php.net/dtd/package-2.0.xsd"
+    >
+      <name>sfJobeetPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <summary>A job board plugin.</summary>
+      <description>A job board plugin.</description>
+      <lead>
+        <name>Fabien POTENCIER</name>
+        <user>fabpot</user>
+        <email>fabien.potencier@symfony-project.com</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-12-20</date>
+      <version>
+        <release>1.0.0</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">
+        MIT license
+      </license>
+      <notes />
+
+      <contents>
+        <!-- CONTENT -->
+      </contents>
+
+      <dependencies>
+       <!-- DEPENDENCIES -->
+      </dependencies>
+
+      <phprelease>
+    </phprelease>
+
+    <changelog>
+      <!-- CHANGELOG -->
+    </changelog>
+    </package>
+
+`<contents>`タグはパッケージに設置する必要のあるファイルを含みます:
+
+    [xml]
+    <contents>
+      <dir name="/">
+        <file role="data" name="README" />
+        <file role="data" name="LICENSE" />
+
+        <dir name="config">
+          <file role="data" name="config.php" />
+          <file role="data" name="schema.yml" />
+        </dir>
+
+        <!-- ... -->
+      </dir>
+    </contents>
+
+`<dependencies>`タグはプラグインが持つすべての依存関係の参照: PHP、symfony、と他のプラグインをつけます。
+この情報はプロジェクト環境に対してベストなプラグインのバージョンをインストールし存在するのであれば必要なプラグインの依存関係をインストールするために`plugin:install`タスクによって使われます。
+
+    [xml]
+    <dependencies>
+      <required>
+        <php>
+          <min>5.0.0</min>
+        </php>
+        <pearinstaller>
+          <min>1.4.1</min>
+        </pearinstaller>
+        <package>
+          <name>symfony</name>
+          <channel>pear.symfony-project.com</channel>
+          <min>1.2.0</min>
+          <max>1.3.0</max>
+          <exclude>1.3.0</exclude>
+        </package>
+      </required>
+    </dependencies>
+
+symfonyはバージョンによって微妙に異なるAPIを持つので、ここで行ったように、依存関係を常に宣言すべきです。
+最大バージョンと最小バージョンを宣言することで`plugin:install`はsymfonyの必須バージョンがわかります。
+
+別のプラグインとの依存関係を宣言することも可能です:
+
+    [xml]
+    <package>
+      <name>sfFooPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <min>1.0.0</min>
+      <max>1.2.0</max>
+      <exclude>1.2.0</exclude>
+    </package>
+
+`<changelog>`タグはオプションですがリリースの間の変更に関する有益な情報が得られます。
+この情報は"Changelog"タブと[プラグインのフィード](http://www.symfony-project.org/plugins/recently.rss)で見ることができます。
+
+    [xml]
+    <changelog>
+      <release>
+        <version>
+          <release>1.0.0</release>
+          <api>1.0.0</api>
+        </version>
+        <stability>
+          <release>stable</release>
+          <api>stable</api>
+        </stability>
+        <license uri="http://www.symfony-project.com/license">
+          MIT license
+        </license>
+        <date>2008-12-20</date>
+        <license>MIT</license>
+        <notes>
+           * fabien: First release of the plugin
+        </notes>
+      </release>
+    </changelog>
+
+### symfony公式サイトでプラグインを公開する
+
+便利なプラグインを開発してsymfonyのコミュニティと共有したい場合、まだなければ[symfony公式サイトのアカウントを作成し](http://www.symfony-project.org/user/new)、[新しいプラグイン](http://www.symfony-project.org/plugins/new)を作成します。
+
+あなたは自動的にプラグインの管理者になりインターフェイスの"admin"タブを見ることになります。
+このタブにおいて、プラグインを管理してパッケージをアップロードするために必要なすべての機能が見つかります。
+
+>**NOTE**
+>[プラグインのFAQページ](http://www.symfony-project.org/plugins/FAQ)にはプラグイン開発者のための有益な情報がたくさんあります。
+
+また明日
+--------
+
+プラグインの作成とコミュニティとの共有はsymfony公式サイトへのベストな貢献方法の1つです。
+これはとても簡単なので、symfonyのプラグインリポジトリは便利で面白く、しかしおかしなプラグインで満たされています。
+
+__ORM__

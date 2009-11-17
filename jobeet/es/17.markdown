@@ -1,0 +1,570 @@
+Día 17: El Motor de Busqueda
+============================
+
+Hace dos días, hemos añadido algunos feeds para mantener a los usuarios Jobeet actualizados con los nuevos puestos de trabajo. Hoy, vamos a seguir mejorando la experiencia del usuario mediante la implementación de la última característica principal del sitio web Jobeet: el motor de búsqueda.
+
+La Tecnología
+-------------
+
+Antes de saltar de cabeza, en primer lugar, hablemos un poco sobre la historia de Symfony. Abogamos por un montón de buenas prácticas, como pruebas y refactoring, y también tratamos de aplicarlas al framework mismo. Por ejemplo, nos gusta el famoso lema "No reinventar la rueda". 
+
+Como cuestión de hecho, el framework Symfony comenzó su vida hace cuatro años como la unión entre dos existentes softwares Open-Source: Mojavi y Propel. Y cada vez que necesitamos hacer frente a un nuevo problema, buscamos una biblioteca que haga el trabajo mucho antes de hacer la codificación uno mismo desde cero.
+
+Hoy, queremos añadir un motor de búsqueda para Jobeet, y el Zend Framework ofrece una gran biblioteca, llamada [Zend Lucene](http://framework.zend.com/manual/en/zend.search.lucene.html),
+la cual es un port del bien conocido proyecto Java Lucene. En lugar de crear un nuevo motor de búsqueda para Jobeet, lo cual es una tarea compleja, vamos a utilizar Zend Lucene.
+
+En la página de la documentación de Zend Lucene, la biblioteca se describe de la siguiente manera:
+
+>... un  motor de búsqueda textual de propósito general escrito íntegramente en PHP 5. Como
+>almacena sus índices en el sistema de archivos y no requiere de un 
+>servidor de bases de datos, éste puede añadir capacidades de búsqueda a casi cualquier sitio web PHP. Zend_Search_Lucene soporta las siguientes características:
+>
+>  * Búsqueda por Ranking - mostrará al principio los mejores resultados
+>  * Muchos tipos de consultas poderosas: consultas de tipo textual, booleaneas, wildcard
+>    por proximidad, rangos y muchas otras
+>  * Búsqueda por un campo específico (e.g., título, autor, contenidos)
+
+-
+
+>**NOTE**
+>Este capítulo no es un tutorial sobre la biblioteca Zend Lucene, sino
+>como integrarla en el sitio web Jobeet; o más en general, la forma de integrar
+>bibliotecas de terceros en un proyecto symfony. Si deseas más información
+>sobre esta tecnología, por favor visita la
+>[Documentación de Zend Lucene](http://framework.zend.com/manual/en/zend.search.lucene.html).
+  
+### Instalación y Configuración del Zend Framework
+
+Las bibliotecas Zend Lucene son parte del Zend Framework. Como no necesitamos de todo del 
+Zend Framework, sólo se necesita instalar algunas partes en el directorio `lib/vendor/`, 
+junto con el symfony framework.
+
+En primer lugar, la descarga
+[Zend Framework](http://framework.zend.com/download/overview) y descomprime los archivos 
+de modo que tengas un directorio `lib/vendor/Zend/`. 
+
+>**NOTE**
+>Las siguientes explicaciones han sido probadas con la versión 1.8.0 de the Zend Framework.
+
+Puedes limpiar el directorio eliminando todo menos los siguientes archivos y directorios:
+
+  * `Exception.php`
+  * `Loader/`
+  * `Loader.php`
+  * `Search/`
+
+Luego, agrega el código siguiente a la clase`ProjectConfiguration` para proporcionar una manera simple de registrar el Zend autoloader:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      static protected $zendLoaded = false;
+
+      static public function registerZend()
+      {
+        if (self::$zendLoaded)
+        {
+          return;
+        }
+
+        set_include_path(sfConfig::get('sf_lib_dir').'/vendor'.PATH_SEPARATOR.get_include_path());
+        require_once sfConfig::get('sf_lib_dir').'/vendor/Zend/Loader/Autoloader.php';
+        Zend_Loader_Autoloader::getInstance();
+        self::$zendLoaded = true;
+      }
+
+      // ...
+    }
+
+Indexación
+----------
+
+El motor de búsqueda de Jobeet debería ser capaz de devolver todos los puestos que corresponden a palabras clave introducidas por el usuario. Antes de ser capaz de buscar cualquier cosa, un índice debe ser construído para los puestos de trabajo; para Jobeet, se almacenarán en el directorio `data/`.
+
+<propel>
+Zend Lucene proporciona dos métodos para recuperar un índice en función de si ya existe uno o no. Vamos a crear un método helper en la clase `JobeetJobPeer` que devuelve un índice existente o crea uno nuevo para nosotros:
+</propel>
+<doctrine>
+Zend Lucene proporciona dos métodos para recuperar un índice en función de si ya existe uno o no. Vamos a crear un método helper en la clase `JobeetJobTable` que devuelve un índice existente o crea uno nuevo para nosotros:
+</doctrine>
+
+    [php]
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJobTable.class.php
+</doctrine>
+    public function getLuceneIndex()
+    {
+      ProjectConfiguration::registerZend();
+
+      if (file_exists($index = $this->getLuceneIndexFile()))
+      {
+        return Zend_Search_Lucene::open($index);
+      }
+      else
+      {
+        return Zend_Search_Lucene::create($index);
+      }
+    }
+
+    public function getLuceneIndexFile()
+    {
+      return sfConfig::get('sf_data_dir').'/job.'.sfConfig::get('sf_environment').'.index';
+    }
+
+### El Método `save()` 
+
+Cada vez que se crea un puesto de trabajo, es actualizado o borrado, el índice debe ser actualizado.
+Edita `JobeetJob` para actualizar el índice cada vez que un trabajo es guardado en la base de datos:
+
+<propel>
+    [php]
+    // lib/model/JobeetJob.php
+    public function save(PropelPDO $con = null)
+    {
+      // ...
+
+      $ret = parent::save($con);
+
+      $this->updateLuceneIndex();
+
+      return $ret;
+    }
+</propel>
+<doctrine>
+    [php]
+    public function save(Doctrine_Connection $conn = null)
+    {
+      // ...
+
+      $ret = parent::save($conn);
+
+      $this->updateLuceneIndex();
+
+      return $ret;
+    }
+</doctrine>
+
+Y crear el método `updateLuceneIndex()` que hace el trabajo:
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    public function updateLuceneIndex()
+    {
+<propel>
+      $index = JobeetJobPeer::getLuceneIndex();
+</propel>
+<doctrine>
+      $index = $this->getTable()->getLuceneIndex();
+</doctrine>
+
+      // remove an existing entry
+      if ($hit = $index->find('pk:'.$this->getId()))
+      {
+        $index->delete($hit->id);
+      }
+
+      // don't index expired and non-activated jobs
+      if ($this->isExpired() || !$this->getIsActivated())
+      {
+        return;
+      }
+
+      $doc = new Zend_Search_Lucene_Document();
+
+      // store job primary key URL to identify it in the search results
+      $doc->addField(Zend_Search_Lucene_Field::UnIndexed('pk', $this->getId()));
+
+      // index job fields
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('position', $this->getPosition(), 'utf-8'));
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('company', $this->getCompany(), 'utf-8'));
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('location', $this->getLocation(), 'utf-8'));
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('description', $this->getDescription(), 'utf-8'));
+
+      // add job to the index
+      $index->addDocument($doc);
+      $index->commit();
+    }
+
+
+Como Zend Lucene no es capaz de actualizar una entrada existente, ésta se elimina primero si el puesto de trabajo (job) ya existe en el índice.
+
+La Indexación de los puestos de trabajo en sí es muy sencilla: la clave primaria se almacena para futuras referencias cuando hacemos búsquedas de puestos de trabajo y las principales columnas (`position`, `company`,
+`location`, y `description`) se indexan pero no se almacena en el índice ya que vamos a utilizar los objetos reales para mostrar los resultados.
+
+### Transacciones ##ORM## 
+
+¿Qué pasa si hay un problema cuando procede la indexación de un puesto de trabajo (job) o si el puesto de trabajo (job) no se guarda en la base de datos? Ambas herramientas ##ORM## y Zend Lucene arrojarán una excepción. Pero en algunas circunstancias, podríamos tener un puesto de trabajo (job) guardado en la base de datos sin la correspondiente indexación. Para evitar que esto ocurra, podemos envolver los dos actualizaciones en una transacción y anularlas en caso de haber un error:
+
+<propel>
+    [php]
+    // lib/model/JobeetJob.php
+    public function save(PropelPDO $con = null)
+    {
+      // ...
+
+      if (is_null($con))
+      {
+        $con = Propel::getConnection(JobeetJobPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+      }
+
+      $con->beginTransaction();
+      try
+      {
+        $ret = parent::save($con);
+
+        $this->updateLuceneIndex();
+
+        $con->commit();
+
+        return $ret;
+      }
+      catch (Exception $e)
+      {
+        $con->rollBack();
+        throw $e;
+      }
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJob.class.php
+    public function save(Doctrine_Connection $conn = null)
+    {
+      // ...
+
+      $conn = $conn ? $conn : $this->getTable()->getConnection();
+      $conn->beginTransaction();
+      try
+      {
+        $ret = parent::save($conn);
+
+        $this->updateLuceneIndex();
+
+        $conn->commit();
+
+        return $ret;
+      }
+      catch (Exception $e)
+      {
+        $conn->rollBack();
+        throw $e;
+      }
+    }
+</doctrine>
+
+### `delete()`
+
+También tenemos que sobreescribir el método `delete()` para eliminar la entrada del puesto de trabajo (job) eliminado a partir del índice:
+
+<propel>
+    [php]
+    // lib/model/JobeetJob.php
+    public function delete(PropelPDO $con = null)
+    {
+      $index = JobeetJobPeer::getLuceneIndex();
+
+      if ($hit = $index->find('pk:'.$this->getId()))
+      {
+        $index->delete($hit->id);
+      }
+
+      return parent::delete($con);
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJob.class.php
+    public function delete(Doctrine_Connection $conn = null)
+    {
+      $index = $this->getTable()->getLuceneIndex();
+
+      if ($hit = $index->find('pk:'.$this->getId()))
+      {
+        $index->delete($hit->id);
+      }
+
+      return parent::delete($conn);
+    }
+</doctrine>
+
+<propel>
+
+### Borrado Masivo
+
+Siempre que cargues los datos con la tarea `propel:data-load`, Symfony elimina todos los registros jobs existentes llamando al método `JobeetJobPeer::doDeleteAll()`. Vamos a redefinir el comportamiento por defecto para eliminar también el índice:
+
+    [php]
+    // lib/model/JobeetJobPeer.php
+    public static function doDeleteAll($con = null)
+    {
+      if (file_exists($index = self::getLuceneIndexFile()))
+      {
+        sfToolkit::clearDirectory($index);
+        rmdir($index);
+      }
+
+      return parent::doDeleteAll($con);
+    }
+</propel>
+
+Búsqueda
+--------
+
+Ahora que tenemos todo en su lugar, puedes recargar los datos para indexarlos:
+
+    $ php symfony propel:data-load --env=dev
+
+La tarea se ejecuta con la opción `--env` ya que el índice es dependiente del entorno y el entorno por defecto para las tareas es `cli`.
+
+>**TIP**
+>Para usuarios tipo Unix: ya que el índice se modifica desde la línea de comandos y también
+>desde el web, debe cambiar el índice de permisos de directorio según
+>tu configuración: comprobar que tanto desde la línea de comandos
+>y desde el servidor web el usuario pueda escribir el índice del directorio.
+
+-
+
+>**NOTE**
+>Puedes tener algunas advertencias acerca de la clase `ZipArchive` si no tienes
+>la extension `zip` compilada en tu PHP. Es un fallo conocido de la clase 
+>`Zend_Loader`.
+
+Implementar la búsqueda en el frontend es pan comido. En primer lugar, crea una ruta:
+
+    [yml]
+    job_search:
+      url:   /search
+      param: { module: job, action: search }
+
+Y la acción correspondiente:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeSearch(sfWebRequest $request)
+      {
+        if (!$query = $request->getParameter('query'))
+        {
+          return $this->forward('job', 'index');
+        }
+
+<propel>
+        $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+        $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+</doctrine>
+      }
+
+      // ...
+    }
+
+La plantilla es también muy sencilla:
+
+    [php]
+    // apps/frontend/modules/job/templates/searchSuccess.php
+    <?php use_stylesheet('jobs.css') ?>
+
+    <div id="jobs">
+      <?php include_partial('job/list', array('jobs' => $jobs)) ?>
+    </div>
+
+La búsqueda en sí misma se delega en el método `getForLuceneQuery()`:
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    static public function getForLuceneQuery($query)
+    {
+      $hits = self::getLuceneIndex()->find($query);
+
+      $pks = array();
+      foreach ($hits as $hit)
+      {
+        $pks[] = $hit->pk;
+      }
+
+      $criteria = new Criteria();
+      $criteria->add(self::ID, $pks, Criteria::IN);
+      $criteria->setLimit(20);
+
+      return self::doSelect(self::addActiveJobsCriteria($criteria));
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    public function getForLuceneQuery($query)
+    {
+      $hits = $this->getLuceneIndex()->find($query);
+
+      $pks = array();
+      foreach ($hits as $hit)
+      {
+        $pks[] = $hit->pk;
+      }
+
+      if (empty($pks))
+      {
+        return array();
+      }
+
+      $q = $this->createQuery('j')
+        ->whereIn('j.id', $pks)
+        ->limit(20);
+      $q = $this->addActiveJobsQuery($q);
+
+      return $q->execute();
+    }
+</doctrine>
+
+Después de obtener todos los resultados del índice Lucene, vamos a filtrar los puestos de trabajo inactivos, y limitar el número de resultados a `20`.
+
+Para que funcione, actualiza el layout:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <h2>Ask for a job</h2>
+    <form action="<?php echo url_for('@job_search') ?>" method="get">
+      <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
+      <input type="submit" value="search" />
+      <div class="help">
+        Enter some keywords (city, country, position, ...)
+      </div>
+    </form>
+
+>**NOTE**
+>Zend Lucene define un lenguaje de consulta poderoso que soporta operaciones como
+>Booleans, wildcards, fuzzy search,y mucho más. Todo está documentado
+>en el
+>[Zend Lucene manual](http://framework.zend.com/manual/en/zend.search.lucene.query-api.html)
+
+Las Pruebas Unitarias
+---------------------
+
+¿Qué tipo de Pruebas unitarias tenemos que crear para probar el motor de búsqueda? Evidentemente, no probaremos la biblioteca Zend Lucene en sí, sino su integración con la clase `JobeetJob`.
+
+Añade las siguientes pruebas al final del archivo `JobeetJobTest.php` y no te olvides de actualizar el número de pruebas al principio del archivo a `7`:
+
+    [php]
+    // test/unit/model/JobeetJobTest.php
+    $t->comment('->getForLuceneQuery()');
+    $job = create_job(array('position' => 'foobar', 'is_activated' => false));
+    $job->save();
+<propel>
+    $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
+</propel>
+<doctrine>
+    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+</doctrine>
+    $t->is(count($jobs), 0, '::getForLuceneQuery() does not return non activated jobs');
+
+    $job = create_job(array('position' => 'foobar', 'is_activated' => true));
+    $job->save();
+<propel>
+    $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
+</propel>
+<doctrine>
+    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+</doctrine>
+    $t->is(count($jobs), 1, '::getForLuceneQuery() returns jobs matching the criteria');
+    $t->is($jobs[0]->getId(), $job->getId(), '::getForLuceneQuery() returns jobs matching the criteria');
+
+    $job->delete();
+<propel>
+    $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
+</propel>
+<doctrine>
+    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+</doctrine>
+    $t->is(count($jobs), 0, '::getForLuceneQuery() does not return deleted jobs');
+
+Probamos que ningun puesto de trabajo inactivo, o borrado aparezca en los resultados de la búsqueda; también comprobamos que los puestos se corresponden al criterio dado para aparecer en los resultados.
+
+Las Tareas
+----------
+
+Finalmente, tenemos que crear una tarea de limpieza para el índice de todos los registros obsoletos
+(cuando expira un puesto, por ejemplo,) y optimizar el índice de vez en cuando. Como ya tenemos una tarea de limpieza, vamos a actualizarla para añadirle esas características:
+
+    [php]
+    // lib/task/JobeetCleanupTask.class.php
+    protected function execute($arguments = array(), $options = array())
+    {
+      $databaseManager = new sfDatabaseManager($this->configuration);
+
+<propel>
+      // cleanup Lucene index
+      $index = JobeetJobPeer::getLuceneIndex();
+
+      $criteria = new Criteria();
+      $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::LESS_THAN);
+      $jobs = JobeetJobPeer::doSelect($criteria);
+</propel>
+<doctrine>
+      // cleanup Lucene index
+      $index = Doctrine::getTable('JobeetJob')->getLuceneIndex();
+
+      $q = Doctrine_Query::create()
+        ->from('JobeetJob j')
+        ->where('j.expires_at < ?', date('Y-m-d'));
+
+      $jobs = $q->execute();
+</doctrine>
+      foreach ($jobs as $job)
+      {
+        if ($hit = $index->find('pk:'.$job->getId()))
+        {
+          $index->delete($hit->id);
+        }
+      }
+
+      $index->optimize();
+
+      $this->logSection('lucene', 'Cleaned up and optimized the job index');
+
+      // Remove stale jobs
+<propel>
+      $nb = JobeetJobPeer::cleanup($options['days']);
+
+      $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
+</propel>
+<doctrine>
+      $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+
+      $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
+</doctrine>
+    }
+
+La tarea remueve todos los puestos de trabajo vencidos del índice y, a continuación, se lo optimiza gracias al método nativo `optimize()` de Zend Lucene.
+
+Nos vemos mañana
+----------------
+
+Hoy, hemos implementado un completo motor de búsqueda con muchas características en menos de una hora. Cada vez que desees añadir una nueva función para tus proyectos, debes comprobar que todavía no se haya resuelto en algún otro lugar. En primer lugar, comprobar si es algo que no se haya implementado de forma nativa en el [framework Symfony](http://www.symfony-project.org/api/1_3/). Luego, busca en los 
+[plugins symfony](http://www.symfony-project.org/plugins/). Y no olvides visitar las [bibliotecas del Zend Framework ](http://framework.zend.com/manual/en/)
+y los [ezComponent](http://ezcomponents.org/docs) también.
+
+Mañana, vamos a utilizar algunos JavaScripts para mejorar la capacidad de respuesta del motor de búsqueda mediante la actualización de los resultados en tiempo real cuando el usuario escribe en el cuadro de búsqueda. Por supuesto, esta será la ocasión para hablar acerca de cómo utilizar AJAX con Symfony.
+
+
+Feedback
+--------
+
+>**Tip**
+>Este capítulo ha sido traducido por **Roberto Germán Puentes Díaz**. 
+>Si encuentras algún error que deseas corregir o realizar algún comentario,
+>no dudes en enviarlo por correo a **puentesdiaz [arroba] gmail.com**
+
+__ORM__

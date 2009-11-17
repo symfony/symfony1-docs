@@ -1,0 +1,878 @@
+Day 4: The Controller and the View
+==================================
+
+Yesterday, we explored how symfony simplifies database management by
+abstracting the differences between database engines, and by converting the
+relational elements to nice object oriented classes. We have also played with
+##ORM## to describe the database schema, create the tables, and populate the
+database with some initial data.
+
+Today, we are going to customize the basic `job` module we created yesterday.
+The `job` module already has all the code we need for Jobeet:
+
+ * A page to list all jobs
+ * A page to create a new job
+ * A page to update an existing job
+ * A page to delete a job
+
+Although the code is ready to be used as is, we will refactor the templates to
+match closer to the Jobeet mockups.
+
+The ~MVC~ Architecture
+----------------------
+
+If you are used to developing PHP websites without a framework, you probably
+use the one PHP file per HTML page paradigm. These PHP files probably contain
+the same kind of structure: initialization and global configuration, business
+logic related to the requested page, database records fetching, and finally
+HTML code that builds the page.
+
+You may use a templating engine to separate the logic from the HTML. Perhaps
+you use a database abstraction layer to separate model interaction from
+business logic. But most of the time, you end up with a lot of code that is a
+nightmare to maintain. It was fast to build, but over time, it's more and more
+difficult to make changes, especially because nobody except you understands
+how it is built and how it works.
+
+As with every problem, there are nice solutions. For web development, the most
+common solution for organizing your code nowadays is the
+[**MVC design pattern**](http://en.wikipedia.org/wiki/Model-view-controller).
+In short, the MVC ~design pattern|Design Patterns~ defines a way to organize your
+code according to its nature. This pattern separates the code into 
+**three layers**:
+
+  * The **~Model~** layer defines the business logic (the database belongs to
+    this layer). You already know that symfony stores all the classes and
+    files related to the Model in the `lib/model/` directory.
+
+  * The **~View~** is what the user interacts with (a template engine is part
+    of this layer). In symfony, the View layer is mainly made of PHP
+    templates. They are stored in various `templates/` directories as we will
+    see later on today.
+
+  * The **~Controller~** is a piece of code that calls the Model to get some
+    data that it passes to the View for rendering to the client. When we
+    installed symfony the first day, we saw that all requests are managed by
+    front controllers (`index.php` and `frontend_dev.php`). These front
+    controllers delegate the real work to **actions**. As we saw yesterday,
+    these actions are logically grouped into **modules**.
+
+![MVC](http://www.symfony-project.org/images/jobeet/1_3/04/mvc.png)
+
+Today, we will use the mockup defined in day 2 to customize the homepage and
+the job page. We will also make them dynamic. Along the way, we will tweak a
+lot of things in many different files to demonstrate the symfony directory
+structure and the way to separate code between layers.
+
+The Layout
+----------
+
+First, if you have a closer look at the mockups, you will notice that much of
+each page looks the same. You already know that code duplication is bad,
+whether we are talking about HTML or PHP code, so we need to find a way to
+prevent these common view elements from resulting in code duplication.
+
+One way to solve the problem is to define a header and a footer and include
+them in each template:
+
+![Header and footer](http://www.symfony-project.org/images/jobeet/1_3/04/header_footer.png)
+
+But here the header and the footer files do not contain valid HTML. There must
+be a better way. Instead of reinventing the wheel, we will use another design
+pattern to solve this problem: the
+[~decorator|Decorator~ design pattern](http://en.wikipedia.org/wiki/Decorator_pattern).
+The decorator design pattern resolves the problem the other way around: the
+template is decorated after the content is rendered by a global template,
+called a **~layout|Layout~** in symfony:
+
+![Layout](http://www.symfony-project.org/images/jobeet/1_3/04/layout.png)
+
+The default layout of an application is called `layout.php` and can be found
+in the `apps/frontend/templates/` directory. This directory contains all the
+global templates for an application.
+
+Replace the default symfony layout with the following code:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <title>Jobeet - Your best job board</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <?php include_javascripts() ?>
+        <?php include_stylesheets() ?>
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            <div class="content">
+              <h1><a href="<?php echo url_for('job/index') ?>">
+                <img src="/images/logo.jpg" alt="Jobeet Job Board" />
+              </a></h1>
+
+              <div id="sub_header">
+                <div class="post">
+                  <h2>Ask for people</h2>
+                  <div>
+                    <a href="<?php echo url_for('job/index') ?>">Post a Job</a>
+                  </div>
+                </div>
+
+                <div class="search">
+                  <h2>Ask for a job</h2>
+                  <form action="" method="get">
+                    <input type="text" name="keywords"
+                      id="search_keywords" />
+                    <input type="submit" value="search" />
+                    <div class="help">
+                      Enter some keywords (city, country, position, ...)
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="content">
+            <?php if ($sf_user->hasFlash('notice')): ?>
+              <div class="flash_notice">
+                <?php echo $sf_user->getFlash('notice') ?>
+              </div>
+            <?php endif; ?>
+
+            <?php if ($sf_user->hasFlash('error')): ?>
+              <div class="flash_error">
+                <?php echo $sf_user->getFlash('error') ?>
+              </div>
+            <?php endif; ?>
+
+            <div class="content">
+              <?php echo $sf_content ?>
+            </div>
+          </div>
+
+          <div id="footer">
+            <div class="content">
+              <span class="symfony">
+                <img src="/images/jobeet-mini.png" />
+                powered by <a href="http://www.symfony-project.org/">
+                <img src="/images/symfony.gif" alt="symfony framework" />
+                </a>
+              </span>
+              <ul>
+                <li><a href="">About Jobeet</a></li>
+                <li class="feed"><a href="">Full feed</a></li>
+                <li><a href="">Jobeet API</a></li>
+                <li class="last"><a href="">Affiliates</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
+
+A symfony ~template|Templates~ is just a plain PHP file. In the layout
+template, you see calls to PHP functions and references to PHP variables.
+~`$sf_content`~ is the most interesting variable: it is defined by the
+framework itself and contains the HTML generated by the action.
+
+If you browse the `job` module
+(`http://jobeet.localhost/frontend_dev.php/job`), you will see that all
+actions are now decorated by the layout.
+
+The Stylesheets, Images, and JavaScripts
+----------------------------------------
+
+As this tutorial is not about web design, we have already prepared all the
+needed assets we will use for Jobeet:
+[download the image files](http://www.symfony-project.org/get/jobeet/images.zip)
+archive and put them into the `web/images/` directory;
+[download the stylesheet files](http://www.symfony-project.org/get/jobeet/css.zip)
+archive and put them into the `web/css/` directory.
+
+>**NOTE**
+>In the layout, we have included a *favicon*. You can
+>[download the Jobeet one](http://www.symfony-project.org/get/jobeet/favicon.ico)
+>and put it under the `web/` directory.
+
+![The job module with a layout and assets](http://www.symfony-project.org/images/jobeet/1_3/04/job_layout_assets.png)
+
+>**TIP**
+>By default, the `generate:project` task has created three directories for the
+>project assets: `web/images/` for images, `web/~css|CSS~/` for 
+>~stylesheet|Stylesheets~s, and `web/js/` for ~JavaScript~s. This is one of the 
+> many ~conventions|Conventions~ defined by symfony, but you can of course store 
+>them elsewhere under the `web/` directory.
+
+The astute reader will have noticed that even if the `main.css` file is not
+mentioned anywhere in the default layout, it is definitely present in the
+generated HTML. But not the other ones. How is this possible?
+
+The stylesheet file has been included by the `include_stylesheets()` function
+call found within the layout `<head>` tag. The `include_stylesheets()`
+function is called a **helper**. A helper is a function, defined by symfony,
+that can take parameters and returns HTML code. Most of the time, helpers are
+time-savers, they package code snippets frequently used in templates. The
+`include_stylesheets()` helper generates `<link>` tags for stylesheets.
+
+But how does the helper know which stylesheets to include?
+
+The ~View~ layer can be configured by editing the ~`view.yml`~ configuration
+file of the application. Here is the default one generated by the
+`generate:app` task:
+
+    [yml]
+    # apps/frontend/config/view.yml
+    default:
+      http_metas:
+        content-type: text/html
+
+      metas:
+        #title:        symfony project
+        #description:  symfony project
+        #keywords:     symfony, project
+        #language:     en
+        #robots:       index, follow
+
+      stylesheets:    [main.css]
+
+      javascripts:    []
+
+      has_layout:     true
+      layout:         layout
+
+The `view.yml` file configures the `default` settings for all the templates of
+the application. For instance, the `stylesheets` entry defines an array of
+stylesheet files to include for every page of the application (the inclusion
+is done by the `include_stylesheets()` helper).
+
+>**NOTE**
+>In the default `view.yml` configuration file, the referenced file is
+>`main.css`, and not `/css/main.css`. As a matter of fact, both definitions
+>are equivalent as symfony ~prefixes|Prefix~ relative paths with `/~css|CSS~/`.
+
+If many files are defined, symfony will include them in the same order as the
+definition:
+
+    [yml]
+    stylesheets:    [main.css, jobs.css, job.css]
+
+You can also change the `media` attribute and omit the `.css` suffix:
+
+    [yml]
+    stylesheets:    [main.css, jobs.css, job.css, print: { media: print }]
+
+This configuration will be rendered as:
+
+    [php]
+    <link rel="stylesheet" type="text/css" media="screen"
+      href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen"
+      href="/css/jobs.css" />
+    <link rel="stylesheet" type="text/css" media="screen"
+      href="/css/job.css" />
+    <link rel="stylesheet" type="text/css" media="print"
+      href="/css/print.css" />
+
+>**TIP**
+>The `view.yml` configuration file also defines the default ~layout|Layout~ used by the
+>application. By default, the name is `layout`, and so symfony decorates every
+>page with the `layout.php` file. You can also disable the decoration process
+>altogether by switching the ~`has_layout`~ entry to `false`.
+
+It works as is but the `jobs.css` file is only needed for the homepage and the
+`job.css` file is only needed for the job page. The `view.yml` configuration
+file can be customized on a per-module basis. Change the stylesheets key of
+the application `view.yml` file to only contain the `main.css` file:
+
+    [yml]
+    # apps/frontend/config/view.yml
+    stylesheets:    [main.css]
+
+To customize the view for the `job` module, create a `view.yml` file in the
+`apps/frontend/modules/job/config/` directory:
+
+    [yml]
+    # apps/frontend/modules/job/config/view.yml
+    indexSuccess:
+      stylesheets: [jobs.css]
+
+    showSuccess:
+      stylesheets: [job.css]
+
+Under the `indexSuccess` and `showSuccess` sections (they are the template
+names associated with the `index` and `show` actions, as we will see later
+on), you can customize any entry found under the `default` section of the
+application `view.yml`. All specific entries are merged with the application
+configuration. You can also define some configuration for all actions of a
+module with the special `all` section.
+
+>**SIDEBAR**
+>Configuration Principles in symfony
+>
+>For many symfony ~configuration|Configuration~ files, the same setting can 
+>be defined at different levels:
+>
+>  * The default configuration is located in the framework
+>  * The global configuration for the project (in `config/`)
+>  * The local configuration for an application (in `apps/APP/config/`)
+>  * The local configuration restricted to a module (in
+>    `apps/APP/modules/MODULE/config/`)
+>
+>At runtime, the configuration system merges all the values from the different
+>files if they exist and caches the result for better performance.
+
+As a rule of thumb, when something is configurable via a configuration file,
+the same can be accomplished with PHP code. Instead of creating a `view.yml`
+file for the `job` module for instance, you can also use the
+~`use_stylesheet()` helper~ to include a stylesheet from a template:
+
+    [php]
+    <?php use_stylesheet('main.css') ?>
+
+You can also use this helper in the layout to include a stylesheet globally.
+
+Choosing between one method or the other is really a matter of taste. The
+`view.yml` file provides a way to define things for all actions of a module,
+which is not possible in a template, but the configuration is quite static. On
+the other hand, using the `use_stylesheet()` ~helper|Helpers~ is more flexible
+and moreover, everything is in the same place: the stylesheet definition and
+the HTML code. For Jobeet, we will use the `use_stylesheet()` helper, so you
+can remove the `view.yml` we have just created and update the `job` templates
+with the `use_stylesheet()` calls:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <?php use_stylesheet('jobs.css') ?>
+
+    <!-- apps/frontend/modules/job/templates/showSuccess.php -->
+    <?php use_stylesheet('job.css') ?>
+
+>**NOTE**
+>Symmetrically, the JavaScript configuration is done via the `javascripts`
+>entry of the `view.yml` configuration file and the ~`use_javascript()` helper~
+>defines JavaScript files to include for a template.
+
+The Job Homepage
+----------------
+
+As seen in day 3, the job homepage is generated by the `index` action of the
+`job` module. The `index` action is the Controller part of the page and the
+associated template, `indexSuccess.php`, is the View part:
+
+    apps/
+      frontend/
+        modules/
+          job/
+            actions/
+              actions.class.php
+            templates/
+              indexSuccess.php
+
+### The Action
+
+Each ~action|Action~ is represented by a method of a class. For the job
+homepage, the class is `jobActions` (the name of the module suffixed by
+`Actions`) and the method is `executeIndex()` (`execute` suffixed by the name
+of the action). It retrieves all the jobs from the database:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeIndex(sfWebRequest $request)
+      {
+<propel>
+        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+</propel>
+<doctrine>
+        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+          ->createQuery('a')
+          ->execute();
+</doctrine>
+      }
+
+      // ...
+    }
+
+<propel>
+Let's have a closer look at the code: the `executeIndex()` method (the
+Controller) calls the Model `JobeetJobPeer` to retrieve all the jobs
+(`new Criteria()`). It returns an array of `JobeetJob` objects that are assigned to
+the `jobeet_job_list` object property.
+</propel>
+<doctrine>
+Let's have a closer look at the code: the `executeIndex()` method (the
+Controller) calls the Table `JobeetJob` to create a query to retrieve all the
+jobs. It returns a `Doctrine_Collection` of `JobeetJob` objects that are assigned to
+the `jobeet_job_list` object property.
+</doctrine>
+
+All such object properties are then automatically passed to the template (the
+View). To pass data from the Controller to the View, just create a new
+property:
+
+    [php]
+    public function executeFooBar(sfWebRequest $request)
+    {
+      $this->foo = 'bar';
+      $this->bar = array('bar', 'baz');
+    }
+
+This code will make `$foo` and `$bar` variables accessible in the template.
+
+### The Template
+
+By default, the ~template|Templates~ name associated with an action is deduced
+by symfony thanks to a convention (the action name suffixed by `Success`).
+
+The `indexSuccess.php` template generates an HTML table for all the jobs. Here
+is the current template code:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <?php use_stylesheet('jobs.css') ?>
+
+    <h1>Job List</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Category</th>
+          <th>Type</th>
+    <!-- more columns here -->
+          <th>Created at</th>
+          <th>Updated at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <tr>
+          <td>
+            <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
+              <?php echo $jobeet_job->getId() ?>
+            </a>
+          </td>
+          <td><?php echo $jobeet_job->getCategoryId() ?></td>
+          <td><?php echo $jobeet_job->getType() ?></td>
+    <!-- more columns here -->
+          <td><?php echo $jobeet_job->getCreatedAt() ?></td>
+          <td><?php echo $jobeet_job->getUpdatedAt() ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+
+    <a href="<?php echo url_for('job/new') ?>">New</a>
+
+In the template code, the `foreach` iterates through the list of `Job` objects
+(`$jobeet_job_list`), and for each job, each column value is output. Remember,
+accessing a column value is as simple as calling an accessor method which name
+begins with `get` and the ~camelCased|Code Formatting~ column name (for
+instance the `getCreatedAt()` method for the `created_at` column).
+
+Let's clean this up a bit to only display a sub-set of the available columns:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <?php use_stylesheet('jobs.css') ?>
+
+    <div id="jobs">
+      <table class="jobs">
+        <?php foreach ($jobeet_job_list as $i => $job): ?>
+          <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
+            <td class="location"><?php echo $job->getLocation() ?></td>
+            <td class="position">
+              <a href="<?php echo url_for('job/show?id='.$job->getId()) ?>">
+                <?php echo $job->getPosition() ?>
+              </a>
+            </td>
+            <td class="company"><?php echo $job->getCompany() ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
+
+![Homepage](http://www.symfony-project.org/images/jobeet/1_3/04/homepage.png)
+
+The `url_for()` function call in this template is a symfony helper that we
+will discuss tomorrow.
+
+The Job Page Template
+---------------------
+
+Now let's customize the template of the job page. Open the `showSuccess.php`
+file and replace its content with the following code:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/showSuccess.php -->
+    <?php use_stylesheet('job.css') ?>
+    <?php use_helper('Text') ?>
+
+    <div id="job">
+      <h1><?php echo $job->getCompany() ?></h1>
+      <h2><?php echo $job->getLocation() ?></h2>
+      <h3>
+        <?php echo $job->getPosition() ?>
+        <small> - <?php echo $job->getType() ?></small>
+      </h3>
+
+      <?php if ($job->getLogo()): ?>
+        <div class="logo">
+          <a href="<?php echo $job->getUrl() ?>">
+            <img src="/uploads/jobs/<?php echo $job->getLogo() ?>"
+              alt="<?php echo $job->getCompany() ?> logo" />
+          </a>
+        </div>
+      <?php endif; ?>
+
+      <div class="description">
+        <?php echo simple_format_text($job->getDescription()) ?>
+      </div>
+
+      <h4>How to apply?</h4>
+
+      <p class="how_to_apply"><?php echo $job->getHowToApply() ?></p>
+
+      <div class="meta">
+<propel>
+        <small>posted on <?php echo $job->getCreatedAt('m/d/Y') ?></small>
+</propel>
+<doctrine>
+        <small>posted on <?php echo $job->getDateTimeObject('created_at')->format('m/d/Y') ?></small>
+</doctrine>
+      </div>
+
+      <div style="padding: 20px 0">
+        <a href="<?php echo url_for('job/edit?id='.$job->getId()) ?>">
+          Edit
+        </a>
+      </div>
+    </div>
+
+This template uses the `$job` variable passed by the action to display the job
+information. As we have renamed the variable passed to the template from
+`$jobeet_job` to `$job`, you need to also make this change in the `show`
+action (be careful, there are two occurrences of the variable):
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeShow(sfWebRequest $request)
+    {
+<propel>
+      $this->job =
+       ➥ JobeetJobPeer::retrieveByPk($request->getParameter('id'));
+</propel>
+<doctrine>
+      $this->job = Doctrine::getTable('JobeetJob')->
+       ➥ find($request->getParameter('id'));
+</doctrine>
+      $this->forward404Unless($this->job);
+    }
+
+<propel>
+Notice that some Propel ~accessors|Accessors~ take arguments. As we have
+defined the `created_at` column as a timestamp, the `getCreatedAt()` accessor
+takes a date formatting pattern as its first argument:
+
+    [php]
+    $job->getCreatedAt('m/d/Y');
+</propel>
+<doctrine>
+Notice that date columns can be converted to PHP DateTime object instances. As
+we have defined the `created_at` column as a timestamp, you can convert the
+column value to a DateTime object by using the `getDateTimeObject()` method
+and then call the `format()` method which takes a date formatting pattern as
+its first argument:
+
+    [php]
+    $job->getDateTimeObject('created_at')->format('m/d/Y');
+</doctrine>
+
+>**NOTE**
+>The job description uses the `simple_format_text()` helper to format it as
+>HTML, by replacing carriage returns with `<br />` for instance. As this helper
+>belongs to the `Text` helper group, which is not loaded by default, we have
+>loaded it manually by using the ~`use_helper()` helper~.
+
+![Job page](http://www.symfony-project.org/images/jobeet/1_3/04/job.png)
+
+~Slot~s
+-------
+
+Right now, the title of all pages is defined in the `<title>` tag of the
+layout:
+
+    [php]
+    <title>Jobeet - Your best job board</title>
+
+But for the job page, we want to provide more useful information, like the
+company name and the job position.
+
+In symfony, when a zone of the layout depends on the template to be displayed,
+you need to define a slot:
+
+![Slots](http://www.symfony-project.org/images/jobeet/1_3/04/layout_slots.png)
+
+Add a slot to the layout to allow the title to be dynamic:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title><?php include_slot('title') ?></title>
+
+Each slot is defined by a name (`title`) and can be displayed by using the
+`~include_slot~()` helper. Now, at the beginning of the `showSuccess.php`
+template, use the `slot()` helper to define the content of the slot for the
+job page:
+
+    [php]
+    // apps/frontend/modules/job/templates/showSuccess.php
+    <?php slot(
+      'title',
+      sprintf('%s is looking for a %s', $job->getCompany(), $job->getPosition()))
+    ?>
+
+If the title is complex to generate, the `slot()` helper can also be used with
+a block of code:
+
+    [php]
+    // apps/frontend/modules/job/templates/showSuccess.php
+    <?php slot('title') ?>
+      <?php echo sprintf('%s is looking for a %s', $job->getCompany(), $job->getPosition()) ?>
+    <?php end_slot(); ?>
+
+For some pages, like the homepage, we just need a generic title. Instead of
+repeating the same title over and over again in templates, we can define a
+default title in the layout:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title>
+      <?php include_slot('title', 'Jobeet - Your best job board') ?>
+    </title>
+
+The second argument of the `include_slot()` method is the default value for
+the slot if it has not been defined. If the default value is longer or has
+some HTML tags, you can also defined it like in the following code:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title>
+      <?php if (!include_slot('title')): ?>
+        Jobeet - Your best job board
+      <?php endif; ?>
+    </title>
+
+The `include_slot()` helper returns `true` if the slot has been defined. So,
+when you define the `title` slot content in a template, it is used; if not,
+the default title is used.
+
+>**TIP**
+>We have already seen quite a few helpers beginning with `include_`. These helpers
+>output the HTML and in most cases have a `get_` helper counterpart to
+>just return the content:
+>
+>     [php]
+>     <?php include_slot('title') ?>
+>     <?php echo get_slot('title') ?>
+>
+>     <?php include_stylesheets() ?>
+>     <?php echo get_stylesheets() ?>
+
+The Job Page Action
+-------------------
+
+The job page is generated by the `show` action, defined in the `executeShow()`
+method of the `job` module:
+
+    [php]
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+<propel>
+        $this->job =
+         ➥ JobeetJobPeer::retrieveByPk($request->getParameter('id'));
+</propel>
+<doctrine>
+        $this->job = Doctrine::getTable('JobeetJob')->
+         ➥ find($request->getParameter('id'));
+</doctrine>
+        $this->forward404Unless($this->job);
+      }
+
+      // ...
+    }
+
+<propel>
+As in the `index` action, the `JobeetJobPeer` class is used to retrieve a job,
+this time by using the `retrieveByPk()` method. The parameter of this method
+is the unique identifier of a job, its ~primary key|Primary Key~. The next 
+section will explain why the `$request->getParameter('id')` statement returns 
+the job primary key.
+</propel>
+<doctrine>
+As in the `index` action, the `JobeetJob` table class is used to retrieve a job,
+this time by using the `find()` method. The parameter of this method
+is the unique identifier of a job, its ~primary key|Primary Key~. The next 
+section will explain why the `$request->getParameter('id')` statement returns 
+the job primary key.
+</doctrine>
+
+<propel>
+>**TIP**
+>The generated model classes contain a lot of useful methods to interact with
+>the project objects. Take some time to browse the code located in the
+>`lib/om/` directory and discover all the power embedded in these classes.
+</propel>
+
+If the job does not exist in the database, we want to forward the user to a
+~404|404 Error~ page, which is exactly what the `forward404Unless()` method does. It
+takes a Boolean as its first argument and, unless it is true, stops the current
+flow of execution. As the forward methods stops the execution of the action
+right away by throwing a `sfError404Exception`, you don't need to return
+afterwards.
+
+As for ~exceptions|Exception Handling~, the page displayed to the user is 
+different in the `prod` ~environment|Environments~ and in the `dev` environment:
+
+![404 error in the dev environment](http://www.symfony-project.org/images/jobeet/1_3/05/404_dev.png)
+
+![404 error in the prod environment](http://www.symfony-project.org/images/jobeet/1_3/05/404_prod.png)
+
+>**NOTE**
+>Before you deploy the Jobeet website to the production server, you will learn
+>how to customize the default 404 page.
+
+-
+
+>**SIDEBAR**
+>The "~forward|Action Forwarding~" Methods Family
+>
+>The `forward404Unless` call is actually equivalent to:
+>
+>     [php]
+>     $this->forward404If(!$this->job);
+>
+>which is also equivalent to:
+>
+>     [php]
+>     if (!$this->job)
+>     {
+>       $this->forward404();
+>     }
+>
+>The `forward404()` method itself is just a shortcut for:
+>
+>     [php]
+>     $this->forward('default', '404');
+>
+>The `forward()` method forwards to another action of the same application;
+>in the previous example, to the `404` action of the `default` module.
+>The `default` module is bundled with symfony and provides default actions
+>to render 404, secure, and login pages.
+
+The Request and the Response
+----------------------------
+
+When you browse to the `/job` or `/job/show/id/1` pages in your browser, your
+are initiating a round trip with the web server. The browser is sending a
+**~request|HTTP Request~** and the server sends back a **~response|HTTP Response~**.
+
+We have already seen that symfony encapsulates the request in a `sfWebRequest`
+object (see the `executeShow()` method signature). And as symfony is an
+Object-Oriented framework, the response is also an object, of class
+`sfWebResponse`. You can access the response object in an action by calling
+`$this->getResponse()`.
+
+These objects provide a lot of convenient methods to access information from
+PHP functions and PHP global variables.
+
+>**NOTE**
+>Why does symfony wrap existing PHP functionalities? First, because the
+>symfony methods are more powerful than their PHP counterpart. Then, because
+>when you test an application, it is much more easier to simulate a request or
+>a response object than trying to fiddle around with global variables or work
+>with PHP functions like `header()` which do too much magic behind the scene.
+
+### The Request
+
+The `sfWebRequest` class wraps the ~`$_SERVER`~, ~`$_COOKIE`~, ~`$_GET`~, ~`$_POST`~,
+and ~`$_FILES`~ PHP global arrays:
+
+ Method name          | PHP equivalent
+ -------------------- | --------------------------------------------------
+ `getMethod()`        | `$_SERVER['REQUEST_METHOD']`
+ `getUri()`           | `$_SERVER['REQUEST_URI']`
+ `getReferer()`       | `$_SERVER['HTTP_REFERER']`
+ `getHost()`          | `$_SERVER['HTTP_HOST']`
+ `getLanguages()`     | `$_SERVER['HTTP_ACCEPT_LANGUAGE']`
+ `getCharsets()`      | `$_SERVER['HTTP_ACCEPT_CHARSET']`
+ `isXmlHttpRequest()` | `$_SERVER['X_REQUESTED_WITH'] == 'XMLHttpRequest'`
+ `getHttpHeader()`    | `$_SERVER`
+ `getCookie()`        | `$_COOKIE`
+ `isSecure()`         | `$_SERVER['HTTPS']`
+ `getFiles()`         | `$_FILES`
+ `getGetParameter()`  | `$_GET`
+ `getPostParameter()` | `$_POST`
+ `getUrlParameter()`  | `$_SERVER['PATH_INFO']`
+ `getRemoteAddress()` | `$_SERVER['REMOTE_ADDR']`
+
+We have already accessed request parameters by using the `getParameter()`
+method. It returns a value from the `$_GET` or `$_POST` global variable, or
+from the `~PATH_INFO~` variable.
+
+If you want to ensure that a request parameter comes from a particular one of
+these variables, you need use the `getGetParameter()`, `getPostParameter()`,
+and `getUrlParameter()` methods respectively.
+
+>**NOTE**
+>When you want to restrict an action for a specific ~HTTP method|HTTP Method~, 
+>for instance when you want to ensure that a form is submitted as a `POST`, 
+>you can use the `isMethod()` method: 
+>`$this->forwardUnless($request->isMethod('POST'));`.
+
+### The Response
+
+The `sfWebResponse` class wraps the `~header|HTTP Headers~()` and 
+`setraw~cookie|Cookies~()` PHP methods:
+
+ Method name                   | PHP equivalent
+ ----------------------------- | ----------------
+ `setCookie()`                 | `setrawcookie()`
+ `setStatusCode()`             | `header()`
+ `setHttpHeader()`             | `header()`
+ `setContentType()`            | `header()`
+ `addVaryHttpHeader()`         | `header()`
+ `addCacheControlHttpHeader()` | `header()`
+
+Of course, the `sfWebResponse` class also provides a way to set the content of
+the response (`setContent()`) and send the response to the browser (`send()`).
+
+Earlier today we saw how to manage stylesheets and JavaScripts in both the
+`view.yml` file and in templates. In the end, both techniques use the response
+object `addStylesheet()` and `addJavascript()` methods.
+
+>**TIP**
+>The [`sfAction`](http://www.symfony-project.org/api/1_3/sfAction),
+>[`sfRequest`](http://www.symfony-project.org/api/1_3/sfRequest), and
+>[`sfResponse`](http://www.symfony-project.org/api/1_3/sfResponse) classes
+>provide a lot of other useful methods. Don't hesitate to browse the
+>[API documentation](http://www.symfony-project.org/api/1_3/) to learn more
+>about all symfony internal classes.
+
+See you Tomorrow
+----------------
+
+Today, we have described some design patterns used by symfony. Hopefully the
+project directory structure now makes more sense. We have played with the
+templates by manipulating the layout and the template files. We have also made
+them a bit more dynamic thanks to slots and actions.
+
+Tomorrow, we will learn more about the `url_for()` helper we have used today,
+and the routing sub-framework associated with it.
+
+__ORM__

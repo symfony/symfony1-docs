@@ -1,0 +1,948 @@
+Giorno 15: Web Service
+======================
+
+
+Con l'aggiunta dei feed su Jobeet, chi è in cerca di lavoro sarà informato
+sulle nuove offerte di lavoro in tempo reale.
+Dall'altra parte, quando si inserisce un lavoro, si vorrà avere la
+maggiore esposizione possibile. Se il proprio lavoro viene inviato
+tramite feed a molti piccoli siti, si avranno maggiori opportunità
+di trovare la persona giusta. Questo è il potere della
+[~coda lunga|Coda lunga~](http://it.wikipedia.org/wiki/Coda_lunga).
+Gli affiliati potranno pubblicare gli ultimi lavori inseriti nei loro
+siti, grazie ai ~web service|Web service~ che svilupperemo oggi.
+
+~Affiliati~
+-----------
+
+Dai requisiti del giorno 2:
+
+  "Storia F7: un affiliato recupera l'attuale lista di inserzioni attive"
+
+### Le fixture
+
+Creiamo un nuovo file di ~fixture|Fixture~ per gli affiliati:
+
+    [yml]
+<propel>
+    # data/fixtures/030_affiliates.yml
+</propel>
+<doctrine>
+    # data/fixtures/affiliates.yml
+</doctrine>
+    JobeetAffiliate:
+      sensio_labs:
+        url:       http://www.sensio-labs.com/
+        email:     fabien.potencier@example.com
+        is_active: true
+        token:     sensio_labs
+<propel>
+        jobeet_category_affiliates: [programming]
+</propel>
+<doctrine>
+        JobeetCategories: [programming]
+</doctrine>
+
+      symfony:
+        url:       http://www.symfony-project.org/
+        email:     fabien.potencier@example.org
+        is_active: false
+        token:     symfony
+<propel>
+        jobeet_category_affiliates: [design, programming]
+</propel>
+<doctrine>
+        JobeetCategories: [design, programming]
+</doctrine>
+
+<propel>
+Creare le righe per una tabella di collegamento di una relazione
+molti-a-molti è facile come definire un array con chiave il nome
+della tabella più una `s`.
+</propel>
+<doctrine>
+Creare le righe per una tabella di collegamento di una relazione
+molti-a-molti è facile come definire un array con chiave il nome
+della relazione.
+</doctrine>
+Il contenuto dell'array è costituito dai nomi degli oggetti, come
+definiti nei file delle fixture. Si possono collegare oggetti di
+file differenti, ma i nomi devono essere definiti in anticipo.
+
+Nel file delle fixture, i token sono fissi per semplificare i test,
+ma quando un vero utente richiede un account, il ~token|Token~ dovrà
+essere generato:
+
+<propel>
+    [php]
+    // lib/model/JobeetAffiliate.php
+    class JobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function save(PropelPDO $con = null)
+      {
+        if (!$this->getToken())
+        {
+          $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
+        }
+
+        return parent::save($con);
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetAffiliate.php
+    class JobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function preValidate($event)
+      {
+        $object = $event->getInvoker();
+
+        if (!$object->getToken())
+        {
+          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+        }
+      }
+
+      // ...
+    }
+</doctrine>
+
+Ora si possono ricaricare i dati:
+
+    $ php symfony propel:data-load
+
+### Il web service dei lavori
+
+Come sempre, quando si crea una nuova risorsa, è una buona abitudine definire
+prima l'~URL~:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    api_jobs:
+      url:     /api/:token/jobs.:sf_format
+      class:   sfPropelRoute
+      param:   { module: api, action: list }
+      options: { model: JobeetJob, type: list, method: getForToken }
+      requirements:
+        sf_format: (?:xml|json|yaml)
+
+Per questa rotta, la variabile speciale ~`sf_format`~ conclude l'URL,
+i suoi valori validi sono `xml`, `json`, o `yaml`.
+
+Il metodo `getForToken()` sarà chiamato quando l'azione recupera l'insieme
+di oggetti legati alla rotta:
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    class JobeetJobPeer extends BaseJobeetJobPeer
+    {
+      static public function getForToken(array $parameters)
+      {
+        $affiliate = JobeetAffiliatePeer::getByToken($parameters['token']);
+        if (!$affiliate || !$affiliate->getIsActive())
+        {
+          throw new sfError404Exception(sprintf('Affiliate with token "%s" does not exist or is not activated.', $parameters['token']));
+        }
+
+        return $affiliate->getActiveJobs();
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      public function getForToken(array $parameters)
+      {
+        $affiliate = Doctrine::getTable('JobeetAffiliate')
+          ➥->findOneByToken($parameters['token']);
+        if (!$affiliate || !$affiliate->getIsActive())
+        {
+          throw new sfError404Exception(sprintf('Affiliate with token "%s" does not exist or is not activated.', $parameters['token']));
+        }
+
+        return $affiliate->getActiveJobs();
+      }
+
+      // ...
+    }
+</doctrine>
+
+Se il token non esiste nel database, sarà sollevata un'eccezione
+`sfError404Exception`. Questa classe di eccezioni è quindi automaticamente
+convertita in una risposta ~`404`|Errore 404~. Questo è il modo più semplice per
+generare una pagina `404` da una classe del modello.
+
+<propel>
+Il metodo `getForToken()` usa due nuovi metodi, che ora creeremo.
+
+Primo, il metodo `getByToken()` serve per ottenere un affiliato dal suo
+token:
+
+    [php]
+    // lib/model/JobeetAffiliatePeer.php
+    class JobeetAffiliatePeer extends BaseJobeetAffiliatePeer
+    {
+      static public function getByToken($token)
+      {
+        $criteria = new Criteria();
+        $criteria->add(self::TOKEN, $token);
+
+        return self::doSelectOne($criteria);
+      }
+    }
+
+Poi, il metodo `getActiveJobs()` restituisce la lista dei lavori attualmente
+attivi:
+
+</propel>
+<doctrine>
+Il metodo `getForToken()` usa un nuovo metodo chiamato `getActiveJobs()` e
+restituisce la lista dei lavori attualmente attivi:
+</doctrine>
+
+<propel>
+    [php]
+    // lib/model/JobeetAffiliate.php
+    class JobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function getActiveJobs()
+      {
+        $cas = $this->getJobeetCategoryAffiliates();
+        $categories = array();
+        foreach ($cas as $ca)
+        {
+          $categories[] = $ca->getCategoryId();
+        }
+
+        $criteria = new Criteria();
+        $criteria->add(JobeetJobPeer::CATEGORY_ID, $categories, Criteria::IN);
+        JobeetJobPeer::addActiveJobsCriteria($criteria);
+
+        return JobeetJobPeer::doSelect($criteria);
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetAffiliate.class.php
+    class JobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function getActiveJobs()
+      {
+        $q = Doctrine_Query::create()
+          ->select('j.*')
+          ->from('JobeetJob j')
+          ->leftJoin('j.JobeetCategory c')
+          ->leftJoin('c.JobeetAffiliates a')
+          ->where('a.id = ?', $this->getId());
+
+        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        return $q->execute();
+      }
+
+      // ...
+    }
+</doctrine>
+
+L'ultimo passo è quello di creare l'azione `api` ed i template.
+Inizializziamo il modulo con il task `generate:module`:
+
+    $ php symfony generate:module frontend api
+
+
+### L'azione
+
+Tutti i formati condivideranno la stessa azione `list`:
+
+    [php]
+    // apps/frontend/modules/api/actions/actions.class.php
+    public function executeList(sfWebRequest $request)
+    {
+      $this->jobs = array();
+      foreach ($this->getRoute()->getObjects() as $job)
+      {
+        $this->jobs[$this->generateUrl('job_show_user', $job, true)] = $job->asArray($request->getHost());
+      }
+    }
+Al posto di passare un array di oggetti di tipo `JobeetJon` ai template, passiamo
+un array di stringhe. Dato che abbiamo tre diversi template per la stessa azione,
+la logica di processare i valori è stata spostata fuori nel metodo `JobeetJob::asArray()`:
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    class JobeetJob extends BaseJobeetJob
+    {
+      public function asArray($host)
+      {
+        return array(
+          'category'     => $this->getJobeetCategory()->getName(),
+          'type'         => $this->getType(),
+          'company'      => $this->getCompany(),
+          'logo'         => $this->getLogo() ? 'http://'.$host.'/uploads/jobs/'.$this->getLogo() : null,
+          'url'          => $this->getUrl(),
+          'position'     => $this->getPosition(),
+          'location'     => $this->getLocation(),
+          'description'  => $this->getDescription(),
+          'how_to_apply' => $this->getHowToApply(),
+<propel>
+          'expires_at'   => $this->getCreatedAt('c'),
+</propel>
+<doctrine>
+          'expires_at'   => $this->getCreatedAt(),
+</doctrine>
+        );
+      }
+
+### Il formato `xml`
+
+Supportare il formato `xml` è semplice come creare un template:
+
+    [php]
+    <!-- apps/frontend/modules/api/templates/listSuccess.xml.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <jobs>
+    <?php foreach ($jobs as $url => $job): ?>
+      <job url="<?php echo $url ?>">
+    <?php foreach ($job as $key => $value): ?>
+        <<?php echo $key ?>><?php echo $value ?></<?php echo $key ?>>
+    <?php endforeach; ?>
+      </job>
+    <?php endforeach; ?>
+    </jobs>
+
+### Il formato `json`
+
+Il supporto al [formato JSON](http://json.org) è simile:
+
+    [php]
+    <!-- apps/frontend/modules/api/templates/listSuccess.json.php -->
+    [
+    <?php $nb = count($jobs); $i = 0; foreach ($jobs as $url => $job): ++$i ?>
+    {
+      "url": "<?php echo $url ?>",
+    <?php $nb1 = count($job); $j = 0; foreach ($job as $key => $value): ++$j ?>
+      "<?php echo $key ?>": <?php echo json_encode($value).($nb1 == $j ? '' : ',') ?>
+
+    <?php endforeach; ?>
+    }<?php echo $nb == $i ? '' : ',' ?>
+
+    <?php endforeach; ?>
+    ]
+
+### Il ~formato `yaml`|Formati (Creazione)~
+
+Per i formati built-in, symfony fornisce una configurazione nel background, come
+cambiare il content type, o disabilitare il layout.
+
+Dato che il formato YAML non è nella lista del formati built-in di richiesta, il
+content type della risposta può venir cambiato ed il layout disabilitato nell'azione:
+
+    [php]
+    class apiActions extends sfActions
+    {
+      public function executeList(sfWebRequest $request)
+      {
+        $this->jobs = array();
+        foreach ($this->getRoute()->getObjects() as $job)
+        {
+          $this->jobs[$this->generateUrl('job_show_user', $job, true)] = $job->asArray($request->getHost());
+        }
+
+        switch ($request->getRequestFormat())
+        {
+          case 'yaml':
+            $this->setLayout(false);
+            $this->getResponse()->setContentType('text/yaml');
+            break;
+        }
+      }
+    }
+
+Nell'azione, il metodo `setLayout()` cambia il layout di default o lo
+~disabilita|Layout disabilitato~ quando viene impostato a `false`.
+
+Il template per YAML è il seguente:
+
+    [php]
+    <!-- apps/frontend/modules/api/templates/listSuccess.yaml.php -->
+    <?php foreach ($jobs as $url => $job): ?>
+    -
+      url: <?php echo $url ?>
+
+    <?php foreach ($job as $key => $value): ?>
+      <?php echo $key ?>: <?php echo sfYaml::dump($value) ?>
+
+    <?php endforeach; ?>
+    <?php endforeach; ?>
+
+Se cercate di chiamare il web service con un token non valido, riceverete una pagina
+404 in XML per il formato XML e una pagina 404 JSON per il formato JSON. Ma per
+il formato YAML, symfony non sa cosa visualizzare.
+
+Quando create un formato, una ~pagina d'errore personalizzata|Pagina d'errore personalizzata~
+dev'essere creata. Il template sarà usato per le pagine 404 e tutte le altre eccezioni.
+
+Dato che le ~eccezioni|Gestione delle eccezioni~ dovrebbero essere differenti negli ambienti di produzione
+e di sviluppo, due file sono necessari (`config/error/exception.yaml.php` per il
+debug e `config/error/error.yaml.php` per la produzione):
+
+    [php]
+    // config/error/exception.yaml.php
+    <?php echo sfYaml::dump(array(
+      'error'       => array(
+        'code'      => $code,
+        'message'   => $message,
+        'debug'     => array(
+          'name'    => $name,
+          'message' => $message,
+          'traces'  => $traces,
+        ),
+    )), 4) ?>
+
+    // config/error/error.yaml.php
+    <?php echo sfYaml::dump(array(
+      'error'       => array(
+        'code'      => $code,
+        'message'   => $message,
+    ))) ?>
+
+Prima di provare, occorre creare un layout per il formato YAML:
+
+    [php]
+    // apps/frontend/templates/layout.yaml.php
+    <?php echo $sf_content ?>
+
+![404](http://www.symfony-project.org/images/jobeet/1_3/16/404.png)
+
+>**TIP**
+>Sovrascrivere i template dell'errore 404 e delle ~eccezioni|Gestione delle eccezioni~
+>è semplice come creare un file nella cartella `config/error/`.
+
+~Test per i Web Service|Test (Web Service)~
+-------------------------------------------
+
+Per testare il web service, copiate le fixture degli affiliati da `data/fixtures/`
+a `text/fixtures/` e rimpiazzate il contenuto del file auto-generato
+`apiActionsTest.php` con il seguente:
+
+    [php]
+    // test/functional/frontend/apiActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->
+      info('1 - Web service security')->
+
+      info('  1.1 - A token is needed to access the service')->
+      get('/api/foo/jobs.xml')->
+      with('response')->isStatusCode(404)->
+
+      info('  1.2 - An inactive account cannot access the web service')->
+      get('/api/symfony/jobs.xml')->
+      with('response')->isStatusCode(404)->
+
+      info('2 - The jobs returned are limited to the categories configured for the affiliate')->
+      get('/api/sensio_labs/jobs.xml')->
+      with('request')->isFormat('xml')->
+      with('response')->checkElement('job', 33)->
+
+      info('3 - The web service supports the JSON format')->
+      get('/api/sensio_labs/jobs.json')->
+      with('request')->isFormat('json')->
+      with('response')->matches('/"category"\: "Programming"/')->
+
+      info('4 - The web service supports the YAML format')->
+      get('/api/sensio_labs/jobs.yaml')->
+      with('response')->begin()->
+        isHeader('content-type', 'text/yaml; charset=utf-8')->
+        matches('/category\: Programming/')->
+      end()
+    ;
+
+In questo test, noterete due nuovi metodi:
+
+  * `isFormat()`: Testa il formato della richiesta
+  * `matches()`: Per i formati non-HTML, controlla se la risposta contiene l'estratto dal testo aspettato
+
+Il form di richiesta di affiliazione
+------------------------------------
+
+Ora che il web service è pronto da usare, creiamo il form per creare
+gli account degli affiliati. Descriveremo ancora il classico
+processo di aggiunta di una nuova feature all'applicazione.
+
+### Rotte
+
+Avete indovinato. La ~rotta|Rotta~ è la prima cosa che creiamo:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    affiliate:
+      class:   sfPropelRouteCollection
+      options:
+        model: JobeetAffiliate
+        actions: [new, create]
+        object_actions: { wait: GET }
+
+È un classico insieme di rotte ##ORM## con una nuova opzione di
+configurazione: `actions`. Poiché non abbiamo bisogno di tutte e
+sette le azioni definite dalla rotta, l'opzione `actions` dice
+alla rotta di far corrispondere solo le azioni `new` e `create`.
+La rotta aggiuntiva `wait` sarà usata per dare al novello
+affiliato un po' di feedback sul suo account.
+
+### Inizio
+
+Il classico secondo passo è generare un modulo:
+
+    $ php symfony propel:generate-module frontend affiliate JobeetAffiliate --non-verbose-templates
+
+### Template
+
+Il task `propel:generate-module` genera le classiche sette azioni ed i loro
+~template|Template~ corrispondenti. Nella cartella `templates/`, cancelliamo tutti i
+file tranne `_form.php` e `newSuccess.php`. E per i file che manteniamo,
+sostituiamo il contenuto con il seguente:
+
+    [php]
+    <!-- apps/frontend/modules/affiliate/templates/newSuccess.php -->
+    <?php use_stylesheet('job.css') ?>
+
+    <h1>Become an Affiliate</h1>
+
+    <?php include_partial('form', array('form' => $form)) ?>
+
+    <!-- apps/frontend/modules/affiliate/templates/_form.php -->
+    <?php include_stylesheets_for_form($form) ?>
+    <?php include_javascripts_for_form($form) ?>
+
+    <?php echo form_tag_for($form, 'affiliate') ?>
+      <table id="job_form">
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <input type="submit" value="Submit" />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <?php echo $form ?>
+        </tbody>
+      </table>
+    </form>
+
+Creiamo il template `waitSuccess.php`:
+
+    [php]
+    <!-- apps/frontend/modules/affiliate/templates/waitSuccess.php -->
+    <h1>Your affiliate account has been created</h1>
+
+    <div style="padding: 20px">
+      Thank you! 
+      You will receive an email with your affiliate token
+      as soon as your account will be activated.
+    </div>
+
+Infine, cambiamo il link nel footer per puntare al modulo `affiliate`:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <li class="last"><a href="<?php echo url_for('@affiliate_new') ?>">Become an affiliate</a></li>
+
+### Azioni
+
+Di nuovo, siccome useremo solo il form di creazione, apriamo il file
+`actions.class.php` e rimuoviamo tutti i metodi tranne `executeNew()`,
+`executeCreate()` e `processForm()`.
+
+Per l'azione `processForm()`, cambiamo l'URL di rinvio all'azione `wait`:
+
+    [php]
+    // apps/frontend/modules/affiliate/actions/actions.class.php
+    $this->redirect($this->generateUrl('affiliate_wait', $jobeet_affiliate));
+
+L'azione `wait` è semplice, perché non vogliamo passare nulla al template:
+
+    [php]
+    // apps/frontend/modules/affiliate/actions/actions.class.php
+    public function executeWait()
+    {
+    }
+
+L'affiliato non può scegliere il suo token, né può attivare il suo account.
+Apriamo il file `JobeetAffiliateForm` per personalizzare il ~form|Form~:
+
+    [php]
+<propel>
+    // lib/form/JobeetAffiliateForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetAffiliateForm.class.php
+</doctrine>
+    class JobeetAffiliateForm extends BaseJobeetAffiliateForm
+    {
+      public function configure()
+      {
+<propel>
+        unset($this['is_active'], $this['token'], $this['created_at']);
+        $this->widgetSchema['jobeet_category_affiliate_list']->setOption('expanded', true);
+        $this->widgetSchema['jobeet_category_affiliate_list']->setLabel('Categories');
+
+        $this->validatorSchema['jobeet_category_affiliate_list']->setOption('required', true);
+</propel>
+<doctrine>
+        unset($this['is_active'], $this['token'], $this['created_at'], $this['updated_at']);
+
+        $this->widgetSchema['jobeet_categories_list']->setOption('expanded', true);
+        $this->widgetSchema['jobeet_categories_list']->setLabel('Categories');
+
+        $this->validatorSchema['jobeet_categories_list']->setOption('required', true);
+</doctrine>
+
+        $this->widgetSchema['url']->setLabel('Your website URL');
+        $this->widgetSchema['url']->setAttribute('size', 50);
+
+        $this->widgetSchema['email']->setAttribute('size', 50);
+
+        $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => true));
+      }
+    }
+
+Il framework dei form supporta le ~relazioni molti-a-molti|Relazioni molti-a-molti (Form)~,
+come ogni altra colonna. Per default, una relazione del genere è visualizzata come un menù
+a tendina, grazie al widget `sfWidgetFormChoice`. Come abbiamo visto nel giorno
+10, abbiamo modificato la visualizzazione usando l'opzione `expanded`.
+Le email e gli URL tendono ad essere un po' più lunghi della dimensione
+predefinita di un tag input, ma gli attributi HTML possono essere impostati
+usando il metodo `setAttribute()`.
+
+![Form affiliati](http://www.symfony-project.org/images/jobeet/1_3/16/affiliate_form.png)
+
+### Test
+
+L'ultimo passo è scrivere alcuni ~test funzionali|Test (Form)~ per la nuova feature:
+
+    [php]
+    // test/functional/frontend/affiliateActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->
+      info('1 - An affiliate can create an account')->
+
+      get('/affiliate/new')->
+      click('Submit', array('jobeet_affiliate' => array(
+        'url'                            => 'http://www.example.com/',
+        'email'                          => 'foo@example.com',
+<propel>
+        'jobeet_category_affiliate_list' => array($browser->getProgrammingCategory()->getId()),
+</propel>
+<doctrine>
+        'jobeet_categories_list'         => array(Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
+</doctrine>
+      )))->
+      isRedirected()->
+      followRedirect()->
+      with('response')->checkElement('#content h1', 'Your affiliate account has been created')->
+
+      info('2 - An affiliate must at least select one category')->
+
+      get('/affiliate/new')->
+      click('Submit', array('jobeet_affiliate' => array(
+        'url'   => 'http://www.example.com/',
+        'email' => 'foo@example.com',
+      )))->
+<propel>
+      with('form')->isError('jobeet_category_affiliate_list')
+</propel>
+<doctrine>
+      with('form')->isError('jobeet_categories_list')
+</doctrine>
+    ;
+
+<propel>
+Per simulare la selezione dei checkbox, passiamo un array di identificatori
+da spuntare. Per semplificare il compito, un nuovo metodo
+`getProgrammingCategory()` è stato creato nella classe
+`JobeetTestFunctional`:
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function getProgrammingCategory()
+      {
+        $criteria = new Criteria();
+        $criteria->add(JobeetCategoryPeer::SLUG, 'programming');
+
+        return JobeetCategoryPeer::doSelectOne($criteria);
+      }
+
+      // ...
+    }
+
+Ma siccome abbiamo già questo codice nel metodo `getMostRecentProgrammingJob()`,
+è ora di ~rifattorizzare|Rifattorizzare~ il codice e creare un metodo `getForSlug()` in
+`JobeetCategoryPeer`:
+
+    [php]
+    // lib/model/JobeetCategoryPeer.php
+    static public function getForSlug($slug)
+    {
+      $criteria = new Criteria();
+      $criteria->add(self::SLUG, $slug);
+
+      return self::doSelectOne($criteria);
+    }
+
+Quindi, sostituiamo le due occorrenze di questo codice in `JobeetTestFunctional`.
+</propel>
+
+
+La gestione degli affiliati
+---------------------------
+
+Per il ~backend|Backend~, va creato un modulo `affiliate` per consentire agli
+amministratori di attivare gli affiliati:
+
+    $ php symfony propel:generate-admin backend JobeetAffiliate --module=affiliate
+
+Per accedere al modulo appena creato, aggiungiamo un link nel menù principale
+col numero di affiliati che devono essere attivati:
+
+    [php]
+    <!-- apps/backend/templates/layout.php -->
+    <li>
+<propel>
+      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
+        Affiliates - <strong><?php echo JobeetAffiliatePeer::countToBeActivated() ?></strong>
+      </a>
+</propel>
+<doctrine>
+      <a href="<?php echo url_for('@jobeet_affiliate_affiliate') ?>">
+        Affiliates - <strong><?php echo Doctrine::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
+      </a>
+</doctrine>
+    </li>
+
+<propel>
+    // lib/model/JobeetAffiliatePeer.php
+    class JobeetAffiliatePeer extends BaseJobeetAffiliatePeer
+    {
+      static public function countToBeActivated()
+      {
+        $criteria = new Criteria();
+        $criteria->add(self::IS_ACTIVE, 0);
+
+        return self::doCount($criteria);
+      }
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetAffiliateTable.class.php
+    class JobeetAffiliateTable extends Doctrine_Table
+    {
+      public function countToBeActivated()
+      {
+        $q = $this->createQuery('a')
+          ->where('a.is_active = ?', 0);
+
+        return $q->count();
+      }
+</doctrine>
+
+Poiché l'unica azione necessaria nel backend è l'attivazione o la
+disattivazione degli account, cambiamo la sezione `config` del
+generatore, per semplificare un po' l'interfaccia, ed aggiungiamo
+un link per attivare gli account direttamente dalla lista:
+
+    [yml]
+    # apps/backend/modules/affiliate/config/generator.yml
+    config:
+      fields:
+        is_active: { label: Active? }
+      list:
+        title:   Affiliate Management
+        display: [is_active, url, email, token]
+        sort:    [is_active]
+        object_actions:
+          activate:   ~
+          deactivate: ~
+        batch_actions:
+          activate:   ~
+          deactivate: ~
+        actions: {}
+      filter:
+        display: [url, email, is_active]
+
+Per rendere gli amministratori più produttivi, cambiamo i filtri di
+default per mostrare solo gli affiliati che devono essere attivati:
+
+    [php]
+    // apps/backend/modules/affiliate/lib/affiliateGeneratorConfiguration.class.php
+    class affiliateGeneratorConfiguration extends BaseAffiliateGeneratorConfiguration
+    {
+      public function getFilterDefaults()
+      {
+        return array('is_active' => '0');
+      }
+    }
+
+Il solo codice da scrivere è per le azioni `activate` e `deactivate`:
+
+    [php]
+    // apps/backend/modules/affiliate/actions/actions.class.php
+    class affiliateActions extends autoAffiliateActions
+    {
+      public function executeListActivate()
+      {
+        $this->getRoute()->getObject()->activate();
+
+<propel>
+        $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
+      }
+
+      public function executeListDeactivate()
+      {
+        $this->getRoute()->getObject()->deactivate();
+
+<propel>
+        $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
+      }
+
+      public function executeBatchActivate(sfWebRequest $request)
+      {
+<propel>
+        $affiliates = JobeetAffiliatePeer::retrieveByPks($request->getParameter('ids'));
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->from('JobeetAffiliate a')
+          ->whereIn('a.id', $request->getParameter('ids'));
+
+        $affiliates = $q->execute();
+</doctrine>
+
+        foreach ($affiliates as $affiliate)
+        {
+          $affiliate->activate();
+        }
+
+<propel>
+        $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
+      }
+
+      public function executeBatchDeactivate(sfWebRequest $request)
+      {
+<propel>
+        $affiliates = JobeetAffiliatePeer::retrieveByPks($request->getParameter('ids'));
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->from('JobeetAffiliate a')
+          ->whereIn('a.id', $request->getParameter('ids'));
+
+        $affiliates = $q->execute();
+</doctrine>
+
+        foreach ($affiliates as $affiliate)
+        {
+          $affiliate->deactivate();
+        }
+
+<propel>
+        $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
+      }
+    }
+
+<propel>
+    // lib/model/JobeetAffiliate.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetAffiliate.class.php
+</doctrine>
+    class JobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function activate()
+      {
+        $this->setIsActive(true);
+
+        return $this->save();
+      }
+
+      public function deactivate()
+      {
+        $this->setIsActive(false);
+
+        return $this->save();
+      }
+
+      // ...
+    }
+
+![Backend affiliati](http://www.symfony-project.org/images/jobeet/1_3/16/backend.png)
+
+
+
+A domani
+--------
+
+Grazie all'architettura ~REST~ di symfony, è molto semplice implementare
+dei web service per i propri progetti. Sebbene oggi abbiamo scritto del
+codice per un web service in sola lettura, avete abbastanza
+conoscenze su symfony da poter implementare un web service in
+lettura-scrittura.
+
+L'implementazione del form di creazione degli account per gli affiliati
+nel frontend e della sua controparte in backend è stata molto
+facile, perché ora avete familiarità col processo di aggiunta di nuove
+feature al vostro progetto.
+
+Se ricordate i requisiti dal giorno 2:
+
+  "L'affiliato può inoltre limitare il numero di lavori da restituire e raffinare
+  la propria richiesta specificando una categoria."
+
+L'implementazione di questa feature è così facile che ve la lasceremo fare
+stasera.
+
+Ogni volta che l'account di un affiliato è attivato dall'amministratore, una email
+deve essere inviata agli affiliati per confermare la loro iscrizione e dargli
+un token. L'invio delle email è l'argomento di cui parleremo domani.
+
+__ORM__

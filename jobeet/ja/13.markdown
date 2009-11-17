@@ -1,0 +1,592 @@
+13日目: ユーザー
+================
+
+昨日はたくさんの情報が詰め込まれました。
+ごくわずかなPHPコードとadminジェネレーターによって、短時間でバックエンドインターフェイスを作成できます。
+
+今日は、HTTPリクエストの間の永続データを管理する方法を理解します。
+ご存じのとおり、HTTPプロトコルはステートレスです。
+それぞれのリクエストはその前後のリクエストから独立していることを意味します。
+現代のWebサイトはユーザーエクスペリエンスを強化するためにリクエストの間のデータを一貫させる方法が必要です。
+
+ユーザー~セッション~は~Cookie~を利用して特定できます。
+symfonyにおいて、開発者はセッションを直接操作する必要はありませんがむしろアプリケーションのエンドユーザーを表す~`sfUser`~オブジェクトを使うことが必要です。
+
+ユーザーflash
+-------------
+
+flashつきのアクションでユーザーオブジェクトをすでに見てきました。
+~flash|flashメッセージ~はユーザーセッションに保存される短期のメッセージです。
+これはすぐ次のリクエストの後で自動的に削除されます。
+~リダイレクト~した後でユーザーにメッセージを表示する必要があるときにとても役立ちます。 
+jobが保存される、削除もしくは延長されるときに、ユーザーにフィードバックを表示するためにadminジェネレーターはflashをたくさん使います。
+
+![flash](http://www.symfony-project.org/images/jobeet/1_3/13/flashes.png)
+
+flashは`sfUser`の`setFlash()`メソッドを使って設定できます:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeExtend(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+
+      $job = $this->getRoute()->getObject();
+      $this->forward404Unless($job->extend());
+
+<propel>
+      $this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', $job->getExpiresAt('m/d/Y')));
+</propel>
+<doctrine>
+      $this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', date('m/d/Y', strtotime($job->getExpiresAt()))));
+</doctrine>
+
+      $this->redirect('job_show_user', $job);
+    }
+
+最初の引数はflashの識別子で2番目は表示するメッセージです。
+望むのであればflashはなんでも定義できますが、`notice`と`error`はもっとも共通するものの2つです
+(これらはadminジェネレーターによって広範囲で使われます)。
+
+テンプレートにflashメッセージをインクルードするのは開発者しだいですが、Jobeetに関して、これらは`layout.php`によって出力されます:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <?php if ($sf_user->hasFlash('notice')): ?>
+      <div class="flash_notice"><?php echo $sf_user->getFlash('notice') ?></div>
+    <?php endif; ?>
+
+    <?php if ($sf_user->hasFlash('error')): ?>
+      <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
+    <?php endif; ?>
+
+テンプレートにおいて、ユーザーは特別な変数`sf_user`をとおしてアクセス可能です.
+
+>**NOTE**
+>symfonyオブジェクトの中にはアクションから明示的に渡さなくても常にテンプレートにアクセスできるものがあります: >`sf_request`、`sf_user`と`sf_response`
+
+ユーザー属性
+------------
+
+不幸なことに、Jobeetユーザーのストーリーにはユーザーセッションに何かを保存する要件は含まれていません。
+ですので新しい要件を追加しましょう: 求人の閲覧を楽にするために、ユーザーによって閲覧される最新の3件の求人は後で求人ページに戻れるリンクつきのメニューに表示されます。
+
+ユーザーが求人ページにアクセスするとき、表示されるjobオブジェクトを~ユーザーの履歴|セッション~に追加してセッションに保存する必要があります:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+
+        // 求人履歴にすでに保存された求人を取得する
+        $jobs = $this->getUser()->getAttribute('job_history', array());
+
+        // 配列の始めに現在の求人を追加する
+        array_unshift($jobs, $this->job->getId());
+
+        // 新しい求人履歴をセッションに保存し直す
+        $this->getUser()->setAttribute('job_history', $jobs);
+      }
+
+      // ...
+    }
+
+>**NOTE**
+>`JobeetJob`オブジェクトをセッションに直接保存するのはできますが非推奨です。
+>リクエストの間にセッション変数がシリアライズされるからです。
+>セッションがロードされるとき、`JobeetJob`オブジェクトはデシリアライズされその間にそれらが修正もしくは削除される場合に"盗まれます"。
+
+### `getAttribute()`、`setAttribute()`
+
+識別子として、`sfUser::getAttribute()`メソッドはユーザーセッションから値を取得します。
+逆に言えば、識別子のために`setAttribute()`メソッドはPHP変数をセッションに保存します。
+
+`getAttribute()`メソッドは識別子がまだ定義されていない場合に返すオプションのデフォルト値も受け取ります。
+
+>**NOTE**
+>`getAttribute()`メソッドが受け取るデフォルトの値は次の内容のショートカットです:
+>
+>     [php]
+>     if (!$value = $this->getAttribute('job_history'))
+>     {
+>       $value = array();
+>     }
+
+### `myUser`クラス
+
+関心の分離をより順守するために、コードを~`myUser`クラス~に移動させましょう。
+`myUser`クラスはデフォルトの[`sfUser`](http://www.symfony-project.org/api/1_3/sfUser)基底クラスをアプリケーション固有のふるまいでオーバーライドします:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+
+        $this->getUser()->addJobToHistory($this->job);
+      }
+
+      // ...
+    }
+
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+      public function addJobToHistory(JobeetJob $job)
+      {
+        $ids = $this->getAttribute('job_history', array());
+
+        if (!in_array($job->getId(), $ids))
+        {
+          array_unshift($ids, $job->getId());
+
+          $this->setAttribute('job_history', array_slice($ids, 0, 3));
+        }
+      }
+    }
+
+すべての要件を考慮するようにコードも変更されました:
+
+  * `!in_array($job->getId(), $ids)`: 求人を重複して履歴に保存できない
+
+  * `array_slice($ids, 0, 3)`: ユーザーによって閲覧される最新の3つの求人のみ表示される
+
+レイアウトにおいて、変数`$sf_content`が出力される前に次のコードを追加します:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <div id="job_history">
+      Recent viewed jobs:
+      <ul>
+        <?php foreach ($sf_user->getJobHistory() as $job): ?>
+          <li>
+            <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+
+    <div class="content">
+      <?php echo $sf_content ?>
+    </div>
+
+レイアウトは現在の求人履歴を読み取るために新しい`getJobHistory()`メソッドを使います:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+<propel>
+      public function getJobHistory()
+      {
+        $ids = $this->getAttribute('job_history', array());
+
+        return JobeetJobPeer::retrieveByPKs($ids);
+      }
+</propel>
+<doctrine>
+      public function getJobHistory()
+      {
+        $ids = $this->getAttribute('job_history', array());
+
+        if (!empty($ids))
+        {
+          return Doctrine::getTable('JobeetJob')
+            ->createQuery('a')
+            ->whereIn('a.id', $ids)
+            ->execute();
+        }
+        else
+        {
+          return array();
+        }
+      }
+</doctrine>
+
+      // ...
+    }
+
+<propel>
+1つの呼び出しで`JobeetJob`オブジェクトを読み取るために`getJobHistory()`メソッドはPropelの`retrieveByPKs()`メソッドを使います。
+</propel>
+
+![求人履歴](http://www.symfony-project.org/images/jobeet/1_3/13/job_history.png)
+
+### sfParameterHolder
+
+求人履歴のAPIを完結させるために、履歴をリセットするメソッドを追加しましょう:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+      public function resetJobHistory()
+      {
+        $this->getAttributeHolder()->remove('job_history');
+      }
+
+      // ...
+    }
+
+ユーザー属性は`sfParameterHolder`クラスのオブジェクトによって管理されます。
+`getAttribute()`と`setAttribute()`メソッドは`getParameterHolder()->get()`と`getParameterHolder()->set()`用のプロキシメソッドです。
+`remove()`メソッドは`sfUser`のプロキシメソッドを持たないので、パラメーターホルダーオブジェクトを直接使う必要があります。
+
+>**NOTE**
+>[`sfParameterHolder`](http://www.symfony-project.org/api/1_3/sfParameterHolder)クラスはパラメーターを保存するために`sfRequest`によっても使われます。
+
+アプリケーションのセキュリティ
+------------------------------
+
+### 認証
+
+他の多くのsymfonyの機能のように、~セキュリティ~はYAMLファイルの~`security.yml`~で管理されます。
+たとえば、デフォルトコンフィギュレーションはバックエンドアプリケーションの`config/`ディレクトリで見つかります:
+
+    [yml]
+    # apps/backend/config/security.yml
+    default:
+      is_secure: false
+
+`is_secure`エントリーを`true`に切り替える場合、バックエンドアプリケーション全体でユーザーを認証することが求められます。
+
+![ログイン](http://www.symfony-project.org/images/jobeet/1_3/13/login.png)
+
+>**TIP**
+>YAMLファイルにおいて、ブール値は`true`と`false`の文字列で表現されます。
+
+Webデバッグツールバーのログを見ると、ページにアクセスしようとするたびに`defaultActions`クラスの`executeLogin()`メソッドが呼び出されることに気がつきます。
+
+![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_3/13/web_debug.png)
+
+認証されていないユーザーが~セキュアなアクション|セキュリティ~にアクセスしようとすると、symfonyは`settings.yml`で設定される`login`アクションにリクエストを転送します:
+
+    [yml]
+    all:
+      .actions:
+        login_module: default
+        login_action: login
+
+>**NOTE**
+>無限の再帰呼び出しを回避するためにloginアクションをセキュアにするのは不可能です。
+
+-
+
+>**TIP**
+>4日目でみたように、同じ設定ファイルを複数の場所で定義できます。
+>これは`security.yml`にもあてはまります。
+>単独のアクションもしくはモジュール全体を~セキュアにするもしくはセキュアにしない|アクセス制限~のみであれば、モジュールの`config/`ディレクトリで~`security.yml`~を作成します:
+>
+>     [yml]
+>     index:
+>       is_secure: false
+>
+>     all:
+>       is_secure: true
+
+デフォルトでは、`myUser`クラスは[`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_3/sfBasicSecurityUser)を継承し、`sfUser`は継承しません。
+`sfBasicSecurityUser`はユーザーの認証と認可を管理するための追加メソッドを提供します。
+
+ユーザーの認証を管理するには、`isAuthenticated()`と`setAuthenticated()`メソッドを使います:
+
+    [php]
+    if (!$this->getUser()->isAuthenticated())
+    {
+      $this->getUser()->setAuthenticated(true);
+    }
+
+### 認証
+
+ユーザーが認証されたとき、アクションへのアクセスは**~クレデンシャル~(credential)**を定義することでより制限できます。
+ユーザーはページにアクセスするために要求されるクレデンシャルを持たなければなりません:
+
+    [yml]
+    default:
+      is_secure:   false
+      credentials: admin
+
+symfonyのクレデンシャルシステムはとてもシンプルで強力です。
+クレデンシャルは(グループもしくはパーミッションのように)アプリケーションのセキュリティモデルを記述するために必要なものを表現できます。
+
+>**SIDEBAR**
+>複雑なクレデンシャル
+>
+>複雑なクレデンシャルの要件を記述するために`security.yml`の`credentials`エントリーはブール値オペレーションをサポートします。
+>
+>ユーザーがクレデンシャルA**と**Bを持たなければならない場合、クレデンシャルを角かっこで囲みます:
+>
+>     [yml]
+>     index:
+>       credentials: [A, B]
+>
+>ユーザーがクレデンシャルA**もしくは**Bを持たなければならない場合、クレデンシャルを2つの角かっこの組で囲みます:
+>
+>     [yml]
+>     index:
+>       credentials: [[A, B]]
+>
+>クレデンシャルの数だけ任意のブール式を記述するためにかっこを組み合わせることもできます。
+
+ユーザークレデンシャルを管理するために、`sfBasicSecurityUser`はいくつかのメソッドを提供します:
+
+    [php]
+    // 1つもしくは複数のクレデンシャルを追加する
+    $user->addCredential('foo');
+    $user->addCredentials('foo', 'bar');
+
+    // ユーザーがクレデンシャルを持つかチェックする
+    echo $user->hasCredential('foo');                      =>   true
+
+    // ユーザーが両方のクレデンシャルを持つかチェックする
+    echo $user->hasCredential(array('foo', 'bar'));        =>   true
+
+    // ユーザーがクレデンシャルの1つを持つかチェックする
+    echo $user->hasCredential(array('foo', 'bar'), false); =>   true
+
+    // クレデンシャルを削除する
+    $user->removeCredential('foo');
+    echo $user->hasCredential('foo');                      =>   false
+
+    // すべてのクレデンシャルを削除する(ログアウト処理の際に便利)
+    $user->clearCredentials();
+    echo $user->hasCredential('bar');                      =>   false
+
+Jobeetバックエンドに関して、プロファイルは1つ: 管理者しかないのでクレデンシャルは使いません。
+
+プラグイン
+----------
+
+車輪の再発明をしたくないので、1からログインアクションを開発しません。
+代わりに、**~プラグイン~**をインストールします。
+
+symfonyフレークワークの大きな強みの1つは[プラグインのエコシステム](http://www.symfony-project.org/plugins/)です。
+来たる日に見ますが、プラグインを作るのはとても簡単です。
+プラグインはコンフィギュレーションからモジュールとアセットまで任意のものを格納できるのでとても強力です。
+
+<propel>
+今日は、バックエンドアプリケーションをセキュアにするために[~`sfGuardPlugin`~](http://www.symfony-project.org/plugins/sfGuardPlugin)をインストールします:
+
+    $ php symfony plugin:install sfGuardPlugin
+</propel>
+<doctrine>
+今日は、バックエンドアプリケーションをセキュアにするために[`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin)をインストールします
+
+    $ php symfony plugin:install sfDoctrineGuardPlugin
+</doctrine>
+
+`plugin:install`タスクは名前でプラグインをインストールします。
+すべてのプラグインは`plugins/`ディレクトリの下に保存されそれぞれのプラグインはプラグインの名前から名づけた独自のディレクトリを持ちます。
+
+>**NOTE**
+>`plugin:install`タスクを動作させるには~PEAR~をインストールしなければなりません。
+
+`plugin:install`タスクでプラグインをインストールするとき、symfonyは最新の安定版をインストールします。
+プラグインの特定バージョンをインストールするには、`--release`オプションを渡します。
+
+<propel>
+[プラグインページ](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_all_releases)はsymfonyバージョンによってグループ化されるすべてのバージョンの一覧を示します。
+
+プラグインはディレクトリで自己展開しますが、symfony公式サイトから[パッケージをダウンロード](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_installation)して展開する、もしくは代わりに[Subversionリポジトリ](http://svn.symfony-project.com/plugins/sfGuardPlugin)への`svn:externals`リンクを作成します。
+
+</propel>
+<doctrine>
+[プラグインページ](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_all_releases)
+はsymfonyのバージョンでグループ化された利用可能なすべてのバージョンの一覧を表示します。
+
+プラグインはディレクトリに内蔵され、symfony公式サイトから[パッケージをダウンロード](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_installation)して展開することが可能で、代わりに[Subversionリポジトリ](http://svn.symfony-project.com/plugins/sfDoctrineGuardPlugin)への`svn:externals`プロパティを作成します。
+</doctrine>
+
+`plugin:install`タスクは`ProjectConfiguration.class.php`ファイルを自動的に更新することでインストールするプラグインを自動的に有効にします。
+しかしSubversionを通してもしくはアーカイブをダウンロードしてプラグインをインストールする場合、`ProjectConfiguration.class.php`で手動で有効にする必要があります:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+<propel>
+        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin');
+</propel>
+<doctrine>
+        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin');
+</doctrine>
+      }
+    }
+
+バックエンドのセキュリティ
+--------------------------
+
+それぞれのプラグインには設定方法を説明している[README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)ファイルが含まれます。
+
+新しいプラグインの作り方を見てみましょう。
+ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります:
+
+<propel>
+    $ php symfony propel:build-all-load --no-confirmation
+</propel>
+<doctrine>
+    $ php symfony doctrine:build --all --and-load
+</doctrine>
+
+>**TIP**
+<propel>
+>`propel:build-all-load`タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。
+</propel>
+<doctrine>
+>`doctrine:build --all --and-load`タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。
+</doctrine>
+>これを避けるには、モデル、フォーム、フィルターをビルドし、`data/sql/`に保存されている生成SQLステートメントを実行して新しいテーブルを作成します。
+
+<propel>
+`sfGuardPlugin`はユーザークラスにいくつかのメソッドを追加するので、`myUser`の基底クラスを`sfGuardSecurityUser`に変更する必要があります:
+</propel>
+<doctrine>
+`sfDoctrineGuardPlugin`はユーザークラスにいくつかのメソッドを追加するので、`myUser`の基底クラスを`sfGuardSecurityUser`に変更する必要があります:
+</doctrine>
+
+    [php]
+    // apps/backend/lib/myUser.class.php
+    class myUser extends sfGuardSecurityUser
+    {
+    }
+
+<propel>
+`sfGuardPlugin`はユーザーを認証する`signin`アクションを`sfGuardAuth`モジュールに提供します。
+</propel>
+<doctrine>
+`sfDoctrineGuardPlugin`はユーザーを認証する`signin`アクションを`sfGuardAuth`モジュールに提供します。
+</doctrine>
+
+ログインページに使われるデフォルトのアクションを変更するために~`settings.yml`~ファイルを編集します:
+
+    [yml]
+    # apps/backend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules: [default, sfGuardAuth]
+
+        # ...
+
+      .actions:
+        login_module:    sfGuardAuth
+        login_action:    signin
+
+        # ...
+
+プラグインは1つのプロジェクトのすべてのアプリケーションで共有されるので、~モジュール~を~`enabled_modules`設定|`enabled_modules`(設定)~に追加することで使いたいモジュールを明示的に有効にする必要があります。
+
+![sfGuardPluginのログイン](http://www.symfony-project.org/images/jobeet/1_3/13/sf_guard_login.png)
+
+最後のステップは管理者ユーザーを作成することです:
+
+    $ php symfony guard:create-user fabien SecretPass
+    $ php symfony guard:promote fabien
+
+>**TIP**
+>`sfGuardPlugin`は~コマンドライン~からユーザー、グループとパーミッションを管理するタスクを提供します。
+>`guard`名前空間に所属するすべてのタスクの一覧を表示するには`list`タスクを使います:
+>
+>     $ php symfony list guard
+
+ユーザーが~認証~されていないとき、メニューバーを隠す必要があります:
+
+    [php]
+    // apps/backend/templates/layout.php
+    <?php if ($sf_user->isAuthenticated()): ?>
+      <div id="menu">
+        <ul>
+<propel>
+          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
+</propel>
+<doctrine>
+          <li><?php echo link_to('Jobs', '@jobeet_job_job') ?></li>
+          <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
+</doctrine>
+        </ul>
+      </div>
+    <?php endif; ?>
+
+ユーザーが認証されたとき、メニューに~ログアウト~リンクを追加する必要があります:
+
+    [php]
+    // apps/backend/templates/layout.php
+    <li><?php echo link_to('Logout', '@sf_guard_signout') ?></li>
+
+>**TIP**
+>`sfGuardPlugin`によって提供されるすべてのルートの一覧を表示するには、`app:routes`タスクを使います。
+
+Jobeetバックエンドにさらに磨きをかけるには、管理者ユーザーを管理する新しいモジュールを追加しましょう。
+ありがたいことに、`sfGuardPlugin`はそのようなモジュールを提供してくれます。
+`sfGuardAuth`モジュールに関して、`settings.yml`でこれを有効にする必要があります:
+
+    [yml]
+    // apps/backend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules: [default, sfGuardAuth, sfGuardUser]
+
+メニューにリンクを追加します:
+
+    [php]
+    // apps/backend/templates/layout.php
+    <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
+
+![バックエンドのメニュー](http://www.symfony-project.org/images/jobeet/1_3/13/menu.png)
+
+やりました！
+
+ユーザーのテスト
+----------------
+
+ユーザーのテストの話をしていないので今日のチュートリアルは終わっていません。
+symfonyブラウザーは~Cookie~をシミュレートするので、組み込みの[`sfTesterUser`](http://symfony-project.org/api/1_3/sfTesterUser)テスターによって使われるユーザーのふるまいをテストするのはとても簡単です。
+
+今日追加したメニュー機能用の~機能テスト~を更新しましょう。
+`job`モジュールの機能テストの末尾に次のコードを追加します:
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->
+      info('4 - User job history')->
+
+      loadData()->
+      restart()->
+
+      info('  4.1 - When the user access a job, it is added to its history')->
+      get('/')->
+      click('Web Developer', array(), array('position' => 1))->
+      get('/')->
+      with('user')->begin()->
+        isAttribute('job_history', array($browser->getMostRecentProgrammingJob()->getId()))->
+      end()->
+
+      info('  4.2 - A job is not added twice in the history')->
+      click('Web Developer', array(), array('position' => 1))->
+      get('/')->
+      with('user')->begin()->
+        isAttribute('job_history', array($browser->getMostRecentProgrammingJob()->getId()))->
+      end()
+    ;
+
+テスト作業を楽にするには、フィクスチャデータをリロードしてクリーンなセッションで始めるためにブラウザーを再起動します。
+
+`isAttribute()`メソッドは渡されたユーザー属性をチェックします。
+
+>**NOTE**
+>`sfTesterUser`テスターはユーザーの認証と認可をテストするために`isAuthenticated()`と`hasCredential()`メソッドも提供します。
+
+また明日
+--------
+
+symfonyのユーザークラスはPHPセッションの管理を抽象化するためのよい手段です。
+symfonyの偉大なプラグインシステムと`sfGuardPlugin`プラグインを結びつけることで短時間でJobeetバックエンドをセキュアにすることができました。
+またプラグインによって提供されたモジュールのおかげで、自由に管理者ユーザーを管理できるクリーンなインターフェイスも追加しました。
+
+__ORM__

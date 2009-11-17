@@ -1,0 +1,878 @@
+﻿Giorno 20: I Plugin
+===================
+
+Ieri avete imparato a internazionalizzare e localizzare gli applicativi symfony. 
+Ancora una volta, grazie allo standard ICU e a numerosi helper,
+symfony rende il tutto veramente facile.
+
+Oggi, si parla di ~plugin|Plugin~: che cosa sono, cosa si può racchiudere in un plugin,
+e per cosa possono essere utilizzati.
+
+Plugin
+------
+
+### Un Plugin di symfony
+
+Un plugin di symfony offre un modo per pacchettizzare e distribuire un sottoinsieme di
+file del progetto. Come un progetto, un plugin può contenere classi, helper,
+configurazioni, task, form, schemi e anche attività web.
+
+### ~Plugin privati~
+
+L'utilizzo primario dei plugin è quello di facilitare la condivisione di codice tra le applicazioni,
+o anche tra differenti progetti. Ricordiamo che gli applicativi symfony condividono solo
+il modello. I Plugin forniscono un modo per condividere più componenti tra gli applicativi.
+
+Se avete bisogno di ~riutilizzare|Riutilizzo del codice~ lo stesso schema per progetti diversi, o lo stesso
+modulo, spostateli in un plugin. Dal momento che un plugin è solo una cartella, è possibile
+lavorarci abbastanza agevolmente mediante la creazione di un repository SVN e utilizzando
+`svn:externals` o, semplicemente copiando i file da un progetto all'altro.
+
+Chiamiamo questi plugin "plugin privati", perché il loro uso è limitato ad un unico
+sviluppatore o società. Essi non sono accessibili pubblicamente.
+
+>**TIP**
+>È anche possibile creare un ~pacchetto|Pacchettizzazione~ plugin privato, creare il proprio
+>canale symfony plugin, ed installarlo attraverso il task `plugin:install`.
+
+### Plugin pubblici
+
+I plugin pubblici sono disponibili alla ~comunità|Comunità~ per il download e l'installazione. In
+questa guida, abbiamo utilizzato due plugin pubblici: `sfGuardPlugin` e
+`sfFormExtraPlugin`.
+
+Sono del tutto simili ai plugin privati. L'unica differenza è che
+chiunque può installarli per i propri progetti. Si vedrà più avanti come
+pubblicare e ospitare un plugin pubblico su un sito web con symfony.
+
+### Un Modo Diverso di Organizzare il Codice
+
+Esiste un altro modo per pensare e utilizzare i plugin. Dimenticatevi
+riusabilità e condivisione. I plugin possono essere usati come un modo diverso per
+~organizzare il codice|Organizzare il codice~. Invece di organizzare i file a strati: tutti i modelli nella
+cartella `lib/model/`, i template nella cartella `templates/`, ...; i
+file possono essere organizzati per funzionalità: tutti i file relativi ai posti di lavoro assieme (il modello,
+i form ed i template), tutti i file CMS assieme e così via.
+
+La Struttura in File del Plugin
+-------------------------------
+
+Un plugin è solo una cartella con file organizzati secondo una ~struttura|Struttura~ 
+predefinita, a seconda della natura dei file. Oggi, sposteremo gran parte del
+codice che abbiamo scritto per Jobeet in un `sfJobeetPlugin`. La configurazione di base che
+verrà utilizzata è la seguente:
+
+    sfJobeetPlugin/
+      config/
+        sfJobeetPluginConfiguration.class.php // Inizializzazione dei plugin
+        schema.yml                            // Schema del database 
+        routing.yml                           // Rotte
+      lib/
+        Jobeet.class.php                      // Classi
+        helper/                               // Helper
+        filter/                               // Classi dei filtri
+        form/                                 // Classi dei form
+        model/                                // Classi del modello
+        task/                                 // Task
+      modules/
+        job/                                  // Moduli
+          actions/
+          config/
+          templates/
+      web/                                    // Asset come JS, CSS, ed immagini
+
+Il Plugin Jobeet
+----------------
+
+Inizializzare un plugin è semplice come creare una nuova cartella sotto
+`plugins/`. Per Jobeet, creiamo una cartella `sfJobeetPlugin`:
+
+    $ mkdir plugins/sfJobeetPlugin
+
+>**NOTE**
+>Tutti i plugin devono terminare con `Plugin`. È anche buona abitudine mettere come
+>~prefisso|Prefisso~ `sf`, per quanto non obbligatorio.
+
+### Il Modello
+
+Innanzitutto, spostate il file `config/schema.yml` in `plugins/sfJobeetPlugin/config/`:
+
+    $ mkdir plugins/sfJobeetPlugin/config/
+    $ mv config/schema.yml plugins/sfJobeetPlugin/config/schema.yml
+
+>**NOTE**
+>Tutti i comandi sono per ambienti di tipo Unix. Chi usa Windows, può spostare
+>i file utilizzando il copia/incolla di Explorer. Se si usa ~Subversion~, o
+>un altro strumento per gestire il codice, utilizzare gli strumenti nativi
+>a disposizione (come `svn mv` per spostare i file).
+
+Spostare i file dei modelli, dei form e dei filtri in `plugins/sfJobeetPlugin/lib/`:
+
+    $ mkdir plugins/sfJobeetPlugin/lib/
+    $ mv lib/model/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/form/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<doctrine>
+Dopo aver spostato modelli, form e filtri, le classi devono essere rinominate,
+rese astratte e precedute dal prefisso `Plugin`.
+
+>**TIP**
+>Inserire il ~prefisso|Prefisso~ `Plugin` solo nelle classi auto-generate, non in tutte
+>le classi. Ad esempio, non inserire il prefisso nelle classi scritte
+>manualmente. Solo le classi auto-generate richiedono il prefisso.
+
+Ecco un esempio in cui si spostano le classi `JobeetAffiliate` e
+`JobeetAffiliateTable`.
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
+
+Ed il codice che dovrebbe essere aggiornato:
+
+    [php]
+    abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function preValidate($event)
+      {
+        $object = $event->getInvoker();
+
+        if (!$object->getToken())
+        {
+          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+        }
+      }
+
+      // ...
+    }
+
+Ora spostiamo la classe `JobeetAffiliateTable`:
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliateTable.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliateTable.class.php
+
+La definizione della classe dovrebbe ora essere come la seguente:
+
+    [php]
+    abstract class PluginJobeetAffiliateTable extends Doctrine_Table
+    {
+      // ...
+    }
+
+Ora facciamo lo stesso per le classi dei form e dei filtri. Rinominiamoli per
+includere un prefisso con la parola `Plugin`.
+
+Assicuriamoci di cancellare la cartella `base` in `plugins/sfJobeetPlugin/lib/*/doctrine`
+per le cartelle `form`, `filter` e `model`.
+
+Esempio:
+
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/base
+
+Una volta spostate, rinominate e cancellate alcune classi di form, filtri e modelli,
+eseguiamo i task per ricostruire tutte le classi.
+
+    $ php symfony doctrine:build-model
+    $ php symfony doctrine:build-forms
+    $ php symfony doctrine:build-filters
+
+Ora si noteranno alcune nuove cartelle create per mantenere i modelli creati
+dallo schema incluso con `sfJobeetPlugin` in `lib/model/doctrine/sfJobeetPlugin/`.
+
+Queste cartelle contengono i modelli di primo livello e le classi base generate
+dallo schema. Per esempio il modello `JobeetJob` ora ha questa struttura di classi.
+
+  * `JobeetJob` (estende `PluginJobeetJob`) in 
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
+    classe di primo livello, dove possono essere messe tutte le 
+    funzionalità dei modelli del progetto. Qui si possono ridefinire
+    le funzionalità incluse nei modelli del plugin.
+
+  * `PluginJobeetJob` (estende `BaseJobeetJob`) in
+     `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
+     questa classe contiene tutte le funzionalità specifiche
+     del plugin. Si possono ridefinire le funzionalità in questa
+     classe ed in quella base modificando la classe `JobeetJob`.
+     
+  * `BaseJobeetJob` (estende `sfDoctrineRecord`) in
+     `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
+     classe base generata dallo schema yaml ogni volta che si
+     esegue `doctrine:build-model`.
+  
+  * `JobeetJobTable` (estende `PluginJobeetJobTable`) in
+     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+     come la classe `JobeetJob`, tranne che questa è un'istanza
+     di `Doctrine_Table` restituita dalla chiamata a
+     `Doctrine::getTable('JobeetJob')`.
+
+  * `PluginJobeetJobTable` (estende `Doctrine_Table`) in
+     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+     questa classe contiene tutte le funzionalità specifiche
+     del plugin, ad esempio per l'istanza di `Doctrine_Table`
+     restituita dalla chiamata a `Doctrine::getTable('JobeetJob')`.
+
+Con questa struttura generata, si ha la possibilità di personalizzare i
+modelli di un plugin modificando la classe `JobeetJob` di primo livello.
+Si può personalizzare lo schema ed aggiungere colonne, aggiungere relazioni
+sovrascrivendo i metodi `setTableDefinition()` e `setUp()`.
+
+>**NOTE**
+>Quando si spostano le classi dei form, assicurarsi di cambiare il metodo
+>`configure()` in un metodo `setup()` e richiamare `parent::setup()`.
+>Ecco un esempio.
+>
+>     [php]
+>     abstract class PluginJobeetAffiliateForm extends BaseJobeetAffiliateForm
+>     {
+>       public function setup()
+>       {
+>         parent::setup();
+>     
+>         // ...
+>       }
+</doctrine>
+
+<propel>
+Se si dovesse lanciare il task `propel:build-model` ora, symfony genererebbe
+ancora i file sotto `lib/model/`, il che non è quello che vogliamo. La cartella
+in output di Propel può essere configurata con l'aggiunta dell'opzione `package`. Aprire
+il file `schema.yml` e aggiungere la seguente configurazione:
+
+    [yml]
+    # plugins/sfJobeetPlugin/config/schema.yml
+    propel:
+      _attributes:      { package: plugins.sfJobeetPlugin.lib.model }
+
+Ora symfony genererà i suoi file dentro la cartella
+`plugins/sfJobeetPlugin/lib/model/`. I costruttori dei form e dei filtri
+terranno conto anche loro della configurazione quando generano dei file.
+
+Il task `propel:build-sql` genera un file SQL per creare le tabelle. Essendo che
+il file è il nome del pacchetto, eliminare quello presente:
+
+    $ rm data/sql/lib.model.schema.sql
+
+Ora, lanciando `propel:build-all-load`, symfony genererà i file dentro
+la cartella del plugin `lib/model/`, come ci si dovrebbe aspettare:
+
+    $ php symfony propel:build-all-load --no-confirmation
+
+Dopo aver lanciato il task, verificare che non sia stata creata la cartella `lib/model/`.
+Il task ha comunque creato le cartelle `lib/form/` e `lib/filter/`. Entrambe
+contengono le classi di base per i form Propel del vostro progetto.
+
+Poiché tali file sono globali per un progetto, rimuoverli dal plugin:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseFormPropel.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/BaseFormFilterPropel.class.php
+</propel>
+<doctrine>
+È necessario assicurarsi che il plugin non abbia classi base per i form di
+Doctrine. Questi file sono globali per un progetto e verranno rigenerati con 
+`doctrine:build-forms` e `doctrine:build-filters`.
+
+Rimuovere tali file dal plugin:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/BaseFormDoctrine.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/BaseFormFilterDoctrine.class.php
+</doctrine>
+
+
+Potete anche spostare il file `Jobeet.class.php` nel plugin:
+
+    $ mv lib/Jobeet.class.php plugins/sfJobeetPlugin/lib/
+
+Avendo spostato vari file, svuotiamo la cache:
+
+    $ php symfony cc
+
+>**TIP**
+>Se utilizzate un acceleratore di PHP, come ad esempio APC, e notate delle cose strane,
+>riavviate Apache.
+
+Ora che tutti i file del modello sono stati spostati nel plugin, avviare i test
+per controllare che ogni cosa funzioni correttamente:
+
+    $ php symfony test:all
+
+### I Controllori e le Viste
+
+Il prossimo passo logico è quello di spostare i moduli nel plugin. Per
+evitare collisioni con il nome del modulo, è buona abitudine aggiungere
+un ~prefisso|Prefisso~ al nome del modulo plugin con il nome del plugin:
+
+    $ mkdir plugins/sfJobeetPlugin/modules/
+    $ mv apps/frontend/modules/affiliate plugins/sfJobeetPlugin/modules/sfJobeetAffiliate
+    $ mv apps/frontend/modules/api plugins/sfJobeetPlugin/modules/sfJobeetApi
+    $ mv apps/frontend/modules/category plugins/sfJobeetPlugin/modules/sfJobeetCategory
+    $ mv apps/frontend/modules/job plugins/sfJobeetPlugin/modules/sfJobeetJob
+    $ mv apps/frontend/modules/language plugins/sfJobeetPlugin/modules/sfJobeetLanguage
+
+Per ciascun modulo, è necessario cambiare il nome delle classi in tutti
+i file `actions.class.php` e `components.class.php` (ad esempio, la classe
+`affiliateActions` deve essere rinominata in `sfJobeetAffiliateActions`).
+
+Le chiamate a `include_partial()` e `include_component()` devono essere cambiate
+nei seguenti template:
+
+  * `sfJobeetAffiliate/templates/_form.php` (cambiare `affiliate` in `sfJobeetAffiliate`)
+  * `sfJobeetCategory/templates/showSuccess.atom.php`
+  * `sfJobeetCategory/templates/showSuccess.php`
+  * `sfJobeetJob/templates/indexSuccess.atom.php`
+  * `sfJobeetJob/templates/indexSuccess.php`
+  * `sfJobeetJob/templates/searchSuccess.php`
+  * `sfJobeetJob/templates/showSuccess.php`
+  * `apps/frontend/templates/layout.php`
+
+Aggiornare le azioni `search` e `delete`:
+
+    [php]
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
+    class sfJobeetJobActions extends sfActions
+    {
+      public function executeSearch(sfWebRequest $request)
+      {
+        if (!$query = $request->getParameter('query'))
+        {
+          return $this->forward('sfJobeetJob', 'index');
+        }
+
+        $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+
+        if ($request->isXmlHttpRequest())
+        {
+          if ('*' == $query || !$this->jobs)
+          {
+            return $this->renderText('No results.');
+          }
+          else
+          {
+            return $this->renderPartial('sfJobeetJob/list', array('jobs' => $this->jobs));
+          }
+        }
+      }
+
+      public function executeDelete(sfWebRequest $request)
+      {
+        $request->checkCSRFProtection();
+
+        $jobeet_job = $this->getRoute()->getObject();
+        $jobeet_job->delete();
+
+        $this->redirect('sfJobeetJob/index');
+      }
+
+      // ...
+    }
+
+Infine, modificare il file `routing.yml` in modo da rispecchiare i cambiamenti fatti sopra:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    affiliate:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetAffiliate
+        actions:        [new, create]
+        object_actions: { wait: GET }
+        prefix_path:    /:sf_culture/affiliate
+        module:         sfJobeetAffiliate
+      requirements:
+        sf_culture: (?:fr|en)
+
+    api_jobs:
+      url:     /api/:token/jobs.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetApi, action: list }
+      options: { model: JobeetJob, type: list, method: getForToken }
+      requirements:
+        sf_format: (?:xml|json|yaml)
+
+    category:
+      url:     /:sf_culture/category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetCategory, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object, method: doSelectForSlug }
+      requirements:
+        sf_format: (?:html|atom)
+        sf_culture: (?:fr|en)
+
+    job_search:
+      url:   /:sf_culture/search
+      param: { module: sfJobeetJob, action: search }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    job:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: PUT, extend: PUT }
+        prefix_path:    /:sf_culture/job
+        module:         sfJobeetJob
+      requirements:
+        token: \w+
+        sf_culture: (?:fr|en)
+
+    job_show_user:
+      url:     /:sf_culture/job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+<propel>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_criteria: doSelectActive
+</propel>
+<doctrine>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_query: retrieveActiveJob
+</doctrine>
+      param:   { module: sfJobeetJob, action: show }
+      requirements:
+        id:        \d+
+        sf_method: GET
+        sf_culture: (?:fr|en)
+
+    change_language:
+      url:   /change_language
+      param: { module: sfJobeetLanguage, action: changeLanguage }
+
+    localized_homepage:
+      url:   /:sf_culture/
+      param: { module: sfJobeetJob, action: index }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    homepage:
+      url:   /
+      param: { module: sfJobeetJob, action: index }
+
+Se ora si prova ad andare nel sito web di Jobeet, compaiono avvisi
+che informano che i moduli non sono abilitati. Dal momento che i plugin sono condivisi tra
+tutti gli applicativi di un progetto, è necessario abilitare nello specifico il modulo
+di cui si necessita in un determinato applicativo, andando nel file di configurazione `settings.yml`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules:
+          - default
+          - sfJobeetAffiliate
+          - sfJobeetApi
+          - sfJobeetCategory
+          - sfJobeetJob
+          - sfJobeetLanguage
+
+L'ultimo passo della migrazione è mettere a posto i test funzionali in cui
+facciamo riferimento al nome del modulo
+
+>**SIDEBAR**
+>Attivazione Plugin
+>
+>Un plugin per essere disponibile in un progetto, deve essere abilitato nella
+>classe `ProjectConfiguration`.
+>
+>Questo passo non è necessario con la configurazione predefinita, perché symfony ha
+>un approccio in stile "black-list", che abilita tutti i plugin ad eccezione di alcuni di essi:
+>
+>     [php]
+>     // config/ProjectConfiguration.class.php
+>     public function setup()
+>     {
+>       $this->enableAllPluginsExcept(array('sfDoctrinePlugin', 'sfCompat10Plugin'));
+>     }
+>
+>Questo tipo di approccio è necessario per mantenere la compatibilità verso il basso
+>con le vecchie versioni di symfony, ma è meglio avere un approccio di tipo "white-list" e usare
+>al suo posto il metodo `enablePlugins()`:
+>
+>     [php]
+>     // config/ProjectConfiguration.class.php
+>     public function setup()
+>     {
+<propel>
+>       $this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
+</propel>
+<doctrine>
+>       $this->enablePlugins(array('sfDoctrinePlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
+</doctrine>
+>     }
+
+### I Task
+
+I Task possono essere spostati nel plugin abbastanza facilmente:
+
+    $ mv lib/task plugins/sfJobeetPlugin/lib/
+
+### I File i18n
+
+Un plugin può anche contenere dei file XLIFF:
+
+    $ mv apps/frontend/i18n plugins/sfJobeetPlugin/
+
+### Le Rotte
+
+Un plugin può anche contenere regole di rotta:
+
+    $ mv apps/frontend/config/routing.yml plugins/sfJobeetPlugin/config/
+
+### Le Risorse
+
+Anche se è un po' poco intuitivo, un plugin può contenere anche risorse web
+come immagini, fogli di stile e JavaScript. Essendo che non vogliamo distribuire il
+plugin Jobeet, non ha realmente senso in questo caso, ma è possibile farlo mediante la creazione di una
+cartella `plugins/sfJobeetPlugin/web/`.
+
+Un plugin di risorse deve essere accessibile nella cartella del progetto in `web/` per essere
+visualizzabile da un browser. Il `plugin:publish-assets` fa proprio questo
+mediante la creazione di collegamenti simbolici su sistema Unix e copiando i file su piattaforma Windows:
+
+    $ php symfony plugin:publish-assets
+
+### L'Utente
+
+Spostare i metodi della classe `myUser` che hanno a che fare con la cronologia dei posti di lavoro è un po' più
+complicato. Si potrebbe creare una classe `JobeetUser` e fare ereditare `myUser` da
+essa. Ma c'è un modo migliore, specialmente se in alcuni plugin si ha bisogno di aggiungere nuovi
+metodi alla classe.
+
+Gli oggetti del nucleo di symfony notificano eventi che possono essere catturati durante il loro ciclo di vita.
+Nel nostro caso, abbiamo bisogno di catturare l'evento `user.method_not_found`, che
+si verifica quando un metodo non definito è chiamato nell'oggetto `sfUser`.
+
+Quando symfony viene inizializzato, sono inizializzati anche tutti i plugin se hanno una
+classe di configurazione del plugin:
+
+    [php]
+    // plugins/sfJobeetPlugin/config/sfJobeetPluginConfiguration.class.php
+    class sfJobeetPluginConfiguration extends sfPluginConfiguration
+    {
+      public function initialize()
+      {
+        $this->dispatcher->connect('user.method_not_found', array('JobeetUser', 'methodNotFound'));
+      }
+    }
+
+Le notifiche degli eventi sono gestiti dall'oggetto
+([`sfEventDispatcher`](http://www.symfony-project.org/api/1_3/sfEventDispatcher)).
+Registrare un ascoltatore (listener) è semplice come chiamare `connect()`.
+Il metodo `connect()` collega un nome di evento con un PHP richiamabile (callable).
+
+>**NOTE**
+>Un [PHP callable](http://www.php.net/manual/en/function.is-callable.php) è una
+>variabile PHP che può essere usata dalla funzione `call_user_func()` e restituire
+>`true` quando passata alla funzione `is_callable()`. Una stringa rappresenta una
+>funzione e un array può rappresentare il metodo di un oggetto o il metodo di una classe.
+
+Con il codice di cui sopra, l'oggetto `myUser` chiamerà il metodo statico
+`methodNotFound()` della classe `JobeetUser` quando non è in grado di
+trovare un certo metodo. Spetta poi al metodo `methodNotFound()` processare il
+metodo mancante o meno.
+
+Rimuovere tutti i metodi dalla classe `myUser` e creare la classe `JobeetUser`:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+    }
+
+    // plugins/sfJobeetPlugin/lib/JobeetUser.class.php
+    class JobeetUser
+    {
+      static public function methodNotFound(sfEvent $event)
+      {
+        if (method_exists('JobeetUser', $event['method']))
+        {
+          $event->setReturnValue(call_user_func_array(
+            array('JobeetUser', $event['method']),
+            array_merge(array($event->getSubject()), $event['arguments'])
+          ));
+
+          return true;
+        }
+      }
+
+      static public function isFirstRequest(sfUser $user, $boolean = null)
+      {
+        if (is_null($boolean))
+        {
+          return $user->getAttribute('first_request', true);
+        }
+        else
+        {
+          $user->setAttribute('first_request', $boolean);
+        }
+      }
+
+      static public function getJobHistory(sfUser $user)
+      {
+<propel>
+        return JobeetJobPeer::retrieveByPks($user->getAttribute('job_history', array()));
+</propel>
+<doctrine>
+        $ids = $user->getAttribute('job_history', array());
+
+        if (!empty($ids))
+        {
+          return Doctrine::getTable('JobeetJob')
+            ->createQuery('a')
+            ->whereIn('a.id', $ids)
+            ->execute();
+        } else {
+          return array();
+        }
+</doctrine>
+      }
+
+      static public function resetJobHistory(sfUser $user)
+      {
+        $user->getAttributeHolder()->remove('job_history');
+      }
+    }
+
+Quando il dispatcher chiama il metodo `methodNotFound()`, gli passa un oggetto
+[`sfEvent`](http://www.symfony-project.org/api/1_3/sfEvent).
+
+Se il metodo esiste nella classe `JobeetUser`, è chiamato e il valore restituito
+è successivamente restituito al notificante. In caso contrario, symfony cercherà il
+prossimo ascoltatore registrato (registered listener) o lancerà una eccezione.
+
+Il metodo `getSubject()` restituisce la notifica di un evento, che in questo
+caso è il corrente oggetto `myUser`.
+
+### La Struttura Predefinita contro l'Architettura dei Plugin
+
+Utilizzando l'architettura dei plugin siete in grado di organizzare il codice in un altro
+modo:
+
+![Architettura dei plugin](http://www.symfony-project.org/images/jobeet/1_3/20/plugin_architecture.png)
+
+Uso dei plugin
+--------------
+
+Quando si inizia l'implementazione di una nuova funzionalità, o se si tenta di risolvere un classico
+problema Web, il colpo di fortuna potrebbe essere che qualcuno ha già risolto lo stesso problema e
+ha realizzato un pacchetto per risolverlo utilizzando un plugin di symfony. Per cercare un plugin pubblico
+di symfony, andare nella
+[sezione plugin](http://www.symfony-project.org/plugins/) del sito web di symfony.
+
+Essendo un plugin auto-contenuto in una cartella, vi sono diverse modi per l'installazione :
+
+  * Utilizzando il task `plugin:install` (funziona solo se lo sviluppatore del plugin ha
+    creato il pacchetto (package) del plugin e lo ha caricato nel sito web di symfony)
+  * Scaricando il pacchetto e manualmente scompattare l'archivio sotto la cartella `plugins/`
+    (è anche necessario che lo sviluppatore abbia caricato un pacchetto)
+  * Creando un `svn:externals` in `plugins/` per il plugin (funziona solo se
+    lo sviluppatore del plugin ospita il suo plugin utilizzando Subversion)
+
+Le ultime due modalità sono facili, ma mancano di una certa flessibilità. Il primo modo consente
+di installare la versione più recente in base alla version del progetto symfony,
+effettuare facilmente l'aggiornamento alla versione stabile più recente e gestire facilmente le dipendenze
+tra i plugin.
+
+Contribuire con un Plugin
+-------------------------
+
+### Creare il pacchetto per un Plugin
+
+Per creare il pacchetto per un plugin, è necessario aggiungere alcuni file obbligatori
+alla struttura delle cartelle del plugin. In primo luogo, creare un file `README` nella radice della cartella del plugin
+dove si spiega come installare il plugin, che cosa prevede e cosa non prevede.
+Il file `README` deve essere formattato con il
+[formato Markdown](http://daringfireball.net/projects/markdown/syntax). Questo
+file sarà utilizzato nel sito web di symfony come pezzo principale per la documentazione.
+È possibile verificare la formattazione del file README in HTML utilizzando
+[symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus).
+
+>**SIDEBAR**
+>Plugin di Task per lo Sviluppo
+>
+>Se vi trovate a creare spesso plugin privati e/o pubblici,
+>considerate di utilizzare alcuni dei task presenti in
+>[sfTaskExtraPlugin](http://www.symfony-project.com/plugins/sfTaskExtraPlugin).
+>Questi plugin, gestiti dagli sviluppatori principali di symfony, includono numerosi task che
+>possono aiutare durante il ciclo di vita di un plugin:
+>
+> * `generate:plugin`
+> * `plugin:package`
+
+È anche necessario creare un file `LICENSE`. La scelta di una licenza non è un compito
+facile, ma la sezione dei plugin symfony elenca solo i plugin che vengono rilasciati
+sotto una licenza simile a quella utilizzata da symfony (MIT, BSD, LGPL e PHP). Il
+contenuto del file `LICENSE` verrà visualizzato sotto la scheda licenza della vostra 
+pagina pubblica del plugin.
+
+L'ultimo passo è quello di creare un file `package.xml` nella cartella principale del plugin.
+Questo file `package.xml` segue la
+[sintassi dei pacchetti PEAR](http://pear.php.net/manual/en/guide-developers.php).
+
+>**NOTE**
+>Il modo migliore per imparare la sintassi del file `package.xml` è sicuramente quello di copiarne uno
+>tra quelli presenti nei
+>[plugin esistenti](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml).
+
+Il file `package.xml` è costituito da più parti, come potete vedere in questo esempio:
+
+    [xml]
+    <!-- plugins/sfJobeetPlugin/package.xml -->
+    <?xml version="1.0" encoding="UTF-8"?>
+    <package packagerversion="1.4.1" version="2.0"
+       xmlns="http://pear.php.net/dtd/package-2.0"
+       xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+       http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0
+       http://pear.php.net/dtd/package-2.0.xsd"
+    >
+      <name>sfJobeetPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <summary>A job board plugin.</summary>
+      <description>A job board plugin.</description>
+      <lead>
+        <name>Fabien POTENCIER</name>
+        <user>fabpot</user>
+        <email>fabien.potencier@symfony-project.com</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-12-20</date>
+      <version>
+        <release>1.0.0</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">
+        MIT license
+      </license>
+      <notes />
+
+      <contents>
+        <!-- CONTENT -->
+      </contents>
+
+      <dependencies>
+       <!-- DEPENDENCIES -->
+      </dependencies>
+
+      <phprelease>
+    </phprelease>
+
+    <changelog>
+      <!-- CHANGELOG -->
+    </changelog>
+    </package>
+
+Il tag `<contents>` contiene i file che devono essere messi nel pacchetto:
+
+    [xml]
+    <contents>
+      <dir name="/">
+        <file role="data" name="README" />
+        <file role="data" name="LICENSE" />
+
+        <dir name="config">
+          <file role="data" name="config.php" />
+          <file role="data" name="schema.yml" />
+        </dir>
+
+        <!-- ... -->
+      </dir>
+    </contents>
+
+Il tag `<dependencies>` descrive tutte le dipendenze che il plugin potrebbe avere:
+PHP, symfony e anche altri plugin. Queste informazioni vengono utilizzate dal
+task `plugin:install` per installare la versione più appropriata del plugin per l'ambiente
+del progetto e anche per installare le eventuali necessarie dipendenze richieste dal plugin.
+
+    [xml]
+    <dependencies>
+      <required>
+        <php>
+          <min>5.0.0</min>
+        </php>
+        <pearinstaller>
+          <min>1.4.1</min>
+        </pearinstaller>
+        <package>
+          <name>symfony</name>
+          <channel>pear.symfony-project.com</channel>
+          <min>1.2.0</min>
+          <max>1.3.0</max>
+          <exclude>1.3.0</exclude>
+        </package>
+      </required>
+    </dependencies>
+
+Si deve sempre dichiarare una dipendenza di symfony, come abbiamo fatto sopra.
+Dichiarare una versione minima e un massima permette a `plugin:install` di conoscere
+quale versione di symfony è necessaria, in quanto le versioni di symfony  possono avere
+API leggermente diverse.
+
+Dichiarando una dipendenza con un altro plugin è anche possibile:
+
+    [xml]
+    <package>
+      <name>sfFooPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <min>1.0.0</min>
+      <max>1.2.0</max>
+      <exclude>1.2.0</exclude>
+    </package>
+
+Il tag `<changelog>` è facoltativo, ma fornisce utili informazioni su ciò che
+è cambiato fra le release. Questa informazione è disponibile sotto la scheda "Changelog"
+e anche nel
+[feed dei plugin](http://www.symfony-project.org/plugins/recently.rss).
+
+    [xml]
+    <changelog>
+      <release>
+        <version>
+          <release>1.0.0</release>
+          <api>1.0.0</api>
+        </version>
+        <stability>
+          <release>stable</release>
+          <api>stable</api>
+        </stability>
+        <license uri="http://www.symfony-project.com/license">
+          MIT license
+        </license>
+        <date>2008-12-20</date>
+        <license>MIT</license>
+        <notes>
+           * fabien: First release of the plugin
+        </notes>
+      </release>
+    </changelog>
+	
+### Ospitare un Plugin nel sito web di symfony
+
+Se si sviluppa un plugin utile  e si desidera condividerlo con la comunità di symfony,
+[create un account symfony](http://www.symfony-project.org/user/new)
+se non ne avete già uno, quindi create un
+[nuovo plugin](http://www.symfony-project.org/plugins/new).
+
+Con questo account si diventerà automaticamente l'amministratore del plugin e si
+vedrà una scheda "admin" nell'interfaccia. In questa scheda, troverete tutto ciò di cui si
+necessita per gestire i plugin e caricare i pacchetti (packages).
+
+>**NOTE**
+>Le [FAQ sui plugin](http://www.symfony-project.org/plugins/FAQ) contengono
+>molte informazioni utili per gli sviluppatori di plugin.
+
+A domani
+--------
+
+Creare plugin e condividerli con la comunità è uno dei modi migliori
+per contribuire al progetto symfony. È così facile, che il repository dei plugin symfony
+è pieno di plugin utili, divertenti, ma anche ridicoli.
+
+__ORM__

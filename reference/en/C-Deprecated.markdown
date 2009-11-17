@@ -1,0 +1,1 @@
+../../tutorial/en/deprecated.markdown

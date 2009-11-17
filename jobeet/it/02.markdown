@@ -1,0 +1,196 @@
+Giorno 2: Il progetto
+=====================
+
+Non abbiamo scritto ancora una sola linea di codice, ma ieri
+abbiamo impostato l'ambiente di sviluppo, creato una struttura vuota di progetto e 
+ci siamo assicurati di partire con buone impostazioni di default riguardanti la sicurezza.
+Se avete seguito tutti i passaggi, state guardando il monitor estasiati, visto che 
+vi mostra la bellissima pagina di default che symfony propone per le nuove applicazioni.
+
+![Pagina di congratulazioni](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+
+Ma volete di più. Volete imparare tutti i minimi dettagli sullo sviluppo delle applicazioni
+con symfony. Quindi riprendiamo il nostro viaggio nel nirvana dello
+sviluppo con symfony.
+
+Oggi impegneremo il nostro tempo per descrivere i requisiti del progetto
+Jobeet con alcuni semplici ~mockup~.
+
+Impostazione del progetto
+-------------------------
+
+Tutti parlano di crisi in questo periodo. La disoccupazione è nuovamente in aumento.
+
+Lo so, gli sviluppatori symfony non sono molto preoccupati, ecco perché volete
+imparare symfony prima di tutto. Ricordate però che è abbastanza difficile trovare
+buoni sviluppatori per symfony.
+
+Dove potete trovare uno sviluppatore symfony? Dove potete pubblicizzare le vostre skill
+su symfony?
+
+Avete bisogno di trovare una buona bacheca per gli annunci di lavoro. Avete detto Monster?
+Pensate meglio. Quello di cui avete bisogno è una bacheca molto specifica. Una dove
+trovare le persone migliori, gli esperti. Una bacheca dove sia semplice, veloce e divertente
+cercare un lavoro oppure offrirlo.
+
+Non cercate più. Jobeet è quello che vi serve. **Jobeet è un software Open Source**
+che fa solamente una cosa, ma la fa bene. È facile da usare, personalizzare, ampliare e
+integrare nei vostri siti. Supporta diverse lingue di default e certamente usa le ultime
+tecnologie in fatto di Web 2.0 per rendere migliore la user experience dell'utente.
+Inoltre mette a disposizione feed e API per interagire con essa.
+
+Esiste già? Come utente potreste trovare diverse bacheche per gli annunci di 
+lavoro simili a Jobeet su Internet. Ma provate a trovarne una Open-Source e ricca 
+di funzionalità come quella che proponiamo qui.
+
+
+>**NOTE**
+>Se state veramente cercando un lavoro con symfony, oppure volete assumere
+>uno sviluppatore symfony, potente consultare il sito [symfonians](http://symfonians.net/)
+
+Le ~User Story~ del progetto
+--------------------------
+
+Prima di tuffarsi nel codice a capofitto descriviamo un po' di più il progetto.
+La sezione seguente descrive le funzionalità che vogliamo implementare nella prima
+versione/~iterazione~ del progetto con alcune semplici storie.
+
+Il sito Jobeet ha quattro tipi di utenti:
+
+ * **admin**: Gestisce il sito ed ha tutti i poteri
+ * **user**: Visita il sito per cercare un lavoro
+ * **poster**: Visita il sito per inserire un annuncio di lavoro
+ * **affiliate**: Ri-pubblica alcuni lavori sul suo sito web
+
+Il progetto ha due applicazioni: il **frontend** (storie da F1 a F7, di seguito)
+dove l'utente interagisce con il sito, ed il **backend** (storie da B1 a B3) dove
+gli amministratori possono gestire il sito stesso.
+
+Il backend è riservato e richiede delle credenziali per l'accesso.
+
+### Storia F1: sulla homepage, l'utente vede gli ultimi lavori disponibili
+
+Quando un utente arriva sul sito di Jobeet vede una lista di lavori disponibili.
+I lavori sono ordinati per categoria e per data di pubblicazione (i più recenti prima).
+Per ogni lavoro solo il luogo, la posizione aperta e la società sono visualizzate.
+
+Per ogni categoria, la lista mostra solamente i primi 10 lavori ed un link permette
+di visualizzare tutti i lavori per una data categoria (*storia F3*).
+
+Sulla homepage l'utente può restringere la lista dei lavori (*storia F3*) o inserire una
+nuova opportunità di lavoro (*storia F5*).
+
+![Mockup della homepage](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+
+### Storia F2: un utente può richiedere tutti i lavori di una data categoria
+
+Quando un utente clicca su una categoria o su un link "altri lavori" sulla homepage
+vedrà tutti gli annunci per quella categoria ordinati per data..
+
+La lista è dotata di paginazione con 20 offerte per pagina.
+
+![La pagina della categoria](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+
+### Storia F3: un utente restringe la ricerca con alcune parole chiave
+
+L'utente può utilizzare alcune parole chiave per migliorare la propria ricerca. Queste
+parole chiave possono essere parole presenti nel luogo, nella posizione aperta, nella categoria
+o nella società.
+
+### Storia F4: un utente clicca su un'offerta per avere informazioni dettagliate
+
+L'utente può selezionare un lavoro dalla lista per vedere i dettagli su quell'offerta.
+
+![La pagina del lavoro](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+
+### Storia F5: un utente inserisce un'offerta di lavoro
+
+Un utente può inserire un'offerta di lavoro. Un'offerta è composta da molte informazioni:
+
+  * Società
+  * Tipo (full-time, part-time, freelance)
+  * Logo (opzionale)
+  * URL (opzionale)
+  * Posizione aperta
+  * Luogo
+  * Categoria (l'utente seleziona da una lista di categorie possibili)
+  * Descrizione del lavoro (URL e email vengono linkate automaticamente)
+  * Come proporsi (URL e email vengono linkate automaticamente)
+  * Pubblico (indica se l'inserzione può essere pubblicata sui siti affiliati o meno)
+  * Email (email di chi ha inserito l'offerta)
+
+Non è necessario creare un account per inserire un'offerta di lavoro.
+
+Il processo è semplice con due soli passi: il primo è quello dove l'utente
+compila il form con tutte le informazioni necessarie per descrivere il lavoro, 
+il secondo è rappresentato dal controllo dei dati inseriti nell'anteprima della
+pagina finale.
+
+Anche se l'utente non ha un account, un'offerta può essere modificata in seguito grazie
+ad un URL specifico (protetto da un token dato all'utente quando l'inserzione viene creata).
+
+Ogni annuncio di lavoro rimane online per 30 giorni (questo parametro è configurabile
+dagli amministratori - vedi *storia B2*). Un utente può tornare per riattivare o estendere la 
+validità di un lavoro per ulteriori 30 giorni solo quando l'inserzione starà per scadere
+in meno di 5 giorni.
+
+![La pagina di creazione di un lavoro](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+
+### Storia F6: un utente richiede l'affiliazione
+
+Un utente deve far richiesta per l'affiliazione ed essere autorizzato per usare
+le API di Jobeet. Per proporsi deve fornire le seguenti informazioni:
+
+  * Nome
+  * Email
+  * URL del sito web
+
+L'account dell'affiliato deve essere attivato da un amministratore (*storia B3*).
+Una volta che sarà stato attivato, l'affiliato riceverà via mail un token da usare 
+con le API.
+
+Quando si candida, l'affiliato può anche scegliere di ottenere un lavoro da
+un sottoinsieme di categorie disponibili.
+
+
+### Storia F7: un affiliato recupera l'attuale lista di inserzioni attive
+
+Un affiliato può recuperare l'attuale lista di offerte di lavoro utilizzando
+le API con il proprio token. La lista può essere restituita in vari formati:
+XML, JSON o YAML.
+
+La lista contiene solamente le informazioni pubbliche di ogni lavoro.
+
+L'affiliato può inoltre limitare il numero di lavori da restituire e raffinare
+la propria richiesta specificando una categoria.
+
+### Storia B1: un amministratore configura il sito
+
+Un amministratore può editare le categorie disponibile sul sito.
+
+Inoltre può anche cambiare alcune impostazioni:
+
+  * Numero massimo di offerte di lavoro visualizzate sulla homepage
+  * Lingua del sito
+  * Numero di giorni per cui un'offerta è attiva
+
+### Storia B2: un amministratore gestisce un'inserzione
+
+Un amministratore può editare o cancellare ogni offerta di lavoro inserita.
+
+### Storia B3: un amministratore gestisce gli affiliati
+
+L'amministratore può creare o modificare gli affiliati. È responsabile per l'attivazione e 
+la disattivazione degli affiliati.
+
+Quando l'amministratore attiva un nuovo affiliato il sistema crea un token univoco
+che dovrà essere utilizzato dall'affiliato.
+
+A domani
+--------
+
+Come per ogni progetto web non inizierete mai a scrivere codice dal primo giorno.
+Avrete bisogno di raccogliere i requisiti e lavorare sulla progettazione di qualche mockup.
+È quello che abbiamo fatto oggi.
+
+__ORM__

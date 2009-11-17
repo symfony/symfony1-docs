@@ -1,0 +1,386 @@
+﻿Día 14: Feeds o Canales
+=======================
+
+Ayer, se comenzó a elaborar tu primer aplicación symfony. No te detengas ahora. A medida que aprendas más sobre Symfony, trata de añadir nuevas funciones a tu aplicación, alojala en algún lugar, y compartelo con la comunidad.
+
+Vamos a pasar hoy a algo completamente diferente.
+
+Si estás buscando un puesto de trabajo, es probable que desees ser informado tan pronto como un nuevo puesto de trabajo se ha publicado. Y no es muy conveniente comprobar el sitio web a cada hora. Vamos hoy a añadir feeds (o canales) de varios puestos de trabajo, para mantener a nuestros usuarios Jobeet actualizados.
+
+Formatos
+--------
+
+Symfony tiene soporte nativo para los formatos y tipos MIME. Esto significa que el modelo y el controlador pueden tener diferentes plantillas basadas en el formato solicitado. El formato predeterminado es HTML pero Symfony admite varios formatos de serie como ser `txt`, `js`, `css`, `json`, `xml`, `rdf`, o `atom`.
+
+El formato se puede configurar utilizando el método `setRequestFormat()` del objeto request:
+
+    [php]
+    $request->setRequestFormat('xml');
+
+Pero la mayor parte del tiempo, el formato está incluído en la URL. En este caso, Symfony lo establecerá por tí si la variable especial `sf_format` se utiliza en la ruta correspondiente. Para la lista de puestos de trabajo (job), la URL es:
+
+    http://jobeet.localhost/frontend_dev.php/job
+
+Esta URL es equivalente a:
+
+    http://jobeet.localhost/frontend_dev.php/job.html
+
+Ambas URL son equivalentes porque las rutas generadas por la clase 
+`sfPropelRouteCollection` tienen la `sf_format` como extension. Puedes comprobarlo por tí mismo ejecutando la tarea `app:routes`:
+
+![Cli](http://www.symfony-project.org/images/jobeet/1_3/15/cli.png)
+
+Feeds
+-----
+
+### Feed de los Últimos Puestos de Trabajo
+
+Soportar diferentes formatos es tán fácil como la crear diferentes plantillas. Para crear un [feed Atom](http://en.wikipedia.org/wiki/Atom_(standard)) para los últimos puestos de trabajo, crea una plantilla `indexSuccess.atom.php`:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="" rel="self"/>
+      <link href=""/>
+      <updated></updated>
+      <author><name>Jobeet</name></author>
+      <id>Unique Id</id>
+
+      <entry>
+        <title>Job title</title>
+        <link href="" />
+        <id>Unique id</id>
+        <updated></updated>
+        <summary>Job description</summary>
+        <author><name>Company</name></author>
+      </entry>
+    </feed>
+
+>**SIDEBAR**
+>Nombres de las Plantillas
+>
+>Como `html` es el formato más utilizado para aplicaciones web, éste puede ser omitido
+>del nombre de la plantilla. Ambas plantillas `indexSuccess.php` y `indexSuccess.html.php`
+>son equivalentes y Symfony utiliza la primero que encuentre.
+>
+>¿Por qué las plantillas predeterminadas tienen el sufijo `Success`? Una acción puede devolver un valor
+>para indicar que plantilla se mostrará. Si la acción no dice o devuelve nada, eso
+>equivalente al siguiente código:
+>
+>     [php]
+>     return sfView::SUCCESS; // == 'Success'
+>
+>Si deseas cambiar el sufijo, devuelve otra cosa:
+>
+>     [php]
+>     return sfView::ERROR; // == 'Error'
+>
+>     return 'Foo';
+>
+>También puedes cambiar el nombre de la plantilla utilizando el método
+>`setTemplate()`:
+
+>     [php]
+>     $this->setTemplate('foo');
+
+Por defecto, Symfony cambiará la respuesta `Content-Type` de acuerdo con el formato, y para todos los formatos que no sean HTML, el layout es deshabilitado. Para un Atom feed, Symfony cambiará el `Content-Type` a `application/atom+xml; charset=utf-8`.
+
+En el pie de página Jobeet, actualiza el enlace para el feed:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <li class="feed">
+      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+    </li>
+
+El URI interno es el mismo que para la lista `job` con el `sf_format` añadido como una variable.
+
+Añade una etiqueta `<link>` en la sección head del layout:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
+      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+
+Para el atributo `href` del enlace, se utiliza una URL absoluta gracias al segundo argumento del helper `url_for()`.
+
+Vamos a actualizar el header de la plantilla Atom:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <title>Jobeet</title>
+    <subtitle>Latest Jobs</subtitle>
+    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+    <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+    <author>
+      <name>Jobeet</name>
+    </author>
+    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+<propel>
+Nota la utilización de `U` como argumento para `getCreatedAt()` para obtener la fecha como timestamp. Para obtener la fecha del envío, crea el método `getLatestPost()`:
+</propel>
+<doctrine>
+Nota la utilización de la función `strtotime()` para obtener la fecha `created_at` como timestamp. Para obtener la fecha del envío, crea el método `getLatestPost()`:
+</doctrine>
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    class JobeetJobPeer extends BaseJobeetJobPeer
+    {
+      static public function getLatestPost()
+      {
+        $criteria = new Criteria();
+        self::addActiveJobsCriteria($criteria);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      public function getLatestPost()
+      {
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j');
+        $this->addActiveJobsQuery($q);
+
+        return $q->fetchOne();
+      }
+
+      // ...
+    }
+</doctrine>
+
+Los items del feed se pueden generar con el siguiente código:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?php use_helper('Text') ?>
+    <?php foreach ($categories as $category): ?>
+      <?php foreach ($category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')) as $job): ?>
+        <entry>
+          <title>
+            <?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)
+          </title>
+          <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+          <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+          <summary type="xhtml">
+           <div xmlns="http://www.w3.org/1999/xhtml">
+             <?php if ($job->getLogo()): ?>
+               <div>
+                 <a href="<?php echo $job->getUrl() ?>">
+                   <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                     alt="<?php echo $job->getCompany() ?> logo" />
+                 </a>
+               </div>
+             <?php endif; ?>
+
+             <div>
+               <?php echo simple_format_text($job->getDescription()) ?>
+             </div>
+
+             <h4>How to apply?</h4>
+
+             <p><?php echo $job->getHowToApply() ?></p>
+           </div>
+          </summary>
+          <author>
+            <name><?php echo $job->getCompany() ?></name>
+          </author>
+        </entry>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+
+El método `getHost()` del objeto request (`$sf_request`) devuelve el actual host, que viene muy bien para crear un vínculo absoluto para el logo de la empresa.
+
+![Feed](http://www.symfony-project.org/images/jobeet/1_3/15/feed.png)
+
+>**TIP**
+>Cuando se crea un feed, la depuración es más fácil si utiliza herramientas de línea de comandos como
+>[`curl`](http://curl.haxx.se/) o
+>[`wget`](http://www.gnu.org/software/wget/), ya que puedes ver el contenido real 
+>del feed.
+
+### El Feed de los Últimos Puestos de Trabajo de una Categoría
+
+Uno de los objetivos de Jobeet es ayudar a la gente a encontrar puestos de trabajo específicos. Por lo tanto, tenemos que proporcionar un feed para cada categoría.
+
+En primer lugar, vamos a actualizar la ruta `category` para agregar el soporte para diferentes formatos:
+
+    [yml]
+    // apps/frontend/config/routing.yml
+    category:
+      url:     /category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: category, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object }
+      requirements:
+        sf_format: (?:html|atom)
+
+Ahora, la ruta `category` comprenderá tanto los formatos `html` como `atom`. Actualiza los enlaces de los feeds de la categoría en las plantillas:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+    [php]
+    <!-- apps/frontend/modules/category/templates/showSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+El último paso es la creación de la plantilla `showSuccess.atom.php`. Pero como este feed también lista puestos de trabajo, podemos refactorizar el código que genera los items del feed mediante la creación de un partial `_list.atom.php`. Como el formato `html`,
+los partial son de un formato específico:
+
+    [php]
+    <!-- apps/frontend/job/templates/_list.atom.php -->
+    <?php use_helper('Text') ?>
+
+    <?php foreach ($jobs as $job): ?>
+      <entry>
+        <title><?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)</title>
+        <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+        <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+        <summary type="xhtml">
+         <div xmlns="http://www.w3.org/1999/xhtml">
+           <?php if ($job->getLogo()): ?>
+             <div>
+               <a href="<?php echo $job->getUrl() ?>">
+                 <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                   alt="<?php echo $job->getCompany() ?> logo" />
+               </a>
+             </div>
+           <?php endif; ?>
+
+           <div>
+             <?php echo simple_format_text($job->getDescription()) ?>
+           </div>
+
+           <h4>How to apply?</h4>
+
+           <p><?php echo $job->getHowToApply() ?></p>
+         </div>
+        </summary>
+        <author>
+          <name><?php echo $job->getCompany() ?></name>
+        </author>
+      </entry>
+    <?php endforeach; ?>
+    
+Puedes utilizar el partial `_list.atom.php` para simplificar la plantilla del feed de los puestos de trabajo:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+      <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+    <?php foreach ($categories as $category): ?>
+      <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
+    <?php endforeach; ?>
+    </feed>
+
+Finalmente, crear la plantilla `showSuccess.atom.php`:
+
+    [php]
+    <!-- apps/frontend/modules/category/templates/showSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet (<?php echo $category ?>)</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom'), true) ?>" rel="self" />
+      <link href="<?php echo url_for('category', array('sf_subject' => $category), true) ?>" />
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('category', array('sf_subject' => $category), true)) ?></id>
+
+      <?php include_partial('job/list', array('jobs' => $pager->getResults())) ?>
+    </feed>
+
+Para el feed principal, necesitamos la fecha del último puesto de trabajo para una categoría:
+
+    [php]
+<propel>
+    // lib/model/JobeetCategory.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetCategory.class.php
+</doctrine>
+    class JobeetCategory extends BaseJobeetCategory
+    {
+      public function getLatestPost()
+      {
+        $jobs = $this->getActiveJobs(1);
+
+        return $jobs[0];
+      }
+
+      // ...
+    }
+
+![Category Feed](http://www.symfony-project.org/images/jobeet/1_3/15/category_feed.png)
+
+Nos vemos mañana
+----------------
+
+Al igual que con muchas características Symfony, el soporte de formatos nativos te permite añadir feeds a tus sitios web sin esfuerzo. Hoy, hemos mejorado la experiencia de alquien que busca empleo.  Mañana, vamos a ver cómo dar una mayor exposición a los oferentes de empleo mediante el suministro de un servicio Web.
+
+Feedback
+--------
+
+>**Tip**
+>Este capítulo ha sido traducido por **Roberto Germán Puentes Díaz**. 
+>Si encuentras algún error que deseas corregir o realizar algún comentario,
+>no dudes en enviarlo por correo a **puentesdiaz [arroba] gmail.com**
+
+__ORM__

@@ -1,0 +1,384 @@
+22日目: デプロイ
+================
+
+昨日のキャッシュシステムのコンフィギュレーションによって、JobeetのWebサイトは運用サーバーにデプロイされる準備ができています。
+
+22日間、開発マシンでJobeetを開発してきました。
+ほとんどの方がローカルマシンで作業したでしょう;
+運用サーバーで直接開発するのは、もちろん非常にわるいアイディアです。
+では、Webサイトを運用サーバーに移行しましょう。
+
+今日は、運用環境に移行する前に必要なもの、とることができる~デプロイ戦略~の種類、継続的なデプロイに必要なツールも見ることにします。
+
+
+運用~サーバー|Webサーバー~を用意する
+-----------------------------------
+
+プロジェクトを運用サーバーに~デプロイ~する前に、運用サーバーを正しく設定する必要があります。
+1日目を読み返すと、Webサーバーの設定方法が説明されています。
+
+このセクションでは、Webサーバー、データベースサーバーとPHP 5.2.4以降をインストールしたことを前提とします。
+
+>**NOTE**
+>WebサーバーにSSHでアクセスできない場合、コマンドラインにアクセスする必要のあるセクションは読み飛ばしてください。
+
+### サーバーのコンフィギュレーション
+
+最初に、PHPが必要なエクステンションと一緒にインストールされ正しく設定されていることを確認する必要があります。
+1日目に関して、symfonyによって提供される`check_configuration.php`スクリプトを使います。
+symfonyを運用サーバーにインストールしないので、symfony公式サイトからファイルを直接ダウンロードします:
+
+    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+
+Webのルートディレクトリにファイルをコピーしてブラウザー**と**コマンドラインから実行します:
+
+    $ php check_configuration.php
+
+スクリプトが見つける致命的なエラーを修正し**両方の**環境ですべてがよい状態で動作するまで作業を繰り返します。
+
+### PHP~アクセラレーター~
+
+運用サーバーに関して、可能な限りベストなパフォーマンスを得ることを望んでいらっしゃるでしょう。
+[PHPアクセラレーター](http://en.wikipedia.org/wiki/PHP_accelerator)をインストールすれば最高のお金の節約になります。
+
+>**NOTE**
+>Wikipediaより: PHPアクセラレーターはリクエストごとのソースの解析とコンパイルのオーバーヘッドを回避するためにPHPスクリプトのコンパイルされたバイトコードをキャッシュすることで動作します。
+
+[~APC~](http://www.php.net/apc)は最も人気のあるアクセラレーターで、インストール作業がシンプルです:
+
+    $ pecl install APC
+
+OSによっては、OSネイティブのパッケージマネージャーでインストールすることもできます。
+
+>**NOTE**
+>[APCの設定方法](http://www.php.net/manual/ja/apc.configuration.php)を学ぶための時間をとってください。
+
+symfonyのライブラリ
+-------------------
+
+### symfonyを埋め込む
+
+symfonyの強みの1つはプロジェクトが自己完結していることです。
+プロジェクトを動作させるために必要なすべてのファイルはメインのrootディレクトリの元にあります。
+symfonyは相対パスのみを使用するのでプロジェクトで何も変更せずにプロジェクトを別のディレクトリに移動できることを意味します。
+運用サーバーのディレクトリは開発マシンと同じである必要はないことを意味します。
+
+唯一の絶対パスは`config/ProjectConfiguration.class.php`ファイルで見つかります; 
+しかし1日目を読み返して、symfonyコアのオートローダーへの相対パスが含まれていることを確認します:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
+
+### symfonyを~アップグレード~する
+
+すべての内容が単独のディレクトリに収まる場合、symfonyを新しいリリースにアップグレードする作業はものすごく簡単です。
+
+バグとセキュリティ問題の修正は定期的に行われるので、ときどきsymfonyを最新のマイナーリリースにアップグレードすることを望むでしょう。
+よい知らせはすべてのsymfonyのバージョンは少なくとも1年間は維持されメンテナンス期間の間、新しい機能は小さくても追加されません。
+ですので、1つのマイナーリリースから別のマイナーリリースへのアップグレードは常に速く、安全でセキュアです。
+
+symfonyのアップグレード作業は`lib/vendor/symfony/`ディレクトリの内容を変更するだけなのでシンプルです。
+アーカイブでsymfonyをインストールする場合、現在のファイルを削除して最新のものに置き換えます。
+
+プロジェクトで~Subversion~を使う場合、プロジェクトを最新のsymfony1.2のタグにリンクすることもできます:
+
+    $ svn propedit svn:externals lib/vendor/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+
+symfonyのアップグレード作業はタグを最新バージョンに変更するだけなのでシンプルです。
+
+リアルタイムで修正される1.2系のブランチも利用できます:
+
+    $ svn propedit svn:externals lib/vendor/
+      # symfony http://svn.symfony-project.com/branches/1.2/
+
+`svn up`を実行するたびに、最新のsymfony 1.2が手に入ります。
+
+新しいバージョンにアップグレードするとき、とりわけ運用環境では、常にキャッシュをクリアすることをお勧めします:
+
+    $ php symfony cc
+
+>**TIP**
+>運用サーバーのFTPアクセス権限もある場合、`cache/`ディレクトリの元にあるすべてのファイルとディレクトリを削除することで`symfony cc`をシミュレートできます。
+
+symfonyの既存のバージョンを置き換えずに新しいバージョンをテストすることもできます。
+新しいリリースをテストしたいだけで、簡単にロールバックできるようにしたい場合、別のディレクトリ(たとえば`lib/vendor/symfony_test`)にsymfonyをインストールし`ProjectConfiguration`クラスのパスを変更し、キャッシュをクリアします。
+ロールバックはディレクトリを削除して`ProjectConfiguration`のパスを元に戻すだけです。
+
+~コンフィギュレーション~を調整する
+---------------------------------
+
+### データベースのコンフィギュレーション
+
+ほとんどの場合、運用のデータベースはローカルと異なるクレデンシャルを持ちます。 
+symfonyの環境システムのおかげで、運用データベースの異なるコンフィギュレーションを用意するのはたやすいことです:
+
+    $ php symfony configure:database
+       ➥ "mysql:host=localhost;dbname=prod_dbname" prod_user prod_pass
+
+`databases.yml`設定ファイルを直接編集することもできます。
+
+### ~アセット~
+
+Jobeetはアセットを埋め込む~プラグイン|プラグインアセット~を使うのでsymfonyは`web/`ディレクトリに相対的なシンボリックリンクを作成しました。
+`plugin:install`タスクなしでプラグインをインストールする場合`plugin:publish-assets`タスクはこれらを再生成もしくは作成します:
+
+    $ php symfony plugin:publish-assets
+
+### ~エラーページ~を~カスタマイズする~
+
+運用に移行する前に、~404エラー~ページ、もしくはデフォルトの例外ページのようなsymfonyの~デフォルトページ~をカスタマイズするのはよいことです。
+
+16日目、`config/error/`ディレクトリで`error.yaml.php`と`exception.yaml.php`ファイルを作ることで`YAML`フォーマット用のエラーページを設定しました。
+`prod`環境のときは`error.yaml.php`ファイルが、`dev`環境では`exception.yaml.php`が使われます。
+
+ですので、HTML~フォーマット~用にデフォルトの~例外|例外ハンドリング~ページをカスタマイズするには、2つのファイル: `config/error/error.html.php`と`config/error/exception.html.php`を作ります。
+
+`404`ページ(page not found)は`error_404_module`と`error_404_action`設定を変更することでカスタマイズできます:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .actions:
+        error_404_module: default
+        error_404_action: error404
+
+ディレクトリ~構造~をカスタマイズする
+-----------------------------------
+
+コードの構造化と標準化のために、symfonyにはあらかじめ定義される名前を持つデフォルトのディレクトリ構造があります。
+しかしときには、何らかの外部の制約から構造を変更せざるをえないことがあります。
+
+`config/ProjectConfiguration.class.php`クラスでディレクトリの名前を設定できます。
+
+### ~Webサイトのルートディレクトリ~
+
+Webホスティングの状況によって、Webサイトのルートディレクトリの名前を変更できないことがあります。
+名前が`web/`ではなく`public_html/`である場合を考えてみましょう:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->setWebDir($this->getRootDir().'/public_html');
+      }
+    }
+
+`setWebDir()`メソッドはWeb公開のルートディレクトリの絶対パスを受け取ります。
+このディレクトリもどこかに移動させる場合、`ProjectConfiguration`ファイルへのパスがまだ有効であることを確認するためにコントローラースクリプトを編集することを忘れないでください:
+
+    [php]
+    require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
+
+### ~キャッシュ~と~ログ~ディレクトリ
+
+symfonyフレームワークは2つのディレクトリ: `cache/`と`log/`のみに書き込みます。
+~セキュリティ~の理由から、Webホスティング会社の中にはメインディレクトリに~書き込みパーミッション~を設定しないところがあります。 
+これに該当する場合、これらのディレクトリを他のファイルシステムに移動させることができます:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->setCacheDir('/tmp/symfony_cache');
+        $this->setLogDir('/tmp/symfony_logs');
+      }
+    }
+
+`setWebDir()`メソッドに関して、`setCacheDir()`と`setLogDir()`はそれぞれ`cache/`と`log/`ディレクトリへの絶対パスを受け取ります。
+
+symfonyのコアオブジェクトをカスタマイズする(別名はファクトリ)
+-----------------------------------------------------------
+
+16日目において、symfonyのファクトリを少し話しました。
+ファクトリがカスタマイズできることは means that you can use a custom class for symfony core objects instead of the default one. 
+これらのクラスに送信するパラメーターを変更することでこれらのデフォルトのふるまいを変更することもできます。
+
+おそらくお望みの古典的なカスタマイズ方法を見てみましょう。
+
+### ~Cookie~の名前
+
+~ユーザーセッション|セッション~を扱うために、symfonyはCookieを使います。
+このCookieはデフォルトの名前として`symfony`を持ちます。
+これは`factories.yml`で変更できます。 
+`all`キーの下で、Cookieの名前を`jobeet`に変更するために次のコンフィギュレーションを追加します:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    storage:
+      class: sfSessionStorage
+      param:
+        session_name: jobeet
+
+### ~セッション|セッションストレージ~~ストレージ~
+
+デフォルトのセッションストレージクラスは`sfSessionStorage`です。
+このクラスはセッション情報を保存するためにファイルシステムを使います。
+複数のWebサーバーがある場合、データベーステーブルのような中心位置で複数のセッションを保存するとよいでしょう:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    storage:
+      class: sfPDOSessionStorage
+      param:
+        session_name: jobeet
+        db_table:     session
+<propel>
+        database:     propel
+</propel>
+<doctrine>
+        database:     doctrine
+</doctrine>
+        db_id_col:    id
+        db_data_col:  data
+        db_time_col:  time
+
+### セッションのタイムアウト
+
+デフォルトでは、ユーザーセッションの~タイムアウト|セッション(タイムアウト)~は`1800`秒です。
+これは`user`エントリーを編集することで変更できます:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    user:
+      class: myUser
+      param:
+        timeout: 1800
+
+### ~ロギング~
+
+デフォルトでは、`prod`~環境~ではロギングは行われません。
+ロガークラスの名前が`sfNoLogger`だからです:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    prod:
+      logger:
+        class:   sfNoLogger
+        param:
+          level:   err
+          loggers: ~
+
+たとえばロガークラスの名前を`sfFileLogger`に変更することでファイルシステムでのロギングを有効にできます:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    logger:
+      class: sfFileLogger
+      param:
+        level: error
+        file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+
+>**NOTE**
+>`factories.yml`設定ファイルにおいて、文字列の`%XXX%`は`sfConfig`オブジェクトからの対応する値に置き換えられます。
+>ですので、設定ファイルの`%SF_APP%`はPHPコードの`sfConfig::get('sf_app')`と同等です。
+>この表記は`app.yml`設定ファイルでも利用できます。
+>パス(`SF_ROOT_DIR`、`SF_WEB_DIR`、・・・)を決め打ちせずに設定ファイルでパスを参照する必要があるときにとても便利です。
+
+~デプロイ~する
+--------------
+
+### デプロイとは？
+
+JobeetのWebサイトを運用サーバーにデプロイするとき、 不要なファイルをアップロードしないもしくは企業のロゴのように、ユーザーによってアップロードされたファイルを上書きしないように注意する必要があります。
+
+symfonyプロジェクトにおいて、転送から除外されるディレクトリは3つ: `cache/`、`log/`と`web/uploads/`あります。
+そのほかはすべてそのまま転送できます。
+
+セキュリティ上の理由から、`frontend_dev.php`、`backend_dev.php`と`frontend_cache.php`スクリプトのような"運用環境ではない"フロントコントローラーも転送したくないでしょう。
+
+### デプロイ戦略
+
+このセクションでは、運用サーバーを完全にコントロールできることを前提とします。
+サーバーへのアクセス権限がFTPアカウントの場合は、唯一可能なデプロイの解決策はデプロイするたびにすべてのファイルを転送することです。
+
+Webサイトをデプロイするもっともシンプルな方法は組み込みの`project:deploy`~タスク~を使うことです。
+これは接続して1つのコンピュータから別のコンピュータにファイルを転送するために~`SSH`~と~`rsync`~を使います。
+
+`project:deploy`タスク用のサーバーは`config/properties.ini`設定ファイルで設定できます:
+
+    [ini]
+    # config/properties.ini
+    [production]
+      host=www.jobeet.org
+      port=22
+      user=jobeet
+      dir=/var/www/jobeet/
+      type=rsync
+      pass=
+
+新しく設定した`production`サーバーにデプロイするには、`project:deploy`タスクを使います:
+
+    $ php symfony project:deploy production
+
+>**NOTE**
+>初めて`project:deploy`タスクを実行する前に、キーを既知のホストファイルに追加するために手動でサーバーに接続する必要があります。
+
+-
+
+>**TIP**
+>このコマンドが期待どおりに動かなければ、`rsync`コマンドのリアルタイムの出力を見るために`-t`オプションを渡すことができます。
+
+このコマンドを実行すると、symfonyは転送のシミュレーションのみを行います。
+実際にWebサイトをデプロイするには、`--go`オプションを追加します:
+
+    $ php symfony project:deploy production --go
+
+>**NOTE**
+>`properties.ini`ファイルでSSHパスワードを提供できる場合でも、パスワードなしの接続ができるようにSSHキーでサーバーを設定するほうがベターです。
+
+デフォルトでは、symfonyは以前のセクションで話したディレクトリを転送しませんし、`dev`のフロントコントローラースクリプトも転送しません。
+これは`project:deploy`タスクが`config/rsync_exclude.txt`ファイルで設定されたファイルとディレクトリを除外するからです:
+
+    # config/rsync_exclude.txt
+    .svn
+    /web/uploads/*
+    /cache/*
+    /log/*
+    /web/*_dev.php
+
+Jobeetに対して、`frontend_cache.php`ファイルを追加する必要があります:
+
+    # config/rsync_exclude.txt
+    .svn
+    /web/uploads/*
+    /cache/*
+    /log/*
+    /web/*_dev.php
+    /web/frontend_cache.php
+
+>**TIP**
+>ファイルとディレクトリの転送を強制するために`config/rsync_include.txt`ファイルを作ることもできます。
+
+`project:deploy`タスクがとても柔軟であるとしても、さらにカスタマイズできます。
+デプロイはサーバーとコンフィギュレーションとネットワークトポロジーによって大きく異なる可能性があるので、デフォルトのタスクを拡張することをためらわないでください。
+
+Webサイトを運用サーバーにデプロイするたびに、少なくとも運用サーバーの設定キャッシュをクリアすることをお忘れなく:
+
+    $ php symfony cc --type=config
+
+ルートを変更したら、ルーティングのキャッシュもクリアする必要があります:
+
+    $ php symfony cc --type=routing
+
+>**NOTE**
+>キャッシュを選別してクリアすることで、テンプレートキャッシュのようなキャッシュの一部を維持できます。
+
+また明日
+--------
+
+プロジェクトのデプロイはsymfony開発のライフサイクルの一番最後のステップです。
+これはすべてが終わったことを意味しません。全くの逆です。
+Webサイトの人生の始まりです。
+おそらくバグを修正しなければならず時間が経過したら新しい機能も追加したくなります。
+しかしsymfonyの構造と自由に使えるツールのおかげで、Webサイトのアップグレード作業はシンプルで、速く、安全です。
+
+明日はJobeetチュートリアルの最後の日です。
+Jobeetの23日間に学んだことを振り返ります。
+
+__ORM__

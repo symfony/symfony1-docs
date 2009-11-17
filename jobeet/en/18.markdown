@@ -1,0 +1,304 @@
+Day 18: ~AJAX~
+==============
+
+Yesterday, we implemented a very powerful search engine for Jobeet, thanks to
+the Zend Lucene library.
+
+Today, to enhance the responsiveness of the search engine, we will take
+advantage of [AJAX](http://en.wikipedia.org/wiki/AJAX) to convert the search
+engine to a live one.
+
+As the form should work with and without JavaScript enabled, the live search
+feature will be implemented using
+[unobtrusive JavaScript](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript).
+~Using unobtrusive|Unobstrusive JavaScript~ JavaScript also allows for a better 
+separation of concerns in the client code between HTML, CSS, and the JavaScript 
+behaviors.
+
+Installing ~jQuery~
+-------------------
+
+Instead of reinventing the wheel and managing the many differences between
+browsers, we will use a JavaScript library, jQuery. The symfony framework
+itself is agnostic and can work with any JavaScript library.
+
+Go to the [jQuery](http://jquery.com/) website, download the latest version,
+and put the `.js` file under `web/js/`.
+
+Including jQuery
+----------------
+
+As we will need jQuery on all pages, update the layout to include it in the
+`<head>`. Be careful to insert the ~`use_javascript()`~ function before the
+`include_javascripts()` call:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+
+      <?php use_javascript('jquery-1.2.6.min.js') ?>
+      <?php include_javascripts() ?>
+    </head>
+
+We could have included the jQuery file directly with a `<script>` tag, but
+using the `use_javascript()` helper ensures that the same JavaScript file
+won't be included twice.
+
+>**NOTE**
+>For
+>[~performance reasons|Performances~](http://developer.yahoo.com/performance/rules.html#js_bottom),
+>you might also want to move the `include_javascripts()` helper call just
+>before the ending `</body>` tag.
+
+Adding ~Behaviors|Behaviors (JavaScript)~
+-----------------------------------------
+
+Implementing a ~live search|Live Search~ means that each time the user types a letter in the
+search box, a call to the server needs to be triggered; the server will then
+return the needed information to update some regions of the page without
+refreshing the whole page.
+
+Instead of adding the behavior with an `on*()` HTML attributes, the main
+principle behind jQuery is to add behaviors to the ~DOM~ after the page is
+fully loaded. This way, if you disable JavaScript support in your browser,
+no behavior is registered, and the form still works as before.
+
+The first step is to intercept whenever a user types a key in the search box:
+
+    [php]
+    $('#search_keywords').keyup(function(key)
+    {
+      if (this.value.length >= 3 || this.value == '')
+      {
+        // do something
+      }
+    });
+
+>**NOTE**
+>Don't add the code for now, as we will modify it heavily. The final
+>JavaScript code will be added to the layout in the next section.
+
+Every time the user types a key, jQuery executes the anonymous function defined
+in the above code, but only if the user has typed more than 3 characters or if
+he removed everything from the input tag.
+
+Making an AJAX call to the server is as simple as using the `load()` method on
+the DOM element:
+
+    [php]
+    $('#search_keywords').keyup(function(key)
+    {
+      if (this.value.length >= 3 || this.value == '')
+      {
+        $('#jobs').load(
+          $(this).parents('form').attr('action'), { query: this.value + '*' }
+        );
+      }
+    });
+
+To manage the ~AJAX Call~, the same action as the "normal" one is called. The needed
+changes in the action will be done in the next section.
+
+Last but not least, if JavaScript is enabled, we will want to remove the
+search button:
+
+    [php]
+    $('.search input[type="submit"]').hide();
+
+User Feedback
+-------------
+
+Whenever you make an AJAX call, the page won't be updated right away. The
+browser will wait for the server ~response|HTTP Response~ to come back before updating the page. In
+the meantime, you need to provide ~visual feedback|Visual Feedback~ to the user to inform him
+that something is going on.
+
+A convention is to display a loader icon during the AJAX call. Update the
+layout to add the loader image and hide it by default:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <div class="search">
+      <h2>Ask for a job</h2>
+      <form action="<?php echo url_for('@job_search') ?>" method="get">
+        <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
+        <input type="submit" value="search" />
+        <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
+        <div class="help">
+          Enter some keywords (city, country, position, ...)
+        </div>
+      </form>
+    </div>
+
+>**NOTE**
+>The default loader is optimized for the current layout of Jobeet. If you want
+>to create your own, you will find a lot of free online services like
+>http://www.ajaxload.info/.
+
+Now that you have all the pieces needed to make the HTML work, create a
+`search.js` file that contains the JavaScript we have written so far:
+
+    [php]
+    // web/js/search.js
+    $(document).ready(function()
+    {
+      $('.search input[type="submit"]').hide();
+
+      $('#search_keywords').keyup(function(key)
+      {
+        if (this.value.length >= 3 || this.value == '')
+        {
+          $('#loader').show();
+          $('#jobs').load(
+            $(this).parents('form').attr('action'),
+            { query: this.value + '*' },
+            function() { $('#loader').hide(); }
+          );
+        }
+      });
+    });
+
+You also need to update the layout to include this new file:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <?php use_javascript('search.js') ?>
+
+>**SIDEBAR**
+>JavaScript as an Action
+>
+>Although the JavaScript we have written for the search engine is static,
+>sometimes, you need to call some PHP code (to use the `url_for()` helper
+>for instance).
+>
+>JavaScript is just another format like HTML, and as seen some days ago,
+>symfony makes format management quite easy. As the JavaScript file will
+>contain behavior for a page, you can even have the same URL as the page for
+>the JavaScript file, but ending with `.js`. For instance, if you want to
+>create a file for the search engine behavior, you can modify the `job_search`
+>route as follows and create a `searchSuccess.js.php` template:
+>
+>     [yml]
+>     job_search:
+>       url:   /search.:sf_format
+>       param: { module: job, action: search, sf_format: html }
+>       requirements:
+>         sf_format: (?:html|js)
+
+AJAX in an Action
+-----------------
+
+If JavaScript is enabled, jQuery will intercept all keys typed in the search
+box, and will call the `search` action. If not, the same `search` action is
+also called when the user submits the form by pressing the "enter" key or by
+clicking on the "search" button.
+
+So, the `search` action now needs to determine if the call is made via AJAX or not.
+Whenever a ~request|HTTP Request (AJAX)~ is made with an AJAX call, the `isXmlHttpRequest()` method
+of the request object returns `true`.
+
+>**NOTE**
+>The `isXmlHttpRequest()` method works with all major JavaScript libraries
+>like Prototype, Mootools, or jQuery.
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeSearch(sfWebRequest $request)
+    {
+      if (!$query = $request->getParameter('query'))
+      {
+        return $this->forward('job', 'index');
+      }
+
+<propel>
+      $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+</doctrine>
+
+      if ($request->isXmlHttpRequest())
+      {
+        return $this->renderPartial('job/list', array('jobs' => $this->jobs));
+      }
+    }
+
+As jQuery won't reload the page but will only replace the `#jobs` DOM element
+with the response content, the page should not be decorated by the layout. As
+this is a common need, the layout is disabled by default when an AJAX request
+comes in.
+
+Moreover, instead of returning the full template, we only need to return the
+content of the `job/list` partial. The `renderPartial()` method used in the
+action returns the partial as the response instead of the full template.
+
+If the user removes all characters in the search box, or if the search returns
+no result, we need to display a message instead of a blank page. We will use
+the `renderText()` method to render a simple test string:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeSearch(sfWebRequest $request)
+    {
+      if (!$query = $request->getParameter('query'))
+      {
+        return $this->forward('job', 'index');
+      }
+
+<propel>
+      $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+</doctrine>
+
+      if ($request->isXmlHttpRequest())
+      {
+        if ('*' == $query || !$this->jobs)
+        {
+          return $this->renderText('No results.');
+        }
+        else
+        {
+          return $this->renderPartial('job/list', array('jobs' => $this->jobs));
+        }
+      }
+    }
+
+>**TIP**
+>You can also return a component in an action by using the `renderComponent()`
+>method.
+
+~Testing AJAX|Functional Testing (AJAX)~
+----------------------------------------
+
+As the symfony browser cannot simulate JavaScript, you need to help it when
+testing AJAX calls. It mainly means that you need to manually add the header
+that jQuery and all other major JavaScript libraries send with the request:
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest');
+    $browser->
+      info('5 - Live search')->
+
+      get('/search?query=sens*')->
+      with('response')->begin()->
+        checkElement('table tr', 2)->
+      end()
+    ;
+
+The `setHttpHeader()` method set an ~HTTP header|HTTP Headers~ for the very next request made
+with the browser.
+
+See you Tomorrow
+----------------
+
+Yesterday, we used the Zend Lucene library to implement the search engine.
+Today, we have used jQuery to make it more responsive. The symfony framework
+provides all the fundamental tools to build MVC applications with ease, and
+also plays well with other components. As always, try to use the best tool for
+the job.
+
+Tomorrow, we will see how to internationalize the Jobeet website.
+
+__ORM__

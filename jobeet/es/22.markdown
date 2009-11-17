@@ -1,0 +1,362 @@
+﻿Día 22: Puesta en Producción
+============================
+
+Con la configuración del sistema caché de ayer, el sitio web Jobeet está listo para ser desplegado en servidores de producción.
+
+Durante veintidós días, hemos desarrollado Jobeet en un equipo de desarrollo, y para la mayoría de ustedes, probablemente significa en su máquina local, excepto si directamente desarrollan en el servidor de producción , que es, por supuesto, una muy mala idea. Ahora, es momento de pasar el sitio web a un servidor de producción.
+
+Hoy , vamos a ver lo que hay que hacer antes de ir a producción, qué tipo de estrategias de despliegue se puede utilizar, y también las herramientas que se necesita para el éxito del despliegue.
+
+Preparando el Servidor de Producción
+------------------------------------
+
+Antes de implementar el proyecto en producción, hay que asegurarse de que el servidor está configurado correctamente. Se puede volver a leer el día 1, donde se explica cómo configurar el servidor web.
+
+En esta sección, se supone que ya ha instalado el servidor web, servidor de bases de datos, y PHP 5.2.4 o posterior.
+
+>**NOTE**
+>Si no dispones de un acceso SSH al servidor web, pasa a la parte en que 
+>necesitas tener acceso a la línea de comandos.
+
+### Configuración del Servidor
+
+En primer lugar, necesitas comprobar que PHP está instalado con todas las extensiones necesarias y está correctamente configurado. Como con el día 1, haremos uso del script `check_configuration.php` provisto con Symfony. Como no vamos a instalar Symfony en el servidor de producción, descarga el archivo directamente desde la página web Symfony:
+
+    http://trac.symfony-project.org/browser/branches/1.2/data/bin/check_configuration.php?format=raw
+
+Copia el archivo en el directorio root Web y ejecutalo desde tu navegador **y** desde la línea de comandos:
+
+    $ php check_configuration.php
+
+Correge cualquier error fatal que el script encuentre y repite el proceso hasta que todo funcione bien en **ambos** entornos.
+
+### PHP Accelerator
+
+Para el servidor de producción, probablemente quieras disfrutar del mejor rendimiento posible.
+La instalación de [PHP accelerator](http://en.wikipedia.org/wiki/PHP_accelerator) te dará la mejor mejora.
+
+>**NOTE**
+>Desde Wikipedia: Un acelerador PHP funciona guardando en cache el bytecode  compilado de los
+>scripts PHP para evitar la sobrecarga de analizar y compilar código fuente en
+>cada petición.
+
+[APC](http://www.php.net/apc) es uno de los más populares, y es muy fácil de instalar:
+
+    $ pecl install APC
+
+Dependiendo de tu sistema operativo, también serás capaz de instalarlo con el  gestor de paquetes nativo del sistema operativo.
+
+>**NOTE**
+>Tómate un tiempo para aprender a
+>[configurar APC](http://www.php.net/manual/en/apc.configuration.php).
+
+Las Bibliotecas de Symfony
+--------------------------
+
+### Incluyendo Symfony
+
+Uno de la gran fortalezas de Symfony es un proyecto esta autocontenido.
+Todos los archivos necesarios para el proyecto funcione se encuentran bajo el directorio raíz principal del proyecto. Y puedes mover todo el proyecto a otro directorio sin cambiar nada en el proyecto propiomente dicho ya que Symfony utiliza sólo rutas relativas.
+Esto significa que el directorio del servidor de producción no tiene que ser el mismo que el de tu equipo de desarrollo.
+
+La única ruta absoluta que posiblemente se puede encontrar esta en el archivo `config/ProjectConfiguration.class.php`; pero nos ocupamos de él durante el día 1. Comprobamos que en realidad contiene una ruta relativa al autoloader de Symfony:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
+
+### Actualizando Symfony
+
+Incluso si todo es autocontenido en un único directorio, actualizar Symfony a una versión más reciente es, no obstante, demasiado fácil.
+
+Tu deseas actualizar Symfony a la última versión menor de vez en cuando, ya que constantemente arreglamos errores y posiblemente, cuestiones de seguridad. La buena noticia es que todas las versiones Symfony se mantienen durante al menos un año y durante el período de mantenimiento, nunca jamás añadimos nuevas características, incluso ni la más pequeña. Por lo tanto, siempre es rápido y seguro actualizar de una versión a otra por menor que sea.
+
+Actualizar Symfony es tan sencillo como cambiar el contenido del
+directorio `lib/vendor/symfony/`. Si has instalado Symfony con el archivo, elimina los archivos actuales y reemplazalos con las nuevas versiones.
+
+Si utilizas Subversion para tu proyecto, también puedes enlazar tu proyecto con la últimas etiquetas de Symfony 1.3:
+
+    $ svn propedit svn:externals lib/vendor/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_3_1/
+
+Actualizar Symfony es tan simple como cambiar la etiqueta a la última versión de Symfony.
+
+También puedes utilizar la rama 1.3 para tener los arreglos en tiempo real:
+
+    $ svn propedit svn:externals lib/vendor/
+      # symfony http://svn.symfony-project.com/branches/1.3/
+
+Ahora, cada vez que hacemos un `svn up`, tendrás la última versión de Symfony 1.3.
+
+Cuando se actualiza a una nueva versión, se aconseja siempre que se limpie el cache, especialmente en el entorno de producción:
+
+    $ php symfony cc
+
+>**TIP**
+>Si también tienes acceso al FTP del servidor de producción, se puede simular un
+>`symfony cc` por la simple eliminación de todos los archivos y directorios del
+>directorio `cache/`.
+
+Puedes incluso probar una nueva versión Symfony sin sustituir a la existente. Si lo que deseas es probar una nueva versión, y quieres que se pueda revertir fácilmente, instala Symfony en otro directorio (`lib/vendor/symfony_test` por ejemplo), cambia la ruta en la clase `ProjectConfiguration`, limpia el cache, y ya está. Restaurar a la versión anterior es tan simple como eliminar el directorio, y restaurar la ruta en `ProjectConfiguration`.
+
+Afinando la Configuración
+-------------------------
+
+### Configuración de la Base de datos
+
+La mayoría de las veces, la base de datos de producción tiene unas credenciales distintas a las locales. Gracias a los entornos de Symfony, es muy sencillo tener una configuración diferente para la base de datos de producción:
+
+    $ php symfony configure:database
+       ➥ "mysql:host=localhost;dbname=prod_dbname" prod_user prod_pass
+
+También puedes editar directamente el archivo de configuración `databases.yml` .
+
+### Recursos
+
+ya que Jobeet usa plugins que tienen recursos web, Symfony crea enlaces relativos simbólicos en el directorio `web/`. La tarea `plugin:publish-assets` los regenera o los crea si instalas plugins sin la tarea `plugin:install`:
+
+    $ php symfony plugin:publish-assets
+
+### Personalizar Páginas de Error
+
+Antes de entrar a producción, es mejor personalizar las páginas por defecto Symfony, como la "Page Not Found", o la página de excepción por defecto.
+
+Ya hemos configurado la página de error para el formato `YAML` durante el día 16, mediante la creación de archivos `error.yaml.php` y `exception.yaml.php` en el directorio `config/error/`. El archivo `error.yaml.php` es usado por Symfony en el entorno `prod`, mientras que `exception.yaml.php` es usado en el entorno `dev`.
+
+Así que, para personalizar la página predeterminada de excepción para el formato HTML, crea dos archivos: `config/error/error.html.php` y `config/error/exception.html.php`.
+
+La página `404` (page not found) se puede personalizar mediante el cambio de los items `error_404_module` y `error_404_action`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .actions:
+        error_404_module: default
+        error_404_action: error404
+
+Personalización de la Estructura de Directorios
+-----------------------------------------------
+
+Para una mejor estructura y para normalizar el código, Symfony tiene una estructura de directorios por defecto con nombres predefinidos. Pero a veces, no tienes más opción que la de cambiar la estructura a causa de algunas limitaciones externas.
+
+La configuración de los nombres de directorios que se puede hacer en la clase `config/ProjectConfiguration.class.php`.
+
+### El Directorio Raíz Web
+
+En algunos servidores de Internet, no puedes cambiar el nombre del directorio raíz web. Digamos que en tu sitio, este se llama `public_html/` en lugar de `web/`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->setWebDir($this->getRootDir().'/public_html');
+      }
+    }
+
+El método `setWebDir()` toma la ruta absoluta del directorio raíz web.
+Si además desplazas este directorio a otra parte, no olvides de editar el scripts para comprobar que las rutas de acceso al archivo `ProjectConfiguration` siguen siendo válidas:
+
+    [php]
+    require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
+
+### Los Directorios Cache y Log
+
+El framework Symfony sólo escribe en dos directorios: `cache/` y `log/`. Por razones de seguridad, algunos servidores web no establecen permisos de escritura en el directorio principal. Si este es el caso, puede mover estos directorios a otra parte del sistema de archivos :
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->setCacheDir('/tmp/symfony_cache');
+        $this->setLogDir('/tmp/symfony_logs');
+      }
+    }
+
+Como para el método `setWebDir()` , `setCacheDir()` y `setLogDir()` toman una ruta absoluta para los directorios `cache/` y `log/` respectivamente.
+
+Personalizando los Objetos del Núcloe Symfony (factorias)
+---------------------------------------------------------
+
+Durante el día 16, hablamos un poco acerca de las factorias symfony. Poder 
+personalizar las factorias significa que puedes usar una clase personalizada para
+los objetos del núcleo symfony en lugar de usar la predeterminada. Puedes también 
+cambiar el comportamiento predeterminado de esas clases modificando los parámetros 
+enviados a ellos.
+
+Demos un vistazo a algunas personalizaciones clásicas que puedes querer hacer.
+
+### Nombre de la Cookie
+
+Para manejar la sesión de usuario, Symfony usa una cookie. Esta cookie tiene el nombre por defecto de `symfony`, el que puede ser cambiado en `factories.yml`. Bajo el item `all`, añade la siguiente configuración para cambiar el nombre de la cookie a `jobeet`:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    storage:
+      class: sfSessionStorage
+      param:
+        session_name: jobeet
+
+### Guardando la Sesión
+
+La clase por defecto para guardar la sesión es `sfSessionStorage`. Esta utiliza el sistema de archivos para almacenar la información de la sesión. Si tienes varios servidores web, puedes desear guardar las sesiones en un lugar central, como una tabla de la base de datos:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    storage:
+      class: sfPDOSessionStorage
+      param:
+        session_name: jobeet
+        db_table:     session
+        database:     propel
+        db_id_col:    id
+        db_data_col:  data
+        db_time_col:  time
+
+### Tiempo de Vida de las Sesiones
+
+De forma predeterminada, el tiempo de la sesión de usuario es `1800` segundos. Esto se puede cambiar editando el item `user`:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    user:
+      class: myUser
+      param:
+        timeout: 1800
+
+### Registro de Log
+
+Por defecto, no hay log en el entorno `prod` porque el nombre de clase de logger es `sfNoLogger`:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    prod:
+      logger:
+        class:   sfNoLogger
+        param:
+          level:   err
+          loggers: ~
+
+Por ejemplo, puedes permitir hacer log sobre el sistema de archivos cambiando el nombre de clase de logger a `sfFileLogger`:
+
+    [yml]
+    # apps/frontend/config/factories.yml
+    logger:
+      class: sfFileLogger
+      param:
+        level: error
+        file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+
+>**NOTE**
+>En el archivo de configuración `factories.yml`, las cadenas de tipo `%XXX%` son reemplazadas con
+>su correspondiente valor del objeto `sfConfig`. Por eso, `%SF_APP%` en 
+>un archivo de configuración es equivalente a `sfConfig::get('sf_app')` en el código PHP.
+>Esta notación se puede utilizar también en el archivo de configuración `app.yml`. Esto es
+>muy útil cuando necesitas para hacer referencia a una ruta en un archivo de configuración sin
+>hardcodear la ruta (`SF_ROOT_DIR`, `SF_WEB_DIR`, ...).
+
+Desplegar
+---------
+
+### ¿Qué desplegar?
+
+Cuando se hace el despliegue (instalación/implementar) del sitio web Jobeet en el servidor de producción, tenemos que tener cuidado de no desplegar los archivos innecesarios o sobreescribir archivos subidos por nuestros usuarios, como los logos de la compañía.
+
+En un proyecto symfony, hay tres directorios a excluir de la transferencia: `cache/`, `log/`, y `web/uploads/`. Todo lo demás puede ser transferido como esta.
+
+Por razones de seguridad, tampoco deseas transferir los controladores frontales "que no sean de producción", como los scripts `frontend_dev.php`, `backend_dev.php y `frontend_cache.php`.
+
+### Estrategias para hacer el Despliegue del Proyecto
+
+En esta sección, vamos a suponer que tienes un control total sobre el/los servidor/es de producción. Si sólo se puede acceder al servidor con una cuenta de FTP, la única solución posible de despliegue es transferir todos los archivos cada vez que necesite.
+
+La forma más sencilla de implementar tu sitio web es utilizar la tarea nativa `project:deploy`. Esta usa `SSH` y `rsync` para conectar y transferir los archivos de un equipo a otro.
+
+Los Servidores para la tarea `project:deploy` se pueden configurar en el
+archivo de configuración `config/properties.ini`:
+
+    [ini]
+    # config/properties.ini
+    [production]
+      host=www.jobeet.org
+      port=22
+      user=jobeet
+      dir=/var/www/jobeet/
+      type=rsync
+      pass=
+
+Para implementar al recién configurado Servidor de `producción`, utiliza l atarea `project:deploy`:
+
+    $ php symfony project:deploy production
+
+>**NOTE**
+>Antes de ejecutar la tarea `project:deploy` por primera vez, necesitas conectarte
+>al servidor manualmente para agregar la clave en el archivo de hosts reconocidos.
+
+Si ejecutas este comando, Symfony sólo simulará la transferencia. Para implementar efectivamente el sitio web, añade la opción `--go`:
+
+    $ php symfony project:deploy production --go
+
+>**NOTE**
+>Incluso si puedes proporcionar la clave SSH en el archivo `properties.ini`,
+>es mejor configurar tu servidor con una clave SSH que permita
+>conexiones sin contraseña.
+
+Por defecto, Symfony no transferirá los directorios que hemos hablado en la sección anterior, ni transferirá el scritp del controlador frontal del entorno `dev`.
+Eso es porque la tarea `project:deploy` excluye archivos y directorios se configuran en el archivo `config/rsync_exclude.txt`:
+
+    # config/rsync_exclude.txt
+    .svn
+    /web/uploads/*
+    /cache/*
+    /log/*
+    /web/*_dev.php
+
+Para Jobeet, tenemos que añadir el archivo `frontend_cache.php`:
+
+    # config/rsync_exclude.txt
+    .svn
+    /web/uploads/*
+    /cache/*
+    /log/*
+    /web/*_dev.php
+    /web/frontend_cache.php
+
+>**TIP**
+>También puedes crear un archivo `config/rsync_include.txt` para obligar que algunos archivos o
+>directorios sean transferidos.
+
+Incluso si la tarea `project:deploy` es muy flexible, es posible que desees personalizarla aún más. Como el despliegue puede ser muy diferente en función de tu configuración y topología de servidores, no dudes en extender la tarea por defecto.
+
+Cada vez que se despliegue un sitio web en producción, no te olvides de por lo menos limpiar la configuración de caché en el servidor de producción:
+
+    $ php symfony cc --type=config
+
+Si has cambiado algunas rutas, también tendrás que limpiar el cache de las rutas:
+
+    $ php symfony cc --type=routing
+
+>**NOTE**
+>Limpiar el cache selectivamente permite conservar algunas partes del cache,
+>como el cache de las plantillas.
+
+Nos vemos mañana
+----------------
+
+El despliegue de un proyecto es el último paso del ciclo de vida del desarrollo symfony. Esto no significa que hayas terminado. Esto es todo lo contrario. Un sitio web es algo que tiene una vida por sí mismo. Probablemente tendrás que corregir errores y también se desearás añadir nuevas características con el tiempo. Pero gracias a la estructura de Symfony y las herramientas que pone a tu disposición, la mejora de tu sitio web es sencilla, rápida y segura.
+
+Mañana es el último día del tutorial Jobeet. Será el momento de volver atrás y echar un vistazo a lo que se aprendió durante los veintitrés días de Jobeet.
+
+
+Feedback
+--------
+
+>**Tip**
+>Este capítulo ha sido traducido por **Roberto Germán Puentes Díaz**. 
+>Si encuentras algún error que deseas corregir o realizar algún comentario,
+>no dudes en enviarlo por correo a **puentesdiaz [arroba] gmail.com**
+
+__ORM__

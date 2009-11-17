@@ -1,0 +1,262 @@
+18日目: ~AJAX~
+==============
+
+昨日は、Zend Luceneライブラリのおかげで、Jobeet用のとても強力な検索エンジンを実装しました。
+
+今日は、検索エンジンのレスポンスを強化するために、検索エンジンをライブ検索エンジンに変換する[AJAX](http://en.wikipedia.org/wiki/AJAX)を利用します。
+
+JavaScriptの有無に関わらずフォームは動作するので、ライブ検索機能は[~控えめなJavaScript~](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript)を利用して実装します。
+控えめなJavaScriptを利用することでHTML、CSSとJavaScriptのふるまいの間のコードの関心の分離も可能になります。
+
+~jQuery~をインストールする
+--------------------------
+
+車輪の再発明とブラウザーの間の多くの違いを管理するのを避けて、JavaScriptライブラリのjQueryを使います。
+symfonyフレームワーク自身は任意のJavaScriptライブラリで動作します。
+
+[jQuery](http://jquery.com/)の公式サイトに移動し、最新バージョンをダウンロードし、`.js`ファイルを`web/js/`に設置します。
+
+jQueryをインクルードする
+------------------------
+
+すべてのページでjQueryが必要なので、`<head>`の前でこれをインクルードするためにレイアウトを更新します。 
+`include_javascripts()`呼び出しの前に~`use_javascript()`~関数を差し込んでいることに注目してください:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+
+      <?php use_javascript('jquery-1.2.6.min.js') ?>
+      <?php include_javascripts() ?>
+    </head>
+
+`<script>`タグでjQueryファイルを直接インクルードできますが、`use_javascript()`ヘルパーを使うことで同じJavaScriptファイルが2回インクルードされないことが保証されます。
+
+>**NOTE**
+>[~パフォーマンス~上の理由](http://developer.yahoo.com/performance/rules.html#js_bottom)から、`include_javascripts()`ヘルパーの呼び出しを`</body>`閉じタグの直前に移動させるとよいでしょう。
+
+~ふるまい|ふるまい(JavaScript)~を追加する
+----------------------------------------
+
+~ライブ検索~を実装することは、検索ボックスでユーザーが文字を入力するたびに、サーバーの呼び出しが必要であるを意味します;
+サーバーはページ全体をリフレッシュせずページの一部を更新するために必要な情報を返します。
+
+jQueryの背景にある主要な原則は`on*()`HTML属性でふるまいを追加する代わりに、ページが完全にロードされた後で~DOM~にふるまいを追加することです。
+この方法によって、ブラウザーでJavaScriptのサポートを無効にする場合、ふるまいは何も登録されず、フォームは以前のとおりに動作します。
+
+最初のステップは検索ボックスでユーザーがキーを入力するときにこれを傍受することです:
+
+    [php]
+    $('#search_keywords').keyup(function(key)
+    {
+      if (this.value.length >= 3 || this.value == '')
+      {
+        // 何かを行う
+      }
+    });
+
+>**NOTE**
+>後で大きく修正するので、今はコードを追加しないでください。
+>次のセクションで最終的なJavaScriptコードはレイアウトに追加されます。
+
+ユーザーがキーを入力するたびに、jQueryは上記のコードで定義される匿名関数を定義しますが、ユーザーが3文字以上を入力した場合、もしくはinputタグからすべてを削除した場合のみです。
+
+サーバーでAJAX呼び出しを行うにはDOM要素で`load()`メソッドを使うだけなのでシンプルです:
+
+    [php]
+    $('#search_keywords').keyup(function(key)
+    {
+      if (this.value.length >= 3 || this.value == '')
+      {
+        $('#jobs').load(
+          $(this).parents('form').attr('action'), { query: this.value + '*' }
+        );
+      }
+    });
+
+AJAX呼び出しを管理するために、"普通"のものとして同じアクションが呼び出されます。
+アクションの必要な変更は次のセクションで行われます。
+
+最後に大事なことですが、JavaScriptが有効な場合、検索ボタンを削除したい場合は次のとおりです:
+
+    [php]
+    $('.search input[type="submit"]').hide();
+
+ユーザーのフィードバック
+-----------------------
+
+~AJAX呼び出し~を行うとき、ページはすぐに更新されません。
+ブラウザーはページを更新する前に戻ってくるサーバーの~レスポンス|HTTPレスポンス~を待ちます。
+一方で、何が起きているのか知らせるためにユーザーに~視覚的なフィードバック~を提供する必要があります。
+
+慣習としてAJAX呼び出しの間にローダーのアイコンが表示されます。
+ローダーの画像を追加してデフォルトでこれを隠すためにレイアウトを更新します:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <div class="search">
+      <h2>Ask for a job</h2>
+      <form action="<?php echo url_for('@job_search') ?>" method="get">
+        <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
+        <input type="submit" value="search" />
+        <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
+        <div class="help">
+          Enter some keywords (city, country, position, ...)
+        </div>
+      </form>
+    </div>
+
+>**NOTE**
+>デフォルトのローダーはJobeetの現在のレイアウトに最適化されます。
+>独自のものを作りたければ、http://www.ajaxload.info/ のようなフリーのオンラインサービスがたくさん見つかります。
+
+これでHTMLを動作させるために必要なすべてのピースが用意されたので、これまで書いてきたJavaScriptを含む`search.js`ファイルを作ります:
+
+    [php]
+    // web/js/search.js
+    $(document).ready(function()
+    {
+      $('.search input[type="submit"]').hide();
+
+      $('#search_keywords').keyup(function(key)
+      {
+        if (this.value.length >= 3 || this.value == '')
+        {
+          $('#loader').show();
+          $('#jobs').load(
+            $(this).parents('form').attr('action'),
+            { query: this.value + '*' },
+            function() { $('#loader').hide(); }
+          );
+        }
+      });
+    });
+
+この新しいファイルをインクルードするためにレイアウトも更新する必要があります。
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <?php use_javascript('search.js') ?>
+
+>**SIDEBAR**
+>アクションとしてのJavaScript
+>
+>検索エンジン用に書いたJavaScriptは静的なものですが、ときには、PHPコードを呼び出す必要があります(たとえば`url_for()`ヘルパーを使うため)。
+>
+>JavaScriptはHTMLのような単なる別のフォーマットで、これまで見てきたように、symfonyはフォーマットの管理作業を簡単にします。
+>JavaScriptファイルはページ用のふるまいを含むので、`.js`で終わる同じURLをJavaScriptファイルとして提供することもできます。
+>たとえば、検索エンジンのふるまいのためにファイルを作りたい場合、`job_search`ルートを次のように修正して`searchSuccess.js.php`テンプレートを作ることができます:
+>
+>     [yml]
+>     job_search:
+>       url:   /search.:sf_format
+>       param: { module: job, action: search, sf_format: html }
+>       requirements:
+>         sf_format: (?:html|js)
+
+アクションにおけるAJAX
+----------------------
+
+JavaScriptが有効な場合、jQueryは検索ボックスに入力されたすべてのキーを傍受し、`search`アクションを呼び出します。
+そうではない場合、ユーザーがフォームを投稿するときに"enter"キーを押すもしくは"search"ボタンをクリックすることで同じ`search`アクションも呼び出されます。
+ですので、`search`アクションは呼び出しがAJAX経由か否かを決定する必要があります。
+AJAX呼び出しによって~リクエスト|HTTPリクエスト(AJAX)~が行われるときは、リクエストオブジェクトの`isXmlHttpRequest()`メソッドは`true`を返します。
+
+>**NOTE**
+>`isXmlHttpRequest()`メソッドはPrototype、MooToolsもしくはjQueryのような主要なJavaScriptライブラリすべて動作します。
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeSearch(sfWebRequest $request)
+    {
+      if (!$query = $request->getParameter('query'))
+      {
+        return $this->forward('job', 'index');
+      }
+
+<propel>
+      $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+</doctrine>
+
+      if ($request->isXmlHttpRequest())
+      {
+        return $this->renderPartial('job/list', array('jobs' => $this->jobs));
+      }
+    }
+
+jQueryはページをリロードしませんが、DOM要素の`#jobs`をレスポンスの内容に置き換えることだけを行うので、ページはレイアウトによってデコレートされません。
+これは共通のニーズなので、AJAXリクエストがやってくるときレイアウトはデフォルトで無効です。
+
+さらに、完全なテンプレートを返す代わりに、`job/list`パーシャルの内容を返すことだけが必要です。
+アクションで使われる`renderPartial()`メソッドはレスポンスとして完全なテンプレートの代わりにパーシャルを返します。
+
+ユーザーが検索ボックスのすべての文字を削除する場合、もしくは検索が結果を返さない場合、空白ページの代わりにメッセージを表示する必要があります。
+
+シンプルなテキストをレンダリングするには`renderText()`メソッドを使います:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeSearch(sfWebRequest $request)
+    {
+      if (!$query = $request->getParameter('query'))
+      {
+        return $this->forward('job', 'index');
+      }
+
+<propel>
+      $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+</doctrine>
+
+      if ($request->isXmlHttpRequest())
+      {
+        if ('*' == $query || !$this->jobs)
+        {
+          return $this->renderText('No results.');
+        }
+        else
+        {
+          return $this->renderPartial('job/list', array('jobs' => $this->jobs));
+        }
+      }
+    }
+
+>**TIP**
+>`renderComponent()`メソッドを使うことでアクションにコンポーネントを返すこともできます。
+
+~AJAXをテストする|機能テスト(Ajax)~
+----------------------------------
+
+symfonyブラウザーはJavaScriptをシミュレートできないので、AJAX呼び出しをテストする際にsymfonyを手助けすることが必要です。
+これはjQueryと他の主要なJavaScriptライブラリはリクエストで送信するヘッダーを手動で追加する必要があることを意味します:
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest');
+    $browser->
+      info('5 - Live search')->
+
+      get('/search?query=sens*')->
+      with('response')->begin()->
+        checkElement('table tr', 2)->
+      end()
+    ;
+
+`setHttpHeader()`メソッドはブラウザーで行われるすぐ次のリクエストに対して~HTTPヘッダー~を設定します。
+
+また明日
+--------
+
+昨日は、検索エンジンを実装するためにZend Luceneライブラリを使いました。
+今日は、よりレスポンスを強化するためにjQueryを使いました。
+symfonyフレームワークは簡単にMVCアプリケーションを開発して他のコンポーネントと連携するための
+すべての基本的なツールを提供します。
+いつものように、求人用のベストなツールを使うことを心がけてください。
+
+明日は、JobeetのWebサイトを国際化する方法を見ます。
+
+__ORM__

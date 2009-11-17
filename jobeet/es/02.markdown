@@ -1,0 +1,161 @@
+﻿Día 2: El Proyecto
+==================
+
+No hemos escrito una sola línea de PHP aún, pero ayer, configuramos el entorno, creamos un proyecto symfony vacío, y nos aseguramos de iniciar con una buena seguridad por defecto. Si seguiste todo, tienes que buscar en la pantalla de entonces, ya que se muestra la hermosa página por defecto de symfony para las nuevas aplicaciones.
+
+![Página de Felicitaciones](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+
+Pero quieres más. ¿Quieres saber todos los detalles de symfony para el desarrollo de aplicaciones? Por lo tanto, vamos a reanudar nuestro viaje al nirvana del desarrollo symfony.
+
+Hoy, nos tomaremos el tiempo para describir los requisitos del proyecto Jobeet con algunos básicos mockups (diseños).
+
+El Foco del Proyecto
+--------------------
+
+Todo el mundo está hablando de la crisis hoy en día. El desempleo está aumentando de nuevo.
+
+Lo sé, los desarrolladores symfony no están realmente interesados y esto es porque quieren aprender symfony en primer lugar. Pero también es bastante difícil encontrar desarrolladores symfony buenos.
+
+¿Dónde puedes encontrar un desarrollador symfony? ¿Dónde puedes anunciar tus habilidades symfony?
+
+Necesitas encontrar una buena Bolsa de Trabajo. ¿Monster dices? Piensa de nuevo. Necesitas una Bolsa especializada. Una donde puedas encontrar a las mejores personas, los expertos. Una donde sea fácil, rápido y divertido buscar un puesto de trabajo, u ofrecer uno.
+
+No busques más. Jobeet es el lugar. Jobeet es un software Open-Source para Bolsas de Trabajo que sólo hace una cosa, pero la hace bien. Es fácil de usar, personalizar, ampliar, e incluir en tu sitio web. Soporta múltiples idiomas, y utiliza las últimas tecnologías Web 2.0 para mejorar la experiencia del usuario. También proporciona feeds y una API para interactuar con él 
+programáticamente.
+
+¿Ya existe? Como usuario, encontrarás un montón de Bolsas de Trabajo como Jobeet en Internet. Pero trata de encontrar una que sea Open-Source (Código Abierto), y con especiales características como las que proponemos aquí.
+
+>**NOTE**
+>Si realmente estás buscando un empleo con symfony o quieres convertirte en un desarrollador symfony, puedes ir al sitio web [symfonians](http://symfonians.net/).
+
+Los Casos de Uso del Proyecto
+-----------------------------
+
+Antes de meternos en el código de cabeza, vamos a describir el proyecto un poco más.
+Las secciones siguientes describen las características que queremos aplicar en la primera versión / iteración del proyecto con algunos Casos de Uso sencillos.
+
+El sitio web Jobeet tiene cuatro tipo de usuarios:
+
+ * **administrador**: Él es el propietario de la página web y tiene poderes mágicos
+ * **user**: Visita la página web para buscar un puesto de trabajo y se postula para uno
+ * **poster**: Visita la página web para envíar/ofrecer un puesto de trabajo
+ * **affiliate**: El re-publica algunos trabajos en su página web
+
+El proyecto tiene dos aplicaciones: el **frontend** (Casos de Uso F1 a F7, que están más abajo),
+donde los usuarios interactúan con el sitio web, y el **backend** (Casos de Uso B1 a
+B3), donde los administradores gestionan el sitio web.
+
+La aplicación backend tiene seguridad y requiere de credenciales para acceder.
+
+### Caso de Uso F1: En la página principal, los usuarios ven los últimos puestos de trabajo activos.
+
+Cuando un usuario entra a la página web Jobeet, ve una lista de los puestos de trabajo activos.
+Los puestos de trabajo se clasifican por categoría y a continuación, por fecha de publicación (los nuevos puestos de trabajo primero). Para cada puesto de trabajo, sólo la ubicación, la posición, y la empresa se muestran.
+
+Para cada categoría, la lista sólo muestra los primeros 10 puestos de trabajo y un enlace permite listar todos los puestos de trabajo para una categoría determinada (*Caso de Uso F2*).
+
+En la página principal, el usuario puede refinar la lista de puestos (Caso de Uso F2), o enviar un nuevo puesto de trabajo (*Caso de Uso F5*).
+
+![Mockup de la Página de Inicio](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+
+### Caso de Uso F2: Un usuario puede solicitar todos los puestos de trabajo de una categoría determinada
+
+Cuando un usuario hace clic en el nombre de una categoría o en un enlace "more jobs" (más trabajos) en la página de inicio, verá todos los puestos de trabajo para esta categoría ordenados por fecha.
+>**Tip**
+>**Nota del Traductor**
+>Trataremos de hacer la traducciones pertinentes de los textos de las plantillas (por ejemplo, `más trabajos`), para así poder mantener éstas identicas a las originales del inglés.
+
+La lista está paginada, con 20 puestos de trabajo por página.
+
+![La Página Categoría](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+
+### Caso de Uso F3: Un usuario refina la lista con algunas palabras clave
+
+El usuario puede introducir algunas palabras clave para refinar su búsqueda. Las palabras clave pueden ser palabras se encuentra en los campos de la ubicación, la posición, la categoría, y de la companía.
+
+### Caso de Uso F4: Un usuario hace clic en un puesto de trabajo para ver información más detallada
+
+El usuario puede seleccionar un trabajo de la lista para ver información más detallada.
+
+![La Página del Puesto de Trabajo](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+
+### Caso de Uso F5: Un usuario envía un puesto de trabajo
+
+Un usuario puede envíar un puesto de trabajo. Un puesto de trabajo está formado por varias partes de información:
+
+  * Compañía
+  * Tipo (full-time, part-time, o freelance)
+  * Logo (opcional)
+  * URL (opcional)
+  * Posición
+  * Ubicación
+  * Categoría (el usuario elige una de una lista de posibles categorías)
+  * Descripción del trabajo (URL y correos electrónicos son enlazados de forma automática)
+  * Cómo aplicar (URL y correos electrónicos son enlazados de forma automática)
+  * Público (si el trabajo también pueden ser publicados en sitios web afiliados)
+  * Email (email del oferente)
+
+No hay necesidad de crear una cuenta para crear un puesto de trabajo.
+
+El proceso es sencillo con sólo dos pasos: en primer lugar, el usuario rellena el formulario con toda la información necesaria para describir el trabajo y, a continuación, se valida la información con una vista previa de la página de empleo final.
+
+Incluso si el usuario no tiene cuenta, un puesto de trabajo pueden ser modificado después, gracias a un URL concreto (protegido por un token dado al usuario cuando crea el puesto de trabajo).
+
+Cada puesto de trabajo está en línea durante 30 días (esto es configurable por el administrador - ver (*Caso de Uso B2*). Un usuario puede volver a activar y extender la validez de un puesto de trabajo por 30 días extra pero sólo cuando el trabajo expira y entonces tiene menos de 5 días para hacerlo.
+
+![La Página de Creación de Puestos de Trabajo](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+
+### Caso de Uso F6: Un usuario se registra para ser un afiliado
+
+Un usuario para re-publicar necesita convertirse en un afiliado y ser autorizado a utilizar la API de Jobeet. Para afiliarse, debe dar la siguiente información:
+
+  * Nombre
+  * Email
+  * URL del sitio web
+
+La cuenta de afiliado debe ser activada por el administrador (*Caso de Uso B3*). Una vez activada, el afiliado recibe un token via email para poder usar la API.
+
+Cuando se registra, el afiliado puede también elegir los puestos de trabajo a obtener de un sub-conjunto de las categorías disponibles.
+
+### Caso de Uso F7: Un afiliado recupera la lista activa de puestos de trabajo
+
+Un afiliado puede recuperar la actual lista de puestos de trabajo llamando a la API con su token de afiliado. La lista puede ser devuelta en formato XML, JSON o YAML.
+
+La lista contiene la información pública disponible para un puesto de trabajo.
+
+El afiliado también puede limitar el número de puestos de trabajo a ser devueltos, y refinar su consulta especificando una categoría.
+
+### Caso de Uso B1: Un administrador configura el sitio web
+
+Un administrador puede modificar las categorías disponibles en el sitio web.
+
+También puede hacer algunos ajustes:
+
+  * El número máximo de puestos de trabajo que figura en la página de inicio
+  * Idioma de la página web
+  * Número de días que un trabajo está en línea
+
+### Caso de Uso B2: Un administrador gestiona los puestos de trabajo
+
+Un administrador puede editar y eliminar cualquier puesto de trabajo publicado.
+
+### Caso de Uso B3: Un administrador gestiona los afiliados
+
+El administrador puede crear o editar los afiliados. Él es el responsable de la activación de un afiliado y también puede desactivarlo.
+
+Cuando el administrador activa un nuevo afiliado, el sistema crea un único token para ser utilizado por ese afiliado.
+
+Nos vemos mañana
+----------------
+
+Como para cualquier desarrollo web, nunca inicies la codificación del primer día. Necesitas primero reunir los requisitos y trabajar en un mockup de diseño. Eso es lo que hemos hecho hoy.
+
+Feedback
+--------
+
+>**Tip**
+>Este capítulo ha sido traducido por **Roberto Germán Puentes Díaz**. 
+>Si encuentras algún error que deseas corregir o realizar algún comentario,
+>no dudes en enviarlo por correo a **puentesdiaz [arroba] gmail.com**
+
+__ORM__

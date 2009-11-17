@@ -1,0 +1,1103 @@
+﻿Día 12: El Generador de Admin
+=============================
+
+Con la cambios que se hizo ayer en Jobeet, la aplicación frontend  esta ahora completamente utilizable por los oferentes y demandantes de empleo. Es hora de hablar un poco acerca de la aplicación backend.
+
+Hoy, gracias a la funcionalidad del Generador de Admin de symfony, vamos a desarrollar una completa interfaz para el backend de Jobeet en sólo una hora.
+
+Creación del Backend 
+--------------------
+
+El primer paso es crear la aplicación backend. Si tu memoria te sirve bien, deberías recordar cómo hacerlo con la tarea `generate:app`:
+
+    $ php symfony generate:app backend
+
+La aplicación backend ya está disponible en
+`http://jobeet.localhost/backend.php/` para el entorno `prod`, and at
+`http://jobeet.localhost/backend_dev.php/` para el entorno `dev`.
+
+>**NOTE**
+>Cuando creaste la aplicación frontend, el controlador frontal de producción fue 
+>llamado `index.php`. Como sólo puede tener un `index.php` por directorio,
+>symfony crea un `index.php` para el primer controlador frontal de producción
+>y nombra a los otros con el nombre de la aplicación.
+
+Si intentas volver a cargar los datos con la tarea `propel:data-load`, no va a funcionar más. Esto se debe a que el método `JobeetJob::save()` necesita tener acceso al archivo de configuración `app.yml` de la aplicación `frontend`.
+Como tenemos ahora dos aplicaciones, symfony usa la primera que encuentra, que es ahora `backend`.
+
+Pero como se ha visto durante el día 8, los ajustes se pueden configurar en distintos niveles.
+Al mover el contenido del archivo `apps/frontend/config/app.yml` a
+`config/app.yml`, los ajustes serán compartidos entre todas las aplicaciones y el problema será corregido. Vamos hacer el cambio ahora  ya que vamos a utilizar mucho el modelo de clases en el Generador de Admin, y así tendremos las variables definidas en `app.yml` en la aplicación backend.
+
+>**TIP**
+>La tarea `propel:data-load` también tiene una opción `--application`. Así que, si
+>necesitas algunos ajustes específicos de una u otra aplicación, esta es la forma
+>de hacerlo:
+>
+>     $ php symfony propel:data-load --application=frontend
+
+Módulos del Backend
+-------------------
+
+Para la aplicación frontend, la tarea `propel:generate-module` se ha utilizado para inicializar un módulo básico CRUD basado en una clase del modelo. Para el backend, la tarea
+`propel:generate-admin` se utilizará, para generar una completa y funcional interfaz para una clase del modelo:
+
+    $ php symfony propel:generate-admin backend JobeetJob --module=job
+    $ php symfony propel:generate-admin backend JobeetCategory --module=category
+
+Estos dos comandos crean un módulo `job` y uno `category` para las clases `JobeetJob` y `JobeetCategory` del modelo respectivamente.
+
+La opción (opcional) `--module` sobreescribe el nombre del `módulo` generado por defecto por la tarea (que habría sido de lo contrario `jobeet_job` para la clase `JobeetJob`).
+
+Detrás de las escenas, la tarea también ha creado una ruta personalizada para cada módulo:
+
+    [yml]
+    # apps/backend/config/routing.yml
+    jobeet_job:
+      class: sfPropelRouteCollection
+      options:
+        model:                JobeetJob
+        module:               job
+        prefix_path:          job
+        column:               id
+        with_wildcard_routes: true
+
+No es de extrañar que la ruta de la clase utilizada por el Generador de Admin es `sfPropelRouteCollection`, ya que el principal objetivo de una interfaz de administración es la gestión del ciclo de vida de los objetos del modelo.
+
+Definición de la ruta también define algunas opciones que no hemos visto antes:
+
+  * `prefix_path`: Define el prefijo de la url para la ruta generada (por ejemplo, la página editar será algo así como `/job/1/edit`).
+  * `column`: Define la columna de la tabla a usar en la URL por los enlaces que hace referencia a un objeto.
+  * `with_wildcard_routes`: Como la interfaz de administrador tendrá más que el clásico de operaciones CRUD, esta opción permite definir una mayor colección de objetos y acciones sin editar la ruta.
+
+>**TIP**
+>Como siempre, es una buena idea leer la ayuda antes de usar una nueva tarea.
+>
+>     $ php symfony help propel:generate-admin
+>
+>Te dará de la tarea, todos los argumentos y opciones, así como algunos clásicos
+>Ejemplos de Uso.
+
+Aspecto del Backend 
+-------------------
+
+De buenas a primeras, ya puedes utilizar los módulos generados:
+
+    http://jobeet.localhost/backend_dev.php/job
+    http://jobeet.localhost/backend_dev.php/category
+
+Los módulos de administración tienen muchas más funciones que los simples módulos que hemos generado en los días anteriores. Sin escribir una sola línea de PHP, cada módulo proporciona estas características:
+
+  * La lista de objetos esta **paginada**
+  * La lista es **ordenable**
+  * La lista puede ser **filtrada**
+  * Los Objetos pueden ser **creados**, **editedos**, y **eliminados**
+  * Los objetos seleccionados pueden ser eliminados en **batch**
+  * La **validation** esta habilitada
+  * Los **Mensajes Flash** dan información inmediata al usuario
+  * ... y mucho mucho más
+
+El Generador de Admin proporciona todas las funciones que necesitas para crear una interfaz backend en un paquete fácil de configurar.
+
+Para hacer la experiencia de los usuarios un poco mejor, necesitamos personalizar el backend por defecto. También vamos a añadir un menú simple para que sea fácil de navegar entre los diferentes módulos. 
+
+Sustituye el contenido por defecto del `layout.php` con el siguiente:
+
+    [php]
+    // apps/backend/templates/layout.php
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <title>Jobeet Admin Interface</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <?php use_stylesheet('admin.css') ?>
+        <?php include_javascripts() ?>
+        <?php include_stylesheets() ?>
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            <h1>
+              <a href="<?php echo url_for('@homepage') ?>">
+                <img src="/images/jobeet.gif" alt="Jobeet Job Board" />
+              </a>
+            </h1>
+          </div>
+
+          <div id="menu">
+            <ul>
+              <li>
+                <?php echo link_to('Jobs', '@jobeet_job') ?>
+              </li>
+              <li>
+                <?php echo link_to('Categories', '@jobeet_category') ?>
+              </li>
+            </ul>
+          </div>
+
+          <div id="content">
+            <?php echo $sf_content ?>
+          </div>
+
+          <div id="footer">
+            <img src="/images/jobeet-mini.png" />
+            powered by <a href="http://www.symfony-project.org/">
+            <img src="/images/symfony.gif" alt="symfony framework" /></a>
+          </div>
+        </div>
+      </body>
+    </html>
+
+Este layout usa una hoja de estilos `admin.css`. Este archivo debe estar presente en `web/css/` ya que se instaló con el resto de las hojas de estilo durante el día 4.
+
+![El Aspecto del Generador de Admin](http://www.symfony-project.org/images/jobeet/1_3/12/look_and_feel.png)
+
+Eventualmente, cambia la página de inicio por defecto en symfony en `routing.yml`:
+
+    [yml]
+    # apps/backend/config/routing.yml
+    homepage:
+      url:   /
+      param: { module: job, action: index }
+
+El Cache de Symfony
+-------------------
+
+Si eres lo suficientemente curioso, probablemente ya has abierto los archivos generados por la tarea bajo el directorio `apps/backend/modules/`. Si no, por favor abrelos ahora. ¡Sorpresa! Los directorios `templates` están vacíos, y los archivos 
+`actions.class.php` están bastante vacíos y:
+
+    [php]
+    // apps/backend/modules/job/actions/actions.class.php
+    require_once dirname(__FILE__).'/../lib/jobGeneratorConfiguration.class.php';
+    require_once dirname(__FILE__).'/../lib/jobGeneratorHelper.class.php';
+
+    class jobActions extends autoJobActions
+    {
+    }
+
+¿Cómo es posiblemente que funcione? Si hechas un vistazo más de cerca, te darás cuenta de que la clase 
+`jobActions` hereda de `autoJobActions`. La clase `autoJobActions` es
+generada automáticamente por symfony si no existe. Que se encuentra en el directorio `cache/backend/dev/modules/autoJob/`, la cual contiene el módulo "real":
+
+    [php]
+    // cache/backend/dev/modules/autoJob/actions/actions.class.php
+    class autoJobActions extends sfActions
+    {
+      public function preExecute()
+      {
+        $this->configuration = new jobGeneratorConfiguration();
+
+        if (!$this->getUser()->hasCredential(
+          $this->configuration->getCredentials($this->getActionName())
+        ))
+        {
+
+    // ...
+
+La forma en que el Generador de Admin trabaja debería recordarte algun conocido comportamiento. De hecho, es bastante similar a lo que ya hemos aprendido sobre el modelo y las clases de formulario. Basado en el modelo de la definición de esquema, symfony genera el modelo y las clases de formulario. Para el Generador de Admin, el módulo generado se puede configurar editando el archivo `config/generator.yml` que se encuentra en el módulo:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    generator:
+      class: sfPropelGenerator
+      param:
+        model_class:           JobeetJob
+        theme:                 admin
+        non_verbose_templates: true
+        with_show:             false
+        singular:              ~
+        plural:                ~
+        route_prefix:          jobeet_job
+<propel>
+        with_propel_route:     1
+</propel>
+<doctrine>
+        with_doctrine_route:   1
+</doctrine>
+
+        config:
+          actions: ~
+          fields:  ~
+          list:    ~
+          filter:  ~
+          form:    ~
+          edit:    ~
+          new:     ~
+
+Cada vez que actualizas el archivo `generator.yml`, symfony regenera el caché.
+Como se verá hoy, la personalización de los módulos generados de administración es fácil, rápida y divertida.
+
+>**NOTA**
+>La generación automática de archivos de cache sólo se produce en el entorno de desarrollo
+>En producción, tendrás que borrar la caché manualmente
+>con la tarea `cache:clear` (o borrar todo lo que encuentres en /cache).
+
+La Configuración del Backend 
+----------------------------
+
+Un módulo de administración puede ser personalizado con la edición de la clave `config` del archivo `generator.yml`. La configuración está organizada en siete secciones:
+
+  * `actions`: Configuración por defecto de las acciones se encuentran en la lista como en los formilarios
+  * `fields`:  Configuración por defecto para los campos
+  * `list`:    Configuración de la lista
+  * `filter`:  Configuración de los filtros
+  * `form`:    Configuración del fomulario new/edit
+  * `edit`:    Configuración específica para la página edit
+  * `new`:     Configuración específica para la página new
+
+Vamos a comenzar la personalización.
+
+Configuración del Título
+------------------------
+
+Los títulos de las secciones `list`, `edit`, y `new` del módulo `category` se puede personalizar mediante la definición de una opción
+`title`:
+
+    [yml]
+    # apps/backend/modules/category/config/generator.yml
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Category Management
+      filter:  ~
+      form:    ~
+      edit:
+        title: Editing Category "%%name%%"
+      new:
+        title: New Category
+
+El `title` para la sección `edit` contiene valores dinámicos: todas las cadenas
+encerradas entre `%%` se sustituyen por los correspondientes valores de las columnas del objeto.
+
+![Títulos](http://www.symfony-project.org/images/jobeet/1_3/12/title.png)
+
+La configuración para el módulo `job` es muy similar:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Job Management
+      filter:  ~
+      form:    ~
+      edit:
+        title: Editing Job "%%company%% is looking for a %%position%%"
+      new:
+        title: Job Creation
+
+La Configuración de los Campos
+------------------------------
+
+Las diferentes vistas (`list`, `new`, y `edit`) se componen de campos. Un campo puede ser una columna de la clase del modelo, o una columna virtual como veremos más adelante.
+
+La configuración por defecto de los campos pueden ser personalizada con la sección `fields` :
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      fields:
+        is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
+        is_public:    { label: Public? }
+
+![Configuración de los Campos](http://www.symfony-project.org/images/jobeet/1_3/12/fields.png)
+
+La sección `fields` sobreecribe la configuración de los campos para todas las vistas, lo que significa que `label` para `is_activated` se modificó para las vistas `list`, `edit`, y `new`.
+
+La Configuración del Generador de Admin se basa en el principio de una configuración en cascada. Por ejemplo, si deseas cambiar un label solo para la vista `list`, define una opción `fields` bajo la sección `list`:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        fields:
+          is_public:    { label: "Public? (label for the list)" }
+
+Cualquier configuración que se establece en la sección principal `fields` puede ser sobreecrita por la configuración de una vista específica. The overriding rules are the
+following:
+
+ * `new` y `edit` heredan de `form` el cual hereda de `fields`
+ * `list` hereda de `fields`
+ * `filter` hereda de `fields`
+
+>**NOTE**
+>Para las secciones form (`form`, `edit`, y `new`), las opciones `label` y `help` 
+>sobreescriben las definidas en las clases form.
+
+Configuración de la vista List 
+------------------------------
+
+### `display`
+
+De forma predeterminada, las columnas de la vista List son todas las columnas del modelo, en el orden del archivo de esquema.
+La opción `display` sobreescribe lo predefinido ordenando las columnas a mostrar:
+
+    [yml]
+    # apps/backend/modules/category/config/generator.yml
+    config:
+      list:
+        title:   Category Management
+        display: [=name, slug]
+
+El signo `=` antes del `nombre` de la columna es una convención para convertir la cadena en un enlace.
+
+![Tabla list](http://www.symfony-project.org/images/jobeet/1_3/12/list_columns.png)
+
+Vamos a hacer lo mismo para el módulo `job` para que sea más legible:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        title:   Job Management
+        display: [company, position, location, url, is_activated, email]
+
+
+### `layout`
+
+La lista puede ser visualizada en diferentes layouts. Por defecto, el layout es `tabular`,lo que significa que cada valor de columna está en su propia columna de la tabla.
+Pero para el módulo `job`, sería mejor utilizar el layout `stacked`,
+que es el otro layout de serie:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        title:   Job Management
+        layout:  stacked
+        display: [company, position, location, url, is_activated, email]
+        params:  |
+          %%is_activated%% <small>%%category_id%%</small> - %%company%%
+           (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
+
+En `stacked`, cada objeto está representado por una única cadena, que se define por la opción `params`.
+
+>**NOTE**
+>La opción `display` sigue siendo necesaria ya que define las columnas que 
+>ordenarán según el criterio del usuario.
+
+### Las Columnas "Virtuales"
+
+Con esta configuración, el segmento `%%category_id%%` será sustituida por la clave principal de la categoría. Pero sería más útil mostrar el nombre de la categoría.
+Siempre que utilices la notación `%%`, la variable no tiene por qué corresponder a una columna en el actual esquema de base de datos. El Generador de Admin solo necesita encontrar un metodo get asociado en la clase del modelo.
+
+Para mostrar el nombre de la categoría, podemos definir un método `getCategoryName()` en la clase `JobeetJob` y sustituir `%%category_id%%` por `%%category_name%%`.
+
+Sin embargo, la clase `JobeetJob` ya tiene un método `getJobeetCategory()` que devuelve el objeto de la categoría relacionada. Y si usas `%%jobeet_category%%`, este funcionará ya que la clase `JobeetCategory` tiene un método mágico `__toString()` que convierte el objeto a una cadena.
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
+     (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
+
+![Stacked layout](http://www.symfony-project.org/images/jobeet/1_3/12/stacked_layout.png)
+
+### `sort`
+
+Como administrador, probablemente estes más interesado en ver las últimos puestos de trabajo envíados. Puede configurar la columna de ordenación por defecto al añadir una opción `sort`:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        sort: [expires_at, desc]
+
+### `max_per_page`
+
+De forma predeterminada, la lista es paginada, y cada página contiene 20 items. Esto puede cambiarse con la opción `max_per_page`:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        max_per_page: 10
+
+![Máximo por Página](http://www.symfony-project.org/images/jobeet/1_3/12/max_per_page.png)
+
+### `batch_actions`
+
+En una lista, una acción se puede ejecutar sobre varios objetos. Estas acciones por lote no son necesarias para el módulo `category`, así, vamos a eliminarlas:
+
+    [yml]
+    # apps/backend/modules/category/config/generator.yml
+    config:
+      list:
+        batch_actions: {}
+
+![Remover batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/no_batch_actions.png)
+
+La opción `batch_actions` define la lista de acciones por lote. Un array
+vacío permite eliminar las características.
+De forma predeterminada, cada módulo tiene una acción por lote `delete` definida por el framework, pero para el módulo `job`, supongamos que necesitamos una manera de extender la validez de determinados puestos de trabajo para otros 30 días:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        batch_actions:
+          _delete:    ~
+          extend:     ~
+
+Todas las acciones que comienzan con un `_` son acciones provistas por el
+framework. Si actualizas tu navegador y seleccionas las acciones extendidas, symfony arrojarán una excepción diciendote que crees un método `executeBatchExtend()`:
+
+    [php]
+    // apps/backend/modules/job/actions/actions.class.php
+    class jobActions extends autoJobActions
+    {
+      public function executeBatchExtend(sfWebRequest $request)
+      {
+        $ids = $request->getParameter('ids');
+
+<propel>
+        $jobs = JobeetJobPeer::retrieveByPks($ids);
+
+        foreach ($jobs as $job)
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j')
+          ->whereIn('j.id', $ids);
+
+        foreach ($q->execute() as $job)
+</doctrine>
+        {
+          $job->extend(true);
+        }
+
+        $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
+
+        $this->redirect('@jobeet_job');
+      }
+    }
+
+Las claves primarias seleccionadas son almacenados en el parámetro `ids` de la petición. Para cada puesto de trabajo seleccionado, el método `JobeetJob::extend()` se llama con un argumento extra para eludir algunos controles realizados en el método. Tenemos que actualizar el método `extend()` con un
+argumento extra para pasar la comprobacion de expiración.
+
+Actualiza el método `extend()` para tomar este nuevo argumento en cuenta:
+
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    class JobeetJob extends BaseJobeetJob
+    {
+      public function extend($force = false)
+      {
+        if (!$force && !$this->expiresSoon())
+        {
+          return false;
+        }
+
+<propel>
+        $this->setExpiresAt(time() + 86400 * sfConfig::get('app_active_days'));
+</propel>
+<doctrine>
+        $this->setExpiresAt(date('Y-m-d', time() + 86400 * sfConfig::get('app_active_days')));
+</doctrine>
+        $this->save();
+
+        return true;
+      }
+
+      // ...
+    }
+
+Después de que todos los puestos de trabajo se han ampliado, el usuario es redirigido al módulo `job`.
+
+![Perzonalizar batch actions](http://www.symfony-project.org/images/jobeet/1_3/12/custom_batch_actions.png)
+
+### `object_actions`
+En la lista, hay una columna adicional para las acciones que puede ejecutarse en un único objeto. Para el módulo `category` , vamos a eliminarlos ya que tenemos un enlace con el nombre de la categoría para editarlo, y que realmente no necesitamos ser capaces de borrar una directamente de la lista:
+
+    [yml]
+    # apps/backend/modules/category/config/generator.yml
+    config:
+      list:
+        object_actions: {}
+
+Para el módulo `job`, vamos a mantener las acciones existentes y añadir una nueva acción `extend` similar a la que hemos añadido como batch action:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        object_actions:
+          extend:     ~
+          _edit:      ~
+          _delete:    ~
+
+Como para las batch actions, las acciones `_delete` y `_edit` son las definidas por el framework. Tenemos que definir la acción `listExtend()` para hacer que el enlace `extend` funcione:
+
+    [php]
+    // apps/backend/modules/job/actions/actions.class.php
+    class jobActions extends autoJobActions
+    {
+      public function executeListExtend(sfWebRequest $request)
+      {
+        $job = $this->getRoute()->getObject();
+        $job->extend(true);
+
+        $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
+
+        $this->redirect('@jobeet_job');
+      }
+
+      // ...
+    }
+
+![Perzonalizar object action](http://www.symfony-project.org/images/jobeet/1_3/12/custom_object_actions.png)
+
+### `actions`
+
+Ya hemos visto la forma de vincular la acción a una lista de objetos o  un objeto único. La opción `actions` define las acciones que no tienen objeto, como la creación de un nuevo objeto. Vamos a eliminar la acción predeterminada `new` y añadir una nueva acción, que suprime todos los puestos de trabajo que no se han activado por el usuario por más de 60 días:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      list:
+        actions:
+          deleteNeverActivated: { label: Delete never activated jobs }
+
+Hasta ahora, todas las acciones que hemos definido tenian `~`, lo que significa que symfony ya configuró la acción automáticamente. Cada acción puede ser personalizada mediante la definición de un array de parámetros. La opción `label` sobreescribe el label por defecto generado por symfony.
+
+Por defecto, la acción ejecutada cuando haces click en el enlace es el nombre de la acción con prefijo `list`.
+
+Crea la acción `listDeleteNeverActivated` en el módulo `job`:
+
+    [php]
+    // apps/backend/modules/job/actions/actions.class.php
+    class jobActions extends autoJobActions
+    {
+      public function executeListDeleteNeverActivated(sfWebRequest $request)
+      {
+<propel>
+        $nb = JobeetJobPeer::cleanup(60);
+</propel>
+<doctrine>
+        $nb = Doctrine::getTable('JobeetJob')->cleanup(60);
+</doctrine>
+
+        if ($nb)
+        {
+          $this->getUser()->setFlash('notice', sprintf('%d never activated jobs have been deleted successfully.', $nb));
+        }
+        else
+        {
+          $this->getUser()->setFlash('notice', 'No job to delete.');
+        }
+
+        $this->redirect('@jobeet_job');
+      }
+
+      // ...
+    }
+
+<propel>
+Hemos reutilizado el método `JobeetJobPeer::cleanup()` definido el día de ayer. Es otro gran ejemplo de la reutilización proporcionada por el patrón MVC.
+</propel>
+<doctrine>
+Hemos reutilizado el método `JobeetJobTable::cleanup()` definido el día de ayer. Es otro gran ejemplo de la reutilización proporcionada por el patrón MVC.
+</doctrine>
+
+>**NOTE**
+>También puede cambiar la acción a ejecutar pasando un parámetro `action`:
+>
+>     [yml]
+>     deleteNeverActivated: { label: Delete never activated jobs, action: foo }
+
+![Acciones](http://www.symfony-project.org/images/jobeet/1_3/12/actions.png)
+
+<propel>
+### `peer_method`
+</propel>
+<doctrine>
+### `table_method`
+</doctrine>
+
+El número de consultas a la base de datos para mostrar el listado de los puestos de trabajo es 13, como muestra la barra de depuración web.
+
+![Número de consultas antes](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_before.png)
+
+Si haces clic en ese número, se verá que la mayoría de las peticiones son para recuperar el nombre de la categoría para cada trabajo.
+
+Para reducir el número de consultas, podemos cambiar el método utilizado para obtener
+<propel>
+los puestos de trabajo utilizando la opción `peer_method`:
+</propel>
+<doctrine>
+los puestos de trabajo utilizando la opción `table_method`:
+</doctrine>
+
+    [yml]
+    config:
+      list:
+<propel>
+        peer_method: doSelectJoinJobeetCategory
+
+El método `doSelectJoinJobeetCategory()` agrega un join entre las tablas `job` y `category` y crea automáticamente el objeto categoría relacionado con cada puesto de trabajo.
+</propel>
+<doctrine>
+        table_method: retrieveBackendJobList
+
+Ahora debes crear el método `retrieveBackendJobList` en `JobeetJobTable` 
+situado en `lib/model/doctrine/JobeetJobTable.class.php`.
+
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      public function retrieveBackendJobList(Doctrine_Query $q)
+      {
+        $rootAlias = $q->getRootAlias();
+        $q->leftJoin($rootAlias . '.JobeetCategory c');
+        return $q;
+      }
+
+      // ...
+
+El método `retrieveBackendJobList()` agrega un join entre las tablas `job` y `category` y crea automáticamente el objeto categoría relacionado con cada puesto de trabajo.
+</doctrine>
+
+The number of requests is now down to three:
+
+![Número de consultas después](http://www.symfony-project.org/images/jobeet/1_3/12/web_debug_after.png)
+
+Configuración de las Vistas Form
+--------------------------------
+
+La Configuración de la Vista Form se realiza en tres secciones: `form`, `edit`, y `new`. Todas tienen la misma configuración y la capacidad de la sección `form` sólo existe como un mensaje para las secciones `edit` y `new`.
+
+### `display`
+
+En cuanto a la lista, puedes cambiar el orden de los campos que se muestran con la opción `display`. Pero, como el formulario mostrado se define por una clase, no trates de eliminar un campo, ya que podría dar lugar a errores de validación inesperados.
+
+La opción `display` para vistas form también se puede utilizar para organizar los campos en grupos:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      form:
+        display:
+          Content: [category_id, type, company, logo, url, position,
+            âž¥ location, description, how_to_apply, is_public, email]
+          Admin:   [_generated_token, is_activated, expires_at]
+
+La configuración anterior define dos grupos (`Content` y `Admin`), each
+que contienen un subconjunto de los campos del formulario.
+
+![Campos agrupados](http://www.symfony-project.org/images/jobeet/1_3/12/fields_grouping.png)
+
+El Generador de Admin tiene soporte para la relación muchos a muchos. En el formilario categoría, tienes un input para el nombre, uno para el slug, y un cuadro desplegable para los afiliados relacionados. Como no tiene sentido editar esta relación en esta página, vamos a eliminarla:
+
+    [php]
+<propel>
+    // lib/form/JobeetCategoryForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetCategoryForm.class.php
+</doctrine>
+    class JobeetCategoryForm extends BaseJobeetCategoryForm
+    {
+      public function configure()
+      {
+<propel>
+        unset($this['jobeet_category_affiliate_list']);
+</propel>
+<doctrine>
+        unset($this['created_at'], $this['updated_at'], $this['jobeet_affiliates_list']);
+</doctrine>
+      }
+    }
+
+### Columnas "Virtuales"
+
+
+En las opciónes `display` para el formulario de puestos de trabajo, el campo `_generated_token` comienza con un guión bajo (`_`). Esto significa que la visualización de este campo será manejado por un partial personalizado de nombre `_generated_token.php`:
+
+Crea este partial con el siguiente contenido:
+
+    [php]
+    // apps/backend/modules/job/templates/_generated_token.php
+    <div class="sf_admin_form_row">
+      <label>Token</label>
+      <?php echo $form->getObject()->getToken() ?>
+    </div>
+
+En el partial, tienes acceso al actual form (`$form`) y el objeto relacionado es accesible a través del método `getObject()`.
+
+>**NOTE**
+>También puede delegar la visualización a un componente con el prefijo 
+>de un tilde (`~`) al nombre del campo.
+
+### `class`
+
+Como el formulario será utilizado por los administradores, hemos mostrado más información que para el usuario del formulario job. Pero por ahora, algunos de ellos no aparecen en la formulario ya que se han eliminado en la clase `JobeetJobForm`.
+
+Para tener diferentes formularios para el frontend y el backend, tenemos que crear dos clases form. Vamos a crear una clase `BackendJobeetJobForm` que herede de la clase `JobeetJobForm`. Como no tienen los mismos campos ocultos, también tenemos que refactorizar la clase `JobeetJobForm` un poco para mover la declaración `unset()` en un método que será sobreescrito en `BackendJobeetJobForm`:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        $this->removeFields();
+
+        $this->validatorSchema['email'] = new sfValidatorEmail();
+
+        // ...
+      }
+
+      protected function removeFields()
+      {
+        unset(
+          $this['created_at'], $this['updated_at'],
+          $this['expires_at'], $this['is_activated'],
+          $this['token']
+        );
+      }
+    }
+
+<propel>
+    // lib/form/BackendJobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/BackendJobeetJobForm.class.php
+</doctrine>
+    class BackendJobeetJobForm extends JobeetJobForm
+    {
+      public function configure()
+      {
+        parent::configure();
+      }
+
+      protected function removeFields()
+      {
+        unset(
+          $this['created_at'], $this['updated_at'],
+          $this['token']
+        );
+      }
+    }
+
+La clase predeterminado form utilizado por el Generador de Administración puede ser sobreescrita con el ajuste de la opción `class`:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    config:
+      form:
+        class: BackendJobeetJobForm
+
+>**NOTE**
+>Como hemos añadido una nueva clase, no te olvides de limpiar el cache.
+
+El formulario `edit` todavía tiene una pequeña molestia. El logotipo subido no aparece en ningun lugar y no podrás quitar el actual. El
+widget `sfWidgetFormInputFileEditable` añade capacidades de edición a un simple widget input file:
+
+    [php]
+<propel>
+    // lib/form/BackendJobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/BackendJobeetJobForm.class.php
+</doctrine>
+    class BackendJobeetJobForm extends JobeetJobForm
+    {
+      public function configure()
+      {
+        parent::configure();
+
+        $this->widgetSchema['logo'] = new sfWidgetFormInputFileEditable(array(
+          'label'     => 'Company logo',
+          'file_src'  => '/uploads/jobs/'.$this->getObject()->getLogo(),
+          'is_image'  => true,
+          'edit_mode' => !$this->isNew(),
+          'template'  => '<div>%file%<br />%input%<br />%delete% %delete_label%</div>',
+        ));
+
+        $this->validatorSchema['logo_delete'] = new sfValidatorPass();
+      }
+
+      // ...
+    }
+
+El widget `sfWidgetFormInputFileEditable` tiene varias opciones para modificar sus características y visualización:
+
+  * `file_src`:    La ruta web del archivo subido
+  * `is_image`:    Si es `true`, el archivo será mostrado como una imagen
+  * `edit_mode`:   Si el formulario está en modo de edición o no
+  * `with_delete`: Si se desea mostrar una casilla de verificación para eliminar
+  * `template`:    La plantilla a utilizar para mostrar el widget
+
+![Carga de Archivos](http://www.symfony-project.org/images/jobeet/1_3/12/file_upload.png)
+
+>**TIP**
+>El aspecto del Generador de Admin puede ser ajustado muy fácilmente ya que las
+>plantillas definen una gran cantidad de atributos `class` y `id` . Por ejemplo, el logotipo puede
+>ser personalizado utilizando `sf_admin_form_field_logo`. Cada campo también
+>tiene una clase, dependiendo de el tipo de campo como `sf_admin_text` o
+>`sf_admin_boolean`.
+
+<propel>
+La opción `edit_mode` utiliza el método `sfPropel::isNew()`.
+</propel>
+<doctrine>
+La opción `edit_mode` utiliza el método `sfDoctrineRecord::isNew()`.
+</doctrine>
+
+Devuelve `true` si el objeto del formulario es nuevo, y `false` de lo contrario.
+Esto es de gran ayuda cuando es necesario que tengas diferentes widgets o validadores, dependiendo del estado del objeto invocado.
+
+Configuración de Filtros
+------------------------
+
+La configuración de los filtros es la misma que la configuración de las vistas forms. Como cuestión de hecho, los filtros son sólo forms. Y como para los forms, las clases se han generado por la tarea `propel:build-all`. También puedes volver a generarlas con la tarea `propel:build-filters`.
+
+Estas clases se encuentran en el directorio `lib/filter/` y cada uno de clase del modelo tiene asociada una clase de filtros (`JobeetJobFormFilter` para 
+`JobeetJobForm`).
+
+Vamos a eliminarlas por completo para el módulo `category`:
+
+    [yml]
+    # apps/backend/modules/category/config/generator.yml
+    config:
+      filter:
+        class: false
+
+Para el módulo `job` , vamos a eliminar algunos de ellos:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    filter:
+      display: [category_id, company, position, description, is_activated,
+       âž¥ is_public, email, expires_at]
+
+Como los filtros son siempre opcional, no hay necesidad de sobreescribir clase filtro para configurar los campos que se mostrarán.
+
+![Filtros](http://www.symfony-project.org/images/jobeet/1_3/12/filters.png)
+
+Acciones Personalizadas
+-----------------------
+
+Cuando la configuración no es suficiente, puedes agregar nuevos métodos a la clase de acciones, como hemos visto con la característica de `extend`, pero también puede sobreescribir la acción de los métodos generados:
+
+ | Método                 | Descripción
+ | ---------------------- | -------------------------------------
+ | `executeIndex()`       | La acción de la vista `list`
+ | `executeFilter()`      | Actualiza los filtros
+ | `executeNew()`         | La acción de la vista `new`
+ | `executeCreate()`      | Crea un nuevo Job
+ | `executeEdit()`        | La acción de la vista `edit`
+ | `executeUpdate()`      | Actualiza un Job
+ | `executeDelete()`      | Borra un Job
+ | `executeBatch()`       | Ejecuta una acción por lote
+ | `executeBatchDelete()` | Ejecuta la acción por lote `_delete`
+ | `processForm()`        | Procesa el formualrio Job
+ | `getFilters()`         | Devuelve los filtros actuales 
+ | `setFilters()`         | Establece los filtros
+ | `getPager()`           | Devuelve el paginador de la lista
+ | `getPage()`            | Obtiene la página de la lista
+ | `setPage()`            | Establece la página de la lista 
+ | `buildCriteria()`      | Construye el `Criteria` para la lista 
+ | `addSortCriteria()`    | agrega un `Criteria` ordenado para la lista 
+ | `getSort()`            | Devuelve la columna utilizada para ordenar
+ | `setSort()`            | Establece la columna utilizada para ordenar
+
+Como cada método generado hace solo una cosa, es fácil cambiar un comportamiento sin tener que copiar y pegar código demasiado.
+
+Personalización de Plantillas
+-----------------------------
+
+Hemos visto cómo personalizar las plantillas generadas gracias a los atributos `class` y `id` añadidos por el Generador de administrador en el código HTML.
+
+En cuanto a las clases, también puedes sobreescribir las plantillas originales. Como las plantillas son simples archivos PHP y no clases PHP , una plantilla puede ser sobreescritapor creando una plantilla del mismo nombre en el módulo (por ejemplo, en el directorio
+`apps/backend/modules/job/templates/` para el módulo de administración `job`):
+
+ | Plantilla                     | Descripción
+ | ---------------------------- | -------------------------------------
+ | `_assets.php`                | Muestra CSS y JS a usar por las plantillas
+ | `_filters.php`               | Muestra los filtros
+ | `_filters_field.php`         | Muestra un único filtro de campo 
+ | `_flashes.php`               | Muestra los mensajes flash 
+ | `_form.php`                  | Muestra el formulario
+ | `_form_actions.php`          | Muestra las acciones del formulario
+ | `_form_field.php`            | Muestra un único campo de formulario
+ | `_form_fieldset.php`         | Muestra un fieldset de formulario
+ | `_form_footer.php`           | Muestra el pie de página del formulario 
+ | `_form_header.php`           | Muestra cabecera del formulario 
+ | `_list.php`                  | Muestra la lista
+ | `_list_actions.php`          | Muestra las acciones de lista 
+ | `_list_batch_actions.php`    | Muestra la lista de acciones por lotes
+ | `_list_field_boolean.php`    | Muestra un único campo booleano en la lista
+ | `_list_footer.php`           | Muestra el pie de página de lista
+ | `_list_header.php`           | Muestra la cabecera de lista
+ | `_list_td_actions.php`       | Muestra las acciones de objeto para una fila
+ | `_list_td_batch_actions.php` | Muestra la casilla de verificación para una fila
+ | `_list_td_stacked.php`       | Muestra el stacked layout para una fila
+ | `_list_td_tabular.php`       | Muestra un único campo de lista
+ | `_list_th_stacked.php`       | Muestra un solo nombre de columna para la cabecera
+ | `_list_th_tabular.php`       | Muestra un solo nombre de columna para la cabecera
+ | `_pagination.php`            | Muestra la paginación de lista
+ | `editSuccess.php`            | Muestra la vista `edit`
+ | `indexSuccess.php`           | Muestra la vista `list`
+ | `newSuccess.php`             | Muestra la vista `new`
+
+Configuración Final
+-------------------
+
+La configuración final de la administración Jobeet es la siguiente:
+
+    [yml]
+    # apps/backend/modules/job/config/generator.yml
+    generator:
+      class: sfPropelGenerator
+      param:
+        model_class:           JobeetJob
+        theme:                 admin
+        non_verbose_templates: true
+        with_show:             false
+        singular:              ~
+        plural:                ~
+        route_prefix:          jobeet_job
+<propel>
+        with_propel_route:     1
+</propel>
+<doctrine>
+        with_doctrine_route:   1
+</doctrine>
+
+        config:
+          actions: ~
+          fields:
+            is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
+            is_public:    { label: Public? }
+          list:
+            title:         Job Management
+            layout:        stacked
+            display:       [company, position, location, url, is_activated, email]
+            params:  |
+<propel>
+              %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
+</propel>
+<doctrine>
+              %%is_activated%% <small>%%JobeetCategory%%</small> - %%company%%
+</doctrine>
+               (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
+            max_per_page:  10
+            sort:          [expires_at, desc]
+            batch_actions:
+              _delete:    ~
+              extend:     ~
+            object_actions:
+              extend:     ~
+              _edit:      ~
+              _delete:    ~
+            actions:
+              deleteNeverActivated: { label: Delete never activated jobs }
+<propel>
+            peer_method:  doSelectJoinJobeetCategory
+</propel>
+<doctrine>
+            table_method: retrieveBackendJobList
+</doctrine>
+          filter:
+            display: [category_id, company, position, description, is_activated, is_public, email, expires_at]
+          form:
+            class:     BackendJobeetJobForm
+            display:
+              Content: [category_id, type, company, logo, url, position, location, description, how_to_apply, is_public, email]
+              Admin:   [_generated_token, is_activated, expires_at]
+          edit:
+            title: Editing Job "%%company%% is looking for a %%position%%"
+          new:
+            title: Job Creation
+
+    # apps/backend/modules/category/config/generator.yml
+    generator:
+      class: sfPropelGenerator
+      param:
+        model_class:           JobeetCategory
+        theme:                 admin
+        non_verbose_templates: true
+        with_show:             false
+        singular:              ~
+        plural:                ~
+        route_prefix:          jobeet_category
+<propel>
+        with_propel_route:     1
+</propel>
+<doctrine>
+        with_doctrine_route:   1
+</doctrine>
+
+        config:
+          actions: ~
+          fields:  ~
+          list:
+            title:   Category Management
+            display: [=name, slug]
+            batch_actions: {}
+            object_actions: {}
+          filter:
+            class: false
+          form:
+            actions:
+              _delete: ~
+              _list:   ~
+              _save:   ~
+          edit:
+            title: Editing Category "%%name%%"
+          new:
+            title: New Category
+
+Con tan sólo estos dos archivos de configuración, hemos desarrollado una excelente interfaz backend para Jobeet en cuestión de minutos.
+
+>**TIP**
+>Ya sabes que cuando algo es configurable en un archivo YAML, hay
+>también la posibilidad de usar código PHP. Para el Generador de administrador, puedes
+>editar `apps/backend/modules/job/lib/jobGeneratorConfiguration.class.php`.
+>Te da las mismas opciones que YAML pero con un archivo PHP.
+>Para aprender los nombre de los métodos, echar un vistazo a la clase base generada
+>en
+>`cache/backend/dev/modules/autoJob/lib/BaseJobGeneratorConfiguration.class.php`.
+
+Nos vemos mañana
+----------------
+
+En sólo una hora, hemos construído una completa interfaz backend para el proyecto Jobeet. Y todo, lo hemos escrito en menos de 50 líneas de código PHP. No está mal para tantas funciones!
+
+Mañana, vamos a ver cómo asegurar esta aplicación con un nombre de usuario y una contraseña. Esta será también la ocasión para hablar de la clase usuario symfony.
+
+>**Note**
+>Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
+>disponible día a día en el repositorio SVN oficial de Jobeet
+>(`http://svn.jobeet.org/##ORM_LOWER##/`).
+>
+>Por ejemplo, puedes obtener el código de hoy de la
+>etiqueta `release_day_12`:
+>
+>       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_12/ jobeet/
+>
+
+Feedback
+--------
+
+>**Tip**
+>Este capítulo ha sido traducido por **Roberto Germán Puentes Díaz**. 
+>Si encuentras algún error que deseas corregir o realizar algún comentario,
+>no dudes en enviarlo por correo a **puentesdiaz [arroba] gmail.com**
+
+__ORM__

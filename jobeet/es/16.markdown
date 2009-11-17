@@ -1,0 +1,272 @@
+Día 16: El Correo Electrónico
+=============================
+
+Ayer, agregamos un servicio de solo lectura a Jobeet. Los Afiliados pueden ahora
+crear una cuenta pero esta necesita ser activada por el administrador antes de 
+poder usarla. Para que el afiliado consiga su token, aún necesitaremos 
+implementar la notificación por email. Eso es lo que haremos el dia de hoy.
+
+El framework Symfony viene con una de las mejores soluciones PHP de correo:
+[Swift Mailer](http://www.swiftmailer.org/). Por supuesto, la librería esta
+completamente integrada con Symfony, con algunas características interesantes
+agregadas por encima de las caracteríticas predeterminadas.
+
+>**NOTE**
+>Symfony 1.3 usa ~Swift Mailer~ versión 4.1.
+
+Envíando Emails simples
+-----------------------
+
+Vamos a empezar enviando un simple email para notificar al afiliado cuando su
+cuenta ha sido confirmada y darle el token.
+
+Reemplace la acción `activate` con el siguiente código:
+
+    [php]
+    // apps/backend/modules/affiliate/actions/actions.class.php
+    class affiliateActions extends autoAffiliateActions
+    {
+      public function executeListActivate()
+      {
+        $affiliate = $this->getRoute()->getObject();
+        $affiliate->activate();
+
+        // send an email to the affiliate
+        $message = $this->getMailer()->compose(
+          array('jobeet@example.com' => 'Jobeet Bot'),
+          $affiliate->getEmail(),
+          'Jobeet affiliate token',
+          <<<EOF
+    Your Jobeet affiliate account has been activated.
+
+    Your token is {$affiliate->getToken()}.
+
+    The Jobeet Bot.
+    EOF
+        );
+
+        $this->getMailer()->send($message);
+
+<propel>
+        $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
+      }
+
+      // ...
+    }
+
+>**NOTE**
+>Para que el código funcione debidamente, deberas cambiar `jobeet@example.com`
+>por una dirección de email real.
+
+La gestión del Email en Symfony es centrada alrededor de un objeto mailer, el cual
+es obtenido desde la acción con un método `getMailer()`.
+
+El método `compose()` toma cuatro argumentos y devuelve un objeto de mensaje de email:
+
+ * el remitente (`from`);
+ * destinatario(s) (`to`);
+ * el asunto del mensaje;
+ * el cuerpo del mensaje;
+
+El enviar el mensaje es entonces tan simple como llamar al método `send()` 
+desde la instancia mailer y pasarle el mensaje como un argumento. Como un atajo, puedes
+solo escribir y enviar un email en un método usando `composeAndSend()`.
+
+>**TIP**
+>El mensaje es una instnacia de la clase `Swift_Message`. Visita la
+>[documentación](http://www.swiftmailer.org/docs) oficial Swift Mailer para
+>aprender mas acerca de este objeto, y como hacer cosas mas avanzadas como
+>adjuntar archivos.
+
+Configuración
+-------------
+
+Por defecto, el método `send()` intenta usar el servidor local SMTP para el
+envio del mensaje al destinatario. Por supuesto, como muchas cosas en Symfony, 
+esto es totalmente configurable.
+
+### ~Factorias~
+
+Durante los días anteriores, hemos hablado acerca de los objetos del núcleo symfony
+como `user`, `request`, `response`, o `routing`. Esos objetos son
+automaticamente creados, configurados, y gestionados por el framework. Ellos
+son siempre accesibles desde el objeto `sfContext`, y como muchas cosas del
+framework, ellas son configurables via un archivo de configuración:
+~`factories.yml`~. Este archivo es configurable por entorno.
+
+Cuando `sfContext` inicializa las factorias del núcleo, este lee al archivo 
+`factories.yml` por los nombres de clases (`class`) y los parámetros 
+(`param`) a pasar al constructor:
+
+    [yml]
+    response:
+      class: sfWebResponse
+      param:
+        send_http_headers: false
+
+En código anterior, para crear un response factory, symfony instancia un objeto 
+`sfWebResponse` y pasa la opción `send_http_headers` como un parámetro.
+
+>**SIDEBAR**
+>La clase `sfContext` 
+>
+>El objeto `sfContext` contiene referencias a los objetos del núcleo symfony como el
+>request, response, user, y así. Como `sfContext` actua como un
+>singleton, puedes usar la sentencia `sfContext::getInstance()` para obtenerlo
+>desde cualquier lugar y entonces poder acceder a cualquiera de los objetos del núcleo:
+>
+>     [php]
+>     $mailer = sfContext::getInstance()->getMailer();
+>
+>Si quieres usar `sfContext::getInstance()` en una de tus clases,
+>piensalo dos veces ya que este hace un ~strong coupling|Strong Coupling~. Esto es 
+>simpre bastante mejor a pasar el objeto que necesitas como un argumento.
+>
+>Puedes aún usar `sfContext` como un registro y agregar tus propios objetos usando los
+>métodos `set()`. Este toma un nombre y un objeto como argumentos y el método the `get()`
+>puede ser usado luego para obtener un objeto por el nombre:
+>
+>     [php]
+>     sfContext::getInstance()->set('job', $job);
+>     $job = sfContext::getInstance()->get('job');
+
+### ~Delivery Strategy~
+
+Como otros muchos objetos del núcleo, el mailer es un factory. Por eso, este es
+configurado en el archivo de configuración `factories.yml`. La configuració por defecto
+se lee asi:
+
+    [yml]
+    mailer:
+      class: sfMailer
+      param:
+        logging:           %SF_LOGGING_ENABLED%
+        charset:           %SF_CHARSET%
+        delivery_strategy: realtime
+        transport:
+          class: Swift_SmtpTransport
+          param:
+            host:       localhost
+            port:       25
+            encryption: ~
+            username:   ~
+            password:   ~
+
+Cuando se crea una nueva aplicación, el archivo de configuración `factories.yml` 
+sobreescribe la configuración predeterminada con algunos sensibles valores para 
+los entornos `env` y `test`:
+
+    [yml]
+    test:
+      mailer:
+        param:
+          delivery_strategy: none
+
+    dev:
+      mailer:
+        param:
+          delivery_strategy: none
+
+La configuración `delivery_strategy` le dice a Symfony como entregar correos. Por
+defecto, Symfony viene con cuatro diferentes estrategias:
+
+ * `realtime`:       Los Mensajes son entregados en tiempo real.
+ * `single_address`: Los Mensajes son entregados a una solo dirección.
+ * `spool`:          Los Mensajes son guardados en cola.
+ * `none`:           Los Mensajes son simplemente ignorados.
+
+No importa cual sea la estrategia, los emails son siempre registrados en el log y estan
+disponibles en el panel "mailer" del web debug toolbar.
+
+### ~Mail Transport~
+
+Los mensajes de correo son siempre enviados por un transport. El transport es configurado
+en el archivo de configuración `factories.yml`, y la configuración por defecto usa el servidor 
+SMTP del equipo local:
+
+    [yml]
+    transport:
+      class: Swift_SmtpTransport
+      param:
+        host:       localhost
+        port:       25
+        encryption: ~
+        username:   ~
+        password:   ~
+
+Swift Mailer viene con tres clases transport diferentes:
+
+  * ~`Swift_SmtpTransport`~: Usa un servidor SMTP para enviar los mensajes.
+
+  * ~`Swift_SendmailTransport`~: Usa `sendmail` para enviar los mensajes.
+
+  * ~`Swift_MailTransport`~: Usa la función nativa de PHP `mail()` fpara enviar los mensajes.
+
+>**TIP**
+>La sección ["Transport Types"](http://swiftmailer.org/docs/transport-types) de
+>la documentación oficial Swift Mailer describe todo lo que necesitas saber
+>acerca de las clases transport y sus diferentes parámetros.
+
+Probando Emails
+---------------
+
+Ahora qe vimos como enviar un email con symfony mailer, vamos a escribir
+algunas pruebas funcionales para asegurarnos que lo hicimos bien. Por defecto,
+symfony registras un tester `mailer` (~`sfMailerTester`~) para facilitar la prueba.
+
+Reemplace el archivo de pruebas `affiliate` para la aplicación backend con lo siguiente:
+
+    [php]
+    // test/functional/backend/affiliateActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->
+      info('1 - When validating an affiliate, an email must be sent with its token')->
+
+      get('/affiliate/new')->
+      click('activate', array(), array('position' => 1))->
+      with('mailer')->begin()->
+        checkHeader('Subject', '/Jobeet affiliate token/')->
+        checkBody('/Your token is symfony/')->
+      end()
+    ;
+
+Para que el anterior código funcione, necesitas copiar el arhivo de datos 
+de ayer (`data/fixtures/030_affiliates.yml`) al directorio `test/fixtures/`.
+
+Cada email enviado puede ser probado con la ayuda de los métodos `checkHeader()` y 
+`checkBody()`. El segundo argumento de `checkHeader()` y el primer argumento de 
+`checkBody()` puede ser lo siguiente:
+
+ * una cadena para comprobar que coincide exactamente;
+
+ * una expresión regular para comprobar el valor;
+
+ * una expresión regular negativa (es una que empieza con un `!`) para comprobar 
+   que el valor no coincide.
+
+>**NOTE**
+>Por defecto, las comprobaciones son hechas en el primer email enviado. si muchos emails
+>se enviaron, puedes elegir uno para probarlo con el método `withMessage()`.
+>El método `withMessage()` toma un destinatario como su primer argumento. Este también
+>toma un segundo argumento para indicar cual email quieres probar si varios han sido
+>enviados al mismo destinatario.
+
+-
+
+>**TIP**
+>Como otros tester incluídos, puedes ver el mensaje en bruto llamando al método `debug()`.
+
+Nos vemos mañana
+----------------
+
+Mañana, vamos a implementar la última característica faltante del sitio web Jobeet, el motor de búsqueda.
+
+__ORM__

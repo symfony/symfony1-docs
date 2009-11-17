@@ -1,0 +1,641 @@
+8日目: ユニットテスト
+====================
+
+最近の2日間の間に、アドベントカレンダーの最初の5日の間に学んだJobeetの機能をカスタマイズして新しい機能を追加するために、すべての機能をレビューしました。
+このプロセスにおいて、symfonyのより高度な機能にもふれてきました。
+
+今日は、完全に異なる内容: 自動化された**テスト**を語ります。
+このトピックの内容はとても大きいので、すべての内容をカバーするのに2日まるごとかかります。
+
+symfonyのテスト
+---------------
+
+symfonyにはまったく異なる2つの種類の自動テスト: **~ユニットテスト~(unit test - もしくは単体テスト)**と**~機能テスト~(functional test)**があります。
+
+ユニットテストはそれぞれのメソッドと関数が適切に機能していることを検証します。
+それぞれのテストは可能な限りお互いから独立していなければなりません。
+
+一方で、機能テストはアプリケーションの結果のふるまいが全体として正しいか検証します。
+
+symfonyのすべてのテストはプロジェクトの`test/`ディレクトリに設置されます。
+ユニットテスト(`test/unit/`)と機能テスト(`test/functional/`)用に2つのサブディレクトリが含まれます。
+
+今日はユニットテストをカバーし、明日は機能テストに専念します。
+
+ユニットテスト
+-------------
+
+ユニットテストを書くのはWeb開発のベストプラクティスの中で実行するのがもっとも難しいことです。
+Web開発者は作品をテストすることに本当に慣れていないのと、たくさんの疑問がわき上がります: 
+機能を実装する前にテストを書かなければならないのか？
+何をテストする必要があるのか？
+テストはすべての単独の~エッジケース~をカバーする必要があるのか？ 
+すべてにおいてよいテストをできる方法は？
+しかし通常、最初のテストははるかに基本的です: どこで始めるのか？
+
+私たちがテストを強く推奨しているとしても、symfonyのアプローチは実践的です: 
+テストを何もしないよりもしたほうが常によいです。
+テストなしのコードがすでにたくさんありますか？
+問題ありません。テストの利点から恩恵を受けるためにフルテストスイートを用意する必要はありません。
+コードでバグを見つけたときにテストを追加することから始めます。時間が経過して、あなたのコードはよりよいものになり、~コードカバレッジ~は上昇し、テストにより自信を持つようになります。
+実践的なアプローチを始めることで、 時間とともにテストがより快適になります。
+次のステップは新しい機能に対してテストを書くことです。
+すぐに、テストがやみつきになりますよ。
+
+たいていのテストライブラリの問題は急激な学習曲線です。
+テストを書く作業を簡単にするためにsymfonyがとてもシンプルなテストライブラリである**lime**を提供するのはそういうわけです。
+
+>**NOTE**
+>このチュートリアルが組み込みのlimeライブラリを広範囲で説明していても、[PHPUnit](http://www.phpunit.de/)ライブラリのような、優れたテストライブラリを利用できます。
+
+~`lime`テストフレームワーク|limeテストフレームワーク~
+---------------------------------------------------
+
+limeフレームワークで書かれたユニットテストは同じコードで始まります:
+
+    [php]
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(1);
+
+最初に、いくつかのことを初期化するために`unit.php`ブートストラップファイルがインクルードされます。
+それから、新しい`lime_test`オブジェクト作成され、立ち上げを計画しているテストの数が引数として渡されます。
+
+>**NOTE**
+>計画によってlimeは実行されるテストの数が少なすぎるときにメッセージを出力できます(たとえばテストがPHPの致命的エラーを生成するとき)。
+
+あらかじめ定義される入力のセットでメソッドもしくは関数を呼び出し期待される出力で結果を比較することでテストは動作します。
+この比較はテストが通るもしくは失敗かどうかを決定します。
+
+比較しやすくするために、`lime_test`オブジェクトはいくつかのメソッドを提供します:
+
+ メソッド                      | 説明
+ ----------------------------- | --------------------------------------------
+ `ok($test)`                   | 条件をテストしてtrueであれば通る
+ `is($value1, $value2)`        | 2つの値を比較してそれらが等しい(`==`)場合に通る
+ `isnt($value1, $value2)`      | 2つの値を比較しそれが等しくない場合に通る
+ `like($string, $regexp)`      | 文字列を正規表現でテストする
+ `unlike($string, $regexp)`    | 文字列が正規表現にマッチしないことをチェックする
+ `is_deeply($array1, $array2)` | 2つの配列が同じ値を持っていることをチェックする
+
+>**TIP**
+>`ok()`メソッドだけを使ってすべてのテストを書けるのに、limeがこんなにたくさんのテストを定義するのか疑問に思っているかもしれません。
+>代替メソッドの利点は失敗したテストの明確なエラーメッセージと改善されたテストの可読性にあります。
+
+`lime_test`オブジェクトは他の便利なテストメソッドも提供します:
+
+ メソッド                | 説明
+ ----------------------- | --------------------------------------------------
+ `fail()`                | 常に失敗する--例外をテストするのに便利
+ `pass()`                | 常にパスする--例外をテストするのに便利
+ `skip($msg, $nb_tests)` | `$nb_tests`テストとしてカウントする--条件テストに便利
+ `todo()`                | テストとしてカウントする--まだ書かれていないテストに便利
+
+最後に、`comment($msg)`メソッドはコメントを出力しますがテストは実行しません。
+
+ユニットテストを実行する
+-----------------------
+
+すべてのユニットテストは`test/unit/`ディレクトリに保存されます。
+慣習では、テストの名前はテストするクラスの名前に`Test`のサフィックスをつけたものです。
+ともかく`test/unit/`ディレクトリの下でファイルを編成できますが、`lib/`ディレクトリの構造を複製することをお勧めします。
+
+ユニットテストを説明するために、`Jobeet`クラスをテストします。
+
+`test/unit/JobeetTest.php`ファイルを作り次のコードを内部にコピーします:
+
+    [php]
+    // test/unit/JobeetTest.php
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(1);
+    $t->pass('This test always passes.');
+
+テストを起動するには、ファイルを直接実行できます:
+
+    $ php test/unit/JobeetTest.php
+
+もしくは`test:unit`タスクを使用する:
+
+    $ php symfony test:unit Jobeet
+
+![コマンドラインでテストする](http://www.symfony-project.org/images/jobeet/1_3/08/cli_tests.png)
+
+>**Note**:
+>不幸にして~Windows~のコマンドラインはテストの結果を赤もしくは緑色でハイライトできません。
+>しかしCygwinをお使いであれば、`--color`オプションをタスクに渡すことで色を使うようsymfonyに強制できます。
+
+`slugify`をテストする
+---------------------
+
+`Jobeet::slugify()`メソッド用のテストを書くことでユニットテストの世界のすてきな旅を始めましょう。
+
+URLに文字列を安全に含められるようにクリーンナップするために5日目に~`slugify()`|スラッグ~メソッドを作りました。
+ASCIIではないすべての文字列をダッシュ(`-`)に変換するもしくは文字列を小文字に変換するなどの基本的な変換で構成されます:
+
+ | 入力          | 出力         |
+ | ------------- | ------------ |
+ | Sensio Labs   | sensio-labs  |
+ | Paris, France | paris-france |
+
+テストファイルの内容を次のコードで置き換えます:
+
+    [php]
+    // test/unit/JobeetTest.php
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(6);
+
+    $t->is(Jobeet::slugify('Sensio'), 'sensio');
+    $t->is(Jobeet::slugify('sensio labs'), 'sensio-labs');
+    $t->is(Jobeet::slugify('sensio   labs'), 'sensio-labs');
+    $t->is(Jobeet::slugify('paris,france'), 'paris-france');
+    $t->is(Jobeet::slugify('  sensio'), 'sensio');
+    $t->is(Jobeet::slugify('sensio  '), 'sensio');
+
+書かれたテストをよく見ると、それぞれの行は1つのことしかテストしていないことに気がつきます。
+これはユニットテストを書く際に覚えておく必要があることです。
+一度に1つのことをテストします。
+
+テストファイルを実行できます。
+すべてのテストが期待通りにパスする場合、"*緑色のバー*"を楽しめます。 
+そうでなければ、悪名高い"*赤いバー*"がテストが通らなくて、それらを修正するように警告します。
+
+![slugify()テスト](http://www.symfony-project.org/images/jobeet/1_3/08/slugify.png)
+
+テストが失敗すると、失敗した理由に関する情報が出力されます; 
+しかし1つのファイルで数百のテストがある場合、どれが失敗するふるまいなのか素早く特定するのが困難になる可能性があります。
+
+すべてのlimeテストメソッドは最後の引数としてテストの説明用の文字列を受け取ります。
+本当に何をテストしているのか説明することが強制されるのでとても便利です。
+メソッドの期待されたふるまいに対して~ドキュメント~の形式でも提供できます。
+`slugify`テストファイルにメッセージを追加してみましょう:
+
+    [php]
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(6);
+
+    $t->comment('::slugify()');
+    $t->is(Jobeet::slugify('Sensio'), 'sensio',
+     ➥ '::slugify() converts all characters to lower case');
+    $t->is(Jobeet::slugify('sensio labs'), 'sensio-labs',
+     ➥ '::slugify() replaces a white space by a -');
+    $t->is(Jobeet::slugify('sensio   labs'), 'sensio-labs',
+     ➥ '::slugify() replaces several white spaces by a single -');
+    $t->is(Jobeet::slugify('  sensio'), 'sensio',
+     ➥ '::slugify() removes - at the beginning of a string');
+    $t->is(Jobeet::slugify('sensio  '), 'sensio',
+     ➥ '::slugify() removes - at the end of a string');
+    $t->is(Jobeet::slugify('paris,france'), 'paris-france',
+     ➥ '::slugify() replaces non-ASCII characters by a -');
+
+![メッセージつきのslugify()テスト](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_doc.png)
+
+テストの説明文字列は何をテストするのか理解しようとするときにも貴重なツールです。
+テストの文字列でパターンがわかります: 
+これらはメソッドがどのようにふるまいテストするメソッドの名前でつねに始まることを記述しています。
+
+>**SIDEBAR**
+>~コードカバレッジ~
+>
+>テストを書くとき、コードの位置を忘れがちです。
+>
+>すべてのコードが十分にテストされるのかチェックする作業を手助けするために、symfonyは`test:coverage`タスクを提供します。
+>このタスクにテストファイルもしくはディレクトリとlibファイルもしくはディレクトリを引数として渡せばテストのコードカバレッジが表示されます:
+>
+>     $ php symfony test:coverage test/unit/JobeetTest.php lib/Jobeet.class.php
+>
+>テストによってどの行がカバーされないのか知りたければ、`--detailed`オプションを渡します:
+>
+>     $ php symfony test:coverage --detailed test/unit/JobeetTest.php lib/Jobeet.class.php
+>
+>コードで十分なユニットテストが行われたことをタスクが示すとき、単にそれぞれの行が実行されたことを意味し、すべての~エッジケース~がテストされたわけではないことに注意してください。
+>
+>情報を集めるために`test:coverage`は`~XDebug~`に依存するので、最初にインストールして有効にする必要があります。
+
+新しい機能のためにテストを追加する
+---------------------------------
+
+空の文字列用のslugは空の文字列です。
+これもテスト可能で、動作します。 
+しかしURLに空文字列を含めるのはよい考えではありません。
+空の文字列の場合に"n-a"の文字列を返すように`slugify()`メソッドを変更してみましょう。
+
+テストを最初に書き、メソッドを更新するもしくは逆のことができます。
+
+本当に好みの問題ですが、最初にテストを書くことでコードが計画したものを本当に実装するものに自信を得られます:
+
+    [php]
+    $t->is(Jobeet::slugify(''), 'n-a',
+     ➥ '::slugify() converts the empty string to n-a');
+
+テストを最初に書いて機能を実装する、この開発の方法論は[~テスト駆動開発~(TDD)](http://en.wikipedia.org/wiki/Test_Driven_Development)として知られます。
+
+テストを立ち上げると、赤いバーが表示されなければなりません。
+そうでなければ、機能はすでに実装されたもしくはテストする予定であったものがテストされないことを意味します。
+`Jobeet`クラスを編集して冒頭部分に次の条件を追加します:
+
+    [php]
+    // lib/Jobeet.class.php
+    static public function slugify($text)
+    {
+      if (empty($text))
+      {
+        return 'n-a';
+      }
+
+      // ...
+    }
+
+テストは期待どおりに通らなければならず、そして緑のバーを享受できますがテスト計画を更新することを覚えている場合のみです。 
+そうでなければ、6つのテストが計画され追加の1つが実行されたことを伝えるメッセージが表示されます。
+テストの計画を最新に保つのは重要です。
+テストスクリプトが初期に止まる場合に情報の提供が続けられるからです。
+
+バグが原因でテストを追加する
+---------------------------
+
+時間が経過しユーザーの1人がうっとおしい~バグ|デバッグ~を報告する場合を考えてみましょう: 
+求人リンクが404エラーページを指し示します。
+調査の後で、これらの求人が空の会社、職、所在地のスラッグなどを持つなど理由を見つけます。
+
+どのように可能なのか？
+
+データベースのレコードを調べますがカラムは完全に空ではありません。
+しばらく考え、当たりをつけて、原因を見つけます。
+文字列が非ASCII文字のみを含む場合、`slugify()`メソッドはこれを空の文字列に変換します。
+幸いにして原因を発見したら、`Jobeet`クラスを開き問題をすぐに直します。
+しかしこれはわるいアイディアです。
+最初に、テストを追加しましょう:
+
+    [php]
+    $t->is(Jobeet::slugify(' - '), 'n-a',
+     ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
+
+![slugify()のバグ](http://www.symfony-project.org/images/jobeet/1_3/08/slugify_bug.png)
+
+テストがパスしないことをチェックした後で、`Jobeet`クラスを編集して空の文字列のチェックをメソッドの末端に移動させます:
+
+    [php]
+    static public function slugify($text)
+    {
+      // ...
+
+      if (empty($text))
+      {
+        return 'n-a';
+      }
+
+      return $text;
+    }
+
+これで、他のすべてのテストのように、新しいテストは通ります。
+100％のカバレッジにもかかわらず`slugify()`にはバグがありました。
+
+テストを書く際にすべての~エッジケース~を考えることはできませんが、それで十分です。
+しかしエッジケースが見つかったら、コードを修正する前にテストを書く必要があります。
+これは時間の経過と共にあなたのコードがよくなることも意味するので、これは常によいことです。
+
+>**SIDEBAR**
+>よりよい`slugify`メソッドに向けて
+>
+>ご存じかもしれませんがsymfonyはフランス人によって作られました。
+>ですので"アクセント"を持つフランス語の単語テストを追加してみましょう:
+>
+>     [php]
+>     $t->is(Jobeet::slugify('Développeur Web'), 'developpeur-web', '::slugify() removes accents');
+>
+>テストは失敗しなければなりません。
+>`é`を`e`に置き換える代わりに`slugify()`メソッドはこれをダッシュ(`-`)に置き換えます。
+>これは*~翻字~*と呼ばれる難しい問題です。
+>幸いにして"~iconv|iconvライブラリ~"がインストールされていれば、私たちの代わりにこの関数がこれらの作業を代行してくれます。
+>`slugify`メソッドのコードを次の内容で置き換えます:
+>
+>     [php]
+>     // http://php.vrana.cz/vytvoreni-pratelskeho-url.phpより派生
+>     static public function slugify($text)
+>     {
+>       // 文字ではないもしくは数値を-に置き換える
+>       $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+>
+>       // トリムする
+>       $text = trim($text, '-');
+>
+>       // 翻字する
+>       if (function_exists('iconv'))
+>       {
+>         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+>       }
+>
+>       // 小文字に変換する
+>       $text = strtolower($text);
+>
+>       // 望まない文字を取り除く
+>       $text = preg_replace('~[^-\w]+~', '', $text);
+>
+>       if (empty($text))
+>       {
+>         return 'n-a';
+>       }
+>
+>       return $text;
+>     }
+>
+>~UTF-8~エンコーディングですべてのPHPファイルを保存することを覚えてください。
+>これはsymfonyのデフォルト~エンコーディング~で、翻字を行うために"iconv"によって使われます。
+>
+>"iconv"が利用可能な場合のみテストを実行するようにテストファイルを変更します:
+>
+>     [php]
+>     if (function_exists('iconv'))
+>     {
+>       $t->is(Jobeet::slugify('Développeur Web'), 'developpeur-web', '::slugify() removes accents');
+>     }
+>     else
+>     {
+>       $t->skip('::slugify() removes accents - iconv not installed');
+>     }
+
+##ORM##ユニットテスト
+---------------------
+
+### データベース接続
+
+##ORM##モデルクラスのユニットテストはデータベースの接続が必要なので少し複雑です。
+すでにデータベースの接続は開発環境にありますが、テスト専用のデータベースを作るのはよい習慣です。
+
+1日目において、アプリケーションのコンフィギュレーションを変更する方法として~環境~(environment)を紹介しました。
+デフォルトでは、symfonyのすべてのテストは`test`環境で実行されるので、`test`環境用に異なるデータベースを設定しましょう:
+
+<propel>
+    $ php symfony configure:database --env=test
+     ➥ "mysql:host=localhost;dbname=jobeet_test" root mYsEcret
+</propel>
+<doctrine>
+    $ php symfony configure:database --name=doctrine
+     ➥ --class=sfDoctrineDatabase --env=test
+     ➥ "mysql:host=localhost;dbname=jobeet_test" root mYsEcret
+</doctrine>
+
+データベースのコンフィギュレーションは`test`環境専用であることを`env`オプションはタスクに伝えます。
+3日目でこのタスクを使ったときは、`env`オプションを渡しませんでした。
+コンフィギュレーションはすべての環境に適用されます。
+
+>**NOTE**
+>ご興味があれば、`config/databases.yml`設定ファイルを開きsymfonyが環境によってコンフィギュレーションを変更する作業をどのように簡単にしているのかご覧ください。
+
+データベースのコンフィギュレーションが終わったので、`propel:insert-sql`タスクを使ってブートストラップします:
+
+    $ mysqladmin -uroot -pmYsEcret create jobeet_test
+    $ php symfony propel:insert-sql --env=test
+
+>**SIDEBAR**
+>symfonyのコンフィギュレーションの原則
+>
+>4日目において、設定ファイルから由来する設定は異なるレベルで定義できることを見ました。
+>
+>これらの~設定~は環境にも依存します。
+>これはこれまで使ってきたたいていの設定ファイル: `databases.yml`、~`app.yml`~、~`view.yml`~と~`settings.yml`~にあてはまります。
+>これらのファイルにおいて、メインキーの値は環境で、`all`キーはすべての環境用の設定を示します:
+>
+>     [yml]
+>     # config/databases.yml
+>     dev:
+>       propel:
+>         class: sfPropelDatabase
+<propel>
+>         param:
+>           classname: DebugPDO
+</propel>
+>
+>     test:
+>       propel:
+>         class: sfPropelDatabase
+>         param:
+<propel>
+>           classname: DebugPDO
+</propel>
+>           dsn: 'mysql:host=localhost;dbname=jobeet_test'
+>
+>     all:
+>       propel:
+>         class: sfPropelDatabase
+>         param:
+>           dsn: 'mysql:host=localhost;dbname=jobeet'
+>           username: root
+>           password: null
+
+### テストデータ
+
+テスト用に専用のデータベースを用意したので、テストデータをロードする方法が必要です。
+3日目において、`propel:data-load`~タスク~の使い方を学んだとおり、テストに関しては、データベースを既知の状態するためにテストを実行するたびにデータをリロードする必要があります。
+
+<propel>
+`propel:data-load`タスクは内部でデータをロードするために[`sfPropelData`](http://www.symfony-project.org/api/1_3/sfPropelData)クラスを使います:
+
+    [php]
+    $loader = new sfPropelData();
+    $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+`doctrine:data-load`タスクは内部でデータをロードするために`Doctrine::loadData()`メソッドを使います:
+
+    [php]
+    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+>**NOTE**
+>~`sfConfig`~オブジェクトはプロジェクトのサブディレクトリのフルパスを得るために使われます。
+>これを使うことでデフォルトのディレクトリ構造をカスタマイズできます。
+
+`loadData()`メソッドは最初の引数としてディレクトリもしくはファイルを受け取ります。
+このメソッドはディレクトリかつ/もしくはファイルの配列も受け取ることができます。
+
+`data/fixtures/`ディレクトリで初期データをすでに作成しました。
+テストに関して、~フィクスチャ~を`test/fixtures/`ディレクトリに設置します。
+これらのフィクスチャは##ORM##のユニットテストと機能テストに使われます。
+
+では、`data/fixtures/`から`test/fixtures/`ディレクトリにファイルをコピーします。
+
+### `JobeetJob`をテストする
+
+`JobeetJob`モデルクラス用にユニットテストを作りましょう。
+
+##ORM##ユニットテストは同じコードで始まるので、`bootstrap/`テストディレクトリで次の内容を持つ`##ORM##.php`ファイルを作ります:
+
+    [php]
+    // test/bootstrap/##ORM##.php
+    include(dirname(__FILE__).'/unit.php');
+
+    $configuration =
+     ➥ ProjectConfiguration::getApplicationConfiguration(
+     ➥ 'frontend', 'test', true);
+
+    new sfDatabaseManager($configuration);
+
+<propel>
+    $loader = new sfPropelData();
+    $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+スクリプトは自分自身をよく説明しています:
+
+  * フロントコントローラーに関しては、`test`環境用にコンフィギュレーションオブジェクトを初期化します:
+
+        [php]
+        $configuration =
+         ➥ ProjectConfiguration::getApplicationConfiguration(
+         ➥ 'frontend', 'test', true);
+
+  * データベースマネージャーを作ります。`databases.yml`設定ファイルをロードしてこれは##ORM##接続を初期化します。
+
+        [php]
+        new sfDatabaseManager($configuration);
+
+<propel>
+  * `sfPropelData`を使ってテストデータをロードします:
+
+        [php]
+        $loader = new sfPropelData();
+        $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+  * `Doctrine::loadData()`を使ってテストデータをロードします:
+
+        [php]
+        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+>**NOTE**
+>実行するSQLステートメントが存在する場合、##ORM##はデータベースに接続します。
+
+すべての準備ができたので、`JobeetJob`クラスのテストを始めることができます。
+
+最初に、`test/unit/model`の`JobeetJobTest.php`ファイルを作る必要があります:
+
+    [php]
+    // test/unit/model/JobeetJobTest.php
+    include(dirname(__FILE__).'/../../bootstrap/##ORM##.php');
+
+    $t = new lime_test(1);
+
+それから、`getCompanySlug()`メソッドでテストを追加して始めましょう:
+
+    [php]
+    $t->comment('->getCompanySlug()');
+<propel>
+    $job = JobeetJobPeer::doSelectOne(new Criteria());
+</propel>
+<doctrine>
+    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+</doctrine>
+    $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
+
+任意の場所ですでにテストしているので、スラッグが正しくなければ、`getCompanySlug()`メソッドのみをテストします。
+
+`save()`メソッド用のテストを書くことは微妙に難しいです:
+
+    [php]
+    $t->comment('->save()');
+    $job = create_job();
+    $job->save();
+    $expiresAt = date('Y-m-d', time() + 86400
+      ➥ * sfConfig::get('app_active_days'));
+<propel>
+    $t->is($job->getExpiresAt('Y-m-d'), $expiresAt, '->save() updates expires_at if not set');
+</propel>
+<doctrine>
+    $t->is($job->getDateTimeObject('expires_at')->format('Y-m-d'), $expiresAt, '->save() updates expires_at if not set');
+</doctrine>
+
+    $job = create_job(array('expires_at' => '2008-08-08'));
+    $job->save();
+<propel>
+    $t->is($job->getExpiresAt('Y-m-d'), '2008-08-08', '->save() does not update expires_at if set');
+</propel>
+<doctrine>
+    $t->is($job->getDateTimeObject('expires_at')->format('Y-m-d'), '2008-08-08', '->save() does not update expires_at if set');
+</doctrine>
+
+    function create_job($defaults = array())
+    {
+      static $category = null;
+
+      if (is_null($category))
+      {
+<propel>
+        $category = JobeetCategoryPeer::doSelectOne(new Criteria());
+</propel>
+<doctrine>
+        $category = Doctrine::getTable('JobeetCategory')
+          ->createQuery()
+          ->limit(1)
+          ->fetchOne();
+</doctrine>
+      }
+
+      $job = new JobeetJob();
+      $job->fromArray(array_merge(array(
+        'category_id'  => $category->getId(),
+        'company'      => 'Sensio Labs',
+        'position'     => 'Senior Tester',
+        'location'     => 'Paris, France',
+        'description'  => 'Testing is fun',
+        'how_to_apply' => 'Send e-Mail',
+        'email'        => 'job@example.com',
+        'token'        => rand(1111, 9999),
+        'is_activated' => true,
+<propel>
+      ), $defaults), BasePeer::TYPE_FIELDNAME);
+</propel>
+<doctrine>
+      ), $defaults));
+</doctrine>
+
+      return $job;
+    }
+
+>**NOTE**
+>テストを追加するたびに、`lime_test`コンストラクターメソッドで 期待されるテストの数(プレーン)を更新することを忘れないでください。
+>`JobeetJobTest`ファイルに関しては、`1`から`3`に変更する必要があります。
+
+### 他の##ORM##クラスをテストする
+
+他のすべての##ORM##クラス用のテストを追加できます。
+ユニットテストの過程に慣れつつあるので、とても簡単です。
+
+~ユニットテストハーネス~
+------------------------
+
+`test:unit`~タスク~はプロジェクトのすべてのユニットテストを起動するためにも使うことができます:
+
+    $ php symfony test:unit
+
+タスクはそれぞれのテストファイルがパスするか失敗するかを出力します:
+
+![ユニットテストのハーネス](http://www.symfony-project.org/images/jobeet/1_3/08/test_harness.png)
+
+>**TIP**
+>`test:unit`タスクがファイルの"~あいまいなステータス~"を返すとき、これは終わる前に停止したスクリプトを示します。
+>テストファイルを単独で実行することで正確なエラーメッセージが表示されます。
+
+また明日
+--------
+
+アプリケーションのテストが簡単でなくても、今日のチュートリアルをスキップしたい方がいらっしゃるのはわかります。
+取り組んでいただけば幸いです。
+
+symfonyを受け入れることはsymfonyが提供するすばらしい機能すべてを学ぶことだけでなく、これはsymfonyが提唱する開発の~哲学~と~ベストプラクティス~でもあります。
+テストはそれらの1つです。遅かれ早かれ、ユニットテストは時間の節約になります。
+これらはコードへの確固たる信頼と恐れずにリファクタリングできる自由を与えてくれます。
+ユニットテストは何かが壊れているときに警告してくれる安全な護衛です。 
+symfonyフレームワーク自身には9000以上のテストがあります。
+
+明日は`job`と`category`モジュール用の機能テストを書きます。
+それまでは、Jobeetモデルクラス用のユニットテストをさらに書くための時間をとってください。
+
+__ORM__

@@ -1,0 +1,726 @@
+Giorno 1: Impostare il progetto
+===============================
+
+Introduzione
+------------
+
+Il framework symfony è un progetto Open Source da più di quattro anni ed è diventato
+uno dei framework PHP più popolari grazie alle molte feature offerte ed all'ottima
+documentazione. Questa tradizione è iniziata molto presto.
+
+Questo libro descrive la creazione di una applicazione web passo-passo con il framework
+symfony dalle specifiche alla implementazione. E' rivolto
+ai principianti che vogliono imparare symfony, capire come funziona e
+anche conoscere le migliori pratiche di sviluppo web.
+
+L'applicazione da creare avrebbe potuto essere un'altra volta il motore di un blog. Ma
+vogliamo usare symfony per un progetto utile. L'obiettivo è dimostrare che
+symfony può essere usato per sviluppare applicazioni professionali con stile e
+sforzo minimo.
+
+Manterremo il contenuto del progetto segreto per un altro giorno, dal momento
+che abbiamo abbastanza cose da fare oggi. Tuttavia diamogli un nome: **Jobeet**.
+
+Ogni capitolo/giorno è pensato per durare circa un'ora e rappresenta
+l'occasione per imparare ad utilizzare symfony realizzando un sito web reale
+dall'inizio alla fine. Ogni giorno verranno aggiunte nuove feature all'applicazione, e
+sfrutteremo queste novità per introdurvi alle nuove funzionalità di symfony ed alle
+good practice dello sviluppo web con symfony.
+
+Questo tutorial è differente
+----------------------------
+
+Ripensate agli albori del PHP4.
+Ah, la [Belle Epoque](http://it.wikipedia.org/wiki/Belle_Époque)! PHP era uno dei primi
+linguaggi dedicati al web ed uno dei più semplici.
+
+Ma con la veloce evoluzione delle tecnologie web gli sviluppatori devono tenersi al passo
+con le ultime best practice e con gli strumenti più aggiornati. La via migliore per 
+imparare è sicuramente quella di leggere blog, tutorial e libri. Ne abbiamo letti molti,
+siano scritti per PHP, Python, Java, Ruby, o Perl e molti di essi perdono di vista l'obiettivo
+finale quando l'autore inizia a dare porzioni di codice come esempio.
+
+Probabilmente siete abituati a leggere avvisi come questi:
+
+  "Per un'applicazione reale non dimenticare di aggiungere la validazione ed una corretta gestione degli errori."
+
+oppure
+
+  "La sicurezza è lasciata al lettore come esercizio."
+
+o ancora
+
+  "Avrete sicuramente bisogno di scrivere dei test."
+
+Cosa? Queste cose sono attività serie. Sono forse le parti più importanti di ogni
+altra parte di codice. E come lettori venite abbandonati. Senza tenere conto di queste
+cose gli esempi sono molto meno utili visto che non possono essere usati come punto 
+di partenza. Questo è male! Perché? Perché la sicurezza, la validazione, la gestione 
+degli errori e i test (solo per dirne alcuni) permettono di scrivere codice corretto.
+
+In questo libro non vedrete mai frasi come quelle viste in precedenza: scriveremo test, 
+gestiremo errori, valideremo il codice e state pure certi che realizzeremo un'applicazione
+sicura. Questo è dovuto al fatto che symfony si occupa del codice ma anche di
+utilizzare le best practice e di mostrare come sviluppare in modo professionale
+applicazioni per il mondo enterprise. Saremo in grado di fornire questo lusso perché
+symfony mette a disposizione tutti gli strumenti necessari per affrontare questi
+aspetti in modo semplice e senza scrivere troppo codice.
+
+Validazione, gestione degli errori, sicurezza e test sono argomenti di prima classe 
+in symfony perciò non servirà molto tempo per spiegarli. Questa è solo una delle molteplici
+ragioni per usare un framework per realizzare progetti reali.
+
+Tutto il codice che leggerete in questo libro potrete usarlo per un progetto reale.
+Vi incoraggiamo a riutilizzare parti del codice o a "rubare" intere porzioni.
+
+
+Cosa facciamo oggi?
+-------------------
+
+Oggi non scriveremo codice PHP. Ma anche senza scrivere una sola riga di codice
+inizierete a capire i benefici derivanti dall'utilizzo di un framework come symfony
+già dall'avvio di un nuovo progetto.
+
+L'obiettivo di questo capitolo è quello di impostare l'ambiente di sviluppo e visualizzare
+una pagina dell'applicazione in un browser web. Questo include l'installazione
+di symfony, la creazione dell'applicazione e la configurazione del server web.
+
+Prerequisiti
+------------
+
+Prima di installare symfony è necessario verificare che nel computer sia
+tutto correttamente installato e configurato. E' meglio prendere ora il tempo
+necessario per seguire tutti i passi richiesti per la verifica della
+configurazione, perché può fare risparmiare tempo in seguito.
+
+### Software di terze parti
+
+Prima di tutto, è necessario verificare che il computer disponga di un ambiente
+di lavoro per lo sviluppo web. Come minimo, è necessario un server web (Apache,
+per esempio), un database (MySQL, PostgreSQL, SQLite, o qualunque database
+compatibile con [PDO](http://www.php.net/PDO)) e PHP 5.2.4 o superiore.
+
+### Interfaccia a linea di comando
+
+Il framework symfony contiene uno strumento a linea di comando che aiuta ad
+automatizzare gran parte del lavoro. Gli utenti dei sistemi operativi della
+famiglia Unix, si sentiranno a casa. Se si utilizza un sistema Windows,
+funzionerà lo stesso, si dovrà solo digitare alcuni comandi nel prompt
+di `cmd`.
+
+>**Note**
+>I comandi della shell Unix possono tornare utili in un sistema Windows.
+>Se vi può essere utile usare comandi come `tar`, `gzip` o `grep` su Windows
+>potete installare [Cygwin](http://cygwin.com/). La documentazione ufficiale
+>è un po' frammentata, quindi una buona guida all'installazione la potete trovare
+>[qui](http://www.soe.ucsc.edu/~you/notes/cygwin-install.html).
+>I più avventurosi potrebbero voler provare
+>[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx)
+>di Microsoft.
+
+### ~Configurazione del PHP~
+
+Essendo che le configurazioni del PHP possono variare da un sistema operativo ad
+un'altro, è necessario controllare che la configurazione del PHP soddisfi i
+requisiti minimi di symfony.
+
+Per prima cosa, assicurarsi di avere installato come minimo il PHP 5.2.4.
+utilizzando la funzione di PHP `phpinfo()`, oppure lanciando `php -v` nella linea di
+comando. Siate consapevoli del fatto che su alcune configurazioni, è possibile avere
+due diverse versioni di PHP installati: uno per la riga di comando e un altro per il web.
+
+Dopo, scaricare lo script di symfony per verificare la configurazione, al seguente
+indirizzo web:
+
+    http://sf-to.org/1.3/check.php
+
+Salvare lo script da qualche parte sotto la cartella principale del server web.
+
+Lanciare lo script per verificare la confgurazione dalla linea di comando:
+
+    $ php check_configuration.php
+
+Se c'è un problema con la configurazione del PHP, l'output del comando
+darà suggerimenti su cosa correggere e come risolvere il problema.
+
+Si dovrebbe anche eseguire la verifica da un browser e mettere a posto i problemi
+che si potrebbero verificare. Questo perché PHP può avere distinti file di
+cofigurazione `php.ini` per questi due ambienti, con impostazioni diverse.
+   
+
+>**NOTE**
+>Successivamente non dimenticarsi di rimuovere il file dalla cartella web.
+
+~Installazione~ di symfony
+--------------------------
+
+Prima di tutto creare una cartella per contenere i file relativi al progetto Jobeet:
+
+    $ mkdir -p /home/sfprojects/jobeet
+    $ cd /home/sfprojects/jobeet
+
+Su Windows:
+
+    c:\> mkdir c:\development\sfprojects\jobeet
+    c:\> cd c:\development\sfprojects\jobeet
+
+>**Note**: agli utenti Windows raccomandiamo di eseguire symfony e di creare il nuovo
+>progetto in un percorso che non contenga spazi.
+>Evitate l'utilizzo della cartella `Documents and Settings`, stessa cosa per qualsiasi
+>sotto-cartella di `My Documents`.
+
+
+-
+
+>**TIP**
+>Se si cra la cartella per il progetto di symfony sotto la cartella principale del
+>server web, non c'è bisogno di configurare il web server.  Naturalmente, per
+>l'ambiente di produzione, si consiglia vivamente di configurare il server web,
+>come spiegato nella sezione di configurazione del server web.
+
+###  Scegliere la versione di symfony
+
+Ora bisogna installare symfony. Essendo che il framework symfony ha diverse versioni
+stabili, bisogna scegliere quella che si vuole installare leggendo la
+[pagina di installazione](http://www.symfony-project.org/installation)
+sul sito web di symfony.
+
+Questo libro assume che si voglia installare symfony 1.3 o symfony 1.4.
+	
+### Scegliere dove installare symfony
+
+È possibile installare symfony globalmente sulla vostra macchina, o incorporarlo
+in ogni vostro progetto. Il secondo metodo è quello consigliato, in questo modo
+i progetti saranno totalmente indipendenti gli uni dagli altri. Aggiornare
+l'installazione locale di symfony non crea problemi imprevisti sui progetti.
+Ciò significa che si potranno avere progetti su diverse versioni di symfony,
+con la possibilità aggiornarli singolarmente, in base alla necessità.
+
+Utilizzando una delle migliori prassi, molte persone installano i file del
+framework di symfony nella cartella `lib/vendor` del progetto. Quindi iniziamo
+con il creare questa cartella:
+
+    $ mkdir -p lib/vendor
+
+### L'installazione di symfony
+
+#### Installazione da un archivio
+
+Il modo più semplice per installare symfony è quello di scaricare l'archivio
+per la versione scelta dal sito web di symfony. Andare nella pagina con le
+installazioni e prendere la versione scelta, ad esempio
+[symfony 1.4](http://www.symfony-project.org/installation/1_4).
+
+Dentro la sezione "**Source Download**" troverete l'archivio nei
+formati `.tgz` e `.zip`. Scaricate il pacchetto, salvandolo nella
+cartella `lib/vendor/` appena creata, ed estraetene i file:
+
+    $ cd lib/vendor
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
+
+Su Windows l'estrazione dal file zip può essere fatta con explorer. Dopo che avrete
+rinominato la cartella con `symfony`, dovreste vedere una cartella di nome
+`c:\development\sfprojects\jobeet\lib\vendor\symfony`.
+
+#### Installazione da Subversion (raccomandata)
+
+Se si usa Subversion, è meglio utilizzare la proprietà `svn:externals`
+per incorporare symfony nella cartella `lib/vendor/` del progetto:
+
+    $ svn pe svn:externals lib/vendor/
+
+>**NOTE**
+>Importare il progetto in un nuovo repository Subversion è spiegato alla fine
+>di questo capitolo.
+
+Se tutto procede bene, questo comando lancierà il vostro editor preferito per
+dare la possibilità di configurare le fonti esterne di Subversion.
+
+>**TIP**
+>Su Windows, si possono usare programmi come [TortoiseSVN](http://tortoisesvn.net/)
+>per fare ogni cosa relativa all'svn, senza la necessità di usare la console.
+
+I conservatori possono legare il progetto a una versione specifica (un tag
+Subversion):
+
+    symfony http://svn.symfony-project.com/tags/RELEASE_1_3_0
+
+Ogni volta che esce una nuova versione (annunciata nel [blog](http://www.symfony-project.org/blog/))
+di symfony, sarà necessario cambiare l'URL alla nuova versione.
+
+I temerari possono utilizzare il branch (ramo) 1.4:
+
+    symfony http://svn.symfony-project.com/branches/1.4/
+
+Utilizzando il ramo, il progetto beneficia automaticamente delle correzzioni dei
+bug ogni volta che si esegue un aggiornamento con `svn update`.
+
+#### Verificare l'installazione
+
+Ora che symfony è installato, verificare che ogni cosa funzioni correttamente,
+utilizzando la linea di comando di symfony per visualizzare
+la versione (attenzione all'uso della `V` maiuscola):
+
+    $ cd ../..
+    $ php lib/vendor/symfony/data/bin/symfony -V
+
+Su Windows:
+
+    c:\> cd ..\..
+    c:\> php lib\vendor\symfony\data\bin\symfony -V
+
+L'opzione `-V` mostra anche il percorso alla cartella dove è installato symfony,
+che è memorizzato in `config/ProjectConfiguration.class.php`.
+Se il percorso a symfony è assoluto (il che non dovrebbe essere se sono state
+eseguite le istruzioni di cui sopra), cambiarlo come segue, in modo da avere una
+migliore portabilità:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
+
+In questo modo, si può spostare la cartella del progetto dove si vuole sulla propria macchina o
+su un'altra e tutto funzionerà senza dover fare modifiche.
+
+>**TIP**
+>Se siete curiosi e volete sapere cosa può fare per voi questa linea di comando,
+>digitate `symfony` per ottenere la lista di tutte le opzioni e dei task disponibili:
+>
+>    $ php lib/vendor/symfony/data/bin/symfony
+>
+>Su Windows:
+>
+>    c:\> php lib\vendor\symfony\data\bin\symfony
+>
+>La linea di comando di symfony è il miglior amico dello sviluppatore. Mette
+>a disposizione molti strumenti che aumentano la vostra produttività per le 
+>attività giornaliere come la pulizia della cache, la generazione del codice
+>e molto altro.
+
+Inizializzazione del progetto
+-----------------------------
+
+In symfony, **~applicazioni~** che condividono lo stesso modello di dati sono raggruppate
+in **progetti**. Per il progetto Jobeet avremo due diverse applicazioni:
+il ~frontend~ ed il ~backend~.
+
+### Creazione del progetto
+
+Dalla cartella `jobeet`, eseguire il task `generate:project` per creare il progetto
+symfony:
+
+<doctrine> 
+    $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
+</doctrine> 
+<propel> 
+ 	$ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel 
+</propel> 
+
+Su Windows:
+
+    c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
+
+Il task `generate:project` genera la ~struttura~ di default delle cartelle ed i file
+necessari per il progetto stesso:
+
+ | Cartella  | Descrizione
+ | --------- | -------------------------------------
+ | apps/     | Contiene le applicazioni del progetto
+ | cache/    | I file di cache del progetto
+ | config/   | I file di configurazione del progetto
+ | lib/      | Le librerie e le classi del progetto
+ | log/      | I file di log del framework
+ | plugins/  | I plugin installati
+ | test/     | Test unitari e funzionali
+ | web/      | La cartella principale del web (leggi sotto)
+
+>**NOTE**
+>Perché symfony genera così tanti file? Uno dei maggiori benefici di usare
+>un framework full-stack è quello di standardizzare ciò che sviluppate. Grazie
+>alla struttura di default di symfony dei file e delle cartelle, ogni sviluppatore
+>con un minimo di conoscenza di symfony potrà occuparsi della manutenzione di
+>un progetto symfony.
+>In pochi minuti sarà in grado di tuffarsi nel codice risolvendo bug e aggiungendo
+>nuove feature.
+
+Il task `generate:project` ha inoltre creato un collegamento `symfony` nella 
+cartella principale del progetto Jobeet per dover scrivere meno caratteri ogni volta
+che si utilizza un task.
+
+Quindi, da ora in poi, invece che usare l'intero percorso per l'eseguibile di symfony 
+useremo la scorciatoia `symfony`.
+
+### Creazione dell'applicazione
+
+Ora create l'applicazione frontend usando il task `generate:app`:
+
+    $ php symfony generate:app frontend
+
+>**TIP**
+>Visto che il file symfony è eseguibile, gli utenti Unix possono sostituire tutte le 
+>occorrenze di '`php symfony`' con '`./symfony`' da qui in avanti.
+>
+>Su Windows potete copiare il file 'symfony.bat' nel vostro progetto ed utilizzare
+>'`symfony`' invece che '`php symfony`':
+>
+>     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
+
+Basandosi sul nome dell'applicazione, il task `generate:app` ha creato
+la struttura di default delle cartelle necessarie ad un'applicazione
+nella cartella `apps/frontend`:
+
+ | Cartella   | Descrizione
+ | ---------- | ------------------------------------------
+ | config/    | I file di configurazione dell'applicazione
+ | lib/       | Le librerie e le classi dell'applicazione
+ | modules/   | Il codice dell'applicazione (MVC)
+ | templates/ | I file globali dei template
+
+>**TIP**
+>Tutti i comandi `symfony` devono essere eseguiti nella cartella principale
+>a meno che non sia specificato diversamente.
+
+-
+
+>**SIDEBAR**
+>Sicurezza
+>
+>Per impostazione predefinita, il task `generate:app`, ha messo in sicurezza l'applicazione 
+>dalle due principali vulnerabilità riscontrate sul web. È esatto, symfony
+>predispone in modo automatico le misure di ~sicurezza~ al posto nostro.
+>
+>Per prevenire attacchi ~XSS~, è stata abilitata l'escapizzazione dell'output; per prevenire
+>attacchi ~CSRF~, sono stati generati dei token di sessione nascosti e casuali.
+>
+>Naturalmente, è possibile personalizzare queste impostazioni grazie alle seguenti *opzioni*:
+>
+>  * `--escaping-strategy`: Abilita l'escape dell'output per prevenire gli attacchi ~XSS~
+>  * `--csrf-secret`: Abilita i token di sessione per i form per prevenire gli attacchi ~CSRF~
+>
+>Se non sapete nulla a proposito di 
+>[XSS](http://it.wikipedia.org/wiki/Cross-site_scripting) o
+>[CSRF](http://it.wikipedia.org/wiki/CSRF), prendetevi il tempo per sapere qualcosa in più
+>su queste vulnerabilità della sicurezza.
+
+### Permessi per le cartelle
+
+Prima di tentare di accedere al progetto appena creato, è necessario impostare
+i permessi di scrittura sulle cartelle della `cache/` e dei `log/` ai livelli
+appropriati, in modo che il server web possa scriverci:
+
+    $ chmod 777 cache/ log/
+
+>**SIDEBAR**
+>Suggerimenti per chi utilizza uno strumento di SCM
+>
+>symfony scrive sempre e solo su due cartelle di un progetto,
+>`cache/` e `log/`. Il contenuto di queste cartelle dovrebbe essere ignorato dal
+>programm SCM utilizzato (ad esempio se si utilizza Subversion, configurando la
+>proprietà `svn:ignore`).
+
+Setup del ~server Web~: la via brutta
+-------------------------------------
+
+Nella sezione precedente è stata creata una cartella per contenere il progetto
+Jobeet. Se l'avete creata da qualche parte dentro la ~cartella principale web~
+del vostro server web, siete in grado di accedere al progetto da un browser web.
+
+Chiaramente, visto che non è richiesta nessuna configurazione, il tutto è stato 
+molto rapido da realizzare, tuttavia provate ad accedere al file `config/databases.yml`
+nel vostro browser per capire quante pericolose conseguenze può implicare 
+questo modo di agire dettato dalla pigrizia. Se l'utente sa che il sito
+è stato sviluppato con symfony, avrà accesso a molti file sensibili.
+
+**Mai e poi mai utilizzare un setup di questo tipo su un server in produzione** e
+leggete la prossima sezione per imparare a configurare correttamente il 
+vostro web server.
+
+Setup del server Web: la via sicura
+-----------------------------------
+
+Una buona pratica web è quella di mettere nella cartella principale web solamente i
+file che devono essere utilizzati da un browser web come fogli di stile, JavaScript
+e immagini. Come da default vi suggeriamo di salvare questi file dentro la sotto-cartella
+`web` del progetto symfony.
+
+Se date uno sguardo a questa cartella troverete alcune sotto-cartelle per i ~materiali~
+web (`css/` e `images/`) e i due file dei front controller. Questi sono gli unici
+file PHP che necessitano di essere nella cartella principale web. Tutti gli altri
+file PHP possono essere nascosti al browser, questa è una buona idea in
+termini di ~sicurezza~.
+
+### Configurazione del Web Server
+
+Ora è il momento di modificare la configurazione di ~Apache~ per rendere il nuovo
+progetto accessibile a tutti.
+
+Trovate e aprite il file di configurazione `httpd.conf` e aggiungete le seguenti 
+configurazioni alla fine:
+
+    # Assicuratevi di avere questa linea una sola volta nel file
+    NameVirtualHost 127.0.0.1:8080
+
+    # Questa è la configurazione per Jobeet
+    Listen 127.0.0.1:8080
+
+    <VirtualHost 127.0.0.1:8080>
+      DocumentRoot "/home/sfprojects/jobeet/web"
+      DirectoryIndex index.php
+      <Directory "/home/sfprojects/jobeet/web">
+        AllowOverride All
+        Allow from All
+      </Directory>
+
+      Alias /sf /home/sfprojects/jobeet/lib/vendor/symfony/data/web/sf
+      <Directory "/home/sfprojects/jobeet/lib/vendor/symfony/data/web/sf">
+        AllowOverride All
+        Allow from All
+      </Directory>
+    </VirtualHost>
+
+>**NOTE**: L'~alias~ `/sf` permette l'accesso alle immagini ed ai javascript
+>necessari per la corretta visualizzazione delle ~pagine di default di symfony~
+>e della web debug toolbar.
+>
+>Su ~Windows~ dovrete sostituire la riga dell'`Alias` con qualcosa come:
+>
+>     Alias /sf "c:\development\symfony\data\web\sf"
+>
+> e `/home/sfprojects/jobeet/web` dovrà essere rimpiazzata con:
+>
+>     c:\development\sfprojects\jobeet\web
+
+Questa configurazione mette Apache in ascolto sulla porta `8080` della vostra macchina, 
+quindi il sito Jobeet sarà accessibile dal seguente URL:
+
+    http://~localhost~:8080/
+
+Potete cambiare `8080` con qualsiasi numero, preferendo comunque numeri maggiori
+di `1024`, visto che non richiedono privilegi amministrativi.
+
+>**SIDEBAR**
+>Configurare un ~nome a dominio~ dedicato per Jobeet
+>
+>Se avete i privilegi amministrativi sulla macchina su cui lavorate, è meglio
+>impostare dei ~virtual host~ piuttosto che aggiungere una nuova porta ogni volta
+>che iniziate un nuovo progetto. Invece che selezionare una porta ed aggiungere
+>una direttiva di tipo `Listen`, scegliete un nome a dominio ed aggiungete
+>una direttiva di tipo `ServerName`:
+>
+>     # Questa è la configurazione per Jobeet
+>     <VirtualHost 127.0.0.1:80>
+>       ServerName jobeet.localhost
+>       <!-- stessa configurazione di prima -->
+>     </VirtualHost>
+>
+>Il nome a dominio `jobeet.localhost`, usato nella configurazione di Apache,
+>deve essere dichiarato localmente. Se utilizzate un sistema Linux,
+>questo va fatto nel file `/etc/hosts`. Se usate Windows XP,
+>questo file è posizionato nella cartella `C:\WINDOWS\system32\drivers\etc\`.
+>
+>Aggiungi la seguente riga:
+>
+>     127.0.0.1         jobeet.localhost
+
+### Provare la nuova configurazione
+
+Riavviate Apache e verificate di avere accesso alla nuova applicazione aprendo
+il browser e digitando `http://localhost:8080/index.php/` o 
+`http://jobeet.localhost/index.php/` in base alla configurazione di Apache 
+selezionata nella sezione precedente.
+
+![Congratulazioni](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+
+>**TIP**
+>Se avete il modulo di Apache `~mod_rewrite~` installato, potete
+>rimuovere la parte /index.php/ da tutti gli URL. Questo è possibile
+>grazie alle regole di riscrittura configurate nel file `web/.~htaccess~`.
+
+Potete anche provare ad accedere all'applicazione nell'ambiente di sviluppo.
+Digitate il seguente URL:
+
+    http://jobeet.localhost/frontend_dev.php/
+
+La web debug toolbar dovrebbe apparire nell'angolo in alto a destra, incluse delle piccole icone
+a riprova del fatto che la configurazione dell'alias `sf/` è corretta.
+
+![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_3/01/web_debug_toolbar.png)
+
+>**Note**
+>La configurazioe è leggermente differente se si vuole lanciare symfony su un server IIS in
+>un ambiente Windows. Le modalità di configurazione si trovano sul
+>[relativo tutorial](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
+
+Gli ~ambienti~
+--------------
+
+Se date un'occhiata alla cartella `web/`, troverete due file PHP:
+`index.php` e `frontend_dev.php`. Questi file sono chiamati **front
+controller**: tutte le richieste all'applicazione vengono fatte tramite loro. Ma perché
+abbiamo due front controller se abbiamo definito una sola applicazione?
+
+Entrambi i file puntano alla stessa applicazione, ma per diversi ambienti.
+Mentre sviluppate un'applicazione, escluso quando si sviluppa direttamente 
+sul server di produzione, avete bisogno di diversi **ambienti**:
+
+  * L'**ambiente di sviluppo**: È l'ambiente usato dai **web
+    developer** quando lavorano sull'applicazione, per aggiungere nuove feature,
+    risolvere bug, ...
+    
+  * L'**ambiente di test**: Quest'ambiente è utilizzato per testare in modo
+    automatico l'applicazione.
+    
+  * L'**ambiente di staging**: Quest'ambiente è utilizzato dal **cliente**
+    per testare l'applicazione e riportare bug o feature mancanti.
+    
+  * L'**ambiente di produzione**: Questo è l'ambiente con cui gli **utenti finali**
+    interagiscono.
+
+Cosa rende un ambiente unico? Nell'ambiente di sviluppo ad esempio,
+l'applicazione necessita di scrivere nei log tutti i dettagli di una
+richiesta per rendere più semplice il debug, ma il sistema di cache deve
+essere disabilitato, per fare in modo che tutte le modifiche apportate al
+codice siano subito disponibili. Quindi l'ambiente di sviluppo deve essere
+ottimizzato per lo sviluppatore. L'esempio migliore è quando viene
+sollevata un'eccezione. Per aiutare lo sviluppatore nel debug del problema,
+symfony mostra l'eccezione con tutte le informazioni disponibili sulla
+richiesta corrente all'interno del browser:
+
+![Un'eccezione nell'ambiente di sviluppo](http://www.symfony-project.org/images/jobeet/1_3/01/exception_dev.png)
+
+Ma nell'ambiente di produzione la cache deve essere abilitata, e
+l'applicazione deve mostrare messaggi di errore personalizzati,
+piuttosto che semplici eccezioni. In questo modo l'ambiente di
+produzione deve essere ottimizzato per le performance e per
+la user experience dell'utente finale.
+
+![Un'eccezione nell'ambiente di produzione](http://www.symfony-project.org/images/jobeet/1_3/01/exception_prod.png)
+
+>**TIP**
+>Se aprite i file dei front controller, potrete notare che il contenuto
+>è lo stesso, tranne per l'impostazione dell'ambiente:
+>
+>    [php]
+>    // web/index.php
+>    <?php
+>
+>    require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
+>
+>    $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
+>    sfContext::createInstance($configuration)->dispatch();
+
+La barra degli strumenti web per il debug è un ottimo esempio dell'utilizzo
+di un ambiente. La ~web debug toolbar~ è presente su tutte le pagine nell'ambiente
+di sviluppo e dà accesso a molte informazioni, cliccando sulle varie linguette: la
+configurazione attuale dell'applicazione, i log per la richiesta corrente,
+i comandi SQL eseguiti sul database, informazioni sulla memoria e sui tempi.
+
+~Subversion~
+------------
+
+È una buona abitudine usare un sistema di controllo delle versioni mentre
+si sviluppa un'applicazione web. Usare un sistema di controllo delle
+versioni permette di:
+
+ * lavorare in sicurezza
+ * tornare ad una versione precedente se qualche modifica blocca qualcosa
+ * permette a più persone di lavorare in modo efficiente sul progetto
+ * avere accesso a tutte le versioni successive dell'applicazione
+
+In questa sezione descriveremo come usare [Subversion](http://subversion.tigris.org/) 
+con symfony. Se usate un altro strumento per il sistema di controllo
+delle versioni, dovrebbe essere abbastanza semplice adattare quanto
+descritto per Subversion.
+
+Ipotizziamo che si disponga già di un accesso ad un server Subversion
+e di un accesso HTTP ad esso.
+
+>**TIP**
+>Se non avete un server Subversion a disposizione, potete creare un
+>repository in modo gratuito su [Google Code](http://code.google.com/hosting/)
+>o anche cercare "free subversion repository" su Google per avere
+>molte più opzioni.
+
+Innanzitutto, create un nuovo repository per il progetto `jobeet`:
+
+    $ svnadmin create /path/to/jobeet/repository
+
+Sulla vostra macchina, create la struttura di base delle cartelle:
+    
+    $ svn mkdir -m "creata struttura la base delle cartelle"
+    ➥ http://svn.example.com/jobeet/trunk
+    ➥ http://svn.example.com/jobeet/tags
+    ➥ http://svn.example.com/jobeet/branches
+
+Ed eseguite il checkout della cartella vuota `trunk/`:
+
+    $ cd /home/sfprojects/jobeet
+    $ svn co http://svn.example.com/jobeet/trunk/ .
+
+Poi rimuovete il contenuto delle cartelle `cache/` e `log/`, visto che
+non intendiamo inserirle nel repository.
+
+    $ rm -rf cache/* log/*
+
+Ora assicuratevi di impostare i giusti permessi di scrittura sulle cartelle `cache`
+e `log`, per fare in modo che il web server possa scriverci dentro:
+
+    $ chmod 777 cache/ log/
+
+Ora, importate tutti i file e le cartelle:
+
+    $ svn add *
+
+Siccome non avremo mai bisogno di eseguire il commit per file delle cartelle 
+`cache/` e `/log`, potete specificare delle opzioni di "ignore":
+
+    $ svn propedit svn:ignore cache
+
+L'editor di testo di default configurato per SVN dovrebbe aprirsi. Subversion deve ignorare
+tutti i contenuti delle seguenti cartelle:
+
+    *
+
+Salvare e uscire. Abbiamo finito.
+
+Ripetere la procedura per la cartella `log/`:
+
+    $ svn propedit svn:ignore log
+
+E inserite:
+
+    *
+
+Infine, eseguire la prima importazione:
+
+    $ svn import -m "prima importazione" .
+    ➥ http://svn.example.com/jobeet/trunk
+
+>**TIP**
+>Gli utenti ~Windows~ possono usare il client [TortoiseSVN](http://tortoisesvn.tigris.org/)
+per gestire i propri repository subversion.
+
+A domani
+--------
+
+Bene, il tempo per oggi è finito! Anche se non abbiamo ancora iniziato a parlare
+di symfony abbiamo impostato un solido ambiente di sviluppo, abbiamo parlato di 
+alcune best practice riguardanti lo sviluppo web e siamo pronti per iniziare a scrivere
+codice.
+
+Domani sveleremo ciò che l'applicazione farà e parleremo dei requisiti che
+dovremo implementare per Jobeet.
+
+>**Note**
+>Se volete guardare il codice di oggi, o di un altro giorno, il sorgente
+>è disponibile su base giornaliera nel repository ufficiale SVN di Jobeet
+>(`http://svn.jobeet.org/##ORM_LOWER##/`).
+>
+>Ad esempio, si può ottenere il codice di oggi eseguendo il checkout
+>del tag `release_day_01`:
+>
+>       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_01/ jobeet/
+
+__ORM__

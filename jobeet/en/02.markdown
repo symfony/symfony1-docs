@@ -1,0 +1,185 @@
+Day 2: The Project
+==================
+
+We have not written a single line of PHP yet, but yesterday, we setup the
+environment, created an empty symfony project, and made sure we started with
+some good security defaults. If you followed along, you have been looking at
+your screen delightedly since then, as it displays the beautiful default
+symfony page for new applications.
+
+![Congratulation page](http://www.symfony-project.org/images/jobeet/1_3/01/congratulations.png)
+
+But you want more. You want to learn all the nitty gritty details of symfony
+application development. So, let's resume our trip to symfony development
+nirvana.
+
+Today, we will take the time to describe the requirements of the Jobeet
+project with some basic ~mockup|Mockup~s.
+
+The Project Pitch
+-----------------
+
+Everybody is talking about the crisis nowadays. Unemployment is rising again.
+
+I know, symfony developers are not really concerned and that's why you want
+to learn symfony in the first place. But it is also quite difficult to find
+good symfony developers.
+
+Where can you find a symfony developer? Where can you advertise your symfony
+skills?
+
+You need to find a good job board. Monster you say? Think again. You need a
+focused job board. One where you can find the best people, the experts. One
+where it is easy, fast, and fun to look for a job, or to propose one.
+
+Search no more. Jobeet is the place. **Jobeet is Open-Source job board
+software** that only does one thing, but does it well. It is easy to use,
+customize, extend, and embed into your website. It supports multiple languages
+out of the box, and of course uses the latest Web 2.0 technologies to enhance
+user experience. It also provides feeds and an API to interact with it
+programatically.
+
+Does it already exist? As as user, you will find a lot of job boards like
+Jobeet on the Internet. But try to find one which is Open-Source, and as
+feature-rich as what we propose here.
+
+>**NOTE**
+>If you are really looking for a symfony job or want to hire a symfony
+>developer, you can go to the [symfonians](http://symfonians.net/)
+>website.
+
+The Project ~User Stories~
+--------------------------
+
+Before diving into the code head-first, let's describe the project a bit more.
+The following sections describe the features we want to implement in the first
+version/iteration of the project with some simple stories.
+
+The Jobeet website has four kind of users:
+
+ * **admin**: He owns the website and has the magic power
+ * **user**: He visits the website to look for a job
+ * **poster**: He visits the website to post a job
+ * **affiliate**: He re-publishes some jobs on his website
+
+The project has two applications: the **frontend** (stories F1 to F7, below),
+where the users interact with the website, and the **backend** (stories B1 to
+B3), where admins manage the website.
+
+The backend application is secured and requires credentials to access.
+
+### Story F1: On the homepage, the user sees the latest active jobs
+
+When a user comes to the Jobeet website, he sees a list of active jobs.
+The jobs are sorted by category and then by publication date (newer jobs
+first). For each job, only the location, the position, and the company are
+displayed.
+
+For each category, the list only shows the first 10 jobs and a link allows
+to list all the jobs for a given category (*Story F2*).
+
+On the homepage, the user can refine the job list (*Story F3*), or post a new
+job (*Story F5*).
+
+![Homepage Mockup](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_homepage.png)
+
+### Story F2: A user can ask for all the jobs in a given category
+
+When a user clicks on a category name or on a "more jobs" link on the
+homepage, he sees all the jobs for this category sorted by date.
+
+The list is paginated with 20 jobs per page.
+
+![The Category Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_category.png)
+
+### Story F3: A user refines the list with some keywords
+
+The user can enter some keywords to refine his search. Keywords can be words
+found in the location, the position, the category, or the company fields.
+
+### Story F4: A user clicks on a job to see more detailed information
+
+The user can select a job from the list to see more detailed information.
+
+![The Job Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_job.png)
+
+### Story F5: A user posts a job
+
+A user can post a job. A job is made of several pieces of information:
+
+  * Company
+  * Type (full-time, part-time, or freelance)
+  * Logo (optional)
+  * URL (optional)
+  * Position
+  * Location
+  * Category (the user chooses in a list of possible categories)
+  * Job description (URLs and emails are automatically linked)
+  * How to apply (URLs and emails are automatically linked)
+  * Public (whether the job can also be published on affiliate websites)
+  * Email (email of the poster)
+
+There is no need to create an account to post a job.
+
+The process is straightforward with only two steps: first, the user fills in
+the form with all the needed information to describe the job, then he
+validates the information by previewing the final job page.
+
+Even if the user has no account, a job can be modified afterwards thanks to a
+specific URL (protected by a token given to the user when the job is created).
+
+Each job post is online for 30 days (this is configurable by the admin - see
+*Story B2*). A user can come back to re-activate or extend the validity of the
+job ad for an extra 30 days but only when the job expires in less than 5 days.
+
+![The Job Creation Page](http://www.symfony-project.org/images/jobeet/1_3/02/mockup_post.png)
+
+### Story F6: A user applies to become an affiliate
+
+A user needs to apply to become an affiliate and be authorized to use the
+Jobeet API. To apply, he must give the following information:
+
+  * Name
+  * Email
+  * Website URL
+
+The affiliate account must be activated by the admin (*Story B3*). Once
+activated, the affiliate receives a token to use with the API via email.
+
+When applying, the affiliate can also choose to get jobs from a sub-set of the
+available categories.
+
+### Story F7: An affiliate retrieves the current active job list
+
+An affiliate can retrieve the current job list by calling the API with his
+affiliate token. The list can be returned in the XML, JSON or YAML format.
+
+The list contains the public information available for a job.
+
+The affiliate can also limit the number of jobs to be returned, and refine
+his query by specifying a category.
+
+### Story B1: An admin configures the website
+
+An admin can edit the categories available on the website.
+
+### Story B2: An admin manages the jobs
+
+An admin can edit and remove any posted job.
+
+### Story B3: An admin manages the affiliates
+
+The admin can create or edit affiliates. He is responsible for activating
+an affiliate and can also disable one.
+
+When the admin activates a new affiliate, the system creates a unique token
+to be used by the affiliate.
+
+See you Tomorrow
+----------------
+
+As for any web development, you never start coding the first day. You need
+to gather the requirements first and work on a mockup design. That's what we
+have done today.
+
+__ORM__
