@@ -49,25 +49,27 @@ Installing and Configuring the Zend Framework
 ---------------------------------------------
 
 The Zend Lucene ~library|Third-Party Libraries~ is part of the Zend Framework.
-As we won't need everything from the Zend Framework, we will only install the
-needed parts into the `lib/vendor/` directory, alongside the symfony framework
-itself.
+We will only install the Zend Framework into the `lib/vendor/` directory,
+alongside the symfony framework itself.
 
 First, download the
 [Zend Framework](http://framework.zend.com/download/overview) and un-archive
 the files so that you have a `lib/vendor/Zend/` directory.
 
 >**NOTE**
->The following explanations have been tested with the 1.8.0 version of
+>The following explanations have been tested with the 1.9 version of
 >the Zend Framework.
 
-You can clean up the directory by removing everything but the following files
-and directories:
+-
 
-  * `Exception.php`
-  * `Loader/`
-  * `Loader.php`
-  * `Search/`
+>**TIP**
+>You can clean up the directory by removing everything but the following files
+>and directories:
+>
+>  * `Exception.php`
+>  * `Loader/`
+>  * `Autoloader.php`
+>  * `Search/`
 
 Then, add the following code to the `ProjectConfiguration` class to provide a
 simple way to register the Zend autoloader:
