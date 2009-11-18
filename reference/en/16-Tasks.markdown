@@ -586,10 +586,13 @@ migrations rather than inserting the Doctrine SQL.
 
 The `doctrine::build-db` task creates database for current model:
 
-    $ php symfony doctrine:build-db [--application[="..."]] [--env="..."] 
+    $ php symfony doctrine:build-db [--application[="..."]] [--env="..."] [database1] ... [databaseN]
 
-*Alias(es)*: `doctrine-build-db`
+*Alias(es)*: `doctrine-build-db, doctrine:create-db`
 
+| Argument | Default | Description
+| -------- | ------- | -----------
+| `database` | `-` | A specific database
 
 
 | Option (Shortcut) | Default | Description
@@ -598,17 +601,20 @@ The `doctrine::build-db` task creates database for current model:
 | `--env` | `dev` | The environment
 
 
-The `doctrine:build-db` task creates the database:
+The `doctrine:build-db` task creates one or more databases based on
+configuration in `config/databases.yml`:
 
     ./symfony doctrine:build-db
 
-The task read connection information in `config/doctrine/databases.yml`:
+You can specify what databases to create by providing their names:
+
+    ./symfony doctrine:build-db slave1 slave2
 
 ### ~`doctrine::build-filters`~
 
 The `doctrine::build-filters` task creates filter form classes for the current model:
 
-    $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] 
+    $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--generator-class="..."] 
 
 
 
@@ -620,6 +626,7 @@ The `doctrine::build-filters` task creates filter form classes for the current m
 | `--env` | `dev` | The environment
 | `--model-dir-name` | `model` | The model dir name
 | `--filter-dir-name` | `filter` | The filter form dir name
+| `--generator-class` | `sfDoctrineFormFilterGenerator` | The generator class
 
 
 The `doctrine:build-filters` task creates form filter classes from the schema:
@@ -636,7 +643,7 @@ It only replaces base classes generated in `lib/doctrine/filter/base`.
 
 The `doctrine::build-forms` task creates form classes for the current model:
 
-    $ php symfony doctrine:build-forms [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--form-dir-name="..."] 
+    $ php symfony doctrine:build-forms [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--generator-class="..."] 
 
 
 
@@ -648,6 +655,7 @@ The `doctrine::build-forms` task creates form classes for the current model:
 | `--env` | `dev` | The environment
 | `--model-dir-name` | `model` | The model dir name
 | `--form-dir-name` | `form` | The form dir name
+| `--generator-class` | `sfDoctrineFormGenerator` | The generator class
 
 
 The `doctrine:build-forms` task creates form classes from the schema:
@@ -899,10 +907,13 @@ You can show the SQL that would be executed by using the `--dir` option:
 
 The `doctrine::drop-db` task drops database for current model:
 
-    $ php symfony doctrine:drop-db [--application[="..."]] [--env="..."] [--no-confirmation] 
+    $ php symfony doctrine:drop-db [--application[="..."]] [--env="..."] [--no-confirmation] [database1] ... [databaseN]
 
 *Alias(es)*: `doctrine-drop-db`
 
+| Argument | Default | Description
+| -------- | ------- | -----------
+| `database` | `-` | A specific database
 
 
 | Option (Shortcut) | Default | Description
@@ -912,11 +923,19 @@ The `doctrine::drop-db` task drops database for current model:
 | `--no-confirmation` | `-` | Whether to force dropping of the database
 
 
-The `doctrine:drop-db` task drops the database:
+The `doctrine:drop-db` task drops one or more databases based on
+configuration in `config/databases.yml`:
 
     ./symfony doctrine:drop-db
 
-The task read connection information in `config/databases.yml`:
+You will be prompted for confirmation before any databases are dropped unless
+you provide the `--no-confirmation` option:
+
+    ./symfony doctrine:drop-db --no-confirmation
+
+You can specify what databases to drop by providing their names:
+
+    ./symfony doctrine:drop-db slave1 slave2
 
 ### ~`doctrine::generate-admin`~
 
@@ -1273,13 +1292,13 @@ The task is equivalent to:
 
 The `generate::app` task generates a new application:
 
-    $ php symfony generate:app [--escaping-strategy="..."] [--csrf-secret="..."] application
+    $ php symfony generate:app [--escaping-strategy="..."] [--csrf-secret="..."] app
 
 *Alias(es)*: `init-app`
 
 | Argument | Default | Description
 | -------- | ------- | -----------
-| `application` | `-` | The application name
+| `app` | `-` | The application name
 
 
 | Option (Shortcut) | Default | Description
@@ -1947,21 +1966,21 @@ environment:
 
 The `project::optimize` task optimizes a project for better performance:
 
-    $ php symfony project:optimize  application [environment]
+    $ php symfony project:optimize  application [env]
 
 
 
 | Argument | Default | Description
 | -------- | ------- | -----------
 | `application` | `-` | The application name
-| `environment` | `prod` | The environment name
+| `env` | `prod` | The environment name
 
 
 
 
 The `project:optimize` optimizes a project for better performance:
 
-    ./symfony project:optimizes frontend prod
+    ./symfony project:optimize frontend prod
 
 This task should only be used on a production server. Don't forget to re-run
 the task each time the project changes.
@@ -2188,7 +2207,7 @@ option:
 
 The `propel::build-filters` task creates filter form classes for the current model:
 
-    $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] 
+    $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] [--generator-class="..."] 
 
 
 
@@ -2200,6 +2219,7 @@ The `propel::build-filters` task creates filter form classes for the current mod
 | `--model-dir-name` | `model` | The model dir name
 | `--filter-dir-name` | `filter` | The filter form dir name
 | `--application` | `1` | The application name
+| `--generator-class` | `sfPropelFormFilterGenerator` | The generator class
 
 
 The `propel:build-filters` task creates filter form classes from the schema:
@@ -2223,7 +2243,7 @@ It only replaces base classes generated in `lib/filter/base`.
 
 The `propel::build-forms` task creates form classes for the current model:
 
-    $ php symfony propel:build-forms [--connection="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--application[="..."]] 
+    $ php symfony propel:build-forms [--connection="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--application[="..."]] [--generator-class="..."] 
 
 
 
@@ -2235,6 +2255,7 @@ The `propel::build-forms` task creates form classes for the current model:
 | `--model-dir-name` | `model` | The model dir name
 | `--form-dir-name` | `form` | The form dir name
 | `--application` | `1` | The application name
+| `--generator-class` | `sfPropelFormGenerator` | The generator class
 
 
 The `propel:build-forms` task creates form classes from the schema:
