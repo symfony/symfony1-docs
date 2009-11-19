@@ -61,9 +61,8 @@ The `stylesheets` entry defines an array of stylesheets to use for the current
 view.
 
 >**NOTE**
->The inclusion of the stylesheets defined in `view.yml` can be done either
->manually with the `include_stylesheets()` helper, or automatically with
->the [common filter](#chapter_12_common).
+>The inclusion of the stylesheets defined in `view.yml` can be done with the
+>`include_stylesheets()` helper.
 
 If many files are defined, symfony will include them in the same order as the
 definition:
@@ -99,9 +98,8 @@ The `javascripts` entry defines an array of JavaScript files to use for the
 current view.
 
 >**NOTE**
->The inclusion of the JavaScript files defined in `view.yml` can be done
->either manually with the `include_javascripts()` helper, or automatically
->with the [common filter](#chapter_12_common).
+>The inclusion of the JavaScript files defined in `view.yml` can be done with the
+>`include_javascripts()` helper.
 
 If many files are defined, symfony will include them in the same order as the
 definition:
