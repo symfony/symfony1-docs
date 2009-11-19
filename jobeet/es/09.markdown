@@ -597,17 +597,6 @@ Acabamos de raspar la superficie de las pruebas funcionales. A partir de ahora, 
 
 Mañana, vamos a hablar de otra gran característica de Symfony: el framework de formularios.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_09`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_09/ jobeet/
->
-
 Feedback
 --------
 

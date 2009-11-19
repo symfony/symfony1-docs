@@ -668,11 +668,6 @@ Eso es todo por hoy. Te lo advertí en la introducción. Hoy, apenas hemos escri
 Si todavía te queda algo de energía, no dudes en leer el código generado para el módulo y el modelo y tratar de entender cómo funciona. Si no, no te preocupes y duerme bien, mañana, vamos a hablar de uno de los paradigmas más utilizados en los frameworks web, el
 [Patrón de Diseño MVC](http://es.wikipedia.org/wiki/Modelo_Vista_Controlador).
 
-Como cualquier otro día, el código escrito hoy está disponible en el repositorio SVN de Jobeet
-Revisa la etiqueta `release_day_03`:
-
-    $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_03/ jobeet/
-
 Feedback
 --------
 

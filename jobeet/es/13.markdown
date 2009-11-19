@@ -566,17 +566,6 @@ Nos vemos mañana
 
 Las clases usuario de Symfony son una buena manera de abstraerse de la gestión de las sesiones PHP. Junto con el sistema de plugins y el plugin `sfGuardPlugin`, hemos sido capaces de asegurar el backend de Jobeet en cuestión de minutos. E incluso hemos añadido una limpia interfaz de administrador para la gestión de nuestros usuarios de forma gratuita, gracias a los módulos proporcionados por el plugin.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_13`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_13/ jobeet/
->
-
 Feedback
 --------
 

@@ -707,14 +707,4 @@ development best practices, and we are ready to start coding.
 Tomorrow, we will reveal what the application will do and talk about the
 requirements we need to implement for Jobeet.
 
->**Note**
->If you want to check the code for today, or for any other day, the code is
->available on a day-to-day basis in the official Jobeet SVN repository
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->For instance, you can get today's code by checking out the
->`release_day_01` tag:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_01/ jobeet/
-
 __ORM__

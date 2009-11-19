@@ -1081,17 +1081,6 @@ En sólo una hora, hemos construído una completa interfaz backend para el proye
 
 Mañana, vamos a ver cómo asegurar esta aplicación con un nombre de usuario y una contraseña. Esta será también la ocasión para hablar de la clase usuario symfony.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_12`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_12/ jobeet/
->
-
 Feedback
 --------
 

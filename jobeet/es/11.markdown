@@ -732,18 +732,6 @@ El framework de formularios de Symfony ofrece mucho más que solo widgets y vali
 
 Nuestro gran tour de características no terminan el día de hoy. Mañana, vamos a crear la aplicación backend para Jobeet. La creación de una interfaz backend es una necesidad para la mayoría de proyectos web, y Jobeet no es diferente. Pero, ¿cómo seremos capaces de desarrollar este tipo de interfaz en tan sólo una hora? Simple, vamos a utilizar el generador de admin de Symfony. Hasta entonces, cuidate.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_11`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_11/ jobeet/
->
-
-
 Feedback
 --------
 

@@ -775,9 +775,4 @@ per il modello e provare a capire come funziona. Altrimenti, non preoccupatevi e
 bene, perché domani parleremo di uno dei paradigmi più usati nei framework per il web, il
 [design pattern MVC](http://it.wikipedia.org/wiki/Model-view-controller).
 
-Come per gli altri giorni, il codice di oggi è disponibile sul
-repository SVN di Jobeet. Basta fare il checkout del tag `release_day_03`:
-
-    $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_03/ jobeet/
-
 __ORM__

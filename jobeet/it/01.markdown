@@ -713,14 +713,4 @@ codice.
 Domani sveleremo ciò che l'applicazione farà e parleremo dei requisiti che
 dovremo implementare per Jobeet.
 
->**Note**
->Se volete guardare il codice di oggi, o di un altro giorno, il sorgente
->è disponibile su base giornaliera nel repository ufficiale SVN di Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Ad esempio, si può ottenere il codice di oggi eseguendo il checkout
->del tag `release_day_01`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_01/ jobeet/
-
 __ORM__

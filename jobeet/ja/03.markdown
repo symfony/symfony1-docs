@@ -678,9 +678,4 @@ PHPコードがないことは、バグが存在しないことも意味する�
 そうでなければ、気にせずによく寝てください。
 明日は、Webフレームワークで最もよく使われるパラダイムの1つである[MVCデザインパターン](http://en.wikipedia.org/wiki/Model-view-controller)について話します。
 
-他の日に関しては、今日のコードはJobeetのSVNリポジトリから入手できます。
-`release_day_03`タグをチェックアウトしてください:
-
-    $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_03/ jobeet/
-
 __ORM__

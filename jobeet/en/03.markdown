@@ -770,9 +770,4 @@ worry and sleep well, as tomorrow, we will talk about one of the most used
 paradigm in web frameworks, the
 [MVC design pattern](http://en.wikipedia.org/wiki/Model-view-controller).
 
-As for any other day, today's code is available on the Jobeet SVN repository.
-Checkout the `release_day_03` tag:
-
-    $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_03/ jobeet/
-
 __ORM__

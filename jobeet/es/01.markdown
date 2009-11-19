@@ -494,17 +494,6 @@ Bien, ¡el tiempo terminó por hoy! Incluso si aún no hemos comenzado a hablar 
 
 Mañana, vamos a revelar lo que hará la aplicación y conversar sobre los requisitos que necesitamos implementar para Jobeet.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_01`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_01/ jobeet/
->
-
 Feedback
 --------
 

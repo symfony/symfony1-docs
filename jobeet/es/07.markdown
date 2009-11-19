@@ -560,17 +560,6 @@ Si trabajaste en tu propia implementación de ayer puedes sentir que no aprendis
 
 Mañana será el comienzo de una nueva semana para Jobeet. Para celebrar, vamos a hablar de un nuevo tema: las Pruebas.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_07`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_07/ jobeet/
->
-
 Feedback
 --------
 

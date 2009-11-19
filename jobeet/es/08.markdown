@@ -580,17 +580,6 @@ Claro, que abarcar symfony es aprender todas las grandes características que el
 Mañana vamos a escribir algunas pruebas funcionales para los módulos `job` y `category`.
 Hasta entonces, toma algo de tiempo para escribir más pruebas unitarias para las clases del modelo de Jobeet.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_08`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_08/ jobeet/
->
-
 Feedback
 --------
 

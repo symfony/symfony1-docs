@@ -525,17 +525,6 @@ Hoy estuvo lleno de una gran cantidad información nueva. Ya has aprendido cómo
 
 Mañana, no introducieremos ningún concepto nuevo, sino más bien pasar tiempo profundizando lo que hemos cubierto hasta ahora.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_05`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_05/ jobeet/
->
-
 Feedback
 --------
 

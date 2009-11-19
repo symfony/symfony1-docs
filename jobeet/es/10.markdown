@@ -885,17 +885,6 @@ El tutorial de hoy esta lleno de una gran cantidad de información, pero esperam
 
 Sé que algunos de ustedes cuentan de que olvidamos algo hoy ... No hemos aplicado ninguna prueba para las nuevas características. Debido a las pruebas es una parte importante del desarrollo de una aplicación, ésta será la primera cosa que haremos mañana.
 
->**Note**
->Si deseas comprobar el código del día de hoy, o de cualquier otro día, el código esta
->disponible día a día en el repositorio SVN oficial de Jobeet
->(`http://svn.jobeet.org/##ORM_LOWER##/`).
->
->Por ejemplo, puedes obtener el código de hoy de la
->etiqueta `release_day_10`:
->
->       $ svn co http://svn.jobeet.org/##ORM_LOWER##/tags/release_day_10/ jobeet/
->
-
 Feedback
 --------
 
