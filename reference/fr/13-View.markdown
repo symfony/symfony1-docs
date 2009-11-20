@@ -62,8 +62,7 @@ actuelle.
 
 >**NOTE**
 >L'inclusion des feuilles de style définies dans `view.yml` peut se faire soit
->manuellement avec le helper `include_stylesheets()`, ou automatiquement avec
->le [filtre common](#chapter_12_common).
+>manuellement avec le helper `include_stylesheets()`.
 
 Si plusieurs fichiers sont définis, symfony va les inclure dans le même ordre que
 la définition :
@@ -100,8 +99,7 @@ la vue actuelle.
 
 >**NOTE**
 >L'inclusion des fichiers Javascript définis dans `view.yml` peut se faire soit
->manuellement avec le helper `include_javascripts()`, ou automatiquement avec
->le [filtre common](#chapter_12_common).
+>manuellement avec le helper `include_javascripts()`.
 
 Si plusieurs fichiers sont définis, symfony va les inclure dans le même ordre que
 la définition :
