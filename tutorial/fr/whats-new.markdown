@@ -8,7 +8,7 @@ et qui veulent apprendre rapidement les nouvelles fonctionnalités de symfony 1.
 Tout d'abord, merci de noter que symfony 1.3/1.4 est compatible avec PHP 5.2.4 ou ultérieur.
 
 Si vous souhaitez mettre à niveau la 1.2, merci de lire le fichier
-[UPGRADE](http://www.symfony-project.org/tutorial/1_3/en/upgrade)
+[UPGRADE](http://www.symfony-project.org/tutorial/1_3/fr/upgrade)
 qui se trouve dans la distribution symfony.
 Vous avez toutes les informations nécessaires pour mettre à niveau
 en toute sécurité vos projets en symfony 1.3/1.4.
