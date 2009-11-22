@@ -14,8 +14,7 @@ excellent moyen pour un débutant d'apprendre symfony, de comprendre comment il 
 aussi de voir, par l'action, les meilleures pratiques de développement web.
 
 Lorsque vous commencez à travailler sur vos projets, vous avez besoin d'un guide de référence.
-When you begin working on your own projects, you need a reference guide. Un
-livre où vous pouvez facilement trouver des réponses à vos questions sous la main.
+Un livre où vous pouvez facilement trouver des réponses à vos questions sous la main.
 Le livre *Symfony Reference Guide* vise à fournir un tel guide. Il agit comme un
 livre complémentaire à *Practical symfony*. Il s'agit d'un livre que vous garder avec
 vous à chaque fois que vous développez avec symfony. Ce livre est le moyen le plus rapide de trouver
