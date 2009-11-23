@@ -19,9 +19,10 @@ There is no upgrade task in symfony 1.4 as this version is the same as symfony
 upgrade to 1.3, and then switch to the 1.4 release.
 
 >**NOTE**
->As the `sfCompat10Plugin` and `sfProtoculousPlugin` have been removed from
->1.4, you must remove them from your configuration classes if you have
->explicitly disabled them.
+>`sfCompat10Plugin` and `sfProtoculousPlugin` have been removed from 1.4. If
+>you are explicitly disabling them in your project's configuration class files,
+>such as `config/ProjectConfiguration.class.php`, you must remove all mention of
+>them from those files.
 
 How to upgrade to symfony 1.3?
 ------------------------------
