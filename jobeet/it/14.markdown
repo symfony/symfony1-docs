@@ -291,7 +291,7 @@ il codice che genera i dati per il feed creando un partial `_list.atom.php`.
 Come per il formato `html` i ~partial|Partial~ sono specifici per il formato:
 
     [php]
-    <!-- apps/frontend/job/templates/_list.atom.php -->
+    <!-- apps/frontend/modules/job/templates/_list.atom.php -->
     <?php use_helper('Text') ?>
 
     <?php foreach ($jobs as $job): ?>
