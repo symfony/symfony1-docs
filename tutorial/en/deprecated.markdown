@@ -143,7 +143,7 @@ in symfony 1.4:
     Propel builder classes have been ported to Propel 1.4's new behaviors
     system
 
-The following classes have been removed in symfony 1.3:
+The following classes have been deprecated in symfony 1.3:
 
   * `sfCommonFilter`: see the "Removal of the common filter" section of the
     UPGRADE_TO_1_3 file for more information about the consequences and how to

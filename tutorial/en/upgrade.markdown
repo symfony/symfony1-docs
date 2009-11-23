@@ -134,10 +134,11 @@ JavaScripts and Stylesheets
 
 ### Removal of the common filter
 
-The `sfCommonFilter` has been removed. This filter used to automatically
-inject the JavaScripts and stylesheets tags into the response content. You now
-need to manually include these assets by explicitly call the
-`include_stylesheets()` and `include_javascripts()` helpers in your layout:
+The `sfCommonFilter` has been deprecated and is not used anymore by default.
+This filter used to automatically inject the JavaScripts and stylesheets tags
+into the response content. You now need to manually include these assets by
+explicitly call the `include_stylesheets()` and `include_javascripts()`
+helpers in your layout:
 
     [php]
     <?php include_javascripts() ?>
@@ -174,6 +175,10 @@ How to upgrade?
     have a `<head>` tag though; and you need to manually upgrade any other
     layout, or any page that does not have a layout but still relies on
     JavaScripts files and/or stylesheets).
+
+>**NOTE**
+>The `sfCommonFilter` class is still bundled with symfony 1.3, and so you can
+>still use it in your `filters.yml` if you need to.
 
 Tasks
 -----
