@@ -835,6 +835,10 @@ placeholder will be replaced with the line number.
 Doctrine Integration
 --------------------
 
+Doctrine has been upgraded to version 1.2. Please visit Doctrine's site for more
+information on their upgrade
+(http://www.doctrine-project.org/documentation/1_2/en).
+
 ### Generating Form Classes
 
 It is now possible to specify additional options for symfony in your Doctrine
