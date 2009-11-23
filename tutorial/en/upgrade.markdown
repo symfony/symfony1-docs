@@ -1,18 +1,30 @@
-Upgrading Projects from 1.2 to 1.3
-==================================
+Upgrading Projects from 1.2 to 1.3/1.4
+======================================
 
-This document describes the changes made in symfony 1.3 and what need
-to be done to upgrade your symfony 1.2 projects.
+This document describes the changes made in symfony 1.3/1.4 and what need to
+be done to upgrade your symfony 1.2 projects.
 
-If you want more detailed information on what has been changed/added in symfony 1.3,
-you can read the [What's new?](http://www.symfony-project.org/tutorial/1_3/en/whats-new) tutorial.
+If you want more detailed information on what has been changed/added in symfony 1.3/1.4,
+you can read the [What's new?](http://www.symfony-project.org/tutorial/1_4/en/whats-new) tutorial.
 
 >**CAUTION**
->symfony 1.3 is compatible with PHP 5.2.4 or later.
+>symfony 1.3/1.4 is compatible with PHP 5.2.4 or later.
 >It might also work with PHP 5.2.0 to 5.2.3 but there is no guarantee.
 
-How to upgrade?
----------------
+Upgrading to symfony 1.4
+------------------------
+
+There is no upgrade task in symfony 1.4 as this version is the same as symfony
+1.3 (minus all the deprecated features). To upgrade to 1.4, you must first
+upgrade to 1.3, and then switch to the 1.4 release.
+
+>**NOTE**
+>As the `sfCompat10Plugin` and `sfProtoculousPlugin` have been removed from
+>1.4, you must remove them from your configuration classes if you have
+>explicitly disabled them.
+
+How to upgrade to symfony 1.3?
+------------------------------
 
 To upgrade a project:
 
