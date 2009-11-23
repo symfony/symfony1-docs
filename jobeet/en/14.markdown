@@ -289,7 +289,7 @@ generates the feed entries by creating a `_list.atom.php` partial. As for the
 `html` format, ~partials|Partial Templates~ are format specific:
 
     [php]
-    <!-- apps/frontend/job/templates/_list.atom.php -->
+    <!-- apps/frontend/modules/job/templates/_list.atom.php -->
     <?php use_helper('Text') ?>
 
     <?php foreach ($jobs as $job): ?>
