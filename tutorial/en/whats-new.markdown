@@ -227,7 +227,15 @@ method.
 ### `sfForm::renderHiddenFields()`
 
 The `->renderHiddenFields()` method now renders hidden fields from embedded
-forms.
+forms. An argument has been added to disable recursion, useful if you render
+embedded forms using a formatter.
+
+    [php]
+    // render all hidden fields, including those from embedded forms
+    echo $form->renderHiddenFields();
+
+    // render hidden fields without recurring
+    echo $form->renderHiddenFields(false)l;
 
 ### `sfFormSymfony`
 
@@ -681,6 +689,22 @@ the `symfony` Propel behavior:
             form: false
             filter: false
 
+### Using a different version of Propel
+
+Using a different version of propel is as easy as setting the
+`sf_propel_runtime_path` and `sf_propel_generator_path` config variables in
+`ProjectConfiguration`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfPropelPlugin');
+
+      sfConfig::set('sf_propel_runtime_path', '/path/to/propel/runtime');
+      sfConfig::set('sf_propel_generator_path', '/path/to/propel/generator');
+    }
+
 Routing
 -------
 
@@ -950,6 +974,13 @@ TextMate.
 This new task will automatically generate complete migration classes for you,
 based on your old and new schemas.
 
+#### Create or drop specific connections
+
+You can now specify database connection names when running `doctrine:build-db`
+and `doctrine:drop-db`:
+
+    $ php symfony doctrine:drop-db master slave1 slave2
+
 ### Date Setters and Getters
 
 We've added two new methods for retrieving Doctrine date or timestamp values as
@@ -997,6 +1028,13 @@ So now the following is possible.
     | 2  | 2         |                | 2009-07-07 18:02:24 | 2009-07-07 18:02:24 |
     +----+-----------+----------------+---------------------+---------------------+
     (2 results)
+
+### Pass query parameters to `doctrine:dql`
+
+The `doctrine:dql` task has also been enhanced to accept query parameters as
+arguments:
+
+    $ php symfony doctrine:dql "FROM Article a WHERE name LIKE ?" John%
 
 ### Debugging queries in functional tests
 
@@ -1097,6 +1135,22 @@ now represented in the doc header of each generated base class. If your IDE
 supports code completion, you should now see these `getFooBar()` and
 `setFooBar()` methods show up on model objects, where `FooBar` is a CamelCased
 field name.
+
+### Using a different version of Doctrine
+
+Using a different version of Doctrine is as easy as setting the
+`sf_doctrine_dir` setting in `ProjectConfiguration`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfDoctrinePlugin');
+
+      sfConfig::set('sf_doctrine_dir', '/path/to/doctrine/lib');
+    }
+
+
 
 Web Debug Toolbar
 -----------------

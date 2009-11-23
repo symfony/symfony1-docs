@@ -159,6 +159,10 @@ removed in symfony 1.4:
     `sfCompat10Plugin`: `DateForm`, `Form`, `ObjectAdmin`, `Object`, and
     `Validation`
 
+Loading helpers from the PHP include path has been deprecated in 1.3 and
+removed in 1.4. Helpers must be located in one of the project, application or
+module `lib/helper/` directories.
+
 Settings
 --------
 
@@ -277,3 +281,9 @@ symfony 1.4.
 The `doc/` directory at the root of a project is not generated anymore, as it
 was not used by symfony itself. And so the related `sf_doc_dir` has also been
 removed.
+
+The `sfDoctrinePlugin_doctrine_lib_path` setting, previously used to specify a
+custom Doctrine lib directory, has been deprecated in 1.3 and removed in 1.4.
+Use the `sf_doctrine_dir` setting instead.
+
+All symfony `Base*` classes generated classes are not marked as `abstract`.
