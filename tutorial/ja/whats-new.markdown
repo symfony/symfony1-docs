@@ -228,7 +228,7 @@ symfony 1.3/1.4のすべての新しいプロジェクトにはFormコンポー�
 DoctrineとPropelのフォームクラスは開発者が扱いやすい`->doUpdateObject()`メソッドを含むようになりました。このメソッドは`->updateObject()`から`->processValues()`ですでに処理された値の配列を受け取ります。
 
 
-### `sfForm::enableLocalCSRFProtection()` and `sfForm::disableLocalCSRFProtection()`
+### `sfForm::enableLocalCSRFProtection()`と`sfForm::disableLocalCSRFProtection()`
 
 `sfForm::enableLocalCSRFProtection()`と`sfForm::disableLocalCSRFProtection()`メソッドを使うとき、あなたのクラスの`configure()`メソッドから簡単にCSRFからの保護機能を設定することができます。
 
@@ -413,7 +413,7 @@ PropelもDoctrineのどちらも使いたくない場合は、`--orm`オプシ�
 
     $ php /path/to/symfony generate:project foo --orm=none
 
-新しい`--installer`オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできるPHPスクリプトを指定することができます。スクリプトはタスク内で実行され、タスクのメソッドで使う事ができます。より利用できるメソッドは次のようなものです。:`installDir()`, `runTask()`, `ask()`, `askConfirmation()`,
+新しい`--installer`オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできるPHPスクリプトを指定することができます。スクリプトはタスク内で実行され、タスクのメソッドで使うことができます。より利用できるメソッドは次のようなものです。:`installDir()`, `runTask()`, `ask()`, `askConfirmation()`,
 `askAndValidate()`, `reloadTasks()`, `enablePlugin()`, and `disablePlugin()`.
 
 より詳細な情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
@@ -428,8 +428,7 @@ PropelもDoctrineのどちらも使いたくない場合は、`--orm`オプシ�
 
 ### `task.test.filter_test_files`
 
-`test:*`タスクはこれらのタスクが実行される前に`task.test.filter_test_files`イベントを通過するようになりました。
-このイベントには`arguments` と `options` パラメーターがあります。
+`test:*`タスクはこれらのタスクが実行される前に`task.test.filter_test_files`イベントを通過するようになりました。このイベントには`arguments`と`options`パラメーターがあります。
 
 ### `sfTask::run()` の強化
 
@@ -453,8 +452,7 @@ PropelもDoctrineのどちらも使いたくない場合は、`--orm`オプシ�
 
 ### `sfBaseTask::setConfiguration()`
 
-PHPから`sfBaseTask`を拡張しているタスクをコールするとき、`->run()`に`--application` と `--env`オプションを渡す必要はもうありません。
-その代わりに、ただ`->setConfiguration()`をコールするだけで直接設定オブジェクトをセットすることができます。
+PHPから`sfBaseTask`を拡張しているタスク呼び出すとき、`->run()`に`--application` と `--env`オプションを渡す必要はもうありません。その代わりに、ただ`->setConfiguration()`を呼び出すだけで直接設定オブジェクトをセットすることができます。
 
     [php]
     $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
@@ -500,9 +498,7 @@ XML出力はIDEのようなサードパーティーにとって大抵の場合�
 
 ### `project:optimize`
 
-このタスクを実行すればアプリケーションのテンプレートファイルの位置をキャッシュすることで実行時のディスクの読み込み回数を減らします。
-このタスクは運用サーバーでのみ使われます。 
-プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
+このタスクを実行すればアプリケーションのテンプレートファイルの位置をキャッシュすることで実行時のディスクの読み込み回数を減らします。このタスクは運用サーバーでのみ使われます。プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
 
     $ php symfony project:optimize frontend
 
@@ -583,8 +579,7 @@ PropelモデルネイティブなビヘイビアをPropelモデルに追加し�
 
 ### デフォルトの要件
 
-デフォルトの必須要件`\d+`は`column`オプションがデフォルトの`id`になっているとき`sfObjectRouteCollection`にだけ適用されるようになりました。
-(`slug`のような)数字でないカラムが指定されているとき代わりの必須要件を用意する必要はないということです。
+デフォルトの必須要件`\d+`は`column`オプションがデフォルトの`id`になっているとき`sfObjectRouteCollection`にだけ適用されるようになりました。(`slug`のような)数字でないカラムが指定されているとき代わりの必須要件を用意する必要はないということです。
 
 ### `sfObjectRouteCollection`オプション
 
@@ -648,8 +643,7 @@ symfony 1.3/1.4で新しく作られたプロジェクトでは、プラグイ�
       }
     }
 
-`plugin:install`タスクはインストールするプラグインを自動的に有効にします(そして`plugin:uninstall`はプラグインを無効にします)。
-Subversion経由でプラグインをインストールする場合、手動で有効にする必要があります。
+`plugin:install`タスクはインストールするプラグインを自動的に有効にします(そして`plugin:uninstall`はプラグインを無効にします)。Subversion経由でプラグインをインストールする場合、手動で有効にする必要があります。
 
 `sfProtoculousPlugin`もしくは`sfCompat10Plugin`のような コアプラグインを使いたい場合、必要なのは対応する`enablePlugins()`ステートメントを`ProjectConfiguration`クラスに追加することだけです。
 
@@ -660,7 +654,7 @@ Subversion経由でプラグインをインストールする場合、手動で�
 
 ### `sfPluginConfiguration::connectTests()`
 
-新しい`setupPlugins()`メソッドでプラグインの設定の`->connectTests()`メソッドをコールすることで`test:*`タスクにプラグインのテストを接続することができます。
+新しい`setupPlugins()`メソッドでプラグインの設定の`->connectTests()`メソッドを呼び出すことで`test:*`タスクにプラグインのテストを接続することができます。
 
     [php]
     class ProjectConfiguration extends sfProjectConfiguration
@@ -677,7 +671,7 @@ Subversion経由でプラグインをインストールする場合、手動で�
 ### `sf_file_link_format`
 
 symfony 1.3/1.4は可能であるときにファイルパスをクリック可能なリンクにフォーマットします(すなわちデバッグ例外のテンプレート)。 
-`sf_file_link_format`はセットされる場合、この目的に使われ、そうでなければ、symfonyはPHP設定の`xdebug.file_link_format`の値を探します。
+`sf_file_link_format`がセットされる場合、この目的に使われ、そうでなければ、symfonyはPHP設定の`xdebug.file_link_format`の値を探します。
 
 たとえば、TextMateでファイルを開きたい場合、次のコードを`settings.yml`に追加します:
 
