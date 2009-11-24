@@ -15,7 +15,7 @@ livello della vista. Questo file di configurazione è attivo solo se  l'impostaz
 Quando un'applicazione viene creata, symfony genera un file predefinito `cache.yml`
 nella cartella dell'applicazione `config/`, che descrive la cache per l'intera
 applicazione (sotto la chiave `default`). Nella modalità predefinita, la cache è
-globalmente assegnata a `off`:
+globalmente assegnata a `false`:
 
     [yml]
     default:
@@ -64,7 +64,7 @@ nel seguente ordine:
 ~`enabled`~
 -----------
 
-*Predefinito*: `off`
+*Predefinito*: `false`
 
 L'impostazione `enabled` abilita o disabilita la cache per l'ambito corrente.
 

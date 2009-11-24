@@ -512,7 +512,7 @@ sono disponibili molte altre opzioni:
 
 >**CAUTION**
 >Questo factory è creato solo se l'impostazione [`cache`](#chapter_04_sub_cache)
->è impostata su `on`.
+>è impostata su `true`.
 
 La maggior parte della configurazione di questo factory è fatta tramite il factory `view_cache`, che
 definisce l'oggetto cache sottostante usato dal gestore cache della vista.
@@ -548,7 +548,7 @@ dipendente dal nome dell'host (valore predefinito: `true`).
 
 >**CAUTION**
 >Questo factory è definito solo se l'impostazione [`cache`](#chapter_04_sub_cache)
->è impostata a `on`.
+>è impostata a `true`.
 
 Il factory `view_cache` definisce una classe cache che deve ereditare da
 `sfCache` (vedere la sezione Cache per maggiori informazioni).
@@ -578,7 +578,7 @@ Il factory `view_cache` definisce una classe cache che deve ereditare da
 
 >**CAUTION**
 >Questo factory è definito solo se l'impostazione [`i18n`](#chapter_04_sub_i18n)
->è impostata a `on`.
+>è impostata a `true`.
 
 ### ~`source`~
 
@@ -588,7 +588,7 @@ L'opzione `source` definisce il tipo di contenitore per le traduzioni.
 
 ### ~`debug`~
 
-L'opzione `debug` imposta la modalità debug. Se impostato a `on`, i messaggi
+L'opzione `debug` imposta la modalità debug. Se impostato a `true`, i messaggi
 non tradotti sono decorati con un prefisso e un suffisso (vedere sotto).
 
 ### ~`untranslated_prefix`~
@@ -743,7 +743,7 @@ quando si usa una classe cache basata sulla memoria (per esempio `sfAPCCache`).
 
 >**CAUTION**
 >Questo factory è sempre definito, ma il logging si verifica soltanto se
->l'impostazione `logging_enabled` è impostata a `on`.
+>l'impostazione `logging_enabled` è impostata a `true`.
 
 ### ~`level`~
 

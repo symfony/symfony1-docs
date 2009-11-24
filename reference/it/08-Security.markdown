@@ -56,7 +56,7 @@ applicazione, autorizza l'accesso a chiunque:
     default:
       is_secure: off
 
-Con l'impostazione della chiave ~`is_secure`~ su `on` nel file dell'applicazione
+Con l'impostazione della chiave ~`is_secure`~ su `true` nel file dell'applicazione
  `security.yml`, l'intera applicazione richiederà l'autenticazione per tutti gli utenti.
 
 >**NOTE**

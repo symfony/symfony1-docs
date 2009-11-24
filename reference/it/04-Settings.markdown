@@ -121,7 +121,7 @@ utilizzare:
 
 ### ~`escaping_strategy`~
 
-*Predefinito*: `on`
+*Predefinito*: `true`
 
 L'impostazione `escaping_strategy` è un valore Booleano che determina se il 
 sub-framework per l'escape dell'output è abilitato o meno. Quando è abilitato
@@ -136,7 +136,7 @@ in uno script Javascript).
 Il sub-framework che si occupa dell'escape dell'output utilizza l'impostazione
 `charset` per il suo compito.
 
-È vivamente consigliato di lasciare il valore predefinito a `on`.
+È vivamente consigliato di lasciare il valore predefinito a `true`.
 
 >**TIP**
 >Queste impostazioni possono essere dichiarate quando si crea un'applicazione 
@@ -225,7 +225,7 @@ riconosciuto da PHP.
 
 ### ~`cache`~
 
-*Predefinito*: `off`
+*Predefinito*: `false`
 
 L'impostazione `cache` abilita o meno la cache dei template.
 
@@ -238,7 +238,7 @@ L'impostazione `cache` abilita o meno la cache dei template.
 
 ### ~`etag`~
 
-*Predefinito*: `on` ad esclusione degli ambienti `dev` e `test`
+*Predefinito*: `true` ad esclusione degli ambienti `dev` e `test`
 
 L'impostazione `etag` abilita e disabilita la generazione automatica degli header 
 HTTP `ETag`. L'ETag generato da symfony è un semplice md5 del contenuto della 
@@ -246,10 +246,10 @@ risposta.
 
 ### ~`i18n`~
 
-*Predefinito*: `off`
+*Predefinito*: `false`
 
 L'impostazione `i18n` è un valore Booleano che abilita e disabilita il 
-sub-framework i18n. Se l'applicazione è internazionalizzata impostarlo a `on`.
+sub-framework i18n. Se l'applicazione è internazionalizzata impostarlo a `true`.
 
 >**TIP**
 >La configurazione generale del sistema i18n va indicata nella sezione 
@@ -271,22 +271,22 @@ per tutti i template (nome del gruppo di helper senza il suffisso `Helper`).
 
 ### ~`no_script_name`~
 
-*Predefinito*: `on` per l'ambiente `prod` della prima applicazione creata,
-`off` per tutte le altre
+*Predefinito*: `true` per l'ambiente `prod` della prima applicazione creata,
+`false` per tutte le altre
 
 L'impostazione `no_script_name` determina il fatto che il nome del front controller
-venga inserito o meno negli URL generati. In modalità predefinita è impostato a `on` dal 
+venga inserito o meno negli URL generati. In modalità predefinita è impostato a `true` dal 
 task `generate:app` per l'ambiente `prod` della prima applicazione creata.
 
 Ovviamente solo un'applicazione e ambiente può avere questa impostazione impostata
-a `on` se tutti i front controller sono nella stessa cartella (`web/`). Se fosse
-necessario avere più di un'applicazione con `no_script_name` impostato a  `on`,
+a `true` se tutti i front controller sono nella stessa cartella (`web/`). Se fosse
+necessario avere più di un'applicazione con `no_script_name` impostato a  `true`,
 è necessario spostare i front controller corrispondenti in una sotto cartella
 della cartella web principale.
 
 ### ~`lazy_cache_key`~
 
-*Predefinito*: `on` per i nuovi progetti, `off` per progetti aggiornati
+*Predefinito*: `true` per i nuovi progetti, `false` per progetti aggiornati
 
 Quando abilitata l'impostazione `lazy_cache_key` ritarda la creazione di una chiave
 cache fino a che non verrà verificato se l'azione o il partial può essere inserito
@@ -311,7 +311,7 @@ segnaposto `%l` sarà sostituito con il numero di linea.
 
 ### ~`logging_enabled`~
 
-*Predefinito*: `on` per tutti gli ambienti escluso `prod`
+*Predefinito*: `true` per tutti gli ambienti escluso `prod`
 
 L'impostazione `logging_enabled` abilita il sub-framework dei log. Impostandola 
 a `false`, si aggira completamente il meccanismo di log e si ottiene un piccolo
@@ -323,7 +323,7 @@ guadagno in termini di prestazioni.
 
 ### ~`web_debug`~
 
-*Predefinito*: `off` per tutti gli ambienti escluso `dev`
+*Predefinito*: `false` per tutti gli ambienti escluso `dev`
 
 L'impostazione `web_debug` abilita la web debug toolbar. La web debug toolbar 
 viene inserita in una pagina quando il content type della risposta è HTML.
@@ -353,30 +353,30 @@ La configurazione predefinita è la più sensibile e non dovrebbe essere modific
 
 ### ~`compressed`~
 
-*Predefinito*: `off`
+*Predefinito*: `false`
 
 L'impostazione `compressed` abilita la compressione nativa di PHP delle risposte.
-Se impostato a `on` symfony utilizzerà [`ob_gzhandler`](http://www.php.net/ob_gzhandler)
+Se impostato a `true` symfony utilizzerà [`ob_gzhandler`](http://www.php.net/ob_gzhandler)
 come funzione di callback per `ob_start()`.
 
-È raccomandabile tenere questo valore a `off` ed utilizzare invece il meccanismo 
+È raccomandabile tenere questo valore a `false` ed utilizzare invece il meccanismo 
 di compressione nativo del web server utilizzato.
 
 ### ~`use_database`~
 
-*Predefinito*: `on`
+*Predefinito*: `true`
 
 L'impostazione `use_database` determina se l'applicazione utilizza o meno un 
 database.
 
 ### ~`check_lock`~
 
-*Predefinito*: `off`
+*Predefinito*: `false`
 
 L'impostazione `check_lock` abilita e disabilita il sistema di lock di un'applicazione
 azionato da alcuni task come `cache:clear` e `project:disable`.
 
-Se impostato a `on` tutte le richieste verso applicazioni disabilitate verranno
+Se impostato a `true` tutte le richieste verso applicazioni disabilitate verranno
 automaticamente redirette alla pagina `lib/exception/data/unavailable.php`
 messa a disposizione dal core di symfony.
 

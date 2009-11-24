@@ -55,7 +55,6 @@ filtri ereditati dal file di configurazione:
     rendering: ~
     security:  ~
     cache:     ~
-    common:    ~
     execution: ~
 
 Per togliere un filtro, occorre disabilitarlo impostando la chiave
@@ -97,7 +96,6 @@ Filtri
  * [`rendering`](#chapter_12_rendering)
  * [`security`](#chapter_12_security)
  * [`cache`](#chapter_12_cache)
- * [`common`](#chapter_12_common)
  * [`execution`](#chapter_12_execution)
 
 `rendering`
@@ -156,23 +154,6 @@ Il filtro `cache` gestisce la cache delle azioni e delle pagine.
 Inoltre si occupa di aggiungere i necessari header HTTP per la
 cache della risposta (`Last-Modified`, `ETag`, `Cache-Control`,
 `Expires`, ...).
-
-`common`
---------
-
-*Configurazione predefinita*:
-
-    [yml]
-    common:
-      class: sfCommonFilter
-
-Il filtro `common` aggiunge i tag per i JavaScript e i fogli di stile
-alla risposta principale, a meno che non siano già stati inclusi.
-
->**TIP**
->Se si usano gli helper `include_stylesheets()` e `include_javascripts()`
->nel layout, si può disabilitare tranquillamente questo filtro e
->beneficiare di un piccolo miglioramento di prestazioni.
 
 `execution`
 -----------

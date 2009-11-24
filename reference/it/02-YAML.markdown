@@ -114,7 +114,6 @@ I valori nulli in YAML possono essere espressi con `null` o `~`.
 
 I booleani in YAML sono espressi con `true` e `false`.
 
-
 ### Date
 
 YAML usa lo standard ISO-8601 per rappresentare le date:

@@ -10,7 +10,7 @@ ad oggetti o per l'ennesimo livello di astrazione del database. Tuttavia,
 questo ha anche un costo; per imparare tutte le caratteristiche disponibili
 e tutte le possibilità di configurazione potrebbe non bastare una giornata.
 
-Il libro [*Symfony in pratica*](http://www.symfony-project.org/jobeet/1_2/Doctrine/it/),
+Il libro [*Symfony in pratica*](http://www.symfony-project.org/jobeet/1_4/Doctrine/it/),
 è un ottimo modo per un principiante di imparare symfony, capire come funziona ed anche
 vedere in azione le pratiche ottimali per lo sviluppo web.
 
