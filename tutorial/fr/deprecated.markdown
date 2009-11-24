@@ -286,4 +286,4 @@ Le paramètre `sfDoctrinePlugin_doctrine_lib_path`, précédemment utilisé pour
 un répertoire lib personnalisé pour Doctrine, a été deprécié en 1.3 et enlevé en 1.4.
 Utilisez le paramètre `sf_doctrine_dir` à la place.
 
-All symfony `Base*` classes generated classes are not marked as `abstract`.
+Toutes les classes `Base*` de symfony ont généré des classes qui ne sont pas marqué comme `abstract`.
