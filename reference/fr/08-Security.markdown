@@ -56,7 +56,7 @@ application, autorise l'accès à n'importe qui :
     default:
       is_secure: false
 
-Par le paramètre ~`is_secure`~ à `true` dans le fichier `security.yml` de
+Quand le paramètre ~`is_secure`~ sera à `true` dans le fichier `security.yml` de
 l'application, l'application entière demandera une authentification pour tous les utilisateurs.
 
 >**NOTE**
