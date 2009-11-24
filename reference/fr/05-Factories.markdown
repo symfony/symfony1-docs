@@ -742,7 +742,7 @@ lorsque vous utilisez une classe de cache basée sur la mémoire (`sfAPCCache` p
 
 >**CAUTION**
 >Ce factory est toujours défini, mais la journalisation se produit que si
->le paramètre `logging_enabled` est à `on`.
+>le paramètre `logging_enabled` est à `true`.
 
 ### ~`level`~
 
