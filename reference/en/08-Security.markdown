@@ -56,7 +56,7 @@ application, authorizes access to anybody:
     default:
       is_secure: false
 
-By setting the ~`is_secure`~ key to `on` in the application `security.yml`
+By setting the ~`is_secure`~ key to `true` in the application `security.yml`
 file, the entire application will require authentication for all users.
 
 >**NOTE**

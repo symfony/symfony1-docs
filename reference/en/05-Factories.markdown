@@ -742,7 +742,7 @@ when using a memory-based cache class (`sfAPCCache` for instance).
 
 >**CAUTION**
 >This factory is always defined, but the logging only occurs if the
->`logging_enabled` setting is set to `on`.
+>`logging_enabled` setting is set to `true`.
 
 ### ~`level`~
 
