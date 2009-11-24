@@ -8,7 +8,7 @@ et qui veulent apprendre rapidement les nouvelles fonctionnalités de symfony 1.
 Tout d'abord, merci de noter que symfony 1.3/1.4 est compatible avec PHP 5.2.4 ou ultérieur.
 
 Si vous souhaitez mettre à niveau la 1.2, merci de lire le fichier
-[UPGRADE](http://www.symfony-project.org/tutorial/1_3/fr/upgrade)
+[UPGRADE](http://www.symfony-project.org/tutorial/1_4/fr/upgrade)
 qui se trouve dans la distribution symfony.
 Vous avez toutes les informations nécessaires pour mettre à niveau
 en toute sécurité vos projets en symfony 1.3/1.4.
@@ -227,7 +227,15 @@ la méthode `->getEmbeddedForm()`.
 ### `sfForm::renderHiddenFields()`
 
 La méthode `->renderHiddenFields()` rend désormais les champs masqués des formulaires
-imbriqués.
+imbriqués. Un argument a été ajouté pour désactiver la récursivité, c'est utile si vous rendez
+des formulaires intégrés utilisant un formateur.
+
+    [php]
+    // Rend tous les champs cachés, y compris ceux des formulaires intégrés
+    echo $form->renderHiddenFields();
+
+    // Rend tous les champs cachés sans récursivité
+    echo $form->renderHiddenFields(false);
 
 ### `sfFormSymfony`
 
@@ -680,6 +688,22 @@ comportement Propel de symfony :
           symfony:
             form: false
             filter: false
+ 
+### Utilisation d'une version différente de Propel
+
+L'utilisation d'une version différente de Propel est facile à paramètrer avec les variables de configuration
+`sf_propel_runtime_path` et `sf_propel_generator_path` dans
+`ProjectConfiguration`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfPropelPlugin');
+
+      sfConfig::set('sf_propel_runtime_path', '/path/to/propel/runtime');
+      sfConfig::set('sf_propel_generator_path', '/path/to/propel/generator');
+    }
 
 Routage
 -------
@@ -810,6 +834,10 @@ réservé `%l` sera remplacé par le numéro de ligne.
 
 Intégration de Doctrine
 --------------------
+
+Doctrine a été mis à jour avec la version 1.2. Visitez, s'il vous plaît, le site de Doctrine pour plus
+d'informations sur leur mise à jour
+(http://www.doctrine-project.org/documentation/1_2/en).
 
 ### Génération des classes de formulaire
 
@@ -950,6 +978,13 @@ TextMate.
 Cette nouvelle tâche va automatiquement générer pour vous les classes d'une migration complète,
 en fonction de vos anciens et nouveaux schémas.
 
+#### Créer ou supprimer des connexions spécifiques
+
+Vous pouvez maintenant spécifiez des connections spécifiques de base de données en lançant `doctrine:build-db`
+et `doctrine:drop-db` :
+
+    $ php symfony doctrine:drop-db master slave1 slave2
+
 ### Setters et Getters pour les dates
 
 Nous avons ajouté deux nouvelles méthodes pour récupérer la valeurs de `date` ou de `timestamp` de Doctrine
@@ -997,6 +1032,13 @@ Maintenant l'exemple suivant est possible.
     | 2  | 2         |                | 2009-07-07 18:02:24 | 2009-07-07 18:02:24 |
     +----+-----------+----------------+---------------------+---------------------+
     (2 results)
+
+### Passer des paramètres de query à `doctrine:dql`
+
+La tâche `doctrine:dql` a aussi été améliorée pour accepter des paramètres de query comme 
+arguments :
+
+    $ php symfony doctrine:dql "FROM Article a WHERE name LIKE ?" John% 
 
 ### Débogage des requêtes dans les tests fonctionnels
 
@@ -1097,6 +1139,22 @@ maintenant représenté dans un entête de doc de chaque classe de base génér�
 supporte la complétion de code, vous devriez maintenant voir ces méthodes `getFooBar()` et
 `setFooBar()` apparaitre en haut des objets du modèle, où FooBar est un nom de champ
 noté en CamelCase.
+ 
+### Utilisation d'une version différente de Doctrine 
+
+L'utilisation d'une version différente de Doctrine est facile à paramètrer avec
+`sf_doctrine_dir` dans `ProjectConfiguration` :
+
+    [php] 
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfDoctrinePlugin');
+
+      sfConfig::set('sf_doctrine_dir', '/path/to/doctrine/lib');
+    }
+
+
 
 La barre d'outil web de débogage
 -----------------
@@ -1203,7 +1261,7 @@ introduit dans symfony 1.2 :
     // symfony 1.2
     $this->redirect(array('sf_route' => 'article_show', 'sf_subject' => $article));
 
-    // symfony 1.3
+    // symfony 1.3/1.4
     $this->redirect('article_show', $article);
 
 Cette amélioration a également été appliquée à `redirectIf()` et `redirectUnless()`.
@@ -1220,7 +1278,7 @@ Les helpers `link_to_if()` et `link_to_unless()` sont maintenant compatibles ave
     // symfony 1.2
     <?php echo link_to_unless($foo, '@article_show?id='.$article->getId()) ?>
 
-    // symfony 1.3
+    // symfony 1.3/1.4
     <?php echo link_to_unless($foo, 'article_show', $article) ?>
 
 Contexte
