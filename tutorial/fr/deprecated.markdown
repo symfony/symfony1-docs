@@ -143,7 +143,7 @@ dans symfony 1.4 :
     de constructeur personnalisé de Propel ont été portés pour le nouveau système de comportement
     de Propel 1.4.
 
-Les classes suivantes ont été supprimées dans Symfony 1.3:
+Les classes suivantes ont été dépréciées dans symfony 1.3:
 
   * `sfCommonFilter` : voir la section "Suppression des filtres communs" du
     fichier UPGRADE_TO_1_3 pour plus d'informations au sujet des conséquences et de
@@ -158,6 +158,10 @@ retirés dans symfony 1.4 :
   * Tous les helpers relatifs au système de formulaires 1.0 fournis par
     le plugin `sfCompat10Plugin` : `DateForm`, `Form`, `ObjectAdmin`, `Object`
     et `Validation`
+
+Le chargement des helpers par le chemin inclus de PHP a été déprécié en 1.3 et
+enlevé en 1.4. Les Helpers doivent être placés dans l'un des répertoires `lib/helper/` du
+projet, de l'application ou du module.
 
 Settings
 --------
@@ -277,3 +281,9 @@ symfony 1.4.
 Le répertoire `doc/` à la racine d'un projet n'est plus généré, car il
 n'est même pas utilisé par symfony. Ainsi, le sf_doc_dir relatif à ce répertoire a été
 également supprimé.
+
+Le paramètre `sfDoctrinePlugin_doctrine_lib_path`, précédemment utilisé pour spécifier
+un répertoire lib personnalisé pour Doctrine, a été deprécié en 1.3 et enlevé en 1.4.
+Utilisez le paramètre `sf_doctrine_dir` à la place.
+
+All symfony `Base*` classes generated classes are not marked as `abstract`.
