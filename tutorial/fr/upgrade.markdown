@@ -1,18 +1,31 @@
-Mise à Jour de Projets 1.2 vers 1.3
-==================================
+Mise à Jour de Projets 1.2 vers 1.3/1.4
+=======================================
 
-Ce document décrit les changements réalisés dans symfony 1.3 et ce 
-qu'il faut accomplir pour mettre à jour vos projets symfony 1.2.
+Ce document décrit les changements réalisés dans symfony 1.3/1.4 et ce que vous avez besoin
+pour accomplir la mise à jour vos projets symfony 1.2.
 
-Si vous souhaitez plus d'informations concernant les ajouts et changements de symfony 1.3,
-vous pouvez consulter le tutoriel [What's new?](http://www.symfony-project.org/tutorial/1_3/fr/whats-new).
+Si vous souhaitez plus d'informations concernant les ajouts et changements de symfony 1.3/1.4,
+vous pouvez consulter le tutoriel [What's new?](http://www.symfony-project.org/tutorial/1_4/fr/whats-new).
 
 >**CAUTION**
->symfony 1.3 est compatible avec PHP 5.2.4 ou ultérieurs.
+>symfony 1.3/1.4 est compatible avec PHP 5.2.4 ou ultérieurs.
 >Il devrait aussi fonctionner pour des versions comprises entre PHP 5.2.0 et 5.2.3 mais ce n'est pas garanti.
 
-Comment mettre à jour ?
------------------------
+Mise à niveau en symfony 1.4
+----------------------------
+
+Il n'y a aucune tâche de mise à jour dans symfony 1.4 car cette version est la même que symfony
+1.3 (moins toutes les caractéristiques dépréciées). Pour mettre à jour en 1.4, vous devez d'abord
+mettre à jour en 1.3 et changer ensuite vers la version 1.4.
+
+>**NOTE**
+>`sfCompat10Plugin` et `sfProtoculousPlugin` ont été enlevés de la 1.4. Si
+>vous les avez explicitement désactivées dans les fichiers de classe de configuration de votre projet,
+>comme `config/ProjectConfiguration.class.php`, vous devez enlever toute mention de ces derniers
+>dans ces fichiers.
+
+Comment mettre à jour en symfony 1.3 ?
+--------------------------------------
 
 Pour mettre à jour un projet:
 
@@ -121,10 +134,11 @@ JavaScripts et Feuilles de Styles
 
 ### Suppression des Filtres Communs
 
-Le filtre `sfCommonFilter` a été supprimé. Il était utilisé pour injecter automatiquement des
-balises de code JavaScripts et des feuilles de styles dans le contenu de la réponse. Vous devez
-désormais inclure manuellement ces ressources en appelant explicitement les helpers
-`include_stylesheets()` et `include_javascripts()` dans votre :
+Le filtre `sfCommonFilter` a été déprécié et il n'est plus utilisé désormais par défaut.
+Il était utilisé pour injecter automatiquement des balises de code JavaScripts et des feuilles de styles
+dans le contenu de la réponse. Vous devez désormais inclure manuellement ces ressources en
+appelant explicitement les helpers `include_stylesheets()` et `include_javascripts()`
+dans votre Layout :
 
     [php]
     <?php include_javascripts() ?>
@@ -162,14 +176,18 @@ Comment mettre à jour ?
     layouts ou pages qui nécessitent des fichiers JavaScripts ou des feuilles de styles
     doivent être mis à jour manuellement).
 
-Tâches Automatiques
--------------------
+>**NOTE** 
+>La classe 'sfCommonFilter' est toujours incluse avec symfony 1.3 et donc vous pouvez
+>toujours l'utiliser dans votre `filters.yml` si vous en avez besoin.
+
+Tâches
+------
 
 Les classes de tâches automatiques suivantes ont été renommées :
 
   symfony 1.2               | symfony 1.3
   ------------------------- | --------------
-  `sfConfigureDatabaseTask` | `sfDoctrineConfigureDatabaseTask` or `sfPropelConfigureDatabaseTask`
+  `sfConfigureDatabaseTask` | `sfDoctrineConfigureDatabaseTask` ou `sfPropelConfigureDatabaseTask`
   `sfDoctrineLoadDataTask`  | `sfDoctrineDataLoadTask`
   `sfDoctrineDumpDataTask`  | `sfDoctrineDataDumpTask`
   `sfPropelLoadDataTask`    | `sfPropelDataLoadTask`
