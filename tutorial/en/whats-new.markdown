@@ -689,6 +689,10 @@ the `symfony` Propel behavior:
             form: false
             filter: false
 
+Note that you have to rebuild the model before that setting is respected,
+because the behaviour is attached to the model and does only exist after
+rebuilding it.
+
 ### Using a different version of Propel
 
 Using a different version of propel is as easy as setting the
