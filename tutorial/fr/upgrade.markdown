@@ -18,6 +18,20 @@ Il n'y a aucune tâche de mise à jour dans symfony 1.4 car cette version est la
 1.3 (moins toutes les caractéristiques dépréciées). Pour mettre à jour en 1.4, vous devez d'abord
 mettre à jour en 1.3 et changer ensuite vers la version 1.4.
 
+Avant de passer en 1.4, vous pouvez également vérifier que votre projet n'utilise pas
+de classe, de méthode, de fonction, de paramètres ou d'autres choses de dépréciés, en exécutant la
+tâche `project:validate` :
+
+    $ php symfony project:validate 
+
+La tâche liste tous les fichiers que vous devez modifier avant de passer à symfony
+1.4.
+
+Soyez conscient que la tâche est une simple expression régulière et elle peut vous donner
+beaucoup d'informations erronées. Aussi, elle ne peut pas tout détecter, c'est juste un outil
+qui vous aide en identifiant des problèmes possibles, ce n'est pas un outil magique. Vous devez toujours
+lire le tutoriel DEPRECATED soigneusement.
+
 >**NOTE**
 >`sfCompat10Plugin` et `sfProtoculousPlugin` ont été enlevés de la 1.4. Si
 >vous les avez explicitement désactivées dans les fichiers de classe de configuration de votre projet,
