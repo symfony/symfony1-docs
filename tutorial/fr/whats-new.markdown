@@ -688,7 +688,11 @@ comportement Propel de symfony :
           symfony:
             form: false
             filter: false
- 
+
+Notez que vous devez reconstruire le modèle avant que ce paramètre soit effectif,
+car le comportement est attaché au modèle et celui-ci existe seulement après
+la reconstruction.
+
 ### Utilisation d'une version différente de Propel
 
 L'utilisation d'une version différente de Propel est facile à paramètrer avec les variables de configuration
