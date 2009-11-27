@@ -1,4 +1,4 @@
-Composants supprimés ou rendus obsolètes en 1.3
+﻿Composants supprimés ou rendus obsolètes en 1.3
 ===============================================
 
 Ce document liste tous les paramètres de configuration, classes, méthodes, 
@@ -158,6 +158,9 @@ retirés dans symfony 1.4 :
   * Tous les helpers relatifs au système de formulaires 1.0 fournis par
     le plugin `sfCompat10Plugin` : `DateForm`, `Form`, `ObjectAdmin`, `Object`
     et `Validation`
+ 
+Le Helper `form_tag()` du groupe de Helper `Form` a été déplacé dans
+le groupe de Helper `Url`, ainsi il est toujours disponible dans symfony 1.4.
 
 Le chargement des helpers par le chemin inclus de PHP a été déprécié en 1.3 et
 enlevé en 1.4. Les Helpers doivent être placés dans l'un des répertoires `lib/helper/` du
