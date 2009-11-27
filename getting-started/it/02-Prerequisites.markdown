@@ -7,8 +7,8 @@ approfondita di questo capitolo e l'esecuzione di tutti i passi
 richiesti per verificare la propria configurazione potrebbe far
 risparmiare molto tempo successivamente.
 
-Programmi
----------
+Programmi di terze parti
+------------------------
 
 Prima di tutto, occorre verificare che il proprio computer disponga di
 un ambiente di lavoro adatto allo sviluppo sul web. Come minimo, si ha
@@ -28,9 +28,7 @@ prompt `cmd`.
 >**Note**
 >I comandi del terminale di Unix possono essere utili in un ambiente
 >Windows. Se si vogliono usare strumenti come `tar`, `gzip`, o `grep`
->su Windows, si può installare [Cygwin](http://cygwin.com/). La
->documentazione ufficiale è un po' scarsa, ma si può trovare una
->buona guida di installazione [qui](http://www.soe.ucsc.edu/~you/notes/cygwin-install.html).
+>su Windows, si può installare [Cygwin](http://cygwin.com/).
 >I più arditi possono anche provare
 >[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx)
 >di Microsoft.
@@ -52,9 +50,9 @@ e l'altra per il web.
 Quindi, scaricare lo script di symfony per la verifica della configurazione,
 al seguente indirizzo:
 
-    http://sf-to.org/1.2/check.php
+    http://sf-to.org/1.4/check.php
 
-Salvare lo script da qualche parte nella propria directory root del server web.
+Salvare lo script da qualche parte nella cartella radice del server web.
 
 Lanciare lo script di verifica della configurazione dalla riga di comando:
 
@@ -69,5 +67,11 @@ configurazione `php.ini` diverso per questi due ambienti, con
 diverse impostazioni.
 
 >**NOTE**
->Non dimenticare di rimuovere il file dalla directory root del server web
+>Non dimenticare di rimuovere il file dalla cartella radice del server web
 >quando si ha finito.
+
+>**NOTE**
+>Se si vuole solo provare symfony per qualche ora, si può installare
+>la sandbox di symfony, come descritto nell'[Appendice A](A-The-Sandbox).
+>Se invece si vuole creare un vero nuovo progetto o imparare di più su
+>symfony, si prosegua con la lettura.
