@@ -18,6 +18,20 @@ There is no upgrade task in symfony 1.4 as this version is the same as symfony
 1.3 (minus all the deprecated features). To upgrade to 1.4, you must first
 upgrade to 1.3, and then switch to the 1.4 release.
 
+Before upgrading to 1.4, you can also validate that your project does not use
+any deprecated class/method/function/setting/... by running the
+`project:validate` task:
+
+    $ php symfony project:validate
+
+The task lists all the files you need to change before switching to symfony
+1.4.
+
+Be aware that the task is a glorified regular expression and might gives you
+many false positives. Also, it cannot detect everything, so it is just a tool
+that helps you identifying possible problems, not a magic tool. You still need
+to read the DEPRECATED tutorial carefully.
+
 >**NOTE**
 >`sfCompat10Plugin` and `sfProtoculousPlugin` have been removed from 1.4. If
 >you are explicitly disabling them in your project's configuration class files,

@@ -159,6 +159,9 @@ removed in symfony 1.4:
     `sfCompat10Plugin`: `DateForm`, `Form`, `ObjectAdmin`, `Object`, and
     `Validation`
 
+The `form_tag()` helper from the `Form` helper group has been moved to the
+`Url` helper group, and as such is still available in symfony 1.4.
+
 Loading helpers from the PHP include path has been deprecated in 1.3 and
 removed in 1.4. Helpers must be located in one of the project, application or
 module `lib/helper/` directories.
