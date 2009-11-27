@@ -4,7 +4,7 @@
 Si votre objectif est d'essayer symfony pendant quelques heures, continuez à lire ce
 chapitre, nous allons vous montrer la méthode la plus rapide pour démarrer. Si vous voulez
 amorcer un projet du monde réel, vous pouvez sans risque passer ce chapitre, et
-[rejoindre](04-Symfony-Installation#chapter_04) tout de suite le prochain.
+[rejoindre](03-Symfony-Installation#chapter_03) tout de suite le prochain.
 
 Le moyen le plus rapide pour expérimenter symfony est d'installer le bac à sable symfony.
 Le bac à sable est une installation facile préemballée pour un projet symfony, il est déjà
@@ -15,7 +15,7 @@ symfony sans les tracas d'une installation appropriée qui respecte les meilleur
 >Comme le bac à sable est pré-configuré pour utiliser SQLite
 >comme moteur de base de données, vous devez vérifier que votre PHP supporte SQLite (voir le
 >chapitre [Prérequis](02-Prerequisites#chapter_02)). Vous pouvez aussi
->lire la section [Configuration de la base de données](05-Project-Setup#chapter_05_sub_configuring_the_database)
+>lire la section [Configuration de la base de données](04-Project-Setup#chapter_04_sub_configuring_the_database)
 >pour savoir comment modifier la base de données utilisée par le bac à sable.
 
 Vous pouvez télécharger le bac à sable sous les formats `.tgz` ou `.zip` sur la
@@ -37,8 +37,8 @@ terminé. Votre projet symfony est désormais accessible en lançant le script `
 >application par les utilisateurs finaux.
 
 Vous pouvez finir votre installation en lisant les chapitres
-[Configuration du serveur Web](06-Web-Server-Configuration#chapter_06)
-et les [Environments](07-Environments#chapter_07).
+[Configuration du serveur Web](05-Web-Server-Configuration#chapter_05)
+et les [Environments](06-Environments#chapter_06).
 
 >**NOTE**
 >Comme le bac à sable est un projet symfony normal où certaines tâches ont
