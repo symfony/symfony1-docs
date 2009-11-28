@@ -106,6 +106,7 @@ Available Tasks
    * [`project::permissions`](#chapter_16_sub_project_permissions)
    * [`project::send-emails`](#chapter_16_sub_project_send_emails)
    * [`project::upgrade1.3`](#chapter_16_sub_project_upgrade1_3)
+   * [`project::validate`](#chapter_16_sub_project_validate)
  * [`propel`](#chapter_16_propel)
    * [`propel::build`](#chapter_16_sub_propel_build)
    * [`propel::build-all`](#chapter_16_sub_propel_build_all)
@@ -878,13 +879,14 @@ models:
 
 The `doctrine::dql` task execute a DQL query and view the results:
 
-    $ php symfony doctrine:dql [--application[="..."]] [--env="..."] [--show-sql] [--table] dql_query
+    $ php symfony doctrine:dql [--application[="..."]] [--env="..."] [--show-sql] [--table] dql_query [parameter1] ... [parameterN]
 
 *Alias(es)*: `doctrine-dql`
 
 | Argument | Default | Description
 | -------- | ------- | -----------
 | `dql_query` | `-` | The DQL query to execute
+| `parameter` | `-` | Query parameter
 
 
 | Option (Shortcut) | Default | Description
@@ -895,13 +897,18 @@ The `doctrine::dql` task execute a DQL query and view the results:
 | `--table` | `-` | Return results in table format
 
 
-The `doctrine:data-dql` task executes a DQL query and display the formatted results:
+The `doctrine:dql` task executes a DQL query and displays the formatted
+results:
 
-    ./symfony doctrine:dql "FROM User u"
+    ./symfony doctrine:dql "FROM User"
 
-You can show the SQL that would be executed by using the `--dir` option:
+You can show the SQL that would be executed by using the `--show-sql` option:
 
-    ./symfony doctrine:dql --show-sql "FROM User u"
+    ./symfony doctrine:dql --show-sql "FROM User"
+
+Provide query parameters as additional arguments:
+
+    ./symfony doctrine:dql "FROM User WHERE email LIKE ?" "%symfony-project.com"
 
 ### ~`doctrine::drop-db`~
 
@@ -1577,7 +1584,7 @@ The `log:clear` task clears all symfony log files:
 
 ### ~`log::rotate`~
 
-The `log::rotate` task rotates an application log files:
+The `log::rotate` task rotates an application's log files:
 
     $ php symfony log:rotate [--history="..."] [--period="..."] application env
 
@@ -1602,7 +1609,7 @@ environment:
 
 You can specify a `period` or a `history` option:
 
-    ./symfony --history=10 --period=7 log:rotate frontend dev
+    ./symfony log:rotate frontend dev --history=10 --period=7
 
 `plugin`
 --------
@@ -2049,6 +2056,25 @@ release to the 1.3 symfony release.
     ./symfony project:upgrade1.3
 
 Please read the UPGRADE_TO_1_3 file to have information on what this task does.
+
+### ~`project::validate`~
+
+The `project::validate` task finds deprecated usage in a project:
+
+    $ php symfony project:validate  
+
+
+
+
+
+
+
+The `project:validate` task detects deprecated usage in your project.
+
+    ./symfony project:validate
+
+The task lists all the files you need to change before switching to
+symfony 1.4.
 
 `propel`
 --------
