@@ -1,0 +1,1051 @@
+День 10: Формы
+==============
+
+*Замечания по переводу: ahudenko[at]yandex.ru*
+
+Вторая неделя Jobeet блестяще началась со знакомства с инструментами 
+тестирования в Symfony. Сегодня мы займемся формами.
+
+Фреймворк Форм
+--------------
+
+На любом сайте есть формы. От простых контактных до сложных комплексных с 
+огромным количеством полей. Написание форм это еще одна из нелегких и скучных
+повседневных обязанностей веб-разработчика: написать HTML код формы, применить
+валидацию к каждому полю, обработать данные и сохранить их в базу, Вывести
+сообщения об ошибках, а так же повторно заполнить и отобразить форму.
+
+Разумеется, чтобы не повторять одни и теже действия снова и снова, Symfony
+предоставляет инструментарий для легкой работы с формами. Фреймворк форм состоит
+из трех частей:
+
+  * **validation**: Валидация - это подфреймворк, которые предоставляет классы
+                    валидаторы для проверки входных 
+                    данных (integer, string, email address, ...)
+  * **widgets**:    Виджеты - это подфреймворк, который предоставляет классы
+                    для отображения полей формы в HTML(input, textarea, select, ...)
+  * **forms**:      Формы - это классы, которые объединяют в себе виджеты и 
+                    валидаторы и предоставляют методы для удобной работы с ними.
+                    Каждое поле в форме, имеет валидатор и виджет.
+
+Формы
+-----
+
+В Symfony класс формы состоит из полей. Каждое поле имеет имя, валидатор и 
+виджет. Простая контактная форма (`ContactForm`) может быть представлена 
+следующим классом:
+
+    [php]
+    class ContactForm extends sfForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->setValidators(array(
+          'email'   => new sfValidatorEmail(),
+          'message' => new sfValidatorString(array('max_length' => 255)),
+        ));
+      }
+    }
+
+Поля формы настраиваются в методе `configure()` при помощи методов 
+`setValidators()` и `setWidgets()`.
+
+>**TIP**
+>В комплекте с фреймворком форм идет много 
+>[виджетов](http://www.symfony-project.org/api/1_4/widget) и
+>[валидаторов](http://www.symfony-project.org/api/1_4/validator). В документации
+>по API подробно описаны все их параметры, ошибки, стандартные сообщения об
+>ошибках.
+
+Имена валидаторов и виджетов вполне очевидны: поле `email` отобразится в HTML,
+как тэг `<input>` (`sfWidgetFormInput`) и будет проверяться, как адрес 
+электронной почты (`sfValidatorEmail`). Поле `message` отобразится как тэг
+`<textarea>` (`sfWidgetFormTextarea`) и будет проверяться как строка длиной не 
+более 255 символов (`sfValidatorString`).
+
+Изначально все поля формы обязательны, так как по умолчанию значение параметра
+`required` установлено в `true`. Так определение валидатора для `email` 
+равносильно Вызову `new sfValidatorEmail(array('required' => true))`.
+
+>**TIP**
+>Вы можете объединить две формы, используя метод `mergeForm()`, или вставить одну
+>форму в другую, используя метод `embedForm()`:
+>
+>     [php]
+>     $this->mergeForm(new AnotherForm());
+>     $this->embedForm('name', new AnotherForm());
+
+##ORM## формы
+-------------
+
+Данные форм постоянно сохраняются в базу данных. Symfony знает все о вашей
+модели и может автоматически создавать формы, осноВываясь на этой информации.
+Например, когда Вы на третий день Выполняли команду `propel:build-all`, Symfony
+Вызывал команду `propel:build-forms`:
+
+    $ php symfony propel:build-forms
+
+Команда `propel:build-forms` создает классы для форм и сохраняет их в директории
+`lib/form/`. Организация сгенерированных файлов похожа на `lib/model/`. Каждый
+класс модели связан с классом форм (например `JobeetJob` и `JobeetJobForm`), 
+по умолчанию они наследуют базоВый класс форм и не содержат собственных методов:
+
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+      }
+    }
+
+<propel>
+>**TIP**
+>Просматривая файлы в `lib/form/base/`, Вы можете найти множество
+>прекрасных примеров использования встроенных в Symfony виджетов и валидаторов
+</propel>
+<doctrine>
+>**TIP**
+>Просматривая файлы в `lib/form/doctrine/base/`, Вы можете найти множество
+>прекрасных примеров использования встроенных в Symfony виджетов и валидаторов
+</doctrine>
+
+>**TIP**
+>Вы можете отменить генерацию формы для конкретной модели, указав соответствующие параметры 
+>в опции `symfony`:
+>
+>      [yml]
+<propel>
+>      classes:
+>        SomeModel:
+>          propel_behaviors:
+>            symfony:
+>              form: false
+>              filter: false
+</propel>
+<doctrine>
+>      SomeModel:
+>        options:
+>          symfony:
+>            form: false
+>            filter: false
+</doctrine>
+
+### Изменение формы вакансии
+
+Форма вакансии прекрасный образец для изучения работы с формами. Рассмотрим ее
+изменения шаг за шагом.
+
+Во первых, изменим ссылку "Post a job" в лэйауте, так чтобы можно было видеть
+все изменения в браузере:
+
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <a href="<?php echo url_for('@job_new') ?>">Post a Job</a>
+
+По умолчанию, ##ORM## отображает поля для всех столбцов таблицы. Но для формы
+вакансии некоторые из них не должны быть доступны для редактирования конечному
+пользователю. Удалим эти поля из формы, просто исключив их:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        unset(
+          $this['created_at'], $this['updated_at'],
+          $this['expires_at'], $this['is_activated']
+        );
+      }
+    }
+
+Исключение поля подразумевает, что соответствующие виджет и валидатор,
+будут удалены.
+
+Вместо удаления полей, который вы не хотите отображать, Вы также можете
+explicitly list the fields you want by using the `useFields()` method:
+
+Instead of unsetting the fields you don't want to display, you can also
+явно перечислить поля, который нужны на форме, используя метод `useFields()`:
+
+    [php]
+    <propel>
+        // lib/form/JobeetJobForm.class.php
+    </propel>
+    <doctrine>
+        // lib/form/doctrine/JobeetJobForm.class.php
+    </doctrine>
+        class JobeetJobForm extends BaseJobeetJobForm
+        {
+          public function configure()
+          {
+            $this->useFields(array('category_id', 'type', 'company', 'logo',
+              ➥ 'url', 'position', 'location', 'description', 'how_to_apply',
+              ➥ 'token', 'is_public', 'email'));
+          }
+        }
+
+Метод `useFields()` делает для Вас автоматически две вещи: добавляет скрытые
+и массив полей, используемый для изменения порядка их отображения.
+
+>**TIP**
+>Явно указание полей, которые Вы хотите отображать, приводит к тому, что при добавлении новых
+>полей в базовую форму, они не будут автоматически появляться на Вашей форме
+>(помните о форме для модели, когда добавляете новый столбец в соответствующую таблицу
+>базы данных).
+
+Порой форму необходимо настроить более точно, чем просто унаследовать свойства
+базы данных. Например, столбец `email` это `varchar` в базе, а нам нужно
+валидировать его как адрес электронной почты. Давайте изменим, стоящий по
+умолчанию, `sfValidatorString` на `sfValidatorEmail`:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    public function configure()
+    {
+      // ...
+
+      $this->validatorSchema['email'] = new sfValidatorEmail();
+    }
+
+Замена стандартного валидатора не всегда лучшее решение, так как при этой
+операции теряются правила унаследованные от 
+базы(`new sfValidatorString(array('max_length' => 255))`). Почти всегда
+лучше добавить ноВый валидатор к уже существующему используя,
+специальный валидатор `sfValidatorAnd`:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    public function configure()
+    {
+      // ...
+
+      $this->validatorSchema['email'] = new sfValidatorAnd(array(
+        $this->validatorSchema['email'],
+        new sfValidatorEmail(),
+      ));
+    }
+
+
+Валидатор `sfValidatorAnd` принимает в качестве параметра массив валидаторов,
+которые будут добавлены для проверки значения. Трюк в том, что мы передаем
+ссылку на текущий валидатор, и добавляем один ноВый.
+
+>**NOTE**
+>Так же Вы можете использовать валидатор `sfValidatorOr`, в таком случае
+>значение будет валидным если провалидируется хотя бы одним из валидаторов.
+>Разумеется, Вы можете объединять валидаторы `sfValidatorAnd` и `sfValidatorOr`
+>для создания валидаторов со сложной логикой.
+
+Хотя столбец `type` у нас в базе тоже `varchar`, мы хотим ограничить его 
+значение, заранее определенным списком: full time, part time или freelance.
+
+<propel>
+Во перВых, давайте определим возможные значения в `JobeetJobPeer`:
+
+    [php]
+    // lib/model/JobeetJobPeer.php
+    class JobeetJobPeer extends BaseJobeetJobPeer
+    {
+      static public $types = array(
+        'full-time' => 'Full time',
+        'part-time' => 'Part time',
+        'freelance' => 'Freelance',
+      );
+
+      // ...
+    }
+</propel>
+<doctrine>
+Во перВых, давайте определим возможные значения в `JobeetJobTable`:
+
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      static public $types = array(
+        'full-time' => 'Full time',
+        'part-time' => 'Part time',
+        'freelance' => 'Freelance',
+      );
+
+      public function getTypes()
+      {
+        return self::$types;
+      }
+
+      // ...
+    }
+</doctrine>
+
+Далее, для поля `type` используем виджет `sfWidgetFormChoice`:
+
+    [php]
+    $this->widgetSchema['type'] = new sfWidgetFormChoice(array(
+<propel>
+      'choices'  => JobeetJobPeer::$types,
+</propel>
+<doctrine>
+      'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+</doctrine>
+      'expanded' => true,
+    ));
+
+Виджет `sfWidgetFormChoice` реализует виджет Выбора значений, он может по 
+разному отображаться в зависимости от конфигурации (`expanded` и
+`multiple`):
+
+ * Dropdown list (`<select>`): `array('multiple' => false, 'expanded' => false)`
+ * Dropdown box (`<select multiple="multiple">`): `array('multiple' => true, 'expanded' => false)`
+ * List of radio buttons: `array('multiple' => false, 'expanded' => true)`
+ * List of checkboxes: `array('multiple' => true, 'expanded' => true)`
+
+>**NOTE**
+>Если Вы хотите сделать чтобы какое-то значение было Выбрано по 
+>умолчанию(на пример `full-time`), измените значение по умолчанию для этого 
+>поля в базе данных.
+
+Хотя Вы и думаете, что теперь никто не сможет отправить некорректные данные, взломщик
+с легкостью может обойти виджет, используя например 
+[curl](http://curl.haxx.se/) или
+[Firefox Web Developer Toolbar](http://chrispederick.com/work/web-developer/).
+Давайте изменим валидатор и ограничим допустимые значения:
+
+<propel>
+    [php]
+    $this->validatorSchema['type'] = new sfValidatorChoice(array(
+      'choices' => array_keys(JobeetJobPeer::$types),
+    ));
+</propel>
+<doctrine>
+    [php]
+    $this->validatorSchema['type'] = new sfValidatorChoice(array(
+      'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+    ));
+</doctrine>
+
+В поле `logo` будет хранится имя файла логотипа, относящегося к этой вакансии,
+нам нужно изменить виджет на тэг ~file input|File Input~:
+
+    [php]
+    $this->widgetSchema['logo'] = new sfWidgetFormInputFile(array(
+      'label' => 'Company logo',
+    ));
+
+Для каждого поля формы Symfony автоматически генерирует  
+~label|Form Labels~(который используется при отображении тэга `label`). Его
+можно изменить используя метод `setLabels()`:
+
+    [php]
+    $this->widgetSchema->setLabels(array(
+      'category_id'    => 'Category',
+      'is_public'      => 'Public?',
+      'how_to_apply'   => 'How to apply?',
+    ));
+
+Еще нам нужно изменить стандартный валидатор:
+
+    [php]
+    $this->validatorSchema['logo'] = new sfValidatorFile(array(
+      'required'   => false,
+      'path'       => sfConfig::get('sf_upload_dir').'/jobs',
+      'mime_types' => 'web_images',
+    ));
+
+`sfValidatorFile` довольно интересен, что же он делает:
+
+ * Удостоверяется, что загруженный файл это изображение в формате (`mime_types`),
+   пригодном для веб
+ * Дает файлу уникальное имя
+ * Сохраняет файл по указанному пути (`path`)
+ * Обновляет в базе поле `logo` с новым сгенерированным именем
+ 
+>**NOTE**
+>Вы должны создать директорию для хранения логотипов(`web/uploads/jobs/`) и 
+>удостовериться, что она доступна для записи пользователю, от имени которого
+>запущен веб-сервер.
+
+Измените путь к логотипу, используемый в шаблоне `showSuccess`, так как 
+валидатор сохраняет относительный путь в базу данных:
+
+    [php]
+    // apps/frontend/modules/job/templates/showSuccess.php
+    <img src="/uploads/jobs/<?php echo $job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
+
+>**TIP**
+>Если в модели определен метод `generateLogoFilename()`, он будет Вызван
+>валидатором и результат его Выполнения заменит сгенерированное по умолчанию
+>имя файла для `logo`. Метод принимает в качестве аргумента объект `sfValidatedFile`.
+
+Вы можете определить пояснение для поля формы, так же легко, как заменить 
+стандартный label. Давайте добавим сообщение к полю `is_public` чтобы лучше
+раскрыть его значение:
+
+    [php]
+    $this->widgetSchema->setHelp('is_public', 'Whether the job can also be published on affiliate websites or not.');
+
+В итоге класс `JobeetJobForm` Выглядит следующим образом:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        unset(
+          $this['created_at'], $this['updated_at'],
+          $this['expires_at'], $this['is_activated']
+        );
+
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+
+        $this->widgetSchema['type'] = new sfWidgetFormChoice(array(
+<propel>
+          'choices' => JobeetJobPeer::$types,
+</propel>
+<doctrine>
+          'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+</doctrine>
+          'expanded' => true,
+        ));
+        $this->validatorSchema['type'] = new sfValidatorChoice(array(
+<propel>
+          'choices' => array_keys(JobeetJobPeer::$types),
+</propel>
+<doctrine>
+          'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+</doctrine>
+        ));
+
+        $this->widgetSchema['logo'] = new sfWidgetFormInputFile(array(
+          'label' => 'Company logo',
+        ));
+
+        $this->widgetSchema->setLabels(array(
+          'category_id'    => 'Category',
+          'is_public'      => 'Public?',
+          'how_to_apply'   => 'How to apply?',
+        ));
+
+        $this->validatorSchema['logo'] = new sfValidatorFile(array(
+          'required'   => false,
+          'path'       => sfConfig::get('sf_upload_dir').'/jobs',
+          'mime_types' => 'web_images',
+        ));
+
+        $this->widgetSchema->setHelp('is_public', 'Whether the job can also be published on affiliate websites or not.');
+      }
+    }
+
+### Шаблон формы
+
+Теперь, когда класс формы настроен, нам нужно отобразить его. Шаблон формы для
+job используется, когда Вы хотите создать новую вакансию или отредактировать
+существующую. Кстати, шаблоны `newSuccess.php` и `editSuccess.php` очень
+похожи:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/newSuccess.php -->
+    <?php use_stylesheet('job.css') ?>
+
+    <h1>Post a Job</h1>
+
+    <?php include_partial('form', array('form' => $form)) ?>
+
+>**NOTE**
+>Если Вы еще не добавили файл стилей `job`, то самое время добавить его в
+>оба шаблона(`<?php use_stylesheet('job.css') ?>`).
+
+Форма отображает сама себя в фрагменте шаблона(partial) `_form`. Замените
+содержимое сгенерированного фрагмента `_form` следующим кодом:
+    
+    [php]
+    <!-- apps/frontend/modules/job/templates/_form.php -->
+    <?php include_stylesheets_for_form($form) ?>
+    <?php include_javascripts_for_form($form) ?>
+
+    <?php echo form_tag_for($form, '@job') ?>
+      <table id="job_form">
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <input type="submit" value="Preview your job" />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <?php echo $form ?>
+        </tbody>
+      </table>
+    </form>
+
+Хелперы include_javascripts_for_form() и include_stylesheets_for_form() 
+подключают соответственно JavaScript и CSS файлы необходимые для виджета
+формы.
+
+>**TIP**
+>Даже если для формы вакансии не нужны JavaScript или CSS дополнения, будет
+>не плохо оставить их "на всякий случай". Это сэкономит Вам время, если
+>когда-нибудь решите изменить форму и добавить немного JavaScript или стилей.
+
+Хелпер `form_tag_for` генерирует для передаваемой формы тэг `<form>`, роутинг,
+устанавливает метод ~`POST`|POST (HTTP Method)~ или ~`PUT`|PUT (HTTP Method)~
+в зависимости от того, ноВый это объект или нет. Также хелпер позаботится об
+атрибуте `~multipart|Forms (Multipart)~`, который будет добавлен если 
+содержится хотя бы один тэг`input file`.
+
+В конце концов `<?php echo $form ?>` рендерит виджет формы.
+
+>**SIDEBAR**
+>Изменение внешнего вида и поведения формы
+>
+>По умолчанию `<?php echo $form ?>` отображает виджет формы в виде таблицы
+>
+>Не редко Вам нужно будет изменить внешний вид формы. Объект формы 
+>предоставляет методы для этого:
+>
+> | Метод                  | Описание
+> | ---------------------- | -------------------------------------------------
+> | `render()`             | Отображает форму (эквивалентен Вызову
+> |                        | `echo $form`)
+> | `renderHiddenFields()` | Отображает спрятанные поля(hidden fields)
+> | `hasErrors()`          | Возвращает `true` если форма содержит ошибки
+> | `hasGlobalErrors()`    | Возвращает `true` если форма содержит глобальные 
+> |                        | ошибки
+> | `getGlobalErrors()`    | Возвращает глобальные ошибки в виде массива
+> | `renderGlobalErrors()` | Отображает глобальные ошибки
+>
+>С формой можно работать как с массивом полей(field). Вы можете обратиться к
+>полю `company` как `$form['company']`. Возвращаемый объект предоставляет
+>методы для отображения каждого элемента этого поля.
+>
+> | Метод           | Описание
+> | --------------- | ---------------------------------------
+> | `renderRow()`   | Отображает строку поля
+> | `render()`      | Отображает виджет поля
+> | `renderLabel()` | Отображает тэг `label` для поля
+> | `renderError()` | Отображает ошибки для поля, если есть
+> | `renderHelp()`  | Отображает вспомогательное сообщение для поля
+>
+> Конструкция `echo $form` эквивалентна:
+>
+>     [php]
+>     <?php foreach ($form as $widget): ?>
+>       <?php echo $widget->renderRow() ?>
+>     <?php endforeach; ?>
+
+### Действия формы
+
+И так у нас есть класс формы и шаблон, который отображает ее. Самое время 
+сделать чтобы все это работало с некоторыми действиями.
+
+Форма вакансии используется в пяти методах модуля `job`:
+
+* **new**:         Отображает пустую форму при создании вакансии
+* **edit**:        Отображает форму для редактирования существующей вакансии
+* **create**:      Создает вакансии с данными, полученными от пользователя
+* **update**:      Обновляет вакансию с данными, полученными от пользователя
+* **processForm**: Вызывается методами `create` и `update`(осуществляет 
+                   валидацию, заполнение полей, сериализацию формы в базу)
+
+Все формы имеют следующий жизненный цикл:
+
+![Form flow](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
+
+Так как 5 дней назад мы создали набор ##ORM## роутингов для модуля `job`, мы
+можем упростить код для методов, использующих форму:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeNew(sfWebRequest $request)
+    {
+      $this->form = new JobeetJobForm();
+    }
+
+    public function executeCreate(sfWebRequest $request)
+    {
+      $this->form = new JobeetJobForm();
+      $this->processForm($request, $this->form);
+      $this->setTemplate('new');
+    }
+
+    public function executeEdit(sfWebRequest $request)
+    {
+      $this->form = new JobeetJobForm($this->getRoute()->getObject());
+    }
+
+    public function executeUpdate(sfWebRequest $request)
+    {
+      $this->form = new JobeetJobForm($this->getRoute()->getObject());
+      $this->processForm($request, $this->form);
+      $this->setTemplate('edit');
+    }
+
+    public function executeDelete(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+
+      $job = $this->getRoute()->getObject();
+      $job->delete();
+
+      $this->redirect('job/index');
+    }
+
+    protected function processForm(sfWebRequest $request, sfForm $form)
+    {
+      $form->bind(
+        $request->getParameter($form->getName()),
+        $request->getFiles($form->getName())
+      );
+
+      if ($form->isValid())
+      {
+        $job = $form->save();
+
+        $this->redirect('job_show', $job);
+      }
+    }
+
+Когда Вы открываете страницу `/job/new`, создается ноВый объект формы и
+передается в шаблон (`new` action).
+
+Когда пользователь отправляет данные формы (`create` action), форма связывается
+(метод `bind()`) с параметрами запроса и Вызывается валидация.
+
+Когда форма связана, можно проверить ее валидность Вызвав метод `isValid()`.
+Если данные формы валидны, то вакансия сохраняется в базу данных(`$form->save()`),
+а пользователь перенаправляется на страницу только что созданной вакансии.
+Если нет, повторно отображается шаблон `newSuccess.php` со всеми соответствующими
+сообщениями об ошибках.
+
+>**TIP**
+>Метод `setTemplate()` изменяет html шаблон для текущего действия. Если форма
+>не валидна, то методы `create` и `update` используют те же шаблоны что и методы
+>`new` и `edit` соответственно, для повторного отображения формы с сообщениями
+>об ошибках.
+
+Изменение существующей вакансии очень похоже. Единственное различие между
+действиями `new` и `edit` это то, что в конструктор формы перВым параметром 
+передается объект редактируемой вакансии. Этот объект будет использован для
+заполнения значений виджетов формы(значения по умолчанию представляются в 
+виде объектов для ##ORM## форм, и в виде обычных массивов для простых форм).
+
+Вы также можете задачть значения по умолчанию для формы создания объекта. Можно
+определить значения в базе данных, или передавать в конструктор формы заранее
+приготовленный объект `Job`.
+
+Изменим метод  `executeNew()`, установим для поля `type` значение по умолчанию
+`full-time`:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeNew(sfWebRequest $request)
+    {
+      $job = new JobeetJob();
+      $job->setType('full-time');
+
+      $this->form = new JobeetJobForm($job);
+    }
+
+>**NOTE**
+>Когда форма связана, значения по умолчанию заменяются введенными 
+>пользователем значениями. Пользовательские данные используются для повторного
+>заполнения формы, в случае обнаружения ошибок.
+
+### Защита формы при помощи токена
+
+Теперь все должно работать хорошо. Теперь пользователь должен ввести
+уникальный токен (уникальный маркер, метка) для вакансии. Но токен должен быть 
+сгенерирован когда вакансия создается, так как мы не можем быть уверены, 
+что пользователь введет уникальный токен.
+
+Обновим метод `save()` в классе `JobeetJob`, добавим логику для генерации
+токена перед тем как вакансия будет сохранена:
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+    public function save(PropelPDO $con = null)
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+    public function save(Doctrine_Connection $con = null)
+</doctrine>
+    {
+      // ...
+
+      if (!$this->getToken())
+      {
+        $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
+      }
+
+<propel>
+      return parent::save($con);
+</propel>
+<doctrine>
+      return parent::save($conn);
+</doctrine>
+    }
+
+Вы можете удалить поле токена из формы:
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        unset(
+          $this['created_at'], $this['updated_at'],
+          $this['expires_at'], $this['is_activated'],
+          $this['token']
+        );
+
+        // ...
+      }
+
+      // ...
+    }
+
+Возможно Вы помните пользовательский сценарий из второго дня, вакансия может
+быть отредактирована пользователем, только если он знает связанный с ней токен.
+Сейчас легко можно отредактировать или удалить вакансию просто угадав ее URL.
+Это происходит потому, что URL редактирования Выглядит как `/job/ID/edit`, где
+`ID` это первичный ключ вакансии.
+
+По умолчанию роутинг ~`sfPropelRouteCollection`~ генерирует URL'ы с первичным
+ключом, но его можно заменить на любое уникальное поле, передав параметр 
+`column`:
+
+    [yml]
+    # apps/frontend/config/~routing|Routing~.yml
+    job:
+      class:        sfPropelRouteCollection
+      options:      { model: JobeetJob, column: token }
+      requirements: { token: \w+ }
+
+Обратите внимание, что параметру `token` соответствует любая строка `\w+`, 
+так как в Symfony по умолчанию уникальному ключу соответствует число `\d+`.
+
+Теперь все роутинги на вакансии, исключая `job_show_user`, содержат токен. На 
+пример, роутинг для редактирования вакансии теперь соответствует следующему
+шаблону:
+
+    http://jobeet.localhost/job/TOKEN/edit
+
+Теперь нам нужно будет изменить ссылку на редактирование в шаблоне 
+`showSuccess`:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/showSuccess.php -->
+    <a href="<?php echo url_for('job_edit', $job) ?>">Edit</a>
+
+Страница просмотра
+------------------
+
+Страница просмотра - это страница на которой отображается вакансия.
+Благодаря роутингу, если пользователь приходит с правильным токеном, токен 
+будет содержаться в параметрах запроса.
+
+Если пользователь приходит по URL с токеном, то мы будем добавлять вверху
+админ-панель. В начале шаблона `showSuccess` добавим фрагмент(partical)
+админ-панели и удалим ссылку `edit` в конце страницы:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/showSuccess.php -->
+    <?php if ($sf_request->getParameter('token') == $job->getToken()): ?>
+      <?php include_partial('job/admin', array('job' => $job)) ?>
+    <?php endif; ?>
+
+Затем создадим фрагмент `_admin`:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/_admin.php -->
+    <div id="job_actions">
+      <h3>Admin</h3>
+      <ul>
+        <?php if (!$job->getIsActivated()): ?>
+          <li><?php echo link_to('Edit', 'job_edit', $job) ?></li>
+          <li><?php echo link_to('Publish', 'job_edit', $job) ?></li>
+        <?php endif; ?>
+        <li><?php echo link_to('Delete', 'job_delete', $job, array('method' => 'delete', 'confirm' => 'Are you sure?')) ?></li>
+        <?php if ($job->getIsActivated()): ?>
+          <li<?php $job->expiresSoon() and print ' class="expires_soon"' ?>>
+            <?php if ($job->isExpired()): ?>
+              Expired
+            <?php else: ?>
+              Expires in <strong><?php echo $job->getDaysBeforeExpires() ?></strong> days
+            <?php endif; ?>
+
+            <?php if ($job->expiresSoon()): ?>
+             - <a href="">Extend</a> for another <?php echo sfConfig::get('app_active_days') ?> days
+            <?php endif; ?>
+          </li>
+        <?php else: ?>
+          <li>
+            [Bookmark this <?php echo link_to('URL', 'job_show', $job, true) ?> to manage this job in the future.]
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+
+Кода получилось много, но большая часть из него вполне понятна.
+
+Для того чтобы сделать шаблон более читабельным, мы добавили несколько методов
+в класс `JobeetJob`:
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    public function getTypeName()
+    {
+<propel>
+      return $this->getType() ? JobeetJobPeer::$types[$this->getType()] : '';
+</propel>
+<doctrine>
+      $types = Doctrine::getTable('JobeetJob')->getTypes();
+      return $this->getType() ? $types[$this->getType()] : '';
+</doctrine>
+    }
+
+    public function isExpired()
+    {
+      return $this->getDaysBeforeExpires() < 0;
+    }
+
+    public function expiresSoon()
+    {
+      return $this->getDaysBeforeExpires() < 5;
+    }
+
+    public function getDaysBeforeExpires()
+    {
+<propel>
+      return floor(($this->getExpiresAt('U') - time()) / 86400);
+</propel>
+<doctrine>
+      return floor($this->getDateTimeObject('expires_at')->format('U') - time()) / 86400);
+</doctrine>
+    }
+
+Админ-панель отображает различные действия доступные для вакансии в 
+зависимости от ее статуса:
+
+![Not activated job](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
+
+![Activated job](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
+
+>**NOTE**
+>В следующем разделе Вы увидите админ-панель для "activated" вакансии.
+
+Активация и публикация вакансии
+-------------------------------
+
+В предыдущем разделе есть ссылка для публикации вакансии. Ссылка должна 
+Вызывать действие `publish`. Вместо того чтобы создавать ноВый роутинг для 
+этого, мы просто изменим существующий роутинг для вакансии:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    job:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: put }
+      requirements:
+        token: \w+
+
+Параметр `object_actions` представляет собой массив дополнительных действий
+для данного объекта. Теперь мы можем изменить ссылку на публикацию вакансии
+("Publish"):
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/_admin.php -->
+    <li>
+      <?php echo link_to('Publish', 'job_publish', $job, array('method' => 'put')) ?>
+    </li>
+
+Последним шагом создадим действие `publish`:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executePublish(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+
+      $job = $this->getRoute()->getObject();
+      $job->publish();
+
+      $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
+
+      $this->redirect('job_show_user', $job);
+    }
+
+Внимательный читатель мог заметить, что ссылка "Publish" срабатывает с HTTP
+методом PUT. Для того чтобы сэмулировать PUT метод, ссылка, когда Вы кликаете
+по ней, автоматически конвертируется в форму.
+
+Поскольку у нас включена защита от CSRF, хелпер `link_to()` включает CSRF токен
+в ссылку и метод `checkCSRFProtection()` объекта запроса  проверяет валидность
+приходящих данных.
+
+Метод `executePublish()` использует ноВый метод `publish()`, который может быть
+определен так:
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    public function publish()
+    {
+      $this->setIsActivated(true);
+      $this->save();
+    }
+
+Теперь Вы можете протестировать в браузере ноВый функционал - публикация.
+<propel>
+Все еще есть что исправить. Неактивированные вакансии должны быть недоступными.
+Подразумевается, что они не отображаются на главной странице Jobeet и не 
+открываются по соответствующим им URL'ам. Так как у нас уже есть метод
+`addActiveJobsCriteria()` для ограничения `Criteria` по активным вакансиям,
+мы должны просто добавить в него новое условие:
+</propel>
+<doctrine>
+Все еще есть что исправить. Неактивированные вакансии должны быть недоступными.
+Подразумевается, что они не отображаются на главной странице Jobeet и не 
+открываются по соответствующим им URL'ам. Так как у нас уже есть метод
+`addActiveJobsQuery()` для ограничения `Doctrine_Query` по активным вакансиям,
+мы должны просто добавить в него новое условие:    
+</doctrine>
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    static public function addActiveJobsCriteria(Criteria $criteria = null)
+    {
+      // ...
+
+      $criteria->add(self::IS_ACTIVATED, true);
+
+      return $criteria;
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    public function addActiveJobsQuery(Doctrine_Query $q = null)
+    {
+      // ...
+
+      $q->andWhere($alias . '.is_activated = ?', 1);
+
+      return $q;
+    }
+</doctrine>
+
+Это все. Теперь можете протестировать это в браузере. Все неактивированные
+вакансии исключены с главной страницы; даже если Вы знаете прямые ссылки на
+вакансии, Вы все равно не сможете просмотреть их. Не смотря на это,
+Вы можете получить к ним доступ, зная токен. В это случае вакансия будет
+отображаться с админ-панелью.
+
+Мы использовали еще одно преимущество патерна MVC и рефакторинга. Единственное
+изменение одного метода было необходимо для добавления нового условия.
+
+>**NOTE**
+<propel>
+>Когда мы создавали метод `getWithJobs()`, мы не использовали
+>`addActiveJobsCriteria()`. Нужно исправить это и добавить новое условие:
+</propel>
+<doctrine>
+>Когда мы создавали метод `getWithJobs()`, мы не использовали
+>`addActiveJobsQuery()`. Нужно исправить это и добавить новое условие:
+</doctrine>
+>
+<propel>
+>     [php]
+>     class JobeetCategoryPeer extends BaseJobeetCategoryPeer
+>     {
+>       static public function getWithJobs()
+>       {
+>         // ...
+>
+>         $criteria->add(JobeetJobPeer::IS_ACTIVATED, true);
+>
+>         return self::doSelect($criteria);
+>       }
+</propel>
+<doctrine>
+>     [php]
+>     class JobeetCategoryTable extends Doctrine_Table
+>     {
+>       public function getWithJobs()
+>       {
+>         // ...
+>
+>         $q->andWhere('j.is_activated = ?', 1);
+>
+>         return $q->execute();
+>       }
+</doctrine>
+
+Увидимся завтра
+---------------
+
+В сегодняшнем руководстве содержится слишком много новой информации, но она
+полезна для лучшего понимания работы с формами в Symfony.
+
+Я знаю, некоторые из Вас заметили, что мы кое-что забыли сегодня... Мы не
+создали ни одного теста для нового функционала. Так как написание тестов очень
+важный момент в разработке приложения, это будет первое, чем мы займемся завтра.
+
+__ORM__
