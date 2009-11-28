@@ -1,0 +1,854 @@
+День 4: Вид и контроллер
+========================
+
+Вчера мы изучали как symfony упрощает управление БД, создавая абстрагируя
+разницу между движками баз данных и конвертируя связанные элементы
+в прекрасные объекто-ориентированные классы. Мы уже также успели поиграться с 
+##ORM##, описывая схемы баз данных, создавая таблицы и заводя некоторые начальные 
+данные.
+
+Сегодня мы будем изменять базовый модуль `job`, созданные вчера.
+Модуль `job` уже имеет весь необходимый код для Jobeet.
+
+ * Страницу со списком вакансий
+ * Страницу заведения вакансии
+ * Страницу обновления вакансии
+ * Страницу удаления вакансии
+
+Так же код готов к использования "как есть", а мы будем рефакторить
+шаблоны, чтобы они стали более похожи на скетчи Jobeet.
+
+Архитектура MVC
+--------------------
+
+Если привыкли создавать сайта на PHP без применения фреймворка, то 
+возможно вы используюте парадигму, в которой один PHP файл равен одной веб странице.
+Возможно данные PHP файлы содержат схожую стркутуру: инициализация и глобальные
+настройки, бизнес логика привязана к текущей странице, получение записей БД и 
+конечно же HTML код, который простраивает страницу.
+
+Возможно вы используете шаблонизатор для отделения логики от HTML.
+Возможно вы используете слой абстракции баз данных, для отделения
+моделей от бизнес-логики. Но в большинстве случаев всё заканчивается
+огромным количеством кода, поддерживать который - сущий кошмар.
+Создать было просто, а вот вносить новые изменения уже нереально, особено
+если никто, кроме вас, не понимает как это сделано и как это работает.
+
+Для каждой проблемы всегда есть красивое решение. Для веб разработок одним
+из лучших способов организации кода в наше время является
+[**шаблон проектирования MVC**](http://en.wikipedia.org/wiki/Model-view-controller).
+Если коротко, то шаблон проектирования MVC определяет способ организации вашего кода
+в зависимости от его назначения. Шаблон разделяет код на **три типа**:
+
+  * **Model(Модель)** - определяет бизнес-логику (база данных относится к данному типу).
+    Вы уже знаете о том, что symfony хранит все классы, связанные с Model в каталоге
+    `lib/model`.
+
+  * **View(Вид)** это то, с чем работает пользователь (шаблонный движок являются частью
+    данного типа). В symfony, View по большей части основан на PHP шаблонах. 
+    Они хранятся в различных каталогах `templates`, в чём мы убедимся чуть позже. 
+
+  * **Controller(Контроллер)** это часть кода, которая вызывает Model для
+    получения данных, которые уже передаёт View для их обработки и выдачи клиенту.
+    Когда мы установили symfony в первый день, то мы увидели, что все запросы
+    принимаются фронт-контроллерами (`index.php` и `frontend_dev.php`). 
+    Данные фронт-контроллеры оставляют реальную работу **действиям(actions)**.
+    Вчера мы узнали, что действия логически сгруппированны в **модули**.
+
+![MVC](http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png)
+
+Сегодня мы воспользуемся скетчем, созданным на второй день, для обачивания
+главной страницы и страницы вакансий и сделаем их динамичными.
+По ходу дела мы изменим несколько вещей в небольших файлах, чтобы
+показать файловую структуру symfony, а так же способ разделения кода между 
+типа MVC.
+
+Обёртка.
+----------
+
+Взлянув повнимательней на наши наброски, вы наверное заметили, что некоторые
+вещи на страницах выглядят абсолютно одинаково. Вы уже знаете, что
+повторение кода это моветон, назависимо от того говорим ли мы о PHP или HTML, 
+поэтому нам нужно найти способ предотвратить повторение данного кода.
+
+Одним из путей решения этой проблемы является определние заголовка (хедер)
+и нижней части страницы (футер) и вставка их в каждый из шаблонов.
+
+![Хедер и футер](http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png)
+
+Только вот в данном случае файлы хедера и футера не содержат верного HTML.
+Должен быть лучший способ. Вместо изобретения велосипеда, мы используем другой
+дизайн-шаблон для решения проблемы:
+[Декоратор(Decorator)](http://en.wikipedia.org/wiki/Decorator_pattern).
+Декоторатор решает проблему объездным путём: шаблон обрамляется другим
+общим шаблоном, после того, как готово всё содержимое. Данный шаблон
+называется в symfony **layout**:
+
+![Layout](http://www.symfony-project.org/images/jobeet/1_4/04/layout.png)
+
+Стандартный layout в приложении называется `layout.php` и может быть
+найден в каталоге `apps/frontend/templates/`. Данный каталог содержит все
+общие (глобальные) шаблоны приложения.
+ 
+Замените текущий layout symfony следующим кодом:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <title>Jobeet - Your best job board</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <?php include_javascripts() ?>
+        <?php include_stylesheets() ?>
+      </head>
+      <body>
+        <div id="container">
+          <div id="header">
+            <div class="content">
+              <h1><a href="/job">
+                <img src="/images/jobeet.gif" alt="Jobeet Job Board" />
+              </a></h1>
+
+              <div id="sub_header">
+                <div class="post">
+                  <h2>Ask for people</h2>
+                  <div>
+                    <a href="/job/new">Post a Job</a>
+                  </div>
+                </div>
+
+                <div class="search">
+                  <h2>Ask for a job</h2>
+                  <form action="" method="get">
+                    <input type="text" name="keywords" id="search_keywords" />
+                    <input type="submit" value="search" />
+                    <div class="help">
+                      Enter some keywords (city, country, position, ...)
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="content">
+            <?php if ($sf_user->hasFlash('notice')): ?>
+              <div class="flash_notice"><?php echo $sf_user->getFlash('notice') ?></div>
+            <?php endif; ?>
+
+            <?php if ($sf_user->hasFlash('error')): ?>
+              <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
+            <?php endif; ?>
+
+            <div class="content">
+              <?php echo $sf_content ?>
+            </div>
+          </div>
+
+          <div id="footer">
+            <div class="content">
+              <span class="symfony">
+                <img src="/images/jobeet-mini.png" />
+                powered by <a href="http://www.symfony-project.org/">
+                <img src="/images/symfony.gif" alt="symfony framework" /></a>
+              </span>
+              <ul>
+                <li><a href="">About Jobeet</a></li>
+                <li class="feed"><a href="">Full feed</a></li>
+                <li><a href="">Jobeet API</a></li>
+                <li class="last"><a href="">Affiliates</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
+
+Шаблон symfony это обычный PHP файл. В шаблоне layout вы увидите вызовы 
+PHP функций и ссылки на переменные. `$sf_content` самая интересная переменная - 
+она определяется фреймворком и содержит весь HTML, созданный действием.
+
+Если вы взглянете теперь на модуль `job` (`http://jobeet.localhost/frontend_dev.php/job`),
+то увидите, что все действия теперь обрамлены layout'ом.
+
+>**NOTE**
+>В layout'е мы прописали *favicon*. Вы можете
+>[скачать иконку Jobeet](http://www.symfony-project.org/images/jobeet/favicon.ico)
+>и разместить её в катлоге `web/`.
+
+Стили, изображение, Javascript
+----------------------------------------
+
+Раз мы организовали конкурс на лучший дизайн, который состоится на 21ый день, то
+мы подготовили лишь самый базовый дизайн для текущего использования:
+[здесь можно скачать изобржения](http://www.symfony-project.org/get/jobeet/images.zip)
+и разместить их в каталог`web/images/`;
+[вот тут файлы стилей](http://www.symfony-project.org/get/jobeet/css.zip),
+которые стоит разместить в каталог `web/css/`.
+
+![Модуль вакансии с layout'ом, картинками и стилями](http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png)
+
+>**TIP**
+>Команда `generate:project` создала для нас 3 директории для файлов проекта:
+>`web/images/` для изображений, `web/css/` для стилей и
+>`web/js/` for JavaScript'ов. Это одно из нескольких правил, определяемых symfony.
+>Но никто вам не запрещает хранить файлы в любом месте каталога `web/` 
+
+Внимательны читатель скорей всего заметил, что даже файл `main.css`, 
+который нигде не упоминается в layout'е, появляется в полученном HTML/
+А вот другие стили - нет. Как такое возможно?
+
+Файлы стилей встраиваются при помощи функции `include_stylesheets()`,
+вызов которой можно обнаружить в теге `<head>`. Функция `include_stylesheets()`
+называется **хелпер**. Хелпер это функция, определённая в symfony, которая принимает
+параметры и возвращает HTML код. В большинстве случаев хелперы помогают экономить время,
+они содержать небольшие кусочки кода, переодически используемые в шаблонах. 
+Хелпер `include_stylesheets()` создаёт тег `<link>` для стилей.
+
+Но откуда хелперу известно, какие файл стилей нужно использовать?
+
+Вид(View) может быть настроен при помощи редактирования файла конфигурации приложения
+`view.yml`. Вот стандартное содержимое файла, получаемое после использования команды
+`generate:app`:
+
+    [yml]
+    # apps/frontend/config/view.yml
+    default:
+      http_metas:
+        content-type: text/html
+
+      metas:
+        #title:        symfony project
+        #description:  symfony project
+        #keywords:     symfony, project
+        #language:     en
+        #robots:       index, follow
+
+      stylesheets:    [main.css]
+
+      javascripts:    []
+
+      has_layout:     true
+      layout:         layout
+
+Файл `view.yml` определяет `стандартные` настройки для всех шаблонов
+приложения. Например, опция `stylesheets` определяет массив файлов стилей,
+которые будут включены на каждой странице приложения (включение осуществляется
+при помощи хелпера `include_stylesheets()`).
+
+>**NOTE**
+>В стандартном файле `view.yml` идёт ссылка на `main.css`, а не на `/css/main.css`
+>Но оба этих определения равны, потому что symfony приписывает к относительному пути
+>`/css/`.
+
+В случае, если у нас определены несколько файло, symfony включит их в том порядке, 
+в каком они были определены:
+
+    [yml]
+    stylesheets:    [main.css, jobs.css, job.css]
+
+Мы так же можете изменить атрибут `media` и поставить расширение отличное от `.css`:
+
+    [yml]
+    stylesheets:    [main.css, jobs.css, job.css, print: { media: print }]
+
+Данная конфигурация будет отображена как:
+
+    [php]
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/jobs.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/job.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
+
+>**TIP**
+>файл конфигурации `view.yml` так же определяет стандартный layout, который 
+>будет использоваться приложением. Изначально его имя `layout` и symfony обрамляет
+>каждую страницу файлом `layout.php`. Вы можете вообще отменить процесс декорации
+>изменив опцию `has_layout` на `false`.
+
+Всё что нам сейчас нужно, это чтобы файл `jobs.css` был прикручен к главной странице,
+а `job.css` к странице с вакансиями. Файл `view.yml` может быть изменён
+отдельно для каждого модуля. Измените `view.yml` так, чтобы он содержал лишь файл
+`main.css`:
+
+    [yml]
+    # apps/frontend/config/view.yml
+    stylesheets:    [main.css]
+
+Чтобы изменить вид модуля `job`, создайте файл `view.yml` в каталоге
+`apps/frontend/modules/job/config/`:
+
+    [yml]
+    # apps/frontend/modules/job/config/view.yml
+    indexSuccess:
+      stylesheets: [jobs.css]
+
+    showSuccess:
+      stylesheets: [job.css]
+
+Под частями `indexSuccess` и `showSuccess` (это имена шаблонов, 
+который связаны с действиями `index` и `show`, о чём мы узнаем позже),
+вы можете изменять любую из опций, находящихся в `default` в файле `view.yml`,
+относящемуся к приложению. Все данные опции будут частью конфигурации
+приложения. Вы так же можете определить конфигурациию для всех действий модуля 
+при помощи раздела `all`.
+
+>**SIDEBAR**
+>Принципы конфигурации в symfony
+>
+>Для многочисленных файлов настроек symfony, одни и теже опции могут быть
+>определены на разных уровнях:
+>
+>  * Дефолтная конфигурация расположена в фреймворке
+>  * Общая конфигурация проекта (лежит в `config/`)
+>  * Конфигурация приложения (в `apps/APP/config/`)
+>  * Конфигурация отдельного модуля (можно найти по адресу
+>    `apps/APP/modules/MODULE/config/`)
+>
+>Во время обработки, система конфигурации сливает все значения различных файлов,
+>если такоевые имеются, и кеширует результат для быстрой работы.
+
+Приавило большого пальца: если что-то где можно настроить через 
+файлы конфига, тоже самое можно сделать и через код PHP. 
+Вместо создания `view.yml` для модуля `job` можно использовать
+хелпер `use_stylesheet()` для вставки стиля в шаблон:
+
+    [php]
+    <?php use_stylesheet('main.css') ?>
+
+Вы так же можете использовать этот хелпер в layout'е, для вставки 
+общих стилей.
+
+Использовать ли один способо или другой - дело вкуса. Файл `view.yml`
+предоставляет способ определения вещей для всех действий модуля,
+что невозможно в отдельном шаблоне, но конфигурация абсолютно статична.
+С другой стороны, использование хелпера `use_stylesheet()` более гибкое
+и помимо этого всё в одном месте: и стили и HTML код. В Jobeet мы будет применять
+хелпера `use_stylesheet()`, так что вы можете удалить `view.yml`, который мы только
+что создали и обновить шаблоны модуля `job`, внеся туда вызовы `use_stylesheet()`.
+
+>**NOTE**
+>Пареллельно этому, конфигурация JavaScript осуществляется через опцию 
+>`javascripts` в файле `view.yml` и через хелпер `use_javascript()` для
+>определения JavaScript файлов в шаблоне.
+
+Главная страница вакансий
+----------------
+
+Как мы уже видели в третьем дне, главная страница вакансий генерируется
+действие `index` модуля `job`. Действие `index` это часть Контроллера страницы
+и оно связано с шаблоном `indexSuccess.php`, который является видом:
+
+    apps/
+      frontend/
+        modules/
+          job/
+            actions/
+              actions.class.php
+            templates/
+              indexSuccess.php
+
+### Действие
+
+Кажое действие определно методом класс. Для главной страницы вакансий 
+есть класс `jobActions` (к имени модуля прибавляется `Actions`), а так же
+метод `executeIndex()` (`execute` прибавляется к имени действия).
+Данное действие получает все вакансии из БД:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeIndex(sfWebRequest $request)
+      {
+<propel>
+        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+</propel>
+<doctrine>
+        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+          ->createQuery('a')
+          ->execute();
+</doctrine>
+      }
+
+      // ...
+    }
+
+<propel>
+Давайте взглянем поближе на код: метод `executeIndex()` (Контроллер)
+вызывает Модель `JobeetJobPeer` для получения все вакансий (`new Criteria()`).
+Последняя возвращает массив объектов `JobeetJob`, которые привязаны к 
+к свойству объекта `jobeet_job_list`.
+</propel>
+<doctrine>
+Давайте взглянем поближе на код: метод `executeIndex()` (Контроллер)
+вызывает таблицу `JobeetJob` для создания запроса, который получит все вакансии.
+Последняя возвращает `Doctrine_Collection` объектов `JobeetJob`, который привязываются
+к свойству объекта `jobeet_job_list`.
+</doctrine>
+
+Все подобные свойства объекта в дальнейшем передаются шаблону (Вид). Для 
+того чтобы передать данные из Контроллера в Вид, просто создайте ещё одно
+свойство:
+
+    [php]
+    public function executeIndex(sfWebRequest $request)
+    {
+      $this->foo = 'bar';
+      $this->bar = array('bar', 'baz');
+    }
+
+Данный код сделает переменные `$foo` и `$bar` доступными для шаблона.
+
+### Шаблон
+
+Изначально, названия шаблонов, связанных с действиями, определяются symfony
+благодаря правилам (к действию прибавляется `Success`).
+
+Шаблон `indexSuccess.php` создаёт HTML таблицу для вывода всех вакансий:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <h1>Job List</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Category</th>
+          <th>Type</th>
+    <!-- more columns here -->
+          <th>Created at</th>
+          <th>Updated at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <tr>
+          <td>
+            <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
+              <?php echo $jobeet_job->getId() ?>
+            </a>
+          </td>
+          <td><?php echo $jobeet_job->getCategoryId() ?></td>
+          <td><?php echo $jobeet_job->getType() ?></td>
+    <!-- more columns here -->
+          <td><?php echo $jobeet_job->getCreatedAt() ?></td>
+          <td><?php echo $jobeet_job->getUpdatedAt() ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+
+    <a href="<?php echo url_for('job/new') ?>">New</a>
+
+В коде шаблона, `foreach` пробегается по всем объектам `Job` (`$jobeet_job_list`)
+и выводит для каждой вакансии и каждое значения поля.
+Помните, получить доступ к значению поля просто - черех вызов акцесора,
+который начинается с `get` и cameCased имени поля (например `getCreatedAt()`
+для поля `created_at`).
+
+Давайте немного приберёмся в коде и организуем вывод лишь значений определённого
+набора доступных полей:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <?php use_stylesheet('jobs.css') ?>
+
+    <div id="jobs">
+      <table class="jobs">
+        <?php foreach ($jobeet_job_list as $i => $job): ?>
+          <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
+            <td><?php echo $job->getLocation() ?></td>
+            <td>
+              <a href="<?php echo url_for('job/show?id='.$job->getId()) ?>">
+                <?php echo $job->getPosition() ?>
+              </a>
+            </td>
+            <td><?php echo $job->getCompany() ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
+
+![Главная страница](http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png)
+
+Функция `url_for()` это очередной хелпер, который мы обсудим завтра. 
+
+Шаблон отображения вакансии
+---------------------------
+
+А теперь изменим шаблон страницы с вакансией. Откройте файл `showSuccess.php`
+и замените его содержимое следующим:
+
+    [php]
+    <?php use_stylesheet('job.css') ?>
+    <?php use_helper('Text') ?>
+
+    <div id="job">
+      <h1><?php echo $job->getCompany() ?></h1>
+      <h2><?php echo $job->getLocation() ?></h2>
+      <h3>
+        <?php echo $job->getPosition() ?>
+        <small> - <?php echo $job->getType() ?></small>
+      </h3>
+
+      <?php if ($job->getLogo()): ?>
+        <div class="logo">
+          <a href="<?php echo $job->getUrl() ?>">
+            <img src="<?php echo $job->getLogo() ?>"
+              alt="<?php echo $job->getCompany() ?> logo" />
+          </a>
+        </div>
+      <?php endif; ?>
+
+      <div class="description">
+        <?php echo simple_format_text($job->getDescription()) ?>
+      </div>
+
+      <h4>How to apply?</h4>
+
+      <p class="how_to_apply"><?php echo $job->getHowToApply() ?></p>
+
+      <div class="meta">
+<propel>
+        <small>posted on <?php echo $job->getCreatedAt('m/d/Y') ?></small>
+</propel>
+<doctrine>
+        <small>posted on <?php echo $job->getDateTimeObject('created_at')->format('m/d/Y') ?></small>
+</doctrine>
+      </div>
+
+      <div style="padding: 20px 0">
+        <a href="<?php echo url_for('job/edit?id='.$job->getId()) ?>">Edit</a>
+      </div>
+    </div>
+
+Данный шаблон использует переменню `$job`, которая передаётся действием, для
+отображения информации о вакансии. Так как мы переименовали переменную,
+передаваемую шаблону с `$jobeet_job` на `$job`, тоже самое нам нужно сделать в 
+дейсвтии `show` (будьте бдительны, эта переменная попадается нам дважды):
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeShow(sfWebRequest $request)
+    {
+<propel>
+      $this->job = JobeetJobPeer::retrieveByPk($request->getParameter('id'));
+</propel>
+<doctrine>
+      $this->job = Doctrine::getTable('JobeetJob')->find($request->getParameter('id'));
+</doctrine>
+      $this->forward404Unless($this->job);
+    }
+
+<propel>
+Смею заметить, что акцесоры Propel принимают аргументы. Мы определили поле
+`created_at` как timestamp, поэтому акцесор `getCreatedAt()` принимает
+шаблон формата даты как первый аргумент: 
+
+    [php]
+    $job->getCreatedAt('m/d/Y');
+</propel>
+<doctrine>
+Заметим, что столбцы, содержащие даты, могут быть преобразованы в экземпляры
+PHP-объекта DateTime. Поскольку мы описали столбец `created_at` как timestamp, 
+мы можем преобразовать значение столбца в объект DateTime при помощи метода 
+`getDateTimeObject()` и затем вызвать метод `format()`, который принимает шаблон
+форматирования в качестве первого аргумента:
+
+    [php]
+    $job->getDateTimeObject('created_at')->format('m/d/Y');
+</doctrine>
+
+>**NOTE**
+>Описание вакансии использует хелпер `simple_format_text()` для форматирования
+>HTML, заменяя переносы строка на `<br />`, например. Так как данный хелпер
+>относится к группе хелперов `Text`, который изначально не загружается, то нам
+>придётся загрузить его самим при помощи хелпера `use_helper()`.
+
+Слоты
+-----
+
+На данный момент все заголовки на всех страницах в теге `<title>` шаблона
+layout выглядят так:
+
+    [php]
+    <title>Jobeet - Your best job board</title>
+
+Но на странице вакансии мы бы хотели вывести куда более полезную информацию,
+включая имя компании и должность.
+
+В symfony, когда зона шаблона layout зависит от отображаемого шаблона, то
+мы должны определить слот:
+
+![Slots](http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png)
+
+Добавьте слот в layout, чтобы сделать заголовок более динамичным:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title><?php include_slot('title') ?></title>
+
+Каждый слот определяется именем (`title`) и может быть отображон при помощи
+хелпера `include_slot()`. Теперь в начале шаблона `showSuccess.php`
+используем хелпер `slot()`, чтобы определить содержимое слота на странице
+вакансии: 
+
+    [php]
+    // apps/frontend/modules/job/templates/showSuccess.php
+    <?php slot('title', sprintf('%s is looking for a %s', $job->getCompany(), $job->getPosition())) ?>
+
+Если тайтл сложен в генерации, то хелпер `slot()` можно использовать в виде блока:
+
+    [php]
+    // apps/frontend/modules/job/templates/showSuccess.php
+    <?php slot('title') ?>
+      <?php echo sprintf('%s is looking for a %s', $job->getCompany(), $job->getPosition()) ?>
+    <?php end_slot(); ?>
+
+На некоторых страницах, такие как главная, нужен обычный тайтл. Вместо
+повторения одного и того же тайтл вновь и вновь в шаблонах,м ы может определить
+стандартный тайтл в layout:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title>
+      <?php include_slot('title', 'Jobeet - Your best job board') ?>
+    </title>
+
+Второй аргумент метода `include_slot()` - это значения по умолчанию для слота,
+если он не был определен. Если значение по умолчанию длинное или содержит 
+HTML тэги, Вы можете также определить его, как показано в следующем коде:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <title>
+      <?php if (!include_slot('title')): ?>
+        Jobeet - Your best job board
+      <?php endif; ?>
+    </title>
+
+Хелпер `include_slot()` возвращает `true` если слот был определён. Так что, 
+когда вы определяете содержимое слота `title` в шаблоне, то используете оно; 
+если нет, то используется значение по умолчанию.
+
+>**TIP**
+>Мы уже познакомились с несколькими хелперами, начинающимися с `include_`. 
+>Эти хелперы выводят HTML и в большинстве случаев имеются сопряжённые хелперы `get_`, которые
+>просто напросто возвращают контент.
+>
+>     [php]
+>     <?php include_slot('title') ?>
+>     <?php echo get_slot('title') ?>
+>
+>     <?php include_stylesheets() ?>
+>     <?php echo get_stylesheets() ?>
+
+Страница вакансии
+-------------------
+
+Страница вакансии генерируется действием `show`, определённым в методе 
+`executeShow()` модуля `job`:
+
+    [php]
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+<propel>
+      $this->job = JobeetJobPeer::retrieveByPk($request->getParameter('id'));
+</propel>
+<doctrine>
+      $this->job = Doctrine::getTable('JobeetJob')->find($request->getParameter('id'));
+</doctrine>
+        $this->forward404Unless($this->job);
+      }
+
+      // ...
+    }
+
+<propel>
+В дейсвтии `index` класс `JobeetJobPeer` используется для получения вакансии,
+в данном случае через метод `retrieveByPk()`. Параметром данного метода
+является уникальный указатель на вакансию, его primary key. Далее мы
+объясним почему выражения `$request->getParameter('id')` возвращает этот ключ.
+</propel>
+<doctrine>
+В действии `index` класс таблицы `JobeetJob` используется для получения вакансии,
+в данном случае через метод `find()`. Параметром данного метода является 
+уникальный указатель на вакансию, его primary key. 
+As in the `index` action, the `JobeetJob` table class is used to retrieve a job,
+this time by using the `find()` method. The parameter of this method
+is the unique identifier of a job, its primary key. Далее мы
+объясним почему выражения `$request->getParameter('id')` возвращает этот ключ.
+</doctrine>
+
+<propel>
+>**TIP**
+>Сгенерированные класс моделей содержат много полезных методов для
+>взаимодействия с объектами проекта. Найдите время для просмотра кода, 
+>расположенного в каталоге `lib/om/` и раскройте всю силу, встроенную
+>в эти классы.
+</propel>
+
+Если вакансия не существует в БД, то стоит перенаправить пользователя на страницу 404,
+чем и занимается метод `forward404Unless()`. Он принимает Boolean в виде
+первого параметра и, до тех пор пока не он не будет true, останавливает
+исполнение текущего процесса. Методы перенаправления останавливают
+исполнение скрипты, выкидывая исключение `sfError404Exception`, поэтому 
+не нужно в последствии ничего возвращать.
+
+В случае исключения страница будет отображаться по разному в окружениях `prod` 
+и `dev`:
+
+![404 error in the dev environment](http://www.symfony-project.org/images/jobeet/1_2/05/404_dev.png)
+
+![404 error in the prod environment](http://www.symfony-project.org/images/jobeet/1_2/05/404_prod.png)
+
+>**NOTE**
+>Прежде чем мы зарелизим сайт Jobeet на рабочий сервер, вам придётся научиться изменять
+>основную страницу 404.
+
+-
+
+>**SIDEBAR**
+>Семейство методов "forward"
+>
+>Вызов метода `forward404Unless` равоносилен следующему:
+>
+>     [php]
+>     $this->forward404If(!$this->job);
+>
+>Что в свою очередь равно:
+>
+>     [php]
+>     if (!$this->job)
+>     {
+>       $this->forward404();
+>     }
+>
+>Сам по себе метод `forward404()` лишь ярлык для:
+>
+>     [php]
+>     $this->forward('default', '404');
+>
+>Метод `forward()` перенаправляет на другое действие этого же приложения;
+>в предыдущем примере на действие `404` модуля `default`.
+>Модуль `default` поставляется с symfony и несёт в себе основные действия для страниц
+>404, безопасности и авторизации.  
+
+Запрос и ответ
+----------------------------
+
+Когда вы попытаетесь запустить в браузере `/job` или `job/show/id/1/`, то
+вы запускаете кругосветное путешествие по веб-серверу. Браузер посылает 
+**запрос**, а сервер посылает обратно **ответ**.
+
+Мы уже видели, что symfony икапсулирует запроос в объект `sfWebRequest`
+(смотрите подпись к методу `executeShow()`). И в symfony, как в объекто-ориентированном фрейморке,
+ответ так же является объектом класса `sfWebResponse`. Вы можете получить
+доступ к объекту ответа в действии, вызывав `$this->getResponse()`.
+
+Данный объект предоставляет множество удобных методов, дающих доступ
+к информации из PHP функции и глобальных переменных PHP.
+
+>**NOTE**
+>Почему symfony собирает функционал PHP? Во-первых, потому что методы symfony более
+>мощные, чем их PHP составляющие. Затем, потому что, когда вы тестируете приложение,
+>куда проще эмулировать объекты запроса или ответа, чем пытаться бегать вокруг
+>глобальных переменных или работать с PHP функциями, вроде `header()`, которые
+>оставляют кучу магии нераскрытой. 
+
+### The Request
+
+Класс `sfWebRequest` собирает глобальные массивы `$_SERVER`, `$_COOKIE`, `$_GET`, `$_POST`,
+и `$_FILES` PHP:
+
+ Method name          | PHP equivalent
+ -------------------- | --------------------------------------------------
+ `getMethod()`        | `$_SERVER['REQUEST_METHOD']`
+ `getUri()`           | `$_SERVER['REQUEST_URI']`
+ `getReferer()`       | `$_SERVER['HTTP_REFERER']`
+ `getHost()`          | `$_SERVER['HTTP_HOST']`
+ `getLanguages()`     | `$_SERVER['HTTP_ACCEPT_LANGUAGE']`
+ `getCharsets()`      | `$_SERVER['HTTP_ACCEPT_CHARSET']`
+ `isXmlHttpRequest()` | `$_SERVER['X_REQUESTED_WITH'] == 'XMLHttpRequest'`
+ `getHttpHeader()`    | `$_SERVER`
+ `getCookie()`        | `$_COOKIE`
+ `isSecure()`         | `$_SERVER['HTTPS']`
+ `getFiles()`         | `$_FILES`
+ `getGetParameter()`  | `$_GET`
+ `getPostParameter()` | `$_POST`
+ `getUrlParameter()`  | `$_SERVER['PATH_INFO']`
+ `getRemoteAddress()` | `$_SERVER['REMOTE_ADDR']`
+
+Мы уже получали доступ к параметрам запроса через метод `getParameter()`.
+Она нам вернул значение из глобальных массивов `$_GET` или `$_POST` 
+или же из переменной `PATH_INFO`.
+
+Если вы хотите быть уверенных в том, что параметр запроса приходить из
+определённой перемнной, то стоит воспользовать методами `getGetParameter()`,
+`getPostParameter()` и `getUrlParameter()`.
+
+>**NOTE**
+>Когда вы хотите запретить действию определённый метод, например когда вы
+хотите быть уверенным в том что форма пришла методом `POST`, то
+вы можете использовать метод `isMethod()`:
+>`$this->forwardUnless($request->isMethod('POST'));`.
+
+### Ответ
+
+Класс `sfWebResponse` вбирает в себя методы `header()` и `setrawcookie()`:
+
+ Method name                   | PHP equivalent
+ ----------------------------- | ----------------
+ `setCookie()`                 | `setrawcookie()`
+ `setStatusCode()`             | `header()`
+ `setHttpHeader()`             | `header()`
+ `setContentType()`            | `header()`
+ `addVaryHttpHeader()`         | `header()`
+ `addCacheControlHttpHeader()` | `header()`
+
+Конечно же класс `sfWebResponse` так же предоставляет возможность устанавливать
+контент в ответе (`setContent()`) и отправлять ответ браузеру (`send()`).
+
+Сегодня, чуть ранее, мы видел как можно управлять файлами стилей и JavaScript
+в обоих видах `view.yml` и в шаблонах. В конце концов, обе техники
+отвечают методам  `addStylesheet()` и `addJavascript()` объекта ответа.
+
+>**TIP**
+>Классы [`sfAction`](http://www.symfony-project.org/api/1_2/sfAction),
+>[`sfRequest`](http://www.symfony-project.org/api/1_2/sfRequest) и 
+>[`sfResponse`](http://www.symfony-project.org/api/1_2/sfResponse) имеют
+>ещё много вкусных методов. Не стесняйтесь и взгляните на них в 
+>[документации API](http://www.symfony-project.org/api/1_2/) чтобы
+>знать больше про встроенные в symfony классы.
+
+Увидимся завтра!
+----------------
+
+Сегодя мы описали некоторые шаблоны проектирования, используемые в symfony.
+Надеюсь теперь структура проекта куда более понятна. Мы поигрались с шаблонами,
+изменяя layout и файлами шаблонов. Мы так же сделали их чуть более динамичными,
+благодаря слотам и действиям.
+
+Если вы хотите отправить оригинальный дизайн для нашего **конкурса дизайнеров**
+(который будет проведёт 21 числа), то самое время начать работать над шаблонами, 
+которые были определены сегодня. Правила предельно просты: мы должны
+создать дизайн сайта используя лишь стили и изображения. Мы
+постарались предоставить все необходимые вставки в HTML, но если вы считаете
+что нужно добавить другой `class` или `id`, то можете смело отправить
+мне email.
+
+Завтра мы узнаем больше о хелпере `url_for()`, который сегодня использовали,
+и о маршрутизации, связанной с ним. 
+
+А пока можете спокойно просмотреть исходники сегодняшнего для (тег
+`release_day_04`) на:
+
+    http://svn.jobeet.org/tags/release_day_04/
+
+__ORM__
