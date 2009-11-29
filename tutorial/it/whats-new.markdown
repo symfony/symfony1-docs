@@ -225,7 +225,15 @@ per disabilitare il riordinamento automatico.
 ### `sfForm::getEmbeddedForm($name)`
 
 Ora si può accedere ad uno specifico form annidato, usando il metodo
-`->getEmbeddedForm()`.
+`->getEmbeddedForm()`. È stato aggiunto un paramentro per disabilitare
+la ricorsione, utile se si rendono dei form annidati usando un formatter.
+
+    [php]
+    // rende tutti i campi hidden, inclusi quelli dei form annidati
+    echo $form->renderHiddenFields();
+
+    // rende i campi hidden senza ricorsione
+    echo $form->renderHiddenFields(false);
 
 ### `sfForm::renderHiddenFields()`
 
@@ -698,6 +706,28 @@ Ora si può disabilitare la generazione di form su alcuni modelli, passando
             form: false
             filter: false
 
+Si noti che occorre ricostruire il modello prima che questa impostazione
+sia applicata, perché il comportamento è collegato al modello ed esiste
+solamente dopo la sua ricostruzione.
+
+
+### Usare una versione diversa di Propel
+
+L'uso di una diversa versione di Propel è facile, basta impostare le
+variabili di configurazione `sf_propel_runtime_path` e `sf_propel_generator_path`
+in `ProjectConfiguration`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfPropelPlugin');
+
+      sfConfig::set('sf_propel_runtime_path', '/path/to/propel/runtime');
+      sfConfig::set('sf_propel_generator_path', '/path/to/propel/generator');
+    }
+
+
 Routing
 -------
 
@@ -830,6 +860,10 @@ segnamposto `%l` sarà sostituito dal numero di riga.
 
 Integrazione con Doctrine
 -------------------------
+
+Doctrine è stato aggiornato alla versione 1.2. Si visiti il sito di Doctrine
+per ulteriori informazioni sul suo aggiornamento
+(http://www.doctrine-project.org/documentation/1_2/en).
 
 ### Generazione delle Classi dei Form
 
@@ -1025,6 +1059,13 @@ Quindi ora si può fare come segue.
     +----+-----------+----------------+---------------------+---------------------+
     (2 results)
 
+### Passare parametri della query a `doctrine:dql`
+
+Il task `doctrine:dql` è stato migliorato, ora accetta dei parametri per le query
+come suoi parametri:
+
+    $ php symfony doctrine:dql "FROM Article a WHERE name LIKE ?" John%
+
 ### Debug delle query nei test funzionali
 
 La classe `sfTesterDoctrine` ora include un metodo `->debug()`. Questo metodo
@@ -1126,6 +1167,20 @@ sono ora rappresentati nella testata di documentazione di ogni classe base
 generata. Se l'IDE in uso supporta il completamento del codice, ora si
 dovrebbero avere i metodi degli oggetti del modello come `getPippoPluto()`
 e `setPippoPluto()`, dove `PippoPluto` è un nome di campo in CamelCase.
+
+### Usare una versione diversa di Doctrine
+
+L'uso di una diversa versione di Doctrine è facile, basta impostare 
+`sf_doctrine_dir` in `ProjectConfiguration`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins('sfDoctrinePlugin');
+
+      sfConfig::set('sf_doctrine_dir', '/path/to/doctrine/lib');
+    }
 
 Web Debug Toolbar
 -----------------

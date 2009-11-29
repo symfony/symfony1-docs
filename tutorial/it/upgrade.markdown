@@ -1,19 +1,47 @@
-Aggiornare i Progetti da 1.2 a 1.3
-==================================
+Aggiornare i Progetti da 1.2 a 1.3/1.4
+======================================
 
-Questo documento descrive i cambiamenti fatti in symfony 1.3 e cosa
+Questo documento descrive i cambiamenti fatti in symfony 1.3/1.4 e cosa
 serve per aggiornare i propri progetti basati su symfony 1.2.
 
 Per informazioni più dettagliate su cosa è stato modificato/aggiunto in
-symfony 1.3, si può leggere il tutorial
-[Che c'è di nuovo?](http://www.symfony-project.org/tutorial/1_3/it/whats-new).
+symfony 1.3/1.4, si può leggere il tutorial
+[Che c'è di nuovo?](http://www.symfony-project.org/tutorial/1_4/it/whats-new).
 
 >**CAUTION**
->symfony 1.3 è compatibile con PHP 5.2.4 e versioni successive.
+>symfony 1.3/1.4 è compatibile con PHP 5.2.4 e versioni successive.
 >Potrebbe funzionare anche con PHP 5.2.0 fino a 5.2.3, ma non è garantito.
 
-Come aggiornare?
-----------------
+Aggiornare a symfony 1.4
+------------------------
+
+Non c'è un task per aggiornare in symfony 1.4, essendo tale versione la stessa
+di symfony 1.3 (meno tutte le caratteristiche deprecate). Per aggiornare alla
+1.4, si deve prima aggiornare alla 1.3 e poi passare al rilascio 1.4.
+
+Prima di aggiornare alla 1.4, si può anche verificare che il progetto non usi
+classi, metodi, funzioni, impostazioni, ecc... deprecati, usando il task
+`project:validate`:
+
+    $ php symfony project:validate
+
+Il task elenca tutti i file che hanno bisogno di modifiche prima del
+passaggio a symfony 1.4.
+
+Si faccia attenzione al fatto che il task usa un'espressione regolare e
+quindi potrebbe dare molti falsi positivi. Inoltre, non è in grado di
+rilevare tutto, quindi è solamente uno strumento di aiuto nell'identificazione
+di possibili problemi, non una bacchetta magica. Occorre comunque leggere
+attentamente la pagina DEPRECATED.
+
+>**NOTE**
+>`sfCompat10Plugin` e `sfProtoculousPlugin` sono stati rimossi dalla 1.4.
+>Se erano stati esplicitamente disabilitati nei file delle classi di
+>configurazione del progetto, come `config/ProjectConfiguration.class.php`,
+>si devono eliminare tutti i riferimenti a tali file.
+
+Come aggiornare a symfony 1.3?
+------------------------------
 
 Per aggiornare un progetto:
 
@@ -124,10 +152,11 @@ JavaScript e Fogli di Stile
 
 ### Rimozione del filtro common
 
-`sfCommonFilter` è stato rimosso. Questo filtro serviva per inserire automaticamente
-i tag per JavaScript e fogli di stile nel contenuto della risposta. Ora si deve
-includere manualmente questi elementi richiamando esplicitamente gli helper
-`include_stylesheets()` e `include_javascripts()` nel layout:
+`sfCommonFilter` è stato deprecato e non più usato di default. Questo filtro 
+serviva per inserire automaticamente i tag per JavaScript e fogli di stile nel 
+contenuto della risposta. Ora si deve includere manualmente questi elementi 
+richiamando esplicitamente gli helper `include_stylesheets()` e 
+`include_javascripts()` nel layout:
 
     [php]
     <?php include_javascripts() ?>
@@ -162,6 +191,10 @@ Come aggiornare?
     contenuti nelle cartelle `templates/` delle applicazioni - ma solo se hanno
     un tag `<head>`; occorre aggiornare manualmente ogni altro layout e ogni altra
     pagina che non ha un layout, ma si basa su file JavaScript e/o fogli di stile).
+
+>**NOTE**
+>La classe `sfCommonFilter` è ancora inclusa in symfony 1.3, quindi la si può
+>ancora usare in `filters.yml`, se necessario.
 
 Task
 ----
