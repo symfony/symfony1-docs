@@ -231,7 +231,7 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
 </doctrine>
 
 <propel>
-`propel:build-model`タスクを実行する場合、symfonyは`lib/model/`の下でファイルを生成しますが、これは私たちが望むことではありません。
+`propel:build --model`タスクを実行する場合、symfonyは`lib/model/`の下でファイルを生成しますが、これは私たちが望むことではありません。
 Propelの出力ディレクトリは`package`オプションを追加することで設定できます。
 `schema.yml`を開き次のコンフィギュレーションを追加します:
 
@@ -243,14 +243,14 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
 これでsymfonyは`plugins/sfJobeetPlugin/lib/model/`ディレクトリの下でファイルを生成します。
 フォームとフィルタービルダーはファイルを生成する際にこの設定も考慮します。
 
-`propel:build-sql`タスクはテーブルを作成するSQLファイルを生成します。
+`propel:build --sql`タスクはテーブルを作成するSQLファイルを生成します。
 ファイルはパッケージの名前からつけられるので、現在のファイルを削除します:
 
     $ rm data/sql/lib.model.schema.sql
 
-`propel:build-all-load`を実行する場合、symfonyはプラグインの`lib/model/`ディレクトリの下でファイルを生成します:
+`propel:build --all --and-load`を実行する場合、symfonyはプラグインの`lib/model/`ディレクトリの下でファイルを生成します:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 タスクを実行した後で、`lib/model/`ディレクトリが作成されなかったことを確認します。
 タスクは`lib/form/`と`lib/filter/`ディレクトリを作成しました。

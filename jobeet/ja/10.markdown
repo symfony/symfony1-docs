@@ -67,11 +67,11 @@ symfonyのフォームは1つ以上のフィールドから構成されるクラ
 
 たいていの場合、フォームの内容をデータベースに保存する必要があります。
 symfonyはデータベースモデルに関するすべての内容を知っているので、この情報に基づいてフォームを自動的に生成できます。
-実際、3日目で`propel:build-all`タスクを起動したとき、symfonyは自動的に`propel:build-forms`タスクを呼び出しました:
+実際、3日目で`propel:build --all --and-load`タスクを起動したとき、symfonyは自動的に`propel:build --forms`タスクを呼び出しました:
 
-    $ php symfony propel:build-forms
+    $ php symfony propel:build --forms
 
-`propel:build-forms`タスクにより、`lib/form/`ディレクトリにフォームクラスが生成されます。
+`propel:build --forms`タスクにより、`lib/form/`ディレクトリにフォームクラスが生成されます。
 生成されたファイルの構成は、`lib/model/`のものと似ています。
 それぞれのモデルクラスごとに、対応するフォームクラスが生成されます(たとえば`JobeetJob`に対応する`JobeetJobForm`)。
 このクラスは基底クラスを継承し、デフォルトでは次のように空です:
@@ -106,7 +106,7 @@ symfonyはデータベースモデルに関するすべての内容を知って�
 <propel>
 >      classes:
 >        SomeModel:
->          propel_behaviors:
+>          _propel_behaviors:
 >            symfony:
 >              form: false
 >              filter: false

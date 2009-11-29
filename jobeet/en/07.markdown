@@ -293,10 +293,10 @@ Each time the `category` name changes, we need to compute and change the
 >object.
 </doctrine>
 
-Use the `propel:build-all-load` task to update the database tables, and
-repopulate the database with our fixtures:
+Use the `propel:build --all --and-load` task to update the database tables,
+and repopulate the database with our fixtures:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 We have now everything in place to create the `executeShow()` method. Replace
 the content of the `category` actions file with the following code:

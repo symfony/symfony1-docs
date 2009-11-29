@@ -784,7 +784,7 @@ And update the ~fixtures|Fixtures (I18n)~ for categories:
 
 Rebuild the model to create the `i18n` stub classes:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
     $ php symfony cc
 
 As the `name` and `slug` columns have been moved to the i18n table, move the
@@ -893,12 +893,7 @@ Rebuild the model:
 </doctrine>
 
 >**TIP**
-<propel>
->As the `propel:build-all` removes all tables and data from the database,
-</propel>
-<doctrine>
->As the `doctrine:build --all --and-load` removes all tables and data from the database,
-</doctrine>
+>As the `propel:build --all --and-load` removes all tables and data from the database,
 >don't forget to re-create a user to access the Jobeet backend with the
 >`guard:create-user` task. Alternatively, you can add a fixture file to add it
 >automatically for you.
@@ -1114,12 +1109,7 @@ define above in `test/fixtures/categories.yml`.
 
 Rebuild the model for the `test` environment:
 
-<propel>
-    $ php symfony propel:build-all-load --no-confirmation --env=test
-</propel>
-<doctrine>
-    $ php symfony doctrine:build --all -and-load --no-confirmation --env=test
-</doctrine>
+    $ php symfony propel:build --all -and-load --no-confirmation --env=test
 
 You can now launch all tests to check that they are running fine:
 

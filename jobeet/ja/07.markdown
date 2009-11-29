@@ -271,9 +271,9 @@
 >`name`フィールドの値を使ってスラッグはビルドされオブジェクトに設定されます。
 </doctrine>
 
-データベースのテーブルを更新するには`propel:build-all-load`タスクを使い、データベースにフィクスチャを投入します:
+データベースのテーブルを更新するには`propel:build --all --and-load`タスクを使い、データベースにフィクスチャを投入します:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 `executeShow()`メソッドを作るための場所が手に入りました。
 次のコードで`category`アクションファイルの内容を置き換えます:

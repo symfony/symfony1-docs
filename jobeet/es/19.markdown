@@ -655,7 +655,7 @@ Y actualiza los archivos de datos para las categorías:
 
 Reconstruye el modelo para crear las clase relacionadas `i18n`:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
     $ php symfony cc
 
 Como las columnas `name` y `slug` se han trasladado a la tabla i18n, mueve el método `setName()` de `JobeetCategory` a `JobeetCategoryI18n`:
@@ -748,18 +748,13 @@ Tenemos que hacer algunos cambios a fin de que la categoría es recuperada sobre
 
 Reconstruye el modelo:
 
-    $ php symfony doctrine:build-all-reload --no-confirmation
+    $ php symfony doctrine:build --all --and-load --no-confirmation
     $ php symfony cc
 
 </doctrine>
 
 >**TIP**
-<propel>
->Como `propel:build-all-load` remueve todas las tablas y los datos de la base de datos,
-</propel>
-<doctrine>
->Como `doctrine:build-all-reload` remueve todas las tablas y los datos de la base de datos,
-</doctrine>
+>Como `propel:build --all --and-load` remueve todas las tablas y los datos de la base de datos,
 >no olvides de volver a crear un usuario para acceder al Jobeet backend con la tarea
 >`guard:create-user`. Si lo prefieres, puedes añadir un archivo de datos para añadirlo
 >automáticamente.
@@ -952,12 +947,7 @@ definidos antes en `test/fixtures/categories.yml`.
 
 Reconstruir el modelo para el entorno `test`:
 
-<propel>
-    $ php symfony propel:build-all-load --no-confirmation --env=test
-</propel>
-<doctrine>
-    $ php symfony doctrine:build-all-reload --no-confirmation --env=test
-</doctrine>
+    $ php symfony propel:build --all --and-load --no-confirmation --env=test
 
 Ahora puedes lanzar todas las pruebas para comprobar que están funcionando bien:
 

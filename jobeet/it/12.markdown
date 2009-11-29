@@ -985,8 +985,8 @@ Configurazione dei filtri
 
 Configurare i filtri è praticamente identico al configurare le viste per i form.
 Come dato di fatto, i filtri sono esattamente dei form. E come per i form, le relative
-classi sono state generate dal task `propel:build-all`. 
-I filtri possono essere rigenerati con il task `propel:build-filters`.
+classi sono state generate dal task `propel:build --all`. 
+I filtri possono essere rigenerati con il task `propel:build --filters`.
 
 Le ~classi dei filtri|Form (classi dei filtri)~ per i form sono posizionate nella cartella `lib/filter` e
 ad ogni classe del modello è associata una classe filtro per il form 

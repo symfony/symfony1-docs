@@ -249,9 +249,9 @@ SQLを生成するためには、最初にスキーマファイルからモデ�
 モデルが生成されたので、SQLを生成してインサートできます。
 </doctrine>
 
-    $ php symfony propel:build-sql
+    $ php symfony propel:build --sql
 
-`propel:build-sql`タスクを実行すると、設定したデータベース用に最適化されたSQLステートメントが`data/sql/`ディレクトリに生成されます:
+`propel:build --sql`タスクを実行すると、設定したデータベース用に最適化されたSQLステートメントが`data/sql/`ディレクトリに生成されます:
 
 <propel>
     [sql]
@@ -292,9 +292,9 @@ SQLを生成するためには、最初にスキーマファイルからモデ�
 
 ORMを使って、テーブルのレコードをオブジェクトにマッピングするPHPクラスを生成することもできます:
 
-    $ php symfony propel:build-model
+    $ php symfony propel:build --model
 
-`propel:build-model`タスクを実行すると、データベースと情報をやりとりするために使用するPHPファイルが`lib/model/`ディレクトリに生成されます。
+`propel:build --model`タスクを実行すると、データベースと情報をやりとりするために使用するPHPファイルが`lib/model/`ディレクトリに生成されます。
 
 <propel>
 生成されたファイルを見てみると、Propelによって~テーブル|テーブル(データベース)~ごとに4つのクラスが生成されていることがわかります。
@@ -303,12 +303,12 @@ ORMを使って、テーブルのレコードをオブジェクトにマッピ�
   * `JobeetJob`: このクラスのオブジェクトは`jobeet_job`テーブルの**単独の~レコード|データベースのレコード~**を表します。
                  デフォルトではこのクラスは空です。
   * `BaseJobeetJob`: `JobeetJob`の親クラス。
-                     `propel:build-model`を実行するたびにこのクラスは上書きされるので、すべてのカスタマイズは`JobeetJob`クラスで行わなければなりません。
+                     `propel:build --model`を実行するたびにこのクラスは上書きされるので、すべてのカスタマイズは`JobeetJob`クラスで行わなければなりません。
 
   * `JobeetJobPeer`: このクラスでは、**`JobeetJob`オブジェクトのコレクションを返す**スタティックメソッドなどを定義します。
                      デフォルトではこのクラスは空です。
   * `BaseJobeetJobPeer`: `JobeetJobPeer`の親クラス。
-                         `propel:build-model`を実行するたびにこのクラスは上書きされるので、カスタマイズは`JobeetJobPeer`クラスで行わなければなりません。
+                         `propel:build --model`を実行するたびにこのクラスは上書きされるので、カスタマイズは`JobeetJobPeer`クラスで行わなければなりません。
 
 </propel>
 <doctrine>
@@ -344,26 +344,13 @@ ORMを使って、テーブルのレコードをオブジェクトにマッピ�
     $job = new JobeetJob();
     $job->setCategory($category);
 
-`propel:build-all`タスクは、この章で行ったタスクを一括して実行するショートカットです。
+`propel:build --all --and-load`タスクは、この章で行ったタスクを一括して実行するショートカットです。
 Jobeetモデルクラス用のフォームやバリデーターを生成するために、このタスクを今実行します:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 今日の最後にアクションにおけるバリデーターを見ることができます。
 フォームに関しては、10日目に詳しく説明する予定です。
-
->**TIP**
->symfony~タスク~は名前空間とタスクの名前で構成されます。
->それぞれのタスクは他のタスクとの曖昧性がない限り短くできます。 
->ですので次のコマンドは`propel:build-model`と同等です:
->
->     $ php symfony propel:build-mo
-<propel>
->     $ php symfony pro:build-mo
-</propel>
-<doctrine>
->     $ php symfony doc:build-mo
-</doctrine>
 
 初期データ
 ----------
@@ -550,7 +537,7 @@ symfonyでは##ORM##を使用してデータベースにデータをロードす
     $ php symfony propel:data-load
 
 >**TIP**
->`propel:build-all-load`タスクは、`propel:data-load`タスクが後に続く`propel:build-all`タスク用のショートカットです。
+>`propel:build --all --and-load`タスクは、`propel:data-load`タスクが後に続く`propel:build --all --and-load`タスク用のショートカットです。
 
 <doctrine>
 スキーマから可能なすべてを生成するには、`doctrine:build --all --and-load`タスクを実行します。

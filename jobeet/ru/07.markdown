@@ -281,10 +281,10 @@
 >При сохранении объекта, slug будет автоматически вычислен и установлен на основе свойства `name`.
 </doctrine>
 
-Используйте команду `propel:build-all-load`, чтобы обновить таблицы базы данных
+Используйте команду `propel:build --all --and-load`, чтобы обновить таблицы базы данных
 и заполнить тестовыми данными (фикстурой).
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 Теперь все готово, чтобы создать метод `executeShow()`.
 Замените содержимое контроллера `category` следующим кодом:

@@ -494,19 +494,14 @@ model classes to manage users, groups, and permissions, you need to rebuild
 your model:
 
 <propel>
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
     $ php symfony doctrine:build --all --and-load
 </doctrine>
 
 >**TIP**
-<propel>
->Remember that the `propel:build-all-load` task removes all existing tables
-</propel>
-<doctrine>
->Remember that the `doctrine:build --all --and-load` task removes all existing tables
-</doctrine>
+>Remember that the `propel:build --all --and-load` task removes all existing tables
 >before re-creating them. To avoid this, you can build the models, forms, and
 >filters, and then, create the new tables by executing the generated SQL
 >statements stored in `data/sql/`.

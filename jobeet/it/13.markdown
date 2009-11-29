@@ -482,19 +482,14 @@ diverse nuove classi del modello per gestire utenti, gruppi e permessi, è
 necessario ricostruire il modello:
 
 <propel>
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
-    $ php symfony doctrine:build-all-reload
+    $ php symfony doctrine:build --all --and-load
 </doctrine>
 
 >**TIP**
-<propel>
->Ricordate che il task `propel:build-all-load` rimuove tutte le tabelle esistenti
-</propel>
-<doctrine>
->Ricordate che il task `doctrine:build-all-reload` rimuove tutte le tabelle esistenti
-</doctrine>
+>Ricordate che il task `propel:build --all --and-load` rimuove tutte le tabelle esistenti
 >prima di ricrearle. Per evitarlo, si può costruire il modello, i form ed i
 >filtri, e poi creare le nuove tabelle eseguendo le istruzioni SQL generate
 >e memorizzate in `data/sql/`.

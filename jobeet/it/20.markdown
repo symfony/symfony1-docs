@@ -172,9 +172,9 @@ Esempio:
 Una volta spostate, rinominate e cancellate alcune classi di form, filtri e modelli,
 eseguiamo i task per ricostruire tutte le classi.
 
-    $ php symfony doctrine:build-model
-    $ php symfony doctrine:build-forms
-    $ php symfony doctrine:build-filters
+    $ php symfony doctrine:build --model
+    $ php symfony doctrine:build --forms
+    $ php symfony doctrine:build --filters
 
 Ora si noteranno alcune nuove cartelle create per mantenere i modelli creati
 dallo schema incluso con `sfJobeetPlugin` in `lib/model/doctrine/sfJobeetPlugin/`.
@@ -197,7 +197,7 @@ dallo schema. Per esempio il modello `JobeetJob` ora ha questa struttura di clas
   * `BaseJobeetJob` (estende `sfDoctrineRecord`) in
      `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
      classe base generata dallo schema yaml ogni volta che si
-     esegue `doctrine:build-model`.
+     esegue `doctrine:build --model`.
   
   * `JobeetJobTable` (estende `PluginJobeetJobTable`) in
      `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
@@ -233,7 +233,7 @@ sovrascrivendo i metodi `setTableDefinition()` e `setUp()`.
 </doctrine>
 
 <propel>
-Se si dovesse lanciare il task `propel:build-model` ora, symfony genererebbe
+Se si dovesse lanciare il task `propel:build --model` ora, symfony genererebbe
 ancora i file sotto `lib/model/`, il che non è quello che vogliamo. La cartella
 in output di Propel può essere configurata con l'aggiunta dell'opzione `package`. Aprire
 il file `schema.yml` e aggiungere la seguente configurazione:
@@ -247,15 +247,15 @@ Ora symfony genererà i suoi file dentro la cartella
 `plugins/sfJobeetPlugin/lib/model/`. I costruttori dei form e dei filtri
 terranno conto anche loro della configurazione quando generano dei file.
 
-Il task `propel:build-sql` genera un file SQL per creare le tabelle. Essendo che
+Il task `propel:build --sql` genera un file SQL per creare le tabelle. Essendo che
 il file è il nome del pacchetto, eliminare quello presente:
 
     $ rm data/sql/lib.model.schema.sql
 
-Ora, lanciando `propel:build-all-load`, symfony genererà i file dentro
+Ora, lanciando `propel:build --all --and-load`, symfony genererà i file dentro
 la cartella del plugin `lib/model/`, come ci si dovrebbe aspettare:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 Dopo aver lanciato il task, verificare che non sia stata creata la cartella `lib/model/`.
 Il task ha comunque creato le cartelle `lib/form/` e `lib/filter/`. Entrambe
@@ -269,7 +269,7 @@ Poiché tali file sono globali per un progetto, rimuoverli dal plugin:
 <doctrine>
 È necessario assicurarsi che il plugin non abbia classi base per i form di
 Doctrine. Questi file sono globali per un progetto e verranno rigenerati con 
-`doctrine:build-forms` e `doctrine:build-filters`.
+`doctrine:build --forms` e `doctrine:build --filters`.
 
 Rimuovere tali file dal plugin:
 

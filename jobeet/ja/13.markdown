@@ -428,19 +428,14 @@ symfonyフレークワークの大きな強みの1つは[プラグインのエ�
 ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります:
 
 <propel>
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
     $ php symfony doctrine:build --all --and-load
 </doctrine>
 
 >**TIP**
-<propel>
->`propel:build-all-load`タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。
-</propel>
-<doctrine>
->`doctrine:build --all --and-load`タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。
-</doctrine>
+>`propel:build --all --and-load`タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。
 >これを避けるには、モデル、フォーム、フィルターをビルドし、`data/sql/`に保存されている生成SQLステートメントを実行して新しいテーブルを作成します。
 
 <propel>

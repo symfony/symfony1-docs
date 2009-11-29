@@ -264,9 +264,9 @@ Cada vez que el nombre `category` cambia, tenemos que calcular el cambio así co
 >objeto.
 </doctrine>
 
-Usa la tarea `propel:build-all-load` para actualizar las tablas de la base de datos, y llenar la base de datos con nuestros datos:
+Usa la tarea `propel:build --all --and-load` para actualizar las tablas de la base de datos, y llenar la base de datos con nuestros datos:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 Tenemos ahora todo en su lugar para crear el método `executeShow()`. Reemplaza el contenido del archivo de acciones `category` con el siguiente código:
 

@@ -258,7 +258,7 @@ and add columns, add relationships by overriding the `setTableDefinition()` and
 </doctrine>
 
 <propel>
-If you were to run the `propel:build-model` task now, symfony would still
+If you were to run the `propel:build --model` task now, symfony would still
 generate the files under `lib/model/`, which is not what we want. The Propel
 output directory can be configured by adding a `package` option. Open the
 `schema.yml` and add the following configuration:
@@ -272,15 +272,15 @@ Now symfony will generate its files under the
 `plugins/sfJobeetPlugin/lib/model/` directory. The form and filter builders
 also take this configuration into account when they generate files.
 
-The `propel:build-sql` task generates a SQL file to create tables. As the
+The `propel:build --sql` task generates a SQL file to create tables. As the
 file is named after the package, remove the current one:
 
     $ rm data/sql/lib.model.schema.sql
 
-Now, if you run `propel:build-all-load`, symfony will generate files under the
-plugin `lib/model/` directory as expected:
+Now, if you run `propel:build --all --and-load`, symfony will generate files
+under the plugin `lib/model/` directory as expected:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 After running the task, check that no `lib/model/` directory has been created.
 The task has created `lib/form/` and `lib/filter/` directories, however. They

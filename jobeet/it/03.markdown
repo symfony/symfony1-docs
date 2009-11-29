@@ -291,14 +291,14 @@ delle tabelle.
 Prima, per poter generare l'SQL, si deve costruire il modello partendo dai
 file dello schema.
 
-    $ php symfony doctrine:build-model
+    $ php symfony doctrine:build --model
 
 Ora che i modelli sono presenti, si può generare ed inserire l'SQL.
 </doctrine>
 
-    $ php symfony propel:build-sql
+    $ php symfony propel:build --sql
 
-Il task `propel:build-sql` genera le istruzioni SQL nella cartella `data/sql`,
+Il task `propel:build --sql` genera le istruzioni SQL nella cartella `data/sql`,
 ottimizzate per il database che abbiamo configurato.
 
 <propel>
@@ -345,9 +345,9 @@ essere utile durante l'esecuzione di un processo batch non interattivo.
 L'ORM genera anche le classi PHP per mappare i record delle tabelle all'interno
 di oggetti.
 
-    $ php symfony propel:build-model
+    $ php symfony propel:build --model
 
-Il task `propel:build-model` genera i file PHP all'interno della cartella
+Il task `propel:build --model` genera i file PHP all'interno della cartella
 `lib/model`, che può essere utilizzata per interagire con il database.
 
 <propel>
@@ -358,14 +358,14 @@ classi per ogni ~tabella|Tabella (Database)~. Per la tabella `jobeet_job`:
      ~record|Record~**
      della tabella `jobeet_job`. La classe è vuota di default.
   * `BaseJobeetJob`: La classe estesa da `JobeetJob`. Ogni volta che si esegue
-     `propel:build-model`, questa classe è sovrascritta, per cui
+     `propel:build --model`, questa classe è sovrascritta, per cui
      le personalizzazione dovranno essere eseguite nella classe
      `JobeetJob`.
   * `JobeetJobPeer`: La classe definisce metodi statici che **restituiscono
      di solito insiemi di oggetti `JobeetJob`**. Questa classe è
      vuota di default.
   * `BaseJobeetJobPeer`: La classe estesa da `JobeetJobPeer`. Ogni volta
-     che si esegue `propel:build-model`, questa classe è sovrascritta,
+     che si esegue `propel:build --model`, questa classe è sovrascritta,
      per cui le personalizzazioni dovranno essere eseguite nella
      classe `JobeetJobPeer`.
 </propel>
@@ -376,7 +376,7 @@ classi per ogni tabella. Per la tabella `jobeet_job`:
   * `JobeetJob`: Un oggetto di questa classe rappresenta un singolo record della
      tabella `jobeet_job`. La classe è vuota di default.
   * `BaseJobeetJob`: La classe estesa da `JobeetJob`. Ogni volta che si esegue
-     `doctrine:build-model`, questa classe è sovrascritta, per cui
+     `doctrine:build --model`, questa classe è sovrascritta, per cui
      le ~personalizzazioni|Personalizzazione~ dovranno essere eseguite nella classe
      `JobeetJob`.
   * `JobeetJobTable`: La classe definisce i metodi che di solito restituiscono
@@ -407,35 +407,27 @@ oggetti tra loro:
     $job = new JobeetJob();
     $job->setCategory($category);
 
-Il task `propel:build-all` è una scorciatoia per i task che abbiamo eseguito in
+Il task `propel:build --all` è una scorciatoia per i task che abbiamo eseguito in
 questa sezione, più alcuni altri. Per cui eseguite questo task per generare form e
 validatori per le classi model di Jobeet.
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
 
 Vedremo i validatori in azione alla fine della giornata, mentre i form verranno
 discussi nel dettaglio nel giorno 10.
 
 >**TIP**
->Il task `propel:build-all-load` è una scorciatoia per il task
->`propel:build-all` seguito dal task `propel:data-load`.
+>Il task `propel:build --all --and-load` è una scorciatoia per il task
+>`propel:build --all` seguito dal task `propel:data-load`.
 
 Come vedremo in seguito, symfony ~carica automaticamente|Autoload~ le classi per noi, ciò
 significa che non si avrà mai bisogno di usare un `require` nel codice. È una
 delle numerose funzionalità che symfony automatizza per lo sviluppatore, ma
 purtroppo questo implica il dover svuotare la cache ogni volta si aggiunge una
-nuova classe. Dato che `propel:build-model` ha creato molte nuove classi,
+nuova classe. Dato che `propel:build --model` ha creato molte nuove classi,
 puliamo la ~cache|Cache~:
 
      $ php symfony cache:clear
-
->**TIP**
->Un ~task|Task~ di symfony è composto da un namespace e da un nome. Ognuno può essere
->ccorciato se non c'è ambiguità con altri task. Per cui il seguente comando è
->equivalente a `propel:build-model`:
->
->     $ php symfony propel:build-mo
->     $ php symfony pro:build-mo
 
 I Dati Iniziali
 ---------------
@@ -646,15 +638,15 @@ Caricare i dati iniziali nel database è facile come eseguire il task:
     $ php symfony propel:data-load
 
 >**TIP**
->Il task `propel:build-all-load` è una scorciatoria per il task
->`propel:build-all` seguito dal task `propel:data-load`.
+>Il task `propel:build --all --and-load` è una scorciatoria per il task
+>`propel:build --all` seguito dal task `propel:data-load`.
 
 <doctrine>
-Eseguiamo il task `doctrine:build-all-reload` per assicurarci che tutto
+Eseguiamo il task `doctrine:build --all --and-load` per assicurarci che tutto
 venga generato dallo schema. Questo genererà form, filtri, modelli,
 e cancellerà e ricreerà il database con tutte le tabelle.
 
-    $ php symfony doctrine:build-all-reload
+    $ php symfony doctrine:build --all --and-load
 </doctrine>
 
 Vediamolo in azione nel browser

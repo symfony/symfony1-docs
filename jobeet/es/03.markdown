@@ -267,14 +267,14 @@ Gracias al archivo de descripción de la base de datos `schema.yml`, podemos uti
 <doctrine>
 Primero para generar el SQL debes contruir el modelo apartir de tus archivos esquema.
 
-    $ php symfony doctrine:build-model
+    $ php symfony doctrine:build --model
 
 Ahora que tus modelos existen puedes generar e insertar el SQL.
 </doctrine>
 
-    $ php symfony propel:build-sql
+    $ php symfony propel:build --sql
 
-La tarea `propel:build-sql` genera comandos SQL en el directorio `data/sql/`, 
+La tarea `propel:build --sql` genera comandos SQL en el directorio `data/sql/`, 
 optimizado para el motor de base de datos que hemos configurado:
 
 <propel>
@@ -317,23 +317,23 @@ Como la tarea elimina las tablas existentes antes de re-crearlas, necesitas conf
 
 El ORM también genera las clases PHP que mapea los registros de la tabla con los objetos:
 
-    $ php symfony propel:build-model
+    $ php symfony propel:build --model
 
-La tarea `propel:build-model` genera archivos PHP en el directorio `lib/model/` que se pueden utilizar para interactuar con la base de datos.
+La tarea `propel:build --model` genera archivos PHP en el directorio `lib/model/` que se pueden utilizar para interactuar con la base de datos.
 <propel>
 Navegando por los archivos generados, probablemente habrás notado que Propel genera cuatro clases por tabla. Para la tabla `jobeet_job`:
 
   * `JobeetJob`: Un objeto de esta clase **representa un único registro** de la tabla `jobeet_job`. La clase está vacía por defecto.
-  * `BaseJobeetJob`: La clase padre de `JobeetJob`. Cada vez que ejecutas `propel:build-model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJob`.
+  * `BaseJobeetJob`: La clase padre de `JobeetJob`. Cada vez que ejecutas `propel:build --model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJob`.
 
   * `JobeetJobPeer`: La clase define los métodos estáticos que mayormente **devuelve colecciones** de objetos `JobeetJob`. La clase está vacía por defecto.
-  * `BaseJobeetJobPeer`:  La clase padre de `JobeetJobPeer`. Cada vez que ejecutas `propel:build-model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJobPeer`.
+  * `BaseJobeetJobPeer`:  La clase padre de `JobeetJobPeer`. Cada vez que ejecutas `propel:build --model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJobPeer`.
 </propel>
 <doctrine>
 Navegando por los archivos generados, probablemente habrás notado que Doctrine genera cuatro clases por tabla. Para la tabla `jobeet_job`:
 
  * `JobeetJob`: Un objeto de esta clase **representa un único registro** de la tabla `jobeet_job`. La clase está vacía por defecto.
- * `BaseJobeetJob`: La clase padre de `JobeetJob`. Cada vez que ejecutas `doctrine:build-model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJob`.
+ * `BaseJobeetJob`: La clase padre de `JobeetJob`. Cada vez que ejecutas `doctrine:build --model`, esta clase es sobreescrita, por lo que todas las personalizaciones se deben hacer en la clase `JobeetJob`.
  
  * `JobeetJobTable`: La clase define los métodos que mayormente **devuelve colecciones** de objetos `JobeetJob`. La clase está vacía por defecto.
 </doctrine>
@@ -358,20 +358,11 @@ También puedes definir claves foráneas directamente por la vinculación de obj
     $job = new JobeetJob();
     $job->setCategory($category);
 
-La tarea `propel:build-all` es un acceso directo para las tareas que han ejecutado en esta sección y algunas más. Por lo tanto, ejecuta esta tarea ahora para generar formularios y validadores para el modelo de clases de Jobeet:
+La tarea `propel:build --all` es un acceso directo para las tareas que han ejecutado en esta sección y algunas más. Por lo tanto, ejecuta esta tarea ahora para generar formularios y validadores para el modelo de clases de Jobeet:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
 
 Verás los validadores en acción al final del día y los formularios se explicarán en gran detalle en el día 10.
-
->**TIP**
->Una tarea symfony está hecha de un nombre y un espacio de nombres. Cada una puede ser más breve
->en tanto no haya ambigüedad con otras tareas. Por lo tanto, los siguientes comandos
->son equivalentes a `propel:build-model`:
->
->     $ php symfony propel:build-mo
->     $ php symfony pro:build-mo
-
 
 Los Datos Iniciales
 -------------------
@@ -552,13 +543,13 @@ La carga de los datos iniciales en la base de datos es tan simple como ejecutar 
     $ php symfony propel:data-load
     
 >**TIP**
->La tarea `propel:build-all-load` es un atajo para la tarea `propel:build-all` 
+>La tarea `propel:build --all --and-load` es un atajo para la tarea `propel:build --all` 
 >seguida de la tarea `propel:data-load`.
 
 <doctrine>
-Ejecuta la tarea `doctrine:build-all-reload` para asegurarte que todo es generado desde tu esquema. Esto generará tus formularios, filtros, modelos, vaciará tu base de datos y la re-creará de nuevo con todas las tablas.
+Ejecuta la tarea `doctrine:build --all --and-load` para asegurarte que todo es generado desde tu esquema. Esto generará tus formularios, filtros, modelos, vaciará tu base de datos y la re-creará de nuevo con todas las tablas.
 
-    $ php symfony doctrine:build-all-reload
+    $ php symfony doctrine:build --all --and-load
 </doctrine>
     
 

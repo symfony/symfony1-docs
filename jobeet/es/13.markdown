@@ -410,19 +410,14 @@ que explica cómo configurarlo.
 Vamos a ver cómo configurar el nuevo plugin. Como el plugin ofrece varias nuevas clases al modelo para la gestión de usuarios, grupos y permisos, necesitas reconstruir tu modelo:
 
 <propel>
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
-    $ php symfony doctrine:build-all-reload
+    $ php symfony doctrine:build --all --and-load
 </doctrine>
 
 >**TIP**
-<propel>
->Recuerde que la tarea `propel:build-all-load` elimina todas las tablas existentes
-</propel>
-<doctrine>
->Recuerde que la tarea `doctrine:build-all-reload` elimina todas las tablas existentes
-</doctrine>
+>Recuerde que la tarea `propel:build --all --and-load` elimina todas las tablas existentes
 >antes de volver a crearlas. Para evitar esto, puedes construir los modelos, formularios y
 >filtros y, a continuación, crear las nuevas tablas ejecutando el 
 >SQL generado y almacenado en `data/sql/`.

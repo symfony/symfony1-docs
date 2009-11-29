@@ -84,12 +84,12 @@ value for the `required` option is `true`. So, the validation definition for
 Most of the time, a form has to be serialized to the database. As symfony
 already knows everything about your database model, it can automatically
 generate forms based on this information. In fact, when you launched the
-`propel:build-all` task during day 3, symfony automatically called the
-`propel:build-forms` task:
+`propel:build --all` task during day 3, symfony automatically called the
+`propel:build --forms` task:
 
-    $ php symfony propel:build-forms
+    $ php symfony propel:build --forms
 
-The `propel:build-forms` task generates form classes in the `lib/form/`
+The `propel:build --forms` task generates form classes in the `lib/form/`
 directory. The organization of these generated files is similar to that of
 `lib/model/`. Each model class has a related form class (for instance
 `JobeetJob` has `JobeetJobForm`), which is empty by default as it inherits

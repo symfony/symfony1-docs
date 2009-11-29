@@ -173,9 +173,9 @@ Ejemplo:
 
 Una vez que se ha mudado, cambiado de nombre y se eliminan algunas clases forms, filters y model corre las tarea para la re-construcción de todas las clases.
 
-    $ php symfony doctrine:build-forms
-    $ php symfony doctrine:build-filters
-    $ php symfony doctrine:build-models
+    $ php symfony doctrine:build --forms
+    $ php symfony doctrine:build --filters
+    $ php symfony doctrine:build --models
 
 Ahora te darás cuenta que algunos de los nuevos directorios creados para mantener los modelos creados a partir de el esquema estan incluido en el `sfJobeetPlugin` en `lib/model/doctrine/sfJobeetPlugin`.
 
@@ -185,7 +185,7 @@ Este directorio contiene los modelos de nivel superior y la base de clases gener
 |-----------------------|----------------------------|-----------------------------|-----------------------------|
 | JobeetJob             | PluginJobeetJob            | lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php | Top level class where all project model functionality can be placed. This is where you can add and override functionality that comes with the plugin models. |
 | PluginJobeetJob       | BaseJobeetJob              | plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php | This class contains all the plugin specific functionality. You can override functionality in this class and the base by modifying the `JobeetJob` class. |
-| BaseJobeetJob         | sfDoctrineRecord           | lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php | Base class that is generated from the yaml schema file each time you run `doctrine:build-model`. |
+| BaseJobeetJob         | sfDoctrineRecord           | lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php | Base class that is generated from the yaml schema file each time you run `doctrine:build --model`. |
 | JobeetJobTable        | PluginJobeetJobTable       | lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php | Same as the `JobeetJob` class except this is the instance of `Doctrine_Table` that will be returned when you call `Doctrine::getTable('JobeetJob')`. |
 | PluginJobeetJobTable  | Doctrine_Table             | lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php | This class contains all the plugin specific functionality for the instance of `Doctrine_Table` that will be returned when you call `Doctrine::getTable('JobeetJob')`.
 
@@ -207,7 +207,7 @@ Con esta estructura que has generado tienes la posibilidad de personalizar los m
 >     }</doctrine>
 
 <propel>
-Si se ejecuta la tarea `propel:build-model` ahora, Symfony aún generará los archivos bajo `lib/model/`, que no es lo que queremos. La salida de Propel se puede configurar mediante la adición de una opción `package`. Abre el `schema.yml` y añade la siguiente configuración:
+Si se ejecuta la tarea `propel:build --model` ahora, Symfony aún generará los archivos bajo `lib/model/`, que no es lo que queremos. La salida de Propel se puede configurar mediante la adición de una opción `package`. Abre el `schema.yml` y añade la siguiente configuración:
 
     [yml]
     # plugins/sfJobeetPlugin/config/schema.yml
@@ -216,13 +216,13 @@ Si se ejecuta la tarea `propel:build-model` ahora, Symfony aún generará los ar
 
 Ahora Symfony generará sus archivos en `plugins/sfJobeetPlugin/lib/model/`. El generador de form y filter aprovechan también esta configuración cuando se generan archivos.
 
-La tarea `propel:build-sql` genera un archivo SQL para crear tablas. Como el archivo es nombrado luego del package, remueve el actual:
+La tarea `propel:build --sql` genera un archivo SQL para crear tablas. Como el archivo es nombrado luego del package, remueve el actual:
 
     $ rm data/sql/lib.model.schema.sql
 
-Ahora, si ejecutas `propel:build-all-load`, Symfony generará archivos en el marco del directorio del plugin `lib/model/` como se esperaba:
+Ahora, si ejecutas `propel:build --all --and-load`, Symfony generará archivos en el marco del directorio del plugin `lib/model/` como se esperaba:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 Después de ejecutar la tarea, comprueba que ningún directorio  `lib/model/` se ha creado.
 La tarea ha creado directorios `lib/form/` y `lib/filter/`, sin embargo. Ambos son la base para todas las clases forms Propel en tu proyecto.
@@ -233,7 +233,7 @@ Como estos archivos son de alcance global para un proyecto, retiralos del plugin
     $ rm plugins/sfJobeetPlugin/lib/filter/BaseFormFilterPropel.class.php
 </propel>
 <doctrine>
-Tenemos que asegurarnos de que nuestro plugin no tiene clases base para todas los Doctrine forms. Estos archivos son globales para un proyecto y se volverán a generar con la `doctrine:build-forms` y `doctrine:build-filters`.
+Tenemos que asegurarnos de que nuestro plugin no tiene clases base para todas los Doctrine forms. Estos archivos son globales para un proyecto y se volverán a generar con la `doctrine:build --forms` y `doctrine:build --filters`.
 
 Quitar los archivos del plugin:
 

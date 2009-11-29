@@ -313,9 +313,9 @@ ORM
 Теперь, когда модели созданы, можно генерировать и вставлять SQL.
 </doctrine>
 
-    $ php symfony propel:build-sql
+    $ php symfony propel:build --sql
 
-Команда `propel:build-sql` создаёт SQL в каталоге `data/sql`,
+Команда `propel:build --sql` создаёт SQL в каталоге `data/sql`,
 оптимизированный под ту БД, которую мы указали в конфигурации. 
 
 <propel>
@@ -360,9 +360,9 @@ ORM
 
 ORM так же генерирует PHP классы, которые связывают записи таблицы и объекты:
 
-    $ php symfony propel:build-model
+    $ php symfony propel:build --model
 
-Команда `propel:build-model` генерирует PHP файлы в каталоге `lib/model`.
+Команда `propel:build --model` генерирует PHP файлы в каталоге `lib/model`.
 Данные файлы используются для работы с базой данных.
 
 <propel>
@@ -372,7 +372,7 @@ ORM так же генерирует PHP классы, которые связы
   * `JobeetJob`: Объект данного класса представляет собой запись таблицы
                  `jobeet_job`. Класс изначально пуст.
   * `BaseJobeetJob`: Родительский класс `JobeetJob`. Каждый раз когда вы
-                     запускаете `propel:build-model`, данный класс перезаписывается, поэтому
+                     запускаете `propel:build --model`, данный класс перезаписывается, поэтому
                      все изменения должны вноситься в класс `JobeetJob`. 
 
   * `JobeetJobPeer`: Класс определяет static методы, которые в основном возвращают
@@ -387,7 +387,7 @@ ORM так же генерирует PHP классы, которые связы
 
  * `JobeetJob`: Объект, представляющий запись таблицы `jobeet_job`. Класс изначально пуст.
  * `BaseJobeetJob`: Базовый класс `JobeetJob`. Каждый раз когда вы
-                     запускаете `doctrine:build-model`, данный класс перезаписывается, поэтому
+                     запускаете `doctrine:build --model`, данный класс перезаписывается, поэтому
                      все изменения должны вноситься в класс `JobeetJob`. 
  * `JobeetJobTable`: Клас определяет static методы, которые в основном возвращают
                      коллекцию объектов `JobeetJob`. Класс изначально пуст.
@@ -414,38 +414,15 @@ ORM так же генерирует PHP классы, которые связы
     $job->setCategory($category);
 
 Команда 
-<propel>
-`propel:build-all`
-</propel>
-<doctrine>
-`doctrine:build --all`
-</doctrine>
+`propel:build --all`
 это ярлык для всех команд, которые мы уже запустили в данной
 части, а так же некоторых других. Запустите данную команду,
 для того чтобы сгенерировать все формы и валидаторы для классов моделей Jobeet:
 
-<propel>
-    $ php symfony propel:build-all
-</propel>
-<doctrine>
-    $ php symfony doctrine:build --all
-</doctrine>
+    $ php symfony propel:build --all
 
 В конце дня вы увидите валидаторы в действии, а о формах пойдёт речь на 10ый день
 нашего учебника.
-
->**TIP**
->Все команды symfony состоят и имени пространства и имени задачи. Каждая
->из них может быть уменьшена так, как захочется, если конечно она не пересекается
->с другими командами. Так, следующие команды равносильны `propel:build-model`:
->
->     $ php symfony propel:build-mo
-<propel>
->     $ php symfony pro:build-mo
-</propel>
-<doctrine>
->     $ php symfony doc:build-mo
-</doctrine>
 
 Загрузка данных
 ----------------
@@ -634,7 +611,7 @@ ORM так же генерирует PHP классы, которые связы
 
 <propel>
 >**TIP**
->Задача `propel:build-all-load` - это ярлык для задач `propel:build-all`
+>Задача `propel:build --all --and-load` - это ярлык для задач `propel:build --all`
 >и `propel:data-load`, выполняемых последовательно.
 </propel>
 

@@ -60,11 +60,11 @@ Por defecto, todos los campos son obligatorios, así el valor por defecto para `
 Formularios ##ORM##
 -------------------
 
-La mayoría de las veces, un formulario tiene que ser serializado (guardado) para la base de datos. Como Symfony ya sabe todo acerca de su modelo de base de datos, puede generar automáticamente formularios basados sobre esta información. De hecho, cuando se puso en marcha la tarea `propel:build-all` durante el día 3, Symfony automáticamente llamó a la tarea `propel:build-forms`:
+La mayoría de las veces, un formulario tiene que ser serializado (guardado) para la base de datos. Como Symfony ya sabe todo acerca de su modelo de base de datos, puede generar automáticamente formularios basados sobre esta información. De hecho, cuando se puso en marcha la tarea `propel:build --all` durante el día 3, Symfony automáticamente llamó a la tarea `propel:build --forms`:
 
-    $ php symfony propel:build-forms
+    $ php symfony propel:build --forms
 
-La tarea `propel:build-forms` genera las clases form en `lib/form/`. La organización de estos archivos generados es similar a la de
+La tarea `propel:build --forms` genera las clases form en `lib/form/`. La organización de estos archivos generados es similar a la de
 `lib/model/`. Cada modelo de clase tiene una clase form relacionada (por ejemplo
 `JobeetJob` tiene `JobeetJobForm`), que está vacío por defecto, ya que hereda de una clase base:
 

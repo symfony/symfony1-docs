@@ -803,7 +803,7 @@ E aggiorniamo le ~fixture|Fixture (I18n)~ per le categorie:
 
 Ricostruiamo il modello per creare gli stub delle classi `i18n`:
 
-    $ php symfony propel:build-all-load --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
     $ php symfony cc
 
 Siccome le colonne `name` e `slug` sono state spostate nella tabella i18n,
@@ -911,20 +911,14 @@ in base allo slug inglese nella tabella `JobeetCategoryTranslation`.
 
 Ricostruiamo il modello:
 
-    $ php symfony doctrine:build-all-load --no-confirmation
+    $ php symfony doctrine:build --all --and-load --no-confirmation
     $ php symfony cc
 
 </doctrine>
 
 >**TIP**
-<propel>
->Siccome `propel:build-all` rimuove tutte le tabelle e i dati dal
+>Siccome `propel:build --all` rimuove tutte le tabelle e i dati dal
 >database,
-</propel>
-<doctrine>
->Siccome `doctrine:build-all` rimuove tutte le tabelle e i dati dal
->database,
-</doctrine>
 >non dimenticare di ricreare un utente per accedere al backend con il
 >task `guard:create-user`. In alternativa, si può aggiungere un file
 >fixture in modo che sia aggiunto automaticamente.
@@ -1141,12 +1135,7 @@ le fixture che abbiamo definito sopra in
 
 Ricostruiamo il modello per l'ambiente `test`:
 
-<propel>
-    $ php symfony propel:build-all-load --no-confirmation --env=test
-</propel>
-<doctrine>
-    $ php symfony doctrine:build-all-reload --no-confirmation --env=test
-</doctrine>
+    $ php symfony propel:build --all --and-load --no-confirmation --env=test
 
 Ora possiamo lanciare tutti i test per verificare che girino bene:
 

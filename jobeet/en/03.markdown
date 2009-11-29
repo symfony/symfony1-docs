@@ -290,9 +290,9 @@ files.
 Now that your models are present you can generate and insert the SQL.
 </doctrine>
 
-    $ php symfony propel:build-sql
+    $ php symfony propel:build --sql
 
-The `propel:build-sql` task generates SQL statements in the `data/sql/`
+The `propel:build --sql` task generates SQL statements in the `data/sql/`
 directory, optimized for the database engine we have configured:
 
 <propel>
@@ -340,9 +340,9 @@ from within a non-interactive batch:
 
 The ORM also generates PHP classes that map table records to objects:
 
-    $ php symfony propel:build-model
+    $ php symfony propel:build --model
 
-The `propel:build-model` task generates PHP files in the `lib/model/`
+The `propel:build --model` task generates PHP files in the `lib/model/`
 directory that can be used to interact with the database.
 
 <propel>
@@ -354,14 +354,14 @@ table:
                  ~record|Database Record~** of the `jobeet_job` table. The 
                  class is empty by default.
   * `BaseJobeetJob`: The parent class of `JobeetJob`. Each time you run
-                     `propel:build-model`, this class is overwritten, so all
+                     `propel:build --model`, this class is overwritten, so all
                      customizations must be done in the `JobeetJob` class.
 
   * `JobeetJobPeer`: The class defines static methods that mostly **return
                      collections** of `JobeetJob` objects. The class is empty
                      by default.
   * `BaseJobeetJobPeer`: The parent class of `JobeetJobPeer`. Each time you
-                         run `propel:build-model`, this class is overwritten,
+                         run `propel:build --model`, this class is overwritten,
                          so all customizations must be done in the
                          `JobeetJobPeer` class.
 </propel>
@@ -403,27 +403,14 @@ together:
     $job = new JobeetJob();
     $job->setCategory($category);
 
-The `propel:build-all` task is a shortcut for the tasks we have run in this
+The `propel:build --all` task is a shortcut for the tasks we have run in this
 section and some more. So, run this task now to generate forms and validators
 for the Jobeet model classes:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
 
 You will see validators in action at the end of the day and forms will be
 explained in great details on day 10.
-
->**TIP**
->A symfony ~task|Tasks~ is made of a namespace and a task name. Each one can be
->shortened as much as there is no ambiguity with other tasks. So, the following
->commands are equivalent to `propel:build-model`:
->
->     $ php symfony propel:build-mo
-<propel>
->     $ php symfony pro:build-mo
-</propel>
-<doctrine>
->     $ php symfony doc:build-mo
-</doctrine>
 
 The Initial Data
 ----------------
@@ -628,8 +615,8 @@ Loading the initial data into the database is as simple as running the
     $ php symfony propel:data-load
 
 >**TIP**
->The `propel:build-all-load` task is a shortcut for the `propel:build-all` task
->followed by the `propel:data-load` task.
+>The `propel:build --all --and-load` task is a shortcut for the `propel:build --all`
+>task followed by the `propel:data-load` task.
 
 <doctrine>
 Run the `doctrine:build --all --and-load` task to make sure everything is generated

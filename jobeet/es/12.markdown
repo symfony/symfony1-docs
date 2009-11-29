@@ -864,7 +864,7 @@ Esto es de gran ayuda cuando es necesario que tengas diferentes widgets o valida
 Configuración de Filtros
 ------------------------
 
-La configuración de los filtros es la misma que la configuración de las vistas forms. Como cuestión de hecho, los filtros son sólo forms. Y como para los forms, las clases se han generado por la tarea `propel:build-all`. También puedes volver a generarlas con la tarea `propel:build-filters`.
+La configuración de los filtros es la misma que la configuración de las vistas forms. Como cuestión de hecho, los filtros son sólo forms. Y como para los forms, las clases se han generado por la tarea `propel:build --all`. También puedes volver a generarlas con la tarea `propel:build --filters`.
 
 Estas clases se encuentran en el directorio `lib/filter/` y cada uno de clase del modelo tiene asociada una clase de filtros (`JobeetJobFormFilter` para 
 `JobeetJobForm`).

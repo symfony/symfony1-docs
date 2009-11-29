@@ -712,7 +712,7 @@ JobeetのWebサイトのために、~すべてのテーブルを国際化|Model�
 
 `i18n`スタブクラスを作るためにモデルをリビルドします:
 
-    $ php symfony propel:build-all --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
     $ php symfony cc
 
 `name`と`slug`カラムはi18nテーブルに移動させたので、`setName()`メソッドを`JobeetCategory`から`JobeetCategoryI18n`に移動させます:
@@ -813,12 +813,7 @@ Doctrineはモデルのすべてのカラム用のマジックファインダー
 </doctrine>
 
 >**TIP**
-<propel>
->`propel:build-all`はデータベースからすべてのテーブルとデータを削除するので、
-</propel>
-<doctrine>
->`doctrine:build --all --and-load`はデータベースからすべてのテーブルとデータを削除するので、
-</doctrine>
+>`propel:build --all --and-load`はデータベースからすべてのテーブルとデータを削除するので、
 >`guard:create-user`タスクでJobeetバックエンドにアクセスするユーザーを
 >再作成することを忘れないでください。
 >代わりに、自動的に追加するためにフィクスチャファイルを追加できます。
@@ -1015,12 +1010,7 @@ adminジェネレーターの翻訳ファイルは、`fr/messages.xml`の代わ�
 最初に、カテゴリ用のテストフィクスチャを更新します。
 `test`環境用のモデルをリビルドします:
 
-<propel>
-    $ php symfony propel:build-all-load --no-confirmation --env=test
-</propel>
-<doctrine>
-    $ php symfony doctrine:build --all -and-load --no-confirmation --env=test
-</doctrine>
+    $ php symfony propel:build --all -and-load --no-confirmation --env=test
 
 正しく動作しているかチェックするためにすべてのテストを立ち上げることができます:
 

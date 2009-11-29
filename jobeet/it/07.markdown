@@ -298,10 +298,10 @@ L'impostazione della colonna `slug` viene presa in considerazione automaticament
 >e impostato nell'oggetto.
 </doctrine>
 
-usiamo il task `propel:build-all-load` per aggiornare le tabelle del database
+usiamo il task `propel:build --all --and-load` per aggiornare le tabelle del database
 e ripopoliamo il database con le nostre fixture:
 
-    $ php symfony propel:build-all-loadd --no-confirmation
+    $ php symfony propel:build --all --and-load --no-confirmation
 
 Ora è tutto pronto per creare il metodo `executeShow()`. Sostituiamo
 il contenuto del file delle azioni `category` con il codice seguente:
