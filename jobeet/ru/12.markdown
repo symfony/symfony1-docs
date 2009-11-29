@@ -26,13 +26,7 @@
 >Symfony создает `index.php` только для самого первого пользовательского фронт-контроллера
 >и именует остальные контроллеры, начиная с имени приложения.
 
-Если Вы теперь попробуете перезагрузить начальные данные при помощи задачи 
-<propel>
-`propel:data-load`,
-</propel>
-<doctrine>
-`doctrine:data-load`,
-</doctrine>
+Если Вы теперь попробуете перезагрузить начальные данные при помощи задачи `propel:data-load`,
 Вы увидите, что это больше не работает. Это происходит потому, что метод `JobeetJob::save()`
 требует доступа к конфигурационному файлу `app.yml` из `frontend`-приложения.
 Поскольку мы теперь имеем два приложения, Symfony использует первое, которое может найти,
@@ -46,46 +40,23 @@
 переменные, определенные в `app.yml`, нам будут нужны и в бэкэнд-приложении.
 
 >**TIP**
-<propel>
 >Задача `propel:data-load` также имеет `--application` опцию. Так, если
 >Вы используете различные настройки в разных приложениях, то ее можно 
 >использовать следующим образом:
 >
 >     $ php symfony propel:data-load --application=frontend
-</propel>
-<doctrine>
->Задача `doctrine:data-load` также имеет `--application` опцию. Так, если
->Вы используете различные настройки в разных приложениях, то ее можно 
->использовать следующим образом:
->
->     $ php symfony doctrine:data-load --application=frontend
-</doctrine>
 
 Модули бэкэнд-приложения
 ------------------------
 
 Для фронтэнд-приложения задача `propel:generate-module` была использована
 для создания базового ~CRUD~ модуля, построенного по классу модели. Для бэкэнда
-задача 
-<propel>
-`propel:generate-admin`
-</propel>
-<doctrine>
-`doctrine:generate-admin`
-</doctrine>
- будет использована для генерации полнофункционального
+задача `propel:generate-admin` будет использована для генерации полнофункционального
 бэкэнд-интерфейса для класса модели:
 
-<propel>
     $ php symfony propel:generate-admin backend JobeetJob --module=job
     $ php symfony propel:generate-admin backend JobeetCategory
        ? --module=category
-</propel>
-<doctrine>
-    $ php symfony doctrine:generate-admin backend JobeetJob --module=job
-    $ php symfony doctrine:generate-admin backend JobeetCategory
-       ? --module=category
-</doctrine>
 
 Эти две команды создают `job` и `category` модули для `JobeetJob` и `JobeetCategory` 
 классов модели соответственно.
@@ -134,18 +105,10 @@
                             без редактирования маршрута.
 
 >**TIP**
-<propel>
 >Как всегда, чтение документации перед использованием новой задачи Propel - это хорошая идея.
 >
 >     $ php symfony help propel:generate-admin
 >
-</propel>
-<doctrine>
->Как всегда, чтение документации перед использованием новой задачи Doctrine - это хорошая идея.
->
->     $ php symfony help doctrine:generate-admin
->
-</doctrine>
 >Это даст Вам обзор всех аргументов и опций задачи а также некоторые классические примеры 
 >использования.
 
@@ -252,14 +215,7 @@
 -----------
 
 Если Вы достаточно любопытны, возможно Вы уже открывали файлы, сгенерированные
-задачей 
-<propel>
-`propel:generate-admin` 
-</propel>
-<doctrine>
-`doctrine:generate-admin` 
-</doctrine>
-в каталоге `apps/backend/modules/`. Если нет,
+задачей `propel:generate-admin` в каталоге `apps/backend/modules/`. Если нет,
 пожалуйста, откройте их сейчас. Сюрприз! Каталоги `templates` пусты, и файлы
 `actions.class.php` также пусты:
 
@@ -441,8 +397,8 @@
 Для секций, относящихся к формам (`form`, `edit` и `new`), опции `label` и `help` 
 >переопределяют соответствующие значения, определенные в классе формы.
 
-Настройка представления `list`
-------------------------------
+Настройка спискового представления
+----------------------------------
 
 ### `display`
 
@@ -1063,21 +1019,8 @@ The `edit_mode` option uses the `sfDoctrineRecord::isNew()` method.
 
 Настройка фильтров очень похожа на настройку отображения формы. Фактически
 фильтры - это те же формы. И - так же, как и для форм, - классы фильтров генерируются
-задачей 
-<propel>
-`propel:build-all`
-</propel>
-<doctrine>
-`doctrine:build-all`
-</doctrine>
-. Также Вы можете перегенерировать их при помощи задачи
-<propel>
-`propel:build-filters`
-</propel>
-<doctrine>
-`doctrine:build-filters`
-</doctrine>
-.
+задачей `propel:build-all`. Также Вы можете перегенерировать их при помощи задачи
+`propel:build-filters`.
 
 Классы форм фильтров находятся в каталоге `lib/filter/`, и каждый класс модели имеет
 ассоциированный класс формы для фильтрации списков (`JobeetJobFormFilter` для `JobeetJobForm`).
