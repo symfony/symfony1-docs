@@ -235,7 +235,7 @@ embedded forms using a formatter.
     echo $form->renderHiddenFields();
 
     // render hidden fields without recurring
-    echo $form->renderHiddenFields(false)l;
+    echo $form->renderHiddenFields(false);
 
 ### `sfFormSymfony`
 
