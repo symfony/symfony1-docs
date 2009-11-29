@@ -170,7 +170,7 @@
       <head>
         <title>Jobeet Admin Interface</title>
         <link rel="shortcut icon" href="/favicon.ico" />
-        <?php use_stylesheet(Шadmin.cssШ) ?>
+        <?php use_stylesheet('admin.css') ?>
         <?php include_javascripts() ?>
         <?php include_stylesheets() ?>
       </head>
@@ -178,7 +178,7 @@
         <div id="container">
           <div id="header">
             <h1>
-              <a href="<?php echo url_for(Ш@homepageШ) ?>">
+              <a href="<?php echo url_for('@homepage') ?>">
                 <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
@@ -188,18 +188,18 @@
             <ul>
               <li>
 <propel>
-                <?php echo link_to(ШJobsШ, Ш@jobeet_jobШ) ?>
+                <?php echo link_to('Jobs', '@jobeet_job') ?>
 </propel>
 <doctrine>
-                <?php echo link_to(ШJobsШ, Ш@jobeet_job_jobШ) ?>
+                <?php echo link_to('Jobs', '@jobeet_job_job') ?>
 </doctrine>
               </li>
               <li>
 <propel>
-                <?php echo link_to(ШCategoriesШ, Ш@jobeet_categoryШ) ?>
+                <?php echo link_to('Categories', '@jobeet_category') ?>
 </propel>
 <doctrine>
-                <?php echo link_to(ШCategoriesШ, Ш@jobeet_category_categoryШ) ?>
+                <?php echo link_to('Categories', '@jobeet_category_category') ?>
 </doctrine>
               </li>
             </ul>
@@ -248,8 +248,8 @@
 
     [php]
     // apps/backend/modules/job/actions/actions.class.php
-    require_once dirname(__FILE__).Ш/../lib/jobGeneratorConfiguration.class.phpШ;
-    require_once dirname(__FILE__).Ш/../lib/jobGeneratorHelper.class.phpШ;
+    require_once dirname(__FILE__).'/../lib/jobGeneratorConfiguration.class.php';
+    require_once dirname(__FILE__).'/../lib/jobGeneratorHelper.class.php';
 
     class jobActions extends autoJobActions
     {
@@ -456,7 +456,7 @@
 
 ### `layout`
 
-Список может быть отображен с использованием различных шаблонов (layouts). Шаблоном по умолчанию
+Список может быть отображен с использованием различных шаблонов (layouts). 'аблоном по умолчанию
 является табличный (`tabular`), что означает, что каждое значение столбца располагается в своем
 собственном столбце таблицы. Но для модуля `job` было бы лучше использовать текстовый (stacked) шаблон,
 который так же является одним из встроенных шаблонов:
@@ -565,7 +565,7 @@ symfony сгенерирует исключение, сообщающее Вам
     {
       public function executeBatchExtend(sfWebRequest $request)
       {
-        $ids = $request->getParameter(ШidsШ);
+        $ids = $request->getParameter('ids');
 
 <propel>
         $jobs = JobeetJobPeer::retrieveByPks($ids);
@@ -574,8 +574,8 @@ symfony сгенерирует исключение, сообщающее Вам
 </propel>
 <doctrine>
         $q = Doctrine_Query::create()
-          ->from(ШJobeetJob jШ)
-          ->whereIn(Шj.idШ, $ids);
+          ->from('JobeetJob j')
+          ->whereIn('j.id', $ids);
 
         foreach ($q->execute() as $job)
 </doctrine>
@@ -583,13 +583,13 @@ symfony сгенерирует исключение, сообщающее Вам
           $job->extend(true);
         }
 
-        $this->getUser()->setFlash(ШnoticeШ, ШThe selected jobs have been extended successfully.Ш);
+        $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
 <propel>
-        $this->redirect(Ш@jobeet_jobШ);
+        $this->redirect('@jobeet_job');
 </propel>
 <doctrine>
-        $this->redirect(Ш@jobeet_job_jobШ);
+        $this->redirect('@jobeet_job_job');
 </doctrine>
       }
     }
@@ -617,10 +617,10 @@ symfony сгенерирует исключение, сообщающее Вам
         }
 
 <propel>
-        $this->setExpiresAt(time() + 86400 * sfConfig::get(Шapp_active_daysШ));
+        $this->setExpiresAt(time() + 86400 * sfConfig::get('app_active_days'));
 </propel>
 <doctrine>
-        $this->setExpiresAt(date(ШY-m-dШ, time() + 86400 * sfConfig::get(Шapp_active_daysШ)));
+        $this->setExpiresAt(date('Y-m-d', time() + 86400 * sfConfig::get('app_active_days')));
 </doctrine>
         $this->save();
 
@@ -673,13 +673,13 @@ symfony сгенерирует исключение, сообщающее Вам
         $job = $this->getRoute()->getObject();
         $job->extend(true);
 
-        $this->getUser()->setFlash(ШnoticeШ, ШThe selected jobs have been extended successfully.Ш);
+        $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
 <propel>
-        $this->redirect(Ш@jobeet_jobШ);
+        $this->redirect('@jobeet_job');
 </propel>
 <doctrine>
-        $this->redirect(Ш@jobeet_job_jobШ);
+        $this->redirect('@jobeet_job_job');
 </doctrine>
       }
 
@@ -722,23 +722,23 @@ symfony сгенерирует исключение, сообщающее Вам
         $nb = JobeetJobPeer::cleanup(60);
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable(ШJobeetJobШ)->cleanup(60);
+        $nb = Doctrine::getTable('JobeetJob')->cleanup(60);
 </doctrine>
 
         if ($nb)
         {
-          $this->getUser()->setFlash(ШnoticeШ, sprintf(Ш%d never activated jobs have been deleted successfully.Ш, $nb));
+          $this->getUser()->setFlash('notice', sprintf('%d never activated jobs have been deleted successfully.', $nb));
         }
         else
         {
-          $this->getUser()->setFlash(ШnoticeШ, ШNo job to delete.Ш);
+          $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
 <propel>
-        $this->redirect(Ш@jobeet_jobШ);
+        $this->redirect('@jobeet_job');
 </propel>
 <doctrine>
-        $this->redirect(Ш@jobeet_job_jobШ);
+        $this->redirect('@jobeet_job_job');
 </doctrine>
       }
 
@@ -808,7 +808,7 @@ symfony сгенерирует исключение, сообщающее Вам
       public function retrieveBackendJobList(Doctrine_Query $q)
       {
         $rootAlias = $q->getRootAlias();
-        $q->leftJoin($rootAlias . Ш.JobeetCategory cШ);
+        $q->leftJoin($rootAlias . '.JobeetCategory c');
         return $q;
       }
 
@@ -875,10 +875,10 @@ symfony сгенерирует исключение, сообщающее Вам
       public function configure()
       {
 <propel>
-        unset($this[Шjobeet_category_affiliate_listШ]);
+        unset($this['jobeet_category_affiliate_list']);
 </propel>
 <doctrine>
-        unset($this[Шcreated_atШ], $this[Шupdated_atШ], $this[Шjobeet_affiliates_listШ]);
+        unset($this['created_at'], $this['updated_at'], $this['jobeet_affiliates_list']);
 </doctrine>
       }
     }
@@ -930,8 +930,8 @@ symfony сгенерирует исключение, сообщающее Вам
       {
         $this->removeFields();
 
-        $this->validatorSchema[ШemailШ] = new sfValidatorAnd(array(
-          $this->validatorSchema[ШemailШ],
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
           new sfValidatorEmail(),
         ));
 
@@ -941,9 +941,9 @@ symfony сгенерирует исключение, сообщающее Вам
       protected function removeFields()
       {
         unset(
-          $this[Шcreated_atШ], $this[Шupdated_atШ],
-          $this[Шexpires_atШ], $this[Шis_activatedШ],
-          $this[ШtokenШ]
+          $this['created_at'], $this['updated_at'],
+          $this['expires_at'], $this['is_activated'],
+          $this['token']
         );
       }
     }
@@ -964,8 +964,8 @@ symfony сгенерирует исключение, сообщающее Вам
       protected function removeFields()
       {
         unset(
-          $this[Шcreated_atШ], $this[Шupdated_atШ],
-          $this[ШtokenШ]
+          $this['created_at'], $this['updated_at'],
+          $this['token']
         );
       }
     }
@@ -999,15 +999,15 @@ symfony сгенерирует исключение, сообщающее Вам
       {
         parent::configure();
 
-        $this->widgetSchema[ШlogoШ] = new sfWidgetFormInputFileEditable(array(
-          ШlabelШ     => ШCompany logoШ,
-          Шfile_srcШ  => Ш/uploads/jobs/Ш.$this->getObject()->getLogo(),
-          Шis_imageШ  => true,
-          Шedit_modeШ => !$this->isNew(),
-          ШtemplateШ  => Ш<div>%file%<br />%input%<br />%delete% %delete_label%</div>Ш,
+        $this->widgetSchema['logo'] = new sfWidgetFormInputFileEditable(array(
+          'label'     => 'Company logo',
+          'file_src'  => '/uploads/jobs/'.$this->getObject()->getLogo(),
+          'is_image'  => true,
+          'edit_mode' => !$this->isNew(),
+          'template'  => '<div>%file%<br />%input%<br />%delete% %delete_label%</div>',
         ));
 
-        $this->validatorSchema[Шlogo_deleteШ] = new sfValidatorPass();
+        $this->validatorSchema['logo_delete'] = new sfValidatorPass();
       }
 
       // ...
@@ -1020,7 +1020,7 @@ symfony сгенерирует исключение, сообщающее Вам
   * `is_image`:    Если `true`, то содежимое файла может быть показано как изображение 
   * `edit_mode`:   Находится ли форма в состоянии редактирования или создания
   * `with_delete`: Надо ли отображать чекбокс для удаления
-  * `template`:    Шаблон для отображения виджета
+  * `template`:    'аблон для отображения виджета
 
 ![File upload](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
@@ -1120,7 +1120,7 @@ The `edit_mode` option uses the `sfDoctrineRecord::isNew()` method.
 при помощи создани шаблона с таким же именем в модуле (например, в каталоге
 `apps/backend/modules/job/templates/` для бэкэнд-модуля `job`):
 
- | Шаблон                       | Описание
+ | 'аблон                       | Описание
  | ---------------------------- | -------------------------------------
  | `_assets.php`                | Подгружает CSS и JS для использования в остальных шаблонах
  | `_filters.php`               | Подготавливает область фильтров для отображения
