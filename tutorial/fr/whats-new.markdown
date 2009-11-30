@@ -228,10 +228,10 @@ la méthode `->getEmbeddedForm()`.
 
 La méthode `->renderHiddenFields()` rend désormais les champs masqués des formulaires
 imbriqués. Un argument a été ajouté pour désactiver la récursivité, c'est utile si vous rendez
-des formulaires intégrés utilisant un formateur.
+des formulaires imbriqués utilisant un formateur.
 
     [php]
-    // Rend tous les champs cachés, y compris ceux des formulaires intégrés
+    // Rend tous les champs cachés, y compris ceux des formulaires imbriqués
     echo $form->renderHiddenFields();
 
     // Rend tous les champs cachés sans récursivité
