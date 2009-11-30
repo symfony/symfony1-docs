@@ -1,4 +1,4 @@
-Installation du ﻿Projet
+Installation du Projet
 =============
 
 Dans symfony, les **applications** partageant le même modèle de données sont regroupés dans des
