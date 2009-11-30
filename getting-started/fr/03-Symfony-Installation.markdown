@@ -1,4 +1,4 @@
-﻿Installation de symfony
+Installation de symfony
 ====================
 
 L'initialisation du répertoire du projet
