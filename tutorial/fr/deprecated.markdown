@@ -1,4 +1,4 @@
-﻿Composants supprimés ou rendus obsolètes en 1.3
+Composants supprimés ou rendus obsolètes en 1.3
 ===============================================
 
 Ce document liste tous les paramètres de configuration, classes, méthodes, 
