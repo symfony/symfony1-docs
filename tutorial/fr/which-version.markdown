@@ -1,4 +1,4 @@
-﻿Quelle version symfony ?
+Quelle version symfony ?
 ======================
 
 Ce livre a été écrit pour les deux versions (symfony 1.3 et symfony 1.4). Bien que l'écriture
