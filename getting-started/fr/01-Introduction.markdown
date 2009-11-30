@@ -1,4 +1,4 @@
-﻿Introduction
+Introduction
 ============
 
 Le framework symfony est un framework full-stack MVC qui vous aide à développer
