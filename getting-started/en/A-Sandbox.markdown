@@ -1,4 +1,4 @@
-Appendix A - The Sandbox
+﻿Appendix A - The Sandbox
 ========================
 
 If your goal is to give symfony a try for a few hours, keep reading this
@@ -16,7 +16,7 @@ practices.
 >As the sandbox is pre-configured to use SQLite as a database
 >engine, you need to check that your PHP supports SQLite (see the
 >[Prerequisites](02-Prerequisites#chapter_02) chapter). You can also
->read the [Configuring the Database](04-Project-Setup#chapter_04_sub_configuring_the_database)
+>read the [Configuring the Database](04-Project-Setup#chapter_04_configuring_the_database)
 >section to learn how to change the database used by the sandbox.
 
 You can download the symfony sandbox in `.tgz` or `.zip` format from the
