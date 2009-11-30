@@ -1,4 +1,4 @@
-﻿Annexe A - Le bac à sable
+Annexe A - Le bac à sable
 ========================
 
 Si votre objectif est d'essayer symfony pendant quelques heures, continuez à lire ce
@@ -15,7 +15,7 @@ symfony sans les tracas d'une installation appropriée qui respecte les meilleur
 >Comme le bac à sable est pré-configuré pour utiliser SQLite
 >comme moteur de base de données, vous devez vérifier que votre PHP supporte SQLite (voir le
 >chapitre [Prérequis](02-Prerequisites#chapter_02)). Vous pouvez aussi
->lire la section [Configuration de la base de données](04-Project-Setup#chapter_04_sub_configuring_the_database)
+>lire la section [Configuration de la base de données](04-Project-Setup#chapter_04_configuration_de_la_base_de_donnees)
 >pour savoir comment modifier la base de données utilisée par le bac à sable.
 
 Vous pouvez télécharger le bac à sable sous les formats `.tgz` ou `.zip` sur la
