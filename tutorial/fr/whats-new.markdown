@@ -1,4 +1,4 @@
-﻿Quoi de neuf dans symfony 1.3/1.4 ?
+Quoi de neuf dans symfony 1.3/1.4 ?
 ===================================
 
 Ce tutoriel est une rapide introduction technique pour symfony 1.3/1.4.
