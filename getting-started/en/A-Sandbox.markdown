@@ -1,4 +1,4 @@
-﻿Appendix A - The Sandbox
+Appendix A - The Sandbox
 ========================
 
 If your goal is to give symfony a try for a few hours, keep reading this
