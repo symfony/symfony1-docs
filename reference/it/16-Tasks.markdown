@@ -106,6 +106,7 @@ I task disponibili
    * [`project::permissions`](#chapter_16_sub_project_permissions)
    * [`project::send-emails`](#chapter_16_sub_project_send_emails)
    * [`project::upgrade1.3`](#chapter_16_sub_project_upgrade1_3)
+   * [`project::validate`](#chapter_16_sub_project_validate)
  * [`propel`](#chapter_16_propel)
    * [`propel::build`](#chapter_16_sub_propel_build)
    * [`propel::build-all`](#chapter_16_sub_propel_build_all)
@@ -158,7 +159,7 @@ Il task `help` mostra l'aiuto per un dato task:
 
     ./symfony help test:all
 
-E' anche possibile visualizzare l'aiuto in formato XML utilizzando l'opzione `--xml`:
+È anche possibile visualizzare l'aiuto in formato XML utilizzando l'opzione `--xml`:
 
     ./symfony help test:all --xml
 
@@ -368,12 +369,12 @@ Il task `doctrine:build` genera il codice basato sullo schema:
 
     ./symfony doctrine:build
 
-E' necessario specificare cosa si vuole creare. Per esempio, se si vogliono
+È necessario specificare cosa si vuole creare. Per esempio, se si vogliono
 creare le classi dei modelli e dei form, usare le opzioni `--model` e `--forms`:
 
     ./symfony doctrine:build --model --forms
 
-E' possibile usare l'opzione abbreviata `--all` se si vogliono generare tutte le classi e
+È possibile usare l'opzione abbreviata `--all` se si vogliono generare tutte le classi e
 i file SQL e ricreare il database:
 
     ./symfony doctrine:build --all
@@ -884,13 +885,14 @@ per un determinato nome del modello:
 
 Il task `doctrine::dql` esegue una query DQL e visualizza i risultati:
 
-    $ php symfony doctrine:dql [--application[="..."]] [--env="..."] [--show-sql] [--table] dql_query
+    $ php symfony doctrine:dql [--application[="..."]] [--env="..."] [--show-sql] [--table] dql_query [parameter1] ... [parameterN]
 
 *Altri nomi*: `doctrine-dql`
 
 | Parametro | Predefinito | Descrizione
 | --------- | ----------- | -----------
 | `dql_query` | `-` | La query DQL da eseguire
+| `parameter` | `-` | Parametro della query
 
 
 | Opzione (Scorciatoia) | Predefinito | Descrizione
@@ -900,13 +902,17 @@ Il task `doctrine::dql` esegue una query DQL e visualizza i risultati:
 | `--show-sql` | `-` | Mostra l'sql che dovrebbe essere eseguito
 
 
-Il task `doctrine:data-dql` esegue una query DQL e visualizza i risultati formattati:
+Il task `doctrine:dql` esegue una query DQL e visualizza i risultati formattati:
 
-    ./symfony doctrine:dql "FROM User u"
+    ./symfony doctrine:dql "FROM User"
 
 Si può visualizzare l'SQL che dovrebbe essere eseguito, utilizzando l'opzione `--dir`:
 
     ./symfony doctrine:dql --show-sql "FROM User u"
+
+Fornire parametri alla query come parametri addizionali:
+
+    ./symfony doctrine:dql "FROM User WHERE email LIKE ?" "%symfony-project.com"
 
 ### ~`doctrine::drop-db`~
 
@@ -1004,7 +1010,7 @@ Il task `doctrine:generate-migration` genera il modello di migrazione
 
     ./symfony doctrine:generate-migration AddUserEmailColumn
 
-E' possibile aggiungere l'opzione `--editor-cmd` per aprire la nuova classe di migrazione
+È possibile aggiungere l'opzione `--editor-cmd` per aprire la nuova classe di migrazione
 nell'editor preferito al momento della creazione:
 
     ./symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate
@@ -1409,7 +1415,7 @@ Se non si vuole utilizzare un ORM, passare `none` all'opzione `--orm`:
 
     ./symfony generate:project blog --orm=none
 
-E' anche possibile passare l'opzione `--installer` per personalizzare ulteriormente
+È anche possibile passare l'opzione `--installer` per personalizzare ulteriormente
 il progetto:
 
     ./symfony generate:project blog --installer=./installer.php
@@ -1596,7 +1602,7 @@ ambiente:
 
 Si può specificare un'opzione `period` o `history` option:
 
-    ./symfony --history=10 --period=7 log:rotate frontend dev
+    ./symfony log:rotate frontend dev --history=10 --period=7
 
 `plugin`
 --------
@@ -1725,7 +1731,7 @@ Il task `plugin:publish-assets` pubblicherà gli elementi web per tutti i plugin
 
 In realtà questo invierà l'evento `plugin.post_install` per ciascun plugin.
 
-E' possibile specificare quale/i plugin dovrebbero installare i loro elementi web, passando
+È possibile specificare quale/i plugin dovrebbero installare i loro elementi web, passando
 i nomi delle plugin come argomenti:
 
     ./symfony plugin:publish-assets sfDoctrinePlugin
@@ -1924,7 +1930,7 @@ Il task `project:disable` disabilita un ambiente:
 
     ./symfony project:disable prod
 
-E' anche possibile specificare applicazioni individuali da disabilitare in questo
+È anche possibile specificare applicazioni individuali da disabilitare in questo
 ambiente:
 
     ./symfony project:disable prod frontend backend
@@ -1951,7 +1957,7 @@ Il task `project:enable` abilita uno specifico ambiente:
 
     ./symfony project:enable frontend prod
 
-E' possibile anche specificare applicazioni individuali da abilitare in questo
+È possibile anche specificare applicazioni individuali da abilitare in questo
 ambiente:
 
     ./symfony project:enable prod frontend backend
@@ -2033,19 +2039,16 @@ Il task `project::upgrade1.3` aggiorna un progetto symfony alla versione 1.3 di 
 
     $ php symfony project:upgrade1.3  
 
-
-
-
-
-
-
-Il task `project:upgrade1.3` ggiorna un progetto symfony basato sulla versione 1.2
-alla versione 1.3 di symfony.
-
-    ./symfony project:upgrade1.3
-
 Si prega di leggere il file UPGRADE_TO_1_3 per avere informazioni su cosa fa questo task.
 
+### ~`project::validate`~
+
+Il task `project::validate` trova gli elementi deprecati in un progetto:
+
+    $ php symfony project:validate  
+
+Il task elenca tutti i file che si devono cambiare prima del passaggio a
+symfony 1.4.
 
 `propel`
 --------
@@ -2055,9 +2058,6 @@ Si prega di leggere il file UPGRADE_TO_1_3 per avere informazioni su cosa fa que
 Il task `propel::build` genera il codice basandosi sullo schema:
 
     $ php symfony propel:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-load[="..."]] [--and-append[="..."]] 
-
-
-
 
 
 | Opzione (Scorciatoia) | Predefinito | Descrizione
@@ -2080,12 +2080,12 @@ Il task `propel:build` genera il codice basandosi sullo schema:
 
     ./symfony propel:build
 
-E' necessario specificare cosa si vuole creare. Ad esempio, se si vogliono
+È necessario specificare cosa si vuole creare. Ad esempio, se si vogliono
 creare le classi dei modelli e dei form  si usano le opzioni `--model` e `--forms`:
 
     ./symfony propel:build --model --forms
 
-E' possibile usare l'opzione scorciatoia `--all` se si vogliono generare tutte le classi,
+È possibile usare l'opzione scorciatoia `--all` se si vogliono generare tutte le classi,
 i file SQL e ricreare il database:
 
     ./symfony propel:build --all
@@ -2545,7 +2545,7 @@ Il generatore può usare un tema personalizzato utilizzando l'opzione `--theme`:
 
 In questo modo, è possibile creare il propriogeneratore di moduli con le proprie convenzioni.
 
-E' anche possibile cambiare la classe base predefinita per le azioni (predefinita come sfActions) dei
+È anche possibile cambiare la classe base predefinita per le azioni (predefinita come sfActions) dei
 moduli generati:
 
     ./symfony propel:generate-module --actions-base-class="ProjectActions" frontend article Article
