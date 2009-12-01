@@ -27,6 +27,9 @@ e saranno rimossi in symfony 1.4:
   * `sfToolkit::getTmpDir()`: Si possono sostituire tutte le occorrenze di
     questo metodo con `sys_get_temp_dir()`
 
+  * `sfToolkit::removeArrayValueForPath()`,
+    `sfToolkit::hasArrayValueForPath()`, and `getArrayValueForPathByRef()`
+
   * `sfValidatorBase::setInvalidMessage()`: Può essere sostituito chiamando il
     nuovo metodo `sfValidatorBase::setDefaultMessage()`
 
@@ -40,6 +43,9 @@ e saranno rimossi in symfony 1.4:
     `isResponseHeader()`, `isUserCulture()`, `isRequestFormat()` e
     `checkResponseElement()`: Questi metodi sono stati deprecati dalla versione
     1.2 e sostituiti con le classi tester.
+
+  * I seguenti metodi di `sfTestFunctional`: `isCached()`, `isUriCached()`: Questi
+    metodi sono stati deprecati dalla versione 1.2 e sostituiti con le classi tester.
 
   * `sfFilesystem::sh()`: Si possono sostituire tutte le occorrenze di
     questo metodo con il nuovo metodo `sfFilesystem::execute()`. Si presti
@@ -56,7 +62,7 @@ e saranno rimossi in symfony 1.4:
   * `sfApplicationConfiguration::loadPluginConfig()`: Usare
     `initializePlugins()` in sostituzione.
 
-  * `sfLoader::getHelperDirs()` and `sfLoader::loadHelpers()`: Usare gli stessi
+  * `sfLoader::getHelperDirs()` e `sfLoader::loadHelpers()`: Usare gli stessi
     metodi dell'oggetto `sfApplicationConfiguration`. Essendo tutti i metodi della
     classe `sfLoader` deprecati, la classe `sfLoader` sarà rimossa in symfony 1.4.
 
@@ -69,6 +75,8 @@ e saranno rimossi in symfony 1.4:
   * `sfWebRequest::getMethodName()`: Usare `getMethod()` in sostituzione.
 
   * `sfDomCssSelector::getTexts()` e `sfDomCssSelector::getElements()`
+
+  * `sfDomCssSelector::getElements()`: Usare `matchAll()`
 
   * `sfVarLogger::getXDebugStack()`: Usare `sfVarLogger::getDebugBacktrace()`
     in sostituzione.
@@ -117,6 +125,12 @@ in symfony 1.4:
     (`sfWidgetFormI18nChoiceLanguage`, `sfWidgetFormI18nChoiceCurrency` e
     `sfWidgetFormI18nChoiceCountry` respectively) che si comportano esattamente
     nello stesso modo, ma hanno più possibilità di personalizzazione
+
+  * `sfWidgetFormChoiceMany`, `sfWidgetFormPropelChoiceMany`,
+    `sfWidgetFormDoctrineChoiceMany`, `sfValidatorChoiceMany`,
+    `sfValidatorPropelChoiceMany`, `sfValidatorPropelDoctrineMany`: Usare le
+    stesse classi, ma senza `Many` finale ed impostando l'opzione `multiple` a
+    `true`
 
   * `SfExtensionObjectBuilder`, `SfExtensionPeerBuilder`,
     `SfMultiExtendObjectBuilder`, `SfNestedSetBuilder`,
