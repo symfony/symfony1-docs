@@ -9,7 +9,7 @@ uno dei framework PHP più popolari grazie alle molte feature offerte ed all'ott
 documentazione. Questa tradizione è iniziata molto presto.
 
 Questo libro descrive la creazione di una applicazione web passo-passo con il framework
-symfony dalle specifiche alla implementazione. E' rivolto
+symfony dalle specifiche alla implementazione. È rivolto
 ai principianti che vogliono imparare symfony, capire come funziona e
 anche conoscere le migliori pratiche di sviluppo web.
 
@@ -89,7 +89,7 @@ Prerequisiti
 ------------
 
 Prima di installare symfony è necessario verificare che nel computer sia
-tutto correttamente installato e configurato. E' meglio prendere ora il tempo
+tutto correttamente installato e configurato. È meglio prendere ora il tempo
 necessario per seguire tutti i passi richiesti per la verifica della
 configurazione, perché può fare risparmiare tempo in seguito.
 
@@ -186,7 +186,7 @@ stabili, bisogna scegliere quella che si vuole installare leggendo la
 sul sito web di symfony.
 
 Questo libro assume che si voglia installare symfony 1.3 o symfony 1.4.
-	
+  
 ### Scegliere dove installare symfony
 
 È possibile installare symfony globalmente sulla vostra macchina, o incorporarlo
@@ -315,7 +315,7 @@ symfony:
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
 </doctrine> 
 <propel> 
- 	$ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel 
+    $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel 
 </propel> 
 
 Su Windows:

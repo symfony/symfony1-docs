@@ -1,5 +1,5 @@
 Riconoscimenti
-===============
+==============
 
 Scrivere un libro è sia eccitante che stancante. Scrivere un libro tecnico
 è ancora più difficile.

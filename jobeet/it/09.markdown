@@ -674,7 +674,7 @@ Quando si ha una grande suite di test, può essere necessario molto tempo per la
 tutti i test ogni volta che si apporta una modifica, in particolare se alcuni test
 falliscono. Questo perché ogni volta che si mette a posto un test, bisogna rilanciare
 nuovamente l'intera suite di test per essere sicuri di non avere introdotto degli
-errori in qualche altro test. Ma finchè non vengono messi a posto i test che falliscono,
+errori in qualche altro test. Ma finché non vengono messi a posto i test che falliscono,
 non c'è motivo per rilanciare tutti gli altri test. Il task `test:all` ha una opzione
 `--only-failed` che forza il task a rieseguire solo i test che sono falliti durante
 la precedente esecuzione:

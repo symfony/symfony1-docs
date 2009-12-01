@@ -3,7 +3,7 @@ Giorno 16: Inviare ~email|Email~
 
 Ieri abbiamo aggiunto un web service di sola lettura a Jobeet. Gli affiliati ora possono
 creare un account, ma quest'ultimo ha bisogno di essere attivato dall'amministratore
-prima di poter essere utilizzato. Pe far si che l'affiliato ottenga il suo token,
+prima di poter essere utilizzato. Per far si che l'affiliato ottenga il suo token,
 abbiamo ancora bisogno di implementare la notifica via ~email~.
 Questo è quello che inizieremo a fare oggi.
 
@@ -38,11 +38,11 @@ Modifichiamo l'azione `activate` con il seguente codice:
           $affiliate->getEmail(),
           'Jobeet affiliate token',
           <<<EOF
-    Il tuo account affiliato di Jobeet è stato attivato.
+    Your Jobeet affiliate account has been activated.
 
-    Il tuo token è {$affiliate->getToken()}.
+    Your token is {$affiliate->getToken()}.
 
-    Il Bot di Jobeet.
+    The Jobeet Bot.
     EOF
         );
 
@@ -127,10 +127,10 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 >     $mailer = sfContext::getInstance()->getMailer();
 >
 >Ogni volta che si vuole utilizzare `sfContext::getInstance()` in una delle,
->proprie classi sarebbe meglio pensarci due volte, perchè introduce un ~forte accoppiamento|Forte Accoppiamento~. It is quite 
+>proprie classi sarebbe meglio pensarci due volte, perché introduce un ~forte accoppiamento|Forte Accoppiamento~.
 >È quasi sempre meglio passare l'oggetto che è necessario come argomento.
 >
->È anche possibile utilizzare ~`sfContext`~ cmoe un registro e aggiungere i propri oggetti usando
+>È anche possibile utilizzare ~`sfContext`~ come un registro e aggiungere i propri oggetti usando
 >metodi `set()`. Prende un nome e un oggetto come argomenti e il metodo `get()`
 >può essere usato in seguito per recuperare l'oggetto in base al nome:
 >
@@ -216,12 +216,12 @@ Swift Mailer è fornito con tre differenti classi per il trasporto:
 >della documentazione ufficiale di Swift Mailer descrive tutto quello che c'è da sapere
 >sulle classi e i loro diversi parametri.
 
-Testare le emails
------------------
+Testare le email
+----------------
 
 Ora che abbiamo visto come inviare una email con il mailer di symfony,
 scriviamo alcuni test funzionali per assicurarci di aver fatto bene le cose. Per
-impostazione predefinita, symfony registra un tester `mailer`  (~`sfMailerTester`~) cheto ease mail testing
+impostazione predefinita, symfony registra un tester `mailer`  (~`sfMailerTester`~) che
 facilita il test delle mail nei test funzionali.
 
 Sostituire il file del test funzionale `affiliate` per l'applicazione di backend con
@@ -245,7 +245,7 @@ il seguente codice:
       end()
     ;
 
-Perchè il codice precedente funzioni, è necessario copiare il file delle fixture di ieri
+Perché il codice precedente funzioni, è necessario copiare il file delle fixture di ieri
 (`data/fixtures/030_affiliates.yml`) nella cartella `test/fixtures/`.
 
 Ogni email inviata, può essere testata con l'aiuto dei metodi ~`checkHeader()`~ e
@@ -273,11 +273,10 @@ argomento di `checkBody()` può essere uno dei seguenti:
 >metodo `debug()`.
 
 
-
 Ci vediamo domani
 -----------------
 
-Domani, implementeremo l'ultima caratterisitica mancante al sito web di Jobeet,
+Domani implementeremo l'ultima caratteristica mancante al sito web di Jobeet,
 il motore di ricerca.
 
 __ORM__ 

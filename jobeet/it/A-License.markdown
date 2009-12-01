@@ -1,5 +1,5 @@
-Appendix B - License
-====================
+Appendice B - Licenza
+=====================
 
 Attribution-Share Alike 3.0 Unported License
 --------------------------------------------

@@ -852,7 +852,7 @@ e anche nel
         </notes>
       </release>
     </changelog>
-	
+  
 ### Ospitare un Plugin nel sito web di symfony
 
 Se si sviluppa un plugin utile  e si desidera condividerlo con la comunità di symfony,

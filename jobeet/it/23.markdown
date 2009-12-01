@@ -313,47 +313,8 @@ in questo tutorial:
 
 Si possono anche creare [i propri task](#chapter_11_task_di_manutenzione).
 
-Riconoscimenti
---------------
-
-Scrivere un tutorial come Jobeet è sia eccitante che sfibrante. Si spendono
-ore ed ore a cercare di immaginare come veicolare il messaggio, come
-spiegare i concetti, come fornire esempi semplici ma sensati e riusabili.
-
-Scrivere un tutorial così grosso è semplicemente impossibile senza la gente
-che ti supporta durante il processo. Per Jobeet, io (**Fabien Potencier**) 
-ho avuto la fortuna di beneficiare di revisori di prima qualità. Essi sono
-tutti parte dell'avventura di symfony e vorrei ringraziarli tutti per il
-tempo che hanno dedicato al progetto Jobeet.
-
-**Kris Wallsmith**, il nostro manager della community e release manager
-dell'imminente symfony 1.3, ha preso il tempo di correggere il mio Inglese
-poco perfetto. Siccome questo tutorial è stato pubblicato su base
-giornaliera e siccome io vivo in Francia e lui negli Stati Uniti, si
-è alzato molto presto ogni mattina questo mese, inclusi i fine settimana,
-per leggere e correggere ogni giorno.
-
-**Stefan Koopmanschap**, uno dei più attivi promotori di symfony, ha assunto
-la responsabilità di mantenere il repository Subversion. Grazie al suo
-lavoro, si può vedere il codice ed iniziare a leggere il tutorial
-per un qualsiasi giorno.
-
-**Fabian Lange**, il release manager di symfony 1.2, nonché "ragazzo"
-symfony, ha letto il libro con una prospettiva Windows ed ha cercato di
-essere un lettore neofita. A margine, ha comprato da poco un Mac, quindi
-avremo bisogno di qualcun altro che si prenda la responsabilità
-del "ragazzo Windows".
-
-**Jonathan Wage**, lo sviluppatore principale di Doctrine, ha speso del
-tempo per creare un'edizione Doctrine del tutorial. Grazie ai suoi
-grandi sforzi, si può scegliere tra Propel e Doctrine come ORM
-principale per symfony e godere ugualmente dello stesso tutorial.
-
-**Pascal Borreli**, un frequentatore del canale IRC francese di symfony, ed
-il membro più amichevole della community di symfony, ha letto il
-tutorial capitolo dopo capitolo alla velocità della luce. Il suo
-continuo supporto e le sue parole gentili mi hanno mantenuto nell'umore
-giusto per scrivere questo tutorial dall'inizio alla fine.
+A presto
+--------
 
 ### Imparare facendo pratica
 
@@ -387,7 +348,5 @@ di unirvi alla community di symfony:
   * Iscrivendovi al [feed del blog ufficiale](http://feeds.feedburner.com/symfony/blog)
   * Iscrivendovi al [feed di symfony planet](http://feeds.feedburner.com/symfony/planet)
   * Chattando sul canale[IRC #symfony](irc://irc.freenode.net/symfony) su freenode
-
-Joyeux Noël !
 
 __ORM__

@@ -248,7 +248,7 @@ Aggiungiamo questo requisito a tutte le rotte che includono la cultura:
 
 È tempo di testare la nostra implementazione. Ma prima di aggiungere altri
 test, dobbiamo aggiustare quelli esistenti. Siccome tutti gli URL sono
-cambiati, modifichiamo tutti i file dei test funzionali	in
+cambiati, modifichiamo tutti i file dei test funzionali in
 `test/functional/frontend/` aggiungendo `/en` all'inizio di ogni URL.
 Non dimenticare di cambiare anche gli URL nel file
 `lib/test/JobeetTestFunctional.class.php`. Lanciamo tutti i test per
