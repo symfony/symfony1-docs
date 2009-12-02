@@ -152,7 +152,7 @@ The following validators have been added:
 ### Default Error Messages
 
 You can now define default error messages globally by using the
-`sfForm::setDefaultMessage()` method:
+`sfValidatorBase::setDefaultMessage()` method:
 
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
@@ -453,7 +453,7 @@ There is a new `sfTask::askAndValidate()` method to ask a question to the user
 and validates its input:
 
     [php]
-    $anwser = $this->askAndValidate('What is you email?', new sfValidatorEmail());
+    $answer = $this->askAndValidate('What is you email?', new sfValidatorEmail());
 
 The method also accepts an array of options (see the API doc for more
 information).
@@ -624,7 +624,7 @@ Exceptions
 
 ### Autoloading
 
-When an exception is thrown during autoloading, symfony now catch them and
+When an exception is thrown during autoloading, symfony now catches them and
 outputs an error to the user. That should solve some "White screen of death"
 pages.
 
