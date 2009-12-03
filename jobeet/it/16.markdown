@@ -32,7 +32,7 @@ Modifichiamo l'azione `activate` con il seguente codice:
         $affiliate = $this->getRoute()->getObject();
         $affiliate->activate();
 
-        // send an email to the affiliate
+        // invio di un'email all'affiliato
         $message = $this->getMailer()->compose(
           array('jobeet@example.com' => 'Jobeet Bot'),
           $affiliate->getEmail(),
@@ -67,7 +67,7 @@ Modifichiamo l'azione `activate` con il seguente codice:
 La gestione delle email in symfony è incentrata intorno a un oggetto mailer, che può essere
 recuperato da una azione con il metodo ~`getMailer()`~.
 
-Il metodo ~`compose()`~ prende quattro argomenti e ritorna un oggetto di messaggio
+Il metodo ~`compose()`~ acceetta quattro parametri e restituisce un oggetto messaggio
 email:
 
  * l'indirizzo email del mittente (`from`);
@@ -76,8 +76,8 @@ email:
  * il corpo del messaggio.
 
 L'invio del messaggio è semplice come chiamare il metodo `send()` sull'istanza
-di mailer, passando il messaggio come argomento. Come scorciatoia, si può
-comporre e inviare una mail in un unico passo utilizzando il metodo
+di mailer, passando il messaggio come parametro. Come scorciatoia, si può
+comporre e inviare una mail in un unico passo, utilizzando il metodo
 ~`composeAndSend()`~.
 
 >**TIP**
@@ -126,12 +126,12 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 >     [php]
 >     $mailer = sfContext::getInstance()->getMailer();
 >
->Ogni volta che si vuole utilizzare `sfContext::getInstance()` in una delle,
->proprie classi sarebbe meglio pensarci due volte, perché introduce un ~forte accoppiamento|Forte Accoppiamento~.
->È quasi sempre meglio passare l'oggetto che è necessario come argomento.
+>Ogni volta che si vuole utilizzare `sfContext::getInstance()` in una delle
+>proprie classi, sarebbe meglio pensarci due volte, perché introduce un ~forte accoppiamento|Forte Accoppiamento~.
+>È quasi sempre meglio passare l'oggetto che è necessario come parametro.
 >
 >È anche possibile utilizzare ~`sfContext`~ come un registro e aggiungere i propri oggetti usando
->metodi `set()`. Prende un nome e un oggetto come argomenti e il metodo `get()`
+>metodi `set()`. Accetta un nome e un oggetto come parametri e il metodo `get()`
 >può essere usato in seguito per recuperare l'oggetto in base al nome:
 >
 >     [php]
@@ -248,28 +248,28 @@ il seguente codice:
 Perché il codice precedente funzioni, è necessario copiare il file delle fixture di ieri
 (`data/fixtures/030_affiliates.yml`) nella cartella `test/fixtures/`.
 
-Ogni email inviata, può essere testata con l'aiuto dei metodi ~`checkHeader()`~ e
-~`checkBody()`~. Il secondo argomento di `checkHeader()` e il primo
-argomento di `checkBody()` può essere uno dei seguenti:
+Ogni email inviata può essere testata con l'aiuto dei metodi ~`checkHeader()`~ e
+~`checkBody()`~. Il secondo parametro di `checkHeader()` e il primo
+parametro di `checkBody()` possono essere uno dei seguenti:
 
  * una stringa su cui verificare una corrispondenza esatta
 
- * una espressione regolare su cui verificare il valore
+ * un'espressione regolare su cui verificare il valore
 
- * una espressione regolare negata (una espressione regolare che inizia con un `!`) per
+ * un'espressione regolare negata (un'espressione regolare che inizia con un `!`) per
    verificare che il valore non corrisponda.
 
 >**NOTE**
 >Per impostazione predefinita, i controlli vengono effettuati sulla prima e-mail inviata.
 >Se sono state inviate varie email, è possibile scegliere quella che si vuole testare
-> con il metodo ~`withMessage()`~. `withMessage()` prende un destinatario come primo argomento. Prende
->anche un secondo argomento per indicare quale email si vuole testare se allo stesso
+> con il metodo ~`withMessage()`~. `withMessage()` accetta un destinatario come primo parametro.
+>Accetta anche un secondo parametro per indicare quale email si vuole testare, se allo stesso
 >destinatario ne sono state inviate più di una.
 
 -
 
 >**TIP**
->Come altri tester disponibili, è possibile vedere il messaggio "grezzo" chiamando il
+>Come altri tester disponibili, è possibile vedere il messaggio "grezzo", chiamando il
 >metodo `debug()`.
 
 

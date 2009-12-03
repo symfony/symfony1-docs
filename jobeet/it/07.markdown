@@ -26,9 +26,9 @@ Aggiungete questo all'inizio del file che si occupa del routing:
       options:  { model: JobeetCategory, type: object }
 
 >**TIP**
->Ogni volta che si parte ad implementare una nuova feature è buona norma
->pensare prima all'argomento ~URL~ creando la rotta associata. Ed è
->obbligatorio se avete rimosso le regole predefinite di ~routing~.
+>Ogni volta che si parte ad implementare una nuova feature, è buona norma
+>pensare prima all'argomento ~URL~, creando la rotta associata. Ed è
+>obbligatorio, se avete rimosso le regole predefinite di ~routing~.
 
 Una rotta può usare una qualsiasi colonna del suo oggetto correlato
 come parametro. Può anche usare un altro valore, se c'è un metodo

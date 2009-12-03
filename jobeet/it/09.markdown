@@ -192,7 +192,7 @@ per analizzare e testare gli oggetti `sfWebResponse`:
  | `isHeader()`       | Controlla il valore dell'header
  | `isStatusCode()`   | Controlla il codice di stato della risposta
  | `isRedirected()`   | Controlla se la risposta corrente è un rinvio
- | `isValid()`        | Controlla se una risposta è in XML ben formato (passando `true` come argomento, si valida la risposta anche su come deve essere il tipo di documento)
+ | `isValid()`        | Controlla se una risposta è in XML ben formato (passando `true` come parametro, si valida la risposta anche su come deve essere il tipo di documento)
 
 >**NOTE**
 >Descriveremo altre classi [tester](http://www.symfony-project.org/api/1_4/test)

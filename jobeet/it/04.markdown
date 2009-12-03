@@ -577,7 +577,7 @@ Notate che le colonne di tipo date possono essere convertite a istanze dell'ogge
 Così come abbiamo definito le colonne `created_at` come timestamp, è possibile convertire il
 valore della colonna a un oggetto DateTime usando il metodo `getDateTimeObject()`
 e dopo chiamando il metodo `format()` che prende un modello di formattazione della data come
-suo primo argomento:
+suo primo parametro:
 
     [php]
     $job->getDateTimeObject('created_at')->format('m/d/Y');
@@ -640,7 +640,7 @@ default nel layout:
       <?php include_slot('title', 'Jobeet - Your best job board') ?>
     </title>
 
-Il secondo argomento del metodo `include_slot()` è il valore predefinito per
+Il secondo parametro del metodo `include_slot()` è il valore predefinito per
 lo slot se non è stato definito. Se il valore predefinito è lungo o ha
 alcuni tag HTML, si può anche crearlo come mostrato nel seguente codice:
 

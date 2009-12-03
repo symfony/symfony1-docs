@@ -155,7 +155,7 @@ data come timestamp. Per avere la data dell'ultimo post, create il metodo
 `getLatestPost()`:
 </propel>
 <doctrine>
-Notate l'utilizzo di `U` come argomento di `format()` per ottenere
+Notate l'utilizzo di `U` come parametro di `format()` per ottenere
 la data come timestamp. Per avere la data dell'ultimo post, create il metodo
 `getLatestPost()`:
 </doctrine>
