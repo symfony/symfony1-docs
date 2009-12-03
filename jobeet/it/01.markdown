@@ -271,19 +271,6 @@ Su Windows:
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
-L'opzione `-V` mostra anche il percorso alla cartella dove è installato symfony,
-che è memorizzato in `config/ProjectConfiguration.class.php`.
-Se il percorso a symfony è assoluto (il che non dovrebbe essere se sono state
-eseguite le istruzioni di cui sopra), cambiarlo come segue, in modo da avere una
-migliore portabilità:
-
-    [php]
-    // config/ProjectConfiguration.class.php
-    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
-
-In questo modo, si può spostare la cartella del progetto dove si vuole sulla propria macchina o
-su un'altra e tutto funzionerà senza dover fare modifiche.
-
 >**TIP**
 >Se siete curiosi e volete sapere cosa può fare per voi questa linea di comando,
 >digitate `symfony` per ottenere la lista di tutte le opzioni e dei task disponibili:
