@@ -152,7 +152,7 @@ Le validator suivant a été ajouté :
 ### Messages d'erreur par défaut
 
 Vous pouvez maintenant définir globalement les messages d'erreurs en utilisant la
-méthode `sfForm::setDefaultMessage()` :
+méthode `sfValidatorBase::setDefaultMessage()` :
 
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
@@ -453,7 +453,7 @@ Il y a une nouvelle méthode `sfTask::askAndValidate()` pour poser une question 
 et valider son entrée :
 
     [php]
-    $anwser = $this->askAndValidate('Quel est votre email?', new sfValidatorEmail());
+    $answer = $this->askAndValidate('Quel est votre email?', new sfValidatorEmail());
 
 La méthode accepte également un tableau d'options (voir la doc de l'API pour plus
 d'informations).
