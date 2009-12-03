@@ -2,8 +2,8 @@
 ===============
 
 La plupart des fichiers de configuration dans symfony sont dans le format YAML. Selon le site
-officiel [YAML](http://yaml.org/), YAML est "un être humain respectueux de la sérialisation standard
-des données pour tous les langages de programmation".
+officiel [YAML](http://yaml.org/), YAML est "un standard de sérialisation de données 
+compréhensible par un humain, quel que soit le langage de programmation".
 
 YAML est un langage simple qui décrit les données. Comme PHP, il a une syntaxe pour
 les types simples comme les chaînes, les booléens, les décimaux ou les entiers. Mais contrairement à PHP, il
