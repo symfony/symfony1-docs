@@ -430,7 +430,7 @@ The `doctrine::build-all` task generates Doctrine model, SQL and initializes the
 | `--migrate` | `-` | Migrate instead of reset the database
 
 
-The `doctrine:build-all` task is a shortcut for three other tasks:
+The `doctrine:build-all` task is a shortcut for four other tasks:
 
     ./symfony doctrine:build-all
 
@@ -441,7 +441,7 @@ The task is equivalent to:
     ./symfony doctrine:build-forms
     ./symfony doctrine:insert-sql
 
-See those three tasks help page for more information.
+See those four tasks help page for more information.
 
 To bypass the confirmation, you can pass the `no-confirmation`
 option:
@@ -2044,6 +2044,17 @@ The `project::upgrade1.3` task upgrade a symfony project to the 1.3 symfony rele
 
     $ php symfony project:upgrade1.3  
 
+
+
+
+
+
+
+The `project:upgrade1.3` task upgrades a symfony project based on the 1.2
+release to the 1.3 symfony release.
+
+    ./symfony project:upgrade1.3
+
 Please read the UPGRADE_TO_1_3 file to have information on what this task does.
 
 ### ~`project::validate`~
@@ -2051,6 +2062,16 @@ Please read the UPGRADE_TO_1_3 file to have information on what this task does.
 The `project::validate` task finds deprecated usage in a project:
 
     $ php symfony project:validate  
+
+
+
+
+
+
+
+The `project:validate` task detects deprecated usage in your project.
+
+    ./symfony project:validate
 
 The task lists all the files you need to change before switching to
 symfony 1.4.
