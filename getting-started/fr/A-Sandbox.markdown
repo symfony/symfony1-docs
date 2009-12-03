@@ -3,8 +3,8 @@ Annexe A - Le bac à sable
 
 Si votre objectif est d'essayer symfony pendant quelques heures, continuez à lire ce
 chapitre, nous allons vous montrer la méthode la plus rapide pour démarrer. Si vous voulez
-amorcer un projet du monde réel, vous pouvez sans risque passer ce chapitre, et
-[rejoindre](03-Symfony-Installation#chapter_03) tout de suite le prochain.
+amorcer un projet du monde réel, vous pouvez rejoindre le chapitre
+[d'installation](03-Symfony-Installation#chapter_03).
 
 Le moyen le plus rapide pour expérimenter symfony est d'installer le bac à sable symfony.
 Le bac à sable est une installation facile préemballée pour un projet symfony, il est déjà
@@ -46,4 +46,4 @@ et les [Environments](06-Environments#chapter_06).
 >facile de l'utiliser comme point de départ pour un nouveau projet. Cependant, gardez à l'esprit
 >que vous aurez probablement besoin d'adapter la configuration : par exemple
 >changer les paramètres liés à la sécurité (voir la configuration des attaques XSS
->et CSRF plus loin dans ce tutoriel).
+>et CSRF dans ce tutoriel).
