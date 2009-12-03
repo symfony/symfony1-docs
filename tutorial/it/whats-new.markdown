@@ -9,7 +9,7 @@ Prima di tutto, si prega di notare che symfony 1.3/1.4 è compatibile con PHP 5.
 o successivi.
 
 Se si vuole aggiornare dalla versione 1.2, si prega di leggere il file
-[UPGRADE](http://www.symfony-project.org/tutorial/1_3/it/upgrade) che si trova
+[UPGRADE](http://www.symfony-project.org/tutorial/1_4/it/upgrade) che si trova
 nella distribuzione di symfony.
 Vi si troveranno tutte le informazioni necessarie per aggiornare senza
 problemi i propri progetti a symfony 1.3/1.4.
@@ -157,7 +157,7 @@ Si possono ora definire dei messaggi di errore predefiniti in modo globale,
 usando il metodo `sfForm::setDefaultMessage()`:
 
     [php]
-    sfValidatorBase::setDefaultMessage('required', 'Questo campo è obbligatorio.');
+    sfForm::setDefaultMessage('required', 'Questo campo è obbligatorio.');
 
 Il codice precedente sovrascriverà il messaggio predefinito 'Required.' per
 tutti i validatori. Si noti che i messaggi predefiniti devono essere definiti
@@ -180,7 +180,7 @@ determinato nel modo seguente:
  * Se non definito, usa il messaggio predefinito dal validatore stesso
    (quando il messaggio è stato aggiunto col metodo `addMessage()`).
 
-### Intefaccia Fluida
+### Interfaccia Fluida
 
 I validatori ora implementano un'interfaccia fluida per i seguenti metodi:
 
@@ -463,7 +463,7 @@ C'è un nuovo metodo `sfTask::askAndValidate()` per porre una domanda all'utente
 e validare il suo input:
 
     [php]
-    $anwser = $this->askAndValidate('Qual è il tuo indirizzo email?', new sfValidatorEmail());
+    $answer = $this->askAndValidate('Qual è il tuo indirizzo email?', new sfValidatorEmail());
 
 Il metodo accetta anche un array di opzioni (si veda la documentazione delle API
 per maggiori informazioni).
@@ -727,7 +727,6 @@ in `ProjectConfiguration`:
       sfConfig::set('sf_propel_generator_path', '/path/to/propel/generator');
     }
 
-
 Routing
 -------
 
@@ -856,7 +855,7 @@ seguenti righe in `settings.yml`:
         file_link_format: txmt://open?url=file://%f&line=%l
 
 Il segnaposto `%f` sarà sostituito con il percorso assoluto del file ed il
-segnamposto `%l` sarà sostituito dal numero di riga.
+segnaposto `%l` sarà sostituito dal numero di riga.
 
 Integrazione con Doctrine
 -------------------------
