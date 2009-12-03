@@ -432,17 +432,15 @@ Il task `doctrine::build-all` genera i modelli per Doctrine, l'SQL e inizializza
 | `--migrate` | `-` | Migra invece di reinizializzare il database
 
 
-Il task `doctrine:build-all` è una scorciatoia per sei altri task:
+Il task `doctrine:build-all` è una scorciatoia per quattro altri task:
 
     ./symfony doctrine:build-all
 
 Il task è equivalente a:
 
-    ./symfony doctrine:build-db
     ./symfony doctrine:build-model
     ./symfony doctrine:build-sql
     ./symfony doctrine:build-forms
-    ./symfony doctrine:build-filters
     ./symfony doctrine:insert-sql
 
 Vedere l'aiuto relativo a questi tre task per maggiori informazioni.
@@ -2035,9 +2033,11 @@ O limitare il tempo (in secondi):
 
 ### ~`project::upgrade1.3`~
 
-Il task `project::upgrade1.3` aggiorna un progetto symfony alla versione 1.3 di symfony (dalla 1.2):
+Il task `project:upgrade1.3` aggiorna un progetto symfony basato sulla versione 1.2
+alla versione di symfony 1.3.
 
-    $ php symfony project:upgrade1.3  
+    ./symfony project:upgrade1.3  
+
 
 Si prega di leggere il file UPGRADE_TO_1_3 per avere informazioni su cosa fa questo task.
 
