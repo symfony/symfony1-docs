@@ -3,8 +3,8 @@ Appendix A - The Sandbox
 
 If your goal is to give symfony a try for a few hours, keep reading this
 chapter as we will show you the fastest way to get you started. If you want to
-bootstrap a real world project, you can safely skip this chapter, and
-[jump](03-Symfony-Installation#chapter_03) to the next one right away.
+bootstrap a real world project, you should jump to
+[installation](03-Symfony-Installation#chapter_03) chapter.
 
 The fastest way to experiment with symfony is to install the symfony sandbox.
 The sandbox is a dead-easy-to-install pre-packaged symfony project, already
@@ -47,4 +47,4 @@ and the [Environments](06-Environments#chapter_06) chapters.
 >easy to use it as a starting point for a new project. However, keep in mind
 >that you will probably need to adapt the configuration; for instance
 >changing the security related settings (see the configuration of XSS
->and CSRF later in this tutorial).
+>and CSRF in this tutorial).
