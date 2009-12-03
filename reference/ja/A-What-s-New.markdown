@@ -1,0 +1,1 @@
+../../tutorial/ja/whats-new.markdown
