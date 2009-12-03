@@ -270,7 +270,8 @@ aggiungiamo i seguenti test:
 
       info('  6.1 - For the first request, symfony guesses the best culture')->
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()-> 
+      followRedirect()-> 
       with('user')->isCulture('fr')->
 
       info('  6.2 - Available cultures are en and fr')->
@@ -283,7 +284,8 @@ aggiungiamo i seguenti test:
       info('  6.3 - The culture guessing is only for the first request')->
 
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()-> 
+      followRedirect()-> 
       with('user')->isCulture('fr')
     ;
 

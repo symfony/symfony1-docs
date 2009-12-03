@@ -143,7 +143,7 @@ Con un form valido l'offerta di lavoro dovrebbe venire creata e l'utente ~rinvia
 alla pagina `show`:
 
     [php]
-    isRedirected()->
+    with('response')->isRedirected()->
     followRedirect()->
 
     with('request')->begin()->
