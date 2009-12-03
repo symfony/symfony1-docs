@@ -90,7 +90,7 @@ will need to be generated:
 </propel>
 <doctrine>
     [php]
-    // lib/model/doctrine/JobeetAffiliate.php
+    // lib/model/doctrine/JobeetAffiliate.class.php
     class JobeetAffiliate extends BaseJobeetAffiliate
     {
       public function preValidate($event)
@@ -678,7 +678,7 @@ Replace the generated tests for the `affiliate` module by the following code:
         'jobeet_categories_list'         => array(Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
 </doctrine>
       )))->
-      isRedirected()->
+      with('response')->isRedirected()->
       followRedirect()->
       with('response')->checkElement('#content h1', 'Your affiliate account has been created')->
 
