@@ -272,20 +272,6 @@ On Windows:
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
-The `-V` option also displays the path to the symfony installation directory,
-which is stored in `config/ProjectConfiguration.class.php`.
-
-If the path to symfony is an absolute one (which should not be by default if
-you follow the above instructions), change it so it reads like follows for
-better portability:
-
-    [php]
-    // config/ProjectConfiguration.class.php
-    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
-
-That way, you can move the project directory anywhere on your machine or
-another one, and it will just work.
-
 >**TIP**
 >If you are curious about what this command line tool can do for you, type
 >`symfony` to list the available options and tasks:
