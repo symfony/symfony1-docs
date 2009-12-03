@@ -1,4 +1,4 @@
-﻿Le format YAML
+Le format YAML
 ===============
 
 La plupart des fichiers de configuration dans symfony sont dans le format YAML. Selon le site
