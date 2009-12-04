@@ -2,14 +2,14 @@ Le format YAML
 ===============
 
 La plupart des fichiers de configuration dans symfony sont dans le format YAML. Selon le site
-officiel [YAML](http://yaml.org/), YAML est "un standard de sérialisation de données 
-compréhensible par un humain, quel que soit le langage de programmation".
+officiel [YAML](http://yaml.org/), YAML est "un standard de sérialisation de données
+compréhensibles par un humain, quel que soit le langage de programmation".
 
 YAML est un langage simple qui décrit les données. Comme PHP, il a une syntaxe pour
 les types simples comme les chaînes, les booléens, les décimaux ou les entiers. Mais contrairement à PHP, il
 fait une différence entre les tableaux (séries) et les hachages (mappings).
 
-Cette section décrit l'ensemble minimum des dispositifs que vous devrez employer pour utilser YAML
+Cette section décrit l'ensemble minimum des dispositifs que vous devrez employer pour utiliser YAML
 comme format des fichiers de configuration dans symfony, bien que le format de YAML soit capable
 de décrire des structures de données beaucoup plus complexes.
 
@@ -37,7 +37,7 @@ La syntaxe des scalaires est similaire à la syntaxe PHP.
     [yml]
     "Une chaine avec des doubles guillemets en YAML\n"
 
-Une chaine avec des guillemets sont utiles quand une chaîne commence ou se termine par un
+Une chaine avec des guillemets est utile quand une chaîne commence ou se termine par un
 ou plusieurs espaces pertinents.
 
 >**TIP**
@@ -106,7 +106,7 @@ où chaque saut de ligne est remplacé par un espace :
 
 ### Null
 
-Les valeur Null en YAML peut être exprimé avec `null` ou `~`.
+La valeur Null en YAML peut être exprimée avec `null` ou `~`.
 
 ### Booléens
 
@@ -245,12 +245,12 @@ Les commentaires peuvent être ajoutés en YAML en les préfixant avec un signe 
 
 >**NOTE**
 >Les commentaires sont tout simplement ignorés par le parseur YAML et n'ont pas besoin d'être
->indenté en fonction du niveau actuel d'inclusion dans une collection.
+>indentés en fonction du niveau actuel d'inclusion dans une collection.
 
 Fichiers YAML dynamiques
 ------------------
 
-Dans symfony, un fichier YAML peut contenir du code PHP qui est évaluée juste avant
+Dans symfony, un fichier YAML peut contenir du code PHP qui est évalué juste avant
 que le parsing soit lancé :
 
     [php]
@@ -262,7 +262,7 @@ que le parsing soit lancé :
 Faites attention à ne pas casser l'indentation. Gardez à l'esprit les conseils
 suivants lors de l'ajout du code PHP dans un fichier YAML :
 
- * Les déclarations `<?php ?>` doivent toujours commencer une ligne ou être intégré à
+ * Les déclarations `<?php ?>` doivent toujours commencer une ligne ou être intégrées à
    une valeur.
 
  * Si une déclaration `<?php ?>` finit une ligne, vous devez explicitement produire une nouvelle
@@ -273,7 +273,7 @@ suivants lors de l'ajout du code PHP dans un fichier YAML :
 Un long exemple complet
 ---------------------
 
-L'exemple suivant illustre la syntaxe YAML expliqué dans cette section :
+L'exemple suivant illustre la syntaxe YAML expliquée dans cette section :
 
     [yml]
     "symfony 1.0":
