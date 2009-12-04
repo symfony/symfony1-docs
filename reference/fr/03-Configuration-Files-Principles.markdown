@@ -1,4 +1,4 @@
-﻿Principes des fichiers de configuration
+Principes des fichiers de configuration
 =============================
 
 Les fichiers de configuration de symfony sont basés sur un ensemble commun de principes et partagent
@@ -48,13 +48,13 @@ une clé en majuscules) et sont remplacés par leur valeur réelle pendant la "c
 
 Une constante peut être n'importe quel paramètre défini dans le fichier de configuration `settings.yml`.
 La clé du substituant est le nom de la clé du paramètre en majuscule préfixé avec
-`SF_`:
+`SF_` :
 
     [yml]
     logging: %SF_LOGGING_ENABLED%
 
 Quand symfony compile le fichier de configuration, il remplace toutes les occurrences de substituant
-`%SF_XXX%` par leur valeur définie dans `settings.yml`. Dans l'exmple ci-dessous,
+`%SF_XXX%` par leur valeur définie dans `settings.yml`. Dans l'exemple ci-dessous,
 il remplacera le substituant `SF_LOGGING_ENABLED` par la valeur du paramètre
 `logging_enabled` définie dans `settings.yml`.
 
@@ -65,8 +65,8 @@ préfixant le nom de la clé avec `APP_`.
 
 ### Constantes spéciales
 
-Par défaut, symfony definit quatre constantes selon le contrôleur
-frontal actuel:
+Par défaut, symfony définit quatre constantes selon le contrôleur
+frontal actuel :
 
  | Constantes             | Description                             | Méthode de configuration |
  | ---------------------- | --------------------------------------- | ------------------------ |
@@ -84,7 +84,7 @@ communs du projet et de l'application.
 La racine de la hiérarchie est la racine du répertoire du projet, `SF_ROOT_DIR`. Toutes
 les autres constantes sont dérivées de ce répertoire racine.
 
-La structure de répertoire du projet est défini comme suit :
+La structure de répertoire du projet est définie comme suit :
 
  | Constantes         | Valeur par défaut    |
  | ------------------ | -------------------- |
@@ -100,7 +100,7 @@ La structure de répertoire du projet est défini comme suit :
  | ~`SF_WEB_DIR`~     | `SF_ROOT_DIR/web`    |
  | ~`SF_UPLOAD_DIR`~  | `SF_WEB_DIR/uploads` |
 
-La structure de répertoire de l'application est défini dans le
+La structure de répertoire de l'application est définie dans le
 répertoire `SF_APPS_DIR/APP_NAME` :
 
  | Constantes              | Valeur par défaut      |
@@ -111,7 +111,7 @@ répertoire `SF_APPS_DIR/APP_NAME` :
  | ~`SF_APP_TEMPLATE_DIR`~ | `SF_APP_DIR/templates` |
  | ~`SF_APP_I18N_DIR`~     | `SF_APP_DIR/i18n`      |
 
-Enfin, la structure du répertoire du cache de l'application est défini comme suit :
+Enfin, la structure du répertoire du cache de l'application est définie comme suit :
 
  | Constantes                | Valeur par défaut                |
  | ------------------------- | -------------------------------- |
@@ -129,7 +129,7 @@ Sensibilisation à l'environnement
 *Les fichiers de configuration*: `settings.yml`, `factories.yml`, `databases.yml`,
 `app.yml`
 
-Certains fichiers de configuration de symfony sont sensible à l'environnement, leur interprétation
+Certains fichiers de configuration de symfony sont sensibles à l'environnement, leur interprétation
 dépend de l'environnement symfony actuel. Ces fichiers ont des sections différentes qui définissent
 une configuration différente pour chaque environnement. Lorsque
 vous créez une nouvelle application, symfony crée une configuration sensible pour les
@@ -151,13 +151,13 @@ trois environnements par défaut de symfony : `prod`, `test`, et `dev` :
 Lorsque symfony a besoin d'une valeur à partir d'un fichier de configuration, il fusionne
 la configuration disponible dans la section de l'environnement actuel avec la configuration `all`.
 La section spéciale `all` décrit la configuration par défaut pour tous
-les environnements. Si la section de l'environnement n'est pas définie, symfony resdescend
+les environnements. Si la section de l'environnement n'est pas définie, symfony redescend
 sur la configuration de `all`.
 
 Configuration en cascade
 ---------------------
 
-*Les fichiers de configuration*: `core_compile.yml`, `autoload.yml`, `settings.yml`,
+*Les fichiers de configuration* : `core_compile.yml`, `autoload.yml`, `settings.yml`,
 `factories.yml`, `databases.yml`, `security.yml`, `cache.yml`, `app.yml`,
 `filters.yml`, `view.yml`
 
@@ -170,8 +170,8 @@ sont fusionnés selon un ordre de priorité :
   * La configuration du module (`PROJECT_ROOT_DIR/apps/APP_NAME/modules/MODULE_NAME/config/XXX.yml`)
   * La configuration de l'application (`PROJECT_ROOT_DIR/apps/APP_NAME/config/XXX.yml`)
   * La configuration du projet (`PROJECT_ROOT_DIR/config/XXX.yml`)
-  * La configuration défini dans les plugins (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
-  * La configuration par défaut défini dans les librairies de symfony (`SF_LIB_DIR/config/XXX.yml`)
+  * La configuration définie dans les plugins (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
+  * La configuration par défaut définie dans les librairies de symfony (`SF_LIB_DIR/config/XXX.yml`)
 
 Par exemple, le `settings.yml` défini dans un répertoire de l'application hérite
 de la configuration définie dans le répertoire `config/` principal du projet, et
@@ -180,7 +180,7 @@ de la configuration définie dans le répertoire `config/` principal du projet, 
 
 >**TIP**
 >Quand un fichier de configuration est sensible à l'environnement, il peut être défini dans
->plusieurs répertoires, la liste des priorités suivante s'applique de la manière suivante :
+>plusieurs répertoires, la liste prioritaire suivante s'applique :
 >
 > 1. Module
 > 2. Application
