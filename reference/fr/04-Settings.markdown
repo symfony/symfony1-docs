@@ -1,11 +1,11 @@
-﻿Le fichier de configuration settings.yml
+Le fichier de configuration settings.yml
 ===================================
 
 La plupart des aspects de symfony peuvent être configurés via un fichier de configuration
 écrit en YAML, ou avec du simple PHP. Dans cette section, `settings.yml`, le principal fichier
 de configuration est décrit.
 
-Le fichier de configuration principal `settings.yml` pour une application peut être trouver dans
+Le fichier principal de configuration `settings.yml` pour une application peut être trouvé dans
 le répertoire `apps/APP_NAME/config/`.
 
 Comme indiqué dans l'introduction, le fichier `settings.yml` est
@@ -13,7 +13,7 @@ Comme indiqué dans l'introduction, le fichier `settings.yml` est
 [**mécanisme de configuration en cascade**](#chapter_03_configuration_en_cascade).
 
 Chaque section d'un environnement comprend deux sous-sections : `.actions` et `.settings`. Toutes
-les directives de configuration passe par la sous-section `.settings`, à l'exception des
+les directives de configuration passent par la sous-section `.settings`, à l'exception des
 actions par défaut pour restituer certaines pages communes.
 
 >**NOTE**
@@ -62,7 +62,7 @@ Paramètres
 La sous-section `.actions`
 --------------------------
 
-*Configuration par défaut*:
+*Configuration par défaut* :
 
     [yml]
     default:
@@ -89,7 +89,7 @@ L'action `error_404` est exécutée quand une page 404 doit être restituée.
 
 ### ~`login`~
 
-L'action `login` est exécutée quand un utilisateur non-identifié essait d'accéder à
+L'action `login` est exécutée quand un utilisateur non-identifié essaie d'accéder à
 une page sécurisée.
 
 ### ~`secure`~
@@ -118,14 +118,14 @@ exemple, pour obtenir la valeur du paramètre `charset`, utilisez :
 
 ### ~`escaping_strategy`~
 
-*Par défaut*: `true`
+*Par défaut* : `true`
 
 Le paramètre `escaping_strategy` est un paramètre booléen qui détermine si
 l'échappement de sortie du sous-framework est activé ou non. Lorsqu'il est activé, toutes les variables
-disponibles dans les templates sont automatiquement échappé en appelant le helper
-définie par le paramètre `escaping_method` (voir ci-dessous).
+disponibles dans les Templates sont automatiquement échappées en appelant le Helper
+défini par le paramètre `escaping_method` (voir ci-dessous).
 
-Faites bien attention à l'`escaping_method`, l'helper par défaut utilisé par symfony,
+Faites bien attention à l'`escaping_method`, le Helper par défaut utilisé par symfony,
 mais cela peut être remplacé au cas par cas, par exemple, en sortant une variable
 d'une balise d'un script JavaScript.
 
@@ -139,26 +139,26 @@ Il est fortement recommandé de laisser la valeur par défaut à `true`.
 
 ### ~`escaping_method`~
 
-*Par défaut*: `ESC_SPECIALCHARS`
+*Par défaut* : `ESC_SPECIALCHARS`
 
-L'`escaping_method` definit la function par défaut utilisée pour échapper
-les variables dans les templates (Voir l'`escaping_strategy` ci-dessus).
+L'`escaping_method` definit la fonction par défaut utilisée pour échapper
+les variables dans les Templates (Voir l'`escaping_strategy` ci-dessus).
 
  Vous pouvez choisir l'une des valeurs prédéfinies : ~`ESC_SPECIALCHARS`~, ~`ESC_RAW`~,
 ~`ESC_ENTITIES`~, ~`ESC_JS`~, ~`ESC_JS_NO_ENTITIES`~, et
 ~`ESC_SPECIALCHARS`~, ou créer votre propre fonction.
 
-La plupart du temps, la valeur par défaut est très bien. L'helper ESC_ENTITIES peut
-également être utilisé, surtout si vous travaillez uniquement avec les langues anglaise
-ou européenne.
+La plupart du temps, la valeur par défaut est très bien. Le Helper ESC_ENTITIES peut
+également être utilisé, surtout si vous travaillez uniquement avec les langues anglaises
+ou européennes.
 
 ### ~`csrf_secret`~
 
-*Par défaut*: a généré de façon aléatoire un secret
+*Par défaut* : a généré de façon aléatoire un secret
 
 Le `csrf_secret` est un secret unique pour votre application. S'il n'est pas défini à
-`false`, il permet la protection CSRF pour toutes les formulaires définies avec le formulaire
-du framework. Ce paramètre est également utilisé par le helper `link_to()` quand il a besoin
+`false`, il permet la protection CSRF pour toutes les formulaires définis avec le formulaire
+du framework. Ce paramètre est également utilisé par le Helper `link_to()` quand il a besoin
 de convertir un lien vers un formulaire (pour simuler une méthode HTTP `DELETE` par exemple).
 
 Il est fortement recommandé de changer la valeur par défaut par un secret unique
@@ -170,7 +170,7 @@ de votre choix.
 
 ### ~`charset`~
 
-*Par défaut*: `utf-8`
+*Par défaut* : `utf-8`
 
 Le paramètre `charset` est le jeu de caractères qui sera utilisé partout dans
 le framework : de la réponse du `Content-Type` dans le header, à la fonctionnalité
@@ -186,10 +186,10 @@ développement.
 
 ### ~`enabled_modules`~
 
-*Par défaut*: `[default]`
+*Par défaut* : `[default]`
 
 L'`enabled_modules` est un tableau de nom de module à activer pour cette
-application. Les modules définis dans un plugin ou dans le noyau de symfony ne sont pas activé
+application. Les modules définis dans un plugin ou dans le noyau de symfony ne sont pas activés
 par défaut, et vous devez les lister dans ce paramètre pour qu'ils soient accessibles.
 
 L'ajout d'un module est très simple en l'ajoutant à la liste (l'ordre des modules
@@ -205,7 +205,7 @@ paramètre.
 
 ### ~`default_timezone`~
 
-*Par défaut*: aucun
+*Par défaut* : aucun
 
 Le paramètre `default_timezone` définit le fuseau horaire par défaut utilisé par PHP. Il
 peut avoir n'importe quel [fuseau horaire](http://www.php.net/manual/en/class.datetimezone.php)
@@ -233,7 +233,7 @@ Le paramètre `cache` active ou désactive le modèle de mise en cache.
 
 ### ~`etag`~
 
-*Par défaut*: `true` par défaut sauf pour les environnements de `dev` et `test`
+*Par défaut* : `true` par défaut sauf pour les environnements de `dev` et `test`
 
 Le paramètre `etag` active ou désactive la génération automatique d'en-têtes `ETag` HTTP.
 Le ETag généré par symfony est un simple MD5 du contenu des
@@ -244,7 +244,7 @@ réponses.
 *Par défaut* : `false`
 
 Le paramètre `i18n` est un booléen qui active ou désactive le sous framework
-i18n. Si votre application estest internationalisée, réglez-le à `on`.
+i18n. Si votre application est internationalisée, réglez-le à `true`.
 
 >**TIP**
 >La configuration générale du système i18n est à faire dans la section
@@ -253,21 +253,21 @@ i18n. Si votre application estest internationalisée, réglez-le à `on`.
 
 ### ~`default_culture`~
 
-*Par défaut*: `en`
+*Par défaut* : `en`
 
 Le paramètre `default_culture`  définit la culture par défaut utilisé par le sous-framework
 i18n. Il peut avoir n'importe quelle culture valide.
 
 ### ~`standard_helpers`~
 
-*Par défaut*: `[Partial, Cache, Form]`
+*Par défaut* : `[Partial, Cache, Form]`
 
-Le paramètre `standard_helpers` est un tableau de groupe de helper pour charger tous
-les templates (nom du groupe de helper sans le suffixe `Helper`).
+Le paramètre `standard_helpers` est un tableau de groupe de Helper pour charger tous
+les Templates (nom du groupe de Helper sans le suffixe `Helper`).
 
 ### ~`no_script_name`~
 
-*Par défaut*: `true` pour l'environnement de `prod` de la première application créée,
+*Par défaut* : `true` pour l'environnement de `prod` de la première application créée,
 `false` pour les autres
 
 Le paramètre `no_script_name` détermine si le nom du script du contrôleur frontal
@@ -283,16 +283,16 @@ web.
 
 ### ~`lazy_cache_key`~
 
-*Par défaut*: `true` pour les nouveaux projets, `false` pour des projets mis à niveau
+*Par défaut* : `true` pour les nouveaux projets, `false` pour des projets mis à niveau
 
 Lorsqu'il est activé, le paramètre `lazy_cache_key` retarde la création d'une clé cache
-jusqu'à ce que la vérification de la mise en cache d'une action ou d'un partial soit terminé. cela peut
-avoir pour résultat une grande amélioration des performances, en fonction de votre utilisation des templates
-partials.
+jusqu'à ce que la vérification de la mise en cache d'une action ou d'un partial soit terminée. Cela peut
+avoir pour résultat une grande amélioration des performances, en fonction de votre utilisation des Templates
+de Partials.
 
 ### ~`file_link_format`~
 
-*Par défaut*: aucun
+*Par défaut* : aucun
 
 Dans le message du débug, les chemins de fichiers sont des liens cliquables si
 `sf_file_link_format` ou la valeur de configuration PHP de `xdebug.file_link_format`
@@ -309,7 +309,7 @@ sera remplacé par le numéro de ligne.
 
 ### ~`logging_enabled`~
 
-*Par défaut*: `true` pour tous les environnements sauf `prod`
+*Par défaut* : `true` pour tous les environnements sauf `prod`
 
 Le paramètre `logging_enabled` active la journalisation du sous-framework. Mettez cette option à
 `false` et il contourne le mécanisme de journalisation et cela fournit un petit
@@ -321,14 +321,14 @@ gain de performance.
 
 ### ~`web_debug`~
 
-*Par défaut*: `false` pour tous les environnements sauf `dev`
+*Par défaut* : `false` pour tous les environnements sauf `dev`
 
 Le paramètre `web_debug` active la barre d'outil de déboggage web. Elle
 est incluse dans une page si le contenu de la réponse est du HTML.
 
 ### ~`error_reporting`~
 
-*Par défaut*:
+*Par défaut* :
 
   * `prod`:  E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR
   * `dev`:   E_ALL | E_STRICT
@@ -351,7 +351,7 @@ La configuration par défaut est la plus sensible, et ne devrait pas être modif
 
 ### ~`compressed`~
 
-*Par défaut*: `false`
+*Par défaut* : `false`
 
 Le paramètre `compressed` permet la compression native de la réponse PHP. S'il est à
 `true`, symfony utilisera [`ob_gzhandler`](http://www.php.net/ob_gzhandler), une fonction
@@ -362,13 +362,13 @@ natif de votre serveur web à la place.
 
 ### ~`use_database`~
 
-*Par défaut*: `true`
+*Par défaut* : `true`
 
 Le `use_database` détermine si l'application utilise une base de données ou non.
 
 ### ~`check_lock`~
 
-*Par défaut*: `false`
+*Par défaut* : `false`
 
 Le paramètre `check_lock` active ou désactive le système de verrouillage de l'application
 déclenchée par des tâches telles que `cache:clear` et `project:disable`.
@@ -377,12 +377,12 @@ S'il est défini à `true`, toutes les requêtes vers des applications désactiv
 redirigées vers la page du noyau symfony `lib/exception/data/unavailable.php`.
 
 >**TIP**
->Vous pouvez remplacer le template par défaut disponible en ajoutant
+>Vous pouvez remplacer le Template par défaut disponible en ajoutant
 >un fichier `config/unavailable.php` à votre projet ou à votre application.
 
 ### ~`web_debug_web_dir`~
 
-*Par défaut*: `/sf/sf_web_debug`
+*Par défaut* : `/sf/sf_web_debug`
 
 Le `web_debug_web_dir` définit le chemin web pour les ressources de la barre d'outil de déboggage
 (images, feuilles de style, et les fichiers JavaScript).
