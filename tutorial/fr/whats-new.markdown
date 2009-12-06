@@ -909,25 +909,6 @@ qui ont été générés et déterminera ce qui doit être enlevé. Ces modèles
 ensuite transmis à la tâche `doctrine:delete-model-files`. Il vous sera demandé une
 confirmation pour la suppression de tous les fichiers avant de supprimer quoi que ce soit.
 
-#### Rechargement des données
-
-Il s'agit d'un besoin commun de vouloir vider complètement les bases de données puis recharger
-vos données de tests. La tâche `doctrine:build-all-reload` fait cela mais il faut aussi
-faire un tas d'autres travaux, la génération des modèles, des formulaires, des filtres, etc, et cela
-peut nécessiter beaucoup de temps dans un grand projet. Maintenant vous pouvez simplement utiliser
-la tâche `doctrine:reload-data`.
-
-La commande suivante :
-
-    $ php symfony doctrine:reload-data
-
-Est équivalent à l'exécution de ces commandes :
-
-    $ php symfony doctrine:drop-db
-    $ php symfony doctrine:build-db
-    $ php symfony doctrine:insert-sql
-    $ php symfony doctrine:data-load
-
 #### Construire ce que vous voulez
 
 La nouvelle tâche `doctrine:build` vous permet de spécifier exactement ce que vous voulez
