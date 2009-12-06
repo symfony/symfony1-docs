@@ -121,45 +121,45 @@ Symfony поставляется вместе с набором инструме
 >Исследователи так же могут попробовать 
 >[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx).
 
-### ~PHP Configuration~
+### Настройка PHP
 
-As PHP configurations can vary a lot from one OS to another, or even between
-different Linux distributions, you need to check that your PHP configuration
-meets the symfony minimum requirements.
+Поскольку настройка PHP может сильно отличаться для разных ОС, и даже для
+разных дистрибутивов Linux, Вам нужно убедиться, что конфигурация PHP
+удовлетворяет минимальным требованиям Symfony.
 
-First, ensure that you have PHP 5.2.4 at a minimum installed by using the
-`phpinfo()` built-in function or by running `php -v` on the command line. Be
-aware that on some configurations, you might have two different PHP versions
-installed: one for the command line, and another for the web.
+Для начала убедитесь, что у Вас установлено PHP как минимум версии 5.2.4,
+используя встроенную функцию `phpinfo()` или набрав `php -v` в командной строке.
+Имейте в виду, что Вы можете иметь 2 установленных версии PHP: одну для командной строки, 
+и другую для веб.
 
-Then, download the symfony configuration checker script at the following URL:
+Затем, скачайте скрипт, проверяющий, что конфигурации подходит для Symfony, по следующей ссылке:
 
     http://sf-to.org/1.4/check.php
 
-Save the script somewhere under your current web root directory.
+Сохраните скрипт где-нибудь в своей текущей корневой директории веб-сервера.
 
-Launch the configuration checker script from the command line:
+Запустите скрипт, проверяющий конфигурацию из командной строки:
 
     $ php check_configuration.php
 
-If there is a problem with your PHP configuration, the output of the command
-will give you hints on what to fix and how to fix it.
+Если с Вашей конфигурацией PHP что-то не так, вывод команды
+даст Вам подсказку, что нужно исправить и как это сделать.
 
-You should also execute the checker from a browser and fix the issues it might
-discover. That's because PHP can have a distinct `php.ini` configuration file
-for these two environments, with different settings.
+Также Вы должны запустить проверочный скрипт в браузере и исправить проблемы,
+которые он может обнаружить. Это нужно потому, что PHP может иметь уникальные 
+конфигурационные файл `php.ini` для этих двух сред, имеющие разные настройки.
 
 >**NOTE**
->Don't forget to remove the file from your web root directory
->afterwards.
+>Не забудьте удалить проверочный скрипт из корневой директории веб-сервера
+>после завершения.
 
 Установка Symfony
 -----------------
 
-### Initializing the Project Directory
+### Инициализация директории проекта
 
-Before installing symfony, you first need to create a directory that will host
-all the files related to Jobeet:
+Преде, чем инсталлировать Symfony, Вы сначала должны моздать директорию, которая будет содержать
+все файлы, относящиеся к Jobeet:
 
     $ mkdir -p /home/sfprojects/jobeet
     $ cd /home/sfprojects/jobeet
@@ -170,98 +170,95 @@ all the files related to Jobeet:
     c:\> cd c:\development\sfprojects\jobeet
 
 >**Note**:
->Пользователям Windows рекомендуется устанавливать
->symfony в путь, не содержащий пробелов.
->Старайтесь не использовать папку `Documents and Settings` а так же папки типа
->`My Documents`
+>Пользователям Windows рекомендуется устанавливать Symfony в папку, путь которой 
+>не содержит пробелов. Старайтесь не использовать папку `Documents and Settings`, 
+>а также папки типа `My Documents`
 
 >**TIP**
->If you create the symfony project directory under the web root
->directory, you won't need to configure your web server.  Of course, for
->production environments, we strongly advise you to configure your web
->server as explained in the web server configuration section.
+>Если Вы создали директорию проекта Symfony в корневой директории веб-сервера,
+>Вам не нужно дополнительно конфигурировать сервер. Конечно, для промышленного
+>использования мы настоятельно рекомендуем Вам настроить свой веб-сервер,
+>как описано в секции "Настройка веб-сервера".
 
-### Choosing the Symfony Version
+### Выбор версии Symfony
 
-Now, you need to install symfony. As the symfony framework has several stable
-versions, you need to choose the one you want to install by reading the
-[installation page](http://www.symfony-project.org/installation) on the
-symfony website.
+Теперь Вам нужно установить Symfony. Поскольку Symfony имеет несколько стабильных
+релизов, Вам нужно выбрать один, который Вы хотите установить, прочитав
+[страницу инсталляции](http://www.symfony-project.org/installation) на сайте
+Symfony.
 
-This book assumes you want to install symfony 1.3 or symfony 1.4.
+Эта книга предполагает, что Вы выбрали Symfony 1.3 или Symfony 1.4.
 
-### Choosing the Symfony Installation Location
+### Выбор инсталляционной директории Symfony
 
-You can install symfony globally on your machine, or embed it into each of
-your project. The latter is the recommended one as projects will then be
-totally independent from each others. Upgrading your locally installed symfony
-won't break some of your projects unexpectedly. It means you will be able to
-have projects on different versions of symfony, and upgrade them one at a time
-as you see fit.
+Вы можете установить Symfony на своей машине глобально, либо встраивать ее
+в каждый свой проект. Последний вариант предпочтительнее, поскольку тогда все 
+Ваши проекты будут полностью независимы друг от друга. Обновляя локально 
+установленную Symfony, Вы не нарушите неожиданно работу остальных своих приложений.
+Это означает, что Вы можете использовать в разных проектах разные версии
+Symfony и обновлять их по одной, если увидите в этом необходимость.
 
-As a best practice, many people install the symfony framework files in the
-`lib/vendor` project directory. So, first, create this directory:
+В качестве лучшей практики, многие люди устанавливают файлы Symfony в директорию
+`lib/vendor` своего проекта. Таким образом, для начала создайте эту директорию:
 
     $ mkdir -p lib/vendor
 
-#### Installing from an Archive
+#### Установка из архива
 
-The easiest way to install symfony is to download the archive for the version
-you choose from the symfony website. Go to the installation page for the
-version you have just chosen, symfony
-[1.4](http://www.symfony-project.org/installation/1_4) for instance.
+Самый простой способ установить Symfony - скачать архив выбранной Вами версии
+с сайта Symfony. Перейдите на страницу инсталляции для выбранной версии,
+например [1.4](http://www.symfony-project.org/installation/1_4).
 
-Under the "**Source Download**" section, you will find the archive in `.tgz`
-or in `.zip` format. Download the archive, put it under the freshly created
-`lib/vendor/` directory, un-archive it, and rename the directory to `symfony`:
+В секции "**Source Download**" Вы найдете архив в формате `.tgz` или `.zip`. 
+Скачайте его, положите в свежесозданную директорию `lib/vendor/`, разархивируйте, 
+и переименуйте появившуюся директорию в `symfony`:
 
     $ cd lib/vendor
     $ tar zxpf symfony-1.4.0.tgz
     $ mv symfony-1.4.0 symfony
     $ rm symfony-1.4.0.tgz
 
-Under Windows, unzipping the zip file can be achieved using Windows Explorer.
-After you rename the directory to `symfony`, there should be a directory
-structure similar to `c:\dev\sfprojects\jobeet\lib\vendor\symfony`.
+Под Windows распакуйте zip-файл, используя проводник Windows (Explorer).
+Когда Вы переименуете директорию в `symfony`, структура директорий будет примерно
+такой `c:\dev\sfprojects\jobeet\lib\vendor\symfony`.
 
-#### Installing from Subversion (recommended)
+#### Установка из Subversion (рекомендуемый вариант)
 
-If you use Subversion, it is even better to use the `svn:externals` property
-to embed symfony into your project in the `lib/vendor/` directory:
+Если Вы используете Subversion, то лучший вариант - использовать свойство `svn:externals`,
+чтобы встроить Symfony в Ваш проект, в директорию `lib/vendor/`:
 
     $ svn pe svn:externals lib/vendor/
 
 >**NOTE**
->Importing your project in a new Subversion repository is explained at the end
->of this chapter.
+>Импорт Вашего проекта в новый репозиторий Subversion описывается в конце главы.
 
-If everything goes well, this command will run your favorite editor to give
-you the opportunity to configure the external Subversion sources.
+Если все сделано правильно, эта команда откроет Ваш любимый текстовый редактор,
+чтобы дать возможность настроить внешнюю ссылку Subversion.
 
 >**TIP**
->On Windows, you can use tools like [TortoiseSVN](http://tortoisesvn.net/)
->to do everything without the need to use the console.
+>Под Windows Вы можете использовать интерфейс к Subversion, например [TortoiseSVN](http://tortoisesvn.net/),
+>чтобы выполнять всю работу, не используя консоль.
 
-If you are conservative, tie your project to a specific release (a subversion
-tag):
+Если Вы консервативны, свяжите свой проект с конкретным релизом (тэгом Subversion):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
-Whenever a new release comes out (as announced on the symfony
-[blog](http://www.symfony-project.org/blog/)), you will need to change the URL
-to the new version.
+Как только новый релиз будет анонсирован (см. Symfony
+[blog](http://www.symfony-project.org/blog/)), Вам нужно будет поменять URL
+на новую версию.
 
-If you want to go the bleeding-edge route, use the 1.4 branch:
+Если же Вы хотите находиться на переднем крае, используйте ветку 1.4:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Using the branch makes your project benefits from the bug fixes automatically
-whenever you run a `svn update`.
+Использование ветки дает Вашему проекту преимущество в использовании всех исправлений
+(bug fixes) автоматически, как только Вы запустите `svn update`.
 
-#### Installation Verification
+#### Проверка правильности установки
 
-Now that symfony is installed, check that everything is working by using the
-symfony command line to display the symfony version (note the capital `V`):
+Теперь, когда Symfony установлена, проверим, что все работает, используя
+командную строку Symfony command для отображения текущей версии (обратите внимание
+на заглавную `V`):
 
     $ cd ../..
     $ php lib/vendor/symfony/data/bin/symfony -V
@@ -271,45 +268,45 @@ symfony command line to display the symfony version (note the capital `V`):
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
-The `-V` option also displays the path to the symfony installation directory,
-which is stored in `config/ProjectConfiguration.class.php`.
+Опция `-V` также выводит путь к инсталляционной директории Symfony,
+которая хранится в файле `config/ProjectConfiguration.class.php`.
 
-If the path to symfony is an absolute one (which should not be by default if
-you follow the above instructions), change it so it reads like follows for
-better portability:
+Если путь к Symfony абсолютный (чего не должно быть по умолчанию, если Вы
+следовали вышеприведенным инструкциям), измените его так, чтобы он выглядел
+примерно так (для обеспечения переносимости):
 
     [php]
     // config/ProjectConfiguration.class.php
     require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 
-That way, you can move the project directory anywhere on your machine or
-another one, and it will just work.
+Таким образом, Вы сможете переносить директорию проекта в любой место на своей или другой машине,
+и все будет работать.
 
 >**TIP**
->If you are curious about what this command line tool can do for you, type
->`symfony` to list the available options and tasks:
+>Если Вам не терпится узнать, что командная строка Symfony может сделать для Вас, наберите
+>`symfony`, чтобы увидеть список всех доступных задач и опций:
 >
 >     $ php lib/vendor/symfony/data/bin/symfony
 >
->On Windows:
+>На Windows:
 >
 >     c:\> php lib\vendor\symfony\data\bin\symfony
 >
->The symfony command line is the developer's best friend. It provides a lot of
->utilities that improve your productivity for day-to-day activities like
->cleaning the cache, generating code, and much more.
+>Командная строка Symfony - это лучший друг разработчика. Она обеспечивает
+>большое число утилит, для повышения продуктивности Ваший ежедневных действий,
+>таких как очистка кэша, генерация кода и многое другое.
 
-Project Setup
--------------
+Настройка проекта
+-----------------
 
-In symfony, **~applications|Applications~** sharing the same data model are
-regrouped into **~projects|Projects~**. For most projects, you will have two
-different applications: a ~frontend|Frontend~ and a ~backend|Backend~.
+В Symfony, **приложения (applications)**, использующие одну и ту же модель данных,
+группируются в **проекты (projects)**. Для большинства проектов, у Вас будет два 
+разных приложения: фронтэнд (frontend) и бэкэнд (backend).
 
-### Project Creation
+### Создание проекта
 
-From the `sfprojects/jobeet` directory, run the symfony `generate:project`
-task to actually create the symfony project:
+Из директории `sfprojects/jobeet` запустите задачу Symfony `generate:project`,
+чтобы создать Symfony-проект:
 
 <doctrine>
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
@@ -318,7 +315,7 @@ task to actually create the symfony project:
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel
 </propel>
 
-On Windows:
+На Windows:
 
 <doctrine>
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
@@ -327,38 +324,37 @@ On Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet --orm=Propel
 </propel>
 
-Задача `generate:project` создаёт стандартную структуру каталогов
-и файлов, необходимых для приложения:
+Задача `generate:project` создаёт стандартную структуру каталогов и файлов, необходимых 
+для проекта:
 
  | Каталог   | Описание
  | --------- | ----------------------------------
  | apps/     | Содержит все приложения проекта
  | cache/    | Кэш фреймворка
- | config/   | Конфиг файлы фреймворка
+ | config/   | Конфигурационные файлы фреймворка
  | lib/      | Библиотеки и классы проекта
  | log/      | Логи фреймворка
  | plugins/  | Установленные плагины
- | test/     | Файлы для юнит и функционального тестирования
+ | test/     | Файлы для модульного и функционального тестирования
  | web/      | Корневая папка с веб-файлами
 
 >**NOTE**
->Почему symfony создаёт столь много файлов? Главным преимуществом
+>Почему Symfony создаёт так много файлов? Главным преимуществом
 >фреймворка является его стандартизация.
->Благодаря стандартной структуре файлов и папок symfony, любой 
->программист с небольшими знаниями по symfony сможет осуществлять поддержку 
+>Благодаря стандартной структуре файлов и папок Symfony, любой 
+>программист с небольшими знаниями по Symfony сможет осуществлять поддержку 
 >проекта. За считанные минуты он сможет погрузиться в код, начать править ошибки и 
 >добавлять новый функционал.
   
-Задача `generate:project` так же создала 
-ярлык `symfony` в корневом каталоге проекта для 
+Задача `generate:project` так же создала ярлык `Symfony` в корневом каталоге проекта для 
 уменьшения количества символов, набираемых для запуска задачи.
 
-Отныне, вместо того чтобы писать полный буть, мы будет пользоваться ярлыком 
+Отныне, вместо того чтобы писать полный путь, мы будет пользоваться ярлыком 
 `symfony`.
 
 ### Создание приложения
 
-Теперь создадим frontend приложения при помощи задачи `generate:app`:
+Теперь создадим фронтэнд-приложение при помощи задачи `generate:app`:
 
     $ php symfony generate:app frontend
 
@@ -370,83 +366,82 @@ On Windows:
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
 
-Ещё раз - задача `generate:app` создаёт стандартную
-файловую структуру для приложения, которое лежит в `apps/frontend/`:
+Ещё раз - задача `generate:app` создаёт стандартную файловую структуру для приложения, 
+которое лежит в `apps/frontend/`:
 
  | Каталог    | Описание
  | ---------- | -------------------------------------
- | config/    | Конфиг файлы приложения
+ | config/    | Конфигурационные файлы приложения
  | lib/       | Классы и библиотеки приложения
  | modules/   | Код приложения (MVC)
  | templates/ | Глобальные шаблоны приложения
 
 >**SIDEBAR**
->Security
+>Безопасность (Security)
 >
->By default, the `generate:app` task has secured our application from the two
->most widespread vulnerabilities found on the web. That's right, symfony
->automatically takes ~security|Security~ measures on our behalf.
+>По умолчанию, задача `generate:app` создает приложение, защищенное от двух
+>наиболее распространенных уязвимостей, которые можно найти в сети. Это правда - Symfony
+>автоматически использует меры безопасности для нашей пользы.
 >
->To prevent ~XSS~ attacks, output escaping has been enabled; and to prevent
->~CSRF~ attacks, a random CSRF secret has been generated.
+>Для предотвращения XSS-атак включается экранирование всего вывода; и для предотвращения
+>CSRF-атак генерируется случайный секретный ключ.
 >
->Of course, you can tweak these settings thanks to the following *options*:
+>Конечно, Вы можете управлять этими настройками, благодяря следующим *опциям*:
 >
->  * `--escaping-strategy`: Enables or disables output escaping
->  * `--csrf-secret`: Enables session tokens in forms
+>  * `--escaping-strategy`: Включает или отключает экранирование
+>  * `--csrf-secret`: Включает использование токенов уровня сессии в формах
 >
 >Если вы ничего не слышали о
 >[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) или
 >[CSRF](http://en.wikipedia.org/wiki/CSRF), то советуем найти время
 >и почитать о данных уязвимостях.
 
-### Directory Structure Rights
+### Права доступа к директориям
 
-Before trying to access your newly created project, you need to set the write
-permissions on the `cache/` and `log/` directories to the appropriate levels,
-so that your web server can write to them:
+Прежде чем пытаться что-то делать со своим вновь созданным проектом, Вам надо
+установить подходящий уровень прав на запись в директории `cache/` и `log/`
+так, чтобы Ваш веб-сервер мог писать в них:
 
     $ chmod 777 cache/ log/
 
 >**SIDEBAR**
->Tips for People using a SCM Tool
+>Для тех, кто использует системы контроля версий
 >
->symfony only ever writes in two directories of a symfony project,
->`cache/` and `log/`. The content of these directories should be ignored
->by your SCM (by editing the `svn:ignore` property if you use Subversion
->for instance).
+>Symfony всегда пишет только в две директории Вашего проекта:
+>`cache/` и `log/`. Содержимое этих директорий должно быть исключено
+>из контроля версий (например, при помощи свойства `svn:ignore`, если 
+>Вы используете Subversion).
 
-~Web Server~ Configuration: The ugly Way
+Настройка веб-сервера: ужасный способ
+-------------------------------------
+
+Если Вы создали директорию проекта где-то в корневой веб-директории
+Вашего веб-сервера, Вы уже можете получить доступ к своему проекту из браузера.
+
+Конечно, поскольку это не требует дополнительной настройки, это очень быстрый способ, 
+но попробуйте открыть в браузере файл `config/databases.yml`, чтобы осознать весь вред 
+от подобной лени. Если пользователь знает, что Ваш сайт разработан с использованием
+Symfony, он может получить доступ ко всем важным файлам, которые должны быть скрыты.
+
+**Никогда не используйте такой способ на промышленных серверах** и прочитайте
+следующую секцию, чтобы узнат, как правильно настроить веб-сервер.
+
+Настройка веб-сервера: защищенный способ
 ----------------------------------------
 
-If you have created the project directory it somewhere under the web root
-directory of your web server, you can already access the project in a web
-browser.
+Хорошей практикой в веб является размещение в корневой директории веб-приложения только тех файлов,
+к которым нужен непосредственый доступ через браузер, например стилей (stylesheets),
+JavaScript-файлов и изображений. По умолчанию, мы рекомендует хранить эти файлы в 
+директории `web/` Symfony-проекта.
 
-Of course, as there is no configuration, it is very fast to set up, but try to
-access the `config/databases.yml` file in your browser to understand the bad
-consequences of such a lazy attitude. If the user knows that your website is
-developed with symfony, he will have access to a lot of sensitive files.
-
-**Never ever use this setup on a production server**, and read the next
-section to learn how to configure your web server properly.
-
-Web Server Configuration: The secure Way
-----------------------------------------
-
-A good web practice is to put under the web root directory only the files that
-need to be accessed by a web browser, like stylesheets, JavaScripts and
-images. By default, we recommend to store these files under the `web/`
-sub-directory of a symfony project.
-
-Если вы уже заглянули в данную директорию, то значит увидели некоторые подкаталоги
-для веб файлов, а так же 2 фронт-контроллера.
-Фронт-контроллеры это единственные php-файлы, которые должны находиться в каталоге web.
-Все остальные PHP файлы должны быть скрыты от браузера для достижения ещё большей безопасности.
+Если Вы уже заглянули в данную директорию, то значит увидели некоторые подкаталоги
+для веб файлов, а так же 2 фронт-контроллера. Фронт-контроллеры - это единственные PHP-файлы, 
+которые должны находиться в каталоге web. Все остальные PHP файлы должны быть скрыты от 
+браузера для достижения ещё большей безопасности.
 
 ### Конфигурируем веб-сервер
 
-Самое время изменить конфиги Apache для того чтобы открыть наш проект всему миру.
+Самое время изменить конфигурацию Apache для того чтобы открыть наш проект всему миру.
 
 Найдите и откройте файл `httpd.conf` и добавьте в конце следующие строки:
 
@@ -482,7 +477,7 @@ sub-directory of a symfony project.
 >
 >     c:\dev\sfprojects\jobeet\web
 
-Данная конфигурация позволяет слушать порт `8080` на вашей машне, так что
+Данная конфигурация позволяет слушать порт `8080` на Вашей машне, так что
 проект Jobeet будет доступен по адресу:
 
     http://localhost:8080/
@@ -494,19 +489,19 @@ sub-directory of a symfony project.
 >Создаём специализированное доменное имя
 >
 >Если вы администратор сервера, то лучше настроить виртуальные хосты, а не 
->добавлять новый порт каждый раз когда вы начинаете новый проект. Вместо выбирания порта
+>добавлять новый порт каждый раз, когда Вы начинаете новый проект. Вместо выбирания порта
 >для директивы `Listen` подберите доменное имя (например, имя реального домена с добавлением
 >`.localhost` в конце) для директивы `ServerName`:
 >
->     # This is the configuration 
+>     # Это конфигурация Вашего проекта 
 >     <VirtualHost 127.0.0.1:80>
 >       ServerName www.jobeet.com.localhost
 >       <!-- тот же конфиг что и раньше -->
 >     </VirtualHost>
 >
 >Доменное имя `www.jobeet.com.localhost` должно быть определено локально.
->Если вы работаете под Linux, то его нужно прописать в `/etc/hosts` file.
->В Windows XP, будет потрошить для этого каталог
+>Если вы работаете под Linux, то его нужно прописать в файл `/etc/hosts`.
+>Windows XP использует для этого для этого директорию
 >`C:\WINDOWS\system32\drivers\etc\`.
 >
 >Пропишите следующее:
@@ -516,33 +511,31 @@ sub-directory of a symfony project.
 ### Тестируем новую конфигурацию
 
 Перезагрузите Apache и проверьте доступ к вашему приложению, открыв в браузере
-`http://localhost:8080/index.php/` или
-`http://www.jobeet.com.localhost/index.php/`,
-в зависимости от того какую конфигурацию Apache вы выбрали.
+`http://localhost:8080/index.php/` или `http://www.jobeet.com.localhost/index.php/`,
+в зависимости от того, какую конфигурацию Apache Вы выбрали.
 
 ![Поздравляем](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
->**Note**: Если у вас установлен модуль `mod_rewrite` 
-вы можете удалить /index.php/ из ссылок, данных выше.
+>**Note**: Если у Вас установлен модуль `mod_rewrite` 
+Вы можете удалить /index.php/ из ссылок, данных выше.
 
 Так же стоит проверить работоспособность окружения разработки 
-(see the next section for more information about environments).
+(смотрите следующую секцию для получения сведений об окружениях).
 Используйте следующую ссылку:
 
     http://jobeet.localhost/frontend_dev.php/
 
 В правом верхнем углу должна показаться панель отладки, на которой 
-размещены маленький икноки. Это доказывает что алиас
-`sf/` работает отлично.
+размещены маленькие иконки. Это доказывает что алиас `sf/` работает отлично.
 
-![панель отладки](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
+![Панель отладки](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
 >**Note**
->Установка на сервер IIS под Windows несколько отличается. Способ устновки можно найти 
+>Установка на сервер IIS под Windows несколько отличается. Способ установки можно найти 
 >[в этом уроке](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
 
-The ~Environments~
-------------------
+Окружения
+---------
 
 If you have a look at the `web/` directory, you will find two PHP files:
 `index.php` and `frontend_dev.php`. These files are called **front
