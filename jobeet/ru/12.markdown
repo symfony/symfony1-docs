@@ -14,7 +14,7 @@
 Самый первый шаг - это создание приложения backend. Если у Вас хорошая память,
 то Вы должны помнить, как это сделать при помощи задачи `generate:app`:
 
-    $ php symfony generate:app
+    $ php symfony generate:app backend
 
 Бэкэнд-приложение теперь доступно по адресу
 `http://jobeet.localhost/backend.php/` для пользовательской среды, и
