@@ -67,8 +67,7 @@
 бэкэнд-интерфейса для класса модели:
 
     $ php symfony propel:generate-admin backend JobeetJob --module=job
-    $ php symfony propel:generate-admin backend JobeetCategory
-       ? --module=category
+    $ php symfony propel:generate-admin backend JobeetCategory --module=category
 
 Эти две команды создают `job` и `category` модули для `JobeetJob` и `JobeetCategory` 
 классов модели соответственно.
