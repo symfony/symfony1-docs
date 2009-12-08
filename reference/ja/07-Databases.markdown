@@ -1,28 +1,25 @@
-databases.yml設定ファイル
-=========================
+databases.yml 設定ファイル
+==========================
 
-~`databases.yml`~はデータベース接続のコンフィギュレーションを可能にします。
-これはsymfonyに搭載されているORMであるPropelとDoctrineの両方で使われます。
+~`databases.yml`~ はデータベース接続のコンフィギュレーションを可能にします。これは symfony に搭載されている ORM である Propel と Doctrine の両方で使われます。
 
-プロジェクトのメインの`databases.yml`設定ファイルは`config/`ディレクトリで見つかります。
+プロジェクトのメインの `databases.yml` 設定ファイルは `config/` ディレクトリで見つかります。
 
 >**NOTE**
->たいていの場合、プロジェクトのすべてのアプリケーションは同じデータベースをを共有します。
->そのことがメインデータベース設定ファイルがプロジェクトの`config/`ディレクトリにある理由です。
->もちろんアプリケーションのconfigディレクトリで`databases.yml`設定ファイルを定義することでデフォルトのコンフィギュレーションをオーバーライドできます。
+>たいていの場合、プロジェクトのすべてのアプリケーションは同じデータベースをを共有します。そのことがメインデータベース設定ファイルがプロジェクトの `config/` ディレクトリにある理由です。もちろんアプリケーションの `config` ディレクトリで `databases.yml` 設定ファイルを定義することでデフォルトのコンフィギュレーションをオーバーライドできます。
 
-はじめの章で説明したように、`databases.yml`ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
+はじめの章で説明したように、`databases.yml` ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
 
-`databases.yml`で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメーター(`param`)の設定を格納しなければなりません:
+`databases.yml` で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメーター(`param`)の設定を格納しなければなりません:
 
     [yml]
     CONNECTION_NAME:
       class: CLASS_NAME
       param: { ARRAY OF PARAMETERS }
 
-`class`クラスは`sfDatabase`基底クラスを継承します。
+`class` クラスは `sfDatabase` 基底クラスを継承します。
 
-データベースハンドラクラスをオートロードできない場合、`file`パスを定義することでファクトリが作成される前に自動的に含めることができます:
+データベースハンドラクラスをオートロードできない場合、`file` パスを定義することでファクトリが作成される前に自動的に含めることができます:
 
     [yml]
     CONNECTION_NAME:
@@ -30,14 +27,12 @@ databases.yml設定ファイル
       file:  ABSOLUTE_PATH_TO_FILE
 
 >**NOTE**
->`databases.yml`設定ファイルはPHPファイルとしてキャッシュされます; 
->プロセスは~`sfDatabaseConfigHandler`~[クラス](#chapter_14_config_handlers_yml)によって自動的に管理されます。
+>`databases.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; プロセスは ~`sfDatabaseConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動的に管理されます。
 
 -
 
 >**TIP**
->データベースの設定は`database:configure`タスクを使うことでも設定できます。
->このタスクは渡される引数に従って`databases.yml`を更新します。
+>データベースの設定は `database:configure` タスクを使うことでも設定できます。このタスクは渡される引数に従って `databases.yml` を更新します。
 
 Propel
 ------

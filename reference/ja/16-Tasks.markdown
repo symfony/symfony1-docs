@@ -1,18 +1,17 @@
 タスク
 ======
 
-symfonyフレームワークはコマンドラインインターフェイスツールを搭載しています。
-組み込みのタスクによって開発者はプロジェクト期間に繰り返されるたくさんのタスクを実行できるようになります。
+symfony フレームワークはコマンドラインインターフェイスツールを搭載しています。組み込みのタスクによって開発者はプロジェクト期間に繰り返されるたくさんのタスクを実行できるようになります。
 
-`symfony` CLIを引数なしで実行すると、利用可能なタスクの一覧が表示されます:
+`symfony` コマンドを引数なしで実行すると、利用可能なタスクの一覧が表示されます:
 
     $ php symfony
 
-`-V`オプションを渡すことで、symfonyのバージョンとCLIで使われるsymfonyライブラリのパス情報が得られます:
+`-V`オプションを渡すことで、symfony のバージョンと CLI で使われる symfony ライブラリのパス情報が得られます:
 
     $ php symfony -V
 
-CLIツールは最初の引数としてタスクの名前を受け取ります:
+CLI ツールは最初の引数としてタスクの名前を受け取ります:
 
     $ php symfony list
 
@@ -24,9 +23,9 @@ CLIツールは最初の引数としてタスクの名前を受け取ります:
 
     $ php symfony cache:clear --type=template
 
-CLIツールは値の有無とオプションの長短バージョンの表記をそれぞれサポートします。
+CLI ツールは値の有無とオプションの長短バージョンの表記をそれぞれサポートします。
 
-タスクにデバッグ情報を出力するよう指示する`-t`オプションはグローバルオプションです。
+タスクにデバッグ情報を出力するよう指示する `-t` オプションはグローバルオプションです。
 
 <div class="pagebreak"></div>
 
@@ -131,7 +130,7 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
 ### ~`help`~
 
-`help`タスクはタスクのヘルプメッセージを表示する:
+`help` タスクはタスクのヘルプメッセージを表示する:
 
     $ php symfony help [--xml] [task_name]
 
@@ -149,25 +148,25 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony help test:all
 
-`--xml`オプションをつけることでヘルプメッセージをXMLとして出力することもできます:
+`--xml` オプションをつけることでヘルプメッセージを XML として出力することもできます:
 
     ./symfony help test:all --xml
 
 ### ~`list`~
 
-`list`タスクはタスクの一覧を表示する:
+`list` タスクはタスクの一覧を表示する:
 
     $ php symfony list [--xml] [namespace]
 
 | 引数        | デフォルト | 説明
-| ----------- | --------- | -----------
+| ----------- | --------- | --------------
 | `namespace` | `-`       | 名前空間の名前
 
-| オプション(ショートカット)| デフォルト | 説明
+| オプション(ショートカット) | デフォルト | 説明
 | ------------------------- | ---------- | ----------------------
-| `--xml`      | `-`        | ヘルプメッセージをXMLとして出力する
+| `--xml`      | `-`        | ヘルプメッセージを XML として出力する
 
-`list`タスクはすべてのタスクの一覧を表示します:
+`list` タスクはすべてのタスクの一覧を表示します:
 
     ./symfony list
 
@@ -175,7 +174,7 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony list test
 
-`--xml`オプションをつけることで情報をXMLとして出力することもできます:
+`--xml` オプションをつけることで情報をXMLとして出力することもできます:
 
     ./symfony list --xml
 
@@ -184,16 +183,16 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
 ### ~`app::routes`~
 
-`app::routes`タスクは現在のアプリケーションのルートを表示する:
+`app::routes` タスクは現在のアプリケーションのルートを表示する:
 
     $ php symfony app:routes  application [name]
 
 | 引数          | デフォルト | 説明
-| ------------- | --------- | -----------
+| ------------- | --------- | -----------------------
 | `application` | `-`       | アプリケーションの名前
 | `name`        | `-`       | ルートの名前
 
-`app:routes`は現在のアプリケーションのルートを表示します:
+`app:routes` は現在のアプリケーションのルートを表示します:
 
     ./symfony app:routes frontend
 
@@ -202,41 +201,41 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
 ### ~`cache::clear`~
 
-`cache::clear`タスクはキャッシュをクリアする:
+`cache::clear` タスクはキャッシュをクリアする:
 
     $ php symfony cache:clear [--app[="..."]] [--env[="..."]] [--type[="..."]] 
 
 *エイリアス*: `cc、clear-cache`
 
 | オプション(ショートカット) | デフォルト | 説明
-| ------------------------- | ---------- | ---
+| ------------------------- | ---------- | ----------------------
 | `--app`                   | `-`        | アプリケーションの名前
 | `--env`                   | `-`        | 環境
 | `--type`                  | `all`      | 種類
 
-`cache:clear`タスクはsymfonyのキャッシュをクリアします。
+`cache:clear` タスクは symfony のキャッシュをクリアします。
 
 デフォルトでは、これはすべての利用可能な種類、すべてのアプリケーションとすべての環境のキャッシュを削除します。
 
 種類、アプリケーションもしくは環境で制限できます:
 
-たとえば、`frontend`アプリケーションのキャッシュをクリアするには:
+たとえば、`frontend` アプリケーションのキャッシュをクリアするには:
 
     ./symfony cache:clear --app=frontend
 
-`frontend`アプリケーションの`prod`環境のキャッシュをクリアするには:
+`frontend` アプリケーションの `prod` 環境のキャッシュをクリアするには:
 
     ./symfony cache:clear --app=frontend --env=prod
 
-すべての`prod`環境のキャッシュをクリアするには:
+すべての `prod` 環境のキャッシュをクリアするには:
 
     ./symfony cache:clear --env=prod
 
-`prod`環境の`config`キャッシュをクリアするには:
+`prod` 環境の `config` キャッシュをクリアするには:
 
     ./symfony cache:clear --type=config --env=prod
 
-組み込みの種類は次のとおりです: `config`、`i18n`、`routing`、`module`と`template`
+組み込みの種類は次のとおりです: `config`、`i18n`、`routing`、`module` と `template`
 
 
 `configure`
@@ -244,31 +243,31 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
 ### ~`configure::author`~
 
-`configure::author`タスクはプロジェクトの著者を設定する:
+`configure::author` タスクはプロジェクトの著者を設定する:
 
     $ php symfony configure:author  author
 
 | 引数     | デフォルト | 説明
-| -------- | --------- | -----------
+| -------- | --------- | ------------------
 | `author` | `-`       | プロジェクトの著者
 
-`configure:author`タスクはプロジェクトの著者を設定します:
+`configure:author` タスクはプロジェクトの著者を設定します:
 
     ./symfony configure:author "Fabien Potencier <fabien.potencier@symfony-project.com>"
 
-それぞれの生成ファイルでPHPDocヘッダーをあらかじめ設定するためにジェネレーターによって著者の名前が使われます。
+それぞれの生成ファイルで PHPDoc ヘッダーをあらかじめ設定するためにジェネレーターによって著者の名前が使われます。
 
-値は[config/properties.ini]に保存されます。
+値は `config/properties.ini` に保存されます。
 
 ### ~`configure::database`~
 
-`configure::database`タスクはデータベースのDSNを設定する:
+`configure::database` タスクはデータベースのDSNを設定する:
 
     $ php symfony configure:database [--env[="..."]] [--name[="..."]] [--class[="..."]] [--app[="..."]] dsn [username] [password]
 
 | 引数       | デフォルト | 説明
 | ---------- | --------- | ---------------------------
-| `dsn`      | `-`       | データベースのDSN
+| `dsn`      | `-`       | データベースの DSN
 | `username` | `root`    | データベースユーザーの名前
 | `password` | `-`       | データベースのパスワード
 
@@ -279,16 +278,15 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 | `--class`                    | `sfPropelDatabase` | データベースクラスの名前
 | `--app`                      | `-`                | アプリケーションの名前
 
-`configure:database`タスクはプロジェクトのデータベースのDSNを設定します:
+`configure:database` タスクはプロジェクトのデータベースの DSN を設定します:
 
     ./symfony configure:database mysql:host=localhost;dbname=example root mYsEcret
 
-デフォルトでは、タスクはすべての環境のコンフィギュレーションを変更します。
-特定の環境のためにDSNを変更したい場合、`env`オプションを使います:
+デフォルトでは、タスクはすべての環境のコンフィギュレーションを変更します。特定の環境のために DSN を変更したい場合、`env` オプションを使います:
 
     ./symfony configure:database --env=dev mysql:host=localhost;dbname=example_dev root mYsEcret
 
-特定のアプリケーションのコンフィギュレーションを変更するには、`app`オプションを使います:
+特定のアプリケーションのコンフィギュレーションを変更するには、`app` オプションを使います:
 
     ./symfony configure:database --app=frontend mysql:host=localhost;dbname=example root mYsEcret
 
@@ -296,19 +294,19 @@ CLIツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony configure:database --name=main --class=ProjectDatabase mysql:host=localhost;dbname=example root mYsEcret
 
-WARNING: `Propel`データベースを使い`app`なしで`all`環境を設定するときは`propel.ini`ファイルも更新されます。
+WARNING: `Propel` データベースを使い `app` なしで `all` 環境を設定するときは `propel.ini` ファイルも更新されます。
 
 `doctrine`
 ----------
 
 ### ~`doctrine::build`~
 
-`doctrine::build`タスクはスキーマに基づいてコードを生成する:
+`doctrine::build` タスクはスキーマに基づいてコードを生成する:
 
     $ php symfony doctrine:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-migrate] [--and-load[="..."]] [--and-append[="..."]] 
 
-| オプション(ショートカット) | デフォルト | 説明
-| -------------------------- | ---------- | -----------
+| オプション(ショートカット)  | デフォルト | 説明
+| -------------------------- | --------- | ---------------------------------------------------------
 | `--application`     | `1`  | アプリケーションの名前
 | `--env`             | `dev`| 環境
 | `--no-confirmation` | `-`  | データベースの削除を強制するか
@@ -317,22 +315,21 @@ WARNING: `Propel`データベースを使い`app`なしで`all`環境を設定�
 | `--model`           | `-`  | モデルクラスをビルドする
 | `--forms`           | `-`  | フォームクラスをビルドする
 | `--filters`         | `-`  | フィルタークラスをビルドする
-| `--sql`             | `-`  | SQLをビルドする
-| `--db`              | `-`  | SQLを削除、作成もしくは挿入する、もしくはデータベースをマイグレートする
+| `--sql`             | `-`  | SQL をビルドする
+| `--db`              | `-`  | SQL を削除、作成もしくは挿入する、もしくはデータベースをマイグレートする
 | `--and-migrate`     | `-`  | データベースをマイグレートする
 | `--and-load`        | `-`  | フィクスチャデータをロードする(複数の値が可能)
 | `--and-append`      | `-`  | フィクスチャデータを追加する(複数の値が可能)
 
-`doctrine:build`タスクはスキーマに基づいてコードを生成します:
+`doctrine:build` タスクはスキーマに基づいてコードを生成します:
 
     ./symfony doctrine:build
 
-ビルドしたいものを指定しなければなりません。
-たとえば、`--model`と`--forms`オプションをつけてモデルとフォームクラスをビルドしたいとします:
+ビルドしたいものを指定しなければなりません。たとえば、`--model` と `--forms` オプションをつけてモデルとフォームクラスをビルドしたいとします:
 
     ./symfony doctrine:build --model --forms
 
-すべてのクラスとSQLを生成させてデータベースをリビルドしたければ`--all`ショートカットオプションを使うことができます:
+すべてのクラスと SQL を生成させてデータベースをリビルドしたければ `--all` ショートカットオプションを使うことができます:
 
     ./symfony doctrine:build --all
 
@@ -346,44 +343,43 @@ WARNING: `Propel`データベースを使い`app`なしで`all`環境を設定�
     ./symfony doctrine:build-sql
     ./symfony doctrine:insert-sql
 
-`--all-classes`ショートカットオプションをつけることでクラスファイルのみを生成することもできます。 
-このオプションが単独で使われるとき、データベースは修正されません。
+`--all-classes` ショートカットオプションをつけることでクラスファイルのみを生成することもできます。このオプションが単独で使われるとき、データベースは修正されません。
 
     ./symfony doctrine:build --all-classes
 
-`--and-migrate`オプションはビルドが完了したらマイグレーションの追加を実行します:
+`--and-migrate` オプションはビルドが完了したらマイグレーションの追加を実行します:
 
     ./symfony doctrine:build --db --and-migrate
 
-`--and-load`オプションはプロジェクトとプラグインの`data/fixtures/`ディレクトリからデータをロードします:
+`--and-load` オプションはプロジェクトとプラグインの `data/fixtures/` ディレクトリからデータをロードします:
 
     ./symfony doctrine:build --db --and-migrate --and-load
 
-ロードされるフィクスチャを指定するには、パラメーターを`--and-load`オプションに加えます:
+ロードされるフィクスチャを指定するには、パラメーターを `--and-load` オプションに加えます:
 
     ./symfony doctrine:build --all --and-load="data/fixtures/dev/"
 
-データベースからのレコードを削除せずにフィクスチャを追加するには、`--and-append`オプションを含めます:
+データベースからのレコードを削除せずにフィクスチャを追加するには、`--and-append` オプションを含めます:
 
     ./symfony doctrine:build --all --and-append
 
 ### ~`doctrine::build-all`~
 
-`doctrine::build-all`タスクはDoctrineモデル、SQLを生成しデータベースを初期化する:
+`doctrine::build-all` タスクは Doctrine モデル、SQL を生成しデータベースを初期化する:
 
     $ php symfony doctrine:build-all [--application[="..."]] [--env="..."] [--no-confirmation] [-F|--skip-forms] [--migrate] 
 
 *エイリアス*: `doctrine-build-all`
 
 | オプション(ショートカット)  | デフォルト | 説明
-| -------------------------- | ---------- | -----------
+| -------------------------- | ---------- | ------------------------------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 | `--no-confirmation`        | `-`        | 確認の質問をしない
 | `--skip-forms`<br />`(-F)` | `-`        | フォーム生成を省く
 | `--migrate`                | `-`        | データベースをリセットする代わりにマイグレートする
 
-`doctrine:build-all`タスクは6つのタスクのショートカットです:
+`doctrine:build-all` タスクは6つのタスクのショートカットです:
 
     ./symfony doctrine:build-all
 
@@ -398,11 +394,11 @@ WARNING: `Propel`データベースを使い`app`なしで`all`環境を設定�
 
 詳細な情報はこれらのタスクのヘルプページを参照してください。
 
-確認を回避するには、`no-confirmation`オプションを渡します:
+確認を回避するには、`no-confirmation` オプションを渡します:
 
     ./symfony doctrine:buil-all-load --no-confirmation
 
-Doctrine SQLを挿入するよりもプロジェクトのマイグレーションを実行したいのであれば`--migrate`オプションを含めます。
+Doctrine SQLを挿入するよりもプロジェクトのマイグレーションを実行したいのであれば `--migrate` オプションを含めます。
 
     ./symfony doctrine:build-all --migrate
 
@@ -415,7 +411,7 @@ Doctrine SQLを挿入するよりもプロジェクトのマイグレーショ�
 
 ### ~`doctrine::build-all-load`~
 
-`doctrine::build-all-load`タスクはDoctrineモデル、SQLを生成し、データベースを初期化し、フィクスチャデータをロードする:
+`doctrine::build-all-load` タスクは Doctrine モデル、SQL を生成し、データベースを初期化し、フィクスチャデータをロードする:
 
     $ php symfony doctrine:build-all-load [--application[="..."]] [--env="..."] [--no-confirmation] [-F|--skip-forms] [--migrate] [--dir="..."] [--append] 
 
@@ -431,7 +427,7 @@ Doctrine SQLを挿入するよりもプロジェクトのマイグレーショ�
 | `--dir`                    | `-`        | フィクスチャを探すディレクトリ(複数の値が許可される)
 | `--append`                 | `-`        | データベースの現在のデータを削除しない
 
-`doctrine:build-all-load`タスクは7つのタスクのショートカットです:
+`doctrine:build-all-load` タスクは7つのタスクのショートカットです:
 
     ./symfony doctrine:build-all-load
 
@@ -445,20 +441,19 @@ Doctrine SQLを挿入するよりもプロジェクトのマイグレーショ�
     ./symfony doctrine:insert-sql
     ./symfony doctrine:data-load
 
-`doctrine:data-load`タスクなのでアプリケーションの引数を受け取ります。
-詳細な情報は`doctrine:data-load`のヘルプページを参照してください。
+`doctrine:data-load` タスクなのでアプリケーションの引数を受け取ります。詳細な情報は `doctrine:data-load` のヘルプページを参照してください。
 
-確認を回避するには、`no-confirmation`オプションを渡します:
+確認を回避するには、`no-confirmation` オプションを渡します:
 
     ./symfony doctrine:build-all-load --no-confirmation
 
-Doctrine SQLを挿入するよりもマイグレーションを実行したいのであれば`--migrate`オプションを含めます。
+Doctrine SQL を挿入するよりもマイグレーションを実行したいのであれば `--migrate` オプションを含めます。
 
     ./symfony doctrine:build-all-load --migrate
 
 ### ~`doctrine::build-all-reload`~
 
-`doctrine::build-all-reload`タスクはDoctrineモデル、SQLを生成し、データベースを初期化し、データをロードする:
+`doctrine::build-all-reload` タスクは Doctrine モデル、SQL を生成し、データベースを初期化し、データをロードする:
 
     $ php symfony doctrine:build-all-reload [--application[="..."]] [--env="..."] [--no-confirmation] [-F|--skip-forms] [--migrate] [--dir="..."] [--append] 
 
@@ -474,7 +469,7 @@ Doctrine SQLを挿入するよりもマイグレーションを実行したい�
 | `--dir`                    | `-`        | フィクスチャを探すディレクトリ(複数の値が許可される)
 | `--append`                 | `-`        | データベースの現在のデータを削除しない
 
-`doctrine:build-all-reload`タスクは8つのタスクのショートカットです:
+`doctrine:build-all-reload` タスクは8つのタスクのショートカットです:
 
     ./symfony doctrine:build-all-reload
 
@@ -489,20 +484,20 @@ Doctrine SQLを挿入するよりもマイグレーションを実行したい�
     ./symfony doctrine:insert-sql
     ./symfony doctrine:data-load
 
-Doctrine SQLを挿入する代わりにプロジェクトのマイグレーションを実行したいのであれば`--migrate`オプションを含めます。
+Doctrine SQL を挿入する代わりにプロジェクトのマイグレーションを実行したいのであれば `--migrate` オプションを含めます。
 
     ./symfony doctrine:build-all-reload --migrate
 
 ### ~`doctrine::build-all-reload-test-all`~
 
-`doctrine::build-all-reload-test-all`タスクはDoctrineモデル、SQLを生成し、データベースを初期化し、データをロードしてすべてのテストを実施する:
+`doctrine::build-all-reload-test-all` タスクは Doctrine モデル、SQL を生成し、データベースを初期化し、データをロードしてすべてのテストを実施する:
 
     $ php symfony doctrine:build-all-reload-test-all [--application[="..."]] [--env="..."] [--no-confirmation] [-F|--skip-forms] [--migrate] [--dir="..."] [--append]
 
 *エイリアス*: `doctrine-build-all-reload-test-all`
 
-| オプション(ショートカット) | デフォルト | 説明
-| -------------------------- | ----- | ----------------------------------------
+| オプション(ショートカット)  | デフォルト | 説明
+| -------------------------- | ----- | ---------------------------------------------------
 | `--application`            | `1`   | アプリケーションの名前
 | `--env`                    | `dev` | 環境
 | `--no-confirmation`        | `-`   | 確認の質問をしない
@@ -511,7 +506,7 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--dir`                    | `-`   | フィクスチャを探すディレクトリ(複数の値が許可される)
 | `--append`                 | `-`   | データベースの現在のデータを削除しない
 
-`doctrine:build-all-reload`タスクは9つのタスクのショートカットです:
+`doctrine:build-all-reload` タスクは9つのタスクのショートカットです:
 
     ./symfony doctrine:build-all-reload-test-all frontend
 
@@ -527,16 +522,15 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
     ./symfony doctrine:data-load
     ./symfony test-all
 
-`doctrine:data-load`タスクなのでアプリケーションの引数を受け取ります。
-詳細な情報は`doctrine:data-load`のヘルプページを参照してください。
+`doctrine:data-load` タスクなのでアプリケーションの引数を受け取ります。詳細な情報は `doctrine:data-load` のヘルプページを参照してください。
 
-Doctrine SQLを挿入する代わりにプロジェクトのマイグレーションを実行したいのであれば`--migrate`オプションを含めます。
+Doctrine SQL を挿入する代わりにプロジェクトのマイグレーションを実行したいのであれば `--migrate` オプションを含めます。
 
     ./symfony doctrine:build-all-reload-test-all --migrate
 
 ### ~`doctrine::build-db`~
 
-`doctrine::build-db`タスクは現在のモデル用のデータベースを作成する:
+`doctrine::build-db` タスクは現在のモデル用のデータベースを作成する:
 
     $ php symfony doctrine:build-db [--application[="..."]] [--env="..."] 
 
@@ -547,15 +541,15 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`          | `1`         | アプリケーションの名前
 | `--env`                  | `dev`       | 環境
 
-`doctrine:build-db`タスクはデータベースを作成します:
+`doctrine:build-db` タスクはデータベースを作成します:
 
     ./symfony doctrine:build-db
 
-タスクは`config/doctrine/databases.yml`の接続情報を読み込みます:
+タスクは `config/doctrine/databases.yml` の接続情報を読み込みます:
 
 ### ~`doctrine::build-filters`~
 
-`doctrine::build-filters`タスクは現在のモデル用のフィルターフォームクラスを作成する:
+`doctrine::build-filters` タスクは現在のモデル用のフィルターフォームクラスを作成する:
 
     $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] 
 
@@ -566,43 +560,39 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--model-dir-name`  | `model`  | モデルディレクトリの名前
 | `--filter-dir-name` | `filter` | フィルターフォームディレクトリの名前
 
-`doctrine:build-filters`タスクはスキーマからフォームフィルタークラスを作成します:
+`doctrine:build-filters` タスクはスキーマからフォームフィルタークラスを作成します:
 
     ./symfony doctrine:build-filters
 
-このクラスはモデルに基づいてフォームフィルタークラスを作成します。
-このクラスは`lib/doctrine/filter`に作られます。
+このクラスはモデルに基づいてフォームフィルタークラスを作成します。このクラスは `lib/doctrine/filter` に作られます。
 
-このタスクは`lib/doctrine/filter`のカスタムクラスをオーバーライドすることはありません。
-これは`lib/doctrine/filter/base`に生成された基底クラスを置き換えるだけです。
+このタスクは `lib/doctrine/filter` のカスタムクラスをオーバーライドすることはありません。これは `lib/doctrine/filter/base` に生成された基底クラスを置き換えるだけです。
 
 ### ~`doctrine::build-forms`~
 
-`doctrine::build-forms`タスクは現在のモデル用のフォームクラスを作成する:
+`doctrine::build-forms` タスクは現在のモデル用のフォームクラスを作成する:
 
     $ php symfony doctrine:build-forms [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--form-dir-name="..."]
 
-| オプション(ショートカット)| デフォルト | 説明
-| ------------------------- | ---------- | -----------
+| オプション(ショートカット) | デフォルト | 説明
+| ------------------------- | ---------- | -------------------------
 | `--application`           | `1`        | アプリケーションの名前
 | `--env`                   | `dev`      | 環境
 | `--model-dir-name`        | `model`    | モデルディレクトリの名前
 | `--form-dir-name`         | `form`     | フォームディレクトリの名前
 
 
-`doctrine:build-forms`タスクはスキーマからフォームクラスを作成します:
+`doctrine:build-forms` タスクはスキーマからフォームクラスを作成します:
 
     ./symfony doctrine:build-forms
 
-タスクは`プロジェクトとすべてのインストールしたプラグインからconfig/*schema.xml`かつ/もしくは`config/*schema.yml`のスキーマ情報を読み取ります。
-モデルフォームクラスのファイルは`lib/form`で作成されます。
+タスクはプロジェクトとすべてのインストールしたプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み取ります。モデルフォームクラスのファイルは `lib/form` で作成されます。
 
-このタスクは`lib/form`のなかのカスタムクラスをけっして上書きしません。
-これは`lib/form/base`で生成された基底クラスのみを置き換えます。
+このタスクは `lib/form` のなかのカスタムクラスをけっして上書きしません。これは `lib/form/base` で生成された基底クラスのみを置き換えます。
 
 ### ~`doctrine::build-model`~
 
-`doctrine::build-model`タスクは現在のモデル用のクラスを作成する:
+`doctrine::build-model` タスクは現在のモデル用のクラスを作成する:
 
     $ php symfony doctrine:build-model [--application[="..."]] [--env="..."] 
 
@@ -613,16 +603,15 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:build-model`タスクはスキーマからモデルクラスを作成します:
+`doctrine:build-model` タスクはスキーマからモデルクラスを作成します:
 
     ./symfony doctrine:build-model
 
-タスクはプロジェクトと有効なすべてのプラグインから`config/doctrine/*.yml`のスキーマ情報を読み込みます。
+タスクはプロジェクトと有効なすべてのプラグインから `config/doctrine/*.yml` のスキーマ情報を読み込みます。
 
-モデルクラスファイルは`lib/model/doctrine`で作成されます。
+モデルクラスファイルは `lib/model/doctrine` で作成されます。
 
-このタスクは`lib/model/doctrine`のなかのカスタムタスクをけっして上書きしません。
-これは`lib/model/doctrine/base`のファイルのみを置き換えます。
+このタスクは `lib/model/doctrine` のなかのカスタムタスクをけっして上書きしません。これは `lib/model/doctrine/base` のファイルのみを置き換えます。
 
 ### ~`doctrine::build-schema`~
 
@@ -637,15 +626,15 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:build-schema`タスクはスキーマを作成するデータベースをイントロスペクトします:
+`doctrine:build-schema` タスクはスキーマを作成するデータベースをイントロスペクトします:
 
     ./symfony doctrine:build-schema
 
-タスクは`config/doctrine`にYAMLファイルを作成します。
+タスクは `config/doctrine` に YAML ファイルを作成します。
 
 ### ~`doctrine::build-sql`~
 
-`doctrine::build-sql`タスクは現在のモデル用のSQLを作成する:
+`doctrine::build-sql` タスクは現在のモデル用の SQL を作成する:
 
     $ php symfony doctrine:build-sql [--application[="..."]] [--env="..."] 
 
@@ -656,17 +645,17 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`              | `1`        | アプリケーションの名前
 | `--env`                      | `dev`      | 環境
 
-`doctrine:build-sql`タスクはテーブル作成用のSQLステートメントを作成します:
+`doctrine:build-sql` タスクはテーブル作成用の SQL ステートメントを作成します:
 
     ./symfony doctrine:build-sql
 
-生成SQLは`config/databases.yml`で設定されるデータベース用に最適化されます:
+生成 SQL は `config/databases.yml` で設定されるデータベース用に最適化されます:
 
     doctrine.database = mysql
 
 ### ~`doctrine::clean-model-files`~
 
-`doctrine::clean-model-files`タスクはYAMLスキーマにもはや存在しないモデル用に生成されたすべてのモデルクラスを削除する:
+`doctrine::clean-model-files` タスクは YAML スキーマにもはや存在しないモデル用に生成されたすべてのモデルクラスを削除する:
 
     $ php symfony doctrine:clean-model-files [--no-confirmation] 
 
@@ -676,13 +665,13 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | -------------------------- | ---------- | -------------------
 | `--no-confirmation`        | `-`        | 確認の質問をしない
 
-`doctrine:clean-model-files`タスクはプロジェクトもしくはプラグインの`schema.yml`ファイルに存在しないモデルクラスを削除します:
+`doctrine:clean-model-files` タスクはプロジェクトもしくはプラグインの `schema.yml` ファイルに存在しないモデルクラスを削除します:
 
     ./symfony doctrine:clean-model-files
 
 ### ~`doctrine::create-model-tables`~
 
-`doctrine::create-model-tables`タスクは指定されるモデルのテーブルを削除し再作成する:
+`doctrine::create-model-tables` タスクは指定されるモデルのテーブルを削除し再作成する:
 
     $ php symfony doctrine:create-model-tables [--application[="..."]] [--env="..."] [models1] ... [modelsN]
 
@@ -695,60 +684,60 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`            | `frontend` | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:create-model-tables`は指定されるモデルのテーブルを削除し再作成します:
+`doctrine:create-model-tables` は指定されるモデルのテーブルを削除し再作成します:
 
     ./symfony doctrine:create-model-tables User
 
 ### ~`doctrine::data-dump`~
 
-`doctrine::data-dump`タスクはデータをフィクスチャディレクトリにダンプする:
+`doctrine::data-dump` タスクはデータをフィクスチャディレクトリにダンプする:
 
     $ php symfony doctrine:data-dump [--application[="..."]] [--env="..."] [target]
 
 *エイリアス*: `doctrine-dump-data`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | ---------------------
 | `target` | `-`        | ターゲットのファイル名
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ----------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:data-dump`タスクはデータベースデータをダンプします:
+`doctrine:data-dump` タスクはデータベースデータをダンプします:
 
     ./symfony doctrine:data-dump
 
-タスクはデータベースのデータを`data/fixtures/%target%`にダンプします。
+タスクはデータベースのデータを `data/fixtures/%target%` にダンプします。
 
-`doctrine:data-load`タスクを使ってダンプファイルはYAMLフォーマットで再インポートできます。
+`doctrine:data-load` タスクを使ってダンプファイルは YAML フォーマットで再インポートできます。
 
     ./symfony doctrine:data-load
 
 ### ~`doctrine::data-load`~
 
-`doctrine::data-load`タスクはYAMLフィクスチャデータをロードする:
+`doctrine::data-load` タスクは YAML フィクスチャデータをロードする:
 
     $ php symfony doctrine:data-load [--application[="..."]] [--env="..."] [--append] [--connection="..."] [--dir="..."] 
 
 *エイリアス*: `doctrine-load-data`
 
-| 引数          | デフォルト | 説明
+| 引数          | デフォルト  | 説明
 | ------------- | ---------- | --------------------------------------
 | `dir_or_file` | `-`        | ロードするディレクトリもしくはファイル
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ----------------------
 | `--application`| `1`       | アプリケーションの名前
 | `--env`        | `dev`     | 環境
 | `--append`     | `-`       | データベースの現在の値を削除しない
 
-`doctrine:data-load`タスクはデータフィクスチャをデータベースにロードします:
+`doctrine:data-load` タスクはデータフィクスチャをデータベースにロードします:
 
     ./symfony doctrine:data-load
 
-タスクは`data/fixtures/`で見つかるすべてのファイルからデータをロードします。
+タスクは `data/fixtures/` で見つかるすべてのファイルからデータをロードします。
 
 特定のファイルもしくはディレクトリからデータをロードしたいのであれば、これらを引数として追加できます:
 
@@ -760,7 +749,7 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 
 ### ~`doctrine::delete-model-files`~
 
-`doctrine::delete-model-files`タスクは任意のモデル名に関連する自動生成されたファイルをすべて削除する:
+`doctrine::delete-model-files` タスクは任意のモデル名に関連する自動生成されたファイルをすべて削除する:
 
     $ php symfony doctrine:delete-model-files [--no-confirmation] name
 
@@ -772,34 +761,34 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | ------------------- | ---- | ---------------------------
 | `--no-confirmation` | `-`  | 確認の質問をしない
 
-`doctrine:delete-model-files`タスクは特定のモデルに関連するすべてのファイルを削除します:
+`doctrine:delete-model-files` タスクは特定のモデルに関連するすべてのファイルを削除します:
 
     ./symfony doctrine:delete-model-files Article Author
 
 ### ~`doctrine::dql`~
 
-`doctrine::dql`タスクはDQLクエリを実行し結果を表示する:
+`doctrine::dql` タスクは DQL クエリを実行し結果を表示する:
 
     $ php symfony doctrine:dql [--application[="..."]] [--env="..."] [--show-sql] [--table] dql_query
 
 *エイリアス*: `doctrine-dql`
 
 | 引数        | デフォルト | 説明
-| ----------- | ---------- | -----------------
-| `dql_query` | `-`        | 実行するDQLクエリ
+| ----------- | ---------- | -------------------
+| `dql_query` | `-`        | 実行する DQL クエリ
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
-| `--show-sql`               | `-`        | 実行されるSQLを表示する
+| `--show-sql`               | `-`        | 実行される SQL を表示する
 | `--table`                  | `-`        | 結果を表形式で返す
 
-`doctrine:data-dql`タスクはDQLクエリを実行しフォーマットされた結果を表示します:
+`doctrine:data-dql` タスクは DQL クエリを実行しフォーマットされた結果を表示します:
 
     ./symfony doctrine:dql "FROM User u"
 
-`--dir`オプションを指定して実行されるSQLを表示できます:
+`--dir` オプションを指定して実行される SQL を表示できます:
 
     ./symfony doctrine:dql --show-sql "FROM User u"
 
@@ -817,15 +806,15 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--env`                    | `dev`      | 環境
 | `--no-confirmation`        | `-`        | データベースの削除を強制するか
 
-`doctrine:drop-db`タスクはデータベースを削除します:
+`doctrine:drop-db` タスクはデータベースを削除します:
 
     ./symfony doctrine:drop-db
 
-タスクは`config/databases.yml`の接続情報を読み込みます:
+タスクは `config/databases.yml` の接続情報を読み込みます:
 
 ### ~`doctrine::generate-admin`~
 
-`doctrine::generate-admin`タスクはDoctrineのadminモジュールを生成する:
+`doctrine::generate-admin` タスクは Doctrine の admin モジュールを生成する:
 
     $ php symfony doctrine:generate-admin [--module="..."] [--theme="..."] [--singular="..."] [--plural="..."] [--env="..."] [--actions-base-class="..."] application route_or_mode
 
@@ -843,21 +832,21 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--env`                    | `dev`      | 環境
 | `--actions-base-class`     | `sfActions`| アクション用の基底クラス 
 
-`doctrine:generate-admin`タスクはDoctrineのadminモジュールを生成します:
+`doctrine:generate-admin` タスクは Doctrine の admin モジュールを生成します:
 
     ./symfony doctrine:generate-admin frontend Article
 
-タスクは`%Article%`モデルの`%frontend%`アプリケーションのモジュールを作成します。
+タスクは `%Article%` モデルの `%frontend%` アプリケーションのモジュールを作成します。
 
-タスクはアプリケーションの`routing.yml`用のルートを作成します。
+タスクはアプリケーションの `routing.yml` 用のルートを作成します。
 
-ルートの名前を渡すことでDoctrineのadminモジュールを生成することもできます:
+ルートの名前を渡すことで Doctrine の admin モジュールを生成することもできます:
 
     ./symfony doctrine:generate-admin frontend article
 
-タスクは`routing.yml`で見つかる`%article%`ルート用の`%frontend%`アプリケーションのモジュールを作成します。
+タスクは `routing.yml` で見つかる `%article%` ルート用の `%frontend%` アプリケーションのモジュールを作成します。
 
-フィルターとバッチアクションを適切に動作させるために、ルートに`wildcard`オプションを追加する必要があります:
+フィルターとバッチアクションを適切に動作させるために、ルートに `wildcard` オプションを追加する必要があります:
 
     article:
       class: sfDoctrineRouteCollection
@@ -867,13 +856,13 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 
 ### ~`doctrine::generate-migration`~
 
-`doctrine::generate-migration`タスクはマイグレーションクラスを生成する:
+`doctrine::generate-migration` タスクはマイグレーションクラスを生成する:
 
     $ php symfony doctrine:generate-migration [--application[="..."]] [--env="..."] [--editor-cmd="..."] name
 
 *エイリアス*: `doctrine-generate-migration`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | ----------------------
 | `name`   | `-`        | マイグレーションの名前
 
@@ -883,17 +872,17 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--env`                   | `dev`     | 環境
 | `--editor-cmd`            | `-`       | 作成するためにこのコマンドでスクリプトを開く
 
-`doctrine:generate-migration`タスクはマイグレーションテンプレートを生成します。
+`doctrine:generate-migration` タスクはマイグレーションテンプレートを生成します。
 
     ./symfony doctrine:generate-migration AddUserEmailColumn
 
-新しいマイグレーションクラスをエディターの作成メニューで開くために`--editor-cmd`オプションをつけることができます:
+新しいマイグレーションクラスをエディターの作成メニューで開くために `--editor-cmd` オプションをつけることができます:
 
     ./symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate
 
 ### ~`doctrine::generate-migrations-db`~
 
-`doctrine::generate-migrations-db`タスクは既存のデータベース接続からマイグレーションクラスを生成する:
+`doctrine::generate-migrations-db` タスクは既存のデータベース接続からマイグレーションクラスを生成する:
 
     $ php symfony doctrine:generate-migrations-db [--application[="..."]] [--env="..."] 
 
@@ -904,30 +893,30 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--application`           | `1`        | アプリケーションの名前
 | `--env`                   | `dev`      | 環境
 
-`doctrine:generate-migrations-db`タスクは既存のデータベース接続からマイグレーションクラスを生成します。
+`doctrine:generate-migrations-db` タスクは既存のデータベース接続からマイグレーションクラスを生成します。
 
     ./symfony doctrine:generate-migrations-db
 
 ### ~`doctrine::generate-migrations-models`~
 
-`doctrine::generate-migrations-models`タスクは既存のモデルのセットからマイグレーションクラスを生成する:
+`doctrine::generate-migrations-models` タスクは既存のモデルのセットからマイグレーションクラスを生成する:
 
     $ php symfony doctrine:generate-migrations-models [--application[="..."]] [--env="..."] 
 
 *エイリアス*: `doctrine-generate-migrations-models`、`doctrine-gen-migrations-from-models`
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ----------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:generate-migration`タスクは既存のモデルのセットからマイグレーションクラスを生成します。
+`doctrine:generate-migration` タスクは既存のモデルのセットからマイグレーションクラスを生成します。
 
     ./symfony doctrine:generate-migration
 
 ### ~`doctrine::generate-module`~
 
-`doctrine::generate-module`タスクはDoctrineモジュールを生成する:
+`doctrine::generate-module` タスクは Doctrine モジュールを生成する:
 
     $ php symfony doctrine:generate-module [--theme="..."] [--generate-in-cache] [--non-verbose-templates] [--with-show] [--singular="..."] [--plural="..."] [--route-prefix="..."] [--with-doctrine-route] [--env="..."] [--actions-base-class="..."] application module model
 
@@ -952,17 +941,17 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--with-doctrine-route`    | `-`        | Doctrineのルートを使うかどうか
 | `--env`                    | `dev`      | 環境
 
-`doctrine:generate-module`タスクはDoctrineのモジュールを生成します:
+`doctrine:generate-module` タスクは Doctrine のモジュールを生成します:
 
     ./symfony doctrine:generate-module frontend article Article
 
-`%model%`モデルクラスの`%application%`アプリケーションの`%module%`モジュールを作成します。
+`%model%` モデルクラスの `%application%` アプリケーションの `%module%` モジュールを作成します。
 
-`--generate-in-cache`オプションをつけることで`%sf_app_cache_dir%/modules/auto%module%`で実行時に生成されたモジュールからアクションとテンプレートを継承する空のモジュールを作ることもできます:
+`--generate-in-cache` オプションをつけることで `%sf_app_cache_dir%/modules/auto%module%` で実行時に生成されたモジュールからアクションとテンプレートを継承する空のモジュールを作ることもできます:
 
     ./symfony doctrine:generate-module --generate-in-cache frontend article Article
 
-`--theme`オプションをつけることでジェネレーターはカスタマイズされたテーマを使うことができます:
+`--theme` オプションをつけることでジェネレーターはカスタマイズされたテーマを使うことができます:
 
     ./symfony doctrine:generate-module --theme="custom" frontend article Article
 
@@ -970,11 +959,11 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 
 ### ~`doctrine::generate-module-for-route`~
 
-`doctrine::generate-module-for-route`タスクはルート定義用のDoctrineモジュールを生成する:
+`doctrine::generate-module-for-route` タスクはルート定義用の Doctrine モジュールを生成する:
 
     $ php symfony doctrine:generate-module-for-route [--theme="..."] [--non-verbose-templates] [--singular="..."] [--plural="..."] [--env="..."] [--actions-base-class="..."] application route
 
-| 引数          | デフォルト | 説明
+| 引数          | デフォルト  | 説明
 | ------------- | ---------- | ------------------------
 | `application` | `-`        | アプリケーションの名前
 | `route`       | `-`        | ルートの名前
@@ -988,87 +977,87 @@ Doctrine SQLを挿入する代わりにプロジェクトのマイグレーシ�
 | `--env`                       | `dev`      | 環境
 | `--actions-base-class`        | `sfActions`| アクションの基底クラス
 
-`doctrine:generate-module-for-route`タスクはルート定義用のDoctrineモジュールを生成します:
+`doctrine:generate-module-for-route` タスクはルート定義用の Doctrine モジュールを生成します:
 
     ./symfony doctrine:generate-module-for-route frontend article
 
-タスクは`routing.yml`で見つかる`%article%`ルート定義用の`%frontend%`アプリケーションでモジュールを作成します。
+タスクは `routing.yml` で見つかる `%article%` ルート定義用の `%frontend%` アプリケーションでモジュールを作成します。
 
 ### ~`doctrine::insert-sql`~
 
-`doctrine::insert-sql`タスクは現在のモデルにSQLをINSERTする:
+`doctrine::insert-sql` タスクは現在のモデルに SQL を INSERT する:
 
     $ php symfony doctrine:insert-sql [--application[="..."]] [--env="..."] 
 
 *エイリアス*: `doctrine-insert-sql`
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ----------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:insert-sql`タスクはデータベースのテーブルを作成します:
+`doctrine:insert-sql` タスクはデータベースのテーブルを作成します:
 
     ./symfony doctrine:insert-sql
 
-タスクはデータベースに接続しすべての`lib/model/doctrine/*.class.php`ファイル用のテーブルを作成します。
+タスクはデータベースに接続しすべての `lib/model/doctrine/*.class.php` ファイル用のテーブルを作成します。
 
 ### ~`doctrine::migrate`~
 
-`doctrine::migrate`タスクは現在の/指定バージョンのデータベースにマイグレートする:
+`doctrine::migrate` タスクは現在の/指定バージョンのデータベースにマイグレートする:
 
     $ php symfony doctrine:migrate [--application[="..."]] [--env="..."] [version]
 
 *エイリアス*: `doctrine-migrate`
 
-| 引数      | デフォルト | 説明
+| 引数      | デフォルト  | 説明
 | --------- | ---------- | --------------------------
 | `version` | `-`        | マイグレートするバージョン
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ----------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:migrate`タスクは現在の/指定バージョンにデータベースをマイグレートします。
+`doctrine:migrate` タスクは現在の/指定バージョンにデータベースをマイグレートします。
 
    ./symfony doctrine:migrate
 
 ### ~`doctrine::rebuild-db`~
 
-`doctrine::rebuild-db`タスクは現在のモデル用のデータベースを作成する:
+`doctrine::rebuild-db` タスクは現在のモデル用のデータベースを作成する:
 
     $ php symfony doctrine:rebuild-db [--application[="..."]] [--env="..."] [--no-confirmation] [--migrate]
 
 *エイリアス*: `doctrine-rebuild-db`
 
-| オプション(ショートカット)   | デフォルト | 説明
+| オプション(ショートカット)    | デフォルト | 説明
 | ---------------------------- | ---------- | ----------------------------------------
 | `--application`              | `1`        | アプリケーションの名前
 | `--env`                      | `dev`      | 環境
 | `--no-confirmation`          | `-`        | 確認をせずにデータベースをドロップするか
 | `--migrate`                  | `-`        | データベースをリセットする代わりにマイグレートする
 
-`doctrine:rebuild-db`タスクはデータベースを作成します:
+`doctrine:rebuild-db` タスクはデータベースを作成します:
 
     ./symfony doctrine:rebuild-db
 
-タスクは`config/databases.yml`の接続情報を読み込みます:
+タスクは`config/databases.yml` の接続情報を読み込みます:
 
-Doctrine SQLを挿入する代わりにアプリケーションのマイグレーションを実行したいのであれば`--migrate`オプションを含めます。
+Doctrine SQL を挿入する代わりにアプリケーションのマイグレーションを実行したいのであれば `--migrate` オプションを含めます。
 
     ./symfony doctrine:rebuild-db --migrate
 
 ### ~`doctrine::reload-data`~
 
-`doctrine::reload-data`タスクはプロジェクトのデータベースとフィクスチャをリロードする:
+`doctrine::reload-data` タスクはプロジェクトのデータベースとフィクスチャをリロードする:
 
     $ php symfony doctrine:reload-data [--application[="..."]] [--env="..."] [--no-confirmation] [--dir="..."] [--migrate] [--append] 
 
 *エイリアス*: `doctrine-reload-data`
 
-| オプション(ショートカット)  | デフォルト | 説明
-| ------------------- | ----- | ----------------------
+| オプション(ショートカット)   | デフォルト            | 説明
+| ------------------- | ----- | -------------------------------------------------
 | `--application`     | `1`   | アプリケーションの名前
 | `--env`             | `dev` | 環境
 | `--no-confirmation` | `-`   | 確認の質問をしない
@@ -1076,7 +1065,7 @@ Doctrine SQLを挿入する代わりにアプリケーションのマイグレ�
 | `--migrate`         | `-`   | データベースをリセットする代わりにマイグレートする
 | `--append`          | `-`   | データベースの現在のデータを削除しない
 
-`doctrine:reload-data`タスクはデータベースを削除してから再作成しフィクスチャをロードします:
+`doctrine:reload-data` タスクはデータベースを削除してから再作成しフィクスチャをロードします:
 
     php symfony doctrine:reload-data
   
@@ -1092,7 +1081,7 @@ Doctrine SQLを挿入する代わりにアプリケーションのマイグレ�
 
 ### ~`generate::app`~
 
-`generate::app`タスクは新しいアプリケーションを生成する:
+`generate::app` タスクは新しいアプリケーションを生成する:
 
     $ php symfony generate:app [--escaping-strategy="..."] [--csrf-secret="..."] application
 
@@ -1102,35 +1091,35 @@ Doctrine SQLを挿入する代わりにアプリケーションのマイグレ�
 | ------------- | ---------- | ----------------------
 | `application` | `-`        | アプリケーションの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ----------------------------
 | `--escaping-strategy`      | `1`        | エスケーピング戦略を出力する
 | `--csrf-secret`            | `1`        | CSRF保護に使う秘密の文字列
 
-`generate:app`タスクは現在のプロジェクトの新しいアプリケーションのための基本的なディレクトリ構造を作成します:
+`generate:app` タスクは現在のプロジェクトの新しいアプリケーションのための基本的なディレクトリ構造を作成します:
 
     ./symfony generate:app frontend
 
-このタスクは2つのフロントコントローラーも`web/`ディレクトリに作成します:
+このタスクは2つのフロントコントローラーも `web/` ディレクトリに作成します:
 
     web/%application%.php`     運用環境
     web/%application%_dev.php` 開発環境
 
-最初のアプリケーションに関して、運用環境のスクリプトの名前は`index.php`です。
+最初のアプリケーションに関して、運用環境のスクリプトの名前は `index.php` です。
 
-すでに同じ名前のアプリケーションが存在する場合、`sfCommandException`が投げられます。
+すでに同じ名前のアプリケーションが存在する場合、`sfCommandException` が投げられます。
 
-デフォルトでは、XSSを阻止するために出力エスケーピングが有効で、CSRFを阻止するためにランダムな秘密の文字列も生成されます。
+デフォルトでは、XSS を阻止するために出力エスケーピングが有効で、CSRF を阻止するためにランダムな秘密の文字列も生成されます。
 
-`escaping-strategy`オプションをつけることで出力エスケーピングを無効にできます:
+`escaping-strategy` オプションをつけることで出力エスケーピングを無効にできます:
 
     ./symfony generate:app frontend --escaping-strategy=false
 
-(CSRFを防止するために)`csrf-secret`オプションで秘密の文字列を定義することでフォームのセッショントークンを有効にできます:
+(CSRF を防止するために) `csrf-secret` オプションで秘密の文字列を定義することでフォームのセッショントークンを有効にできます:
 
     ./symfony generate:app frontend --csrf-secret=UniqueSecret
 
-`%sf_data_dir%/skeleton/app`ディレクトリを作成することでタスクによって使われるデフォルトのスケルトンをカスタマイズできます。
+`%sf_data_dir%/skeleton/app` ディレクトリを作成することでタスクによって使われるデフォルトのスケルトンをカスタマイズできます。
 
 ### ~`generate::module`~
 
@@ -1145,25 +1134,25 @@ Doctrine SQLを挿入する代わりにアプリケーションのマイグレ�
 | `application` | `-`        | アプリケーションの名前
 | `module`      | `-`        | モジュールの名前
 
-`generate:module`タスクは既存のアプリケーションの新しいモジュール用の基本ディレクトリ構造を作成します:
+`generate:module` タスクは既存のアプリケーションの新しいモジュール用の基本ディレクトリ構造を作成します:
 
     ./symfony generate:module frontend article
 
-`config/properties.ini`で設定した場合タスクは`actions.class.php`で見つかる著者の名前を変更することもできます:
+`config/properties.ini` で設定した場合タスクは `actions.class.php` で見つかる著者の名前を変更することもできます:
 
     [symfony]
       name=blog
       author=Fabien Potencier <fabien.potencier@sensio.com>
 
-`%sf_data_dir%/skeleton/module`ディレクトリを作ることでタスクによって使われるデフォルトのスケルトンをカスタマイズできます。
+`%sf_data_dir%/skeleton/module` ディレクトリを作ることでタスクによって使われるデフォルトのスケルトンをカスタマイズできます。
 
-`%sf_test_dir%/functional/%application%/%module%ActionsTest.class.php`という名前の機能テストのスタブも作成します。これはデフォルトではパスしません。
+`%sf_test_dir%/functional/%application%/%module%ActionsTest.class.php` という名前の機能テストのスタブも作成します。これはデフォルトではパスしません。
 
 すでにアプリケーションに同じ名前のモジュールがある場合、`sfCommandException`が投げられます。
 
 ### ~`generate::project`~
 
-`generate::project`タスクは新しいプロジェクトを生成する:
+`generate::project` タスクは新しいプロジェクトを生成する:
 
     $ php symfony generate:project [--orm="..."] [--installer="..."] name [author]
 
@@ -1179,57 +1168,55 @@ Doctrine SQLを挿入する代わりにアプリケーションのマイグレ�
 | `--orm`       | `Doctrine`  | デフォルトで使うORM
 | `--installer` | `-`         | 実行するインストーラースクリプト
 
-`generate:project`タスクは現在のディレクトリに新しいプロジェクトの基本ディレクトリ構造を作成します:
+`generate:project` タスクは現在のディレクトリに新しいプロジェクトの基本ディレクトリ構造を作成します:
 
     ./symfony generate:project blog
 
-すでに現在のディレクトリがsymfonyのプロジェクトを格納する場合、`sfCommandException`が投げられます。
+すでに現在のディレクトリが symfony のプロジェクトを格納する場合、`sfCommandException` が投げられます。
 
-ORMを使いたくないのであれば、`--orm`オプションに`none`を渡します:
+ORMを使いたくないのであれば、`--orm` オプションに `none` を渡します:
 
     ./symfony generate:project blog --orm=none
 
-プロジェクトをさらにカスタマイズするために`--installer`オプションを渡すこともできます:
+プロジェクトをさらにカスタマイズするために `--installer` オプションを渡すこともできます:
 
     ./symfony generate:project blog --installer=./installer.php
 
-symfonyが新しいクラスを生成するときに著者として使う名前を指定するためにオプションとして2番目の引数の`author`を含めることができます:
+symfony が新しいクラスを生成するときに著者として使う名前を指定するためにオプションとして2番目の引数の `author` を含めることができます:
 
     ./symfony generate:project blog "Jack Doe"
 
 ### ~`generate::task`~
 
-`generate::task`タスクは新しいタスクのスケルトンクラスを作成する:
+`generate::task` タスクは新しいタスクのスケルトンクラスを作成する:
 
     $ php symfony generate:task [--dir="..."] [--use-database="..."] [--brief-description="..."] task_name
 
-| 引数        | デフォルト | 説明
+| 引数        | デフォルト  | 説明
 | ----------- | ---------- | ---------------------------------------
 | `task_name` | `-`        | タスクの名前(名前空間を含むことができる)
 
 | オプション(ショートカット) | デフォルト | 説明
-| -------------------- | --------- | -------------------------------------------
-| `--dir`              | `lib/task`| タスクを作成するディレクトリ
-| `--use-database`     | `doctrine`  | タスクがデータベースにアクセスするモデルの初期化を必要とするか
-| `--brief-description`| `-`       | 短いタスクの説明(タスクのリストに表示される)
+| -------------------- | ---------- | ------------------------------------------------------------
+| `--dir`              | `lib/task` | タスクを作成するディレクトリ
+| `--use-database`     | `doctrine` | タスクがデータベースにアクセスするモデルの初期化を必要とするか
+| `--brief-description`| `-`        | 短いタスクの説明(タスクのリストに表示される)
 
-`generate:task`は引数として渡される名前をもとに新しい`sfTask`クラスを作成します:
+`generate:task` は引数として渡される名前をもとに新しい `sfTask` クラスを作成します:
 
     ./symfony generate:task namespace:name
 
-`namespaceNameTask.class.php`スケルトンタスクは`lib/task/`ディレクトリの元で作成されます。
-名前空間はオプションであることに留意してください。
+`namespaceNameTask.class.php` スケルトンタスクは `lib/task/` ディレクトリの元で作成されます。名前空間はオプションであることに留意してください。
 
-別のディレクトリ(プロジェクトのルートフォルダーに相対的)でファイルを作りたい場合、`--dir`オプションにこれを渡します。
-このディレクトリはまだ存在しなければ作成されます。
+別のディレクトリ(プロジェクトのルートフォルダーに相対的)でファイルを作りたい場合、`--dir` オプションにこれを渡します。このディレクトリはまだ存在しなければ作成されます。
 
     ./symfony generate:task namespace:name --dir=plugins/myPlugin/lib/task
 
-デフォルトの`doctrine`以外の接続を使いたい場合、`--use-database`オプションで接続の名前を提供します:
+デフォルトの `doctrine` 以外の接続を使いたい場合、`--use-database` オプションで接続の名前を提供します:
 
     ./symfony generate:task namespace:name --use-database=main
 
-`--use-database`オプションは生成タスクでデータベースの初期化を無効化するためにも使うことができます:
+`--use-database` オプションは生成タスクでデータベースの初期化を無効化するためにも使うことができます:
 
     ./symfony generate:task namespace:name --use-database=false
 
@@ -1242,47 +1229,47 @@ symfonyが新しいクラスを生成するときに著者として使う名前�
 
 ### ~`i18n::extract`~
 
-`i18n::extract`タスクはPHPファイルから国際化された文字列を抽出する:
+`i18n::extract` タスクは PHP ファイルから国際化された文字列を抽出する:
 
     $ php symfony i18n:extract [--display-new] [--display-old] [--auto-save] [--auto-delete] application culture
 
 | 引数          | デフォルト | 説明
 | ------------- | ---------- | ----------------------
 | `application` | `-`        | アプリケーションの名前
-| `culture`     | `-`        | ターゲットのculture
+| `culture`     | `-`        | ターゲットの culture
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | -------------------------
 | `--display-new` | `-`      | 新しく見つかるすべての文字列を出力する
 | `--display-old` | `-`      | すべての古い文字列を出力する
 | `--auto-save`   | `-`      | 新しい文字列を保存する
 | `--auto-delete` | `-`      | 古い文字列を削除する
 
-`i18n:extract`タスクはアプリケーションとターゲットのculture用のプロジェクトファイルから国際化文字列を抽出します:
+`i18n:extract` タスクはアプリケーションとターゲットの culture 用のプロジェクトファイルから国際化文字列を抽出します:
 
     ./symfony i18n:extract frontend fr
 
 デフォルトでは、タスクは現在のプロジェクトで見つかる新旧の文字列の数のみを表示します。
 
-新しい文字列を表示したい場合、`--display-new`オプションを指定します:
+新しい文字列を表示したい場合、`--display-new` オプションを指定します:
 
     ./symfony i18n:extract --display-new frontend fr
 
-これらを国際化メッセージカタログに保存するには、`--auto-save`オプションを指定します:
+これらを国際化メッセージカタログに保存するには、`--auto-save` オプションを指定します:
 
     ./symfony i18n:extract --auto-save frontend fr
 
-国際化メッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したい場合、`--display-old`オプションを指定します:
+国際化メッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したい場合、`--display-old` オプションを指定します:
 
     ./symfony i18n:extract --display-old frontend fr
 
-古い文字列を自動的に削除するには`--auto-delete`を指定しますが、とりわけプラグインの翻訳がある場合、これらは現在のではなく古い文字列として現れるので、注意してください:
+古い文字列を自動的に削除するには `--auto-delete` を指定しますが、とりわけプラグインの翻訳がある場合、これらは現在のではなく古い文字列として現れるので、注意してください:
 
     ./symfony i18n:extract --auto-delete frontend fr
 
 ### ~`i18n::find`~
 
-`i18n::find`タスクはアプリケーションで"国際化に対応"していない文字列を見つける:
+`i18n::find` タスクはアプリケーションで"国際化に対応"していない文字列を見つける:
 
     $ php symfony i18n:find [--env="..."] application
 
@@ -1290,59 +1277,59 @@ symfonyが新しいクラスを生成するときに著者として使う名前�
 | ------------- | ---------- | -----------------------
 | `application` | `-`        | アプリケーションの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | -----------
 | `--env`                    | `dev`      | 環境
 
-`i18n:find`タスクはテンプレートに埋め込まれる非国際化文字列を見つけます:
+`i18n:find` タスクはテンプレートに埋め込まれる非国際化文字列を見つけます:
 
     ./symfony i18n:find frontend
 
-このタスクは純粋なHTMLとPHPコードで非国際化文字列を見つけることができます:
+このタスクは純粋な HTML と PHP コードで非国際化文字列を見つけることができます:
 
     <p>Non i18n text</p>
     <p><?php echo 'Test' ?></p>
 
-タスクはPHPに埋め込まれたすべての文字列を返しますが、誤検出(false positive)がある場合があります(とりわけヘルパーの引数用の文字列構文を使う場合)。
+タスクは PHP に埋め込まれたすべての文字列を返しますが、誤検出(false positive)である可能性があります(とりわけヘルパーの引数用の文字列構文を使う場合)。
 
 `log`
 -----
 
 ### ~`log::clear`~
 
-`log::clear`タスクはログファイルをクリアする:
+`log::clear` タスクはログファイルをクリアする:
 
     $ php symfony log:clear  
 
 *エイリアス*: `log-purge`
 
-`log:clear`タスクはすべてのsymfonyログをクリアします:
+`log:clear` タスクはすべての symfony ログをクリアします:
 
     ./symfony log:clear
 
 ### ~`log::rotate`~
 
-`log::rotate`タスクはアプリケーションのログファイルのローテーションを行います:
+`log::rotate` タスクはアプリケーションのログファイルのローテーションを行います:
 
     $ php symfony log:rotate [--history="..."] [--period="..."] application env
 
 *エイリアス*: `log-rotate`
 
-| 引数          | デフォルト | 説明
+| 引数          | デフォルト  | 説明
 | ------------- | ---------- | ----------------------
 | `application` | `-`        | アプリケーションの名前
 | `env`         | `-`        | 環境名
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ----------------------
 | `--history`   | `10`       | 維持する古いログファイルの最大個数
 | `--period`    | `7`        | 日にち単位の期間
 
-`log:rotate`タスクは任意の環境のアプリケーションのログファイルのローテーションを行います:
+`log:rotate` タスクは任意の環境のアプリケーションのログファイルのローテーションを行います:
 
     ./symfony log:rotate frontend dev
 
-`period`もしくは`history`オプションを指定できます:
+`period` もしくは `history` オプションを指定できます:
 
     ./symfony --history=10 --period=7 log:rotate frontend dev
 
@@ -1351,28 +1338,28 @@ symfonyが新しいクラスを生成するときに著者として使う名前�
 
 ### ~`plugin::add-channel`~
 
-`plugin::add-channel`タスクは新しいPEARチャンネルを追加する:
+`plugin::add-channel` タスクは新しい PEAR チャンネルを追加する:
 
     $ php symfony plugin:add-channel  name
 
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | -------------
 | `name`   | `-`        | チャンネル名
 
-`plugin:add-channel`タスクは新しいPEARチャンネルを追加します:
+`plugin:add-channel` タスクは新しい PEAR チャンネルを追加します:
 
     ./symfony plugin:add-channel symfony.plugins.pear.example.com
 
 ### ~`plugin::install`~
 
-`plugin::install`タスクはプラグインをインストールする:
+`plugin::install` タスクはプラグインをインストールする:
 
     $ php symfony plugin:install [-s|--stability="..."] [-r|--release="..."] [-c|--channel="..."] [-d|--install_deps] [--force-license] name
 
 *エイリアス*: `plugin-install`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | -----------------
 | `name`   | `-`        | プラグインの名前
 
@@ -1384,13 +1371,13 @@ symfonyが新しいクラスを生成するときに著者として使う名前�
 | `--install_deps`<br />`(-d)` | `-`        | 必須の依存パッケージのインストールを強制するか
 | `--force-license`            | `-`        | MITのようなライセンスではない場合にインストールを強制するか
 
-`plugin:install`タスクはプラグインをインストールします:
+`plugin:install` タスクはプラグインをインストールします:
 
     ./symfony plugin:install sfGuardPlugin
 
 デフォルトでは、最新の`stable`リリースがインストールされます。
 
-まだ安定版ではないプラグインをインストールしたい場合、`stability`オプションを指定します:
+まだ安定版ではないプラグインをインストールしたい場合、`stability` オプションを指定します:
 
     ./symfony plugin:install --stability=beta sfGuardPlugin
     ./symfony plugin:install -s beta sfGuardPlugin
@@ -1400,19 +1387,19 @@ symfonyが新しいクラスを生成するときに著者として使う名前�
     ./symfony plugin:install --release=1.0.0 sfGuardPlugin
     ./symfony plugin:install -r 1.0.0 sfGuardPlugin
 
-依存の必須パッケージをすべて強制的にインストールするには、`install_deps`フラグを指定します:
+依存の必須パッケージをすべて強制的にインストールするには、`install_deps` フラグを指定します:
 
     ./symfony plugin:install --install-deps sfGuardPlugin
     ./symfony plugin:install -d sfGuardPlugin
 
-デフォルトで使われるPEARチャンネルは`symfony-plugins`(plugins.symfony-project.org)です。
+デフォルトで使われる PEAR チャンネルは `symfony-plugins`(plugins.symfony-project.org)です。
 
-`channel`オプションで別のチャンネルを指定できます:
+`channel` オプションで別のチャンネルを指定できます:
 
     ./symfony plugin:install --channel=mypearchannel sfGuardPlugin
     ./symfony plugin:install -c mypearchannel sfGuardPlugin
 
-WebサイトでホストされているPEARパッケージをインストールすることもできます:
+Web サイトでホストされている PEAR パッケージをインストールすることもできます:
 
     ./symfony plugin:install http://somewhere.example.com/sfGuardPlugin-1.0.0.tgz
 
@@ -1420,18 +1407,17 @@ WebサイトでホストされているPEARパッケージをインストール�
 
     ./symfony plugin:install /home/fabien/plugins/sfGuardPlugin-1.0.0.tgz
 
-プラグインがWebコンテンツ(画像、スタイルシートもしくはJavaScript)を格納する場合、タスクはこれらのアセットのために`web/`の元で`%name%`シンボリックリンクを作成します。
-Windowsでは、タスクはこれらすべてのファイルを`web/%name%`ディレクトリにコピーします。
+プラグインが Web コンテンツ(画像、スタイルシートもしくは JavaScript)を格納する場合、タスクはこれらのアセットのために `web/` の下で `%name%` シンボリックリンクを作成します。Windows では、タスクはこれらすべてのファイルを `web/%name%` ディレクトリにコピーします。
 
 ### ~`plugin::list`~
 
-`plugin::list`タスクはインストールされたプラグインの一覧を表示する:
+`plugin::list` タスクはインストールされたプラグインの一覧を表示する:
 
     $ php symfony plugin:list  
 
 *エイリアス*: `plugin-list`
 
-`plugin:list`タスクはインストールされたプラグインの一覧を表示します:
+`plugin:list` タスクはインストールされたプラグインの一覧を表示します:
 
     ./symfony plugin:list
 
@@ -1439,11 +1425,11 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 ### ~`plugin::publish-assets`~
 
-`plugin::publish-assets`タスクはすべてのプラグイン用のWebアセットを公開する:
+`plugin::publish-assets` タスクはすべてのプラグイン用の Web アセットを公開する:
 
     $ php symfony plugin:publish-assets [--core-only] [plugins1] ... [pluginsN]
 
-| 引数      | デフォルト | 説明
+| 引数      | デフォルト  | 説明
 | --------- | ---------- | -------------------------------
 | `plugins` | `-`        | プラグインのアセットを公開する 
 
@@ -1451,11 +1437,11 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | -------------------------- | ---------- | ---------------------------------------
 | `--core-only`              | `-`        | セットされている場合コアプラグインのみがアセットを公開します
 
-`plugin:publish-assets`タスクはすべてのプラグインからWebアセットを公開します。
+`plugin:publish-assets` タスクはすべてのプラグインからWebアセットを公開します。
 
     ./symfony plugin:publish-assets
 
-実際これはそれぞれのプラグインに`plugin.post_install`イベントを送信します。
+実際これはそれぞれのプラグインに `plugin.post_install` イベントを送信します。
 
 これらのプラグインの名前を引数として渡すことで1つもしくは複数のプラグインがアセットをインストールするか指定できます:
 
@@ -1463,7 +1449,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 ### ~`plugin::uninstall`~
 
-`plugin::uninstall`タスクはプラグインをアンインストールする:
+`plugin::uninstall` タスクはプラグインをアンインストールする:
 
     $ php symfony plugin:uninstall [-c|--channel="..."] [-d|--install_deps] name
 
@@ -1473,12 +1459,12 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | -------- | ---- ----- | ----------------
 | `name`   | `-`        | プラグインの名前
 
-| オプション(ショートカット)    | デフォルト | 説明
+| オプション(ショートカット)     | デフォルト | 説明
 | ----------------------------- | ---------- | ---------------------------------------
 | `--channel`<br />`(-c)`       | `-`        | PEARチャンネル名
 | `--install_deps`<br />`(-d)`  | `-`        | 依存パッケージをインストールするかどうか
 
-`plugin:uninstall`タスクはプラグインをアンインストールします:
+`plugin:uninstall` タスクはプラグインをアンインストールします:
 
     ./symfony plugin:uninstall sfGuardPlugin
 
@@ -1490,23 +1476,23 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
     ./symfony plugin:uninstall -c mypearchannel sfGuardPlugin
 
-もしくは`channel/package`の表記を使うことができます:
+もしくは `channel/package` の表記を使うことができます:
 
     ./symfony plugin:uninstall mypearchannel/sfGuardPlugin
 
-`plugin:list`タスクを立ち上げてプラグインのPEARチャンネルを取得できます。
+`plugin:list` タスクを立ち上げてプラグインの PEAR チャンネルを取得できます。
 
-プラグインがWebコンテンツを格納する場合(画像、スタイルシートもしくはJavaScript)、タスクは`web/%name%`シンボリックリンク(Unix系)もしくはディレクトリ(Windows)も削除します。
+プラグインが Web コンテンツを格納する場合(画像、スタイルシートもしくは JavaScript)、タスクは `web/%name%` シンボリックリンク(Unix系)もしくはディレクトリ(Windows)も削除します。
 
 ### ~`plugin::upgrade`~
 
-`plugin::upgrade`タスクはプラグインをアップグレードする:
+`plugin::upgrade` タスクはプラグインをアップグレードする:
 
     $ php symfony plugin:upgrade [-s|--stability="..."] [-r|--release="..."] [-c|--channel="..."] name
 
 *エイリアス*: `plugin-upgrade`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | ----------------
 | `name`   | `-`        | プラグインの名前
 
@@ -1514,48 +1500,48 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | ------------------------- | ----------- | -----------------------------
 | `--stability`<br />`(-s)` | `-`         | 安定性(stable、beta、alpha)
 | `--release`<br />`(-r)`   | `-`         | 優先バージョン
-| `--channel`<br />`(-c)`   | `-`         | PEARチャンネルの名前
+| `--channel`<br />`(-c)`   | `-`         | PEAR チャンネルの名前
 
-`plugin:upgrade`タスクはプラグインをアップグレードしようとします:
+`plugin:upgrade` タスクはプラグインをアップグレードしようとします:
 
     ./symfony plugin:upgrade sfGuardPlugin
 
-デフォルトのチャンネルは`symfony`です。
+デフォルトのチャンネルは `symfony` です。
 
-プラグインがWebコンテンツを格納する場合(画像、スタイルシートもしくはJavaScript)、Windowsではタスクは`web/%name%`ディレクトリのコンテンツもアップグレードします。
+プラグインがWebコンテンツを格納する場合(画像、スタイルシートもしくは JavaScript)、Windows ではタスクは `web/%name%` ディレクトリのコンテンツもアップグレードします。
 
-プラグインの名前とオプションのフォーマットの詳細情報に関しては`plugin:install`を参照してください。
+プラグインの名前とオプションのフォーマットの詳細情報に関しては `plugin:install` を参照してください。
 
 `project`
 ---------
 
 ### ~`project::clear-controllers`~
 
-`project::clear-controllers`タスクは運用環境以外のコントローラーをクリアする:
+`project::clear-controllers` タスクは運用環境以外のコントローラーをクリアする:
 
     $ php symfony project:clear-controllers  
 
 *エイリアス*: `clear-controllers`
 
-`project:clear-controllers`タスクは運用環境以外のコントローラーをクリアします:
+`project:clear-controllers` タスクは運用環境以外のコントローラーをクリアします:
 
     ./symfony project:clear-controllers
 
 運用サーバーで運用環境以外のすべてのフロントコントローラーを削除するためにこのタスクを使うことができます。
 
-`frontend`と`backend`という名前の2つのアプリケーションがある場合、`web/`にはデフォルトのコントローラーは4つあります:
+`frontend` と `backend` という名前の2つのアプリケーションがある場合、`web/` にはデフォルトのコントローラーは4つあります:
 
     index.php
     frontend_dev.php
     backend.php
     backend_dev.php
 
-`project:clear-controllers`タスクを実行した後で、`web/`には2つのフロントコントローラーが残ります:
+`project:clear-controllers` タスクを実行した後で、`web/` には2つのフロントコントローラーが残ります:
 
     index.php
     backend.php
 
-デバッグモードとWebデバッグツールバーが無効なのでこれら2つのコントローラーは安全です。
+デバッグモードと Web デバッグツールバーが無効なのでこれら2つのコントローラーは安全です。
 
 ### ~`project:deploy`~
 
@@ -1565,21 +1551,21 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 *エイリアス*: `sync`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | ---------------
 | `server` | `-`        | サーバーの名前
 
-| オプション(ショートカット) | デフォルト    | 説明
-| -------------------------- | ------------- | -------------------------------------
+| オプション(ショートカット)  | デフォルト    | 説明
+| -------------------------- | ------------- | ---------------------------------------------
 | `--go`           | `-`                     | デプロイを行う
-| `--rsync-dir`    | `config`                | rsync*.txtファイルを探すディレクトリ
-| `--rsync-options`| `-azC --force --delete --progress` | rsync実行ファイルに渡すオプション
+| `--rsync-dir`    | `config`                | rsync*.txt ファイルを探すディレクトリ
+| `--rsync-options`| `-azC --force --delete --progress` | rsync 実行ファイルに渡すオプション
 
-`project:deploy`タスクはプロジェクトをサーバーにデプロイします:
+`project:deploy` タスクはプロジェクトをサーバーにデプロイします:
 
     ./symfony project:deploy production
 
-サーバーは`config/properties.ini`で設定しなければなりません:
+サーバーは `config/properties.ini` で設定しなければなりません:
 
     [production]
       host=www.example.com
@@ -1588,34 +1574,32 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
       dir=/var/www/sfblog/
       type=rsync
 
-デプロイを自動化するために、タスクはSSH越しにrsyncを使います。
-キーでSSHのアクセス権限を設定するか`config/properties.ini`でパスワードを設定しなければなりません。
+デプロイを自動化するために、タスクは SSH 越しに rsync を使います。キーで SSH のアクセス権限を設定するか `config/properties.ini` でパスワードを設定しなければなりません。
 
-デフォルトでは、タスクはdry-modeです。
-本当にデプロイするには、`--go`オプションを渡さなければなりません:
+デフォルトでは、タスクはドライモードです。本当にデプロイするには、`--go` オプションを渡さなければなりません:
 
     ./symfony project:deploy --go production
 
-`config/rsync_exclude.txt`で設定されるファイルとディレクトリはデプロイされません:
+`config/rsync_exclude.txt` で設定されるファイルとディレクトリはデプロイされません:
 
     .svn
     /web/uploads/*
     /cache/*
     /log/*
 
-`rsync.txt`と`rsync_include.txt`ファイルも作成できます。
+`rsync.txt`と`rsync_include.txt` ファイルも作成できます。
 
-サーバーに基づいて`rsync*.txt`ファイルをカスタマイズする必要がある場合、`rsync-dir`オプションを渡すことができます:
+サーバーに基づいて `rsync*.txt` ファイルをカスタマイズする必要がある場合、`rsync-dir` オプションを渡すことができます:
 
     ./symfony project:deploy --go --rsync-dir=config/production production
 
-最後に、`rsync-options`オプションをつけることで、rsync実行ファイルに渡されるオプションを指定することができます(デフォルトは`-azC --force --delete --progress`):
+最後に、`rsync-options` オプションをつけることで、rsync 実行ファイルに渡されるオプションを指定することができます(デフォルトは `-azC --force --delete --progress`):
 
     ./symfony project:deploy --go --rsync-options=-avz
 
 ### ~`project::disable`~
 
-`project::disable`タスクは任意の環境のアプリケーションを無効にする:
+`project::disable` タスクは任意の環境のアプリケーションを無効にする:
 
     $ php symfony project:disable  env [app1] ... [appN]
 
@@ -1626,7 +1610,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | `env`         | `-`        | 環境名
 | `app`         | `-`        | アプリケーションの名前
 
-`project:disable`タスクは環境を無効にします:
+`project:disable` タスクは環境を無効にします:
 
     ./symfony project:disable prod
 
@@ -1636,7 +1620,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 ### ~`project::enable`~
 
-`project::enable`タスクは任意の環境のアプリケーションを有効にする:
+`project::enable` タスクは任意の環境のアプリケーションを有効にする:
 
     $ php symfony project:enable  env [app1] ... [appN]
 
@@ -1647,7 +1631,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | `env`         | `-`        | 環境名
 | `app`         | `-`        | アプリケーションの名前
 
-`project:enable`タスクは特定の環境を有効にします:
+`project:enable` タスクは特定の環境を有効にします:
 
     ./symfony project:enable frontend prod
 
@@ -1657,7 +1641,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 ### ~`project::optimize`~
 
-`project::optimize`タスクはよりよいパフォーマンスのためにプロジェクトを最適化する:
+`project::optimize` タスクはよりよいパフォーマンスのためにプロジェクトを最適化する:
 
     $ php symfony project:optimize  environment [application]
 
@@ -1666,16 +1650,15 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | `application` | `-`       | アプリケーションの名前
 | `environment` | `prod`    | 環境の名前
 
-`project:optimize`はよりよいパフォーマンスのためにプロジェクトを最適化します:
+`project:optimize` はよりよいパフォーマンスのためにプロジェクトを最適化します:
 
     ./symfony project:optimizes prod frontend
 
-このタスクは運用サーバーのみで使うべきです。
-プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
+このタスクは運用サーバーのみで使うべきです。プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
 
 ### ~`project::permissions`~
 
-`project::permissions`タスクはsymfonyのディレクトリのパーミッションを修正する:
+`project::permissions` タスクは symfony のディレクトリのパーミッションを修正する:
 
     $ php symfony project:send-emails [--application[="..."]] [--env="..."] [--message-limit[="..."]] [--time-limit[="..."]] 
 
@@ -1688,22 +1671,22 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 *エイリアス*: `permissions, fix-perms`
 
-`project:permissions`タスクはディレクトリのパーミッションを修正します:
+`project:permissions` タスクはディレクトリのパーミッションを修正します:
 
     ./symfony project:permissions
 
 ### ~`project::send-emails`~
 
-`project::send-emails`タスクはキューに保存されるEメールを送信する:
+`project::send-emails` タスクはキューに保存されるメールを送信する:
 
     $ php symfony project:send-emails [--application[="..."]] [--env="..."] 
 
-| オプション(ショートカット) | デフォルト | 説明
-| -------------------------- | ---------- | -----------
-| `--application` | `1` | アプリケーションの名前
-| `--env` | `dev` | 環境
+| オプション(ショートカット)  | デフォルト  | 説明
+| -------------------------- | ---------- | ----------------------
+| `--application`            | `1`        | アプリケーションの名前
+| `--env`                    | `dev`      | 環境
 
-`project:send-emails`はキューに保存されるEメールを送信します:
+`project:send-emails` はキューに保存されるメールを送信します:
 
     php symfony project:send-emails
 
@@ -1717,15 +1700,15 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 ### ~`project::upgrade1.3`~
 
-`project::upgrade1.3`タスクはsymfonyプロジェクトを(1.2から)1.3のsymfonyリリースにアップグレードする:
+`project::upgrade1.3` タスクは symfony プロジェクトを(1.2から)1.3の symfony リリースにアップグレードする:
 
     $ php symfony project:upgrade1.3  
 
-`project:upgrade1.3`タスクは1.2リリースのsymfonyプロジェクトを1.3リリースにアップグレードします。
+`project:upgrade1.3` タスクは1.2リリースの symfony プロジェクトを1.3リリースにアップグレードします。
 
     ./symfony project:upgrade1.3
 
-このタスクが行うことに関する情報はUPGRADE_TO_1_3ファイルを参照してくださるようお願いします。
+このタスクが行うことに関する情報は"プロジェクトを1.2から1.3/1.4にアップグレードする"のチュートリアルを参照してくださるようお願いします。
 
 `propel`
 --------
@@ -1738,7 +1721,7 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 *エイリアス*: `propel-build-all`
 
-| オプション(ショートカット)    | デフォルト | 説明
+| オプション(ショートカット)     | デフォルト | 説明
 | ----------------------------- | ---------- | ------------------------------
 | `--application`               | `1`        | アプリケーションの名前
 | `--env`                       | `dev`      | 環境
@@ -1746,9 +1729,9 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 | `--no-confirmation`           | `-`        | 確認の質問をしない
 | `--skip-forms`<br />`(-F)`    | `-`        | フォーム生成を省く
 | `--classes-only`<br />`(-C)`  | `-`        | データベースを初期化しない
-| `--phing-arg`                 | `-`        | Phingの任意の引数(複数の値が可)
+| `--phing-arg`                 | `-`        | Phing の任意の引数(複数の値が可)
 
-`propel:build-all`タスクはほかの5つのタスクのショートカットです:
+`propel:build-all` タスクはほかの5つのタスクのショートカットです:
 
     ./symfony propel:build-all
 
@@ -1762,35 +1745,35 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 詳細な情報はこれらのタスクのヘルプページを参照してください。
 
-確認のプロンプトを回避するには、`no-confirmation`オプションを渡します:
+確認のプロンプトを回避するには、`no-confirmation` オプションを渡します:
 
     ./symfony propel:buil-all --no-confirmation
 
-すべてのクラスをビルドするがデータベースの初期化を省くには、`classes-only`オプションを指定します:
+すべてのクラスをビルドするがデータベースの初期化を省くには、`classes-only` オプションを指定します:
 
     ./symfony propel:build-all --classes-only
 
 ### ~`propel::build-all-load`~
 
-`propel::build-all-load`タスクはPropelモデルとフォームクラス、SQLを生成し、データベースを初期化し、データをロードします:
+`propel::build-all-load` タスクは Propel モデルとフォームクラス、SQL を生成し、データベースを初期化し、データをロードします:
 
     $ php symfony propel:build-all-load [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [-F|--skip-forms] [-C|--classes-only] [--phing-arg="..."] [--append] [--dir="..."] 
 
 *エイリアス*: `propel-build-all-load`
 
 | オプション(ショートカット)   | デフォルト | 説明
-| ---------------------------- | ---------- | ---------------------------------
+| ---------------------------- | ---------- | ---------------------------------------------------
 | `--application`              | `1`        | アプリケーションの名前
 | `--env`                      | `dev`      | 環境
 | `--connection`               | `propel`   | 接続名
 | `--no-confirmation`          | `-`        | 確認の質問をしない
 | `--skip-forms`<br />`(-F)`   | `-`        | フォーム生成を省く
 | `--classes-only`<br />`(-C)` | `-`        | データベースを初期化しない
-| `--phing-arg`                | `-`        | Phingの任意の引数(複数の値が可)
+| `--phing-arg`                | `-`        | Phing の任意の引数(複数の値が可)
 | `--append`                   | `-`        | データベースの現在の値を削除しない
 | `--dir`                      | `-`        | フィクスチャを探すディレクトリ(複数の値が許可される)
 
-`propel:build-all-load`タスクはほかの2つのタスクのショートカットです:
+`propel:build-all-load` タスクはほかの2つのタスクのショートカットです:
 
     ./symfony propel:build-all-load
 
@@ -1801,160 +1784,154 @@ Windowsでは、タスクはこれらすべてのファイルを`web/%name%`デ�
 
 詳細な情報はこれらのタスクのヘルプページを参照してください。
 
-確認を回避するには、`no-confirmation`オプションを渡します:
+確認を回避するには、`no-confirmation` オプションを渡します:
 
     ./symfony propel:buil-all-load --no-confirmation
 
 ### ~`propel::build-filters`~
 
-`propel::build-filters`タスクは現在のモデル用のフィルターフォームクラスを作成する:
+`propel::build-filters` タスクは現在のモデル用のフィルターフォームクラスを作成する:
 
     $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] 
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ------------------------------------
 | `--connection`             | `propel`   | 接続名
 | `--model-dir-name`         | `model`    | モデルディレクトリ名
 | `--filter-dir-name`        | `filter`   | フィルターフォームのディレクトリ名
 | `--application`            | `1`        | アプリケーション名
 
-`propel:build-filters`タスクはスキーマからフィルターフォームクラスを作成します:
+`propel:build-filters` タスクはスキーマからフィルターフォームクラスを作成します:
 
     ./symfony propel:build-filters
 
-タスクはプロジェクトとすべてのインストールされたプラグインから`config/*schema.xml`かつ/もしくは`config/*schema.yml`のスキーマ情報を読み込みます。
+タスクはプロジェクトとすべてのインストールされたプラグインから `config/*schema.xml` かつ `/` もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-タスクは`config/databases.yml`で定義された`propel`接続を使います。
-`--connection`オプションをつけることで別の接続が使えます:
+タスクは `config/databases.yml` で定義された `propel` 接続を使います。`--connection` オプションをつけることで別の接続が使えます:
 
     ./symfony propel:build-filters --connection="name"
 
-モデルのフィルターフォームクラスは`lib/filter`に作成されます。
+モデルのフィルターフォームクラスは `lib/filter` に作成されます。
 
-このタスクは`lib/filter`のなかのカスタムクラスをけっして上書きしません。
-これは`lib/filter/base`で生成された既定クラスを置き換えます。
+このタスクは `lib/filter` のなかのカスタムクラスをけっして上書きしません。これは `lib/filter/base` で生成された既定クラスを置き換えます。
 
 ### ~`propel::build-forms`~
 
-`propel::build-forms`タスクは現在のモデルのフォームクラスを作成する:
+`propel::build-forms` タスクは現在のモデルのフォームクラスを作成する:
 
     $ php symfony propel:build-forms [--connection="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--application[="..."]] 
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | --------------------------
 | `--connection`             | `propel`   | 接続名
 | `--model-dir-name`         | `model`    | モデルディレクトリの名前
 | `--form-dir-name`          | `form`     | フォームディレクトリの名前
 | `--application`            | `1`        | アプリケーションの名前
 
-`propel:build-forms`タスクはスキーマからフォームクラスを作成します:
+`propel:build-forms` タスクはスキーマからフォームクラスを作成します:
 
     ./symfony propel:build-forms
 
-タスクはプロジェクトとインストールしたすべてのプラグインから`config/*schema.xml`かつ/もしくは`config/*schema.yml`のスキーマ情報を読み込みます。
+タスクはプロジェクトとインストールしたすべてのプラグインから `config/*schema.xml` かつ／もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-タスクは`config/databases.yml`で定義される`propel`接続を使います。
-`--connection`オプションをつけることで別の接続を使うことができます:
+タスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:build-forms --connection="name"
 
-モデルのフォームクラスは`lib/form`に作成されます。
+モデルのフォームクラスは `lib/form` に作成されます。
 
-このタスクは`lib/form`のカスタムクラスをけっして上書きしません。
-これは`lib/form/base`に生成された基底クラスのみを置き換えます。
+このタスクは `lib/form` のカスタムクラスをけっして上書きしません。これは `lib/form/base` に生成された基底クラスのみを置き換えます。
 
 ### ~`propel::build-model`~
 
-`propel::build-model`タスクは現在のモデル用のクラスを作成する:
+`propel::build-model` タスクは現在のモデル用のクラスを作成する:
 
     $ php symfony propel:build-model [--phing-arg="..."] 
 
 *エイリアス*: `propel-build-model`
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | -------------------------------
-| `--phing-arg`              | `-`        | Phingの任意の引数(複数の値が可)
+| `--phing-arg`              | `-`        | Phing の任意の引数(複数の値が可)
 
-`propel:build-model`タスクはスキーマからモデルクラスを作成します:
+`propel:build-model` タスクはスキーマからモデルクラスを作成します:
 
     ./symfony propel:build-model
 
-タスクはプロジェクトとインストールされたすべてのプラグインから`config/*schema.xml`かつ/もしくは`config/*schema.yml`のスキーマ情報を読み込みます。
+タスクはプロジェクトとインストールされたすべてのプラグインから `config/*schema.xml` かつ／もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-YAMLとXMLスキーマファイルを混ぜることができます。
-タスクはPropelタスクを呼び出す前にYAMLをXMLに変換します。
+YAML と XML スキーマファイルを混ぜることができます。タスクは Propel タスクを呼び出す前に YAML を XML に変換します。
 
-モデルクラスのファイルは`lib/model`に作成されます。
+モデルクラスのファイルは `lib/model` に作成されます。
 
-このタスクは`lib/model`のなかのカスタムクラスをけっして置き換えません。
-`lib/model/om`と`lib/model/map`のファイルのみを置き換えます。
+このタスクは `lib/model` のなかのカスタムクラスをけっして置き換えません。`lib/model/om` と `lib/model/map` のファイルのみを置き換えます。
 
 ### ~`propel::build-schema`~
 
-`propel::build-schema`タスクは既存のデータベースからスキーマを作成する:
+`propel::build-schema` タスクは既存のデータベースからスキーマを作成する:
 
     $ php symfony propel:build-schema [--application[="..."]] [--env="..."] [--connection="..."] [--xml] [--phing-arg="..."] 
 
 *エイリアス*: `propel-build-schema`
 
-| オプション(ショートカット) | デフォルト | 説明
-| -------------------------- | ---------- | -----------------------------------
+| オプション(ショートカット)  | デフォルト | 説明
+| -------------------------- | ---------- | --------------------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `cli`      | 環境
 | `--connection`             | `-`        | 接続名
-| `--xml`                    | `-`        | YAMLの代わりにXMLスキーマを作成する
-| `--phing-arg`              | `-`        | Phingの任意の引数(複数の値が可)
+| `--xml`                    | `-`        | YAML の代わりに XML スキーマを作成する
+| `--phing-arg`              | `-`        | Phing の任意の引数(複数の値が可)
 
-`propel:build-schema`タスクはスキーマを作成するためにデータベースをイントロスペクトします:
+`propel:build-schema` タスクはスキーマを作成するためにデータベースをイントロスペクトします:
 
     ./symfony propel:build-schema
 
-デフォルトでは、タスクはYAMLファイルを作成しますが、XMLファイルを作成することもできます:
+デフォルトでは、タスクは YAML ファイルを作成しますが、XML ファイルを作成することもできます:
 
     ./symfony --xml propel:build-schema
 
-XMLフォーマットはYAMLよりも多くの情報を格納できます。
+XML フォーマットは YAML よりも多くの情報を格納できます。
 
 ### ~`propel::build-sql`~
 
-`propel::build-sql`タスクは現在のモデル用のSQLを作成する:
+`propel::build-sql` タスクは現在のモデル用の SQL を作成する:
 
     $ php symfony propel:build-sql [--phing-arg="..."] 
 
 *エイリアス*: `propel-build-sql`
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | -------------------------------
-| `--phing-arg`              | `-`        | Phingの任意の引数(複数の値が可)
+| `--phing-arg`              | `-`        | Phing の任意の引数(複数の値が可)
 
-`propel:build-sql`タスクはテーブル作成用のSQLステートメントを作成します:
+`propel:build-sql` タスクはテーブル作成用の SQL ステートメントを作成します:
 
     ./symfony propel:build-sql
 
-生成されるSQLは`config/propel.ini`で設定されるデータベース用に最適化されます:
+生成される SQL は `config/propel.ini`で 設定されるデータベース用に最適化されます:
 
     propel.database = mysql
 
 ### ~`propel::data-dump`~
 
-`propel::data-dump`タスクはデータをフィクスチャディレクトリにダンプする:
+`propel::data-dump` タスクはデータをフィクスチャディレクトリにダンプする:
 
     $ php symfony propel:data-dump [--application[="..."]] [--env="..."] [--connection="..."] [--classes="..."] [target]
 
 *エイリアス*: `propel-dump-data`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | ---------------------
 | `target` | `-`        | ターゲットのファイル名
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ------------------------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `cli`      | 環境
 | `--connection`             | `propel`   | 接続名
 | `--classes`                | `-`        | ダンプするクラスの名前(コロンで区切られる)
 
-`propel:data-dump`タスクはデータベースデータをダンプします:
+`propel:data-dump` タスクはデータベースデータをダンプします:
 
     ./symfony propel:data-dump > data/fixtures/dump.yml
 
@@ -1962,26 +1939,25 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
     ./symfony propel:data-dump dump.yml
 
-タスクはデータを`data/fixtures/%target%`にダンプします(この例ではdata/fixtures/dump.yml)。
+タスクはデータを `data/fixtures/%target%` にダンプします(この例では `data/fixtures/dump.yml`)。
 
-`propel:data-load`タスクを使うことでダンプファイルをYAMLフォーマットで再インポートできます。
+`propel:data-load` タスクを使うことでダンプファイルをYAMLフォーマットで再インポートできます。
 
-デフォルトでは、`config/databases.yml`で定義される`propel`接続を使います。
-`connection`オプションをつけることで別の接続を使うことができます:
+デフォルトでは、`config/databases.yml` で定義される `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:data-dump --connection="name"
 
-クラスをダンプしたいだけなら、`classes`オプションを指定します:
+クラスをダンプしたいだけなら、`classes` オプションを指定します:
 
     ./symfony propel:data-dump --classes="Article,Category"
 
-アプリケーションから特定のデータベース接続を使いたい場合、`application`オプションを指定します:
+アプリケーションから特定のデータベース接続を使いたい場合、`application` オプションを指定します:
 
     ./symfony propel:data-dump --application=frontend
 
 ### ~`propel::data-load`~
 
-`propel::data-load`タスクはYAMLフィクスチャデータをロードする:
+`propel::data-load` タスクは YAML フィクスチャデータをロードする:
 
     $ php symfony propel:data-load [--application[="..."]] [--env="..."] [--append] [--connection="..."] [--dir="..."] 
 
@@ -1991,43 +1967,42 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | -------- | ---------- | ---------------------------------------
 | `dir_or_file` | `-`   | ロードするディレクトリもしくはファイル
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ---------------------------------------
 | `--application`| `1`       | アプリケーションの名前
 | `--env`        | `cli`     | 環境
 | `--append`     | `-`       | データベースの現在の値を削除しない
 | `--connection` | `propel`  | 接続名
 
-`propel:data-load`タスクはデータフィクスチャをデータベースにロードします:
+`propel:data-load` タスクはデータフィクスチャをデータベースにロードします:
 
     ./symfony propel:data-load
 
-タスクは`data/fixtures/`で見つかるすべてのファイルからデータをロードします。
+タスクは `data/fixtures/` で見つかるすべてのファイルからデータをロードします。
 
 特定のファイルもしくはディレクトリからデータをロードしたいのであれば、これらを引数として追加できます:
 
     ./symfony propel:data-load data/fixtures/dev data/fixtures/users.yml
 
-タスクは`config/databases.yml`で定義される`propel`接続を使います。
-`--connection`オプションをつけることで別の接続を使うことができます:
+タスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:data-load --connection="name"
 
-タスクにデータベースの既存のデータを削除させたくない場合、`--append`オプションを指定します:
+タスクにデータベースの既存のデータを削除させたくない場合、`--append` オプションを指定します:
 
     ./symfony propel:data-load --append
 
-アプリケーションからデータベース接続を使いたい場合、`application`オプションを指定します:
+アプリケーションからデータベース接続を使いたい場合、`application` オプションを指定します:
 
     ./symfony propel:data-load --application=frontend
 
 ### ~`propel::generate-admin`~
 
-`propel::generate-admin`タスクはPropelのadminモジュールを生成する:
+`propel::generate-admin` タスクは Propel の admin モジュールを生成する:
 
     $ php symfony propel:generate-admin [--module="..."] [--theme="..."] [--singular="..."] [--plural="..."] [--env="..."] [--actions-base-class="..."] application route_or_model
 
-| 引数             | デフォルト | 説明
+| 引数             | デフォルト  | 説明
 | ---------------- | ---------- | ---------------------------------
 | `application`    | `-`        | アプリケーションの名前
 | `route_or_model` | `-`        | ルートの名前もしくはモデルクラス
@@ -2041,21 +2016,21 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `--env`                    | `dev`       | 環境
 | `--actions-base-class`     | `sfActions` | アクションの基底クラス 
 
-`propel:generate-admin`タスクはPropelのadminモジュールを生成します:
+`propel:generate-admin` タスクは Propel の admin モジュールを生成します:
 
     ./symfony propel:generate-admin frontend Article
 
-タスクは`%Article%`モデルの`%frontend%`アプリケーションのモジュールを作成します。
+タスクは `%Article%` モデルの `%frontend%` アプリケーションのモジュールを作成します。
 
-このタスクはアプリケーションの`routing.yml`でルートを作成します。
+このタスクはアプリケーションの `routing.yml` でルートを作成します。
 
-ルートの名前を渡すことでもPropelのadminモジュールを生成することもできます:
+ルートの名前を渡すことでも Propel の admin モジュールを生成することもできます:
 
     ./symfony propel:generate-admin frontend article
 
-タスクは`routing.yml`で見つかる`%article%`ルート定義用の`%frontend%`アプリケーションのモジュールを作成します。
+タスクは `routing.yml` で見つかる `%article%` ルート定義用の `%frontend%` アプリケーションのモジュールを作成します。
 
-フィルターとバッチアクションを適切に機能させるために、ルートに`wildcard`オプションを追加する必要があります:
+フィルターとバッチアクションを適切に機能させるために、ルートに `wildcard` オプションを追加する必要があります:
 
     article:
       class: sfPropelRouteCollection
@@ -2065,7 +2040,7 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
 ### ~`propel::generate-module`~
 
-`propel::generate-module`タスクはPropelモジュールを生成する:
+`propel::generate-module` タスクは Propel モジュールを生成する:
 
     $ php symfony propel:generate-module [--theme="..."] [--generate-in-cache] [--non-verbose-templates] [--with-show] [--singular="..."] [--plural="..."] [--route-prefix="..."] [--with-propel-route] [--env="..."] [--actions-base-class="..."] application module model
 
@@ -2077,30 +2052,30 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `module`      | `-`        | モジュールの名前
 | `model`       | `-`        | モデルクラスの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | ----------------------------------
 | `--theme`                  | `default`  | テーマの名前
 | `--generate-in-cache`      | `-`        | キャッシュでモジュールを生成する
 | `--non-verbose-templates`  | `-`        | 冗長ではないテンプレートを生成する
-| `--with-show`              | `-`        | showメソッドを生成する
+| `--with-show`              | `-`        | show メソッドを生成する
 | `--singular`               | `-`        | 単数形の名前
 | `--plural`                 | `-`        | 複数形の名前
 | `--route-prefix`           | `-`        | ルートのプレフィックス
-| `--with-propel-route`      | `-`        | Propelのルートを使うかどうか
+| `--with-propel-route`      | `-`        | Propel のルートを使うかどうか
 | `--env`                    | `dev`      | 環境
 | `--actions-base-class`     | `sfActions`| アクションの基底クラス 
 
-`propel:generate-module`タスクはPropelモジュールを生成します:
+`propel:generate-module` タスクは Propel モジュールを生成します:
 
     ./symfony propel:generate-module frontend article Article
 
-タスクは`%model%`モデルクラス用の`%application%`アプリケーションで`%module%`モジュールを作成します。
+タスクは `%model%` モデルクラス用の `%application%` アプリケーションで `%module%` モジュールを作成します。
 
-`--generate-in-cache`オプションをつけることで`%sf_app_cache_dir%/modules/auto%module%`の実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールを作成することもできます:
+`--generate-in-cache` オプションをつけることで `%sf_app_cache_dir%/modules/auto%module%` の実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールを作成することもできます:
 
     ./symfony propel:generate-module --generate-in-cache frontend article Article
 
-`--theme`オプションをつけることでジェネレーターはカスタマイズされたテーマを使うことができます:
+`--theme` オプションをつけることでジェネレーターはカスタマイズされたテーマを使うことができます:
 
     ./symfony propel:generate-module --theme="custom" frontend article Article
 
@@ -2108,7 +2083,7 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
 ### ~`propel::generate-module-for-route`~
 
-`propel::generate-module-for-route`タスクはルート定義用のPropelモジュールを生成する:
+`propel::generate-module-for-route` タスクはルート定義用の Propel モジュールを生成する:
 
     $ php symfony propel:generate-module-for-route [--theme="..."] [--non-verbose-templates] [--singular="..."] [--plural="..."] [--env="..."] [--actions-base-class="..."] application route
 
@@ -2117,7 +2092,7 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `application` | `-`        | アプリケーションの名前
 | `route`       | `-`        | ルートの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ----------------------------------
 | `--theme`                  | `default`  | テーマの名前
 | `--non-verbose-templates`  | `-`        | 冗長ではないテンプレートを生成する
@@ -2126,15 +2101,15 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `--env`                    | `dev`      | 環境
 | `--actions-base-class`     | `sfActions`| アクションの基底クラス 
 
-`propel:generate-module-for-route`タスクはルート定義用のPropelモジュールを生成します:
+`propel:generate-module-for-route` タスクはルート定義用の Propel モジュールを生成します:
 
     ./symfony propel:generate-module-for-route frontend article
 
-タスクは`routing.yml`で見つかる`%article%`ルート定義用の`%frontend%`アプリケーションでモジュールを作成します。
+タスクは `routing.yml` で見つかる `%article%` ルート定義用の `%frontend%` アプリケーションでモジュールを作成します。
 
 ### ~`propel::graphviz`~
 
-`propel::graphviz`タスクは現在のオブジェクトモデルのGraphvizによるチャートを生成する:
+`propel::graphviz` タスクは現在のオブジェクトモデルの Graphviz によるチャートを生成する:
 
     $ php symfony propel:graphviz [--phing-arg="..."] 
 
@@ -2142,13 +2117,13 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | -------------------------- | ---------- | ------------------------------
 | `--phing-arg`              | `-`        | Phingの任意の引数(複数の値が可)
 
-`propel:graphviz`タスクはオブジェクトモデルのグラフの自動描画にGraphvizのDOTを作成します:
+`propel:graphviz` タスクはオブジェクトモデルのグラフの自動描画に Graphviz の DOT を作成します:
 
     ./symfony propel:graphviz
 
 ### ~`propel::init-admin`~
 
-`propel::init-admin`タスクはPropelのadminモジュールを初期化する:
+`propel::init-admin` タスクは Propel の admin モジュールを初期化する:
 
     $ php symfony propel:init-admin [--theme="..."] application module model
 
@@ -2160,76 +2135,75 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `module`      | `-`        | モジュールの名前
 | `model`       | `-`        | モデルクラスの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | -------------
 | `--theme`                  | `default`  | テーマの名前
 
-`propel:init-admin`タスクはPropelのadminモジュールを生成します:
+`propel:init-admin` タスクは Propel の admin モジュールを生成します:
 
     ./symfony propel:init-admin frontend article Article
 
-`%model%`モデルクラス用の`%application%`アプリケーションで`%module%`モジュールを作成します。
+`%model%` モデルクラス用の `%application%` アプリケーションで `%module%` モジュールを作成します。
 
-作成されるモジュールは`%sf_app_cache_dir%/modules/auto%module%`の実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールです。
+作成されるモジュールは `%sf_app_cache_dir%/modules/auto%module%` の実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールです。
 
-ジェネレーターは`--theme`オプションをつけることでカスタマイズされたテーマを使うことができます:
+ジェネレーターは `--theme` オプションをつけることでカスタマイズされたテーマを使うことができます:
 
     ./symfony propel:init-admin --theme="custom" frontend article Article
 
 ### ~`propel::insert-sql`~
 
-`propel::insert-sql`タスクは現在のモデル用のSQLをINSERTする:
+`propel::insert-sql` タスクは現在のモデル用の SQL を INSERT する:
 
     $ php symfony propel:insert-sql [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [--phing-arg="..."] 
 
 *エイリアス*: `propel-insert-sql`
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | --------------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `cli`      | 環境
 | `--connection`             | `-`        | 接続名
 | `--no-confirmation`        | `-`        | 確認の質問をしない
-| `--phing-arg`              | `-`        | Phingの任意の引数(複数の値が可)
+| `--phing-arg`              | `-`        | Phing の任意の引数(複数の値が可)
 
-`propel:insert-sql`タスクはデータベースのテーブルを作成します:
+`propel:insert-sql` タスクはデータベースのテーブルを作成します:
 
     ./symfony propel:insert-sql
 
-タスクはデータベースに接続して`config/sql/*schema.sql`ファイルで見つかるすべてのSQLステートメントを実行します。
+タスクはデータベースに接続して `config/sql/*schema.sql` ファイルで見つかるすべての SQL ステートメントを実行します。
 
 実行する前に、データベースのすべてのデータが削除されるのでタスクは本当に実行するか確認します。
 
-確認を回避するには、`--no-confirmation`オプションを渡します:
+確認を回避するには、`--no-confirmation` オプションを渡します:
 
     ./symfony propel:insert-sql --no-confirmation
 
-タスクは`databases.yml`からデータベース設定を読み込みます。
-`--application`もしくは`--env`オプションを渡せば特定のアプリケーションの環境を使うことができます。
+タスクは `databases.yml` からデータベース設定を読み込みます。`--application` もしくは `--env` オプションを渡せば特定のアプリケーションの環境を使うことができます。
 
-任意の接続でSQLステートメントをロードしたいだけなら`--connection`オプションをつけます。
+任意の接続で SQL ステートメントをロードしたいだけなら `--connection` オプションをつけます。
 
 ### ~`propel::schema-to-xml`~
 
-`propel::schema-to-xml`タスクは`schema.yml`から`schema.xml`を作成する:
+`propel::schema-to-xml` タスクは `schema.yml` から `schema.xml` を作成する:
 
     $ php symfony propel:schema-to-xml  
 
 *エイリアス*: `propel-convert-yml-schema`
 
-`propel:schema-to-xml`タスクはYAMLスキーマをXMLスキーマに変換します:
+`propel:schema-to-xml` タスクは YAML スキーマを XML スキーマに変換します:
 
     ./symfony propel:schema-to-xml
 
 ### ~`propel::schema-to-yml`~
 
-`propel::schema-to-yml`タスクは`schema.xml`から`schema.yml`を作成する:
+`propel::schema-to-yml` タスクは `schema.xml` から `schema.yml` を作成する:
 
     $ php symfony propel:schema-to-yml  
 
 *エイリアス*: `propel-convert-xml-schema`
 
-`propel:schema-to-yml`タスクはXMLスキーマをYAMLに変換します:
+`propel:schema-to-yml` タスクは XML スキーマを YAML に変換します:
 
     ./symfony propel:schema-to-yml
 
@@ -2242,12 +2216,12 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
     $ php symfony symfony:test [-u|--update-autoloader] [-f|--only-failed] [--xml="..."] [--rebuild-all] 
 
-| オプション(ショートカット)  | デフォルト | 説明
-| ----------------- | ------- | -------------------------------------------
-| `--update-autoloader`<br />`(-u)` | `-` | sfCoreAutoloadクラスを更新する
-| `--only-failed`<br />`(-f)` | `-` | 最後に通らなかったテストのみを実行する
-| `--xml` | `-` | JUnitと互換性のあるXMLログファイルの名前
-| `--rebuild-all` | `-` | すべての生成フィクスチャファイルをリビルドする
+| オプション(ショートカット)         | デフォルト | 説明
+| --------------------------------- | --------- | -------------------------------------------
+| `--update-autoloader`<br />`(-u)` | `-`       | sfCoreAutoloadクラスを更新する
+| `--only-failed`<br />`(-f)`       | `-`       | 最後に通らなかったテストのみを実行する
+| `--xml`                           | `-`       | JUnitと互換性のあるXMLログファイルの名前
+| `--rebuild-all`                   | `-`       | すべての生成フィクスチャファイルをリビルドする
 
 `test:all`タスクはsymfonyテストスイートを立ち上げます:
 
@@ -2258,68 +2232,65 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
 ### ~`test::all`~
 
-`test::all`タスクはすべてのテストを立ち上げる:
+`test::all` タスクはすべてのテストを立ち上げる:
 
     $ php symfony test:all [-f|--only-failed] [--xml="..."]  
 
 *エイリアス*: `test-all`
 
-| オプション(ショートカット)  | デフォルト | 説明
-| --------------------------- | ---------- | -------------------------------
-| `--only-failed`<br />`(-f)` | `-` | 最後に通らなかったテストのみを実行する
-| `--xml` | `-` | JUnitと互換性のあるXMLログファイルの名前
+| オプション(ショートカット)   | デフォルト  | 説明
+| --------------------------- | ---------- | --------------------------------------
+| `--only-failed`<br />`(-f)` | `-`        | 最後に通らなかったテストのみを実行する
+| `--xml`                     | `-`        | JUnitと互換性のあるXMLログファイルの名前
 
-`test:all`タスクはすべてのユニットテストと機能テストを立ち上げます:
+`test:all` タスクはすべてのユニットテストと機能テストを立ち上げます:
 
     ./symfony test:all
 
-タスクは`test/`で見つかるすべてのテストを立ち上げます。
+タスクは `test/` で見つかるすべてのテストを立ち上げます。
 
-テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために`--trace`オプションをつけます:
+テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけます:
 
       `./symfony test:all -t
 
-もしくは`test:unit`と`test:functional`タスクでこれらのテストスイートを立ち上げることで問題の修正にとりかかることもできます。
+もしくは `test:unit` と `test:functional` タスクでこれらのテストスイートを立ち上げることで問題の修正にとりかかることもできます。
 
-以前の実行のときに通らなかったテストのみの実行を強制するために`--only-failed`オプションをつけます:
+以前の実行のときに通らなかったテストのみの実行を強制するために `--only-failed` オプションをつけます:
 
       `./symfony test:all --only-failed
 
-どのように動くのは次のとおりです: 最初に、通常のようにすべてのテストが実行されます。 
-しかしその後実行されるテストでは、前回通らなかったテストのみが実行されます。
-コードを修正するにつれて、テストの一部が通るようになり、その後の実行から除外されるようになります。
-すべてのテストが通るとき、フルテストスイートが実行され、洗い流し繰り返すことができます。
+どのように動くのは次のとおりです: 最初に、通常のようにすべてのテストが実行されます。しかしその後実行されるテストでは、前回通らなかったテストのみが実行されます。コードを修正するにつれて、テストの一部が通るようになり、その後の実行から除外されるようになります。すべてのテストが通るとき、フルテストスイートが実行され、洗い流し繰り返すことができます。
 
-タスクは`--xml`オプションでJUnitと互換性のあるXMLログファイルを出力することができます:
+タスクは `--xml` オプションで JUnit と互換性のある XML ログファイルを出力することができます:
 
     ./symfony test:all --xml=log.xml
 
 ### ~`test::coverage`~
 
-`test::coverage`タスクはテストのコードカバレッジを出力する:
+`test::coverage` タスクはテストのコードカバレッジを出力する:
 
     $ php symfony test:coverage [--detailed] test_name lib_name
 
-| 引数        | デフォルト | 説明
-| ----------- | ---------- | ---------------------------------------------------------
+| 引数        | デフォルト  | 説明
+| ----------- | ---------- | --------------------------------------------------------------
 | `test_name` | `-`        | テストファイルの名前もしくはテストのディレクトリ
-| `lib_name`  | `-`        | カバレージを知りたいlibファイルの名前もしくはlibディレクトリ
+| `lib_name`  | `-`        | カバレージを知りたい lib ファイルの名前もしくは lib ディレクトリ
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト | 説明
 | -------------------------- | ---------- | --------------------
 | `--detailed`               | `-`        | 詳細な情報を出力する
 
-`test:coverage`タスクはテストディレクトリもしくはテストディレクトリとlibファイルもしくはlibディレクトリのほしいコードカバレージを出力します:
+`test:coverage` タスクはテストディレクトリもしくはテストディレクトリと lib ファイルもしくは lib ディレクトリのほしいコードカバレージを出力します:
 
     ./symfony test:coverage test/unit/model lib/model
 
-カバーされていない行を出力するには、`--detailed`オプションを渡します:
+カバーされていない行を出力するには、`--detailed` オプションを渡します:
 
     ./symfony test:coverage --detailed test/unit/model lib/model
 
 ### ~`test::functional`~
 
-`test::functional`タスクは機能テストを立ち上げる:
+`test::functional` タスクは機能テストを立ち上げる:
 
     $ php symfony test:functional [--xml="..."] application [controller1] ... [controllerN]
 
@@ -2330,17 +2301,17 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 | `application` | `-`        | アプリケーションの名前
 | `controller`  | `-`        | コントローラーの名前
 
-| オプション(ショートカット) | デフォルト | 説明
+| オプション(ショートカット)  | デフォルト  | 説明
 | -------------------------- | ---------- | ---------------
-| `--xml` | `-` | JUnitと互換性のあるXMLログファイルの名前
+| `--xml` | `-` | JUnit と互換性のある XML ログファイルの名前
 
-`test:functional`タスクは任意のアプリケーション用の機能テストを立ち上げます:
+`test:functional` タスクは任意のアプリケーション用の機能テストを立ち上げます:
 
     ./symfony test:functional frontend
 
-タスクは`test/functional/%application%`で見つかるすべてのテストを立ち上げます。
+タスクは `test/functional/%application%` で見つかるすべてのテストを立ち上げます。
 
-テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために`--trace`オプションをつけます:
+テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけます:
 
       `./symfony test:functional frontend -t
 
@@ -2352,33 +2323,33 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
     ./symfony test:functional frontend article comment
 
-タスクは`--xml`オプションでJUnitと互換性のあるXMLログファイルを出力します:
+タスクは `--xml` オプションで JUnit と互換性のある XML ログファイルを出力します:
 
     ./symfony test:functional --xml=log.xml
 
 ### ~`test::unit`~
 
-`test::unit`タスクはユニットテストを立ち上げます:
+`test::unit` タスクはユニットテストを立ち上げます:
 
     $ php symfony test:unit [--xml="..."] [name1] ... [nameN]
 
 *エイリアス*: `test-unit`
 
-| 引数     | デフォルト | 説明
+| 引数     | デフォルト  | 説明
 | -------- | ---------- | -----------
 | `name`   | `-`        | テストの名前
 
 | オプション(ショートカット) | デフォルト | 説明
-| -------------------------- | ---------- | ----------------------------
-| `--xml`       | `-`        | JUnitと互換性のあるXMLログファイルの名前
+| ------------------------- | --------- | ----------------------------
+| `--xml`       | `-`       | JUnit と互換性のある XML ログファイルの名前
 
-`test:unit`タスクはユニットテストを立ち上げます:
+`test:unit` タスクはユニットテストを立ち上げます:
 
     ./symfony test:unit
 
-タスクは`test/unit`で見つかるすべてのテストを立ち上げます。
+タスクは `test/unit` で見つかるすべてのテストを立ち上げます。
 
-テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために`--trace`オプションをつけます:
+テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけます:
 
       `./symfony test:unit -t
 
@@ -2390,7 +2361,7 @@ XMLフォーマットはYAMLよりも多くの情報を格納できます。
 
     ./symfony test:unit strtolower strtoupper
 
-タスクは`--xml`オプションでJUnitと互換性のあるXMLログファイルを出力できます:
+タスクは `--xml` オプションで JUnit と互換性のある XML ログファイルを出力できます:
 
     ./symfony test:unit --xml=log.xml
 

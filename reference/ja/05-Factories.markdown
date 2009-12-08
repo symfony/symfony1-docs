@@ -1,18 +1,17 @@
-factories.yml設定ファイル
-========================
+factories.yml 設定ファイル
+==========================
 
-ファクトリはリクエストが存続するあいだにフレームワークが必要とするコアオブジェクトです。
-これらは`factories.yml`設定ファイルで設定され`sfContext`オブジェクトを通して常にアクセス可能です:
+ファクトリはリクエストが存続するあいだにフレームワークが必要とするコアオブジェクトです。これらは `factories.yml` 設定ファイルで設定され `sfContext` オブジェクトを通して常にアクセス可能です:
 
     [php]
     // ユーザーファクトリを取得する
     sfContext::getInstance()->getUser();
 
-アプリケーションのメインの`factories.yml`設定ファイルは`apps/APP_NAME/config/`ディレクトリで見つかります。
+アプリケーションのメインの `factories.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-はじめの章で説明したように、`factories.yml`ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
+はじめの章で説明したように、`factories.yml` ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
 
-`factories.yml`設定ファイルは名前つきのファクトリのリストを格納します:
+`factories.yml` 設定ファイルは名前つきのファクトリのリストを格納します:
 
     [yml]
     FACTORY_1:
@@ -23,19 +22,18 @@ factories.yml設定ファイル
 
     # ...
 
-サポートされるファクトリの名前は次のとおりです: `controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、`user`、`view_cache`と`view_cache_manager`
+サポートされるファクトリの名前は次のとおりです: `controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、`user`、`view_cache` と `view_cache_manager`
 
-`sfContext`がファクトリを初期化するとき、ファクトリオブジェクトを設定するために使われるファクトリ(`class`)とパラメーター(`param`)のクラス名の`factories.yml`ファイルを読み込みます:
+`sfContext` がファクトリを初期化するとき、ファクトリオブジェクトを設定するために使われるファクトリ(`class`)とパラメーター(`param`)のクラス名の `factories.yml` ファイルを読み込みます:
 
     [yml]
     FACTORY_NAME:
       class: CLASS_NAME
       param: { ARRAY OF PARAMETERS }
 
-ファクトリをカスタマイズできることはsymfonyのコアオブジェクトのデフォルトクラスの代わりにカスタムクラスを使うことができることを意味します。
-これらに送信するパラメーターをカスタマイズすることでこれらのクラスのデフォルトのふるまいを変更することもできます。
+ファクトリをカスタマイズできることは symfony のコアオブジェクトのデフォルトクラスの代わりにカスタムクラスを使うことができることを意味します。これらに送信するパラメーターをカスタマイズすることでこれらのクラスのデフォルトのふるまいを変更することもできます。
 
-ファクトリクラスがオートロードできないとき、`file`パスが定義されファクトリが作成される前に自動的にインクルードできます:
+ファクトリクラスがオートロードできないとき、`file` パスが定義されファクトリが作成される前に自動的にインクルードできます:
 
     [yml]
     FACTORY_NAME:
@@ -43,8 +41,7 @@ factories.yml設定ファイル
       file:  ABSOLUTE_PATH_TO_FILE
 
 >**NOTE**
->`factories.yml`設定ファイルはPHPファイルとしてキャッシュされます; 
->プロセスは~`sfFactoryConfigHandler`~[クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動的に管理されます。
+>`factories.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; プロセスは ~`sfFactoryConfigHandler`~ [クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動的に管理されます。
 
 <div class="pagebreak"></div>
 
@@ -133,7 +130,7 @@ factories.yml設定ファイル
 `mailer`
 --------
 
-*sfContextアクセサー*: `$context->getMailer()`
+*sfContext アクセサー*: `$context->getMailer()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -153,14 +150,14 @@ factories.yml設定ファイル
             username:   ~
             password:   ~
 
-*`test`環境のデフォルトコンフィギュレーション*:
+*`test` 環境のデフォルトコンフィギュレーション*:
 
     [yml]
     mailer:
       param:
         delivery_strategy: none
 
-*`dev`環境のデフォルトコンフィギュレーション*:
+*`dev` 環境のデフォルトコンフィギュレーション*:
 
     [yml]
     mailer:
@@ -169,13 +166,11 @@ factories.yml設定ファイル
 
 ### ~`charset`~
 
-`charset`オプションはメールメッセージに使う文字集合を定義します。 
-デフォルトでは、`settings.yml`から`charset`設定が使われます。
+`charset` オプションはメールメッセージに使う文字集合を定義します。デフォルトでは、`settings.yml` から `charset` 設定が使われます。
 
 ### ~`delivery_strategy`~
 
-`delivery_strategy`オプションはEメールメッセージがメーラーによってどのように配信されるのかを定義します。 
-デフォルトでは4つの戦略を選ぶことが可能で、すべての共通にニーズに適しています:
+`delivery_strategy` オプションはEメールメッセージがメーラーによってどのように配信されるのかを定義します。デフォルトでは4つの戦略を選ぶことが可能で、すべての共通にニーズに適しています:
 
  * `realtime`:       メッセージはリアルタイムで送信される。
 
@@ -187,11 +182,11 @@ factories.yml設定ファイル
 
 ### ~`delivery_address`~
 
-`delivery_address`オプションは`delivery_strategy`が`single_address`にセットされる場合すべてのメッセージの受信者を定義します。
+`delivery_address` オプションは `delivery_strategy` が `single_address` にセットされる場合すべてのメッセージの受信者を定義します。
 
 ### ~`spool_class`~
 
-`spool_class`オプションは`delivery_strategy`が`spool`にセットされるときに使うスプールクラスを定義します:
+`spool_class` オプションは `delivery_strategy` が `spool` にセットされるときに使うスプールクラスを定義します:
 
   * ~`Swift_FileSpool`~: メッセージはファイルシステムに保存される。
 
@@ -200,12 +195,11 @@ factories.yml設定ファイル
   * ~`Swift_PropelSpool`~: メッセージはPropelモデルに保存される。
 
 >**NOTE**
->スプールがインスタンス化されるとき、~`spool_arguments`~オプションがコンストラクターの引数として使われます。
+>スプールがインスタンス化されるとき、~`spool_arguments`~ オプションがコンストラクターの引数として使われます。
 
 ### ~`spool_arguments`~
 
-`spool_arguments`オプションはスプールのコンストラクターの引数を定義します。
-組み込みのキュークラスに利用できるオプションは次のとおりです:
+`spool_arguments` オプションはスプールのコンストラクターの引数を定義します。組み込みのキュークラスに利用できるオプションは次のとおりです:
 
  * `Swift_FileSpool`:
 
@@ -213,23 +207,21 @@ factories.yml設定ファイル
 
  * `Swift_DoctrineSpool`:
 
-    * メッセージを保存するDoctrineモデル(デフォルトでは`MailMessage`)
+    * メッセージを保存する Doctrine モデル(デフォルトでは `MailMessage`)
 
-    * メッセージ保存に使われるカラムの名前(デフォルトでは`message`)
+    * メッセージ保存に使われるカラムの名前(デフォルトでは `message`)
 
-    * 送信するメッセージを読み出すために呼び出すメソッド(オプション)。
-      これは引数としてキューオプションを受け取る。
+    * 送信するメッセージを読み出すために呼び出すメソッド(オプション)。これは引数としてキューオプションを受け取る。
 
  * `Swift_PropelSpool`:
 
-    * メッセージを保存するために使うPropelモデル(デフォルトでは`MailMessage`)
+    * メッセージを保存するために使う Propel モデル(デフォルトでは `MailMessage`)
 
-    * メッセージ保存に使うカラム名(デフォルトでは`message`)
+    * メッセージ保存に使うカラム名(デフォルトでは `message`)
 
-    * 送信するメッセージを読み出すために呼び出すメソッド(オプション)。
-      これは引数としてキューオプションを受け取る。
+    * 送信するメッセージを読み出すために呼び出すメソッド(オプション)。これは引数としてキューオプションを受け取る。
 
-Doctrineスプールの典型的なコンフィギュレーションは次のとおりです:
+Doctrine スプールの典型的なコンフィギュレーションは次のとおりです:
 
     [yml]
     # configuration in factories.yml
@@ -242,24 +234,22 @@ Doctrineスプールの典型的なコンフィギュレーションは次のと
 
 ### ~`transport`~
 
-`transport`オプションはEメールメッセージを実際に送信するために使うトランスポートを定義します。
+`transport` オプションはEメールメッセージを実際に送信するために使うトランスポートを定義します。
 
-`class`設定は`Swift_Transport`を実装する任意のクラスになります。
-デフォルトでは3つの設定が提供されます:
+`class` 設定は `Swift_Transport` を実装する任意のクラスになります。デフォルトでは3つの設定が提供されます:
 
-  * ~`Swift_SmtpTransport`~: メッセージを送信するためにSMTPサーバーを使う。
+  * ~`Swift_SmtpTransport`~: メッセージを送信するために SMTP サーバーを使う。
 
-  * ~`Swift_SendmailTransport`~: メッセージを送信するために`sendmail`を使う。
+  * ~`Swift_SendmailTransport`~: メッセージを送信するために `sendmail` を使う。
 
-  * ~`Swift_MailTransport`~: メッセージを送信するためにPHPネイティブの`mail()`関数を使う。
+  * ~`Swift_MailTransport`~: メッセージを送信するために PHP ネイティブの `mail()` 関数を使う。
 
-`param`設定をセットすることでトランスポートをさらに設定できます。
-Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer.org/docs/transport-types)セクションで組み込みの転送クラスと異なるパラメーターに関して知る必要のあることすべてが説明されています。
+`param` 設定をセットすることでトランスポートをさらに設定できます。Swift Mailer の公式ドキュメントの ["Transport Types"](http://swiftmailer.org/docs/transport-types) セクションで組み込みの転送クラスと異なるパラメーターに関して知る必要のあることすべてが説明されています。
 
 `request`
 ---------
 
-*sfContextアクセサー*: `$context->getRequest()`
+*sfContext アクセサー*: `$context->getRequest()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -282,29 +272,26 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
 
 ### ~`path_info_array`~
 
-`path_info_array`オプションは情報を読み取るために使われるグローバルなPHP配列を定義します。
-設定によってはデフォルトの`SERVER`の値を`ENV`に変更するとよいでしょう。
+`path_info_array` オプションは情報を読み取るために使われるグローバルな PHP 配列を定義します。設定によってはデフォルトの `SERVER` の値を `ENV` に変更するとよいでしょう。
 
 ### ~`path_info_key`~
 
-`path_info_key`オプションは`PATH_INFO`の情報が見つかるキーを定義します。
+`path_info_key` オプションは `PATH_INFO` の情報が見つかるキーを定義します。
 
-`IIFR`もしくは`ISAPI`のようなrewriteモジュールつきのIISを使う場合、この値を`HTTP_X_REWRITE_URL`に変更するとよいでしょう。
+`IIFR` もしくは `ISAPI` のような rewrite モジュールつきの IIS を使う場合、この値を `HTTP_X_REWRITE_URL` に変更するとよいでしょう。
 
 ### ~`formats`~
 
-`formats`オプションはファイル拡張子と`Content-Type`の配列です。
-リクエストURIの拡張子に基づいて、レスポンスの`Content-Type`を自動管理するためにsymfonyによって使われます。
+`formats` オプションはファイル拡張子と `Content-Type` の配列です。リクエスト URI の拡張子に基づいて、レスポンスの `Content-Type` を自動管理するために symfony によって使われます。
 
 ### ~`relative_url_root`~
 
-`relative_url_root`オプションはフロントコントローラー前のURLの部分を定義します。
-たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
+`relative_url_root` オプションはフロントコントローラー前の URL の部分を定義します。たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
 
 `response`
 ----------
 
-*sfContextアクセサー*: `$context->getResponse()`
+*sfContext アクセサー*: `$context->getResponse()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -316,7 +303,7 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
         charset:           %SF_CHARSET%
         send_http_headers: true
 
-*`test`環境のデフォルトコンフィギュレーション*:
+*`test` 環境のデフォルトコンフィギュレーション*:
 
     [yml]
     response:
@@ -326,24 +313,20 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
 
 ### ~`send_http_headers`~
 
-`send_http_headers`オプションはレスポンス内に含まれるコンテンツと一緒にHTTPレスポンスヘッダーを送信するかを指定します。
-この設定は出力の後でヘッダーを送信しようとすると警告を発するPHPの`header()`関数でヘッダーが送信されるので、テストの際に便利です。
+`send_http_headers` オプションはレスポンス内に含まれるコンテンツと一緒に HTTP レスポンスヘッダーを送信するかを指定します。この設定は出力の後でヘッダーを送信しようとすると警告を発する PHP の `header()` 関数でヘッダーが送信されるので、テストの際に便利です。
 
 ### ~`charset`~
 
-`charset`オプションはレスポンスに使う文字集合を定義します。
-デフォルトでは、`settings.yml`の`charset`設定が使われます。 
+`charset` オプションはレスポンスに使う文字集合を定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。 
 
 ### ~`http_protocol`~
 
-`http_protocol`オプションはレスポンスに使うHTTPプロトコルのバージョンを定義します。
-デフォルトでは、利用可能であれば`$_SERVER['SERVER_PROTOCOL']`の値をチェックします。
-デフォルトは`HTTP/1.0`です。
+`http_protocol` オプションはレスポンスに使う HTTP プロトコルのバージョンを定義します。デフォルトでは、利用可能であれば `$_SERVER['SERVER_PROTOCOL']` の値をチェックします。デフォルトは `HTTP/1.0` です。
 
 `user`
 ------
 
-*sfContextのアクセサー*: `$context->getUser()`
+*sfContext のアクセサー*: `$context->getUser()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -357,39 +340,34 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
         default_culture: %SF_DEFAULT_CULTURE%
 
 >**NOTE**
->デフォルトでは、`myUser`クラスは`sfBasicSecurityUser`を継承します。
->これは[`security.yml`](#chapter_08)設定ファイルで設定できます。
+>デフォルトでは、`myUser` クラスは `sfBasicSecurityUser` を継承します。これは [`security.yml`](#chapter_08) 設定ファイルで設定できます。
 
 ### ~`timeout`~
 
-`timeout`オプションはユーザー認証のタイムアウトを定義します。
-これはセッションのタイムアウトとは関係ありません。
-デフォルトの設定は30分間何もしていないユーザーの認証を自動的に解除します。
+`timeout` オプションはユーザー認証のタイムアウトを定義します。これはセッションのタイムアウトとは関係ありません。デフォルトの設定は30分間何もしていないユーザーの認証を自動的に解除します。
 
-`sfBasicSecurityUser`基底クラスを継承するユーザークラスのみがこの設定を使います。
-これは`myUser`クラスが生成される例が当てはまります。
+`sfBasicSecurityUser` 基底クラスを継承するユーザークラスのみがこの設定を使います。これは `myUser`クラス が生成される例が当てはまります。
 
 >**NOTE**
->予期していないふるまいを避けるために、ユーザークラスはセッションガーベッジコレクターの最長有効期間(`session.gc_maxlifetime`)をタイムアウトよりも長くなるように強制します。
+>予期していないふるまいを避けるために、ユーザークラスはセッションガーベッジコレクターの最長有効期間 (`session.gc_maxlifetime`) をタイムアウトよりも長くなるように強制します。
 
 ### ~`use_flash`~
 
-`use_flash`オプションはflashコンポーネントを有効もしくは無効にします。
+`use_flash` オプションは flash コンポーネントを有効もしくは無効にします。
 
 ### ~`default_culture`~
 
-`default_culture`オプションはサイトに始めて訪問したユーザーのためにデフォルトのcultureを定義します。
-デフォルトでは、`settings.yml`からの`default_culture`が使用されるいていの場合これで十分です。
+`default_culture` オプションはサイトに初めて訪問したユーザーのためにデフォルトの culture を定義します。デフォルトでは、`settings.yml` からの `default_culture` が使用されるたいていの場合これで十分です。
 
 >**CAUTION**
->`factories.yml`もしくは`settings.yml`の~`default_culture`~設定を変更する場合、結果を確認するためにブラウザのCookieをクリアする必要があります。
+>`factories.yml` もしくは `settings.yml` の ~`default_culture`~ 設定を変更する場合、結果を確認するためにブラウザの Cookie をクリアする必要があります。
 
 `storage`
 ---------
 
-ストレージファクトリはHTTPリクエストのあいだのユーザーデータを一貫させるためにユーザーファクトリによって使われます。
+ストレージファクトリは HTTP リクエストのあいだのユーザーデータを一貫させるためにユーザーファクトリによって使われます。
 
-*sfContextアクセサー*: `$context->getStorage()`
+*sfContext アクセサー*: `$context->getStorage()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -399,7 +377,7 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
       param:
         session_name: symfony
 
-*`test`環境のデフォルトコンフィギュレーション*:
+*`test` 環境のデフォルトコンフィギュレーション*:
 
     [yml]
     storage:
@@ -409,46 +387,43 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
 
 ### ~`auto_start`~
 
-`auto_start`オプションは(`session_start()`関数を通して)PHPのセッション自動開始機能を有効もしくは無効にします。
+`auto_start` オプションは(`session_start()`関数を通して) PHP のセッション自動開始機能を有効もしくは無効にします。
 
 ### ~`session_name`~
 
-`session_name`オプションはユーザーセッションを保存するためにsymfonyによって使われるCookieの名前を定義します。
-デフォルトの名前は`symfony`で、すべてのアプリケーションが同じCookieを共有することを意味します(そして対応する認証と権限付与も)。
+`session_name` オプションはユーザーセッションを保存するために symfony によって使われるCookieの名前を定義します。デフォルトの名前は `symfony` で、すべてのアプリケーションが同じ Cookie を共有することを意味します(そして対応する認証と権限付与も)。
 
-### `session_set_cookie_params()`パラメーター
+### `session_set_cookie_params()` パラメーター
 
-`storage`ファクトリは次のオプションの値で[`session_set_cookie_params()`](http://www.php.net/session_set_cookie_params)関数を呼び出します:
+`storage` ファクトリは次のオプションの値で [`session_set_cookie_params()`](http://www.php.net/session_set_cookie_params) 関数を呼び出します:
 
- * ~`session_cookie_lifetime`~: セッションCookieの有効期間。秒単位で定義する。
- * ~`session_cookie_path`~:   Cookieが機能するドメイン上のパス。
-                              ドメインのすべてのパスに対して単独のスラッシュ(`/`)を使う。
- * ~`session_cookie_domain`~: Cookieのドメイン、たとえば`www.php.net`。
-                              すべてのサブドメインにCookieを見えるようにするためには`.php.net`のようにプレフィックスとしてドットをドメインにつけなければなりません。
- * ~`session_cookie_secure`~: `true`の場合Cookieはセキュアなコネクションを通してのみ送信されます。
- * ~`session_cookie_httponly`~: `true`にセットされている場合、セッションCookieを設定する際にPHPは`httponly`フラグを送信しようとします。
+ * ~`session_cookie_lifetime`~: セッション Cookie の有効期間。秒単位で定義する。
+ * ~`session_cookie_path`~:   Cookie が機能するドメイン上のパス。ドメインのすべてのパスに対して単独のスラッシュ(`/`)を使う。
+ * ~`session_cookie_domain`~: Cookie のドメイン、たとえば `www.php.net`。すべてのサブドメインに Cookie を見えるようにするためには `.php.net` のようにプレフィックスとしてドットをドメインにつけなければなりません。
+ * ~`session_cookie_secure`~: `true` の場合 Cookie はセキュアなコネクションを通してのみ送信されます。
+ * ~`session_cookie_httponly`~: `true` にセットされている場合、セッション Cookie を設定する際に PHP は `httponly` フラグを送信しようとします。
 
 >**NOTE**
->それぞれのオプションの説明は`session_set_cookie_params()`関数の説明はPHPの公式サイトに説明に由来しています。
+>それぞれのオプションの説明は `session_set_cookie_params()` 関数の説明は PHP の公式サイトに説明に由来しています。
 
 ### ~`session_cache_limiter`~
 
-`session_cache_limiter`オプションがセットされている場合、PHPの[`session_cache_limiter()`](http://www.php.net/session_cache_limiter)関数が呼び出され引数としてオプションの値が渡されます。
+`session_cache_limiter` オプションがセットされている場合、PHP の [`session_cache_limiter()`](http://www.php.net/session_cache_limiter) 関数が呼び出され引数としてオプションの値が渡されます。
 
 ### データベースストレージ固有のオプション
 
-`sfDatabaseSessionStorage`クラスを継承するストレージを使うとき、いくつかの追加オプションが利用可能です:
+`sfDatabaseSessionStorage` クラスを継承するストレージを使うとき、いくつかの追加オプションが利用可能です:
 
  * ~`database`~:     データベースの名前(必須)
  * ~`db_table`~:     テーブルの名前(必須)
- * ~`db_id_col`~:    主キーのカラムの名前(デフォルトは`sess_id`)
- * ~`db_data_col`~:  データカラムの名前(デフォルトは`sess_data`)
- * ~`db_time_col`~:  時間カラムの名前(デフォルトは`sess_time`)
+ * ~`db_id_col`~:    主キーのカラムの名前(デフォルトは `sess_id`)
+ * ~`db_data_col`~:  データカラムの名前(デフォルトは `sess_data`)
+ * ~`db_time_col`~:  時間カラムの名前(デフォルトは `sess_time`)
 
 `view_cache_manager`
 --------------------
 
-*sfContextアクセサー*: `$context->getViewCacheManager()`
+*sfContext アクセサー*: `$context->getViewCacheManager()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -460,25 +435,22 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
         cache_key_use_host_name:    true
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache)設定が`on`にセットされている場合にのみこのファクトリは作成されます。
+>[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合にのみこのファクトリは作成されます。
 
-このファクトリのコンフィギュレーションの大半は`view_cache`ファクトリ経由で行われます。
-`view_cache`ファクトリはビューキャッシュマネージャーによって使われる内部のキャッシュオブジェクトを定義します。
+このファクトリのコンフィギュレーションの大半は `view_cache` ファクトリ経由で行われます。`view_cache` ファクトリはビューキャッシュマネージャーによって使われる内部のキャッシュオブジェクトを定義します。
 
 ### ~`cache_key_use_vary_headers`~
 
-`cache_key_use_vary_headers`オプションはキャッシュキーがVaryヘッダーの部分を含むか指定します。 
-実際には、`vary`キャッシュパラメーターで指定されるように、これはページキャッシュがHTTPヘッダーに依存することを伝えます(デフォルト値: `true`)。
+`cache_key_use_vary_headers` オプションはキャッシュキーが Vary ヘッダーの部分を含むか指定します。実際には、`vary` キャッシュパラメーターで指定されるように、これはページキャッシュが HTTP ヘッダーに依存することを伝えます(デフォルト値: `true`)。
 
 ### ~`cache_key_use_host_name`~
 
-`cache_key_use_host_name`オプションはキャッシュキーがホスト名の部分を含むか指定します。
-実際には、これはページキャッシュがホスト名に依存するかを伝えます(デフォルト値: `true`)。
+`cache_key_use_host_name` オプションはキャッシュキーがホスト名の部分を含むか指定します。実際には、これはページキャッシュがホスト名に依存するかを伝えます(デフォルト値: `true`)。
 
 `view_cache`
 ------------
 
-*sfContextアクセサー*: なし(`view_cache_manager`ファクトリによって直接使われる)
+*sfContext アクセサー*: なし(`view_cache_manager` ファクトリによって直接使われる)
 
 *デフォルトコンフィギュレーション*:
 
@@ -492,14 +464,14 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
         prefix:                    %SF_APP_DIR%/template
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache)設定が`on`にセットされている場合のみこのファクトリが定義されます。
+>[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
 
-`view_cache`ファクトリは`sfCache`を継承するキャッシュクラスを定義します(詳細な情報はキャッシュのセクションを参照)。
+`view_cache` ファクトリは `sfCache` を継承するキャッシュクラスを定義します(詳細な情報はキャッシュのセクションを参照)。
 
 `i18n`
 ------
 
-*sfContextアクセサー*: `$context->getI18N()`
+*sfContext アクセサー*: `$context->getI18N()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -520,34 +492,34 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
             prefix:                    %SF_APP_DIR%/i18n
 
 >**CAUTION**
->[`i18n`](#chapter_04-Settings_sub_i18n)設定が`on`にセットされている場合のみこのファクトリが定義されます。
+>[`i18n`](#chapter_04-Settings_sub_i18n) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
 
 ### ~`source`~
 
-`source`オプションは翻訳用コンテナーの種類を定義します。
+`source` オプションは翻訳用コンテナーの種類を定義します。
 
-*組み込みのコンテナー*: `XLIFF`、`SQLite`、`MySQL`、と`gettext`
+*組み込みのコンテナー*: `XLIFF`、`SQLite`、`MySQL`、と `gettext`
 
 ### ~`debug`~
 
-`debug`オプションはデバッグモードをセットします。`on`にセットされる場合、未翻訳のメッセージはプレフィックスとサフィックスによってデコレートされます(下記を参照)。
+`debug` オプションはデバッグモードをセットします。`on` にセットされる場合、未翻訳のメッセージはプレフィックスとサフィックスによってデコレートされます(下記を参照)。
 
 ### ~`untranslated_prefix`~
 
-`untranslated_prefix`は未翻訳のメッセージに使われるプレフィックスを定義します。
+`untranslated_prefix` は未翻訳のメッセージに使われるプレフィックスを定義します。
 
 ### ~`untranslated_suffix`~
 
-`untranslated_suffix`は未翻訳のメッセージに使われるサフィックスを定義します。
+`untranslated_suffix` は未翻訳のメッセージに使われるサフィックスを定義します。
 
 ### ~`cache`~
 
-`cache`オプションは国際化データのキャッシュに使われる匿名キャッシュファクトリを定義します(詳細な情報はキャッシュのセクションを参照)。
+`cache` オプションは国際化データのキャッシュに使われる匿名キャッシュファクトリを定義します(詳細な情報はキャッシュのセクションを参照)。
 
 `routing`
 ---------
 
-*sfContextアクセサー*: `$context->getRouting()`
+*sfContext アクセサー*: `$context->getRouting()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -569,35 +541,32 @@ Swift Mailerの公式ドキュメントの["Transport Types"](http://swiftmailer
 
 *デフォルト*: `:`
 
-`variable_prefixes`オプションはルートのパターンの変数名を始める文字のリストを定義します。
+`variable_prefixes` オプションはルートのパターンの変数名を始める文字のリストを定義します。
 
 ### ~`segment_separators`~
 
 *デフォルト*: `/`と`.`
 
-`segment_separators`オプションはルートセグメントの区切り文字のリストを定義します。
+`segment_separators` オプションはルートセグメントの区切り文字のリストを定義します。
 たいていの場合、特定のルート以外、ルーティング全体に対してこのオプションをオーバーライドすることはないでしょう。
 
 ### ~`generate_shortest_url`~
 
-*デフォルト*: 新しいプロジェクトでは`true`、アップグレードしたプロジェクトには`false`
+*デフォルト*: 新しいプロジェクトでは `true`、アップグレードしたプロジェクトには `false`
 
-`true`にセットされる場合、`generate_shortest_url`オプションはルーティングシステムに実現可能な最短のルートを生成するよう伝えます。
-symfony 1.0と1.1との後方互換性のあるルートがほしい場合は、`false`にセットします。
+`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短のルートを生成するよう伝えます。symfony 1.0と1.1 との後方互換性のあるルートがほしい場合は、`false` にセットします。
 
 ### ~`extra_parameters_as_query_string`~
 
-*デフォルト*: 新しいプロジェクトには`true`、アップグレードしたプロジェクトには`false`
+*デフォルト*: 新しいプロジェクトには `true`、アップグレードしたプロジェクトには `false`
 
-ルートの生成に使われないパラメーターがあるとき、`extra_parameters_as_query_string`はルート生成に利用していないパラメーターをクエリーストリングに変換することが可能です。
-symfony 1.0もしくは1.1のふるまいを代替するには`false`にセットします。
-このバージョンでは、ルート生成に利用していないパラメーターはルーティングシステムによって無視されるだけでした。
+ルートの生成に使われないパラメーターがあるとき、`extra_parameters_as_query_string` はルート生成に利用していないパラメーターをクエリーストリングに変換することが可能です。symfony 1.0 もしくは1.1のふるまいを代替するには `false` にセットします。このバージョンでは、ルート生成に利用していないパラメーターはルーティングシステムによって無視されるだけでした。
 
 ### ~`cache`~
 
 *デフォルト*: なし
 
-`cache`オプションはルーティング設定とデータのキャッシュに使われる匿名キャッシュファクトリを定義します(詳細な情報はキャッシュセクションを参照)。
+`cache` オプションはルーティング設定とデータのキャッシュに使われる匿名キャッシュファクトリを定義します(詳細な情報はキャッシュセクションを参照)。
 
 ### ~`suffix`~
 
@@ -609,32 +578,27 @@ symfony 1.0もしくは1.1のふるまいを代替するには`false`にセッ�
 
 *デフォルト*: `true`
 
-`load_configuration`オプションは`routing.yml`ファイルが自動的にロードされ解析される必要があるかどうかを定義します。
-symfonyプロジェクトではない外部のルーティングシステムを使いたい場合`false`にセットします。
+`load_configuration` オプションは `routing.yml` ファイルが自動的にロードされ解析される必要があるかどうかを定義します。symfony プロジェクトではない外部のルーティングシステムを使いたい場合 `false` にセットします。
 
 ### ~`lazy_routes_deserialize`~
 
 *デフォルト*: `false`
 
-`true`にセットする場合、`lazy_routes_deserialize`設定はルーティングキャッシュの遅延デシリアライズを有効にします。
-たくさんのルートを抱えており、マッチするルートが最初のものである場合この設定はアプリケーションのパフォーマンスを改善できます。
-特定の状況ではパフォーマンスに悪い影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
+`true` にセットする場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライズを有効にします。
+たくさんのルートを抱えており、マッチするルートが最初のものである場合この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスに悪い影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
 
 ### ~`lookup_cache_dedicated_keys`~
 
 *デフォルト*: `false`
 
-`lookup_cache_dedicated_keys`設定はルーティングキャッシュが構成される方法を決定します。
-`false`にセットされている場合、キャッシュは1つの大きな値として保存されます;
-`true`にセットされている場合それぞれのルートは独自のキャッシュストアを持ちます。
-この設定はパフォーマンス最適化設定です。
+`lookup_cache_dedicated_keys` 設定はルーティングキャッシュが構成される方法を決定します。`false` にセットされている場合、キャッシュは1つの大きな値として保存されます; `true` にセットされている場合それぞれのルートは独自のキャッシュストアを持ちます。この設定はパフォーマンス最適化設定です。
 
-経験則として、ファイルベースのキャッシュクラス(たとえば`sfFileCache`)を使う際にはこの設定を`false`に、メモリベースのキャッシュクラス(たとえば`sfAPCCache`)を使う際には`true`にするとよいです。
+経験則として、ファイルベースのキャッシュクラス(たとえば `sfFileCache`)を使う際にはこの設定を `false` に、メモリベースのキャッシュクラス(たとえば `sfAPCCache` )を使う際には `true` にするとよいです。
 
 `logger`
 --------
 
-*sfContextアクセサー*: `$context->getLogger()`
+*sfContext アクセサー*: `$context->getLogger()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -657,7 +621,7 @@ symfonyプロジェクトではない外部のルーティングシステムを�
               level: debug
               file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
-*`prod`環境のデフォルトコンフィギュレーション*:
+*`prod` 環境のデフォルトコンフィギュレーション*:
 
     [yml]
     logger:
@@ -667,18 +631,17 @@ symfonyプロジェクトではない外部のルーティングシステムを�
         loggers: ~
 
 >**CAUTION**
->このファクトリは常に定義されますが、`logging_enabled`設定が`on`にセットされている場合のみロギングが行われます。
+>このファクトリは常に定義されますが、`logging_enabled` 設定が `on` にセットされている場合のみロギングが行われます。
 
 ### ~`level`~
 
-`level`オプションはロガーのレベルを定義します。
+`level` オプションはロガーのレベルを定義します。
 
 *可能な値*: `EMERG`、`ALERT`、`CRIT`、`ERR`、`WARNING`、`NOTICE`、`INFO`もしくは`DEBUG`
 
 ### ~`loggers`~
 
-`loggers`オプションは使用するロガーのリストを定義します。
-リストは匿名ロガーファクトリの配列です。
+`loggers` オプションは使用するロガーのリストを定義します。リストは匿名ロガーファクトリの配列です。
 
 *組み込みのロガークラス*: `sfConsoleLogger`、`sfFileLogger`、`sfNoLogger`、
 `sfStreamLogger`と`sfVarLogger`
@@ -686,7 +649,7 @@ symfonyプロジェクトではない外部のルーティングシステムを�
 `controller`
 ------------
 
-*sfContextアクセサー*: `$context->getController()`
+*sfContext アクセサー*: `$context->getController()`
 
 *デフォルトコンフィギュレーション*:
 
@@ -697,12 +660,8 @@ symfonyプロジェクトではない外部のルーティングシステムを�
 匿名キャッシュファクトリ
 ------------------------
 
-いくつかのファクトリ(`view_cache`、`i18n`と`routing`)はそれぞれ設定で定義されている場合、効果のあるキャッシュオブジェクトを利用できます。
-キャッシュオブジェクトの設定はすべてのファクトリと似ています。
-`cache`キーは匿名キャッシュファクトリを定義します。
-ほかのファクトリと同じように、これは`class`と`param`エントリをとります。
-`param`エントリーは与えられたキャッシュクラスで利用可能な任意のオプションをとります。
+いくつかのファクトリ(`view_cache`、`i18n` と `routing`)はそれぞれ設定で定義されている場合、効果のあるキャッシュオブジェクトを利用できます。キャッシュオブジェクトの設定はすべてのファクトリと似ています。`cache` キーは匿名キャッシュファクトリを定義します。ほかのファクトリと同じように、これは `class` と `param` エントリーをとります。`param` エントリーは与えられたキャッシュクラスで利用可能な任意のオプションをとります。
 
-もっとも重要なのは`prefix`オプションで異なる環境/アプリケーション/プロジェクトのあいだでキャッシュを共有するもしくは分離できるようにします。
+もっとも重要なのは `prefix` オプションで異なる環境/アプリケーション/プロジェクトのあいだでキャッシュを共有するもしくは分離できるようにします。
 
-*組み込みのキャッシュクラス*: `sfAPCCache`、`sfEAcceleratorCache`、`sfFileCache`、`sfMemcacheCache`、`sfNoCache`、`sfSQLiteCache`と`sfXCachCache`
+*組み込みのキャッシュクラス*: `sfAPCCache`、`sfEAcceleratorCache`、`sfFileCache`、`sfMemcacheCache`、`sfNoCache`、`sfSQLiteCache` と `sfXCachCache`
