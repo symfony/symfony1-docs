@@ -4,51 +4,35 @@
 はじめに
 --------
 
-symfony~フレームワーク~は~オープンソース~プロジェクトとして3年間以上開発され、すばらしい機能とドキュメントのおかげで今ではもっとも人気のあるフレームワークの1つになりました。
+symfony ~フレームワーク~は~オープンソース~プロジェクトとして3年間以上開発され、すばらしい機能とドキュメントのおかげで今ではもっとも人気のあるフレームワークの1つになりました。
 
-この本は仕様から実装まで段階的にWebアプリケーションをsymfonyで作る方法を説明します。
-この本はsymfonyを学び、これがどのように動くのか理解し、またWeb開発のベストプラクティスも学びたい初心者をターゲットとしてします。
+この本は仕様から実装まで段階的に Web アプリケーションを symfony で作る方法を説明します。この本は symfony を学び、これがどのように動くのか理解し、また Web 開発のベストプラクティスも学びたい初心者をターゲットとしてします。
 
-アプリケーションを別のblogエンジンにする選択肢もありました。
-しかし私たちは実用上のプロジェクトでsymfonyを使うことを望んでいます。
-ゴールはスタイルと少しの労力でプロフェッショナルなアプリケーションを開発するために使えることを実証することです。
+アプリケーションを別のブログエンジンにする選択肢もありました。しかし私たちは実際のプロジェクトで symfony を使うことを望んでいます。ゴールはスタイルと少しの労力でプロフェッショナルなアプリケーションを開発するために使えることを実証することです。
 
-今日はすでにたくさんのやることがあるので別の日のプロジェクトの内容は秘密にしておきます。
-しかしながら、プロジェクトの名前を教えます: **Jobeet**です。
+今日はすでにたくさんのやることがあるので別の日のプロジェクトの内容は秘密にしておきます。しかしながら、プロジェクトの名前を教えます: **Jobeet** です。
 
-この本のそれぞれの章は1時間から2時間かけることを想定しており、
-最初から最後まで実際のWebサイトのコーディングをすることでsymfonyを学ぶ機会になります。
-毎日、新しい機能がアプリケーションに追加され、symfonyのWeb開発と同様に新しいsymfonyの機能を紹介するためにこの開発を利用します。
+この本のそれぞれの章は1時間から2時間かけることを想定しており、最初から最後まで実際の Web サイトのコーディングをすることで symfony を学ぶ機会になります。毎日、新しい機能がアプリケーションに追加され、symfony の Web 開発と同様に新しい symfony の機能を紹介するためにこの開発を利用します。
 
 チャレンジ
 ----------
 
-チュートリアルの各章は約1時間ほどで終わる程度であり、実際のWebサイトを最初から最後までコーディングすることでsymfonyを学習します。
+チュートリアルの各章は約1時間ほどで終わる程度であり、実際のWebサイトを最初から最後までコーディングすることで symfony を学習します。
 
-1日1時間24日で合計1日になります。
-これはsymfonyの基本を学ぶために必要な時間であると私たちは考えています。
-毎日、新しい機能がアプリケーションに追加され、symfonyのWeb開発のベストプラクティスと同時に新しい機能を紹介するためにこの開発プロセスを利用します。
+1日1時間24日で合計1日になります。これは symfony の基本を学ぶために必要な時間であると私たちは考えています。毎日、新しい機能がアプリケーションに追加され、symfony の Web 開発のベストプラクティスと同時に新しい機能を紹介するためにこの開発プロセスを利用します。
 
-askeetでは、21日目は「get-a-symfony-guru-for-a-day」でした。
-私たちはノープランであり、コミュニティはaskeetに追加する要素を提案しなければなりませんでした。
-21日目はすばらしい成功例であり、コミュニティはアプリケーションに検索エンジンを実装することが必要だと判断しました。
-そして私たちは実装しました。
-21日目のチュートリアルはaskeetチュートリアルの中でもっとも人気があります。
+askeet では、21日目は「get-a-symfony-guru-for-a-day」でした。私たちはノープランであり、コミュニティは askeet に追加する要素を提案しなければなりませんでした。21日目はすばらしい成功例であり、コミュニティはアプリケーションに検索エンジンを実装することが必要だと判断しました。そして私たちは実装しました。21日目のチュートリアルは askeet チュートリアルのなかでもっとも人気があります。
 
-Jobeetでは、21日目に行われたデザインコンテストの優勝者を祝福しました。
-優勝したデザインはcenter{source}によるもので、このチュートリアルのデフォルトのデザインとして使用しています。
-また、実際のJobeetのWebサイトでもこのデザインが採用されています。 
+Jobeet では、21日目に行われたデザインコンテストの優勝者を祝福しました。優勝したデザインは center{source} によるもので、このチュートリアルのデフォルトのデザインとして使用しています。また、実際の Jobeet の Web サイトでもこのデザインが採用されています。 
 
 この本は一味違います
 -------------------
 
-初期のころのPHP 4を覚えていますか？
-[ベル・エポック(よき時代)](http://ja.wikipedia.org/wiki/%E3%83%99%E3%83%AB%E3%83%BB%E3%82%A8%E3%83%9D%E3%83%83%E3%82%AF)でした。
-PHPはWeb専用でもっとも習得しやすい最初の言語の1つでした。
+初期のころの PHP 4 を覚えていますか？
+[ベル・エポック(よき時代)](http://ja.wikipedia.org/wiki/%E3%83%99%E3%83%AB%E3%83%BB%E3%82%A8%E3%83%9D%E3%83%83%E3%82%AF)でした。PHP は Web 専用でもっとも習得しやすい最初の言語の1つでした。
 
-しかし、Webテクノロジーは早く進化し、Web開発者は最新のベストプラクティスとツールについてゆくことが必要になりました。
-学ぶための最良の方法はブログやチュートリアルや書籍を読むことです。
-私たちはPHP、Python、Java、Ruby、Perlで書かれたたくさんの資料を読んできましたが、筆者がコードスニペットの例を提供するときにこれらの多くは不十分でした。
+しかし、Web テクノロジーは早く進化し、Web 開発者は最新のベストプラクティスとツールについてゆくことが必要になりました。
+学ぶための最良の方法はブログやチュートリアルや書籍を読むことです。私たちは PHP、Python、Java、Ruby、Perl で書かれたたくさんの資料を読んできましたが、筆者がコードスニペットの例を提供するときにこれらの多くは不十分でした。
 
 おそらく次のような注意書きを見たことがあるでしょう:
 
@@ -64,188 +48,152 @@ PHPはWeb専用でもっとも習得しやすい最初の言語の1つでした�
 
 などです。
 
-何ということでしょう。
-これらは深刻な問題です。
-これらはコードのもっとも重要な部分です。
-それなのに読者は置き去りにされます。
-これらの問題を考慮していないのであれば、サンプルコードは役に立ちませんし、よい出発点として使えません。
-ひどいとは思いません？
-セキュリティやバリデーションやエラーハンドリングやテストは2・3の例を挙げると、きちんとコーディングしなければならないからです。
+何ということでしょう。これらは深刻な問題です。これらはコードのもっとも重要な部分です。それなのに読者は置き去りにされます。これらの問題を考慮していないのであれば、サンプルコードは役に立ちませんし、よい出発点として使えません。ひどいとは思いません？セキュリティやバリデーションやエラーハンドリングやテストは2・3の例を挙げると、きちんとコーディングしなければならないからです。
 
-この本では、「テスト、エラーハンドリング、バリデーションコードは後で書きます」、「セキュアなアプリケーションを開発してください」といった文は見ることはいっさいありません。
-なぜならsymfonyはコードそのものであり、企業向けのプロフェッショナルなアプリケーションを開発するためのベストプラクティスおよび手段でもあるからです。
-symfonyは多くのコードを書かずにこれらの面を簡単に実装するために必要なすべてのツールを提供するのでこのような豪華なことができます。
+この本では、「テスト、エラーハンドリング、バリデーションコードは後で書きます」、「セキュアなアプリケーションを開発してください」といった文は見ることはいっさいありません。なぜなら symfony はコードそのものであり、企業向けのプロフェッショナルなアプリケーションを開発するためのベストプラクティスおよび手段でもあるからです。symfony は多くのコードを書かずにこれらの面を簡単に実装するために必要なすべてのツールを提供するのでこのような豪華なことができます。
 
 
-symfonyではバリデーションやエラーハンドリング、セキュリティ、テストは第一級の扱いを受けます。
-ですので説明にそれほどの時間はかかりません。
-この点が「日常生活の」プロジェクトとしてフレームワークが使われる多くの理由の1つとなっています。
+symfony ではバリデーションやエラーハンドリング、セキュリティ、テストは第一級の扱いを受けます。ですので説明にそれほどの時間はかかりません。この点が「日常生活の」プロジェクトとしてフレームワークが使われる多くの理由の1つとなっています。
 
-この本で読むすべてのコードは実際のプロジェクトで使えます。
-コードのスニペットをコピー＆ペーストするもしくはコード全体を流用することを推奨します。
+この本で読むすべてのコードは実際のプロジェクトで使えます。コードのスニペットをコピー＆ペーストするもしくはコード全体を流用することを推奨します。
 
 プロジェクト
 ------------
 
-設計するアプリケーションを別のblogエンジンにすることもできました。
-しかし私たちはsymfonyを実用的なプロジェクトとして使うことを望んでいます。
-symfonyがスタイルと少しの労力でプロ仕様のアプリケーションの開発に使えることを実証するのがゴールです。
+設計するアプリケーションを別のブログエンジンにすることもできました。しかし私たちは symfony を実用的なプロジェクトとして使うことを望んでいます。symfony がスタイルと少しの労力でプロ仕様のアプリケーションの開発に使えることを実証するのがゴールです。
 
-今日は多くの作業があるので別の日のプロジェクトのコンテンツは秘密にしておきます。
-でもアプリケーションの名前はもうご存知ですよね?: **Jobeet**です。
+今日は多くの作業があるので別の日のプロジェクトのコンテンツは秘密にしておきます。でもアプリケーションの名前はもうご存知ですよね?: **Jobeet**です。
 
 今日は何を?
 -----------
 
-今日はPHPコードを書きません。
-しかし1行もコードを書かないにしても新規プロジェクトをブートストラップすることでsymfonyのようなフレームワークを使うことの利点を理解し始めるでしょう。
+今日は PHP コードを書きません。しかし1行もコードを書かないにしても新規プロジェクトをブートストラップすることで symfony のようなフレームワークを使うことの利点を理解し始めるでしょう。
 
-この章の目標は開発環境のセットアップとWebブラウザーでアプリケーションのページを表示させることです。
-これらはsymfonyのインストールとアプリケーションの作成、Webサーバーの設定も含まれます。
+この章の目標は開発環境のセットアップと Web ブラウザーでアプリケーションのページを表示させることです。これらは symfony のインストールとアプリケーションの作成、Web サーバーの設定も含まれます。
 
-この本は主にsymfonyフレームワークに焦点を当てるので、PHP 5とオブジェクト指向のプログラミングのきちんとした知識があることを前提とします。
+この本は主に symfony フレームワークに焦点を当てるので、PHP 5 とオブジェクト指向のプログラミングのきちんとした知識があることを前提とします。
 
 前提条件
 --------
 
-symfonyをインストールする前に、すべてのソフトウェアがコンピューターにインストールされ正しく設定されているか確認する必要があります。
-この章は入念に読み、コンフィギュレーションを確認するために必須のすべての手順に従ってください。
-将来の時間を節約することになるでしょう。
+symfony をインストールする前に、すべてのソフトウェアがコンピューターにインストールされ正しく設定されているか確認する必要があります。この章は入念に読み、コンフィギュレーションを確認するために必須のすべての手順に従ってください。将来の時間を節約することになるでしょう。
 
 ### サードパーティのソフトウェア
 
-最初に、コンピューターにWeb開発にフレンドリーな作業環境があることを確認する必要があります。
-最小要件として、Webサーバー(たとえばApache)、データベースエンジン(MySQL、PostgreSQL、SQLite、もしくは[PDO](http://www.php.net/PDO)と互換性のある任意のデータベースエンジン)、とバージョン5.2.4とそれ以降のPHPが必要です。
+最初に、コンピューターに Web 開発にフレンドリーな作業環境があることを確認する必要があります。最小要件として、Web サーバー(たとえば Apache)、データベースエンジン(MySQL、PostgreSQL、SQLite、もしくは [PDO](http://www.php.net/PDO)と互換性のある任意のデータベースエンジン)、とバージョン5.2.4とそれ以降のPHPが必要です。
 
 ### コマンドラインインターフェイス
 
-symfonyフレームワークは多くの作業を自動化するコマンドツールを搭載しています。 
-Unix系OSのユーザーであるなら、快適に感じるでしょう。。 
-Windowsシステムを稼働させているのであれば、これまた立派に動きますが、`cmd`プロンプトでいくつかんコマンドを入力しなければなりません。
+symfony フレームワークは多くの作業を自動化するコマンドツールを搭載しています。Unix 系 OS のユーザーであるなら、快適に感じるでしょう。Windows システムを稼働させているのであれば、これまた立派に動きますが、`cmd` プロンプトでいくつかコマンドを入力しなければなりません。
 
 >**Note**
->UnixシェルのコマンドはWindows環境で重宝します。
->Windowsで`tar`、`gzip`もしくは`grep`のようなツールを使いたいなら、[Cygwin](http://cygwin.com/)をインストールします。
->冒険好きな人はMicrosoftの[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx)を試すのもよいでしょう。
+>Unix シェルのコマンドは Windows 環境で重宝します。Windows で `tar`、`gzip` もしくは `grep` のようなツールを使いたいなら、[Cygwin](http://cygwin.com/) をインストールします。冒険好きな人は Microsoftの[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx) を試すのもよいでしょう。
 
-### ~PHPのコンフィギュレーション~
+### ~PHP のコンフィギュレーション~
 
-PHPのコンフィギュレーションはOSごと、Linuxディストリビューションごとでも異なるので、symfonyの最小要件を満たすことを確認する必要があります。
+PHP のコンフィギュレーションは OS ごと、Linux ディストリビューションごとでも異なるので、symfony の最小要件を満たすことを確認する必要があります。
 
-最初に、組み込みの`phpinfo()`関数を使うかコマンドラインで`php -v`を実行するかによって少なくともPHP 5.2.4がインストールされていることを確認してください。 
-コンフィギュレーションによっては、1つはコマンドラインのために、もう1つはWebのために異なるバージョンのPHPをインストールすることが必要になることに注意してください。
+最初に、組み込みの `phpinfo()` 関数を使うかコマンドラインで `php -v` を実行するかによって少なくとも PHP 5.2.4 がインストールされていることを確認してください。コンフィギュレーションによっては、1つはコマンドラインのために、もう1つは Web のために異なるバージョンの PHP をインストールすることが必要になることに注意してください。
 
-それから、次のURLからsymfonyのコンフィギュレーションチェッカースクリプトをダウンロードします:
+それから、次の URL から symfony のコンフィギュレーションチェッカースクリプトをダウンロードします:
 
     http://sf-to.org/1.4/check.php
 
-スクリプトは現在のWeb公開ディレクトリのルートのどこかに保存してください。
+スクリプトは現在の Web 公開ディレクトリのルートのどこかに保存してください。
 
 コマンドラインからコンフィギュレーションチェッカースクリプトを立ち上げます:
 
     $ php check_configuration.php
 
-PHPのコンフィギュレーションに問題がある場合、コマンドの出力は何を修正しどのように直すのかのためのヒントを示します。
+PHP のコンフィギュレーションに問題がある場合、コマンドの出力は何を修正しどのように直すのかのためのヒントを示します。
 
-またブラウザーからチェッカーを実行し見つかる問題を修正します。
-これは異なる設定を持つ2つの環境に対して異なる`php.ini`設定ファイルがあるからです。
+またブラウザーからチェッカーを実行し見つかる問題を修正します。これは異なる設定を持つ2つの環境に対して異なる `php.ini` 設定ファイルがあるからです。
 
 >**NOTE**
->後でWeb公開のルートディレクトリのチェッカーを削除するのをお忘れなく。
+>後で Web 公開のルートディレクトリのチェッカーを削除するのをお忘れなく。
 
-symfonyの~インストール~
+symfony の~インストール~
 -----------------------
 
 ### プロジェクトディレクトリを初期化する
 
-symfonyをインストールする前に、最初にJobeetに関連するファイルをすべて格納するディレクトリを作る必要があります:
+symfony をインストールする前に、最初に Jobeet に関連するファイルをすべて格納するディレクトリを作る必要があります:
 
     $ mkdir -p /home/sfprojects/jobeet
     $ cd /home/sfprojects/jobeet
 
-Windowsでは次の通りです:
+Windows では次のとおりです:
 
     c:\> mkdir c:\development\sfprojects\jobeet
     c:\> cd c:\development\sfprojects\jobeet
 
 >**NOTE**: 
->Windowsユーザーの方はsymfonyの新しいプロジェクトをスペースが含まれないパスでセットアップすることをおすすめします。
->`My Documents`より下の場所を含めて`Documents and Settings`ディレクトリを使うのは避けるべきです。
+>Windows ユーザーの方は symfony の新しいプロジェクトをスペースが含まれないパスでセットアップすることをおすすめします。`My Documents` より下の場所を含めて `Documents and Settings` ディレクトリを使うのは避けるべきです。
 
 -
 
 >**TIP**
->symfonyのプロジェクトディレクトリをWeb公開のルートディレクトリで作るのであれば、Webサーバーのコンフィギュレーションを修正する必要はありません。  
->もちろん、運用環境では、Webサーバーのコンフィギュレーションのセクションで説明したように、サーバーのコンフィギュレーションを修正する必要があります。
+>symfony のプロジェクトディレクトリを Web 公開のルートディレクトリで作るのであれば、Web サーバーのコンフィギュレーションを修正する必要はありません。もちろん、運用環境では、Web サーバーのコンフィギュレーションのセクションで説明したように、サーバーのコンフィギュレーションを修正する必要があります。
 
-### symfonyのバージョンを選ぶ
+### symfony のバージョンを選ぶ
 
-では、symfonyをインストールします。
-symfonyフレームワークにはいくつかの安定バージョンがあるので、symfonyの公式サイトの[インストールの手引きのページ](http://www.symfony-project.org/installation)を読んでインストールしたいバージョンを選ぶ必要があります。
+では、symfony をインストールします。symfony フレームワークにはいくつかの安定バージョンがあるので、symfony の公式サイトの[インストールの手引きのページ](http://www.symfony-project.org/installation)を読んでインストールしたいバージョンを選ぶ必要があります。
 
-この本ではsymfony 1.3もしくはsymfony 1.4をインストールすることを想定しています。
+この本では symfony 1.3 もしくは symfony 1.4 をインストールすることを想定しています。
 
-### symfonyのインストール位置を選ぶ
+### symfony のインストール位置を選ぶ
 
-symfonyをグローバルで利用できるようにインストールする、もしくはそれぞれのプロジェクトごとに組み込むことができます。 
-それぞれのプロジェクトは全体的に独立しているので後者がおすすめです。
-ローカルでアップグレードすればインストールしたsymfonyが意図せずにいくつかのプロジェクトを壊すことはありません。
-これは異なるバージョンのsymfonyで複数のプロジェクトを持ち、これらを1つづ適切にアップグレードできることを意味します。
+symfony をグローバルで利用できるようにインストールする、もしくはそれぞれのプロジェクトごとに組み込むことができます。それぞれのプロジェクトは全体的に独立しているので後者がおすすめです。ローカルでアップグレードすればインストールした symfony が意図せずにいくつかのプロジェクトを壊すことはありません。これは異なるバージョンの symfony で複数のプロジェクトを持ち、これらを1つづ適切にアップグレードできることを意味します。
 
-ベストプラクティスとして、多くの人がsymfonyフレームワークをプロジェクトの`lib/vendor`ディレクトリにインストールします。ですので、最初にこのディレクトリを作ります:
+ベストプラクティスとして、多くの人が symfony フレームワークをプロジェクトの `lib/vendor` ディレクトリにインストールします。ですので、最初にこのディレクトリを作ります:
 
     $ mkdir -p lib/vendor
 
-### symfonyをインストールする
+### symfony をインストールする
 
 #### アーカイブからインストールする
 
-symfonyをインストールするもっとも簡単な方法はsymfonyのWebサイトからバージョンを選んだバージョンのアーカイブをダウンロードすることです。 
-選んだバージョン、たとえばsymfony [1.4](http://www.symfony-project.org/installation/1_4)のインストールページに移動します。 
+symfony をインストールするもっとも簡単な方法は symfony の Web サイトからバージョンを選んだバージョンのアーカイブをダウンロードすることです。選んだバージョン、たとえば symfony [1.4](http://www.symfony-project.org/installation/1_4)のインストールページに移動します。 
 
-"**Source Download**"のセクションの下で、`.tgz`もしくは`.zip`フォーマットのアーカイブが見つかります。 
-アーカイブをダウンロードし、新たに作られた`lib/vendor/`ディレクトリの下に置き、展開し、ディレクトリの名前を`symfony`に変更します:
+"**Source Download**" のセクションの下で、`.tgz` もしくは `.zip` フォーマットのアーカイブが見つかります。アーカイブをダウンロードし、新たに作られた `lib/vendor/` ディレクトリの下に置き、展開し、ディレクトリの名前を `symfony` に変更します:
 
     $ cd lib/vendor
     $ tar zxpf symfony-1.4.0.tgz
     $ mv symfony-1.4.0 symfony
     $ rm symfony-1.4.0.tgz
 
-Windows環境ではzipファイルの展開はエクスプローラーで行います。
-ディレクトリの名前を`symfony`に変更すると、`c:\dev\sfprojects\jobeet\lib\vendor\symfony`のような構造になります。
+Windows 環境では zip ファイルの展開はエクスプローラーで行います。ディレクトリの名前を `symfony` に変更すると、`c:\dev\sfprojects\jobeet\lib\vendor\symfony` のような構造になります。
 
-#### Subversionからインストールする(推奨)
+#### Subversion からインストールする(推奨)
 
-Subversionを使うのであれば、プロジェクトの`lib/vendor/`ディレクトリに組み込むために`svn:externals`を使うのがよいです:
+Subversion を使うのであれば、プロジェクトの `lib/vendor/` ディレクトリに組み込むために `svn:externals` を使うのがよいです:
 
     $ svn pe svn:externals lib/vendor/
 
 >**NOTE**
->プロジェクトを新しいSubversionリポジトリにインポートする方法はこの章の最後で説明します。
+>プロジェクトを新しい Subversion リポジトリにインポートする方法はこの章の最後で説明します。
 
-すべてがうまくいっているのであれば、このコマンドはSubversionの外部ソースを設定する機会を提供する好みのエディターを走らせます。
+すべてがうまくいっているのであれば、このコマンドは Subversion の外部ソースを設定する機会を提供する好みのエディターを走らせます。
 
 >**TIP**
->Windowsでは、コンソールを使わずにすべての作業ができる[TortoiseSVN](http://tortoisesvn.net/)のようなツールを使うことができます。
+>Windows では、コンソールを使わずにすべての作業ができる [TortoiseSVN](http://tortoisesvn.net/) のようなツールを使うことができます。
 
-慎重に利用するのであれば、プロジェクトを特定のリリースに結びつけます(subversionタグ):
+慎重に利用するのであれば、プロジェクトを特定のリリースに結びつけます(Subversion のタグ):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
-新しいリリースが公開されるときに(symfonyの公式
-[blog](http://www.symfony-project.org/blog/)でアナウンスされるたびに)、URLを新しいバージョンに変更する必要があります。
+新しいリリースが公開されるときに(symfony の公式
+[ブログ](http://www.symfony-project.org/blog/)でアナウンスされるたびに)、URL を新しいバージョンに変更する必要があります。
 
-開発最先端のIf you want to go the bleeding-edge route、1.4ブランチを使います:
+開発最先端のルートを使いたいのであれば、1.4ブランチを使います:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Using the branch makes your project benefits from the bug fixes automatically
-whenever you run a `svn update`.
+ブランチを使えばプロジェクトは `svn update` を使うことによる自動的なバグ修正の恩恵を得られます。
 
-#### Installation Verification
+#### インストールの検証
 
-Now that symfony is installed, check that everything is working by using the
-symfony command line to display the symfony version (note the capital `V`):
+symfony がインストールされたので、symfony のバージョンを表示する symfony コマンドラインを使ってすべてが動くのかチェックします(大文字の `V` であることに注意):
 
     $ cd ../..
     $ php lib/vendor/symfony/data/bin/symfony -V
@@ -255,46 +203,36 @@ On Windows:
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
-The `-V` option also displays the path to the symfony installation directory,
-which is stored in `config/ProjectConfiguration.class.php`.
+`-V` オプションは symfony のインストールディレクトリへのパス、`config/ProjectConfiguration.class.php` も表示します。
 
-If the path to symfony is an absolute one (which should not be by default if
-you follow the above instructions), change it so it reads like follows for
-better portability:
+symfony へのパスが絶対パスである場合(上記の手引きに従って入ればデフォルトではありません)、次のようなよりよいポータビリティのために変更します:
 
     [php]
     // config/ProjectConfiguration.class.php
     require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 
-That way, you can move the project directory anywhere on your machine or
-another one, and it will just work.
+この方法では、プロジェクトディレクトリをあなたのマシンもしくは別のマシンの任意の場所に移動させても、きちんと動きます。
 
 >**TIP**
->If you are curious about what this command line tool can do for you, type
->`symfony` to list the available options and tasks:
+>このコマンドラインツールができることに興味があれば、利用可能なオプションとタスクの一覧を表示する `symfony` を打ち込んでください:
 >
 >     $ php lib/vendor/symfony/data/bin/symfony
 >
->On Windows:
+>Windowsでは:
 >
 >     c:\> php lib\vendor\symfony\data\bin\symfony
 >
->The symfony command line is the developer's best friend. It provides a lot of
->utilities that improve your productivity for day-to-day activities like
->cleaning the cache, generating code, and much more.
+>symfony コマンドラインツールは開発者の最良の友です。これはキャッシュの消去、コードの生成などの日々の活動の生産性を高めるたくさんのユーティリティを提供します。
 
 プロジェクトのセットアップ
 --------------------------
 
-In symfony, **~applications|Applications~** sharing the same data model are
-regrouped into **~projects|Projects~**. For most projects, you will have two
-different applications: a ~frontend|Frontend~ and a ~backend|Backend~.
+symfony では、同じデータモデルを共有する**~アプリケーション~**は**~プロジェクト~**に再分類されます。たいていのプロジェクトでは、2つの異なるアプリケーション: ~frontend|Frontend~ と ~backend|Backend~ を用意します。
 
 プロジェクトの作成
 ------------------
 
-From the `sfprojects/jobeet` directory, run the symfony `generate:project`
-task to actually create the symfony project:
+`sfprojects/jobeet` ディレクトリから、実際の symfony プロジェクトを作成する `generate:project` タスクを実行します:
 
 <doctrine>
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
@@ -303,7 +241,7 @@ task to actually create the symfony project:
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel
 </propel>
 
-On Windows:
+Windowsでは:
 
 <doctrine>
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
@@ -312,8 +250,7 @@ On Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet --orm=Propel
 </propel>
 
-The `generate:project` task generates the default structure of directories and
-files needed for a symfony project:
+`generate:project` タスクは symfony プロジェクトに必要なディレクトリとファイルのデフォルト構造を生成します:
 
  | ディレクトリ | 説明
  | ----------- | ------------------------------------------------
@@ -324,31 +261,27 @@ files needed for a symfony project:
  | `log/`      | フレームワークのログファイル
  | `plugins/`  | インストールされたプラグイン
  | `test/`     | ユニットテストと機能テストのファイル
- | `web/`      | Web公開ルートディレクトリ(下記を参照)
+ | `web/`      | Web 公開ルートディレクトリ(下記を参照)
 
 >**NOTE**
->なぜsymfonyはたくさんのファイルを生成するのでしょうか？
->フルスタックフレームワークを使う主な利点の1つは開発作業を標準化することです。
->symfonyのファイルとディレクトリのデフォルト構造のおかげで、ある程度の知識がある開発者はsymfonyプロジェクトのメンテナンスを引き継ぎできます。
->ほんの数分で、引き継ぎ者はコードに飛び込むことが可能で、バグを修正し新しい機能を追加します。
+>なぜ symfony はたくさんのファイルを生成するのでしょうか？フルスタックフレームワークを使う主な利点の1つは開発作業を標準化することです。symfony のファイルとディレクトリのデフォルト構造のおかげで、ある程度の知識がある開発者は symfony プロジェクトのメンテナンスを引き継ぎできます。ほんの数分で、引き継ぎの人はコードに飛び込むことが可能で、バグを修正し新しい機能を追加します。
 
-タスクを実行するときに入力しなければならない文字数を短くするためにで`generate:project`タスクは`symfony`のショートカットをJobeetプロジェクトのルートディレクトリに作りました。
+タスクを実行するときに入力しなければならない文字数を短くするために `generate:project` タスクは `symfony` のショートカットを Jobeet プロジェクトのルートディレクトリに作りました。
 
-これからは、symfonyプログラムへのフルパスの代わりに`symfony`ショートカットを使います。
+これからは、symfony プログラムへのフルパスの代わりに `symfony` ショートカットを使います。
 
 ### アプリケーションの作成
 
-今度は`generate:app`タスクを実行してfrontendアプリケーションを生成します。
+今度は `generate:app` タスクを実行して frontend アプリケーションを生成します。
 
     $ symfony generate:app frontend
 
 >**TIP**
->symfonyファイルが実行可能なので、Unixのユーザーはすべての'php symfony'を'./symfony'に置き換えできます。
->Windowsでは'symfony.bat'ファイルをプロジェクトにコピーして'php symfony'の代わりに'symfony'コマンドが使えます:
+>symfony ファイルが実行可能なので、Unix のユーザーはすべての `php symfony` を `./symfony` に置き換えできます。Windows では `symfony.bat ` ファイルをプロジェクトにコピーして `php symfony` の代わりに `symfony` コマンドが使えます:
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
 
-プロジェクト生成と同じように、`generate:app`タスクはアプリケーションに必要なディレクトリを`apps/frontend/`ディレクトリ以下で生成します。
+プロジェクト生成と同じように、`generate:app` タスクはアプリケーションに必要なディレクトリを `apps/frontend/` ディレクトリ以下で生成します。
 
  | ディレクトリ    | 説明
  | -------------- | ------------------------------------
@@ -360,67 +293,51 @@ files needed for a symfony project:
 >**SIDEBAR**
 >セキュリティ
 >
->By default, the `generate:app` task has secured our application from the two
->most widespread vulnerabilities found on the web. That's right, symfony
->automatically takes ~security|Security~ measures on our behalf.
+>デフォルトでは、`generate:app` タスクはで見つかるもっとも広く知られている2つの脆弱性からアプリケーションをセキュアにします。これで symfony は私たちに代わって自動的に ~セキュリティ~ を配慮します。
 >
->To prevent ~XSS~ attacks, output escaping has been enabled; and to prevent
->~CSRF~ attacks, a random CSRF secret has been generated.
+>~XSS~ 攻撃を阻止するために、出力エスケーピングが有効になり;  ~CSRF~ 攻撃を阻止するために、CSRF 用のランダムな秘密の文字列が生成されました。
 >
->Of course, you can tweak these settings thanks to the following *options*:
+>もちろん、次の*オプション*のおかげでこれらの設定を調整できます:
 >
->  * `--escaping-strategy`: Enables or disables output escaping
->  * `--csrf-secret`: Enables session tokens in forms
+>  * `--escaping-strategy`: 出力エスケーピングを有効もしくは無効にする
+>  * `--csrf-secret`: フォームのセッショントークンを有功にする
 >
->[XSS](http://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0)もしくは[CSRF](http://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%AA)に関して何も知らなければ、これらの脆弱性について学ぶ時間を割いてください。
+>[XSS](http://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0) もしくは [CSRF](http://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%AA) に関して何も知らなければ、これらの脆弱性について学ぶ時間を割いてください。
 
 
 ### ディレクトリ構造の権限
 
-Before trying to access your newly created project, you need to set the write
-permissions on the `cache/` and `log/` directories to the appropriate levels,
-so that your web server can write to them:
+新しく作成されたプロジェクトにアクセスする前に、Web サーバーが `cache/` と `log/`  ディレクトリに書き込みできるよう、これらのディレクトリに適切な書き込み権限を設定する必要があります:
 
     $ chmod 777 cache/ log/
 
 >**SIDEBAR**
 >SCMツールを使う方のための豆知識
 >
->symfony only ever writes in two directories of a symfony project,
->`cache/` and `log/`. The content of these directories should be ignored
->by your SCM (by editing the `svn:ignore` property if you use Subversion
->for instance).
+>symfony はプロジェクトの2つのディレクトリ、 `cache/` と `log/` のみに書き込みします。これらのディレクトリの内容は SCM によって無視されます(たとえば Subversion を使う場合 `svn:ignore` プロパティを編集する)。
 
 ~Webサーバー~のコンフィギュレーション：好ましくないやり方
-----------------------------------------------
+-------------------------------------------------------
 
-If you have created the project directory it somewhere under the web root
-directory of your web server, you can already access the project in a web
-browser.
+プロジェクトを Web サーバーの Web 公開ルートディレクトリのどこかで作成したのであれば。すでに Web ブラウザーでプロジェクトにアクセスできます。
 
-もちろん設定ファイルを編集しないので、迅速なセットアップができますが、`config/database.yml`にブラウザーから直接アクセスできるので手抜きの悪い結果を見ることになります。
-Webサイトがsymfonyで開発されたことをユーザーが知っていたら、たくさんのデリケートなファイルにアクセスが可能となってしまします。
+もちろん設定ファイルを編集しないので、迅速なセットアップができますが、`config/database.yml` にブラウザーから直接アクセスできるので手抜きの悪い結果を見ることになります。Web サイトが symfony で開発されたことをユーザーが知っていたら、たくさんのデリケートなファイルにアクセスが可能となってしまします。
 
 **運用サーバーでこのセットアップ方法は絶対に実行してはなりません。
 **次の節を読んでWebサーバーの適切な設定方法を学んでください。
 
-Webサーバーのセットアップ：セキュアな方法
-----------------------------------------
+Web サーバーのセットアップ：セキュアな方法
+-----------------------------------------
 
-Web開発のよい習慣はスタイルシート、JavaScript、もしくは画像のようなWebブラウザーがアクセスする必要のあるファイルだけを~Webのルートディレクトリ~の下に設置することです。
-デフォルトでは、symfonyプロジェクトの`web`サブディレクトリにこれらのファイルを保存することをおすすめします。
+Web 開発のよい習慣はスタイルシート、JavaScript、もしくは画像のようなWebブラウザーがアクセスする必要のあるファイルだけを~Web 公開ルートディレクトリ~の下に設置することです。デフォルトでは、symfony プロジェクトの `web` サブディレクトリにこれらのファイルを保存することをおすすめします。
 
-If you have a look at this directory, you will find some sub-directories for
-web ~assets|Assets~ (`css/` and `images/`) and the two front controller files.
-The front controllers are the only PHP files that need to be under the web
-root directory. All other PHP files can be hidden from the browser, which is a
-good idea as far as ~security|Security~ is concerned.
+このディレクトリを見てみると、Web ~アセット~ (`css/` と `images/`) と2つのフロントコントローラーファイル用のサブディレクトリが見つかります。フロントコントローラーは Web 公開のルートディレクトリの下に必要な唯一の PHP ファイルです。ほかのすべての PHP ファイルはブラウザーから隠すことが可能で、~セキュリティ~に関してよいアイディアです。
 
-### Webサーバーのコンフィギュレーション
+### Web サーバーのコンフィギュレーション
 
-世界中から新しいプロジェクトにアクセスできるように~Apache~のコンフィギュレーションを変更しましょう。
+世界中から新しいプロジェクトにアクセスできるように ~Apache~ のコンフィギュレーションを変更しましょう。
 
-`httpd.conf`設定ファイルを見つけて開き次のコンフィギュレーションを最後の行を追加します:
+`httpd.conf` 設定ファイルを見つけて開き次のコンフィギュレーションを最後の行を追加します:
 
     # Be sure to only have this line once in your configuration
     NameVirtualHost 127.0.0.1:8080
@@ -444,18 +361,17 @@ good idea as far as ~security|Security~ is concerned.
     </VirtualHost>
 
 >**NOTE**
->`/sf` ~エイリアス|エイリアス(Apache)~ gives you access to images and javascript files needed
->to properly display ~default symfony pages|Default symfony Pages~ and the ~web debug toolbar~|Web Debug Toolbar.
+>`/sf` ~エイリアス|エイリアス(Apache)~ は~デフォルトの symfony ページ~と ~Web デバッグツールバー~を適切に表示するために必要な画像と JavaScript のファイルにアクセスできるようにします。
 >
->On ~Windows~, you need to replace the `Alias` line with something like:
+>~Windows~ では、`Alias` の行を次のようなものに置き換える必要があります:
 >
 >     Alias /sf "c:\dev\sfprojects\jobeet\lib\vendor\symfony\data\web\sf"
 >
->And `/home/sfprojects/jobeet/web` should be replaced with:
+>`/home/sfprojects/jobeet/web` は次のものに置き換えられます:
 >
 >     c:\dev\sfprojects\jobeet\web
 
-この設定によってApacheはマシンのポート番号`8080`をリスニングするようになるので、Webサイトは次のURLからアクセスできるようになります:
+この設定によって Apache はマシンのポート番号`8080`をリスニングするようになるので、Web サイトは次の URL からアクセスできるようになります:
 
     http://~localhost~:8080/
 
@@ -464,8 +380,7 @@ good idea as far as ~security|Security~ is concerned.
 >**SIDEBAR**
 >~ドメイン名~を設定する
 >
->マシンの管理者であるなら、新しいプロジェクトを始めるたびに新しいポート番号を追加する代わりに~バーチャルホスト~をセットアップするほうがよいです。
->ポート番号を選ぶ代わりに`Listen`ステートメントを追加し、ドメイン名を選び`ServerName`ステートメントを追加します:
+>マシンの管理者であるなら、新しいプロジェクトを始めるたびに新しいポート番号を追加する代わりに~バーチャルホスト~をセットアップするほうがよいです。ポート番号を選ぶ代わりに `Listen` ステートメントを追加し、ドメイン名を選び `ServerName` ステートメントを追加します:
 >
 >     # This is the configuration for Jobeet
 >     <VirtualHost 127.0.0.1:80>
@@ -473,9 +388,7 @@ good idea as far as ~security|Security~ is concerned.
 >       <!-- same configuration as before -->
 >     </VirtualHost>
 >
->ドメイン名の`jobeet.localhost`はローカルで宣言されなければなりません。
->Linuxシステムを稼働させているのであれば、`/etc/hosts`ファイルで行わなければなりません。
->Windows XPを稼働させているのであれば、このファイルは`C:\WINDOWS\system32\drivers\etc\`ディレクトリの中で見つかります。
+>ドメイン名の `jobeet.localhost` はローカルで宣言されなければなりません。Linux システムを稼働させているのであれば、`/etc/hosts` ファイルで行わなければなりません。Windows XP を稼働させているのであれば、このファイルは `C:\WINDOWS\system32\drivers\etc\` ディレクトリのなかで見つかります。
 >
 >次の行を追加します:
 >
@@ -483,50 +396,44 @@ good idea as far as ~security|Security~ is concerned.
 
 ### 新しい設定をテストする
 
-Apacheを再起動し、ブラウザーを開き`http://localhost:8080/index.php/`もしくは`http://jobeet.localhost/index.php/`を入力することで新しいアプリケーションにアクセスできるか確認します。
-どちらのURLになるかは以前のセクションで選んだ設定によります。
+Apache を再起動し、ブラウザーを開き `http://localhost:8080/index.php/` もしくは `http://jobeet.localhost/index.php/` を入力することで新しいアプリケーションにアクセスできるか確認します。どちらの URL になるかは以前のセクションで選んだ設定によります。
 
 ![初期ページ](http://www.symfony-project.org/images/jobeet/1_2/01/congratulations.png)
 
 >**NOTE**: 
->Apacheの~`mod_rewrite`|mod_rewrite(Apache)~モジュールをインストールした場合、URLの`index.php/`部分を取り除くことができます。
->これは`web/~.htaccess|.htaccess(Apache)~`ファイルで設定される書き換えルールのおかげで可能です。
+>Apache の ~`mod_rewrite`|mod_rewrite(Apache)~ モジュールをインストールした場合、URL の `index.php/` 部分を取り除くことができます。これは `web/~.htaccess|.htaccess(Apache)~` ファイルで設定される書き換えルールのおかげで可能です。
 
-開発環境のアプリケーションにもアクセスしてみることにします。
-次のURLを入力します:
+開発環境のアプリケーションにもアクセスしてみることにします。次の URL を入力します:
 
     http://jobeet.localhost/frontend_dev.php/
 
-~Webデバッグツールバー~は右上コーナーに表示され、小さなアイコンが含まれていれば`sf/`エイリアスの設定が正しいことがわかります。
+~Web デバッグツールバー~は右上コーナーに表示され、小さなアイコンが含まれていれば`sf/`エイリアスの設定が正しいことがわかります。
 
-![Webデバッグツールバー](http://www.symfony-project.org/images/jobeet/1_2/01/web_debug_toolbar.png)
+![Web デバッグツールバー](http://www.symfony-project.org/images/jobeet/1_2/01/web_debug_toolbar.png)
 
-Webデバッグツールバーは 開発環境のすべてのページに存在し異なるタブにクリックすれば多くの情報: 現在のアプリケーションの設定、現在のリクエストのログ、データベースエンジンで実行されたSQLステートメント、メモリ情報、時間の情報が得られます。
+Web デバッグツールバーは 開発環境のすべてのページに存在し異なるタブにクリックすれば多くの情報: 現在のアプリケーションの設定、現在のリクエストのログ、データベースエンジンで実行されたSQLステートメント、メモリ情報、時間の情報が得られます。
 
 >**NOTE**
->Windows環境のIISサーバーでsymfonyを動かしたい場合セットアップ方法が少し異なります。
->[関連チュートリアル](http://www.symfony-project.org/cookbook/1_0/ja/web_server_iis)で設定する方法がわかります。
+>Windows 環境の IIS サーバーで symfony を動かしたい場合セットアップ方法が少し異なります。[関連チュートリアル](http://www.symfony-project.org/cookbook/1_2/ja/web_server_iis)で設定する方法がわかります。
 
 ~Subversion~
 ------------
 
-Webアプリケーションを開発するときにバージョン管理ツールを利用するのはよい習慣です。
-バージョン管理ツールを利用することで次のことが可能になります:
+Web アプリケーションを開発するときにバージョン管理ツールを利用するのはよい習慣です。バージョン管理ツールを利用することで次のことが可能になります:
 
  * 安心して作業する
  * 変更によって何かが壊れたときに以前のバージョンに差し戻す
  * プロジェクトで複数の人が効率的に作業できる
  * 連続するすべてのバージョンのアプリケーションを入手できる
 
-この節では、[Subversion](http://subversion.tigris.org/)の使い方を説明します。
-別のソースコード管理ツールを利用しているのであれば、私たちがSubversionについて説明することを適用するのは簡単でしょう。
+この節では、[Subversion](http://subversion.tigris.org/) の使い方を説明します。別のソースコード管理ツールを利用しているのであれば、私たちが Subversion について説明することを適用するのは簡単でしょう。
 
-Subversionサーバーへの権限がありHTTPを通してアクセスできることを前提とします。
+Subversion サーバーへの権限があり HTTP を通してアクセスできることを前提とします。
 
 >**TIP**
->自由に使えるSubversionサーバーがなければ、無料の[Google Code](http://code.google.com/hosting/)で作成するかより多くの選択肢を探すためにGoogle検索で"free subversion repository"を入力して検索します。
+>自由に使える Subversion サーバーがなければ、無料の [Google Code](http://code.google.com/hosting/) で作成するかより多くの選択肢を探すために Google 検索で "free subversion repository" を入力して検索します。
 
-最初に、リポジトリサーバーで`jobeet`プロジェクト用のリポジトリを作ります:
+最初に、リポジトリサーバーで `jobeet` プロジェクト用のリポジトリを作ります:
 
     $ svnadmin create /path/to/jobeet/repository
 
@@ -537,16 +444,16 @@ Subversionサーバーへの権限がありHTTPを通してアクセスできる
     ➥ http://svn.example.com/jobeet/tags
     ➥ http://svn.example.com/jobeet/branches
 
-そして空の`trunk/`ディレクトリをチェックアウトします:
+そして空の `trunk/` ディレクトリをチェックアウトします:
 
     $ cd /home/sfprojects/jobeet
     $ svn co http://svn.example.com/jobeet/trunk/ .
 
-それから、`cache/`と`log/`ディレクトリをリポジトリに置きたくないのでこれらの内容を削除します。
+それから、`cache/` と `log/` ディレクトリをリポジトリに置きたくないのでこれらの内容を削除します。
 
     $ rm -rf cache/* log/*
 
-Webサーバーが書き込みできるようにcacheとlogディレクトリに適切なレベルの書き込み権限をかならず設定してください:
+Web サーバーが書き込みできるように `cache/` と `log/` ディレクトリに適切なレベルの書き込み権限をかならず設定してください:
 
     $ chmod 777 cache/ log/
 
@@ -554,18 +461,17 @@ Webサーバーが書き込みできるようにcacheとlogディレクトリに
 
     $ svn add *
 
-`cache/`と`/log`ディレクトリに設定されたファイルをコミットしたくないので、無視リストを指定する必要があります:
+`cache/` と `/log` ディレクトリに設定されたファイルをコミットしたくないので、無視リストを指定する必要があります:
 
     $ svn propedit svn:ignore cache
 
-SVN用に設定されたデフォルトのテキストエディターが起動します。
-Subversionはこのディレクトリのすべての内容を無視しなければなりません:
+SVN 用に設定されたデフォルトのテキストエディターが起動します。Subversion はこのディレクトリのすべての内容を無視しなければなりません:
 
     *
 
 保存して終了します。終わりました。
 
-`log/`ディレクトリ用に手順を繰り返します:
+`log/` ディレクトリ用に手順を繰り返します:
 
     $ svn propedit svn:ignore log
 
@@ -579,14 +485,13 @@ Subversionはこのディレクトリのすべての内容を無視しなけれ�
       ➥ http://svn.example.com/jobeet/trunk
 
 >**TIP**
->~Windows~ユーザーはSubvresionのレポジトリを管理するためにすばらしい [TortoiseSVN](http://tortoisesvn.tigris.org/) クライアントを利用できます。
+>~Windows~ ユーザーは Subvresion のレポジトリを管理するためにすばらしい [TortoiseSVN](http://tortoisesvn.tigris.org/) クライアントを利用できます。
 
 それではまた明日
 ----------------
 
-はい、今日はここまでです！
-symfonyについてまだ何も話していませんが、確固とした開発環境をセットアップし、Web開発のベストプラクティスを話し、コーディングを始める準備ができています。
+はい、今日はここまでです！symfony についてまだ何も話していませんが、確固とした開発環境をセットアップし、Web開発のベストプラクティスを話し、コーディングを始める準備ができています。
 
-明日は、アプリケーションが何を行うのかを明らかにしJobeetのために実装する必要のある要件を話します。
+明日は、アプリケーションが何を行うのかを明らかにし Jobeet のために実装する必要のある要件を話します。
 
 __ORM__
