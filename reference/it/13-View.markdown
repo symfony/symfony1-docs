@@ -104,8 +104,7 @@ la vista corrente.
 
 >**NOTE**
 >L'inclusione dei file JavaScript definiti in `view.yml` può essere fatta
->manualmente con l'helper `include_javascripts()` oppure automaticamente
->con il [filtro `common`](#chapter_12_common).
+>manualmente con l'helper `include_javascripts()`.
 
 Se si definiscono diversi file, symfony li includerà nello stesso ordine
 in cui sono definiti:
