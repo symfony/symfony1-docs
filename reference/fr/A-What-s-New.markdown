@@ -1,0 +1,1 @@
+link ../../tutorial/fr/whats-new.markdown
