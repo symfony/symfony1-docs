@@ -347,7 +347,7 @@ codice. Vuol dire anche che il codice diventerà migliore nel tempo, che
 >     [php]
 >     $t->is(Jobeet::slugify('Développeur Web'), 'developpeur-web', '::slugify() removes accents');
 >
->Il test deve fallire. Invece di sostiuire `é` con `e`, il metodo `slugify()`
+>Il test deve fallire. Invece di sostituire `é` con `e`, il metodo `slugify()`
 >l'ha sostituita con un trattino (`-`). Questo è un bel problema, chiamato
 >*~translitterazione~*. Sperando che abbiate installato "~iconv~",
 >esso farà il lavoro per noi. Sostituamo il codice del metodo
