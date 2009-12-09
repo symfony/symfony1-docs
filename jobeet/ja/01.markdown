@@ -87,7 +87,7 @@ symfony をインストールする前に、すべてのソフトウェアがコ
 symfony フレームワークは多くの作業を自動化するコマンドツールを搭載しています。Unix 系 OS のユーザーであるなら、快適に感じるでしょう。Windows システムを稼働させているのであれば、これまた立派に動きますが、`cmd` プロンプトでいくつかコマンドを入力しなければなりません。
 
 >**Note**
->Unix シェルのコマンドは Windows 環境で重宝します。Windows で `tar`、`gzip` もしくは `grep` のようなツールを使いたいなら、[Cygwin](http://cygwin.com/) をインストールします。冒険好きな人は Microsoftの[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx) を試すのもよいでしょう。
+>Unix シェルのコマンドは Windows 環境で重宝します。Windows で `tar`、`gzip` もしくは `grep` のようなツールを使いたいなら、[Cygwin](http://cygwin.com/) をインストールします。冒険好きな人は Microsoft の [Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx) を試すのもよいでしょう。
 
 ### ~PHP のコンフィギュレーション~
 
@@ -153,7 +153,7 @@ symfony をグローバルで利用できるようにインストールする、
 
 #### アーカイブからインストールする
 
-symfony をインストールするもっとも簡単な方法は symfony の Web サイトからバージョンを選んだバージョンのアーカイブをダウンロードすることです。選んだバージョン、たとえば symfony [1.4](http://www.symfony-project.org/installation/1_4)のインストールページに移動します。 
+symfony をインストールするもっとも簡単な方法は symfony の Web サイトからバージョンを選んだバージョンのアーカイブをダウンロードすることです。選んだバージョン、たとえば symfony [1.4](http://www.symfony-project.org/installation/1_4) のインストールページに移動します。 
 
 "**Source Download**" のセクションの下で、`.tgz` もしくは `.zip` フォーマットのアーカイブが見つかります。アーカイブをダウンロードし、新たに作られた `lib/vendor/` ディレクトリの下に置き、展開し、ディレクトリの名前を `symfony` に変更します:
 
@@ -182,8 +182,7 @@ Subversion を使うのであれば、プロジェクトの `lib/vendor/` ディ
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
-新しいリリースが公開されるときに(symfony の公式
-[ブログ](http://www.symfony-project.org/blog/)でアナウンスされるたびに)、URL を新しいバージョンに変更する必要があります。
+新しいリリースが公開されるときに(symfony の公式[ブログ](http://www.symfony-project.org/blog/)でアナウンスされるたびに)、URL を新しいバージョンに変更する必要があります。
 
 開発最先端のルートを使いたいのであれば、1.4ブランチを使います:
 
@@ -198,7 +197,7 @@ symfony がインストールされたので、symfony のバージョンを表�
     $ cd ../..
     $ php lib/vendor/symfony/data/bin/symfony -V
 
-On Windows:
+Windows では:
 
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
@@ -218,7 +217,7 @@ symfony へのパスが絶対パスである場合(上記の手引きに従っ�
 >
 >     $ php lib/vendor/symfony/data/bin/symfony
 >
->Windowsでは:
+>Windows では:
 >
 >     c:\> php lib\vendor\symfony\data\bin\symfony
 >
@@ -241,7 +240,7 @@ symfony では、同じデータモデルを共有する**~アプリケーショ
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel
 </propel>
 
-Windowsでは:
+Windows では:
 
 <doctrine>
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
@@ -295,7 +294,7 @@ Windowsでは:
 >
 >デフォルトでは、`generate:app` タスクはで見つかるもっとも広く知られている2つの脆弱性からアプリケーションをセキュアにします。これで symfony は私たちに代わって自動的に ~セキュリティ~ を配慮します。
 >
->~XSS~ 攻撃を阻止するために、出力エスケーピングが有効になり;  ~CSRF~ 攻撃を阻止するために、CSRF 用のランダムな秘密の文字列が生成されました。
+>~XSS~ 攻撃を阻止するために、出力エスケーピングが有効になり; ~CSRF~ 攻撃を阻止するために、CSRF 用のランダムな秘密の文字列が生成されました。
 >
 >もちろん、次の*オプション*のおかげでこれらの設定を調整できます:
 >
@@ -312,7 +311,7 @@ Windowsでは:
     $ chmod 777 cache/ log/
 
 >**SIDEBAR**
->SCMツールを使う方のための豆知識
+>SCM ツールを使う方のための豆知識
 >
 >symfony はプロジェクトの2つのディレクトリ、 `cache/` と `log/` のみに書き込みします。これらのディレクトリの内容は SCM によって無視されます(たとえば Subversion を使う場合 `svn:ignore` プロパティを編集する)。
 
@@ -329,7 +328,7 @@ Windowsでは:
 Web サーバーのセットアップ：セキュアな方法
 -----------------------------------------
 
-Web 開発のよい習慣はスタイルシート、JavaScript、もしくは画像のようなWebブラウザーがアクセスする必要のあるファイルだけを~Web 公開ルートディレクトリ~の下に設置することです。デフォルトでは、symfony プロジェクトの `web` サブディレクトリにこれらのファイルを保存することをおすすめします。
+Web 開発のよい習慣はスタイルシート、JavaScript、もしくは画像のような Web ブラウザーがアクセスする必要のあるファイルだけを~Web 公開ルートディレクトリ~の下に設置することです。デフォルトでは、symfony プロジェクトの `web` サブディレクトリにこれらのファイルを保存することをおすすめします。
 
 このディレクトリを見てみると、Web ~アセット~ (`css/` と `images/`) と2つのフロントコントローラーファイル用のサブディレクトリが見つかります。フロントコントローラーは Web 公開のルートディレクトリの下に必要な唯一の PHP ファイルです。ほかのすべての PHP ファイルはブラウザーから隠すことが可能で、~セキュリティ~に関してよいアイディアです。
 
@@ -490,7 +489,7 @@ SVN 用に設定されたデフォルトのテキストエディターが起動�
 それではまた明日
 ----------------
 
-はい、今日はここまでです！symfony についてまだ何も話していませんが、確固とした開発環境をセットアップし、Web開発のベストプラクティスを話し、コーディングを始める準備ができています。
+はい、今日はここまでです！symfony についてまだ何も話していませんが、確固とした開発環境をセットアップし、Web 開発のベストプラクティスを話し、コーディングを始める準備ができています。
 
 明日は、アプリケーションが何を行うのかを明らかにし Jobeet のために実装する必要のある要件を話します。
 
