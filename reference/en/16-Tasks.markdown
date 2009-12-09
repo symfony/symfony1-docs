@@ -1992,6 +1992,7 @@ The `project:optimize` optimizes a project for better performance:
 This task should only be used on a production server. Don't forget to re-run
 the task each time the project changes.
 
+
 ### ~`project::permissions`~
 
 The `project::permissions` task fixes symfony directory permissions:
@@ -2007,6 +2008,7 @@ The `project::permissions` task fixes symfony directory permissions:
 The `project:permissions` task fixes directory permissions:
 
     ./symfony project:permissions
+
 
 ### ~`project::send-emails`~
 
@@ -2040,20 +2042,11 @@ Or limit to time (in seconds):
 
 ### ~`project::upgrade1.3`~
 
-The `project::upgrade1.3` task upgrade a symfony project to the 1.3 symfony release (from 1.2):
+The `project:upgrade1.3` task upgrades a symfony project based on the 1.2
+release to the 1.3 symfony release:
 
     $ php symfony project:upgrade1.3  
 
-
-
-
-
-
-
-The `project:upgrade1.3` task upgrades a symfony project based on the 1.2
-release to the 1.3 symfony release.
-
-    ./symfony project:upgrade1.3
 
 Please read the UPGRADE_TO_1_3 file to have information on what this task does.
 
@@ -2062,16 +2055,6 @@ Please read the UPGRADE_TO_1_3 file to have information on what this task does.
 The `project::validate` task finds deprecated usage in a project:
 
     $ php symfony project:validate  
-
-
-
-
-
-
-
-The `project:validate` task detects deprecated usage in your project.
-
-    ./symfony project:validate
 
 The task lists all the files you need to change before switching to
 symfony 1.4.
@@ -2843,6 +2826,7 @@ coverage:
 To output the lines not covered, pass the `--detailed` option:
 
     ./symfony test:coverage --detailed test/unit/model lib/model
+
 
 ### ~`test::functional`~
 
