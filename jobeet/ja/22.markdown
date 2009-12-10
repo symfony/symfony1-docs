@@ -130,7 +130,7 @@ Jobeetはアセットを埋め込む~プラグイン|プラグインアセット
 
 運用に移行する前に、~404エラー~ページ、もしくはデフォルトの例外ページのようなsymfonyの~デフォルトページ~をカスタマイズするのはよいことです。
 
-16日目、`config/error/`ディレクトリで`error.yaml.php`と`exception.yaml.php`ファイルを作ることで`YAML`フォーマット用のエラーページを設定しました。
+15日目、`config/error/`ディレクトリで`error.yaml.php`と`exception.yaml.php`ファイルを作ることで`YAML`フォーマット用のエラーページを設定しました。
 `prod`環境のときは`error.yaml.php`ファイルが、`dev`環境では`exception.yaml.php`が使われます。
 
 ですので、HTML~フォーマット~用にデフォルトの~例外|例外ハンドリング~ページをカスタマイズするには、2つのファイル: `config/error/error.html.php`と`config/error/exception.html.php`を作ります。

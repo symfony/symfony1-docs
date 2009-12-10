@@ -177,7 +177,7 @@ Prima di andare in produzione, è meglio personalizzare le
 la pagina "~Page Not Found|Errore 404~" o la pagina dell'eccezione.
 
 Abbiamo già configurato la pagina di errore per il formato `YAML` durante
-il giorno 16, creando dei file `error.yaml.php` e `exception.yaml.php` nella
+il giorno 15, creando dei file `error.yaml.php` e `exception.yaml.php` nella
 cartella `config/error/`. Il file `error.yaml.php` è usato da symfony
 per l'ambiente `prod`, mentre `exception.yaml.php` è usato nell'ambiente
 `dev`.

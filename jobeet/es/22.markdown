@@ -121,7 +121,7 @@ ya que Jobeet usa plugins que tienen recursos web, Symfony crea enlaces relativo
 
 Antes de entrar a producción, es mejor personalizar las páginas por defecto Symfony, como la "Page Not Found", o la página de excepción por defecto.
 
-Ya hemos configurado la página de error para el formato `YAML` durante el día 16, mediante la creación de archivos `error.yaml.php` y `exception.yaml.php` en el directorio `config/error/`. El archivo `error.yaml.php` es usado por Symfony en el entorno `prod`, mientras que `exception.yaml.php` es usado en el entorno `dev`.
+Ya hemos configurado la página de error para el formato `YAML` durante el día 15, mediante la creación de archivos `error.yaml.php` y `exception.yaml.php` en el directorio `config/error/`. El archivo `error.yaml.php` es usado por Symfony en el entorno `prod`, mientras que `exception.yaml.php` es usado en el entorno `dev`.
 
 Así que, para personalizar la página predeterminada de excepción para el formato HTML, crea dos archivos: `config/error/error.html.php` y `config/error/exception.html.php`.
 
