@@ -1,0 +1,416 @@
+День 14: Ленты
+==============
+
+Вчера Вы начали разрабатывать свое первое собственное приложение на Symfony.
+Не останавливайтесь. Изучая Symfony, старайтесь добавлять новые возможности в
+приложение, размещайте их на хостинге, и делитесь ими с сообществом.
+
+Сегодня мы займемся совершенно новой темой.
+
+Если Вы ищете работу, вероятнее всего Вы хотели бы быть осведомлены о предложении
+новых вакансий. Поскольку проверять ежечасно наличие новых вакансий на сайте
+не совсем удобно, мы добавим несколько новостных лент (feeds) о новых вакансиях, и тем самым
+будем держать наших пользователей в курсе событий.
+
+Форматы
+-------
+
+Во фреймворке Symfony существует поддержка различных форматов страниц и mime-типов. 
+Это означает, что одни и те же модели и контроллеры могут иметь разные шаблоны 
+в зависимости от формата запроса. Формат по умолчанию html, но Symfony поддерживает
+несколько других встроенных форматов, таких как `txt`, `js`, `css`, `json`,
+`xml`, `rdf`, `atom`.
+
+Формат устанавливается методом `setRequestFormat()` объекта запроса:
+
+    [php]
+    $request->setRequestFormat('xml');
+
+Но чаще всего формат устанавливается в URL. Symfony сможет установить его
+за Вас, если в соответствующем маршруте указана переменная `sf_format`.
+URL для списка вакансий выглядит следующим образом:
+
+    http://jobeet.localhost/frontend_dev.php/job
+
+Это равносильно такому URL:
+
+    http://jobeet.localhost/frontend_dev.php/job.html
+
+Оба URL равносильны, потому что маршруты созданные классом
+`sfPropelRouteCollection` наследуют переменную `sf_format`, которая содержит
+значение `html`, как формат по умолчанию. Вы можете сами в этом убедиться, запустив 
+задачу `app:routes`.
+
+![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
+
+Ленты
+-----
+
+### Лента последних вакансий
+
+Поддержка различных форматов проста, также как создание новых шаблонов.
+Для создания [ленты Atom](http://en.wikipedia.org/wiki/Atom_(standard))
+последних вакансий, создайте шаблон `indexSuccess.atom.php`:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="" rel="self"/>
+      <link href=""/>
+      <updated></updated>
+      <author><name>Jobeet</name></author>
+      <id>Unique Id</id>
+
+      <entry>
+        <title>Job title</title>
+        <link href="" />
+        <id>Unique id</id>
+        <updated></updated>
+        <summary>Job description</summary>
+        <author><name>Company</name></author>
+      </entry>
+    </feed>
+
+>**SIDEBAR**
+>Имена шаблонов
+>
+>Поскольку `html` является самым используемым форматом для веб-приложений,
+>устанавливать его в имени шаблона необязательно.
+>Шаблоны `indexSuccess.php` и `indexSuccess.html.php` одинаковы, и Symfony
+>будет использовать первый найденный шаблон.
+>
+>Почему к имени шаблона по умолчанию добавляется `Success`? Действие может
+>возвращать значение, которое укажет, какой шаблон отображать. Если действие ничего
+>не возвращает, то это равносильно следующему коду:
+>
+>     [php]
+>     return sfView::SUCCESS; // == 'Success'
+>
+>Если Вы желаете изменить суффикс шаблона, просто верните
+>другое значение:
+>
+>     [php]
+>     return sfView::ERROR; // == 'Error'
+>
+>     return 'Foo';
+>
+>Как видно из предыдущего дня, изменить имя шаблона можно с помощью метода
+>`setTemplate()`:
+>
+>     [php]
+>     $this->setTemplate('foo');
+
+По умолчанию, Symfony изменит тип содержимого (`Content-Type`) ответа 
+в соответствии с форматом, и отключит layout для всех не-HTML форматов. 
+Для ленты Atom, Symfony изменит `Content-Type` на `application/atom+xml; charset=utf-8`.
+
+В нижней части страницы Jobeet, обновите ссылку на ленту:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <li class="feed">
+      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+    </li>
+
+Внутренний URI остается таким же, как для списка вакансий, только
+к нему ещё добавляется переменная `sf_format`.
+
+Добавьте тэг `<link>` в раздел `<head>` шаблона, чтобы позволить браузеру
+автоматически распознавать нашу ленту:
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
+      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+
+В аттрибуте `href` элемента link, используется абсолютный URL, благодаря второму
+параметру переданному помощнику `url_for()`.
+
+Замените заголовок шаблона для Atom следующим кодом:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <title>Jobeet</title>
+    <subtitle>Latest Jobs</subtitle>
+    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+    <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+    <author>
+      <name>Jobeet</name>
+    </author>
+    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+<propel>
+Обратите внимание на использование `U` в качестве аргумента для метода
+`getCreatedAt()` для получения даты как timestamp. Для получения даты последней
+размещенной вакансии создайте метод `getLatestPost()`:
+</propel>
+<doctrine>
+Обратите внимание на использование `U` в качестве аргумента для метода
+`format()` для получения даты как timestamp. Для получения даты последней 
+размещенной вакансии создайте метод `getLatestPost()`:
+</doctrine>
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    class JobeetJobPeer extends BaseJobeetJobPeer
+    {
+      static public function getLatestPost()
+      {
+        $criteria = new Criteria();
+        self::addActiveJobsCriteria($criteria);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      public function getLatestPost()
+      {
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j');
+        $this->addActiveJobsQuery($q);
+
+        return $q->fetchOne();
+      }
+
+      // ...
+    }
+</doctrine>
+
+Записи в ленте могут быть созданы следующим кодом:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?php use_helper('Text') ?>
+    <?php foreach ($categories as $category): ?>
+      <?php foreach ($category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')) as $job): ?>
+        <entry>
+          <title>
+            <?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)
+          </title>
+          <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+          <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+          <summary type="xhtml">
+           <div xmlns="http://www.w3.org/1999/xhtml">
+             <?php if ($job->getLogo()): ?>
+               <div>
+                 <a href="<?php echo $job->getUrl() ?>">
+                   <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                     alt="<?php echo $job->getCompany() ?> logo" />
+                 </a>
+               </div>
+             <?php endif; ?>
+
+             <div>
+               <?php echo simple_format_text($job->getDescription()) ?>
+             </div>
+
+             <h4>How to apply?</h4>
+
+             <p><?php echo $job->getHowToApply() ?></p>
+           </div>
+          </summary>
+          <author>
+            <name><?php echo $job->getCompany() ?></name>
+          </author>
+        </entry>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+
+Метод `getHost()` объекта запроса(`$sf_request`) возвращает имя текущего хоста, которое
+пригодится для создания абсолютной ссылки на логотип компании.
+
+![Feed](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
+
+>**TIP**
+>При создании ленты, отладка проходит легче, если использовать утилиты
+>командной строки на подобие
+>[`curl`](http://curl.haxx.se/) или
+>[`wget`](http://www.gnu.org/software/wget/), так как Вы увидите действительное
+>содержание ленты.
+
+### Последние вакансии в лентах категорий
+
+Одна из целей Jobeet, это помощь людям в нахождении более конкретных вакансий.
+Поэтому нам надо предоставить ленты для всех категорий.
+
+Для начала давайте обновим маршрут модуля `category`, чтобы добавить поддержку различных
+форматов:
+
+    [yml]
+    // apps/frontend/config/routing.yml
+    category:
+      url:     /category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: category, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object }
+      requirements:
+        sf_format: (?:html|atom)
+
+Теперь маршрут `category` будет понимать оба формата - `html` и `atom`.
+Обновите ссылки на ленты категорий в шаблонах:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+    <!-- apps/frontend/modules/category/templates/showSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+Завершающим шагом будет создание шаблона `showSuccess.atom.php`. Но поскольку эта
+лента также будет содержать вакансии, мы можем отрефакторить код, который
+создает ленту, добавив фрагмент (partial) `_list.atom.php`. Что касается формата `html`,
+то указывать его в названии шаблона фрагмента необязательно:
+
+    [php]
+    <!-- apps/frontend/job/templates/_list.atom.php -->
+    <?php use_helper('Text') ?>
+
+    <?php foreach ($jobs as $job): ?>
+      <entry>
+        <title><?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)</title>
+        <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+        <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+        <summary type="xhtml">
+         <div xmlns="http://www.w3.org/1999/xhtml">
+           <?php if ($job->getLogo()): ?>
+             <div>
+               <a href="<?php echo $job->getUrl() ?>">
+                 <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                   alt="<?php echo $job->getCompany() ?> logo" />
+               </a>
+             </div>
+           <?php endif; ?>
+
+           <div>
+             <?php echo simple_format_text($job->getDescription()) ?>
+           </div>
+
+           <h4>How to apply?</h4>
+
+           <p><?php echo $job->getHowToApply() ?></p>
+         </div>
+        </summary>
+        <author>
+          <name><?php echo $job->getCompany() ?></name>
+        </author>
+      </entry>
+    <?php endforeach; ?>
+
+Вы можете использовать фрагмент `_list.atom.php` для упрощения шаблона ленты
+вакансий:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+      <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+    <?php foreach ($categories as $category): ?>
+      <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
+    <?php endforeach; ?>
+    </feed>
+
+В конечном итоге, создайте шаблон `showSuccess.atom.php`:
+
+    [php]
+    <!-- apps/frontend/modules/category/templates/showSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet (<?php echo $category ?>)</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom'), true) ?>" rel="self" />
+      <link href="<?php echo url_for('category', array('sf_subject' => $category), true) ?>" />
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('category', array('sf_subject' => $category), true)) ?></id>
+
+      <?php include_partial('job/list', array('jobs' => $pager->getResults())) ?>
+    </feed>
+
+Так же, как и для главной ленты вакансий, нам нужна дата добавления последней вакансии
+в категории:
+
+    [php]
+<propel>
+    // lib/model/JobeetCategory.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetCategory.class.php
+</doctrine>
+    class JobeetCategory extends BaseJobeetCategory
+    {
+      public function getLatestPost()
+      {
+        $jobs = $this->getActiveJobs(1);
+
+        return $jobs[0];
+      }
+
+      // ...
+    }
+
+![Category Feed](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
+
+Увидимся завтра!
+----------------
+
+Наряду со многими возможностями Symfony, поддержка форматов позволяет
+Вам добавлять ленты на ваши веб-сайты не прилагая особых усилий.
+
+Сегодня мы улучшили методы поиска вакансий для пользователя. Завтра мы узнаем, какие новые
+возможности можно предложить работодателям, предоставив веб-сервис.
+
+__ORM__
