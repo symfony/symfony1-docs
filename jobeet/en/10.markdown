@@ -147,8 +147,8 @@ from a base class:
 
 ### Customizing the Job Form
 
-The job form is a perfect example to learn ~form customization|Forms
-(Customization)~. Let's see how to customize it, step by step.
+The job form is a perfect example to learn
+~form customization|Forms (Customization)~. Let's see how to customize it, step by step.
 
 First, change the "Post a Job" link in the layout to be able to check changes
 directly in your browser:
