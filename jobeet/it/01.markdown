@@ -118,13 +118,13 @@ di `cmd`.
 >[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx)
 >di Microsoft.
 
-### ~Configurazione del PHP~
+### ~Configurazione di PHP~
 
-Essendo che le configurazioni del PHP possono variare da un sistema operativo ad
-un'altro, è necessario controllare che la configurazione del PHP soddisfi i
+Poiché le configurazioni di PHP possono variare da un sistema operativo ad
+un'altro, è necessario controllare che la configurazione di PHP soddisfi i
 requisiti minimi di symfony.
 
-Per prima cosa, assicurarsi di avere installato come minimo il PHP 5.2.4.
+Per prima cosa, assicurarsi di avere installato come minimo PHP 5.2.4.
 utilizzando la funzione di PHP `phpinfo()`, oppure lanciando `php -v` nella linea di
 comando. Siate consapevoli del fatto che su alcune configurazioni, è possibile avere
 due diverse versioni di PHP installati: uno per la riga di comando e un altro per il web.
@@ -140,16 +140,15 @@ Lanciare lo script per verificare la confgurazione dalla linea di comando:
 
     $ php check_configuration.php
 
-Se c'è un problema con la configurazione del PHP, l'output del comando
+Se c'è un problema con la configurazione di PHP, l'output del comando
 darà suggerimenti su cosa correggere e come risolvere il problema.
 
 Si dovrebbe anche eseguire la verifica da un browser e mettere a posto i problemi
 che si potrebbero verificare. Questo perché PHP può avere distinti file di
 cofigurazione `php.ini` per questi due ambienti, con impostazioni diverse.
-   
 
 >**NOTE**
->Successivamente non dimenticarsi di rimuovere il file dalla cartella web.
+>Successivamente, non dimenticarsi di rimuovere il file dalla cartella web.
 
 ~Installazione~ di symfony
 --------------------------
@@ -164,11 +163,11 @@ Su Windows:
     c:\> mkdir c:\development\sfprojects\jobeet
     c:\> cd c:\development\sfprojects\jobeet
 
->**Note**: agli utenti Windows raccomandiamo di eseguire symfony e di creare il nuovo
+>**NOTE**
+>agli utenti Windows raccomandiamo di eseguire symfony e di creare il nuovo
 >progetto in un percorso che non contenga spazi.
 >Evitate l'utilizzo della cartella `Documents and Settings`, stessa cosa per qualsiasi
 >sotto-cartella di `My Documents`.
-
 
 -
 
@@ -180,8 +179,8 @@ Su Windows:
 
 ###  Scegliere la versione di symfony
 
-Ora bisogna installare symfony. Essendo che il framework symfony ha diverse versioni
-stabili, bisogna scegliere quella che si vuole installare leggendo la
+Ora bisogna installare symfony. Poiché il framework symfony ha diverse versioni
+stabili, bisogna scegliere quella che si vuole installare, leggendo la
 [pagina di installazione](http://www.symfony-project.org/installation)
 sul sito web di symfony.
 
@@ -189,8 +188,8 @@ Questo libro assume che si voglia installare symfony 1.3 o symfony 1.4.
   
 ### Scegliere dove installare symfony
 
-È possibile installare symfony globalmente sulla vostra macchina, o incorporarlo
-in ogni vostro progetto. Il secondo metodo è quello consigliato, in questo modo
+È possibile installare symfony globalmente sulla propria macchina o incorporarlo
+in ogni progetto. Il secondo metodo è quello consigliato, in questo modo
 i progetti saranno totalmente indipendenti gli uni dagli altri. Aggiornare
 l'installazione locale di symfony non crea problemi imprevisti sui progetti.
 Ciò significa che si potranno avere progetti su diverse versioni di symfony,
@@ -211,17 +210,17 @@ per la versione scelta dal sito web di symfony. Andare nella pagina con le
 installazioni e prendere la versione scelta, ad esempio
 [symfony 1.4](http://www.symfony-project.org/installation/1_4).
 
-Dentro la sezione "**Source Download**" troverete l'archivio nei
+Dentro la sezione "**Source Download**" si troverà l'archivio nei
 formati `.tgz` e `.zip`. Scaricate il pacchetto, salvandolo nella
-cartella `lib/vendor/` appena creata, ed estraetene i file:
+cartella `lib/vendor/` appena creata, ed estrarne i file:
 
     $ cd lib/vendor
     $ tar zxpf symfony-1.4.0.tgz
     $ mv symfony-1.4.0 symfony
     $ rm symfony-1.4.0.tgz
 
-Su Windows l'estrazione dal file zip può essere fatta con explorer. Dopo che avrete
-rinominato la cartella con `symfony`, dovreste vedere una cartella di nome
+Su Windows l'estrazione dal file zip può essere fatta con explorer. Dopo aver
+rinominato la cartella in `symfony`, si dovrebbe avere una cartella di nome
 `c:\development\sfprojects\jobeet\lib\vendor\symfony`.
 
 #### Installazione da Subversion (raccomandata)
@@ -232,7 +231,7 @@ per incorporare symfony nella cartella `lib/vendor/` del progetto:
     $ svn pe svn:externals lib/vendor/
 
 >**NOTE**
->Importare il progetto in un nuovo repository Subversion è spiegato alla fine
+>L'importazione del progetto in un nuovo repository Subversion è spiegata alla fine
 >di questo capitolo.
 
 Se tutto procede bene, questo comando lancierà il vostro editor preferito per
@@ -250,11 +249,11 @@ Subversion):
 Ogni volta che esce una nuova versione (annunciata nel [blog](http://www.symfony-project.org/blog/))
 di symfony, sarà necessario cambiare l'URL alla nuova versione.
 
-I temerari possono utilizzare il branch (ramo) 1.4:
+I temerari possono utilizzare il ramo 1.4:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Utilizzando il ramo, il progetto beneficia automaticamente delle correzzioni dei
+Utilizzando il ramo, il progetto beneficia automaticamente delle correzioni dei
 bug ogni volta che si esegue un aggiornamento con `svn update`.
 
 #### Verificare l'installazione

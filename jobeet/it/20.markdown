@@ -247,7 +247,7 @@ Ora symfony genererà i suoi file dentro la cartella
 `plugins/sfJobeetPlugin/lib/model/`. I costruttori dei form e dei filtri
 terranno conto anche loro della configurazione quando generano dei file.
 
-Il task `propel:build --sql` genera un file SQL per creare le tabelle. Essendo che
+Il task `propel:build --sql` genera un file SQL per creare le tabelle. Poiché
 il file è il nome del pacchetto, eliminare quello presente:
 
     $ rm data/sql/lib.model.schema.sql
@@ -522,13 +522,13 @@ Un plugin può anche contenere regole di rotta:
 
 ### Le Risorse
 
-Anche se è un po' poco intuitivo, un plugin può contenere anche risorse web
-come immagini, fogli di stile e JavaScript. Essendo che non vogliamo distribuire il
+Anche se è poco intuitivo, un plugin può contenere anche risorse web
+come immagini, fogli di stile e JavaScript. Poiché non vogliamo distribuire il
 plugin Jobeet, non ha realmente senso in questo caso, ma è possibile farlo mediante la creazione di una
 cartella `plugins/sfJobeetPlugin/web/`.
 
 Un plugin di risorse deve essere accessibile nella cartella del progetto in `web/` per essere
-visualizzabile da un browser. Il `plugin:publish-assets` fa proprio questo
+visualizzabile da un browser. Il `plugin:publish-assets` fa proprio questo,
 mediante la creazione di collegamenti simbolici su sistema Unix e copiando i file su piattaforma Windows:
 
     $ php symfony plugin:publish-assets

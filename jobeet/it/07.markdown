@@ -605,7 +605,7 @@ una lista di metodi `sfPropelPager` usati in questo template:
   * `getNextPage()`: Restituisce il numero della pagina successiva
   * `getLastPage()`: Restituisce il numero dell'ultima pagina
 
-Essendo che `sfPropelPager` implementa anche le interfaccie `Iterator` e `Countable`,
+Poiché `sfPropelPager` implementa anche le interfaccie `Iterator` e `Countable`,
 si può usare la funzione `count()` per ottenere il numero dei risultati, invece del 
 metodo `getNbResults()`.
 

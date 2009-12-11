@@ -130,7 +130,7 @@ classe base dei form:
 <propel>
 >      classes:
 >        SomeModel:
->          _propel_behaviors:
+>          propel_behaviors:
 >            symfony:
 >              form: false
 >              filter: false
@@ -148,7 +148,7 @@ classe base dei form:
 Il form per il lavoro è un esempio perfetto per imparare a
 ~personalizzare i form|Form (Personalizzazione)~. Vediamo come personalizzarlo passo passo.
 
-Come prima cosa cambiamo il link "Post a Job" nel layout ,per avere la possibilità
+Come prima cosa cambiamo il link "Post a Job" nel layout, per avere la possibilità
 di verificare i cambiamenti direttamente nel browser:
 
     [php]
@@ -204,8 +204,8 @@ hidden e l'array dei campi è usato per cambiare l'ordine dei campi.
 
 >**TIP**
 >Elencare esplicitamente i campi che si vogliono visualizzare del form significa che quando si aggiungono
->nuovi campi a un form base, quesi non appariranno automagicamente nel form
->(pernsare a un modello in cui si aggiunge una nuova colonna alla tabella correlata).
+>nuovi campi a un form base, questi non appariranno automagicamente nel form
+>(pensare a un modello in cui si aggiunge una nuova colonna alla tabella correlata).
 
 La configurazione del form deve alle volte essere più precisa di quanto possa
 apparire dall'analisi dello schema del database. Per esempio la colonna `email`
@@ -911,12 +911,22 @@ definito come segue:
 
 Ora si può testare la nuova feature di pubblicazione nel browser.
 
+<propel>
 Ma c'è ancora qualcosa da sistemare. I lavori non attivati non devono
 essere accessibili, il che vuol dire che non devono essere mostrati
 nella homepage di Jobeet e che non devono essere accessibili dai
 loro URL. Poiché abbiamo creato un metodo `addActiveJobsCriteria()`
 per restringere un `Criteria` ai lavori attivi, dobbiamo solo
 modificarlo ed aggiungere i nuovi requisiti alla fine:
+</propel>
+<doctrine>
+Ma c'è ancora qualcosa da sistemare. I lavori non attivati non devono
+essere accessibili, il che vuol dire che non devono essere mostrati
+nella homepage di Jobeet e che non devono essere accessibili dai
+loro URL. Poiché abbiamo creato un metodo `addActiveJobsQuery()`
+per restringere un `Doctrine_Query` ai lavori attivi, dobbiamo solo
+modificarlo ed aggiungere i nuovi requisiti alla fine:
+</doctrine>
 
 <propel>
     [php]
