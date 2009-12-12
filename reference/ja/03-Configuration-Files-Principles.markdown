@@ -6,11 +6,10 @@ symfony の設定ファイルは一連の共通原則にしたがい共通のプ
 キャッシュ
 ----------
 
-symfony のすべての設定ファイルはコンフィギュレーションハンドラークラスによってPHPファイルとしてキャッシュされます。`is_debug` 設定が`false`のとき(たとえば `prod`環境)、YAML ファイルは初回のリクエスト時のみ
-アクセスされます;初回以降のアクセスは PHP キャッシュが使われます。前述のような仕様は初回時のみ YAML ファイルの解析と解釈を行うことで、"重い"作業は一度しか行われないことを意味します。
+symfony のすべての設定ファイルはコンフィギュレーションハンドラークラスによって PHP ファイルとしてキャッシュされます。`is_debug` 設定が `false` のとき(たとえば `prod`環境)、YAML ファイルは初回のリクエスト時のみアクセスされます;初回以降のアクセスは PHP キャッシュが使われます。前述のような仕様は初回時のみ YAML ファイルの解析と解釈を行うことで、"重い"作業は一度しか行われないことを意味します。
 
 >**TIP**
->デフォルトで `is_debug` が `true` にセットされている `dev` 環境においては、設定ファイルが変更されるたびにコンパイルが行われます(symfony はファイルの修正時刻をチェックします)。
+>デフォルトで `is_debug` が `true` にセットされている `dev` 環境においては、設定ファイルが変更されるたびにコンパイルが行われます (symfony はファイルの修正時刻をチェックします)。
 
 それぞれの設定ファイルの解析とキャッシュは特別なコンフィギュレーションハンドラークラスで行われます。コンフィギュレーションハンドラーは [`config_handler.yml`](#chapter_14_config_handlers_yml) で設定されます。
 
@@ -26,7 +25,7 @@ symfony のすべての設定ファイルはコンフィギュレーションハ
 
 *設定ファイル*: `core_compile.yml`、`factories.yml`、`generator.yml`、`databases.yml`、`filters.yml`、`view.yml`、`autoload.yml`
 
-いくつかの設定ファイルはあらかじめ定義されている定数の使用を許容します。定数は `%XXX%`(XXX は大文字のキー)で表記されるプレースホルダーで宣言され"コンパイル"の時に実際の値に置き換えられます。
+いくつかの設定ファイルはあらかじめ定義されている定数の使用を許容します。定数は `%XXX%` (XXX は大文字のキー) で表記されるプレースホルダーで宣言され"コンパイル"の時に実際の値に置き換えられます。
 
 ### コンフィギュレーション設定
 
@@ -47,10 +46,10 @@ symfony が設定ファイルをコンパイルするとき、存在するすべ
 
  | 定数                 | 説明                            | 設定メソッド         |
  | -------------------- | ------------------------------- | -------------------- |
- | `SF_APP`             | 現在のアプリケーションの名前    | `getApplication()`   |
- | `SF_ENVIRONMENT`     | 現在の環境の名前                | `getEnvironment()`   |
- | `SF_DEBUG`           | デバッグモードが有効であるか    | `isDebug()`          |
- | `SF_SYMFONY_LIB_DIR` | symfonyライブラリのディレクトリ | `getSymfonyLibDir()` |
+ | `SF_APP`             | 現在のアプリケーションの名前     | `getApplication()`   |
+ | `SF_ENVIRONMENT`     | 現在の環境の名前                 | `getEnvironment()`   |
+ | `SF_DEBUG`           | デバッグモードが有効であるか     | `isDebug()`          |
+ | `SF_SYMFONY_LIB_DIR` | symfonyライブラリのディレクトリ  | `getSymfonyLibDir()` |
 
 ### ディレクトリ
 
@@ -101,8 +100,7 @@ symfony が設定ファイルをコンパイルするとき、存在するすべ
 
 *設定ファイル*: `settings.yml`、`factories.yml`、`databases.yml`、`app.yml`
 
-symfony の設定ファイルのなかには環境を認識するものがあります。環境の解釈は現在symfonyが動作している環境に依存します。
-これら設定ファイルはそれぞれの環境ごとに変化するべき設定を定義するための異なるセクションを持ちます。新しいアプリケーションを作成するとき、symfony は3つのデフォルト環境: `prod`、`test` と `dev` を含む適切な設定ファイルを作成します:
+symfony の設定ファイルのなかには環境を認識するものがあります。環境の解釈は現在 symfony が動作している環境に依存します。これら設定ファイルはそれぞれの環境ごとに変化するべき設定を定義するための異なるセクションを持ちます。新しいアプリケーションを作成するとき、symfony は3つのデフォルト環境: `prod`、`test` と `dev` を含む適切な設定ファイルを作成します:
 
     [yml]
     prod:
@@ -128,13 +126,13 @@ symfony が設定ファイルから値を必要とするとき、現在の環境
 
 コンフィギュレーションがコンパイルされるとき、すべての異なるファイルからの値は次の優先順位に従ってマージされます
 
-  * モジュールのコンフィギュレーション(`PROJECT_ROOT_DIR/apps/APP_NAME/modules/MODULE_NAME/config/XXX.yml`)
-  * アプリケーションのコンフィギュレーション(`PROJECT_ROOT_DIR/apps/APP_NAME/config/XXX.yml`)
-  * プロジェクトのコンフィギュレーション(`PROJECT_ROOT_DIR/config/XXX.yml`)
-  * プラグインで定義されるコンフィギュレーション(`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
-  * symfonyライブラリで定義されるデフォルトのコンフィギュレーション(`SF_LIB_DIR/config/XXX.yml`)
+  * モジュールのコンフィギュレーション (`PROJECT_ROOT_DIR/apps/APP_NAME/modules/MODULE_NAME/config/XXX.yml`)
+  * アプリケーションのコンフィギュレーション (`PROJECT_ROOT_DIR/apps/APP_NAME/config/XXX.yml`)
+  * プロジェクトのコンフィギュレーション (`PROJECT_ROOT_DIR/config/XXX.yml`)
+  * プラグインで定義されるコンフィギュレーション (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
+  * symfonyライブラリで定義されるデフォルトのコンフィギュレーション (`SF_LIB_DIR/config/XXX.yml`)
 
-たとえば、アプリケーションディレクトリで定義される `settings.yml` はプロジェクトのメインの `config/` ディレクトリのコンフィギュレーションのセット、およびフレームワーク自身に格納されるデフォルトコンフィギュレーション(`lib/config/config/settings.yml`)を継承します。
+たとえば、アプリケーションディレクトリで定義される `settings.yml` はプロジェクトのメインの `config/` ディレクトリのコンフィギュレーションのセット、およびフレームワーク自身に格納されるデフォルトコンフィギュレーション (`lib/config/config/settings.yml`) を継承します。
 
 >**TIP**
 >設定ファイルが環境を認識し複数のディレクトリで定義できる場合、次の優先順位リストが適用されます:

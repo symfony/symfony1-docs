@@ -3,7 +3,7 @@ view.yml 設定ファイル
 
 View レイヤーは `view.yml` 設定ファイルを編集することで設定できます。
 
-はじめの章で説明したように、`view.yml`ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
+はじめの章で説明したように、`view.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
 
 >**CAUTION**
 >アクションから呼び出されるテンプレートもしくはメソッドで直接使われるヘルパーのためにたいていの場合この設定ファイルは非推奨です。
@@ -35,7 +35,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
 `view.yml` 設定ファイルはアプリケーションによって使われるデフォルトの ~`layout`~ を定義します。デフォルトでは、名前は `layout` で、symfony はアプリケーションの `templates/` ディレクトリで `layout.php` ファイルですべてのページをデコレートします。~`has_layout`~ エントリーを`false`にセットすることでデコレーションプロセスを一緒に無効にすることもできます。
 
 >**TIP**
->`view` に対して明示的にセットしない限り、`layout` は XML、HTTP リクエストと非 HTML の Content-Type に対して自動的に無効にされます。
+>`view` に対して明示的にセットされない限り、`layout` は XML、HTTP リクエストと非 HTML の Content-Type に対して自動的に無効にされます。
 
 `stylesheets`
 -------------
@@ -82,7 +82,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
 `javascripts` エントリーは現在のビューに使う JavaScript ファイルの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーで手動、もしくは [common フィルター](#chapter_12-Filters_sub_common)で自動的に行われます。
+>`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーで手動、もしくは  [common フィルター](#chapter_12-Filters_sub_common)で自動的に行われます。
 
 多くのファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
@@ -100,7 +100,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
     <?php use_javascript('foo.js') ?>
 
 >**NOTE**
->`foo.js` のように相対パスを使うとき、symfonyはこれらの前に `/js/` をつけます。
+>`foo.js` のように相対パスを使うとき、symfony はこれらの前に `/js/` をつけます。
 
 `metas` と `http_metas`
 -----------------------
@@ -124,7 +124,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
 >**NOTE**
 >`view.yml` で定義されるメタタグのインクルードは `include_metas()` と `include_http_metas()` ヘルパーで手動で行うことができます。
 
-静的なメタ情報(Content-Type など)に対するレイアウトの HTML を純粋に保つ、もしくは動的なメタ情報(タイトルや説明)のためのスロットのためにこれらの設定は*非推奨*です。
+静的なメタ情報 (Content-Type など) に対するレイアウトの HTML を純粋に保つ、もしくは動的なメタ情報 (タイトルや説明) のためのスロットのためにこれらの設定は*非推奨*です。
 
 >**TIP**
 >効果があるとき、[`settings.yml` 設定ファイル](#chapter_04-Settings_sub_charset)で定義された文字集合をインクルードするために HTTP の `Content-Type` のメタ情報は自動的に修正されます。

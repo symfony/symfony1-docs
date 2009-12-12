@@ -3,7 +3,7 @@ filters.yml 設定ファイル
 
 ~`filters.yml`~ 設定ファイルはすべてのリクエストで実行されるフィルターチェーンを記述します。
 
-アプリケーション用のメインの `filters.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
+アプリケーションのメインの `filters.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
 はじめの章で説明したように、`filters.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
 
@@ -18,7 +18,7 @@ filters.yml 設定ファイル
 
     # ...
 
-コントローラーがリクエストに対してフィルターを初期化するとき、`filters.yml` ファイルを読み込みフィルターオブジェクトを設定するために使われるフィルター(`class`)とパラメーター(`param`)のクラス名を探すことでフィルターを登録します:
+コントローラーがリクエストに対してフィルターを初期化するとき、`filters.yml` ファイルを読み込みフィルターオブジェクトを設定するために使われるフィルター (`class`) とパラメーター (`param`) のクラス名を探すことでフィルターを登録します:
 
     [yml]
     FILTER_NAME:
@@ -124,7 +124,7 @@ filters.yml 設定ファイル
       param:
         condition: %SF_CACHE%
 
-`cache` フィルターはアクションとページを管理します。これは必要とされる HTTP キャッシュヘッダーをレスポンスに追加するための責務も担います(`Last-Modified`、`ETag`、`Cache-Control`、`Expires`、・・・)。
+`cache` フィルターはアクションとページを管理します。これは必要とされる HTTP キャッシュヘッダーをレスポンスに追加するための責務も担います (`Last-Modified`、`ETag`、`Cache-Control`、`Expires`、・・・)。
 
 `common`
 --------

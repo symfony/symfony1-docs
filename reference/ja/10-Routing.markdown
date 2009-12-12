@@ -95,7 +95,7 @@ routing.yml 設定ファイル
 
 ### ~`class`~
 
-*デフォルト*: `sfRoute`(もしくは `type` が `collection` である場合 `sfRouteCollection`、下記を参照)
+*デフォルト*: `sfRoute` (もしくは `type` が `collection` である場合 `sfRouteCollection`、下記を参照)
 
 ルートに使うルートクラスは `class` 設定によって変更できます。
 
@@ -111,7 +111,7 @@ routing.yml 設定ファイル
  * 定数
  * キー/値のペアのシーケンスにマッチするワイルドカード(`*`)
 
-それぞれのセグメントはあらかじめ定義される区切り文字の1つで区切らなければなりません([デフォルトでは `/` もしくは `.`](#chapter_05_sub_segment_separators))。
+それぞれのセグメントはあらかじめ定義される区切り文字の1つで区切らなければなりません ([デフォルトでは `/` もしくは `.`](#chapter_05_sub_segment_separators))。
 
 ### ~`params`~
 
@@ -190,7 +190,7 @@ routing.yml 設定ファイル
 
 *デフォルト*: `toParams`
 
-`convert` オプションはこのモデルオブジェクトに基づいてルートを生成するためにモデルを適切なパラメーターの配列に変換するために呼び出すメソッドです。これは少なくともルートパターンの必須パラメーターを持つ配列を返さなければなりません(`url` 設定で定義される)。
+`convert` オプションはこのモデルオブジェクトに基づいてルートを生成するためにモデルを適切なパラメーターの配列に変換するために呼び出すメソッドです。これは少なくともルートパターンの必須パラメーターを持つ配列を返さなければなりません (`url` 設定で定義される)。
 
 ~`sfPropelRoute`~
 -----------------
@@ -240,7 +240,7 @@ routing.yml 設定ファイル
 
 ### ~`prefix_path`~
 
-*デフォルト*: ルートの名前の前につけられる`/`
+*デフォルト*: ルートの名前の前につけられる `/`
 
 `prefix_path` オプションはすべての `url` パターンの先頭につけられるプレフィックスを指定します。これは任意の有効なパターンになり変数と複数のセグメントを含むことができます。
 
@@ -266,7 +266,7 @@ routing.yml 設定ファイル
 
 *デフォルト*: 空の配列
 
-`model_methods` オプションはモデルからオブジェクトを読み取るために呼び出すメソッドを定義します(`sfObjectRoute` の`method` オプションを参照)。これは実際には `list` と `object` メソッドを定義する配列です:
+`model_methods` オプションはモデルからオブジェクトを読み取るために呼び出すメソッドを定義します (`sfObjectRoute` の`method` オプションを参照)。これは実際には `list` と `object` メソッドを定義する配列です:
 
     [yml]
     model_methods:
@@ -283,7 +283,7 @@ routing.yml 設定ファイル
 
 *デフォルト*: `false`
 
-`with_wildcard_routes` オプションは2つのワイルドカードのルート: (1つは単独のオブジェクト用、もう1つはオブジェクトコレクション用)を通してアクションにアクセスできるようにします。
+`with_wildcard_routes` オプションは2つのワイルドカードのルート: (1つは単独のオブジェクト用、もう1つはオブジェクトコレクション用) を通してアクションにアクセスできるようにします。
 
 ### ~`route_class`~
 
@@ -306,9 +306,9 @@ routing.yml 設定ファイル
 ~`sfPropelRouteCollection`~
 ---------------------------
 
-`sfPropelRouteCollection` ルートクラスは `sfRouteCollection` を継承し、デフォルトのルートクラスを `sfPropelRoute` に変更します(上記の `route_class` オプションを参照)。
+`sfPropelRouteCollection` ルートクラスは `sfRouteCollection` を継承し、デフォルトのルートクラスを `sfPropelRoute` に変更します (上記の `route_class` オプションを参照)。
 
 ~`sfDoctrineRouteCollection`~
 -----------------------------
 
-`sfDoctrineRouteCollection` ルートクラスは `sfRouteCollection` を継承し、デフォルトのルートクラスを `sfDoctrineRoute` に変更します(上記の `route_class` オプションを参照)。
+`sfDoctrineRouteCollection` ルートクラスは `sfRouteCollection` を継承し、デフォルトのルートクラスを `sfDoctrineRoute` に変更します (上記の `route_class` オプションを参照)。

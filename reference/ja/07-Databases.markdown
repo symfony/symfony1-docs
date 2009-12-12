@@ -10,7 +10,7 @@ databases.yml 設定ファイル
 
 はじめの章で説明したように、`databases.yml` ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
 
-`databases.yml` で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメーター(`param`)の設定を格納しなければなりません:
+`databases.yml` で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメーター (`param`) の設定を格納しなければなりません:
 
     [yml]
     CONNECTION_NAME:
@@ -70,20 +70,20 @@ Propel
           persistent: true
           pooling:    true
 
-次のパラメーターは`param`セクションの下で定義できます:
+次のパラメーターは `param` セクションの下で定義できます:
 
- | キー         | 説明                     | デフォルトの値 |
- | ------------ | -------------------------| -------------- |
- | `classname`  | Propelのアダプタークラス | `PropelPDO`    |
- | `dsn`        | PDOのDSN (必須)         | -              |
- | `username`   | データベースのユーザー名 | -              |
- | `password`   | データベースのパスワード | -              |
- | `pooling`    | プーリングを有効にするか | `true`         |
- | `encoding`   | デフォルトの文字集合     | `UTF-8`        |
- | `persistent` | 永続的接続を作成するか   | `false`        |
- | `options`    | Propelオプションのセット | -              |
- | `options`    | Propelオプションのセット | -              |
- | `debug`      | `DebugPDO`クラスのオプション| n/a         |
+ | キー         | 説明                        | デフォルトの値 |
+ | ------------ | ----------------------------| -------------- |
+ | `classname`  | Propel のアダプタークラス    | `PropelPDO`    |
+ | `dsn`        | PDO の DSN (必須)           | -              |
+ | `username`   | データベースのユーザー名     | -              |
+ | `password`   | データベースのパスワード     | -              |
+ | `pooling`    | プーリングを有効にするか     | `true`         |
+ | `encoding`   | デフォルトの文字集合         | `UTF-8`        |
+ | `persistent` | 永続的接続を作成するか       | `false`        |
+ | `options`    | Propel オプションのセット    | -              |
+ | `options`    | Propel オプションのセット    | -              |
+ | `debug`      | `DebugPDO` クラスのオプション| n/a            |
 
 Doctrine
 --------
@@ -108,21 +108,21 @@ Doctrine
 
 次のパラメーターは`param`セクションの下でカスタマイズできます:
 
- | キー         | 説明                     | デフォルト値 |
- | ------------ | ------------------------ | ------------ |
- | `dsn`        | PDOのDSN (必須)          | -            |
- | `username`   | データベースのユーザー名 | -            |
- | `password`   | データベースのパスワード | -            |
- | `encoding`   | デフォルトの文字コード   | `UTF-8`      |
- | `attributes` | Doctrine属性のセット     | -            |
+ | キー         | 説明                        | デフォルト値 |
+ | ------------ | --------------------------- | ------------ |
+ | `dsn`        | PDO の DSN (必須)           | -            |
+ | `username`   | データベースのユーザー名     | -            |
+ | `password`   | データベースのパスワード     | -            |
+ | `encoding`   | デフォルトのエンコーディング | `UTF-8`      |
+ | `attributes` | Doctrine 属性のセット       | -            |
 
 次の属性は`attributes`セクションの下でカスタマイズできます:
 
- | キー               | 説明                                     | デフォルト値 |
- | ------------------ | ---------------------------------------- | ------------ |
- | `quote_identifier` | 識別子をクォートでラップするか           | `false`      |
- | `use_native_enum`  | ネイティブのenumを使うか                 | `false`      |
+ | キー               | 説明                                  | デフォルト値 |
+ | ------------------ | -------------------------------------- | ------------ |
+ | `quote_identifier` | 識別子をクォートでラップするか          | `false`      |
+ | `use_native_enum`  | ネイティブの enum を使うか              | `false`      |
  | `validate`         | データバリデーションを有効にするかどうか | `true`       |
- | `idxname_format`   | インデックス名のフォーマット             | `%s_idx`     |
- | `seqname_format`   | シーケンス名のフォーマット               | `%s_seq`     |
- | `tblname_format`   | テーブル名のフォーマット                 | `%s`         |
+ | `idxname_format`   | インデックス名のフォーマット            | `%s_idx`     |
+ | `seqname_format`   | シーケンス名のフォーマット              | `%s_seq`     |
+ | `tblname_format`   | テーブル名のフォーマット                | `%s`         |
