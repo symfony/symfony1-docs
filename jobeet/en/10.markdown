@@ -124,9 +124,16 @@ from a base class:
 
 -
 
+<doctrine>
+>**TIP**
+>You can disable form generation on certain models by passing parameters to
+>the `symfony` Doctrine behavior:
+</doctrine>
+<propel>
 >**TIP**
 >You can disable form generation on certain models by passing parameters to
 >the `symfony` Propel behavior:
+</propel>
 >
 >      [yml]
 <propel>
