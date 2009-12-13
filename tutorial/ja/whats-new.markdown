@@ -1,5 +1,5 @@
 symfony 1.3/1.4 の新しい機能
-============================
+=============================
 
 このチュートリアルでは symfony 1.3/1.4 のための技術的な内容をおおまかに紹介します。このチュートリアルは symfony 1.2 ですでに作業をしており、symfony 1.3/1.4 の新しい機能を速く学びたい開発者向けです。
 
@@ -11,7 +11,7 @@ symfony 1.3/1.4 の新しい機能
 メーラー
 --------
 
-symfony 1.3/1.4 では SwiftMailer 4.1 に基づく新しい標準のメーラーが用意されました。
+symfony 1.3/1.4 では SwiftMailer 4.1 に基づく新しい標準メーラーが用意されました。
 
 Eメールの送信はシンプルでアクションから `composeAndSend()` メソッドを使うだけです:
 
@@ -34,9 +34,9 @@ Eメールの送信はシンプルでアクションから `composeAndSend()` �
 
 `generate:app` タスクで新しいアプリケーションをつくるとき、セキュリティ設定はデフォルトで有効になるようになりました:
 
-  * `escaping_strategy`: この値はデフォルトで `true` です(`--escaping-strategy` オプションで無効にできる)。
+  * `escaping_strategy`: この値はデフォルトで `true` です (`--escaping-strategy` オプションで無効にできます)。
 
-  * `csrf_secret`: デフォルトでランダムなパスワードが生成されます。CSRF の保護機能は標準で有効です(`--csrf-secret` オプションで無効にすることができます)。`settings.yml` 設定ファイルを編集するか、`--csrf-secret` オプションを使う事で、デフォルトのパスワードを変更することが強く勧められます。
+  * `csrf_secret`: デフォルトでランダムなパスワードが生成されます。CSRF の保護機能は標準で有効です (`--csrf-secret` オプションで無効にすることができます)。`settings.yml` 設定ファイルを編集するか、`--csrf-secret` オプションを使うことで、デフォルトのパスワードを変更することを強くおすすめします。
 
 ウィジット
 ---------
@@ -86,12 +86,12 @@ Eメールの送信はシンプルでアクションから `composeAndSend()` �
 
 ### `sfValidatorUrl`
 
-`sfValidatorUrl` は新しい `protocols` オプションを持つようになりました。 次のように特定のプロトコルを許可することができるようになりました:
+`sfValidatorUrl` は新しい `protocols` オプションを持つようになりました。次のように特定のプロトコルを許可することができるようになりました:
 
     [php]
     $validator = new sfValidatorUrl(array('protocols' => array('http', 'https')));
 
-つぎのプロトコルがデフォルトで許可されています:
+デフォルトでは次のプロトコルが許可されています:
 
  * `http`
  * `https`
@@ -105,14 +105,14 @@ Eメールの送信はシンプルでアクションから `composeAndSend()` �
  * `IDENTICAL`、は`===`と同等;
  * `NOT_IDENTICAL`、は`!==`と同等;
 
-### `sfValidatorChoice`、`sfValidatorPropelChoice`,、`sfValidatorDoctrineChoice`
+### `sfValidatorChoice`、`sfValidatorPropelChoice`、`sfValidatorDoctrineChoice`
 
 `sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターは `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションを持ちます:
 
  * `min` 選択される必要がある最小の数
  * `max` 選択される必要がある最大の数
 
-### I18n バリデーター
+### 国際化バリデーター
 
 次のバリデーターが追加されました:
 
@@ -125,18 +125,18 @@ Eメールの送信はシンプルでアクションから `composeAndSend()` �
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
 
-以前までのコードは標準の `Required.` メッセージを全てのバリデーターのために上書きするでしょう。標準のメッセージはどのバリデーターが作成される前に定義しておかなければならないことに注意してください(コンフィグレーションクラスがよい場所です)。
+以前までのコードは標準の `Required.` メッセージを全てのバリデーターのためにオーバーライドするでしょう。標準のメッセージはどのバリデーターが作成される前に定義しておかなければならないことに注意してください(コンフィグレーションクラスがよい場所です)。
 
 >**NOTE**
 >`setRequiredMessage()` と `setInvalidMessage()` メソッドは非推奨になり、新しい `setDefaultMessage()` メソッドを呼ぶようになりました。
 
-symfony がエラーを表示するとき、次のように使用されるエラーメッセージは決定されます。:
+symfony がエラーを表示するとき、次のように使用されるエラーメッセージは決定されます:
 
-  * symfony はバリデーターが作成されたときに通過したメッセージを探します(バリデーターのコンストラクターの第２引数経由);
+  * symfony はバリデーターが作成されたときに渡されたメッセージを探します(バリデーターのコンストラクターの第２引数経由);
 
   * 定義されていないなら、`setDefaultMessage()` メソッドで標準の定義されたメッセージを探します;
 
-  * もし、定義されていないなら、(メッセージが `addMessage()` メソッドで追加されているとき)バリデーター自身で定義された標準のメッセージへ戻ります。
+  * もし、定義されていないなら、(メッセージが `addMessage()` メソッドで追加されているとき) バリデーター自身で定義された標準のメッセージへ戻ります。
 
 ### 流れるようなインターフェイス
 
@@ -157,7 +157,7 @@ symfony がエラーを表示するとき、次のように使用されるエラ
 
 ### `sfForm::useFields()`
 
-新しい `sfForm::useFields()` メソッドはフォームから引数として提供されるもの以外、すべての隠しフィールドではないフィールドを削除します。状況によって不要なフィールドの割り当てを解除する代わりにフォームで維持したいフィールドを明示的に指示するのが楽になります。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームで自動的に現われなくなります(モデルフォームで新しいカラムを関連テーブルに追加するを考えてください)。
+新しい `sfForm::useFields()` メソッドはフォームから引数として提供されるもの以外、すべての隠しフィールドではないフィールドを削除します。状況によって不要なフィールドの割り当てを解除する代わりにフォームで維持したいフィールドを明示的に指示するのが楽になります。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームで自動的に現われなくなります (モデルフォームで新しいカラムを関連テーブルに追加するを考えてください)。
 
     [php]
     class ArticleForm extends BaseArticleForm
@@ -228,7 +228,7 @@ CSRF からの保護機能を無効にするためには、次のような行を
 
 symfony のすべてのオートローダーは大文字と小文字を区別しないようになりました。PHP が大文字と小文字を区別をしないので、symfony はそれに合わせることにしました。
 
-### `sfAutoloadAgain`(実験)
+### `sfAutoloadAgain` (実験的な機能)
 
 デバッグモードでの用途を目的とする特殊なオートローダーが追加されました。新しい `sfAutoloadAgain` クラスは symfony の標準オートローダーをリロードし問題のクラスを求めてファイルシステムを検索します。純粋な効果は新しいクラスをプロジェクトに追加した後に `symfony cc` を実行する必要はないことです。
 
@@ -241,7 +241,7 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
     $ php symfony test:all --only-failed
 
-どのように動作するかを説明します: まず最初に、全てのテストはいつも通りに実行されます。しかし引き続きテストを実行しても、最後のテストで失敗したものだけが実行されます。コードを修正したら、テストは通過し次回以降の実行からは除外されるかもしれません。再び全てのテストがパスしたら、あなたは完全なテストスイートを実行し、洗い流し繰り返すことができます。
+どのように動作するかを説明します: まず最初に、全てのテストはいつも通りに実行されます。しかし引き続きテストを実行しても、最後のテストで失敗したものだけが実行されます。コードを修正したら、テストは通り次回以降の実行からは除外されるかもしれません。再び全てのテストが通ったら、あなたは完全なテストスイートを実行し、洗い流し繰り返すことができます。
 
 ### 機能テスト
 
@@ -383,7 +383,7 @@ Propel も Doctrine のどちらも使いたくない場合は、`--orm` オプ�
 
     $ php /path/to/symfony generate:project foo --orm=none
 
-新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスク内で実行され、タスクのメソッドで使うことができます。より利用できるメソッドは次のようなものです: `installDir()`、`runTask()`、`ask()`、`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、 `enablePlugin()`そして`disablePlugin()`
+新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスク内で実行され、タスクのメソッドで使うことができます。より利用できるメソッドは次のようなものです: `installDir()`、`runTask()`、`ask()`、`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、 `enablePlugin()` そして `disablePlugin()`
 
 より詳細な情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
 
@@ -513,7 +513,7 @@ Propel を拡張するために symfony が依存するカスタムのビルダ�
 
 ### Propel のビヘイビア
 
-Propel 1.4 は Propel のコードのビヘイビアの実装を導入しました。カスタムの symfony ビルダーはこの新しいシステムに移植されました。
+Propel 1.4 はビヘイビアの実装を導入しました。カスタムの symfony ビルダーはこの新しいシステムに移植されました。
 
 Propel モデルネイティブなビヘイビアを Propel モデルに追加したい場合、`schema.yml` でもできます:
 
@@ -561,7 +561,7 @@ Propel の異なるバージョンを使うのは簡単で `ProjectConfiguration
 
 ### デフォルトの要件
 
-デフォルトの必須要件 `\d+` は `column` オプションがデフォルトの `id` になっているとき `sfObjectRouteCollection` にだけ適用されるようになりました。(`slug` のような)数字でないカラムが指定されているとき代わりの必須要件を用意する必要はないということです。
+デフォルトの必須要件 `\d+` は `column` オプションがデフォルトの `id` になっているとき `sfObjectRouteCollection` にだけ適用されるようになりました。(`slug` のような) 数字でないカラムが指定されているとき代わりの必須要件を用意する必要はないということです。
 
 ### `sfObjectRouteCollection` オプション
 
@@ -579,7 +579,7 @@ CLI
 
 ### 出力の色づけ
 
-symfony の CLI を使用するとき、symfony はあなたが利用しているコンソールがカラーの出力をサポートしているかどうかを推測しようとします。しかし、symfony は推測を間違える場合があります;例えば、Cygwin を使っているときです(Windows プラットフォームではカラーの出力は常に切られているからです)。
+symfony の CLI を使用するとき、symfony はあなたが利用しているコンソールがカラーの出力をサポートしているかどうかを推測しようとします。しかし、symfony は推測を間違える場合があります;例えば、Cygwin を使っているときです (Windows プラットフォームではカラーの出力は常に切られているからです)。
 
 symfony 1.3/1.4 では、`--color` グローバルオプションを渡すことでカラーで出力することを強制できるようになりました。
 
@@ -645,7 +645,7 @@ symfony 1.3/1.4 で新しく作られたプロジェクトでは、プラグイ�
 
 ### `sf_file_link_format`
 
-symfony 1.3/1.4 は可能であるときにファイルパスをクリック可能なリンクにフォーマットします(すなわちデバッグ例外のテンプレート)。`sf_file_link_format` がセットされる場合、この目的に使われ、そうでなければ、symfony は PHP 設定の `xdebug.file_link_format` の値を探します。
+symfony 1.3/1.4 は可能であるときにファイルパスをクリック可能なリンクにフォーマットします (すなわちデバッグ例外のテンプレート)。`sf_file_link_format` がセットされる場合、この目的に使われ、そうでなければ、symfony は PHP 設定の `xdebug.file_link_format` の値を探します。
 
 たとえば、TextMate でファイルを開きたい場合、次のコードを `settings.yml` に追加します:
 
@@ -681,13 +681,14 @@ symfony の追加オプションを Doctrine の YAML スキーマファイル�
         group_id:
           type: integer
           primary: true
+
 ### フォームクラスの継承
 
 あなたのモデルクラスからフォームを生成するとき、モデルクラスは継承を含んでいます。生成された子クラスは継承を留意し、同じ継承構造に続くフォームを生成します。
 
 ### 新しいタスク
 
-Doctrineで開発するときに手助けしてくれる新しいタスクを導入しました。
+Doctrine で開発するときに手助けしてくれる新しいタスクを導入しました。
 
 #### モデルテーブルを作成する
 
@@ -735,15 +736,15 @@ YAML スキーマファイルでモデルを変更したり、名前を変えた
 
     $ php symfony doctrine:build --db --and-load
 
-これはデータベースを削除(`:drop-db`)して作成(`:build-db`)し、`schema.yml` にテーブル設定を作成(`:insert-sql`)し、フィクスチャーデータを読み込み(`:data-load`)します。
+これはデータベースを削除 (`:drop-db`) して作成 (`:build-db`) し、`schema.yml` にテーブル設定を作成 (`:insert-sql`) し、フィクスチャーデータを読み込み (`:data-load`) します。
 
     $ php symfony doctrine:build --all-classes --and-migrate
 
-これはモデル(`:build-model`)、フォーム(`:build-forms`)、フォームフィルター(`:build-filters`)を生成し、保留されていたマイグレーション(`:migrate`)を実行します。
+これはモデル (`:build-model`)、フォーム (`:build-forms`)、フォームフィルター (`:build-filters`) を生成し、保留されていたマイグレーション (`:migrate`) を実行します。
 
     $ php symfony doctrine:build --model --and-migrate --and-append=data/fixtures/categories.yml
 
-モデルを生成(`:build-model`)し、データベースのマイグレーション(`:migrate`)を行い、そしてカテゴリーのフィクスチャーデータ(`:data-load --append --dir=/data/fixtures/categories.yml`)を付け加えます。
+モデルを生成 (`:build-model`) し、データベースのマイグレーション (`:migrate`) を行い、そしてカテゴリーのフィクスチャーデータ (`:data-load --append --dir=/data/fixtures/categories.yml`)を付け加えます。
 
 より多くの情報は `doctrine:build` タスクのヘルプページを参照してください。
 
@@ -797,7 +798,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
 
 ### `doctrine:migrate --dry-run`
 
-データベースが DDL ステートメントのロールバックをサポートする場合(MySQL はサポートしない)、新しい `dry-run` オプションを利用できます。
+データベースが DDL ステートメントのロールバックをサポートする場合 (MySQL はサポートしない)、新しい `dry-run` オプションを利用できます。
 
     $ php symfony doctrine:migrate --dry-run
 
@@ -1024,7 +1025,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 コンテキスト
 -----------
 
-メソッドを動的に `sfContext` に追加するために `context.method_not_found` をリスニングできます。プラグインから遅延ロードファクトリを追加する場合に便利でしょう。
+メソッドを動的に `sfContext` に追加するには `context.method_not_found` をリスニングできます。プラグインから遅延ロードファクトリを追加する場合に便利でしょう。
 
     [php]
     class myContextListener
