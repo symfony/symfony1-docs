@@ -2,30 +2,30 @@ Il file di configurazione security.yml
 ======================================
 
 Il file di configurazione ~`security.yml`~ descrive le regole di autenticazione
-e autorizzazione per una applicazione symfony.
+e autorizzazione per un'applicazione symfony.
 
 >**TIP**
 >Le informazioni di configurazione del file `security.yml` sono usate dalla
 >classe factory [`user`](#chapter_05_user) (predefinita `sfBasicSecurityUser`).
-> L'esecuzione dell'autenticazione e dell'autorizzazione è
+>L'esecuzione dell'autenticazione e dell'autorizzazione è
 >fatta da `security` [filter](#chapter_12_security).
 
 Quando un'applicazione è creata, symfony genera un file predefinito
-`security.yml` nella cartella dell'applicazione `config/` che descrive la sicurezza per
+`security.yml`, nella cartella dell'applicazione `config/`, che descrive la sicurezza per
 l'intera applicazione (sotto la chiave `default`):
 
     [yml]
     default:
-      is_secure: off
+      is_secure: false
 
 Come discusso in sede di introduzione, il file `security.yml` trae benefici dal
- [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata),
+ [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata)
 e può includere [**costanti**](#chapter_03_costanti).
 
 La configurazione predefinita dell'applicazione può essere sovrascritta per un modulo,
-creando un file `security.yml` nella cartella `config/` del modulo. Le
+creando un file `security.yml` nella cartella `config/` del modulo stesso. Le
 chiavi principali sono nomi di azioni senza il prefisso `execute` (ad esempio `index`
- per il metodo `executeIndex`).
+per il metodo `executeIndex`).
 
 Per determinare se una azione è sicura o no, symfony cerca le informazioni
 nel seguente ordine:
@@ -54,7 +54,7 @@ applicazione, autorizza l'accesso a chiunque:
 
     [yml]
     default:
-      is_secure: off
+      is_secure: false
 
 Con l'impostazione della chiave ~`is_secure`~ su `true` nel file dell'applicazione
  `security.yml`, l'intera applicazione richiederà l'autenticazione per tutti gli utenti.
@@ -68,7 +68,7 @@ nella cartella `config/` del modulo e definire una chiave `all`:
 
     [yml]
     all:
-      is_secure: on
+      is_secure: true
 
 Per modificare i requisiti di autenticazione di una singola azione di un modulo, creare
 un file `security.yml` nella cartella `config/` del modulo e definire una
@@ -76,7 +76,7 @@ chiave dopo il nome dell'azione:
 
     [yml]
     index:
-      is_secure: off
+      is_secure: false
 
 >**TIP**
 >Non è possibile mettere in sicurezza l'azione di login. Questo per evitare una ricorsione
@@ -91,7 +91,7 @@ deve avere le credenziali richieste, per accedere all'azione:
 
     [yml]
     all:
-      is_secure:   on
+      is_secure:   true
       credentials: admin
 
 Il sistema di credenziali di symfony è semplice e potente. Una credenziale è una

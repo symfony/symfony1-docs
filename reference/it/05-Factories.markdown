@@ -565,7 +565,7 @@ Il factory `view_cache` definisce una classe cache che deve ereditare da
       class: sfI18N
       param:
         source:               XLIFF
-        debug:                off
+        debug:                false
         untranslated_prefix:  "[T]"
         untranslated_suffix:  "[/T]"
         cache:

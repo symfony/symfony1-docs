@@ -10,10 +10,10 @@ Il file di configurazione `routing.yml` contiene un elenco di definizioni
 di rotte, basate su nomi:
 
     [yml]
-    ROUTE_1:
+    ROTTA_1:
       # definizione della rotta 1
 
-    ROUTE_2:
+    ROTTA_2:
       # definizione della rotta 2
 
     # ...
@@ -28,7 +28,7 @@ un oggetto della classe `class`:
     [yml]
     NOME_ROTTA:
       class: NOME_CLASSE
-      # configuration if the route
+      # configurazione della rotta
 
 Il nome `class` dovrebbe estendere la classe base `sfRoute`. Se così non avviene, come
 ripiego è usata la classe base `sfRoute`.

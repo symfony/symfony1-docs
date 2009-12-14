@@ -19,7 +19,7 @@ globalmente assegnata a `false`:
 
     [yml]
     default:
-      enabled:     off
+      enabled:     false
       with_layout: false
       lifetime:    86400
 

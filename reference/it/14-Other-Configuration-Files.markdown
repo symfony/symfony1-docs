@@ -28,25 +28,25 @@ La configurazione predefinita va bene per la maggior parte dei progetti:
       project:
         name:           project
         path:           %SF_LIB_DIR%
-        recursive:      on
+        recursive:      true
         exclude:        [model, symfony]
 
       project_model:
         name:           project model
         path:           %SF_LIB_DIR%/model
-        recursive:      on
+        recursive:      true
 
       # application
       application:
         name:           application
         path:           %SF_APP_LIB_DIR%
-        recursive:      on
+        recursive:      true
 
       modules:
         name:           module
         path:           %SF_APP_DIR%/modules/*/lib
         prefix:         1
-        recursive:      on
+        recursive:      true
 
 Ogni configurazione ha un nome e deve essere assegnato con una chiave che ha quel nome. Questo
 consente di sovrascrivere la configurazione predefinita.
@@ -75,7 +75,7 @@ delle prestazioni, modificando la configurazione `project` di autocaricamento:
       project:
         name:           project
         path:           %SF_LIB_DIR%
-        recursive:      on
+        recursive:      true
         exclude:        [model, symfony, vendor/large_lib]
 
 ~`config_handlers.yml`~
