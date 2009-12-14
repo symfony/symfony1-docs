@@ -3,22 +3,22 @@ Il file di configurazione routing.yml
 
 Il file di configurazione `routing.yml` permette la definizione di rotte.
 
-Il file di configurazione principale `routing.yml` per una applicazione può essere trovato
+Il file di configurazione principale `routing.yml` per una applicazione si trova
 nella cartella `apps/NOME_APP/config/`.
 
-Il file di configurazione `routing.yml` contiene un elenco con nome delle definizioni
-di rotte:
+Il file di configurazione `routing.yml` contiene un elenco di definizioni
+di rotte, basate su nomi:
 
     [yml]
     ROUTE_1:
-      # definition of route 1
+      # definizione della rotta 1
 
     ROUTE_2:
-      # definition of route 2
+      # definizione della rotta 2
 
     # ...
 
-Quando entra una richiesta, il sistema delle rotte prova a confrontare una rotta con
+Quando arriva una richiesta, il sistema delle rotte prova a confrontare una rotta con
 l'URL entrante. La prima rotta che combacia vince, in questo modo l'ordine con il quale sono
 definite le rotte nel file di configurazione `routing.yml` è importante.
 
@@ -169,7 +169,7 @@ Se valorizzato a `collection`, la rotta verrà letta come una collezione di rott
 
 >**NOTE**
 >Questa impostazione è automaticamente valorizzata a `collection` dalla classe che gestisce
->il config se il nome `class` contiene la parola `Collection`. Questo significa che
+>il config se il nome `class` contiene la parola `Collection`. Questo significa che,
 >la maggior parte delle volte, non si ha la necessità di usare questa impostazione.
 
 ~`sfRoute`~
@@ -208,8 +208,8 @@ collezione di oggetti di modelli.
 
 ### ~`method`~
 
-L'opzione `type` è obbligatoria. È il metodo da chiamare sulla classe del modello
-per recuperare l'oggetto (o gli oggetti) associati a questa rotta. Deve essere un
+L'opzione `method` è obbligatoria. È il metodo da chiamare sulla classe del modello
+per recuperare l'oggetto o gli oggetti associati a questa rotta. Deve essere un
 metodo statico. Il metodo è chiamato con i parametri della rotta scansionata come
 parametro.
 
@@ -318,7 +318,7 @@ azioni `edit` e `new`.
 
 *Predefinito*: Un array vuoto
 
-Le opzioni `model_methods` definiscono i metodi da chiamare per recuperare l'oggetto
+L'opzione `model_methods` definisce i metodi da chiamare per recuperare l'oggetto
 (o gli oggetti) dal modello (vedere l'opzione `method` di `sfObjectRoute`). Questo
 si realizza definendo i metodi `list` e `object`:
 
@@ -352,14 +352,14 @@ per la collezione.
 
 *Predefinito*: Un array vuoto
 
-Le opzioni `collection_actions` definiscono un array di azioni aggiuntive
+Lìopzione `collection_actions` definisce un array di azioni aggiuntive
 disponibili per la collezione di rotte.
 
 ### ~`object_actions`~
 
 *Predefinito*: Un array vuoto
 
-Le opzioni `object_actions` definiscono un array di azioni aggiuntive disponibili
+L'opzione `object_actions` definisce un array di azioni aggiuntive disponibili
 per l'oggetto delle rotte.
 
 ~`sfPropelRouteCollection`~
