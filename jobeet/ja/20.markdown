@@ -1,62 +1,50 @@
 20日目: プラグイン
 ==================
 
-昨日は、symfonyアプリケーションの国際化とローカライゼーションのしかたを学びました。
-再度繰り返しますが、ICU標準とたくさんのヘルパーのおかげで、symfonyではこの作業は本当に楽です。
+昨日は、symfony アプリケーションの国際化とローカライゼーションのしかたを学びました。再度繰り返しますが、ICU 標準とたくさんのヘルパーのおかげで、symfony ではこの作業は本当に楽です。
 
 今日は、~プラグイン~は何ができ、プラグインに何をまとめることができるのか、何のために使うことができるのかについて説明します。
 
 プラグイン
 ----------
 
-### symfonyのプラグイン
+### symfony のプラグイン
 
-symfonyプラグインはプロジェクトファイルのサブセットのパッケージを作成して配布する方法を提供します。
-プロジェクトのように、プラグインはクラス、ヘルパー、設定、タスク、モジュール、スキーマとアセットさえも格納できます。
+symfony プラグインはプロジェクトファイルのサブセットのパッケージを作成して配布する方法を提供します。プロジェクトのように、プラグインはクラス、ヘルパー、設定、タスク、モジュール、スキーマとアセットさえも格納できます。
 
 ### ~プライベートプラグイン~
 
-プラグインの最初の使い方は複数のアプリケーションもしくは異なるプロジェクトの間でコードを楽に共有できるようにすることです。
-symfonyアプリケーションはモデルのみを共有することを思い思い出してください。
-プラグインはさらに複数のアプリケーションの間でコンポーネントを共有する方法を提供します。
+プラグインの最初の使い方は複数のアプリケーションもしくは異なるプロジェクトの間でコードを楽に共有できるようにすることです。symfony アプリケーションはモデルのみを共有することを思い思い出してください。プラグインはさらに複数のアプリケーションの間でコンポーネントを共有する方法を提供します。
 
 異なるプロジェクトもしくは同じモジュールの同じスキーマを~再利用する|コードの再利用~場合、これらをプラグインに移動させます。
-プラグインは単なるディレクトリなので、SVNリポジトリを作り`svn:externals`を指定するもしくは1つのプロジェクトから他のプロジェクトにファイルをコピーすることでプラグインを移動させることができます。
+プラグインは単なるディレクトリなので、SVN リポジトリを作り `svn:externals` を指定するもしくは1つのプロジェクトから他のプロジェクトにファイルをコピーすることでプラグインを移動させることができます。
 
-私たちはこれらを"プライベート(非公開の)プラグイン"と呼んでいます。
-これらの用途は1人の開発者もしくは企業に限定されているからです。
+私たちはこれらを"プライベートプラグイン"と呼んでいます。これらの用途は1人の開発者もしくは企業に限定されているからです。
 これらは公に利用できません。
 
 >**TIP**
->プライベートプラグインから~パッケージ|パッケージ作成~を作ることもできます。
->独自のsymfonyプラグインチャンネルを作成し、`plugin:install`タスクをとおしてこれらをインストールします。
+>プライベートプラグインから~パッケージ|パッケージ作成~を作ることもできます。独自の symfony プラグインチャンネルを作成し、`plugin:install` タスクをとおしてこれらをインストールします。
 
 ### ~公開プラグイン~
 
 公開プラグインは~コミュニティ~でダウンロードとインストールができます。
 <propel>
-このチュートリアルでは、ひとくみの公開プラグイン: `sfGuardPlugin`と`sfFormExtraPlugin`を使いました。
+このチュートリアルでは、ひとくみの公開プラグイン: `sfGuardPlugin` と `sfFormExtraPlugin` を使いました。
 </propel>
 <doctrine>
-このチュートリアルでは、ひとくみの公開プラグイン: `sfDoctrineGuardPlugin`と`sfFormExtraPlugin`を使いました。
+このチュートリアルでは、ひとくみの公開プラグイン: `sfDoctrineGuardPlugin` と `sfFormExtraPlugin` を使いました。
 </doctrine>
 
-これらはプライベートプラグインとまったく同じです。
-唯一の違いは誰でもプロジェクトにインストールできることです。
-後で公開プラグインを公開してsymfonyの公式サイトでホストする方法を見ることになります。
+これらはプライベートプラグインとまったく同じです。唯一の違いは誰でもプロジェクトにインストールできることです。後で公開プラグインを公開して symfony の公式サイトでホストする方法を見ることになります。
 
 ### ~コードを編成する|コードの編成~異なる方法
 
-プラグインを考え出す方法とそれらの使い方はいろいろあります。
-再利用と共有を忘れましょう。プラグインはあなたのコードを編成するための異なる方法として利用できます。
-レイヤーごとにファイルを編成する代わりに: `lib/model/`ディレクトリのすべてのモデル、`templates/`ディレクトリのテンプレートなど; ファイルは機能ごとにまとめられます: すべてのjobファイルのセット(モデル、モジュール、テンプレート)、すべてのCMSファイルのセットなど。
+プラグインを考え出す方法とそれらの使い方はいろいろあります。再利用と共有を忘れましょう。プラグインはあなたのコードを編成するための異なる方法として利用できます。レイヤーごとにファイルを編成する代わりに: `lib/model/` ディレクトリのすべてのモデル、`templates/` ディレクトリのテンプレートなど; ファイルは機能ごとにまとめられます: すべての job ファイルのセット (モデル、モジュール、テンプレート)、すべての CMS ファイルのセットなど。
 
 プラグインのファイル構造
 ------------------------
 
-プラグインはファイルの性質に応じて、あらかじめ定義された~構造~にわかれるファイルを持つ単なるディレクトリ構造です。
-今日は、Jobeet用に書いてきた大部分のコードを`sfJobeetPlugin`に移動させます。
-使用する基本的なレイヤーは次の通りです:
+プラグインはファイルの性質に応じて、あらかじめ定義された~構造~にわかれるファイルを持つ単なるディレクトリ構造です。今日は、Jobeetに向けて書いてきたコードの大部分を `sfJobeetPlugin` に移動させます。使用する基本的なレイヤーは次のとおりです:
 
     sfJobeetPlugin/
 <propel>
@@ -84,27 +72,25 @@ symfonyアプリケーションはモデルのみを共有することを思い�
           actions/
           config/
           templates/
-      web/                                    // JS、CSSと画像のようなアセット
+      web/                                    // JS、CSS と画像のようなアセット
 
-Jobeetプラグイン
-----------------
+Jobeet プラグイン
+-----------------
 
-プラグインのブートストラップはシンプルで`plugins/`の下で新しいディレクトリを作ります。
-Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
+プラグインのブートストラップはシンプルで`plugins/`の下で新しいディレクトリを作ります。Jobeet に関して、`sfJobeetPlugin` ディレクトリを作りましょう:
 
     $ mkdir plugins/sfJobeetPlugin
 
 >**NOTE**
->すべてのプラグインの名前は`Plugin`で終わらなければなりません。
->義務ではありませんが、~プレフィックス~として`sf`をつけるのはよい習慣です。
+>すべてのプラグインの名前は `Plugin` で終わらなければなりません。義務ではありませんが、~プレフィックス~として `sf` をつけるのはよい習慣です。
 
 ### Model
 
 <propel>
-最初に、`config/schema.yml`ファイルを`plugins/sfJobeetPlugin/config/`に移動させます:
+最初に、`config/schema.yml` ファイルを `plugins/sfJobeetPlugin/config/` に移動させます:
 </propel>
 <doctrine>
-最初に、`config/doctrine/schema.yml`ファイルを`plugins/sfJobeetPlugin/config/`に移動させます:
+最初に、`config/doctrine/schema.yml` ファイルを `plugins/sfJobeetPlugin/config/` に移動させます:
 </doctrine>
 
     $ mkdir plugins/sfJobeetPlugin/config/
@@ -117,12 +103,9 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
 </doctrine>
 
 >**NOTE**
->すべてのコマンドはUnix系環境のものです。
->Windowsを利用しているのであれば、Explorerでファイルをドラッグ＆ドロップできます。
->コードを管理するのに~Subversion~、もしくは他のツールを使う場合、
->これらが提供する組み込みのツールを使います(ファイルを移動させる`svn mv`など)。
+>すべてのコマンドは Unix 系環境のものです。Windows を利用しているのであれば、Explorer でファイルをドラッグ＆ドロップできます。コードを管理するのに ~Subversion~、もしくはほかのツールを使う場合、これらが提供する組み込みのツールを使います (ファイルを移動させる `svn mv` など)。
 
-モデル、フォーム、フィルターファイルを`plugins/sfJobeetPlugin/lib/`に移動させます:
+モデル、フォーム、フィルターファイルを `plugins/sfJobeetPlugin/lib/` に移動させます:
 
     $ mkdir plugins/sfJobeetPlugin/lib/
     $ mv lib/model/ plugins/sfJobeetPlugin/lib/
@@ -130,14 +113,12 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
 
 <doctrine>
-モデル、フォームとフィルターを移動させた後でクラスを抽象クラスにし、リネームしてプレフィックスとして`Plugin`をつけなければなりません。
+モデル、フォームとフィルターを移動させた後でクラスを抽象クラスにし、リネームしてプレフィックスとして `Plugin` をつけなければなりません。
 
 >**TIP**
->~プレフィックス~の`Plugin`をつけるのは自動生成クラスのみですべてのクラスではありません。
->たとえば手で書いたクラスにはプレフィックスをつけないでください。
->プレフィックスが必要なのは自動生成されたクラスのみです。
+>~プレフィックス~の `Plugin` をつけるのは自動生成クラスのみですべてのクラスではありません。たとえば手書きのクラスにはプレフィックスをつけないでください。プレフィックスが必要なのは自動生成されたクラスのみです。
 
-`JobeetAffiliate`と`JobeetAffiliateTable`クラスを移動させる例は次の通りです。
+`JobeetAffiliate` と `JobeetAffiliateTable` クラスを移動させる例は次の通りです。
 
     $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
 
@@ -159,7 +140,7 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
       // ...
     }
 
-`JobeetAffiliateTable`クラスを移動させましょう:
+`JobeetAffiliateTable` クラスを移動させましょう:
 
     $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliateTable.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliateTable.class.php
 
@@ -171,10 +152,9 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
       // ...
     }
 
-フォームとフィルタークラスにも同じことを行います。
-`Plugin`をプレフィックスとしてつけるためにこれらをリネームします。
+フォームとフィルタークラスにも同じことを行います。`Plugin` をプレフィックスとしてつけるためにこれらをリネームします。
 
-`form`、`filter`と`model`ディレクトリに対して`plugins/sfJobeetPlugin/lib/*/doctrine/`の`base`ディレクトリを必ず削除してください:
+`form`、`filter` と `model` ディレクトリに対して `plugins/sfJobeetPlugin/lib/*/doctrine/` の `base` ディレクトリを必ず削除してください:
 
     $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/base
     $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/base
@@ -184,39 +164,35 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
 
     $ php symfony doctrine:build --all-classes
 
-いくつかの新しく作成されたディレクトリが`lib/model/doctrine/sfJobeetPlugin/`に格納されるスキーマから作成されたモデルを保有こしていることがわかります。
+いくつかの新しく作成されたディレクトリが `lib/model/doctrine/sfJobeetPlugin/` に格納されるスキーマから作成されたモデルを保有こしていることがわかります。
 
-このディレクトリはスキーマから生成されたトップレベルのモデルと基底クラスを含みます。
-たとえば`JobeetJob`モデルは次のようなクラス構造を持ちます:
+このディレクトリはスキーマから生成されたトップレベルのモデルと基底クラスを含みます。たとえば `JobeetJob` モデルは次のようなクラス構造を持ちます:
 
-  * `JobeetJob` (`PluginJobeetJob`を継承)
+  * `JobeetJob` (`PluginJobeetJob` を継承) 
     `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
-    すべてのプロジェクトの機能が設定できるトップレベルのクラスです。
-    ここは機能を追加したりプラグインモデルに付属する機能をオーバーライドできる場所です。
+    すべてのプロジェクトの機能が設定できるトップレベルのクラスです。ここは機能を追加したりプラグインモデルに付属する機能をオーバーライドできる場所です。
 
-  * `PluginJobeetJob` (`BaseJobeetJob`を継承)
+  * `PluginJobeetJob` (`BaseJobeetJob` を継承)
     `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
-    このクラスはプラグイン固有の機能すべてを格納します。
-    `JobeetJob`クラスを修正することでこのクラスと基底クラスをオーバーライドできます。
+    このクラスはプラグイン固有の機能すべてを格納します。`JobeetJob`クラスを修正することでこのクラスと基底クラスをオーバーライドできます。
 
-  * `BaseJobeetJob` (`sfDoctrineRecord`を継承)
+  * `BaseJobeetJob` (`sfDoctrineRecord` を継承)
     `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
     `doctrine:build --model`を実行するたびにYAMLスキーマファイルから自動生成される基底クラス。
 
-  * `JobeetJobTable` (`PluginJobeetJobTable`を継承)
+  * `JobeetJobTable` (`PluginJobeetJobTable` を継承)
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
      `Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンスであることを除いて`JobeetJob`クラスと同じ
 
-  * `PluginJobeetJobTable` (`Doctrine_Table`を継承)
+  * `PluginJobeetJobTable` (`Doctrine_Table` を継承)
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
     このクラスは`Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンス用のプラグイン固有の機能をすべて含みます
 
-この生成された構造によってトップレベルの`JobeetJob`クラスを編集することでプラグインのモデルをカスタマイズできます。
-`setTableDefinition()`と`setUp()`メソッドをオーバーライドすることでスキーマとカラムをカスタマイズし、リレーションを追加できます。
+この生成された構造によってトップレベルの `JobeetJob` クラスを編集することでプラグインのモデルをカスタマイズできます。
+`setTableDefinition()` と `setUp()` メソッドをオーバーライドすることでスキーマとカラムをカスタマイズし、リレーションを追加できます。
 
 >**NOTE**
->フォームクラスを移動させるとき、かならず`configure()`メソッドを`setup()`メソッドに変更し`parent::setup()`を呼び出してください。
->下記のコードは例です。
+>フォームクラスを移動させるとき、かならず `configure()` メソッドを `setup()` メソッドに変更し `parent::setup()` を呼び出してください。下記のコードは例です。
 >
 >     [php]
 >     abstract class PluginJobeetAffiliateForm extends BaseJobeetAffiliateForm
@@ -231,30 +207,24 @@ Jobeetに関して、`sfJobeetPlugin`ディレクトリを作りましょう:
 </doctrine>
 
 <propel>
-`propel:build --model`タスクを実行する場合、symfonyは`lib/model/`の下でファイルを生成しますが、これは私たちが望むことではありません。
-Propelの出力ディレクトリは`package`オプションを追加することで設定できます。
-`schema.yml`を開き次のコンフィギュレーションを追加します:
+`propel:build --model` タスクを実行する場合、symfony は `lib/model/` の下でファイルを生成しますが、これは私たちが望むことではありません。Propel の出力ディレクトリは `package` オプションを追加することで設定できます。`schema.yml` を開き次のコンフィギュレーションを追加します:
 
     [yml]
     # plugins/sfJobeetPlugin/config/schema.yml
     propel:
       _attributes:      { package: plugins.sfJobeetPlugin.lib.model }
 
-これでsymfonyは`plugins/sfJobeetPlugin/lib/model/`ディレクトリの下でファイルを生成します。
-フォームとフィルタービルダーはファイルを生成する際にこの設定も考慮します。
+これで symfony は `plugins/sfJobeetPlugin/lib/model/` ディレクトリの下でファイルを生成します。フォームとフィルタービルダーはファイルを生成する際にこの設定も考慮します。
 
-`propel:build --sql`タスクはテーブルを作成するSQLファイルを生成します。
-ファイルはパッケージの名前からつけられるので、現在のファイルを削除します:
+`propel:build --sql` タスクはテーブルを作成する SQL ファイルを生成します。ファイルはパッケージの名前からつけられるので、現在のファイルを削除します:
 
     $ rm data/sql/lib.model.schema.sql
 
-`propel:build --all --and-load`を実行する場合、symfonyはプラグインの`lib/model/`ディレクトリの下でファイルを生成します:
+`propel:build --all --and-load` を実行する場合、symfony はプラグインの `lib/model/` ディレクトリの下でファイルを生成します:
 
     $ php symfony propel:build --all --and-load --no-confirmation
 
-タスクを実行した後で、`lib/model/`ディレクトリが作成されなかったことを確認します。
-タスクは`lib/form/`と`lib/filter/`ディレクトリを作成しました。
-これらは両方ともプロジェクトのPropelフォーム用の基底クラスを格納します。
+タスクを実行した後で、`lib/model/` ディレクトリが作成されなかったことを確認します。タスクは `lib/form/` と `lib/filter/` ディレクトリを作成しました。これらは両方ともプロジェクトの Propel フォーム用の基底クラスを格納します。
 
 これらのファイルはプロジェクトに対してグローバルなので、プラグインからこれらのファイルを削除します:
 
@@ -262,8 +232,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
     $ rm plugins/sfJobeetPlugin/lib/filter/BaseFormFilterPropel.class.php
 </propel>
 <doctrine>
-すべてのDoctrineフォームが基底クラスを持たないことを確認する必要があります。
-これらのファイルはプロジェクトに対してグローバルであり`doctrine:build --forms`と`doctrine:build --filters`で再生成されます。
+すべての Doctrine フォームが基底クラスを持たないことを確認する必要があります。これらのファイルはプロジェクトに対してグローバルであり `doctrine:build --forms` と `doctrine:build --filters` で再生成されます。
 
 プラグインからファイルを削除します:
 
@@ -271,7 +240,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
     $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/BaseFormFilterDoctrine.class.php
 </doctrine>
 
-`Jobeet.class.php`ファイルをプラグインに移動させることもできます:
+`Jobeet.class.php` ファイルをプラグインに移動させることもできます:
 
     $ mv lib/Jobeet.class.php plugins/sfJobeetPlugin/lib/
 
@@ -280,16 +249,15 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
     $ php symfony cc
 
 >**TIP**
->APCのようなPHPアクセラレーターを利用している場合はこの時点で動作がおかしくなるので、Apacheを再起動させます。
+>APC のような PHP アクセラレーターを利用している場合はこの時点で動作がおかしくなるので、Apache を再起動させます。
 
 すべてのモデルファイルはプラグインに移動させたので、すべてがきちんと動作するのか確認するためにテストを実行します:
 
     $ php symfony test:all
 
-### ControllerとView
+### Controller と View
 
-次のロジックのステップはモジュールをプラグインに移動させることです。
-モジュールの名前の衝突を避けるために、モジュールの名前に~プレフィックス~としてプラグインの名前をつけるのは常によい習慣です:
+次のロジックのステップはモジュールをプラグインに移動させることです。モジュールの名前の衝突を避けるために、モジュールの名前に~プレフィックス~としてプラグインの名前をつけるのは常によい習慣です:
 
     $ mkdir plugins/sfJobeetPlugin/modules/
     $ mv apps/frontend/modules/affiliate plugins/sfJobeetPlugin/modules/sfJobeetAffiliate
@@ -298,11 +266,11 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
     $ mv apps/frontend/modules/job plugins/sfJobeetPlugin/modules/sfJobeetJob
     $ mv apps/frontend/modules/language plugins/sfJobeetPlugin/modules/sfJobeetLanguage
 
-それぞれのモジュールに対して、すべての`actions.class.php`と`components.class.php`ファイルのクラスの名前を変更することも必要です(たとえば、`affiliateActions`クラスは`sfJobeetAffiliateActions`にリネームする必要があります)。
+それぞれのモジュールに対して、すべての `actions.class.php` と `components.class.php` ファイルのクラスの名前を変更することも必要です (たとえば、`affiliateActions` クラスは `sfJobeetAffiliateActions` にリネームする必要があります)。
 
-次のテンプレートの`include_partial()`と`include_component()`呼び出しも変更しなければなりません:
+次のテンプレートの `include_partial()` と `include_component()` 呼び出しも変更しなければなりません:
 
-  * `sfJobeetAffiliate/templates/_form.php` (`affiliate`を`sfJobeetAffiliate`に変更する)
+  * `sfJobeetAffiliate/templates/_form.php` (`affiliate` を `sfJobeetAffiliate` に変更する)
   * `sfJobeetCategory/templates/showSuccess.atom.php`
   * `sfJobeetCategory/templates/showSuccess.php`
   * `sfJobeetJob/templates/indexSuccess.atom.php`
@@ -311,7 +279,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
   * `sfJobeetJob/templates/showSuccess.php`
   * `apps/frontend/templates/layout.php`
 
-`search`と`delete`アクションを更新します:
+`search` と `delete` アクションを更新します:
 
     [php]
     // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
@@ -359,7 +327,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
       // ...
     }
 
-最後に、これらの修正が考慮されるように`routing.yml`ファイルを修正します:
+最後に、これらの修正が考慮されるように `routing.yml` ファイルを修正します:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -444,7 +412,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
       url:   /
       param: { module: sfJobeetJob, action: index }
 
-最後に、`plugin:install`タスクを通してインストールされなかったので、`ProjectConfiguration.class.php`でプラグインを手作業で有効にします:
+最後に、`plugin:install` タスクを通してインストールされなかったので、`ProjectConfiguration.class.php` でプラグインを手作業で有効にします:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -461,8 +429,7 @@ Propelの出力ディレクトリは`package`オプションを追加するこ�
       }
     }
 
-JobeetのWebサイトを見ようとすると、モジュールが有効にされていないことを知らせる例外が表示されます。
-プラグインはプロジェクトのすべてのアプリケーションの間で共有されるので、アプリケーションに必要なモジュールを`settings.yml`設定ファイルで有効にする必要があります:
+Jobeet の Web サイトを見ようとすると、モジュールが有効にされていないことを知らせる例外が表示されます。プラグインはプロジェクトのすべてのアプリケーションの間で共有されるので、アプリケーションに必要なモジュールを `settings.yml` 設定ファイルで有効にする必要があります:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -486,7 +453,7 @@ JobeetのWebサイトを見ようとすると、モジュールが有効にさ�
 
 ### 国際化ファイル
 
-プラグインはXLIFFファイルも格納できます:
+プラグインは XLIFF ファイルも格納できます:
 
     $ mv apps/frontend/i18n plugins/sfJobeetPlugin/
 
@@ -498,24 +465,19 @@ JobeetのWebサイトを見ようとすると、モジュールが有効にさ�
 
 ### アセット
 
-少し直感に反していますが、プラグインは、画像、スタイルシートとJavaScriptのようなWebアセットも格納できます。
-Jobeetプラグインを配布したくないので、本当に意味がありませんが、`plugins/sfJobeetPlugin/web/`ディレクトリを作ることで実現できます。
+少し直感に反していますが、プラグインは、画像、スタイルシートとJavaScriptのようなWebアセットも格納できます。Jobeet プラグインを配布したくないので、本当に意味がありませんが、`plugins/sfJobeetPlugin/web/` ディレクトリを作ることで実現できます。
 
-プラグインのアセットはブラウザーから閲覧可能なプロジェクトの`web/`ディレクトリからアクセスできなければなりません。
-`plugin:publish-assets`はUnixシステムではシンボリックリンクの作成、Windowsプラットフォームではファイルをコピーすることでこれに対処します:
+プラグインのアセットはブラウザーから閲覧可能なプロジェクトの `web/` ディレクトリからアクセスできなければなりません。`plugin:publish-assets` は Unix 系システムではシンボリックリンクの作成、Windows プラットフォームではファイルをコピーすることでこれに対処します:
 
     $ php symfony plugin:publish-assets
 
 ### ユーザー
 
-求人履歴を扱う`myUser`クラスメソッドを移動させることは少し手間がかかります。
-`JobeetUser`クラスを作成し`myUser`を継承させることもできます。
-しかし、とりわけいくつかのプラグインが新しいメソッドをクラスに追加したい場合、ベターな方法があります。
+求人履歴を扱う `myUser` クラスメソッドを移動させることは少し手間がかかります。`JobeetUser` クラスを作成し `myUser` を継承させることもできます。しかし、とりわけいくつかのプラグインが新しいメソッドをクラスに追加したい場合、ベターな方法があります。
 
-リスニングできるライフサイクルの間にsymfonyのコアオブジェクトはイベントを通知します。
-我々の事例では、未定義のメソッドが`sfUser`オブジェクトに呼び出されるときに起きる`user.method_not_found`イベントをリスニングする必要があります。
+リスニングできるライフサイクルの間に symfony のコアオブジェクトはイベントを通知します。私たちの事例では、未定義のメソッドが `sfUser` オブジェクトに呼び出されるときに起きる `user.method_not_found` イベントをリスニングする必要があります。
 
-symfonyが初期化されるときにプラグインのコンフィギュレーションクラスがある場合、すべてのプラグインも初期化されます:
+symfony が初期化されるときにプラグインのコンフィギュレーションクラスがある場合、すべてのプラグインも初期化されます:
 
     [php]
     // plugins/sfJobeetPlugin/config/sfJobeetPluginConfiguration.class.php
@@ -527,18 +489,14 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
       }
     }
 
-イベントの通知はイベントディスパッチャーオブジェクトである[`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher)によって管理されます。
-`connect()`メソッドを呼び出せばリスナーが登録されます。
-`connect()`メソッドはイベントの名前をPHP callableに結びつけます。
+イベントの通知はイベントディスパッチャーオブジェクトである [`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher) によって管理されます。`connect()` メソッドを呼び出せばリスナーが登録されます。`connect()` メソッドはイベントの名前を PHP callable に結びつけます。
 
 >**NOTE**
->[PHP callable](http://www.php.net/manual/ja/function.is-callable.php)はPHP変数で`call_user_func()`関数によって使われ`is_callable()`関数に渡されるときに`true`を返します。
->文字列は関数を表し、配列はオブジェクトメソッドもしくはクラスメソッドを表します。
+>[PHP callable](http://www.php.net/manual/ja/function.is-callable.php) は PHP 変数で `call_user_func()` 関数によって使われ `is_callable()` 関数に渡されるときに `true` を返します。文字列は関数を表し、配列はオブジェクトメソッドもしくはクラスメソッドを表します。
 
-上記のコードによって、`myUser`オブジェクトはメソッドを見つけられないときは`JobeetUser`クラスの`methodNotFound()`スタティックメソッドを呼び出します。
-見つからないメソッドを処理するもしくは処理しないのは`methodNotFound()`メソッド次第です。
+上記のコードによって、`myUser` オブジェクトはメソッドを見つけられないときは `JobeetUser` クラスの `methodNotFound()` スタティックメソッドを呼び出します。見つからないメソッドを処理するもしくは処理しないのは `methodNotFound()` メソッド次第です。
 
-`myUser`クラスからすべてのメソッドを削除し`JobeetUser`クラスを作成します:
+`myUser` クラスからすべてのメソッドを削除し `JobeetUser` クラスを作成します:
 
     [php]
     // apps/frontend/lib/myUser.class.php
@@ -611,13 +569,11 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
       }
     }
 
-ディスパッチャが`methodNotFound()`メソッドを呼び出すとき、[`sfEvent`](http://www.symfony-project.org/api/1_4/sfEvent)オブジェクトを渡します。
+ディスパッチャーが `methodNotFound()` メソッドを呼び出すとき、[`sfEvent`](http://www.symfony-project.org/api/1_4/sfEvent) オブジェクトを渡します。
 
-`JobeetUser`クラスにメソッドが存在する場合、このメソッドが呼び出され、その後で戻り値は通知元オブジェクトに返されます。 
-そうではない場合、symfonyは次に登録されたリスナーを試すもしくは例外を投げます。
+`JobeetUser` クラスにメソッドが存在する場合、このメソッドが呼び出され、その後で戻り値は通知元オブジェクトに返されます。そうではない場合、symfony は次に登録されたリスナーを試すもしくは例外を投げます。
 
-`getSubject()`メソッドはイベントの通知元オブジェクトを返します。
-この場合現在の`myUser`オブジェクトです。
+`getSubject()` メソッドはイベントの通知元オブジェクトを返します。この場合現在の `myUser` オブジェクトです。
 
 ### デフォルト構造 vs プラグインアーキテクチャ
 
@@ -628,51 +584,40 @@ symfonyが初期化されるときにプラグインのコンフィギュレー�
 プラグインを使う
 ----------------
 
-新しい機能の実装を始めるとき、もしくはWebの古典的な問題を解決しようとする場合、おそらく誰かが同じ問題をすでに解決していてsymfonyのプラグインとして解決方法をパッケージにしています。
-symfonyの公開プラグインを探すには、symfony公式サイトの[プラグインセクション](http://www.symfony-project.org/plugins/)に移動します。
+新しい機能の実装を始めるとき、もしくは Web の古典的な問題を解決しようとする場合、おそらく誰かが同じ問題をすでに解決していて symfony のプラグインとして解決方法をパッケージにしています。symfony の公開プラグインを探すには、symfony 公式サイトの[プラグインセクション](http://www.symfony-project.org/plugins/)に移動します。
 
 プラグインはディレクトリに内蔵されるので、インストールする方法は複数あります:
 
-  * `plugin:install`タスクを使う(プラグインの開発者がプラグインパッケージを作りsymfonyの公式サイトにアップロードする場合のみ機能する)
-  * パッケージをダウンロードして`plugins/`ディレクトリの下で手動で解凍する(開発者がパッケージをアップロードすることも必要)
-  * `plugins/`でプラグイン用の`svn:externals`を作る(プラグインの作者がSuversionでプラグインをホストする場合のみ機能する)
+  * `plugin:install` タスクを使う (プラグインの開発者がプラグインパッケージを作り symfony の公式サイトにアップロードする場合のみ機能する)
+  * パッケージをダウンロードして `plugins/` ディレクトリの下で手動で解凍する (開発者がパッケージをアップロードすることも必要)
+  * `plugins/` でプラグイン用の `svn:externals` を作る (プラグインの作者が Suversion でプラグインをホストする場合のみ機能する)
 
-後者の2つの方法は簡単ですが柔軟性に欠けます。
-最初の方法でプロジェクトのsymfonyのバージョンに合わせて最新バージョンをインストールして、
-最新の安定版に簡単にアップグレードする、そして簡単にプラグイン間の依存関係を管理できます。
+後者の2つの方法は簡単ですが柔軟性に欠けます。最初の方法でプロジェクトの symfony のバージョンに合わせて最新バージョンをインストールして、最新の安定版に簡単にアップグレードする、そして簡単にプラグイン間の依存関係を管理できます。
 
 プラグインを寄付する
 --------------------
 
 ### プラグインのパッケージを作成する
 
-プラグインパッケージを作成するには、必須のファイルをプラグインのディレクトリ構造に追加する必要があります。
-最初に、プラグインのルートディレクトリで`README`ファイルを作りプラグインのインストール方法、これが何を提供するもの、しないものを記述します。
-`README`ファイルは[Markdownフォーマット](http://daringfireball.net/projects/markdown/syntax)でフォーマットしなければなりません。
-このファイルはsymfony公式サイトでドキュメントのメインピースとして使われます。
-[symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus)を利用してREADMEファイルをHTMLに変換することができます。
+プラグインパッケージを作成するには、必須のファイルをプラグインのディレクトリ構造に追加する必要があります。最初に、プラグインのルートディレクトリで `README` ファイルを作りプラグインのインストール方法、これが何を提供するもの、しないものを記述します。`README` ファイルは [Markdown フォーマット](http://daringfireball.net/projects/markdown/syntax)でフォーマットしなければなりません。このファイルは symfony 公式サイトでドキュメントのメインピースとして使われます。[symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus) を利用して README ファイルを HTML に変換することができます。
 
 >**SIDEBAR**
 >プラグイン開発のタスク
 >
->プライベートかつ/もしくは公開プラグインをよく作ることに気がついたら、[sfTaskExtraPlugin](http://www.symfony-project.com/plugins/sfTaskExtraPlugin)のタスクのいくつかを利用することを考えてください。
->このプラグインは、コアチームによって維持され、プラグインのライフサイクルの効率化を手助けするたくさんのタスクを含みます:
+>プライベートかつ/もしくは公開プラグインをよく作ることに気がついたら、[sfTaskExtraPlugin](http://www.symfony-project.com/plugins/sfTaskExtraPlugin) のタスクのいくつかを利用することを考えてください。このプラグインは、コアチームによって維持され、プラグインのライフサイクルの効率化を手助けするたくさんのタスクを含みます:
 >
 > * `generate:plugin`
 > * `plugin:package`
 
 `LICENSE`ファイルを作ることも必要です。
-ライセンスの選択は簡単な作業ではありませんが、symfonyのプラグインセクションはsymfonyのライセンス(MIT、BSD、LGPL、とPHP)と似たライセンスでリリースされたプラグインのみを表示します。
-`LICENSE`ファイルの内容はプラグインの公開ページのlicenseタブの下で表示されます。
+ライセンスの選択は簡単な作業ではありませんが、symfony のプラグインセクションは symfony のライセンス (MIT、BSD、LGPL と PHP) と似たライセンスでリリースされたプラグインのみを表示します。`LICENSE` ファイルの内容はプラグインの公開ページの license タブの下で表示されます。
 
-最後のステップはプラグインディレクトリのルートで`package.xml`ファイルを作ることです。
-この`package.xml`ファイルは[PEARパッケージ構文](http://pear.php.net/manual/en/guide-developers.php)に従います。
+最後のステップはプラグインディレクトリのルートで `package.xml` ファイルを作ることです。この `package.xml` ファイルは [PEAR パッケージ構文](http://pear.php.net/manual/en/guide-developers.php)に従います。
 
 >**NOTE**
->`package.xml`の構文を学ぶベストな方法は[既存のプラグイン](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml)で使われるファイルをコピーすることです。
+>`package.xml` の構文を学ぶベストな方法は[既存のプラグイン](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml)で使われるファイルをコピーすることです。
 
-`package.xml`ファイルはいくつかの部分で構成されます。
-このテンプレートの例は次のようなものです:
+`package.xml` ファイルはいくつかの部分で構成されます。このテンプレートの例は次のようなものです:
 
     [xml]
     <!-- plugins/sfJobeetPlugin/package.xml -->
@@ -725,7 +670,7 @@ symfonyの公開プラグインを探すには、symfony公式サイトの[プ�
     </changelog>
     </package>
 
-`<contents>`タグはパッケージに設置する必要のあるファイルを含みます:
+`<contents>` タグはパッケージに設置する必要のあるファイルを含みます:
 
     [xml]
     <contents>
@@ -742,8 +687,7 @@ symfonyの公開プラグインを探すには、symfony公式サイトの[プ�
       </dir>
     </contents>
 
-`<dependencies>`タグはプラグインが持つすべての依存関係の参照: PHP、symfony、と他のプラグインをつけます。
-この情報はプロジェクト環境に対してベストなプラグインのバージョンをインストールし存在するのであれば必要なプラグインの依存関係をインストールするために`plugin:install`タスクによって使われます。
+`<dependencies>` タグはプラグインが持つすべての依存関係の参照: PHP、symfony とほかのプラグインをつけます。この情報はプロジェクト環境に対してベストなプラグインのバージョンをインストールし存在するのであれば必要なプラグインの依存関係をインストールするために `plugin:install` タスクによって使われます。
 
     [xml]
     <dependencies>
@@ -764,8 +708,7 @@ symfonyの公開プラグインを探すには、symfony公式サイトの[プ�
       </required>
     </dependencies>
 
-symfonyはバージョンによって微妙に異なるAPIを持つので、ここで行ったように、依存関係を常に宣言すべきです。
-最大バージョンと最小バージョンを宣言することで`plugin:install`はsymfonyの必須バージョンがわかります。
+symfony はバージョンによって微妙に異なる API を持つので、ここで行ったように、依存関係を常に宣言すべきです。最大バージョンと最小バージョンを宣言すれば `plugin:install` は symfony の必須バージョンがわかります。
 
 別のプラグインとの依存関係を宣言することも可能です:
 
@@ -778,8 +721,7 @@ symfonyはバージョンによって微妙に異なるAPIを持つので、こ�
       <exclude>1.2.0</exclude>
     </package>
 
-`<changelog>`タグはオプションですがリリースの間の変更に関する有益な情報が得られます。
-この情報は"Changelog"タブと[プラグインのフィード](http://www.symfony-project.org/plugins/recently.rss)で見ることができます。
+`<changelog>` タグはオプションですがリリースの間の変更に関する有益な情報が得られます。この情報は "Changelog" タブと[プラグインのフィード](http://www.symfony-project.org/plugins/recently.rss)で見ることができます。
 
     [xml]
     <changelog>
@@ -803,20 +745,18 @@ symfonyはバージョンによって微妙に異なるAPIを持つので、こ�
       </release>
     </changelog>
 
-### symfony公式サイトでプラグインを公開する
+### symfony 公式サイトでプラグインを公開する
 
-便利なプラグインを開発してsymfonyのコミュニティと共有したい場合、まだなければ[symfony公式サイトのアカウントを作成し](http://www.symfony-project.org/user/new)、[新しいプラグイン](http://www.symfony-project.org/plugins/new)を作成します。
+便利なプラグインを開発して symfony のコミュニティと共有したい場合、まだなければ [symfony 公式サイトのアカウントを作成し](http://www.symfony-project.org/user/new)、[新しいプラグイン](http://www.symfony-project.org/plugins/new)を作成します。
 
-あなたは自動的にプラグインの管理者になりインターフェイスの"admin"タブを見ることになります。
-このタブにおいて、プラグインを管理してパッケージをアップロードするために必要なすべての機能が見つかります。
+あなたは自動的にプラグインの管理者になりインターフェイスの "admin" タブを見ることになります。このタブにおいて、プラグインを管理してパッケージをアップロードするために必要なすべての機能が見つかります。
 
 >**NOTE**
->[プラグインのFAQページ](http://www.symfony-project.org/plugins/FAQ)にはプラグイン開発者のための有益な情報がたくさんあります。
+>[プラグインの FAQ ページ](http://www.symfony-project.org/plugins/FAQ)にはプラグイン開発者のための有益な情報がたくさんあります。
 
 また明日
 --------
 
-プラグインの作成とコミュニティとの共有はsymfony公式サイトへのベストな貢献方法の1つです。
-これはとても簡単なので、symfonyのプラグインリポジトリは便利で面白く、しかしおかしなプラグインで満たされています。
+プラグインの作成とコミュニティとの共有は symfony 公式サイトへのベストな貢献方法の1つです。これはとても簡単なので、symfony のプラグインリポジトリは便利で面白く、しかしおかしなプラグインで満たされています。
 
 __ORM__

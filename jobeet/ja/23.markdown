@@ -1,88 +1,76 @@
-23日目: 別の視点からsymfonyを見る
-=================================
+23日目: 別の視点から symfony を見る
+==================================
 
-今日でsymfonyのすばらしい世界の旅行は最後です。
-23日間、デザインパターンから強力な組み込み機能までの具体例でsymfonyを学びました。
-あなたはまだsymfonyマスターではありませんが、自信を持ってsymfonyアプリケーションの開発を始めるために必要な知識はすべてあります。
+今日で symfony のすばらしい世界の旅行は最後です。23日間、デザインパターンから強力な組み込み機能までの具体例で symfony を学びました。あなたはまだ symfony マスターではありませんが、自信を持って symfony アプリケーションの開発を始めるために必要な知識はすべてあります。
 
-Jobeetチュートリアルのまとめとして、別の視点からフレームワークを見てみましょう。
-Jobeetは忘れてこの3週間に学んだすべての機能を思い出しましょう。
+Jobeet チュートリアルのまとめとして、別の視点からフレームワークを見てみましょう。Jobeet は忘れてこの3週間に学んだすべての機能を思い出しましょう。
 
-symfonyとは？
-------------
+symfony とは？
+--------------
 
-symfony~フレームワーク~はフルスタックの[MVCフレームワーク](#chapter_04_the_mvc_architecture)(Model、View、Controller)を形成する[疎結合された(cohesive but decoupled)サブフレームワーク](#chapter_11_sidebar_using_the_form_framework_without_symfony)の集まりです。
+symfony~フレームワーク~はフルスタックの [MVC フレームワーク](#chapter_04_the_mvc_architecture)(Model、View、Controller) を形成する[疎結合されたサブフレームワーク](#chapter_11_sidebar_using_the_form_framework_without_symfony)の集まりです。
 
-コーディングを始める前に、[symfonyの歴史と哲学](#chapter_01_introduction)を読む時間をとります。
+コーディングを始める前に、[symfony の歴史と哲学](#chapter_01_introduction)を読む時間をとります。
 
 それから、フレームワークの[前提要件](#chapter_01_prerequisites)を確認し設定を検証するために[`check_configuration.php`スクリプト](#chapter_01_symfony_installation)を使います。
 
-最後に、[symfonyをインストール](#chapter_01_symfony_installation)します。
-しばらくしてからsymfonyの最新バージョンに[アップグレード](#chapter_22_sub_upgrading_symfony)します。
+最後に、[symfony をインストール](#chapter_01_symfony_installation)します。しばらくしてから symfony の最新バージョンに[アップグレード](#chapter_22_sub_upgrading_symfony)します。
 
-symfonyは[デプロイ](#chapter_22_deploying)作業を楽にするツールも提供します。
+symfony は[デプロイ](#chapter_22_deploying)作業を楽にするツールも提供します。
 
 ~Model~
 -------
 
-symfonyのModel部分の作業は
+symfony の Model 部分の作業は
 <propel>
-[Propel ORM](http://propel.phpdb.org/).
+[Propel ORM](http://propel.phpdb.org/)
 </propel>
 <doctrine>
-[Doctrine ORM](http://www.doctrine-project.org/).
+[Doctrine ORM](http://www.doctrine-project.org/)
 </doctrine>
 の助けを借りて行うことができます。
-[データベースの記述](#chapter_03_the_schema)に基づいて、[オブジェクト](#chapter_03_the_orm)、[フォーム](#chapter_10_##ORM_LOWER##_forms)と[フィルター](#chapter_12_filters_configuration)用のクラスが生成されます。
-##ORM##はデータベースのテーブルを作成するために使用される[SQLステートメントを生成します](#chapter_03_the_orm)。
+[データベースの記述](#chapter_03_the_schema)に基づいて、[オブジェクト](#chapter_03_the_orm)、[フォーム](#chapter_10_##ORM_LOWER##_forms)と[フィルター](#chapter_12_filters_configuration)用のクラスが生成されます。##ORM## はデータベースのテーブルを作成するために使用される [SQL ステートメントを生成します](#chapter_03_the_orm)。
 
-データベースのコンフィギュレーションは[タスク](#chapter_03_the_database)もしくは[設定ファイル](#chapter_03_the_database)を編集することで行うことができます。
-コンフィギュレーションに加えて、[フィクスチャファイル](#chapter_03_the_initial_data)のおかげで、初期データを投入することもできます。
-これらのファイルを[動的なもの](#chapter_06_dynamic_fixtures)にすることもできます。
+データベースのコンフィギュレーションは[タスク](#chapter_03_the_database)もしくは[設定ファイル](#chapter_03_the_database)を編集することで行うことができます。コンフィギュレーションに加えて、[フィクスチャファイル](#chapter_03_the_initial_data)のおかげで、初期データを投入することもできます。これらのファイルを[動的なもの](#chapter_06_dynamic_fixtures)にすることもできます。
 
 <propel>
-Propelのオブジェクトも簡単に[国際化](#chapter_19_sub_propel_objects)できます。
+Propel のオブジェクトも簡単に[国際化](#chapter_19_sub_propel_objects)できます。
 </propel>
 <doctrine>
-Doctrineのオブジェクトも簡単に[国際化](#chapter_19_sub_doctrine_objects)できます。
+Doctrine のオブジェクトも簡単に[国際化](#chapter_19_sub_doctrine_objects)できます。
 </doctrine>
 
 ~View~
 ------
 
-デフォルトでは、MVCアーキテクチャのViewレイヤーはテンプレートとしてプレーンなPHPファイルを使います。
+デフォルトでは、MVC アーキテクチャの View レイヤーはテンプレートとしてプレーンな PHP ファイルを使います。
 
-[URL](#chapter_05_routing_in_actions_and_templates)もしくは[リンク](#chapter_05_routing_in_actions_and_templates)を作成するなどの頻繁に行われるタスクのためにテンプレートは[ヘルパー](#chapter_04_the_stylesheets_images_and_javascripts)を使います。
+[URL](#chapter_05_routing_in_actions_and_templates) もしくは[リンク](#chapter_05_routing_in_actions_and_templates)を作成するなどの頻繁に行われるタスクのためにテンプレートは[ヘルパー](#chapter_04_the_stylesheets_images_and_javascripts)を使います。
 
 ページのヘッダーとフッターを抽出するためにテンプレートは[レイアウト](#chapter_04_the_layout)によってデコレートされます。
 ビューの再利用性を高めるために、[スロット](#chapter_04_slots)、[パーシャル](#chapter_07_partials)と[コンポーネント](#chapter_19_language_switching)を定義できます。
 
-開発を加速するために、[ページ全体](#chapter_21_page_cache)、[アクション](#chapter_21_action_cache)だけ、もしくは[パーシャルもしくはコンポーネント](#chapter_21_partial_and_component_cache)だけをキャッシュするために[キャッシュサブフレームワーク](#chapter_21_cache_configuration)を利用できます。
-手動で[キャッシュを削除](#chapter_21_removing_the_cache)することもできます。
+開発を加速するために、[ページ全体](#chapter_21_page_cache)、[アクション](#chapter_21_action_cache)だけ、もしくは[パーシャルもしくはコンポーネント](#chapter_21_partial_and_component_cache)だけをキャッシュするために[キャッシュサブフレームワーク](#chapter_21_cache_configuration)を利用できます。手動で[キャッシュを削除](#chapter_21_removing_the_cache)することもできます。
 
 ~Controller~
 ------------
 
-Controllerの部分は[フロントコントローラー](#chapter_01_the_environments)と[アクション](#chapter_03_see_it_in_action_in_the_browser)によって管理されます。
+Controller の部分は[フロントコントローラー](#chapter_01_the_environments)と[アクション](#chapter_03_see_it_in_action_in_the_browser)によって管理されます。
 
-タスクは[シンプルなモジュール](#chapter_07_job_category_module_creation)、[CRUDモジュール](#chapter_03_see_it_in_action_in_the_browser)を作成する、もしくはモデルクラス用に十分に実用的な[adminモジュール](#chapter_12_backend_modules)を生成するために使うことができます。
+タスクは[シンプルなモジュール](#chapter_07_job_category_module_creation)、[CRUD モジュール](#chapter_03_see_it_in_action_in_the_browser)を作成する、もしくはモデルクラス用に十分に実用的な [admin モジュール](#chapter_12_backend_modules)を生成するために使うことができます。
 
-adminモジュールによってコードをまったく書かなくても十分な機能を持つアプリケーションを作ることができます。 
+admin モジュールによってコードをまったく書かなくても十分な機能を持つアプリケーションを作ることができます。 
 
-Webサイトの技術的な実装を抽出するために、symfonyは[プリティURL](#chapter_05_urls)を生成する[ルーティング](#chapter_05_routing_configuration)サブフレームワークを利用します。
-Webサービスの実装を簡単にするために、symfonyは複数の[フォーマット](#chapter_14_formats)をネイティブでサポートします。
-独自[フォーマット](#chapter_15_sub_the_yaml_format)を作ることもできます。
+Web サイトの技術的な実装を抽出するために、symfony は[プリティ URL](#chapter_05_urls) を生成する[ルーティング](#chapter_05_routing_configuration)サブフレームワークを利用します。Web サービスの実装を簡単にするために、symfony は複数の[フォーマット](#chapter_14_formats)をネイティブでサポートします。独自[フォーマット](#chapter_15_sub_the_yaml_format)を作ることもできます。
 
 アクションを別のアクションに[フォワード](#chapter_04_sidebar_the_forward_methods_family)、もしくは[リダイレクト](#chapter_05_sidebar_the_redirect_methods_family)できます。
 
 ~コンフィギュレーション~
 -----------------------
 
-symfonyフレームワークでは異なる~環境~に対して異なる~コンフィギュレーション~を用意するのが楽です。
-[環境](#chapter_01_the_environments)はコンフィギュレーションの集まりで開発もしくは運用サーバーで異なるふるまいを可能にします。
-新しい[環境](#chapter_21_creating_a_new_environment)を作ることもできます。
+symfony フレームワークでは異なる~環境~に対して異なる~コンフィギュレーション~を用意するのが楽です。[環境](#chapter_01_the_environments)はコンフィギュレーションの集まりで開発もしくは運用サーバーで異なるふるまいを可能にします。新しい[環境](#chapter_21_creating_a_new_environment)を作ることもできます。
 
-symfonyの設定ファイルは[異なるレベル](#chapter_04_sidebar_configuration_principles_in_symfony)で定義可能でこれらの大部分が[環境を認識します](#chapter_08_sidebar_configuration_principles_in_symfony):
+symfony の設定ファイルは[異なるレベル](#chapter_04_sidebar_configuration_principles_in_symfony)で定義可能でこれらの大部分が[環境を認識します](#chapter_08_sidebar_configuration_principles_in_symfony):
 
  * [`app.yml`](#chapter_06_custom_configuration)
  * [`cache.yml`](#chapter_21_cache_configuration)
@@ -95,10 +83,9 @@ symfonyの設定ファイルは[異なるレベル](#chapter_04_sidebar_configur
  * [`settings.yml`](#chapter_11_sub_built_in_security_features)
  * [`view.yml`](#chapter_04_the_stylesheets_images_and_javascripts)
 
-大部分の設定ファイルは[YAMLフォーマット](#chapter_03_sidebar_the_yaml_format)を使います。
+大部分の設定ファイルは [YAML フォーマット](#chapter_03_sidebar_the_yaml_format)を使います。
 
-デフォルトのディレクトリ構造を利用してレイヤーごとにアプリケーションをわける代わりに、これらを機能ごとにわけて、[プラグイン](#chapter_20_sub_a_different_way_to_organize_code)にまとめることができます。
-デフォルトのディレクトリ構造に関して、ニーズに応じて[カスタマイズ](#chapter_22_customizing_the_directory_structure)することもできます。
+デフォルトのディレクトリ構造を利用してレイヤーごとにアプリケーションをわける代わりに、これらを機能ごとにわけて、[プラグイン](#chapter_20_sub_a_different_way_to_organize_code)にまとめることができます。デフォルトのディレクトリ構造に関して、ニーズに応じて[カスタマイズ](#chapter_22_customizing_the_directory_structure)することもできます。
 
 ~デバッグ~
 ----------
@@ -111,32 +98,30 @@ symfonyの設定ファイルは[異なるレベル](#chapter_04_sidebar_configur
 </doctrine>
 [重大な例外](#chapter_01_the_environments)まで、symfonyは開発者が問題を速くデバッグするために便利で助けになるツールをたくさん提供します。
 
-symfonyの主要なオブジェクト
----------------------------
+symfony の主要なオブジェクト
+----------------------------
 
-symfonyフレームワークはWebプロジェクトで頻度の高いニーズを抽出するコアオブジェクトを精選して提供します: [リクエスト](#chapter_04_sub_the_request)、[レスポンス](#chapter_04_sub_the_response)、[ユーザー](#chapter_13_sub_the_myuser_class)、[ロギング](#chapter_23_sub_logging)、[ルーティング](#chapter_05_routing_configuration)と[mailer](#chapter_16)、と[view cache manager](#chapter_16_sidebar_the_code_sfcontext_code_class)です。
+symfony フレームワークはWebプロジェクトで頻度の高いニーズを抽出するコアオブジェクトを精選して提供します: [リクエスト](#chapter_04_sub_the_request)、[レスポンス](#chapter_04_sub_the_response)、[ユーザー](#chapter_13_sub_the_myuser_class)、[ロギング](#chapter_23_sub_logging)、[ルーティング](#chapter_05_routing_configuration)と[メーラー](#chapter_16)、と[ビューキャッシュマネージャー](#chapter_16_sidebar_the_code_sfcontext_code_class)です。
 
-これらのコアオブジェクトは[`sfContext`オブジェクト](#chapter_16_sidebar_the_code_sfcontext_code_class)によって管理され、[ファクトリ](#chapter_16_sub_factories)をとおしてこれらを設定できます。
+これらのコアオブジェクトは [`sfContext` オブジェクト](#chapter_16_sidebar_the_code_sfcontext_code_class)によって管理され、[ファクトリ](#chapter_16_sub_factories)をとおしてこれらを設定できます。
 
-ユーザーオブジェクトはユーザーの[認証](#chapter_13_sub_authentication)、[認可](#chapter_13_sub_authorization)、[flash](#chapter_13_user_flashes)とセッションでシリアライズされる[属性](#chapter_13_user_attributes)を管理します。
+ユーザーオブジェクトはユーザーの[認証](#chapter_13_sub_authentication)、[認可](#chapter_13_sub_authorization)、[flash](#chapter_13_user_flashes) とセッションでシリアライズされる[属性](#chapter_13_user_attributes)を管理します。
 
 ~セキュリティ~
 --------------
 
-symfonyフレームワークは[XSS](#chapter_01_sub_application_creation)と[CSRF](#chapter_01_sub_application_creation)に対して組み込みの防御機能を持ちます。
-これらの設定は[コマンドライン](#chapter_01_sub_application_creation)から、もしくは[設定ファイル](#chapter_11_sub_xss_and_csrf_protection)を編集することで設定できます。
+symfony フレームワークは [XSS](#chapter_01_sub_application_creation) と [CSRF](#chapter_01_sub_application_creation) に対して組み込みの防御機能を持ちます。これらの設定は[コマンドライン](#chapter_01_sub_application_creation)から、もしくは[設定ファイル](#chapter_11_sub_xss_and_csrf_protection)を編集することで設定できます。
 
 フォームフレームワークは[組み込みのセキュリティ機能](#chapter_11_sub_built_in_security_features)も提供します。
 
 ~フォーム~
 ----------
 
-Web開発者にとってフォームの管理がもっとも退屈なタスクの1つなので、symfonyは[フォームサブフレームワーク](#chapter_10_the_form_framework)を提供します。
-フォームフレームワークはたくさんの[ウィジェット](http://www.symfony-project.org/api/1_4/widget)と[バリデーター](http://www.symfony-project.org/api/1_4/validator)を搭載しています。
+Web 開発者にとってフォームの管理がもっとも退屈なタスクの1つなので、symfony は[フォームサブフレームワーク](#chapter_10_the_form_framework)を提供します。フォームフレームワークはたくさんの[ウィジェット](http://www.symfony-project.org/api/1_4/widget)と[バリデーター](http://www.symfony-project.org/api/1_4/validator)を搭載しています。
 
 フォームサブフレームワークの強みの1つはテンプレートがとても簡単に[カスタマイズ可能](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form)であることです。
 
-##ORM##を利用する場合、フォームフレームワークはモデルに基づいて
+##ORM## を利用する場合、フォームフレームワークはモデルに基づいて
 <propel>
 [フォームとフィルターを生成する方法](#chapter_10_propel_forms)も簡単になります。
 </propel>
@@ -147,14 +132,12 @@ Web開発者にとってフォームの管理がもっとも退屈なタスク�
 国際化とローカライゼーション
 ----------------------------
 
-ICU標準のおかげで、[国際化](#chapter_19_internationalization)と[ローカライゼーション](#chapter_19_localization)はsymfonyによってサポートされます。
-[ユーザーculture](#chapter_19_sub_the_user_culture)はユーザーの言語と国を決定します。
-これはユーザー自身もしくは[URL](#chapter_19_culture_in_the_url)に埋め込むことで定義できます。
+ICU 標準のおかげで、[国際化](#chapter_19_internationalization)と[ローカライゼーション](#chapter_19_localization)は symfony によってサポートされます。[ユーザー culture](#chapter_19_sub_the_user_culture) はユーザーの言語と国を決定します。これはユーザー自身もしくは [URL](#chapter_19_culture_in_the_url) に埋め込むことで定義できます。
 
 テスト
 ------
 
-**ユニットテスト**のために使われるlimeライブラリはたくさんの[テスト用のメソッド](#chapter_08_the_lime_testing_framework)を提供します。
+**ユニットテスト**のために使われる lime ライブラリはたくさんの[テスト用のメソッド](#chapter_08_the_lime_testing_framework)を提供します。
 
 [専用のデータベース](#chapter_08_sub_database_configuration)と専用の[フィクスチャ](#chapter_08_sub_test_data)から
 <propel>
@@ -167,14 +150,13 @@ ICU標準のおかげで、[国際化](#chapter_19_internationalization)と[ロ�
 ユニットテストは[一度に1つ](#chapter_08_running_unit_tests)もしくは[まとめて](#chapter_08_unit_tests_harness)実行できます。
 
 **機能テスト**は
-[`sfFunctionalTest`](#chapter_09_the_sftestfunctional_class)クラスで記述され、[ブラウザーシミュレーター](#chapter_09_the_sfbrowser_class)を使い、symfonyは[テスター](#chapter_09_the_sftestfunctional_class)をとおして
-コアオブジェクトのイントロスペクトができます。
-[リクエストオブジェクト](#chapter_09_sub_the_request_tester)、[レスポンスオブジェクト](#chapter_09_sub_the_response_tester)、[ユーザーオブジェクト](#chapter_13_user_testing)、[現在のフォームオブジェクト](#chapter_11_the_form_tester)、[キャッシュレイヤー](#chapter_21_testing_the_cache)と
+[`sfFunctionalTest`](#chapter_09_the_sftestfunctional_class)クラスで記述され、[ブラウザーシミュレーター](#chapter_09_the_sfbrowser_class)を使い、symfony は[テスター](#chapter_09_the_sftestfunctional_class)をとおして
+コアオブジェクトのイントロスペクトができます。[リクエストオブジェクト](#chapter_09_sub_the_request_tester)、[レスポンスオブジェクト](#chapter_09_sub_the_response_tester)、[ユーザーオブジェクト](#chapter_13_user_testing)、[現在のフォームオブジェクト](#chapter_11_the_form_tester)、[キャッシュレイヤー](#chapter_21_testing_the_cache)と
 <propel>
-[Propelオブジェクト](#chapter_11_the_propel_tester)
+[Propel オブジェクト](#chapter_11_the_propel_tester)
 </propel>
 <doctrine>
-[Doctrineオブジェクト](#chapter_11_the_doctrine_tester)
+[Doctrine オブジェクト](#chapter_11_the_doctrine_tester)
 </doctrine>
 のためのテスターが存在します。
 
@@ -187,17 +169,16 @@ ICU標準のおかげで、[国際化](#chapter_19_internationalization)と[ロ�
 プラグイン
 ----------
 
-symfonyフレームワークはWebアプリケーションのための基盤のみを提供しより多くの機能を追加するために[プラグイン](#chapter_20_using_plugins)を頼りにします。
-このチュートリアルでは、[`sfGuardPlugin`](#chapter_13_plugins)、[`sfFormExtraPlugin`](#chapter_19_language_switching)、[`sfTaskExtraPlugin`](#chapter_20_contributing_a_plugin)を話しました。
+symfony フレームワークは Web アプリケーションのための基盤のみを提供しより多くの機能を追加するために[プラグイン](#chapter_20_using_plugins)を頼りにします。このチュートリアルでは、[`sfGuardPlugin`](#chapter_13_plugins)、[`sfFormExtraPlugin`](#chapter_19_language_switching)、[`sfTaskExtraPlugin`](#chapter_20_contributing_a_plugin) を話しました。
 
 インストールの後でプラグインを[アクティベート](#chapter_20_sidebar_plugin_activation)しなければなりません。
 
-プラグインはsymfonyの公式サイトに[寄付](#chapter_20_contributing_a_plugin)する最高の方法です。
+プラグインは symfony の公式サイトに[寄付](#chapter_20_contributing_a_plugin)する最高の方法です。
 
 ~タスク~
 --------
 
-symfony CLIはたくさんのタスクを提供し、もっとも便利なものはこのチュートリアルで検討しました:
+symfony CLI はたくさんのタスクを提供し、もっとも便利なものはこのチュートリアルで検討しました:
 
  * [`app:routes`](#chapter_05_route_debugging)
  * [`cache:clear`](#chapter_21_clearing_the_cache)
@@ -237,28 +218,19 @@ symfony CLIはたくさんのタスクを提供し、もっとも便利なもの
 
 ### 練習して学ぶ
 
-symfonyフレームワークには、どのソフトウェアのピースと同じように、学習曲線があります。
-学習プロセスにおいて、最初のステップはこの本のように実際の例から学ぶことです。 
-2番目のステップは**練習です**。練習に勝るものはありません。
+symfony フレームワークには、どのソフトウェアのピースと同じように、学習曲線があります。学習プロセスにおいて、最初のステップはこの本のように実際の例から学ぶことです。2番目のステップは**練習です**。練習に勝るものはありません。
 
-それが今日始められることです。
-ToDoリストマネージャー、シンプルなblog、時間もしくは通貨コンバーター、などなんらかの価値を提供するWebプロジェクトを考えてください。 
-1つ選び今日知っている知識で実装を始めてください。
-異なるオプションを学ぶためにタスクのヘルプメッセージを使い、symfonyによって生成されるコードを眺め、[Eclipse](http://www.eclipse.org/)のような、PHPの自動入力補完があるテキストエディタを使います auto-completion support like [Eclipse](http://www.eclipse.org/)、symfonyによって提供されるすべてのコンフィギュレーションを眺めるために[リファレンスガイド](http://www.symfony-project.org/reference/1_4/)を参照します。
+それが今日始められることです。ToDo リストマネージャー、シンプルなブログ、時間もしくは通貨コンバーター、などなんらかの価値を提供する Web プロジェクトを考えてください。1つ選び今日知っている知識で実装を始めてください。異なるオプションを学ぶためにタスクのヘルプメッセージを使い、symfony によって生成されるコードを眺め、[Eclipse](http://www.eclipse.org/) のような、PHP の自動入力補完があるテキストエディタを使います。symfonyによって提供されるすべてのコンフィギュレーションを見るために[リファレンスガイド](http://www.symfony-project.org/reference/1_4/ja/)を参照します。
 
-symfonyをより学ぶために自由にできるすべての無料の素材を楽しんでください。
+symfony をより学ぶために自由にできるすべての無料の素材を楽しんでください。
 
 ### コミュニティ
 
-チュートリアルが終わる前に、最後にsymfonyに関して話したいことが1つあります。
-symfonyはたくさんのすばらしい機能と無料のドキュメントを提供します。
-しかし、オープンソースが持つもっとも貴重な資産の1つはコミュニティです。
-そしてsymfonyにはもっとも面白くて活発なコミュニティの1つがあります。
-プロジェクトでsymfonyを使い始めるのであれば、symfonyのコミュニティに参加することを考えてください:
+チュートリアルが終わる前に、最後に symfony に関して話したいことが1つあります。symfony はたくさんのすばらしい機能と無料のドキュメントを提供します。しかし、オープンソースが持つもっとも貴重な資産の1つはコミュニティです。そして symfony にはもっとも面白くて活発なコミュニティの1つがあります。プロジェクトで symfony を使い始めるのであれば、symfony のコミュニティに参加することを考えてください:
 
   * [ユーザーのメーリングリスト](http://groups.google.com/group/symfony-users)を購読する
-  * 公式[blogのフィード](http://feeds.feedburner.com/symfony/blog)を購読する
-  * symfonyの[planetフィード](http://feeds.feedburner.com/symfony/planet)を購読する
-  * freenodeの[#symfony IRC](irc://irc.freenode.net/symfony)チャンネルに来てチャットをする
+  * [公式ブログのフィード](http://feeds.feedburner.com/symfony/blog)を購読する
+  * symfony の [planet フィード](http://feeds.feedburner.com/symfony/planet)を購読する
+  * freenode の [#symfony IRC](irc://irc.freenode.net/symfony) チャンネルに来てチャットをする
 
 __ORM__

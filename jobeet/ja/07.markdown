@@ -1,19 +1,16 @@
-7日目: カテゴリページで遊ぶ
-===========================
+7日目: カテゴリーページで遊ぶ
+============================
 
-昨日はたくさんの異なる領域: ##ORM##でクエリを行う、フィクスチャ、ルーティング、デバッグとカスタムの設定などsymfonyの知識を広げました。
-今日は少しチャレンジして終わります。
+昨日はたくさんの異なる領域: ##ORM## でクエリを行う、フィクスチャ、ルーティング、デバッグとカスタムの設定など symfony の知識を広げました。今日は少しチャレンジして終わります。
 
-あなたがJobeetのカテゴリページで取り組んでくださることを期待しています。
-今日のチュートリアルはさらに大切になります。
+あなたが Jobeet のカテゴリーページで取り組んでくださることを期待しています。今日のチュートリアルはさらに大切になります。
 
 準備はいいですか？実現可能な実装について語りましょう。
 
-カテゴリのルート
+カテゴリーのルート
 ----------------
 
-最初に、カテゴリページに対してプリティURLを定義するためにルートを定義する必要があります。
-ルーティングファイルの冒頭で次の内容を追加します:
+最初に、カテゴリーページに対してプリティ URL を定義するためにルートを定義する必要があります。ルーティングファイルの冒頭で次の内容を追加します:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -24,12 +21,9 @@
       options:  { model: JobeetCategory, type: object }
 
 >**TIP**
->新しい機能を実装し始めるとき、最初に~URL~を考えて関連~ルート~を作るのはよい習慣です。
->デフォルトのルーティングルールを削除するときにこれは必須です。
+>新しい機能を実装し始めるとき、最初に ~URL~ を考えて関連~ルート~を作るのはよい習慣です。デフォルトのルーティングルールを削除するときにこれは必須です。
 
-ルートは関連オブジェクトからの任意のカラムをパラメーターとして使うことができます。
-オブジェクトクラスで定義された関連アクセサーが存在する場合、ルートは他の値も使用できます。
-`slug`パラメーターは対応する`category`テーブルのカラムを持たないので、ルートを動作させるために`JobeetCategory`のバーチャルアクセサーを追加する必要があります:
+ルートは関連オブジェクトからの任意のカラムをパラメーターとして使うことができます。オブジェクトクラスで定義される関連アクセサーが存在する場合、ルートは他の値も使用できます。`slug` パラメーターは対応する `category` テーブルのカラムを持たないので、ルートを動作させるために `JobeetCategory` のバーチャルアクセサーを追加する必要があります:
 
     [php]
 <propel>
@@ -43,10 +37,10 @@
       return Jobeet::slugify($this->getName());
     }
 
-カテゴリのリンク
-----------------
+カテゴリーのリンク
+-----------------
 
-リンクをカテゴリページに追加するために`job`モジュールの`indexSuccess.php`テンプレートを編集します:
+リンクをカテゴリーページに追加するために `job` モジュールの `indexSuccess.php` テンプレートを編集します:
 
     [php]
     <!-- some HTML code -->
@@ -70,9 +64,8 @@
       <?php endforeach; ?>
     </div>
 
-現在のカテゴリで表示する求人件数が10を越える場合のみにリンクを表示します。
-リンクは表示されない求人件数を含みます。
-このテンプレートを動作させるために、`JobeetCategory`に`countActiveJobs()`メソッドを追加する必要があります:
+現在のカテゴリーで表示する求人件数が10を越える場合のみにリンクを表示します。リンクは表示されない求人件数を含みます。
+このテンプレートを動作させるために、`JobeetCategory` に `countActiveJobs()` メソッドを追加する必要があります:
 
 <propel>
     [php]
@@ -85,8 +78,7 @@
       return JobeetJobPeer::countActiveJobs($criteria);
     }
 
-`countActiveJobs()`メソッドは`JobeetJobPeer`にはまだ存在しない`countActiveJobs()`メソッドを使用します。
-`JobeetJobPeer.php`ファイルの内容を次のコードで置き換えます:
+`countActiveJobs()` メソッドは `JobeetJobPeer` にはまだ存在しない `countActiveJobs()` メソッドを使用します。`JobeetJobPeer.php` ファイルの内容を次のコードで置き換えます:
 </propel>
 <doctrine>
     [php]
@@ -100,8 +92,7 @@
       return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
     }
 
-`countActiveJobs()`メソッドは`JobeetJobTable`にまだ存在しない`countActiveJobs()`メソッドを使用します。
-`JobeetJobTable.php`ファイルの内容を次のコードで置き換えます:
+`countActiveJobs()` メソッドは `JobeetJobTable` にまだ存在しない `countActiveJobs()` メソッドを使用します。`JobeetJobTable.php` ファイルの内容を次のコードで置き換えます:
 </doctrine>
 
 <propel>
@@ -138,7 +129,7 @@
       }
     }
 
-ご覧の通り、コードをより[~DRY~(Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)にするために、新しく共有される`addActiveJobsCriteria()`メソッドを導入して`JobeetJobPeer`のコード全体をリファクタリングしました。
+ご覧の通り、コードをより [~DRY~(Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself) にするために、新しく共有される `addActiveJobsCriteria()` メソッドを導入して `JobeetJobPeer` のコード全体をリファクタリングしました。
 
 </propel>
 <doctrine>
@@ -178,50 +169,41 @@
       }
     }
 
-ご覧の通り、コードをより[~DRY~(Don't Repeat Yourself )](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)にするために、新しく共有する`addActiveJobsQuery()`メソッドを導入して`JobeetJobTable`のコード全体をリファクタリングしました。
+ご覧の通り、コードをより [~DRY~(Don't Repeat Yourself )](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself) にするために、新しく共有する `addActiveJobsQuery()` メソッドを導入して `JobeetJobTable` のコード全体をリファクタリングしました。
 </doctrine>
 
 >**TIP**
->最初にコードのピースが再利用されるとき、コードのコピーで間に合うかもしれません。
->しかしそれを他の場所で使う場合、今しがたやったように、共用の関数もしくはメソッドへのすべての利用をリファクタリングする必要があります。
+>最初にコードのピースが再利用されるとき、コードのコピーで間に合うかもしれません。しかしそれを他の場所で使う場合、今しがたやったように、共用の関数もしくはメソッドへのすべての利用をリファクタリングする必要があります。
 
 <propel>
-`countActiveJobs()`メソッドにおいて。`doSelect()`を使って結果数をカウントする代わりに、ずっと速い`doCount()`メソッドを使いました。
+`countActiveJobs()` メソッドにおいて、`doSelect()` を使って結果数をカウントする代わりに、ずっと速い `doCount()` メソッドを使いました。
 </propel>
 <doctrine>
-`countActiveJobs()`メソッドにおいて、`execute()`を使って結果数をカウントする代わりに、はるかに速い`count()`メソッドを使いました。
+`countActiveJobs()` メソッドにおいて、`execute()` を使って結果数をカウントする代わりに、はるかに速い `count()` メソッドを使いました。
 </doctrine>
 
-このシンプルな機能のために、たくさんのファイルを変更しました。
-コードを追加するたびに、アプリケーションの正しいレイヤーに設置しようとしました。
-コードを再利用できるようにすることにも取り組みました。
-このプロセスにおいて、既存のコードをリファクタリングすることも行いました。
-これはsymfonyプロジェクトに取り組む際の典型的なワークフローです。
-次のスクリーンショットでは短くするために5件の求人を表示しており、10件を見ることになります(`max_jobs_on_homepage`設定):
+このシンプルな機能のために、たくさんのファイルを変更しました。コードを追加するたびに、アプリケーションの正しいレイヤーに設置しようとしました。コードを再利用できるようにすることにも取り組みました。このプロセスにおいて、既存のコードをリファクタリングすることも行いました。これは symfony プロジェクトに取り組む際の典型的なワークフローです。次のスクリーンショットでは短くするために5件の求人を表示しており、10件を見ることになります (`max_jobs_on_homepage` 設定):
 
 ![ホームページ](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
 
-求人のcategoryモジュールの作成
------------------------------
+求人の category モジュールの作成
+--------------------------------
 
-`category`~モジュール~を作りましょう:
+`category` ~モジュール~を作りましょう:
 
     $ php symfony generate:module frontend category
 
-モジュールを作ってあるのであれば、おそらく`propel:generate-module`を使ったことでしょう。
-これはよいのですが生成コードの90％は不要なので、空のモジュールを作成する`generate:module`を使いました。
+モジュールを作ってあるのであれば、おそらく `propel:generate-module` を使ったことでしょう。これはよいのですが生成コードの90％は不要なので、空のモジュールを作成する `generate:module` を使いました。
 
 >**TIP**
->`job`モジュールに`category`アクションを追加しないのはなぜでしょうか？
->できますが、カテゴリページのメインの対象はカテゴリなので、専用の`category`モジュールを作るのは自然に思われます。
+>`job` モジュールに `category` アクションを追加しないのはなぜでしょうか？できますが、カテゴリーページのメインの対象はカテゴリなので、専用の `category` モジュールを作るのは自然に思われます。
 
-カテゴリページにアクセスする際に、`category`ルートは`slug`リクエスト変数に関連するカテゴリを見つけなければなりません。
-~スラッグ~はデータベースに保存されないのとスラッグからカテゴリの名前を推測できないので、スラッグに関連するカテゴリを見つける方法がありません。
+カテゴリーページにアクセスする際に、`category` ルートは `slug` リクエスト変数に関連するカテゴリーを見つけなければなりません。~スラッグ~はデータベースに保存されないのとスラッグからカテゴリーの名前を推測できないので、スラッグに関連するカテゴリを見つける方法がありません。
 
 データベースを更新する
 ----------------------
 
-`category`テーブル用に`slug`カラムを追加する必要があります:
+`category` テーブルのために `slug` カラムを追加する必要があります:
 
 <propel>
     [yml]
@@ -233,8 +215,7 @@
         slug:         { type: varchar(255), required: true, index: unique }
 </propel>
 <doctrine>
-この`slug`カラムはDoctrineの`Sluggable`ビヘイビアによって考慮されます。
-`JobeetCategory`モデルのビヘイビアを有効にすればすべてが考慮されます。
+この `slug` カラムは Doctrine の `Sluggable` ビヘイビアによって考慮されます。`JobeetCategory` モデルのビヘイビアを有効にすればすべてが考慮されます。
 
     [yml]
     # config/doctrine/schema.yml
@@ -250,11 +231,10 @@
 
 </doctrine>
 
-`slug`は本当のカラムなので、`JobeetCategory`から`getSlug()`メソッドを削除する必要があります。
+`slug` は本当のカラムなので、`JobeetCategory` から `getSlug()` メソッドを削除する必要があります。
 
 <propel>
-`category`の名前が代わるたびに、`slug`を算出して変更する必要があります。
-`setName()`メソッドをオーバーライドしてみましょう:
+`category` の名前が代わるたびに、`slug` を算出して変更する必要があります。`setName()` メソッドをオーバーライドしてみましょう:
 
     [php]
     // lib/model/JobeetCategory.php
@@ -267,16 +247,14 @@
 </propel>
 <doctrine>
 >**NOTE**
->レコードを保存する際にslugカラムの設定は自動的に考慮されます。
->`name`フィールドの値を使ってスラッグはビルドされオブジェクトに設定されます。
+>レコードを保存する際に slug カラムの設定は自動的に考慮されます。`name` フィールドの値を使ってスラッグはビルドされオブジェクトに設定されます。
 </doctrine>
 
-データベースのテーブルを更新するには`propel:build --all --and-load`タスクを使い、データベースにフィクスチャを投入します:
+データベースのテーブルを更新するには `propel:build --all --and-load` タスクを使い、データベースにフィクスチャを投入します:
 
     $ php symfony propel:build --all --and-load --no-confirmation
 
-`executeShow()`メソッドを作るための場所が手に入りました。
-次のコードで`category`アクションファイルの内容を置き換えます:
+`executeShow()` メソッドを作るための場所が手に入りました。次のコードで `category` アクションファイルの内容を置き換えます:
 
     [php]
     // apps/frontend/modules/category/actions/actions.class.php
@@ -289,9 +267,9 @@
     }
 
 >**NOTE**
->生成された`executeIndex()`メソッドを削除したので、`indexSuccess.php`テンプレートも自動的に削除できます(`apps/frontend/modules/category/templates/indexSuccess.php`)。
+>生成された `executeIndex()` メソッドを削除したので、`indexSuccess.php` テンプレートも自動的に削除できます (`apps/frontend/modules/category/templates/indexSuccess.php`)。
 
-最後のステップは`showSuccess.php`テンプレートを作ることです:
+最後のステップは `showSuccess.php` テンプレートを作ることです:
 
     [php]
     // apps/frontend/modules/category/templates/showSuccess.php
@@ -325,14 +303,9 @@
 ~パーシャル|パーシャルテンプレート~
 ----------------------------------
 
-jobの`indexSuccess.php`テンプレートから求人リストを作成する`<table>`タグをコピー＆ペーストしたことに注目してください。
-これはよいことではありません。
-新しいトリックを学びましょう。
-テンプレートの一部を再利用する必要があるとき、**~パーシャル|パーシャルテンプレート~(partial)**を作る必要があります。
-パーシャルは複数のテンプレートの間で共有できる~テンプレート~コードのスニペットです。
-アンダースコア(`_`)で始まる別の種類のテンプレートにすぎません。
+job の `indexSuccess.php` テンプレートから求人リストを作成する `<table>` タグをコピー＆ペーストしたことに注目してください。これはよいことではありません。新しいトリックを学びましょう。テンプレートの一部を再利用する必要があるとき、**~パーシャル|パーシャルテンプレート~ (partial)** を作る必要があります。パーシャルは複数のテンプレートの間で共有できる~テンプレート~コードのスニペットです。アンダースコア (`_`) で始まる別の種類のテンプレートにすぎません。
 
-`_list.php`ファイルを作ります:
+`_list.php` ファイルを作ります:
 
     [php]
     // apps/frontend/modules/job/templates/_list.php
@@ -352,19 +325,17 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
       <?php endforeach; ?>
     </table>
 
-~`include_partial()`~ヘルパーを利用することでパーシャルをインクルードできます:
+~`include_partial()`~ ヘルパーを利用することでパーシャルをインクルードできます:
 
     [php]
     <?php include_partial('job/list', array('jobs' => $jobs)) ?>
 
-`include_partial()`の最初の引数はパーシャルの名前です(モジュールの名前、`/`と先頭の`_`がないパーシャルの名前で構成)。
-2番目の引数はパーシャルに渡される変数の配列です。
+`include_partial()` の最初の引数はパーシャルの名前です (モジュールの名前、`/` と先頭の `_` がないパーシャルの名前で構成)。2番目の引数はパーシャルに渡される変数の配列です。
 
 >**NOTE**
->なぜ`include_partial()`ヘルパーの代わりにPHP組み込みの`include()`関数を使わないのでしょうか？ 
->2つの主な違いは`include_partial()`ヘルパーの組み込みのキャッシュサポートです。
+>なぜ `include_partial()` ヘルパーの代わりに PHP 組み込みの `include()` 関数を使わないのでしょうか？2つの主な違いは `include_partial()` ヘルパーの組み込みのキャッシュサポートです。
 
-両方からのHTMLコードの`<table>`を`include_partial()`の呼び出しで置き換えます:
+両方からの HTML コードの `<table>` を `include_partial()` の呼び出しで置き換えます:
 
     [php]
     // in apps/frontend/modules/job/templates/indexSuccess.php
@@ -380,9 +351,7 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
 
   "リストはページごとに20件の求人でページ分割される"
 
-##ORM##オブジェクトのリストをページ分割するために、symfonyは専用のクラス:
-[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager)を提供します。
-`category`アクションにおいて、`showSuccess`テンプレートにjobオブジェクトを渡す代わりに、ページャーを渡します:
+##ORM## オブジェクトのリストをページ分割するために、symfony は専用のクラス: [`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager) を提供します。`category` アクションにおいて、`showSuccess` テンプレートに job オブジェクトを渡す代わりに、ページャーを渡します:
 
     [php]
     // apps/frontend/modules/category/actions/actions.class.php
@@ -405,11 +374,9 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
     }
 
 >**TIP**
->`sfRequest::getParameter()`メソッドは2番目の引数でデフォルトの値を受け取ります。
->上記のアクションにおいて、`page`リクエストパラメーターが存在しない場合、`getParameter()`は`1`を返します。
+>`sfRequest::getParameter()` メソッドは2番目の引数でデフォルトの値を受け取ります。上記のアクションにおいて、`page` リクエストパラメーターが存在しない場合、`getParameter()` は `1` を返します。
 
-`sfPropelPager`コンストラクターはモデルクラスとページごとに返すアイテムの最大個数を受け取ります。
-後者の値を設定ファイルに追加します:
+`sfPropelPager` コンストラクターはモデルクラスとページごとに返すアイテムの最大個数を受け取ります。後者の値を設定ファイルに追加します:
 
     [yml]
     # apps/frontend/config/app.yml
@@ -419,17 +386,17 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
       max_jobs_on_category: 20
 
 <propel>
-`sfPropelPager::setCriteria()`メソッドはデータベースからアイテムをselectする際に使う`Criteria`オブジェクトを受け取ります。
+`sfPropelPager::setCriteria()` メソッドはデータベースからアイテムを SELECT する際に使う `Criteria` オブジェクトを受け取ります。
 </propel>
 <doctrine>
-`sfDoctrinePager::setQuery()`メソッドはデータベースからアイテムをselectする際に使う`Doctrine_Query`オブジェクトを受け取ります。
+`sfDoctrinePager::setQuery()` メソッドはデータベースからアイテムを SELECT する際に使う `Doctrine_Query` オブジェクトを受け取ります。
 </doctrine>
 
 <propel>
-`getActiveJobsCriteria()`メソッドを追加します:
+`getActiveJobsCriteria()` メソッドを追加します:
 </propel>
 <doctrine>
-`getActiveJobsQuery()`メソッドを追加します:
+`getActiveJobsQuery()` メソッドを追加します:
 </doctrine>
 
 <propel>
@@ -457,10 +424,10 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
 </doctrine>
 
 <propel>
-`getActiveJobsCriteria()`メソッドを定義したのでこのメソッドを使うようにするために`JobeetCategory`メソッドをリファクタリングできます:
+`getActiveJobsCriteria()` メソッドを定義したのでこのメソッドを使うようにするために `JobeetCategory` メソッドをリファクタリングできます:
 </propel>
 <doctrine>
-`getActiveJobsQuery()`メソッドを定義したので、このメソッドを使うようにするために`JobeetCategory`メソッドをリファクタリングできます:
+`getActiveJobsQuery()` メソッドを定義したので、このメソッドを使うようにするために `JobeetCategory` メソッドをリファクタリングできます:
 </doctrine>
 
 <propel>
@@ -551,34 +518,26 @@ jobの`indexSuccess.php`テンプレートから求人リストを作成する`<
       <?php endif; ?>
     </div>
 
-たいていのコードでは他のページへのリンクが扱われます。
-このテンプレートで使われる`sfPropelPager`メソッドのリストは次のとおりです:
+たいていのコードでは他のページへのリンクが扱われます。このテンプレートで使われる `sfPropelPager` メソッドのリストは次のとおりです:
 
-  * `getResults()`: 現在のページ用の##ORM##オブジェクトを返す
+  * `getResults()`: 現在のページ用の ##ORM## オブジェクトを返す
   * `getNbResults()`: 結果の合計数を返す
-  * `haveToPaginate()`: 複数のページがある場合は`true`を返す
+  * `haveToPaginate()`: 複数のページがある場合は `true` を返す
   * `getLinks()`: 表示するページリンクのリストを返す
   * `getPage()`: 現在のページ番号を返す
   * `getPreviousPage()`: 前のページ番号を返す
   * `getNextPage()`: 次のページ番号を返す
   * `getLastPage()`: 最後のページ番号を返す
 
-`sfPropelPager`は`Iterator`と`Countable`インターフェイスも実装するので、
-you can use `count()` function to get the number of results instead of the
-`getNbResults()` method.
+`sfPropelPager` は `Iterator` と `Countable` インターフェイスも実装するので、結果数を得るのに `getNbResults` メソッドの代わりに `count()` 関数を使うことができます。
 
 ![ページ分割](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
 
 また明日
 --------
 
-昨日独自の実装に取り組んだのであれば今日はあまり学ばなかったと感じるでしょう。
-これはsymfonyの哲学に慣れつつあることを意味します。
-symfonyのWebサイトに新しい機能を追加するプロセスは常に同じです:
-URLを考え、アクションを作り、モデルを更新し、テンプレートを書きます。
-そして、よい開発習慣を複数の事例に適用できるのであれば、早くsymfonyマスターになれます。
+昨日独自の実装に取り組んだのであれば今日はあまり学ばなかったと感じるでしょう。これは symfony の哲学に慣れつつあることを意味します。symfony の Web サイトに新しい機能を追加するプロセスは常に同じです: URL を考え、アクションを作り、モデルを更新し、テンプレートを書きます。そして、よい開発習慣を複数の事例に適用できるのであれば、早く symfony マスターになれます。
 
-明日はJobeetの新しい週の始まりです。
-祝うために、真新しいトピック: テストを語ります。
+明日は Jobeet の新しい週の始まりです。祝うために、真新しいトピック: テストを語ります。
 
 __ORM__
