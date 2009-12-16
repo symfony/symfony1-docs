@@ -410,11 +410,11 @@ underscore (`_`). Each action can be customized with the options described in
 this section. The same options can be used when defining an action in the
 `list`, `edit`, or `new` entries.
 
-### ~`name`~
+### ~`label`~
 
 *Default*: The action key
 
-The `name` option defines the label to use for the action.
+The `label` option defines the label to use for the action.
 
 ### ~`action`~
 

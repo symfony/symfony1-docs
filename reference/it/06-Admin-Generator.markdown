@@ -410,11 +410,11 @@ trattino di sottolineatura (`_`). Ciascuna azione può essere personalizzata con
 questa sezione. Le stesse opzioni possono essere usate quando si definisce una azione nelle
 voci `list`, `edit`, o `new`.
 
-### ~`name`~
+### ~`label`~
 
 *Predefinito*: La chiave dell'azione
 
-L'opzione `name` definisce l'etichetta da usare per l'azione.
+L'opzione `label` definisce l'etichetta da usare per l'azione.
 
 ### ~`action`~
 

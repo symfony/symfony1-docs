@@ -410,11 +410,11 @@ underscore (`_`). Chaque action peut être personnalisée avec les options décr
 cette section. Les mêmes options peuvent être utilisées pour définir une action dans
 les entrées `list`, `edit`, ou `new`.
 
-### ~`name`~
+### ~`label`~
 
 *Par défaut* : la clé de l'action
 
-L'option `name` définit le libellé à utiliser pour l'action.
+L'option `label` définit le libellé à utiliser pour l'action.
 
 ### ~`action`~
 
