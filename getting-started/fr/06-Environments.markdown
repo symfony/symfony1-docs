@@ -2,8 +2,8 @@ Les environnements
 ================
 
 Si vous regarder le répertoire `web/`, vous trouverez deux fichiers PHP :
-`index.php` et `frontend_dev.php`. Ces fichiers sont appelé **contrôleurs
-frontaux**; toutes les requêtes de l'application sont font par leur intermédiaire. Mais pourquoi
+`index.php` et `frontend_dev.php`. Ces fichiers sont appelés **contrôleurs
+frontaux**; toutes les requêtes de l'application se font par leur intermédiaire. Mais pourquoi
 nous avons deux contrôleurs frontaux pour chaque application ?
 
 Les deux fichiers pointent sur la même application mais pour des **environnements** différents.
