@@ -14,7 +14,7 @@ conséquences négatives d'une telle attitude paresseuse. Si l'utilisateur sait 
 développé avec symfony, il aura accès à un grand nombre de fichiers sensibles.
 
 **N'utilisez jamais cette configuration sur un serveur de production**, et lisez la section
-suivante pour savoir comment configurer votre serveur web correctement
+suivante pour savoir comment configurer votre serveur web correctement.
 
 La méthode sécurisée
 --------------
@@ -38,10 +38,10 @@ accessible au monde.
 Localisez et ouvrez le fichier de configuration `httpd.conf` et ajoutez la configuration
 suivante à la fin :
 
-    # Be sure to only have this line once in your configuration
+    # Soyez sûr d'avoir seulement cette ligne une fois dans votre configuration
     NameVirtualHost 127.0.0.1:8080
 
-    # This is the configuration for your project
+    # C'est la configuration pour votre projet
     Listen 127.0.0.1:8080
 
     <VirtualHost 127.0.0.1:8080>
@@ -61,23 +61,23 @@ suivante à la fin :
 
 >**NOTE**
 >L'alias `/sf` vous donne accès à des images et des fichiers JavaScript nécessaire
->pour afficher correctement les pages Symfony par défaut et la barre d'outils web de débogage.
+>pour afficher correctement les pages symfony par défaut et la barre d'outils web de débogage.
 >
 >Sur Windows, vous devez remplacer la ligne `Alias` avec quelque chose comme :
 >
 >     Alias /sf "c:\dev\sfproject\lib\vendor\symfony\data\web\sf"
 >
->et `/home/sfproject/web` doit être remplacé par :
+>Et `/home/sfproject/web` doit être remplacé par :
 >
 >     c:\dev\sfproject\web
 
 Cette configuration permet Apache d'écouter le port 8080 sur votre machine, de sorte que
-le site web sera accessible à l'adresse suivante:
+le site web sera accessible à l'adresse suivante :
 
     http://localhost:8080/
 
 Vous pouvez changer `8080` par un autre nombre, mais favorisez les nombres plus grand que `1024` car
-ils ne nécessitent pas de droits administrateur..
+ils ne nécessitent pas de droits administrateur.
 
 >**SIDEBAR**
 >Configurer un nom de domaine dédié
@@ -96,18 +96,17 @@ ils ne nécessitent pas de droits administrateur..
 >
 >Le nom du domaine `www.myproject.com.localhost` utilisé dans la configuration d'Apache
 > doit être déclaré localement. Si vous utilisez un système Linux, il doit être
->fait dans le fichier `/etc/hosts`. 
->done in the `/etc/hosts` file. Si vous exécutez Windows XP, ce fichier
+>fait dans le fichier `/etc/hosts`. Si vous exécutez Windows XP, ce fichier
 >se trouve dans le répertoire `C:\WINDOWS\system32\drivers\etc\`.
 >
->Ajoutez la ligne suivante:
+>Ajoutez la ligne suivante :
 >
 >     127.0.0.1 www.myproject.com.localhost
 
 ### Tester la nouvelle configuration
 
 Redémarrez Apache, et vérifiez que vous avez maintenant accès à la nouvelle application en
-ouvrant un navigateur et en tapant `http://localhost:8080/index.php/`, or
+ouvrant un navigateur et en tapant `http://localhost:8080/index.php/`, ou
 `http://www.myproject.com.localhost/index.php/` en fonction de la configuration d'Apache que
 vous avez choisi dans la section précédente.
 
@@ -120,7 +119,7 @@ vous avez choisi dans la section précédente.
 
 Vous devriez également essayer d'accéder à l'application dans l'environnement de développement
 (voir la section suivante pour plus d'informations sur les environnements). Tapez
-l'adresse URL suivante:
+l'adresse URL suivante :
 
     http://www.myproject.com.localhost/frontend_dev.php/
 
@@ -130,6 +129,6 @@ de petites icônes, prouvant que la configuration de votre alias `sf/` est corre
 ![La barre d'outils web de débogage](http://www.symfony-project.org/images/getting-started/1_4/web_debug_toolbar.png)
 
 >**Note**
->La configuration est un peu différente si vous voulez faire tourner Symfony sur un serveur IIS dans
+>La configuration est un peu différente si vous voulez faire tourner symfony sur un serveur IIS dans
 >un environnement de Windows. Vous trouverez la façon de le configurer dans le 
 >[tutoriel dédié](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
