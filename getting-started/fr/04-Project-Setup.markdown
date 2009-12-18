@@ -18,7 +18,7 @@ Sur Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project PROJECT_NAME
 
 La tâche `generate:project` génére la structure par défaut des répertoires et
-fichiers nécessaires pour un projet symfony :
+les fichiers nécessaires pour un projet symfony :
 
  | Répertoire  | Description
  | ----------- | ----------------------------------
@@ -102,7 +102,7 @@ répertoire `apps/frontend/` :
 >les plus répandues que l'on trouve sur le web. C'est vrai, symfony
 >prend automatiquement des mesures de ~sécurité|Sécurité~ à notre place.
 >
->Pour prévenir des attaques ~XSS~ attacks, l'output escaping a été activé; et pour prévenir
+>Pour prévenir des attaques ~XSS~, l'output escaping a été activé; et pour prévenir
 >des attaques ~CSRF~, un secret CSRF a été créé aléatoirement.
 >
 >Bien sûr, vous pouvez modifier ces paramètres grâce aux *options* suivantes :
