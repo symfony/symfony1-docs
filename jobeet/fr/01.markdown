@@ -557,7 +557,7 @@ serveur de production, vous avez besoin de plusieurs environnements :
     l'application.
 
   * L'**environnement de qualité** : Cet environnement est utilisé par le **client**
-    pour tester l'application et et les bogues ou les fonctionnalités manquantes.
+    pour tester l'application et les bogues ou les fonctionnalités manquantes.
 
   * L'**environnement de production** : C'est l'environnement où interagissent les
     **utilisateurs finaux**
