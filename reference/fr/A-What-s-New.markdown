@@ -1,1 +1,1 @@
-  link ../../tutorial/fr/whats-new.markdown
+link ../../tutorial/fr/whats-new.markdown

@@ -1,1 +1,1 @@
-  link ../../tutorial/fr/upgrade.markdown
+link ../../tutorial/fr/upgrade.markdown

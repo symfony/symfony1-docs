@@ -1,1 +1,1 @@
-  link ../../tutorial/fr/deprecated.markdown
+link ../../tutorial/fr/deprecated.markdown
