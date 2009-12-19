@@ -1,4 +1,4 @@
-Tasks
+Les tâches
 =====
 
 Le framework symfony est livré avec un outil en ligne de commande.
