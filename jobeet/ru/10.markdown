@@ -869,7 +869,7 @@ job используется, когда Вы хотите создать нов
       return floor(($this->getExpiresAt('U') - time()) / 86400);
 </propel>
 <doctrine>
-      return floor($this->getDateTimeObject('expires_at')->format('U') - time()) / 86400);
+      return floor(($this->getDateTimeObject('expires_at')->format('U') - time()) / 86400);
 </doctrine>
     }
 
