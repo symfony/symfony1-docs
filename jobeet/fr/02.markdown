@@ -1,0 +1,185 @@
+Jour 2 : Le Projet
+==================
+
+Nous n'avons pas écrit une seule ligne de PHP pour le moment, mais hier, nous avons configurer
+l'environnement, créer un projet symfony vide, et fait en sorte que nous commencions avec
+une bonne sécurité par défaut. Si vous avez suivi tout le long, vous avez regardé
+votre écran avec délices depuis qu'il affiche la belle page par défaut
+de symfony pour de nouvelles applications.
+
+![Page de félicitations](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
+
+Mais vous en voulez plus. Vous voulez apprendre les bases et l'essentiel des détails
+du développement d'une application symfony. Donc, reprenons notre voyage pour atteindre
+le nirvana du développement de symfony.
+
+Aujourd'hui, nous allons prendre le temps de décrire les exigences du projet
+Jobeet avec quelques ~maquettes|Maquettes~ de base.
+
+Le pitch du projet
+------------------
+
+Tout le monde parle de la crise de nos jours. Le chômage augmente à nouveau.
+
+Je sais, les développeurs symfony ne sont pas trop concernés et c'est pourquoi
+vous voulez apprendre symfony en premier lieu. C'est également difficile de
+trouver de bons développeurs symfony.
+
+Où pouvez-vous trouver un développeur symfony ? Où pouvez-vous montrer vos
+compétences en symfony ?
+
+Vous devez trouvez un bon site pour la recherche d'emploi. Vous pensez à Monster ? Réfléchissez encore. Vous
+avez besoin d'un site dédié. Un site où vous pourrez trouver les meilleures personnes,
+des experts. Un site où il est simple, rapide, et fun de rechercher un travail, ou d'en proposer.
+
+Ne cherchez plus. Jobeet est le site. **Jobeet est un logiciel open-source de
+recherche d'emploi** qui ne fait qu'une seule chose, mais le fait bien. Il est facile d'utilisation,
+à adapter, à faire évoluer, et à intégrer à votre site internet. Il est multi langues
+dès le départ, et bien sûr il utilise les dernières technologies du web 2.0 pour améliorer
+l'expérience utilisateur. Il fournit également des feeds et une API pour interagir avec lui
+en programmant.
+
+Est-ce qu'il existe déjà ? Comme utilisateur, vous trouverez beaucoup de site de
+recherche d'emplois comme Jobeet sur internet. Mais trouvez-en un qui est Open Source, et
+qui possède des fonctionnalités aussi évoluées que celles que nous vous proposons.
+
+>**NOTE**
+>Si vous cherchez un emploi sur symfony ou que vous voulez faire appel à un
+>développeur symfony, vous pouvez aller sur le site
+>[symfonians](http://symfonians.net/).
+
+Les ~histoires d'utilisateur~ du projet
+--------------------------
+
+Avant de plonger la tête  la première dans le code, nous allons décrire le projet un peu plus.
+Les sections suivantes décrivent les fonctionnalités que nous voulons mettre en œuvre dans la première
+version/itération du projet avec des histoires simples.
+
+Le site web Jobeet a quatre types d'utilisateurs :
+
+ * **L'administrateur** : il est propriétaire du site et il a le pouvoir magique
+ * **L'utilisateur** : il visite le site pour chercher un emploi
+ * **L'annonceur** : il soumet une offre d'emploi
+ * **L'affilié** : il re-édite certains emplois sur son site
+
+Le projet a deux applications : le **frontend** (les histoires F1 à F7, ci-dessous),
+où les utilisateurs interagissent avec le site, et le **backend** (les histoires B1
+à B3), où les administrateurs gèrent le site.
+
+L'application backend est sécurisé et requiert des droits d'accès.
+
+### Histoire F1 : Sur la page d'accueil, l'utilisateur voit les dernières offres actives
+
+Quand un utilisateur vient sur le site Jobeet, il voit une liste des emplois actifs.
+Les emplois sont classés par catégorie, puis par date de publication (emplois
+plus récents en premier). Pour chaque emploi, seul le lieu, la position, et la
+société sont affichées.
+
+Pour chaque catégorie, la liste ne montre que les 10 premiers emplois et un lien permet
+de lister tous les emplois pour une catégorie donnée (Histoire F2).
+
+Sur la page d'accueil , l'utilisateur peut affiner la liste des travaux (*Histoire F3*), ou par
+la soumission d'un nouvel emploi (Histoire F5).
+
+![Maquette de la page d'accueil](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
+
+### Histoire F2 : Un utilisateur peut demander tous les emplois dans une catégorie donnée
+
+Quand un utilisateur clique sur un nom de catégorie ou sur le lien "more jobs" sur
+la page d'accueil, il voit tous les emplois pour cette catégorie triée par date.
+
+La liste est paginée avec 20 emplois par page.
+
+![La page de la catégorie](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
+
+### Histoire F3 : Un utilisateur affine la liste avec quelques mots clés
+
+L'utilisateur peut saisir quelques mots clés pour affiner sa recherche. Les mots clés peuvent être des mots
+trouvés dans l'emplacement, la position, la catégorie, ou les champs de l'entreprise.
+
+### Histoire F4 : Un utilisateur clique sur un emploi pour obtenir des informations plus détaillées
+
+L'utilisateur peut sélectionner un emploi dans la liste pour afficher des informations plus détaillées.
+
+![La page de l'emploi](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
+
+### Histoire F5 : Un utilisateur soumet un emploi
+
+Un utilisateur peut soumettre un emploi. Un emploi est composé de plusieurs l'informations :
+
+  * Société
+  * Type (à temps plein, à temps partiel, ou freelance)
+  * Logo (facultatif)
+  * URL (facultatif)
+  * Poste
+  * Localité
+  * Catégorie (l'utilisateur choisit dans une liste de catégories possibles)
+  * Description du poste (les URLs et les emails sont automatiquement mis en lien)
+  * Comment appliquer (les URL et les emails sont automatiquement mis en lien)
+  * Publique (si la tâche peut également être publiés sur les sites affiliés)
+  * Email (l'email de celui qui a soumis l'emploi)
+
+Il n'est pas nécessaire de créer un compte afin de soumettre un emploi.
+
+Le processus est simple, avec seulement deux étapes : d'abord, l'utilisateur remplit
+dans le formulaire toutes les informations nécessaires pour décrire l'emploi, puis il
+valide les informations en visualisant la page finale de l'emploi.
+
+Même si l'utilisateur n'a pas de compte, un emploi peut être modifié ultérieurement, grâce à
+une URL spécifique (protégé par un jeton donné à l'utilisateur lorsque l'emploi est créé).
+
+Chaque poste de travail est en ligne pendant 30 jours (ce qui est configurable par l'administrateur - voir
+*Histoire B2*). Un utilisateur peut revenir réactiver ou prolonger la validité de l'annonce
+pour un supplément de 30 jours, mais seulement lorsque le travail expire dans moins de 5 jours.
+
+![La page de création d'un emploi](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
+
+### Histoire F6 : Un utilisateur demande à devenir une société affiliée
+
+Un utilisateur doit demander à devenir un affilié et être autorisés à utiliser
+l'API Jobeet. Pour postuler, il doit donner les informations suivantes :
+
+  * Nom
+  * Email
+  * URL du site web
+
+Le compte d' un affilié doit être activé par l'administrateur (*Histoire B3*). Une fois
+activé, l'affilié reçoit un jeton pour une utilisation avec l'API par email.
+
+Lors de l'application, l'affilié peut également choisir d'obtenir des emplois auprès
+d'un sous-ensemble des catégories disponibles.
+
+### Histoire F7 : Un affilié récupère la liste actuelle des emplois actifs
+
+Un affilié peut récupérer la liste des emplois en cours en appelant l'API avec
+le jeton de sa filiale. La liste peut être retournée en XML, JSON ou YAML.
+
+La liste contient les informations publiques disponibles pour un emploi.
+
+L'affilié peut également limiter le nombre d'emplois qui seront retournés, et d'affiner
+sa requête en spécifiant une catégorie.
+
+### Histoire B1 : Un administrateur configure le site web
+
+L'administrateur peut modifier les catégories disponibles sur le site.
+
+### Histoire B2 : Un administrateur gère les emplois
+
+Un administrateur peut modifier et supprimer tous les emplois affichés.
+
+### Histoire B3 : Un administrateur gère les affiliés
+
+L'administrateur peut créer ou modifier des affiliés. Il est responsable de l'activation
+d'un affilié et peut également les désactiver.
+
+Lorsque l'administrateur active une nouvelle filiale, le système crée un jeton unique
+a utilisé par la filiale.
+
+A demain
+----------------
+
+Comme pour tout développement Web, vous ne commencez jamais la codification la première journée. Vous avez
+besoin de recueillir les premières exigences et les travaux sur une maquette. C'est ce que nous
+avons fait aujourd'hui.
+
+__ORM__
