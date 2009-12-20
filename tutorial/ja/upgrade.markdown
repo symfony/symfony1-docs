@@ -129,7 +129,7 @@ JavaScript とスタイルシート
 
   * `common` フィルターをすべての `filters.yml` から削除する必要がある設定ファイル (これは `project:upgrade1.3` タスクによって自動的に行われる)。
 
-  * 以前と同じふるまいにするには `include_stylesheets()` と `include_javascripts()` 呼び出しをレイアウトに追加する必要があります (これはアプリケーションの `templates/` ディレクトリに含まれる HTML  - これらは `<head>` タグを持たなければなりません - 用の `project:upgrade1.3` タスクによって自動的に行われます; ほかのレイアウト、もしくはレイアウトを持たないが JavaScript ファイルかつ/もしくスタイルシートに依存するページを手動でアップグレードする必要がある)。
+  * 以前と同じふるまいにするには `include_stylesheets()` と `include_javascripts()` 呼び出しをレイアウトに追加する必要があります (これはアプリケーションの `templates/` ディレクトリに収められている HTMLレイアウト用の `project:upgrade1.3` タスクによって自動的に行われます - これらは `<head>` タグをもたなければなりません; ほかのレイアウト、もしくはレイアウトを持たないが JavaScript ファイルかつ/もしくスタイルシートに依存するページを手動でアップグレードする必要があります)。
 
 
 >**NOTE**
@@ -171,7 +171,7 @@ admin ジェネレーターバッチの削除機能はレコードをすべて�
 
 ### Doctrine プラグインスキーマをオーバーライドする
 
-ローカルスキーマで同じモデルを定義することでプラグインの YAML スキーマに含まれるモデルをオーバーライドできます。たとえば、"email"カラムを `sfDoctrineGuardPlugin` の `sfGuardUser` モデルに追加するには、次のコードを `config/doctrine/schema.yml` に追加します:
+ローカルスキーマで同じモデルを定義することでプラグインの YAML スキーマに含まれるモデルをオーバーライドできます。たとえば、`email` カラムを `sfDoctrineGuardPlugin` の `sfGuardUser` モデルに追加するには、次のコードを `config/doctrine/schema.yml` に追加します:
 
     sfGuardUser:
       columns:
