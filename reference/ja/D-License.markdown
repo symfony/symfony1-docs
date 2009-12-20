@@ -1,5 +1,5 @@
-Appendix A - License
-====================
+付録 A - ライセンス
+==================
 
 Attribution-Share Alike 3.0 Unported License
 --------------------------------------------

@@ -3,12 +3,12 @@ view.yml 設定ファイル
 
 View レイヤーは `view.yml` 設定ファイルを編集することで設定できます。
 
-はじめの章で説明したように、`view.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
+第3章で説明したように、`view.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を収めることができます。
 
 >**CAUTION**
 >アクションから呼び出されるテンプレートもしくはメソッドで直接使われるヘルパーのためにたいていの場合この設定ファイルは非推奨です。
 
-`view.yml` 設定ファイルはビュー設定のリストを格納できます:
+`view.yml` 設定ファイルはビュー設定のリストを収めることができます:
 
     [yml]
     VIEW_NAME_1:
@@ -20,7 +20,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
     # ...
 
 >**NOTE**
->`view.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は `sfViewConfigHandler` [クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動的に管理されます。
+>`view.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は `sfViewConfigHandler` [クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動管理されます。
 
 `layout`
 --------

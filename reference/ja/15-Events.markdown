@@ -46,8 +46,8 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 リスナーは最初の引数としてイベントを受け取ります。イベントオブジェクトはイベントの情報を得るためのメソッドをいくつか持ちます:
 
-  * `getSubject()`: イベントに添付する subject オブジェクトを取得する
-  * `getParameters()`: イベントパラメーターを返す
+  * `getSubject()`: イベントに添付する subject オブジェクトを取得します。
+  * `getParameters()`: イベントパラメーターを返します。
 
 イベントオブジェクトはパラメーターを取得するために配列としてもアクセスできます。
 
@@ -66,7 +66,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 ### `notifyUntil`
 
-`notifyUntil()` メソッドは `true` の値を返すことで1つのリスナーがチェーンを停止させるまですべてのリスナーを通知します。
+`notifyUntil()` メソッドは `true` の値を返すことでひとつのリスナーがチェーンを停止させるまですべてのリスナーを通知します。
 
 チェーンを停止させるリスナーは `setReturnValue()` メソッドを呼び出すこともできます。
 
@@ -156,7 +156,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | ------------ | ----------------------------------------------------------------------------------
 | `priority`   | 優先順位 (`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`application.log` イベントは Web リクエストに対してロギングを行うために symfony によって利用されるメカニズムです(logger ファクトリを参照)。このイベントはたいていの symfony のコアコンポーネントによって通知されます。
+`application.log` イベントは Web リクエストに対してロギングを行うために symfony によって利用されるメカニズムです(logger ファクトリーを参照)。このイベントはたいていの symfony のコアコンポーネントによって通知されます。
 
 ### ~`application.throw_exception`~
 
@@ -181,7 +181,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | ------------ | -----------------------------------------------------------------------------------
 | `priority`   | 優先順位(`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`command.log` イベントは symfony の CLI ユーティリティでロギングを行うために symfony によって利用されるメカニズムです。(`logger` ファクトリを参照)。
+`command.log` イベントは symfony の CLI ユーティリティでロギングを行うために symfony によって利用されるメカニズムです。(`logger` ファクトリーを参照)。
 
 ### ~`command.pre_command`~
 
@@ -257,7 +257,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 *デフォルトの通知元クラス*: `sfContext`
 
-すべてのファクトリが初期化された直後に `sfContext` オブジェクトによってリクエストごとに `context.load_factories` イベントが1回通知されます。これはすべてのコアクラスの初期化で通知される最初のイベントです。
+すべてのファクトリーが初期化された直後に `sfContext` オブジェクトによってリクエストごとに `context.load_factories` イベントが1回通知されます。これはすべてのコアクラスの初期化で通知される最初のイベントです。
 
 `controller`
 ------------
@@ -301,7 +301,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 リクエスト処理のあいだに404エラーが生成されたときに `controller.page_not_found` が通知されます。
 
-Eメールを送信する、エラー、イベントをロギングするなど、404ページが表示されるときに何か特別なことを行うためにこのイベントをリスニングできます。
+メールを送信する、エラー、イベントをロギングするなど、404ページが表示されるときに何か特別なことを行うためにこのイベントをリスニングできます。
 
 `form`
 ------
@@ -464,7 +464,7 @@ Eメールを送信する、エラー、イベントをロギングするなど�
 
 *デフォルトの通知元クラス*: `sfRouting`
 
-ルーティングファクトリがルーティングコンフィギュレーションをロードするとき `routing.load_configuration` イベントが通知されます。
+ルーティングファクトリーがルーティングコンフィギュレーションをロードするとき `routing.load_configuration` イベントが通知されます。
 
 `task`
 ------

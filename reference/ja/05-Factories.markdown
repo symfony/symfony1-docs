@@ -1,17 +1,17 @@
 factories.yml 設定ファイル
 ==========================
 
-ファクトリはリクエストが存続するあいだにフレームワークが必要とするコアオブジェクトです。これらは `factories.yml` 設定ファイルで設定され `sfContext` オブジェクトを通して常にアクセス可能です:
+ファクトリーはリクエストが存続するあいだにフレームワークが必要とするコアオブジェクトです。これらは `factories.yml` 設定ファイルで設定され `sfContext` オブジェクトを通して常にアクセス可能です:
 
     [php]
-    // ユーザーファクトリを取得する
+    // ユーザーファクトリーを取得する
     sfContext::getInstance()->getUser();
 
 アプリケーションのメインの `factories.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-はじめの章で説明したように、`factories.yml` ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を格納することができます。
+第3章で説明したように、`factories.yml` ファイルは[**環境を認識し**](#chapter_03_environment_awareness)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効になり、[**定数**](#chapter_03_constants)を収めることができます。
 
-`factories.yml` 設定ファイルは名前つきのファクトリのリストを格納します:
+`factories.yml` 設定ファイルは名前つきのファクトリーのリストを収めます:
 
     [yml]
     FACTORY_1:
@@ -22,18 +22,18 @@ factories.yml 設定ファイル
 
     # ...
 
-サポートされるファクトリの名前は次のとおりです: `controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、`user`、`view_cache` と `view_cache_manager`
+サポートされるファクトリーの名前は次のとおりです: `controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、`user`、`view_cache` と `view_cache_manager`
 
-`sfContext` がファクトリを初期化するとき、ファクトリオブジェクトを設定するために使われるファクトリ (`class`) とパラメーター (`param`) のクラス名の `factories.yml` ファイルを読み込みます:
+`sfContext` がファクトリーを初期化するとき、ファクトリーオブジェクトを設定するために使われるファクトリー (`class`) とパラメーター (`param`) のクラス名の `factories.yml` ファイルを読み込みます:
 
     [yml]
     FACTORY_NAME:
       class: CLASS_NAME
       param: { ARRAY OF PARAMETERS }
 
-ファクトリをカスタマイズできることは symfony のコアオブジェクトのデフォルトクラスの代わりにカスタムクラスを使うことができることを意味します。これらに送信するパラメーターをカスタマイズすることでこれらのクラスのデフォルトのふるまいを変更することもできます。
+ファクトリーをカスタマイズできることは symfony のコアオブジェクトのデフォルトクラスの代わりにカスタムクラスを使うことができることを意味します。これらに送信するパラメーターをカスタマイズすることでこれらのクラスのデフォルトのふるまいを変更することもできます。
 
-ファクトリクラスがオートロードできないとき、`file` パスが定義されファクトリが作成される前に自動的にインクルードできます:
+ファクトリークラスがオートロードできないとき、`file` パスが定義されファクトリーが作成される前に自動的にインクルードできます:
 
     [yml]
     FACTORY_NAME:
@@ -41,11 +41,11 @@ factories.yml 設定ファイル
       file:  ABSOLUTE_PATH_TO_FILE
 
 >**NOTE**
->`factories.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; プロセスは ~`sfFactoryConfigHandler`~ [クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動的に管理されます。
+>`factories.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; プロセスは ~`sfFactoryConfigHandler`~ [クラス](#chapter_14-Other-Configuration-Files_config_handlers_yml)によって自動管理されます。
 
 <div class="pagebreak"></div>
 
-ファクトリ
+ファクトリー
 ----------
 
 * [`mailer`](#chapter_05_mailer)
@@ -166,19 +166,19 @@ factories.yml 設定ファイル
 
 ### ~`charset`~
 
-`charset` オプションはメールメッセージに使う文字集合を定義します。デフォルトでは、`settings.yml` から `charset` 設定が使われます。
+`charset` オプションはメールメッセージに使う文字集合を定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。
 
 ### ~`delivery_strategy`~
 
-`delivery_strategy` オプションはEメールメッセージがメーラーによってどのように配信されるのかを定義します。デフォルトでは4つの戦略を選ぶことが可能で、すべての共通にニーズに適しています:
+`delivery_strategy` オプションはEメールメッセージがメーラーによってどのように配信されるのかを定義します。デフォルトでは4つの戦略を選ぶことが可能で、すべての共通ニーズに適しています:
 
- * `realtime`:       メッセージはリアルタイムで送信される。
+ * `realtime`:       メッセージはリアルタイムで送信されます。
 
- * `single_address`: メッセージは単独のアドレスに送信される。
+ * `single_address`: メッセージは単独のアドレスに送信されます。
 
- * `spool`:          メッセージはキューに保存される。
+ * `spool`:          メッセージはキューに保存されます。
 
- * `none`:           メッセージは単に無視される。
+ * `none`:           メッセージは単に無視されます。
 
 ### ~`delivery_address`~
 
@@ -188,11 +188,11 @@ factories.yml 設定ファイル
 
 `spool_class` オプションは `delivery_strategy` が `spool` にセットされるときに使うスプールクラスを定義します:
 
-  * ~`Swift_FileSpool`~: メッセージはファイルシステムに保存される。
+  * ~`Swift_FileSpool`~: メッセージはファイルシステムに保存されます。
 
-  * ~`Swift_DoctrineSpool`~: メッセージは Doctrine モデルに保存される。
+  * ~`Swift_DoctrineSpool`~: メッセージは Doctrine モデルに保存されます。
 
-  * ~`Swift_PropelSpool`~: メッセージは Propel モデルに保存される。
+  * ~`Swift_PropelSpool`~: メッセージは Propel モデルに保存されます。
 
 >**NOTE**
 >スプールがインスタンス化されるとき、~`spool_arguments`~ オプションがコンストラクターの引数として使われます。
@@ -203,7 +203,7 @@ factories.yml 設定ファイル
 
  * `Swift_FileSpool`:
 
-    * キューディレクトリの絶対パス(メッセージはこのディレクトリに保存される)
+    * キューディレクトリの絶対パス (メッセージはこのディレクトリに保存される)
 
  * `Swift_DoctrineSpool`:
 
@@ -219,7 +219,7 @@ factories.yml 設定ファイル
 
     * メッセージ保存に使うカラム名 (デフォルトでは `message`)
 
-    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これは引数としてキューオプションを受け取る。
+    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これは引数としてキューオプションを受け取ります。
 
 Doctrine スプールの典型的なコンフィギュレーションは次のとおりです:
 
@@ -238,11 +238,11 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 `class` 設定は `Swift_Transport` を実装する任意のクラスになります。デフォルトでは3つの設定が提供されます:
 
-  * ~`Swift_SmtpTransport`~: メッセージを送信するために SMTP サーバーを使う。
+  * ~`Swift_SmtpTransport`~: メッセージを送信するために SMTP サーバーを使います。
 
-  * ~`Swift_SendmailTransport`~: メッセージを送信するために `sendmail` を使う。
+  * ~`Swift_SendmailTransport`~: メッセージを送信するために `sendmail` を使います。
 
-  * ~`Swift_MailTransport`~: メッセージを送信するために PHP ネイティブの `mail()` 関数を使う。
+  * ~`Swift_MailTransport`~: メッセージを送信するために PHP ネイティブの `mail()` 関数を使います。
 
 `param` 設定をセットすることでトランスポートをさらに設定できます。Swift Mailer の公式ドキュメントの ["Transport Types"](http://swiftmailer.org/docs/transport-types) の節で組み込みの転送クラスと異なるパラメーターに関して知る必要のあるすべての知識が説明されています。
 
@@ -286,7 +286,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`relative_url_root`~
 
-`relative_url_root` オプションはフロントコントローラー前の URL の部分を定義します。たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
+`relative_url_root` オプションはフロントコントローラーの前の URL の部分を定義します。たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
 
 `response`
 ----------
@@ -357,15 +357,15 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`default_culture`~
 
-`default_culture` オプションはサイトに初めて訪問したユーザーのためにデフォルトの culture を定義します。デフォルトでは、`settings.yml` からの `default_culture` が使用され、たいていの場合これで十分です。
+`default_culture` オプションはサイトに初めて訪問したユーザーのためにデフォルトの culture を定義します。デフォルトでは、`settings.yml` の `default_culture` が使われ、たいていの場合これで十分です。
 
 >**CAUTION**
->`factories.yml` もしくは `settings.yml` の ~`default_culture`~ 設定を変更する場合、結果を確認するためにブラウザの Cookie をクリアする必要があります。
+>`factories.yml` もしくは `settings.yml` の ~`default_culture`~ 設定を変更する場合、結果を確認するためにブラウザーの Cookie をクリアする必要があります。
 
 `storage`
 ---------
 
-ストレージファクトリは HTTP リクエストのあいだのユーザーデータを一貫させるためにユーザーファクトリによって使われます。
+ストレージファクトリーは HTTP リクエストのあいだのユーザーデータを一貫させるためにユーザーファクトリーによって使われます。
 
 *sfContext アクセサー*: `$context->getStorage()`
 
@@ -387,18 +387,18 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`auto_start`~
 
-`auto_start` オプションは(`session_start()`関数を通して) PHP のセッション自動開始機能を有効もしくは無効にします。
+`auto_start` オプションは (`session_start()` 関数を通して) PHP のセッション自動開始機能を有効もしくは無効にします。
 
 ### ~`session_name`~
 
-`session_name` オプションはユーザーセッションを保存するために symfony によって使われるCookieの名前を定義します。デフォルトの名前は `symfony` で、すべてのアプリケーションが同じ Cookie を共有することを意味します(そして対応する認証と権限付与も)。
+`session_name` オプションはユーザーセッションを保存するために symfony によって使われる Cookie の名前を定義します。デフォルトの名前は `symfony` で、すべてのアプリケーションが同じ Cookie を共有することを意味します (そして対応する認証と権限付与も)。
 
 ### `session_set_cookie_params()` パラメーター
 
-`storage` ファクトリは次のオプションの値で [`session_set_cookie_params()`](http://www.php.net/session_set_cookie_params) 関数を呼び出します:
+`storage` ファクトリーは次のオプションの値で [`session_set_cookie_params()`](http://www.php.net/session_set_cookie_params) 関数を呼び出します:
 
- * ~`session_cookie_lifetime`~: セッション Cookie の有効期間。秒単位で定義する。
- * ~`session_cookie_path`~:   Cookie が機能するドメイン上のパス。ドメインのすべてのパスに対して単独のスラッシュ(`/`)を使う。
+ * ~`session_cookie_lifetime`~: セッション Cookie の有効期間。秒単位で定義します。
+ * ~`session_cookie_path`~:   Cookie が機能するドメイン上のパス。ドメインのすべてのパスに対して単独のスラッシュ (`/`)を使います。
  * ~`session_cookie_domain`~: Cookie のドメイン、たとえば `www.php.net`。すべてのサブドメインに Cookie を見えるようにするためには `.php.net` のようにプレフィックスとしてドットをドメインにつけなければなりません。
  * ~`session_cookie_secure`~: `true` の場合 Cookie はセキュアなコネクションを通してのみ送信されます。
  * ~`session_cookie_httponly`~: `true` にセットされている場合、セッション Cookie を設定する際に PHP は `httponly` フラグを送信しようとします。
@@ -435,9 +435,9 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
         cache_key_use_host_name:    true
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合にのみこのファクトリは作成されます。
+>[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合にのみこのファクトリーは作成されます。
 
-このファクトリのコンフィギュレーションの大半は `view_cache` ファクトリ経由で行われます。`view_cache` ファクトリはビューキャッシュマネージャーによって使われる内部のキャッシュオブジェクトを定義します。
+このファクトリーのコンフィギュレーションの大半は `view_cache` ファクトリー経由で行われます。`view_cache` ファクトリーはビューキャッシュマネージャーによって使われる内部のキャッシュオブジェクトを定義します。
 
 ### ~`cache_key_use_vary_headers`~
 
@@ -450,7 +450,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 `view_cache`
 ------------
 
-*sfContext アクセサー*: なし (`view_cache_manager` ファクトリによって直接使われる)
+*sfContext アクセサー*: なし (`view_cache_manager` ファクトリーによって直接使われる)
 
 *デフォルトコンフィギュレーション*:
 
@@ -464,9 +464,9 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
         prefix:                    %SF_APP_DIR%/template
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
+>[`cache`](#chapter_04-Settings_sub_cache) 設定が `on` にセットされている場合のみこのファクトリーが定義されます。
 
-`view_cache` ファクトリは `sfCache` を継承するキャッシュクラスを定義します (詳細な情報はキャッシュの節を参照)。
+`view_cache` ファクトリーは `sfCache` を継承するキャッシュクラスを定義します (詳細な情報はキャッシュの節を参照)。
 
 `i18n`
 ------
@@ -492,17 +492,17 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
             prefix:                    %SF_APP_DIR%/i18n
 
 >**CAUTION**
->[`i18n`](#chapter_04-Settings_sub_i18n) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
+>[`i18n`](#chapter_04-Settings_sub_i18n) 設定が `on` にセットされている場合のみこのファクトリーが定義されます。
 
 ### ~`source`~
 
-`source` オプションは翻訳用コンテナーの種類を定義します。
+`source` オプションは翻訳コンテナーの種類を定義します。
 
 *組み込みのコンテナー*: `XLIFF`、`SQLite`、`MySQL` と `gettext`
 
 ### ~`debug`~
 
-`debug` オプションはデバッグモードをセットします。`on` にセットされる場合、未翻訳のメッセージはプレフィックスとサフィックスによってデコレートされます(下記を参照)。
+`debug` オプションはデバッグモードをセットします。`on` にセットされる場合、未翻訳のメッセージはプレフィックスとサフィックスによってデコレートされます (下記を参照)。
 
 ### ~`untranslated_prefix`~
 
@@ -514,7 +514,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`cache`~
 
-`cache` オプションは国際化データのキャッシュに使われる匿名キャッシュファクトリを定義します (詳細な情報はキャッシュのセクションを参照)。
+`cache` オプションは国際化データのキャッシュに使われる匿名キャッシュファクトリーを定義します (詳細な情報はキャッシュのセクションを参照)。
 
 `routing`
 ---------
@@ -553,19 +553,19 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト*: 新しいプロジェクトでは `true`、アップグレードしたプロジェクトには `false`
 
-`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短のルートを生成するよう伝えます。symfony 1.0と1.1 との後方互換性のあるルートがほしい場合は、`false` にセットします。
+`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短ルートを生成するよう伝えます。symfony 1.0 と1.1との後方互換性のあるルートがほしい場合は、`false` にセットします。
 
 ### ~`extra_parameters_as_query_string`~
 
 *デフォルト*: 新しいプロジェクトには `true`、アップグレードしたプロジェクトには `false`
 
-ルートの生成に使われないパラメーターがあるとき、`extra_parameters_as_query_string` はルート生成に利用していないパラメーターをクエリーストリングに変換することが可能です。symfony 1.0もしくは1.1のふるまいを代替するには `false` にセットします。このバージョンでは、ルート生成に利用していないパラメーターはルーティングシステムによって無視されるだけでした。
+ルートの生成に使われないパラメーターがあるとき、`extra_parameters_as_query_string` はルート生成に利用していないパラメーターをクエリ文字列に変換することが可能です。symfony 1.0 もしくは1.1のふるまいを代替するには `false` にセットします。このバージョンでは、ルート生成に利用していないパラメーターはルーティングシステムによって無視されるだけでした。
 
 ### ~`cache`~
 
 *デフォルト*: なし
 
-`cache` オプションはルーティング設定とデータのキャッシュに使われる匿名キャッシュファクトリを定義します(詳細な情報はキャッシュセクションを参照)。
+`cache` オプションはルーティング設定とデータのキャッシュに使われる匿名キャッシュファクトリーを定義します(詳細な情報はキャッシュセクションを参照)。
 
 ### ~`suffix`~
 
@@ -590,9 +590,9 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト*: `false`
 
-`lookup_cache_dedicated_keys` 設定はルーティングキャッシュが構成される方法を決定します。`false` にセットされている場合、キャッシュは1つの大きな値として保存されます; `true` にセットされている場合それぞれのルートは独自のキャッシュストアを持ちます。この設定はパフォーマンス最適化設定です。
+`lookup_cache_dedicated_keys` 設定はルーティングキャッシュが構成される方法を決定します。`false` にセットされている場合、キャッシュはひとつの大きな値として保存されます; `true` にセットされている場合それぞれのルートは独自のキャッシュストアを持ちます。この設定はパフォーマンス最適化設定です。
 
-経験則として、ファイルベースのキャッシュクラス (たとえば `sfFileCache`) を使う際にはこの設定を `false` に、メモリベースのキャッシュクラス(たとえば `sfAPCCache`) を使う際には `true` にするとよいです。
+経験則として、ファイルベースのキャッシュクラス (たとえば `sfFileCache`) を使う際にはこの設定を `false` に、メモリベースのキャッシュクラス (たとえば `sfAPCCache`) を使う際には `true` にするとよいです。
 
 `logger`
 --------
@@ -630,7 +630,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
         loggers: ~
 
 >**CAUTION**
->このファクトリは常に定義されますが、`logging_enabled` 設定が `on` にセットされている場合のみロギングが行われます。
+>このファクトリーは常に定義されますが、`logging_enabled` 設定が `on` にセットされている場合のみロギングが行われます。
 
 ### ~`level`~
 
@@ -640,7 +640,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`loggers`~
 
-`loggers` オプションは使用するロガーのリストを定義します。リストは匿名ロガーファクトリの配列です。
+`loggers` オプションは使用するロガーのリストを定義します。リストは匿名ロガーファクトリーの配列です。
 
 *組み込みのロガークラス*: `sfConsoleLogger`、`sfFileLogger`、`sfNoLogger`、
 `sfStreamLogger` と `sfVarLogger`
@@ -656,10 +656,10 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
     controller:
       class: sfFrontWebController
 
-匿名キャッシュファクトリ
+匿名キャッシュファクトリー
 ------------------------
 
-いくつかのファクトリ (`view_cache`、`i18n` と `routing`) はそれぞれ設定で定義されている場合、効果のあるキャッシュオブジェクトを利用できます。キャッシュオブジェクトの設定はすべてのファクトリと似ています。`cache` キーは匿名キャッシュファクトリを定義します。ほかのファクトリと同じように、これは `class` と `param` エントリーをとります。`param` エントリーは与えられたキャッシュクラスで利用可能な任意のオプションをとります。
+いくつかのファクトリー (`view_cache`、`i18n` と `routing`) はそれぞれ設定で定義されている場合、効果のあるキャッシュオブジェクトを利用できます。キャッシュオブジェクトの設定はすべてのファクトリーと似ています。`cache` キーは匿名キャッシュファクトリーを定義します。ほかのファクトリーと同じように、これは `class` と `param` エントリーをとります。`param` エントリーは与えられたキャッシュクラスで利用可能な任意のオプションをとります。
 
 もっとも重要なのは `prefix` オプションで異なる環境／アプリケーション/プロジェクトのあいだでキャッシュを共有するもしくは分離できるようにします。
 

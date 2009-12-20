@@ -5,9 +5,9 @@ filters.yml 設定ファイル
 
 アプリケーションのメインの `filters.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-はじめの章で説明したように、`filters.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
+第3章で説明したように、`filters.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を収めることができます。
 
-`filters.yml` 設定ファイルは名前つきフィルター定義のリストを格納できます:
+`filters.yml` 設定ファイルは名前つきフィルター定義のリストを収めることができます:
 
     [yml]
     FILTER_1:
@@ -25,7 +25,7 @@ filters.yml 設定ファイル
       class: CLASS_NAME
       param: { ARRAY OF PARAMETERS }
 
-フィルターは設定ファイルで記述されている順序で実行されます。symfony は複数のフィルターを1つのチェーンとして実行するので、最初に登録されたフィルターは最初と最後に実行されます。
+フィルターは設定ファイルで記述されている順序で実行されます。symfony は複数のフィルターをひとつのチェーンとして実行するので、最初に登録されたフィルターは最初と最後に実行されます。
 
 `class` クラスは `sfFilter` 基底クラスを継承します。
 
@@ -51,7 +51,7 @@ filters.yml 設定ファイル
     FACTORY_NAME:
       enabled: false
 
-2つの特別な名前のフィルター: `rendering` と `execution` があります。これらは両方とも必須で `type` パラメーターで識別されます。`rendering` フィルターは常に最初に登録されフィルタリングされ `execution` フィルターは最後のものになります:
+2つの特別な名前のフィルター: `rendering` と `execution` があります。これらは両方とも必須で `type` パラメーターで識別されます。`rendering` フィルターは常に最初に登録されフィルタリングされ `execution` フィルターは最後になります:
 
     [yml]
     rendering:
@@ -67,7 +67,7 @@ filters.yml 設定ファイル
         type: execution
 
 >**NOTE**
->`filters.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfFilterConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動的に管理されます。
+>`filters.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfFilterConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
 
 <div class="pagebreak"></div>
 

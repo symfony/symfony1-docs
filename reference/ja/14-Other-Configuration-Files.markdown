@@ -8,7 +8,7 @@
 
 `autoload.yml` 設定は symfony によってオートロードされる必要のあるディレクトリを決定します。それぞれのディレクトリは PHP クラスとインターフェイスを見つけるためにスキャンされます。
 
-最初の章で説明したように、`autoload.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
+最初の章で説明したように、`autoload.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を収めることができます。
 
 >**NOTE**
 >`autoload.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 
@@ -100,7 +100,7 @@
 ~`core_compile.yml`~
 --------------------
 
-`core_compile.yml` 設定ファイルは symfony のロード時間を加速するために`prod`環境で1つの大きなファイルにマージされる PHP ファイルを記述します。デフォルトでは、symfony のメインのコアクラスはこの設定ファイルで定義されます。アプリケーションがそれぞれのリクエストごとにロードする必要のあるいくつかのクラスに依存する場合、プロジェクトもしくはアプリケーションの `core_compile.yml` 設定ファイルを作成しこれらのクラスを設定ファイルに追加できます。デフォルトコンフィギュレーションの抜粋は次のとおりです:
+`core_compile.yml` 設定ファイルは symfony のロード時間を加速するために`prod`環境でひとつの大きなファイルにマージされる PHP ファイルを記述します。デフォルトでは、symfony のメインのコアクラスはこの設定ファイルで定義されます。アプリケーションがそれぞれのリクエストごとにロードする必要のあるいくつかのクラスに依存する場合、プロジェクトもしくはアプリケーションの `core_compile.yml` 設定ファイルを作成しこれらのクラスを設定ファイルに追加できます。デフォルトコンフィギュレーションの抜粋は次のとおりです:
 
     [yml]
     - %SF_SYMFONY_LIB_DIR%/autoload/sfAutoload.class.php
@@ -108,15 +108,15 @@
     - %SF_SYMFONY_LIB_DIR%/action/sfAction.class.php
     - %SF_SYMFONY_LIB_DIR%/action/sfActions.class.php
 
-はじめの章で説明したように、`core_compile.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を格納することができます。
+第3章で説明したように、`core_compile.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03_configuration_cascade)が有効で、[**定数**](#chapter_03_constants)を収めることができます。
 
 >**NOTE**
->`core_compile.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfCompileConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動的に管理されます。
+>`core_compile.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfCompileConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
 
 ~`module.yml`~
 --------------
 
-`module.yml` 設定ファイルはモジュールのコンフィギュレーションを可能にします。この設定ファイルはほとんど使われることはなく、下記の定義されたエントリーのみを格納します。
+`module.yml` 設定ファイルはモジュールのコンフィギュレーションを可能にします。この設定ファイルはほとんど使われることはなく、下記の定義されたエントリーのみを収めます。
 
 `module.yml` ファイルは symfony によってロードされるモジュールの `config/` サブディレクトリに保存されます。次のコードはすべての設定のデフォルト値を持つ `module.yml` の典型的な内容を示しています:
 
@@ -128,6 +128,6 @@
 
 `enabled` パラメーターが `false` にセットされる場合、モジュールのすべてのアクションは無効になります。これらは([`settings.yml`](#chapter_04) で定義される)~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~ アクションにリダイレクトされます。
 
-`view_class` パラメーターはモジュールのすべてのアクションによって使われる(サフィックスなしの `View` の)ビュークラスを定義します。これは `sfView` を継承しなければなりません。
+`view_class` パラメーターはモジュールのすべてのアクションによって使われる (サフィックスなしの `View` の)ビュークラスを定義します。これは `sfView` を継承しなければなりません。
 
 `partial_view_class` パラメーターは (サフィックスの `PartialView` なしの) このモジュールのパーシャルに使われるビュークラスを定義します。`sfPartialView` を継承しなければなりません。
