@@ -51,6 +51,6 @@ Bạn cũng nên chạy script này từ trình duyệt và sửa các lỗi ph�
 
 >**NOTE**
 >Nếu bạn chỉ muốn dùng thử symfony trong vài giờ, bạn có thể cài đặt
->symfony sandbox như mô tả trong [Phụ lục A](A-The-Sandbox). Nếu bạn muốn tạo
+>symfony sandbox như mô tả trong [Phụ lục A](A-Sandbox). Nếu bạn muốn tạo
 >một project thực sự hoặc muốn học về
 >symfony, hãy đọc tiếp.

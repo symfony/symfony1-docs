@@ -72,7 +72,7 @@ Nếu mọi thứ chạy đúng, lệnh này sẽ mở một editor để bạn 
 >Ở Windows, bạn có thể sử dụng công cụ như [TortoiseSVN](http://tortoisesvn.net/)
 >để thực hiện mà không cần dùng dòng lệnh
 
-Nếu bạn thận trong, hãy sử dụng một phiên bản cụ thể (một subversion
+Nếu bạn là người thận trọng, hãy sử dụng một phiên bản cụ thể (một subversion
 tag):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0

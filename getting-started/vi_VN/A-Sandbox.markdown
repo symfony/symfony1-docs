@@ -1,5 +1,5 @@
 Phụ lục A: Sandbox
-===========
+==================
 
 Chương này sẽ chỉ ra cho bạn cách nhanh nhất để bắt đầu với symfony. Nếu bạn muốn bắt đầu một dự án thực, bạn có thể bỏ qua chương này, và chuyển sang đọc [chương cài đặt](#chapter_03-Symfony-Installation).
 
