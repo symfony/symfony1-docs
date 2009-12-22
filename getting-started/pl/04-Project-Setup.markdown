@@ -24,6 +24,7 @@ są potrzebne w projekcie symfony:
  | `apps/`     | Wszystkie aplikacje w projekcie
  | `cache/`    | Pliki cache - pamięć podręczna frameworka
  | `config/`   | Pliki konfiguracyjne projektu
+ | `data/`     | -
  | `lib/`      | Biblioteki i klasy projektu
  | `log/`      | Logi frameworka
  | `plugins/`  | Zainstalowane dodatki 

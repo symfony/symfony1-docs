@@ -22,6 +22,7 @@ Tác vụ `generate:project` tạo ra cấu trúc thư mục và các file cần
  | `apps/`     | Chứa các application của project
  | `cache/`    | Chứa các file cache của framework
  | `config/`   | Chứa các file cấu hình
+ | `data/`     | -
  | `lib/`      | Chứa các thư viện dùng trong project
  | `log/`      | Chứa file log của framework
  | `plugins/`  | Chứa các plugin đã cài đặt

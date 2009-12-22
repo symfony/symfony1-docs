@@ -25,6 +25,7 @@ files needed for a symfony project:
  | `apps/`     | Hosts all project applications
  | `cache/`    | The files cached by the framework
  | `config/`   | The project configuration files
+ | `data/`     | Data files like initial fixtures
  | `lib/`      | The project libraries and classes
  | `log/`      | The framework log files
  | `plugins/`  | The installed plugins

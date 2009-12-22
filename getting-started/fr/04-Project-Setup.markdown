@@ -25,6 +25,7 @@ les fichiers nécessaires pour un projet symfony :
  | `apps/`     | Accueille toutes les applications du projet
  | `cache/`    | Les fichiers mis en cache par le framework
  | `config/`   | Les fichiers de configuration du projet
+ | `data/`     | Les fichiers de données comme les jeux de données initiales
  | `lib/`      | Les bibliothèque et les classes du projet
  | `log/`      | Les fichiers log du framework
  | `plugins/`  | Les plugins installés
@@ -32,16 +33,15 @@ les fichiers nécessaires pour un projet symfony :
  | `web/`      | Le répertoire racine Web (voir ci-dessous)
 
 >**NOTE**
->Pourquoi symfony génère beaucoup de dossiers ? Un des principaux avantages d'un
->framework full-stack est de normaliser vos développements. Grâce à
->la structure par défaut des fichiers et des répertoires de symfony, tout développeur
->ayant une certaine connaissance de symfony peut prendre en charge la maintenance d'un projet symfony.
->En quelques minutes, il sera capable de plonger dans le code, de corriger des bugs,
->et d'ajouter de nouvelles fonctionnalités.
+>Pourquoi symfony génère autant de dossiers ? L'un des principaux avantages d'un
+>framework full-stack consiste à normaliser les développements. Grâce à
+>la structure par défaut des fichiers et des répertoires de symfony, tout 
+>développeur ayant une certaine connaissance de symfony peut prendre en charge 
+>la maintenance d'un projet symfony.
+>En quelques minutes, il sera capable de parcourir le code, de corriger des 
+>bugs et d'ajouter de nouvelles fonctionnalités.
 
-La tâche `generate:project` a également créé un raccourci `symfony` dans le
-répertoire racine du projet pour diminuer le nombre de caractères que vous allez écrire
-lors de l'exécution d'une tâche.
+La tâche `generate:project` a également créé un raccourci `symfony` dans le répertoire racine du projet pour diminuer le nombre de caractères que vous allez écrire lors de l'exécution d'une tâche.
 
 Ainsi, à partir de maintenant, au lieu d'utiliser le chemin complet pour le programme
 symfony, vous pouvez utiliser le raccourci `symfony`.
