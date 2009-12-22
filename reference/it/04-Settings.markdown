@@ -263,7 +263,7 @@ dal sub-framework i18n. Può essere una qualsiasi delle nazionalità valide.
 
 ### ~`standard_helpers`~
 
-*Predefinito*: `[Partial, Cache, Form]`
+*Predefinito*: `[Partial, Cache]`
 
 L'impostazione `standard_helpers` è un array di gruppi di helper da caricare
 per tutti i template (nome del gruppo di helper senza il suffisso `Helper`).

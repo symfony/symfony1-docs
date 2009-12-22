@@ -260,7 +260,7 @@ sub-framework. It can be any valid culture.
 
 ### ~`standard_helpers`~
 
-*Default*: `[Partial, Cache, Form]`
+*Default*: `[Partial, Cache]`
 
 The `standard_helpers` setting is an array of helper groups to load for all
 templates (name of the group helper without the `Helper` suffix).

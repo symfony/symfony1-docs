@@ -202,7 +202,7 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 ### ~`standard_helpers`~
 
-*デフォルト値*: `[Partial, Cache, Form]`
+*デフォルト値*: `[Partial, Cache]`
 
 `standard_helpers` 設定はすべてのテンプレート用にロードされるヘルパーグループの配列です (サフィックスの `Helper` を持たないヘルパーグループの名前)。
 

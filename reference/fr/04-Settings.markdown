@@ -1,5 +1,5 @@
 Le fichier de configuration settings.yml
-===================================
+========================================
 
 La plupart des aspects de symfony peuvent être configurés via un fichier de configuration
 écrit en YAML, ou avec du simple PHP. Dans cette section, `settings.yml`, le principal fichier
@@ -260,10 +260,9 @@ i18n. Il peut avoir n'importe quelle culture valide.
 
 ### ~`standard_helpers`~
 
-*Par défaut* : `[Partial, Cache, Form]`
+*Par défaut* : `[Partial, Cache]`
 
-Le paramètre `standard_helpers` est un tableau de groupe de Helper pour charger tous
-les Templates (nom du groupe de Helper sans le suffixe `Helper`).
+Le paramètre `standard_helpers` est un tableau de groupes de Helper permettant de charger tous les Templates (nom du groupe de Helper sans le suffixe `Helper`).
 
 ### ~`no_script_name`~
 
