@@ -280,4 +280,4 @@ Ci vediamo domani
 Domani implementeremo l'ultima caratteristica mancante al sito web di Jobeet,
 il motore di ricerca.
 
-__ORM__ 
+__ORM__
