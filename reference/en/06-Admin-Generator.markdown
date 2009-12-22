@@ -234,7 +234,7 @@ Available Configuration Options
 
  * [`actions`](#chapter_06_actions)
 
-   * [`name`](#chapter_06_sub_name)
+   * [`label`](#chapter_06_sub_label)
    * [`action`](#chapter_06_sub_action)
    * [`credentials`](#chapter_06_sub_credentials)
 
