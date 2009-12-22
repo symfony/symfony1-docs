@@ -101,8 +101,8 @@ Per astrarre l'implementazione tecnica di un sito, symfony usa un
 sotto-framework per il [routing](#chapter_05_configurazione_del_routing) 
 che genera [URL carini](#chapter_05_url). Per rendere ancora più facile
 l'implementazione dei web service, symfony supporta i
-[formati](#chapter_15_formati) in modo nativo. Si possono anche creare
-i propri [formati](#chapter_16_sub_il_formato_yaml_formati_creazione).
+[formati](#chapter_14_formati) in modo nativo. Si possono anche creare
+i propri [formati](#chapter_15_sub_il_formato_yaml_formati_creazione).
 
 Un'azione può essere [rimandata](#chapter_04_sidebar_la_famiglia_dei_metodi_forward_)
 ad un'altra, oppure [rinviata](#chapter_05_sidebar_la_famiglia_dei_metodi_redirect_rinvio_).
@@ -124,7 +124,7 @@ la maggior parte di essi sono
  * [`app.yml`](#chapter_06_configurazione_personalizzata)
  * [`cache.yml`](#chapter_21_configurazione_della_cache)
  * [`databases.yml`](#chapter_03_il_database)
- * [`factories.yml`](#chapter_22_i_factory_factory)
+ * [`factories.yml`](#chapter_16_sub_factories)
  * [`generator.yml`](#chapter_12_la_cache_di_symfony)
  * [`routing.yml`](#chapter_05_configurazione_del_routing)
  * [`schema.yml`](#chapter_03_lo_schema)
@@ -166,8 +166,8 @@ i [log](#chapter_22_sub_log), il [routing](#chapter_05_configurazione_del_routin
 [gestore della cache della vista](#chapter_21_rimuovere_la_cache).
 
 Questi oggetti principali sono gestiti dall'oggetto
-[`sfContext`](#chapter_21_sidebar_la_classe_code_sfcontext_code_) e sono
-configurati tramite i [factory](#chapter_22_i_factory_factory).
+[`sfContext`](#chapter_16_sidebar_la_classe_code_sfcontext_code_) e sono
+configurati tramite i [factory](#chapter_16_sub_factories).
 
 La classe `user` gestisce l'[autenticazione](#chapter_13_sub_autenticazione) degli
 utenti, l'[autorizzazione](#chapter_13_sub_autorizzazione), i [flash](#chapter_13_flash_utente),
