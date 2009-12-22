@@ -1,7 +1,7 @@
 Les environnements
 ================
 
-Si vous regarder le répertoire `web/`, vous trouverez deux fichiers PHP :
+Si vous regardez le répertoire `web/`, vous trouverez deux fichiers PHP :
 `index.php` et `frontend_dev.php`. Ces fichiers sont appelés **contrôleurs
 frontaux**; toutes les requêtes de l'application se font par leur intermédiaire. Mais pourquoi
 nous avons deux contrôleurs frontaux pour chaque application ?
