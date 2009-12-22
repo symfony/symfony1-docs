@@ -297,12 +297,12 @@ il ~frontend~ ed il ~backend~.
 Dalla cartella `jobeet`, eseguire il task `generate:project` per creare il progetto
 symfony:
 
-<doctrine> 
+<doctrine>
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
-</doctrine> 
-<propel> 
+</doctrine>
+<propel>
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel 
-</propel> 
+</propel>
 
 Su Windows:
 
@@ -588,14 +588,14 @@ la user experience dell'utente finale.
 >Se aprite i file dei front controller, potrete notare che il contenuto
 >è lo stesso, tranne per l'impostazione dell'ambiente:
 >
->    [php]
->    // web/index.php
->    <?php
+>     [php]
+>     // web/index.php
+>     <?php
 >
->    require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
+>     require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
 >
->    $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
->    sfContext::createInstance($configuration)->dispatch();
+>     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
+>     sfContext::createInstance($configuration)->dispatch();
 
 La barra degli strumenti web per il debug è un ottimo esempio dell'utilizzo
 di un ambiente. La ~web debug toolbar~ è presente su tutte le pagine nell'ambiente
