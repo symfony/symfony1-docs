@@ -46,11 +46,12 @@ Replace the `activate` action with the following code:
         );
 
         $this->getMailer()->send($message);
-
 <propel>
+
         $this->redirect('@jobeet_affiliate');
 </propel>
 <doctrine>
+
         $this->redirect('@jobeet_affiliate_affiliate');
 </doctrine>
       }
