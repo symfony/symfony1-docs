@@ -262,7 +262,8 @@ i18n. Il peut avoir n'importe quelle culture valide.
 
 *Par défaut* : `[Partial, Cache]`
 
-Le paramètre `standard_helpers` est un tableau de groupes de Helper permettant de charger tous les Templates (nom du groupe de Helper sans le suffixe `Helper`).
+Le paramètre `standard_helpers` est un tableau de groupes de Helper permettant de charger tous les
+Templates (nom du groupe de Helper sans le suffixe `Helper`).
 
 ### ~`no_script_name`~
 
