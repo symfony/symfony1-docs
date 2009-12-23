@@ -136,7 +136,7 @@ Alcuni file di configurazione di symfony sono ambiente dipendenti, la loro
 interpretazione dipende dall'attuale ambiente in uso. Questi file hanno sezioni
 diverse che definiscono come la configurazione deve variare per ogni ambiente.
 Quando si crea una nuova applicazione symfony crea configurazioni per i tre
-ambienti predefiniti: `prod`, `test`, and `dev`:
+ambienti predefiniti: `prod`, `test` e `dev`:
 
     [yml]
     prod:

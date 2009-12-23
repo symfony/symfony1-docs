@@ -584,7 +584,7 @@ Il factory `view_cache` definisce una classe cache che deve ereditare da
 
 L'opzione `source` definisce il tipo di contenitore per le traduzioni.
 
-*Built-in containers*: `XLIFF`, `SQLite`, `MySQL`, and `gettext`.
+*Contenitori già disponibili*: `XLIFF`, `SQLite`, `MySQL` e `gettext`.
 
 ### ~`debug`~
 
@@ -634,7 +634,7 @@ nome variabile in uno schema di rotta.
 
 ### ~`segment_separators`~
 
-*Predefinito*: `/` and `.`
+*Predefinito*: `/` e `.`
 
 L'opzione `segment_separators` definisce l'elenco dei separatori delle parti di rotta.
 La maggior parte delle volte, non si vuole sovrascrivere questa opzione per tutte le
@@ -757,8 +757,8 @@ L'opzione `level` definisce il livello del logger.
 L'opzione `loggers` definisce un elenco di logger da usare. L'elenco è un array di
 factory logger anonimi.
 
-*Built-in logger classes*: `sfConsoleLogger`, `sfFileLogger`, `sfNoLogger`,
-`sfStreamLogger`, and `sfVarLogger`.
+*Classi già disponibili*: `sfConsoleLogger`, `sfFileLogger`, `sfNoLogger`,
+`sfStreamLogger` e `sfVarLogger`.
 
 `controller`
 ------------

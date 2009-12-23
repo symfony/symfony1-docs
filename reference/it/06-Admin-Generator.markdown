@@ -660,7 +660,7 @@ La sezione `form` esiste unicamente come fallback per le sezioni `edit` e `new`
 (vedere le regole di ereditarietà nell'introduzione).
 
 >**NOTE**
->Per le sezioni form (`form`, `edit`, and `new`), le opzioni `label` e `help`
+>Per le sezioni form (`form`, `edit` e `new`), le opzioni `label` e `help`
 >sovrascrivono quelle definite nelle classi del form.
 
 ### ~`display`~
