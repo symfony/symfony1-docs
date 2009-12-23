@@ -101,7 +101,7 @@ automaticamente. Se si desidera l'autoload di alcune sottocartelle di
       vendor_some_lib:
         name:      vendor_some_lib
         path:      %SF_LIB_DIR%/vendor/some_lib_dir
-        recursive: on
+        recursive: true
 
 Il caricamento automatico della cartella `lib/vendor/` era problematico per
 diverse ragioni:

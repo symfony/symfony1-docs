@@ -28,7 +28,7 @@ e saranno rimossi in symfony 1.4:
     questo metodo con `sys_get_temp_dir()`
 
   * `sfToolkit::removeArrayValueForPath()`,
-    `sfToolkit::hasArrayValueForPath()`, and `getArrayValueForPathByRef()`
+    `sfToolkit::hasArrayValueForPath()` e `getArrayValueForPathByRef()`
 
   * `sfValidatorBase::setInvalidMessage()`: Può essere sostituito chiamando il
     nuovo metodo `sfValidatorBase::setDefaultMessage()`
