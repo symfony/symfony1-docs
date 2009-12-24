@@ -263,7 +263,7 @@ ORM потребует от вас описания таблиц и связей
 
 >**NOTE**
 >Атрибут `onDelete` определяет поведение `ON DELETE` для внешних ключей.
->Propel поддерживает `CASCADE`, `SET NULL` и `RESTRICT`. Например, если 
+>Doctrine поддерживает `CASCADE`, `SET NULL` и `RESTRICT`. Например, если 
 >запись `job` удаляется, то все связанные с ней записи `jobeet_category_affiliate`
 >будут автоматически удалены базой данных.
 </doctrine>
