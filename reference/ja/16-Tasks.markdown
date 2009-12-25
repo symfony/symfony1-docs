@@ -897,6 +897,21 @@ Doctrine SQL を挿入する代わりにプロジェクトのマイグレーシ�
 
     ./symfony doctrine:generate-migrations-db
 
+### ~`doctrine::generate-migrations-diff`~
+
+`doctrine::generate-migrations-diff` タスクは新旧のスキーマの差分を作り出すことでマイグレーションクラスを生成する:
+
+    $ php symfony doctrine:generate-migrations-diff [--application[="..."]] [--env="..."]
+
+| オプション (ショートカット) | デフォルト | 説明
+| -------------------------- | ---------- | -----------
+| `--application` | `1`   | アプリケーションの名前
+| `--env`         | `dev` | 環境
+
+`doctrine:generate-migrations-diff` タスクは新旧のスキーマの差分を作り出すことでマイグレーションクラスを生成します。
+
+    ./symfony doctrine:generate-migrations-diff
+
 ### ~`doctrine::generate-migrations-models`~
 
 `doctrine::generate-migrations-models` タスクは既存のモデルのセットからマイグレーションクラスを生成する:
