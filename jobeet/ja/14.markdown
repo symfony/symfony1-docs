@@ -114,7 +114,6 @@ Atom テンプレートヘッダーを次のコードで置き換えます:
 </propel>
 <doctrine>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
-</updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
@@ -180,7 +179,6 @@ Atom テンプレートヘッダーを次のコードで置き換えます:
 </propel>
 <doctrine>
           <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
-</updated>
 </doctrine>
           <summary type="xhtml">
            <div xmlns="http://www.w3.org/1999/xhtml">
