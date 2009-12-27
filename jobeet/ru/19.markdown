@@ -1,0 +1,1162 @@
+День 19: Интернационализация и Локализация
+==========================================
+
+Вчера мы закончили с функциональностью поискового движка, сделав его более приятным
+с помощью ценных свойств AJAX.
+
+Сегодня мы поговорим об интернационализации (или i18n) и локализации (или l10n) Jobeet.
+
+Из [Википедии](http://en.wikipedia.org/wiki/Internationalization):
+
+>**Интернационализация** - это процесс проектирования программного приложения
+>таким образом, чтобы оно могло быть адаптировано под разные языки и регионы без
+>изменения кода.
+>
+>**Локализация** - это процесс адаптации программного обеспечения для конкретного региона
+>или языка с помощью компонентов, зависящих от локали, и добавления перевода текстов.
+
+Как всегда, фреймворк Symfony не изобретал колесо и поддержка i18n и
+l10n основана на [стандартах ICU](http://www.icu-project.org/).
+
+Пользователь
+------------
+
+Интернационализация невозможна без пользователя. Когда ваш веб-сайт доступен на
+нескольких языках или для нескольких регионов мира, пользователь несет ответсвенность за выбор
+того что ему больше подходит.
+
+>**NOTE**
+>Мы уже говорили о классе User в фреймворке Symfony в течении дня 13.
+
+### Локаль пользователя
+
+Функциональность i18n и l10n фреймворка Symfony базируется на **локали пользователя**.
+Локаль это комбинация языка и страны пользователя. Например локаль для пользователя который
+говорит на французском `fr`, а локаль для пользователя из Франции `fr_FR`.
+
+Вы можете управлять локалью пользователя с помощью методов `setCulture()` и
+`getCulture()` объекта User:
+
+    [php]
+    // В действии (action)
+    $this->getUser()->setCulture('fr_BE');
+    echo $this->getUser()->getCulture();
+
+>**TIP**
+>Язык закодирован как две строчные буквы согласно
+>[стандарту ISO 639-1](http://en.wikipedia.org/wiki/ISO_639-1), а страна закодирована
+>как две заглавные буквы согласно
+>[стандарту ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1).
+
+### Предпочтительная локаль
+
+Локаль пользователя по умолчанию настраивается в конфигурационном файле `settings.yml`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        default_culture: it_IT
+
+>**TIP**
+>Поскольку локаль управляется объектом User, она хранится в сессии пользователя. 
+>Во время разработки, если Вы меняете локаль по умолчанию,
+>Вы должны очистить куки вашей сессии, чтобы применить новые установки в вашем браузере.
+
+Когда пользователь начинает сессию на веб-сайте Jobeet, мы можем определить лучшую локаль,
+основываясь на информации предоставленной HTTP-заголовком `Accept-Language`.
+
+Метод `getLanguages()` объекта Request возвращает массив приемлемых языков для текущего
+пользователя, отсортированного в порядке предпочтений:
+
+    [php]
+    // В действии (action)
+    $languages = $request->getLanguages();
+
+Но в большинстве случаев веб-сайт не будет поддерживать все 136 самых популярных языков мира.
+Метод `getPreferredCulture()` возвращает самый подходящий язык в сравнении с
+предпочтительными языками пользователя и языками, которые поддерживает Ваш веб-сайт:
+
+    [php]
+    // В действии (action)
+    $language = $request->getPreferredCulture(array('en', 'fr'));
+
+В предыдущем вызове будет возвращен английский или французский язык в зависимости от предпочтительных
+языков пользователя, или английский (первый язык в массиве), если ни один из них не подходит.
+
+Локаль в URL
+------------
+
+Веб-сайт Jobeet будет доступен на английском и французском. Поскольку URL может
+представлять только один ресурс, локаль должна быть встроена в URL. Для этого
+откройте файл `routing.yml` и добавьте специальную переменную `:sf_culture`
+для всех маршрутов кроме `api_jobs` и `homepage`. Для простых маршрутов
+добавьте `/:sf_culture` в начало `url`. Для коллекций маршрутов добавьте
+опцию `prefix_path`, которая начинается с `/:sf_culture`.
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    affiliate:
+      class: sfPropelRouteCollection
+      options:
+        model:          JobeetAffiliate
+        actions:        [new, create]
+        object_actions: { wait: get }
+        prefix_path:    /:sf_culture/affiliate
+
+    category:
+      url:     /:sf_culture/category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: category, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object }
+      requirements:
+        sf_format: (?:html|atom)
+
+    job_search:
+      url:   /:sf_culture/search
+      param: { module: job, action: search }
+
+    job:
+      class: sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: put, extend: put }
+        prefix_path:    /:sf_culture/job
+      requirements:
+        token: \w+
+
+    job_show_user:
+      url:     /:sf_culture/job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+<propel>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_criteria: doSelectActive
+</propel>
+<doctrine>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_query: retrieveActiveJob
+</doctrine>
+      param:   { module: job, action: show }
+      requirements:
+        id:        \d+
+        sf_method: get
+
+Когда в маршруте используется переменная `sf_culture`, фреймворк Symfony будет
+автоматически использовать ее значение для изменения локали пользователя.
+
+Поскольку нам нужно домашних страниц столько же, сколько языков мы поддерживаем
+(`/en/`, `/fr/`, ...), домашняя страница по умолчанию (`/`) должна перенаправлять
+на соответствующую локализацию в соответствии с локалью пользователя. Но если локаль
+пользователя еще не определена, потому что он пришел на Jobeet первый раз,
+для него будет выбрана предпочтительная локаль.
+
+Сначала добавьте метод `isFirstRequest()` в `myUser`. Он возвращает `true` только для самого
+первого запроса сессии пользователя:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    public function isFirstRequest($boolean = null)
+    {
+      if (is_null($boolean))
+      {
+        return $this->getAttribute('first_request', true);
+      }
+      else
+      {
+        $this->setAttribute('first_request', $boolean);
+      }
+    }
+
+Добавьте маршрут `localized_homepage`:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    localized_homepage:
+      url:   /:sf_culture/
+      param: { module: job, action: index }
+      requirements:
+        sf_culture: (?:fr|en)
+
+Измените действие `index` модуля `job` для реализации логики перенаправления
+пользователя на "лучшую" домашнюю страницу при первом запросе сессии:
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeIndex(sfWebRequest $request)
+    {
+      if (!$request->getParameter('sf_culture'))
+      {
+        if ($this->getUser()->isFirstRequest())
+        {
+          $culture = $request->getPreferredCulture(array('en', 'fr'));
+          $this->getUser()->setCulture($culture);
+          $this->getUser()->isFirstRequest(false);
+        }
+        else
+        {
+          $culture = $this->getUser()->getCulture();
+        }
+
+        $this->redirect('@localized_homepage');
+      }
+
+<propel>
+      $this->categories = JobeetCategoryPeer::getWithJobs();
+</propel>
+<doctrine>
+      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+</doctrine>
+    }
+
+Если переменная `sf_culture` не существует в запросе, это означает что пользователь
+пришел на URL `/`. Это тот самый случай и это новая сессия, предпочтительная локаль
+такая же как локаль пользователя. В противном случае будет использована текущая
+локаль пользователя.
+
+Последний шаг - это перенаправление пользователя на URL `localized_homepage`. Заметьте, что
+переменная `sf_culture` не передается при перенаправлении поскольку фреймворк Symfony
+добавляет ее автоматически.
+
+Теперь, если Вы попробуете пойти на URL `/it/`, фреймворк Symfony вернет ошибку 404 
+поскольку мы ограничили переменную `sf_culture` значениями `en` и `fr`. Добавьте это
+требование во все маршруты которые содержат локаль:
+
+    [yml]
+    requirements:
+      sf_culture: (?:fr|en)
+
+Тестирование локали
+-------------------
+
+Самое время протестировать нашу реализацию. Но перед добавлением тестов, нам нужно
+исправить уже существующие. Поскольку все URLы были изменены, отредактируйте все
+файлы фунциональных тестов в `test/functional/frontend/` и добавьте `/en` в начале
+каждого URL. Не забудьте также изменить URLы в файле `lib/test/JobeetTestFunctional.class.php`.
+Запустите тесты для того, чтобы проверить, что правильно их исправили:
+
+    $ php symfony test:functional frontend
+
+Тестер `user` предоставляет метод `isCulture()` который тестирует текущую локаль пользователя.
+Откройте файл `jobActionsTest` и добавьте следующие тесты:
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->setHttpHeader('ACCEPT_LANGUAGE', 'fr_FR,fr,en;q=0.7');
+    $browser->
+      info('6 - User culture')->
+
+      restart()->
+
+      info('  6.1 - For the first request, symfony guesses the best culture')->
+      get('/')->
+      isRedirected()->followRedirect()->
+      with('user')->isCulture('fr')->
+
+      info('  6.2 - Available cultures are en and fr')->
+      get('/it/')->
+      with('response')->isStatusCode(404)
+    ;
+
+    $browser->setHttpHeader('ACCEPT_LANGUAGE', 'en,fr;q=0.7');
+    $browser->
+      info('  6.3 - The culture guessing is only for the first request')->
+
+      get('/')->
+      isRedirected()->followRedirect()->
+      with('user')->isCulture('fr')
+    ;
+
+Переключение языка
+------------------
+
+Для изменения локали пользователем, нужно добавить форму языка в шаблон.
+Фреймворк форм не предоставляет такой формы из коробки, но поскольку она
+нужна для большинства интернациональных веб-сайтов, разработчики ядра
+фреймворка Symfony поддерживают
+[`sfFormExtraPlugin`](http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme),
+который содержит валидаторы, виджеты и формы, которые не могут быть включены
+в основной пакет фреймворка Symfony из-за своей специфичности или потому что
+содержат внешние зависимости, но тем не менее очень полезны.
+
+Установите плагин с помощью комманды `plugin:install`:
+
+    $ php symfony plugin:install sfFormExtraPlugin
+
+>**NOTE**
+>Плагин `sfFormExtraPlugin` содержит виджеты, которые имеют внешние зависимости,
+>например, от библиотек JavaScript. Вы увидите виджеты для выбора даты, для 
+>WYSIWYG редактора и много других. Найдите время прочитать документацию,
+>где вы найдете много полезных вещей.
+
+Плагин `sfFormExtraPlugin` предоставляет форму `sfFormLanguage` для управления
+языковой секцией. Добавление языковой формы в шаблон может быть выполнено следующим
+образом:
+
+>**NOTE**
+>Код ниже не предназначен для реализации. Он здесь для того, чтобы показать Вам, как
+>можно реализовать что-то неправильно. Мы покажем Вам, как реализовать это правильно,
+>используя фреймворк Symfony.
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <div id="footer">
+      <div class="content">
+        <!-- footer content -->
+
+        <?php $form = new sfFormLanguage(
+          $sf_user,
+          array('languages' => array('en', 'fr'))
+          )
+        ?>
+        <form action="<?php echo url_for('@change_language') ?>">
+          <?php echo $form ?><input type="submit" value="ok" />
+        </form>
+      </div>
+    </div>
+
+Видите ошибку? Правильно, создание объекта формы не соответсвует уровню представления.
+Она должна быть создана в действии. Но поскольку код в главном шаблоне, форма должна быть создана
+в каждом действии, что далеко не практично. В данном случае Вы должны использовать
+**компонент**. Компонент это тот же самый фрагмент (partial), но с прикрепленным к нему кодом.
+Считайте, что это облегченный контроллер.
+
+Включение компонента в шаблон можно выполнить с помощью помощника `include_component()`:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <div id="footer">
+      <div class="content">
+        <!-- footer content -->
+
+        <?php include_component('language', 'language') ?>
+      </div>
+    </div>
+
+Помощник принимает имена модуля и действия как аргументы. Третий аргумент может быть использован для
+передачи параметров в компонент.
+
+Создайте модуль `language`, который будет содержать компонент и действие, которое будет переключать
+язык пользователя:
+
+    $ php symfony generate:module frontend language
+
+Компоненты будут определены в файле `actions/components.class.php`.
+
+Создайте этот файл сейчас:
+
+    [php]
+    // apps/frontend/modules/language/actions/components.class.php
+    class languageComponents extends sfComponents
+    {
+      public function executeLanguage(sfWebRequest $request)
+      {
+        $this->form = new sfFormLanguage(
+          $this->getUser(),
+          array('languages' => array('en', 'fr'))
+        );
+      }
+    }
+
+Как Вы видите, класс компонента очень похож на класс контроллера.
+
+Для шаблона компонента используются те же самые соглашения по именованию, как и
+для фрагментов: перед названием компонента ставится подчеркивание (`_`):
+
+    [php]
+    // apps/frontend/modules/language/templates/_language.php
+    <form action="<?php echo url_for('@change_language') ?>">
+      <?php echo $form ?><input type="submit" value="ok" />
+    </form>
+
+Поскольку плагин не предоставляет действие, которое изменяет локаль пользователя,
+измените файл `routing.yml` и создайте маршрут `change_language`:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    change_language:
+      url:   /change_language
+      param: { module: language, action: changeLanguage }
+
+И создайте соответствующее действие:
+
+    [php]
+    // apps/frontend/modules/language/actions/actions.class.php
+    class languageActions extends sfActions
+    {
+      public function executeChangeLanguage(sfWebRequest $request)
+      {
+        $form = new sfFormLanguage(
+          $this->getUser(),
+          array('languages' => array('en', 'fr'))
+        );
+
+        $form->process($request);
+
+        return $this->redirect('@localized_homepage');
+      }
+    }
+
+Метод `process()` формы `sfFormLanguage` заботится об изменении локали пользователя,
+опираясь на отосланную форму.
+
+![Internationalized Footer](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
+
+Интернационализация
+-------------------
+
+### Языки, таблица символов и кодировка
+
+Разные языки содержат различные наборы символов. Английский язык один из самых,
+простых поскольку в нем используются ASCII символы, французский язык сложнее
+с акцентированными символами как "é", и языки такие как русский, китайский или
+арабский намного сложнее, так как все их символы находятся за пределами ASCII.
+Такие языки определены в совершенно разных таблицах символов.
+
+Когда вы имеете дело с интернационализированными данными, лучше всего использовать
+Unicode. Идея Unicode заключается в том, чтобы использовать универсальную таблицу
+символов, которая содержит все символы для всех языков. Проблема Unicode состоит
+в том, что один символ может быть представлен с помощью 21 октета. Поэтому для веба
+мы используюем UTF-8, в котором код Unicode указывается различной по длине
+последовательностью октетов. В UTF-8 символы большинства используемых языков закодированы
+с помощью менее чем 3 октетов.
+
+UTF-8 это кодировка по умолчанию, используемая фреймворком Symfony, и это определено в
+конфигурационном файле `settings.yml`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        charset: utf-8
+
+Также для того, чтобы включить уровень интернационализации, Вы должны установить значение
+`true` для настройки `i18n` в `settings.yml`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        i18n: true
+
+### Шаблоны
+
+Интернационализированный веб-сайт означает что интерфейс пользователя переведен
+на несколько языков.
+
+В шаблоне все строки которые зависят от языка должны быть заключены в помощник `__()`
+(заметьте что тут два подчеркивания).
+
+Помощник `__()` это часть группы помощников `I18N`, которые
+упрощают управление i18n в шаблонах. Поскольку эта группа не загружена по умолчанию,
+Вам нужно или добавить ее вручную в каждом шаблоне с помощью `use_helper('I18N')`
+как мы уже делали с группой помощников `Text`, или загрузить ее глобально добавив
+настройку в `standard_helpers`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        standard_helpers: [Partial, Cache, I18N]
+
+Тут показано как использовать помощник `__()` для подвала (footer) Jobeet:
+
+    [php]
+    // apps/frontend/templates/layout.php
+    <div id="footer">
+      <div class="content">
+        <span class="symfony">
+          <img src="/images/jobeet-mini.png" />
+          powered by <a href="http://www.symfony-project.org/">
+          <img src="/images/symfony.gif" alt="symfony framework" /></a>
+        </span>
+        <ul>
+          <li>
+            <a href=""><?php echo __('About Jobeet') ?></a>
+          </li>
+          <li class="feed">
+            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+          </li>
+          <li>
+            <a href=""><?php echo __('Jobeet API') ?></a>
+          </li>
+          <li class="last">
+            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+          </li>
+        </ul>
+        <?php include_component('language', 'language') ?>
+      </div>
+    </div>
+
+>**NOTE**
+>Помощник `__()` может принять строку для языка по умолчанию, или Вы можете
+>так же использовать уникальный идентификатор для каждой строки. Это только дело вкуса.
+>Для Jobeet, мы будем использовать прежнюю стратегию, чтобы шаблоны были более читабельными.
+
+Когда Symfony исполняет шаблон, каждый раз, когда вызывается помощник `__()`,
+Symfony ищет перевод для текущей локали пользователя. Если перевод найден,
+он будет использован, если нет, первый аргумент будет возвращен как значение по умолчанию.
+
+Все переводы хранятся в некотором каталоге. Фреймворк i18n предоставляет много различных стратегий для
+сохранения переводов. Мы будем использовать формат ["~XLIFF~"](http://en.wikipedia.org/wiki/XLIFF),
+который является стандартом и наиболее гибким. Это так же хранилице, используемое генератором
+админки и большинством плагинов Symfony.
+
+>**NOTE**
+>Другие каталоги хранения это ~`gettext`~, `MySQL`, и `SQLite`. Как всегда, посмотрите в
+>[i18n API](http://www.symfony-project.org/api/1_4/i18n) для более подробной информации.
+
+### `i18n:extract`
+
+Вместо создания файла каталога вручную, используйте встроенную задачу
+~`i18n:extract`~:
+
+    $ php symfony i18n:extract frontend fr --auto-save
+
+Задача `i18n:extract` находит все строки, которые нужно перевести на `fr`
+в приложении `frontend` и создает или обновляет соответствующий каталог.
+Опция `--auto-save` сохраняет новые строки в каталог. Вы также можете
+использовать опцию `--auto-delete` для автоматического удаления строк,
+которые больше не существуют.
+
+В нашем случае, заполняется файл, который мы создали:
+
+    [xml]
+    <!-- apps/frontend/i18n/fr/messages.xml -->
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN"
+      "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+    <xliff version="1.0">
+      <file source-language="EN" target-language="fr" datatype="plaintext"
+          original="messages" date="2008-12-14T12:11:22Z"
+          product-name="messages">
+        <header/>
+        <body>
+          <trans-unit id="1">
+            <source>About Jobeet</source>
+            <target/>
+          </trans-unit>
+          <trans-unit id="2">
+            <source>Feed</source>
+            <target/>
+          </trans-unit>
+          <trans-unit id="3">
+            <source>Jobeet API</source>
+            <target/>
+          </trans-unit>
+          <trans-unit id="4">
+            <source>Become an affiliate</source>
+            <target/>
+          </trans-unit>
+        </body>
+      </file>
+    </xliff>
+
+Каждый перевод управляется тегами `trans-unit` у которого есть уникальный
+аттрибут `id`. Теперь вы можете отредактировать этот файл и добавить перевод
+для французского языка:
+
+    [xml]
+    <!-- apps/frontend/i18n/fr/messages.xml -->
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN"
+      "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+    <xliff version="1.0">
+      <file source-language="EN" target-language="fr" datatype="plaintext"
+          original="messages" date="2008-12-14T12:11:22Z"
+          product-name="messages">
+        <header/>
+        <body>
+          <trans-unit id="1">
+            <source>About Jobeet</source>
+            <target>A propos de Jobeet</target>
+          </trans-unit>
+          <trans-unit id="2">
+            <source>Feed</source>
+            <target>Fil RSS</target>
+          </trans-unit>
+          <trans-unit id="3">
+            <source>Jobeet API</source>
+            <target>API Jobeet</target>
+          </trans-unit>
+          <trans-unit id="4">
+            <source>Become an affiliate</source>
+            <target>Devenir un affilié</target>
+          </trans-unit>
+        </body>
+      </file>
+    </xliff>
+
+>**TIP**
+>XLIFF это стандартный формат, и существует много инструментов для облегчения
+>процесса перевода. [Open Language Tools](https://open-language-tools.dev.java.net/)
+>это проект с открытыми исходными кодами на Java с встроенным редактором XLIFF.
+
+>**TIP**
+>Поскольку XLIFF это формат, базирующийся на файлах, применимы те же правила приоритетов и объединения
+>которые существуют для других конфигурационных файлов. Файлы I18n могут существовать
+>в проекте, в приложении или модуле, и наиболее специфичный файл перегружает перевод,
+>найденный в глобальном.
+
+### Переводы с аргументами
+
+Основной принцип интернационализации это переводить все предложение.
+Но в некоторые предложения включены динамические значения. В Jobeet, тот самый случай
+для ссылок "more..." на домашней странице:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <div class="more_jobs">
+      and <?php echo link_to($count, 'category', $category) ?> more...
+    </div>
+
+Количество работ это переменная, которая должна быть заменена на заполнитель для перевода:
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <div class="more_jobs">
+      <?php echo __('and %count% more...', array('%count%' => link_to($count, 'category', $category))) ?>
+    </div>
+
+Теперь строка которую нужно перевести "and %count% more...", и заполнитель `%count%`
+будет заменен реальным значением во время выполнения, благодаря значению переданному
+во втором аргументе помощника `__()`.
+
+Добавьте новую строку вручную с помощью вставки тега `trans-unit` в файл
+`messages.xml`, или используйте задачу `i18n:extract` для обновления файла автоматически:
+
+    $ php symfony i18n:extract frontend fr --auto-save
+
+После запуска задачи, откройте XLIFF-файл и добавьте французский перевод:
+
+    [xml]
+    <trans-unit id="5">
+      <source>and %count% more...</source>
+      <target>et %count% autres...</target>
+    </trans-unit>
+
+Единственное требование к переведенной строке - это где-то использовать заполнитель `%count%`.
+
+Некоторые другие строки намного сложнее, так как они включают множества.
+В зависимости от некоторых чисел, предложение меняется, но это не обязательно
+для всех языков. Некоторые языки имеют очень сложные грамматические правила
+для множеств, наприммер, польский или русский.
+
+На странице категорий, количество работ в текущей категории отображается таким кодом:
+
+    [php]
+    <!-- apps/frontend/modules/category/templates/showSuccess.php -->
+    <strong><?php echo count($pager) ?></strong> jobs in this category
+
+Когда предложение имеет несколько переводов в зависимости от числа, нужно использовать
+помощник `format_number_choice()`:
+
+    [php]
+    <?php echo format_number_choice(
+        '[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category',
+        array('%count%' => '<strong>'.count($pager).'</strong>'),
+        count($pager)
+      )
+    ?>
+
+Помощник `format_number_choice()` принимает три аргумента:
+
+  * Строка, которая зависит от числа
+  * Массив заполнителей
+  * Число для определения текста, который нужно использовать
+
+Строка, которая описывает различные переводы в зависимости от числа, должна быть в следующем формате:
+
+  * Каждый вариант разделен вертикальной чертой (`|`)
+  * Каждая строка состоит из диапазонов для перевода
+
+Диапазоны могут описывать любые числовые диапазоны:
+
+  * `[1,2]`:     Принимает значения от 1 до 2 включительно
+  * `(1,2)`:     Принимает значения от 1 до 2 не включая 1 и 2
+  * `{1,2,3,4}`: Принимаются только указанные значения
+  * `[-Inf,0)`:  Принимает значения от отрицательной бесконечности до 0, не включая 0
+  * `{n: n % 10 > 1 && n % 10 < 5}`: Соответствует числам 2, 3, 4, 22, 23, 24
+
+Перевод строки похож на другие строки сообщений:
+
+    [xml]
+    <trans-unit id="6">
+      <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
+      <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
+    </trans-unit>
+
+Теперь Вы знаете, как интернационализировать все типы строк, потратьте время
+на добавление вызовов `__()` для всех шаблонов приложения frontend. Мы не будем
+интернационализировать приложение backend.
+
+### Формы
+
+Классы форм содержат много строк, которые нужно переводить, такие, как метки,
+сообщения об ошибках, и подсказки. Все эти строки автоматически интернационализированы
+фреймворком Symfony, так что вам нужно только предоставить перевод в файлах XLIFF.
+
+>**NOTE**
+>К сожалению задача `i18n:extract` еще не обрабатывает классы форм для поиска
+>непереведенных строк.
+
+### ##ORM## объекты
+
+Для веб-сайта Jobeet, мы не будем интернационализировать все таблицы, 
+поскольку нет смысла просить тех, кто размещает вакансии, переводить их посты о вакансиях на
+все доступные языки. Но таблица категорий точно должна быть переведена.
+
+##ORM## плагин поддерживает таблицы i18n из коробки. Для каждой таблицы, которая
+содержит локализованные данные, нужно создать две таблицы: одна для столбцов, которые
+не зависят от i18n, и другая со столбцами, которые нужно интернационализировать.
+Эти две таблицы имеют отношения один-ко-многим.
+
+Обновите файл `schema.yml` следующим образом:
+
+<propel>
+    [yml]
+    # config/schema.yml
+    jobeet_category:
+      _attributes:  { isI18N: true, i18nTable: jobeet_category_i18n }
+      id:           ~
+
+    jobeet_category_i18n:
+      id:           { type: integer, required: true, primaryKey: true,
+       ➥ foreignTable: jobeet_category, foreignReference: id }
+      culture:      { isCulture: true, type: varchar, size: 7,
+       ➥ required: true, primaryKey: true }
+      name:         { type: varchar(255), required: true }
+      slug:         { type: varchar(255), required: true }
+
+Запись `_attributes` определяет опции для таблицы.
+
+И обновите начальные данные для категорий:
+
+    [yml]
+    # data/fixtures/010_categories.yml
+    JobeetCategory:
+      design:        { }
+      programming:   { }
+      manager:       { }
+      administrator: { }
+
+    JobeetCategoryI18n:
+      design_en:        { id: design, culture: en, name: Design }
+      programming_en:   { id: programming, culture: en, name: Programming }
+      manager_en:       { id: manager, culture: en, name: Manager }
+      administrator_en: { id: administrator, culture: en,
+       ➥ name: Administrator }
+
+      design_fr:        { id: design, culture: fr, name: Design }
+      programming_fr:   { id: programming, culture: fr,
+       ➥ name: Programmation }
+      manager_fr:       { id: manager, culture: fr, name: Manager }
+      administrator_fr: { id: administrator, culture: fr,
+       ➥ name: Administrateur }
+
+Перестройте модель:
+
+    $ php symfony propel:build-all --no-confirmation
+    $ php symfony cc
+
+Поскольку столбцы `name` и `slug` нужно переместить в i18n-таблицу, переместите метод
+`setName()` из `JobeetCategory` в `JobeetCategoryI18n`:
+
+    [php]
+    // lib/model/JobeetCategoryI18n.php
+    public function setName($name)
+    {
+      parent::setName($name);
+
+      $this->setSlug(Jobeet::slugify($name));
+    }
+
+Также нужно исправить метод `getForSlug()` в `JobeetCategoryPeer`:
+
+    [php]
+    // lib/model/JobeetCategoryPeer.php
+    static public function getForSlug($slug)
+    {
+      $criteria = new Criteria();
+      $criteria->addJoin(JobeetCategoryI18nPeer::ID, self::ID);
+      $criteria->add(JobeetCategoryI18nPeer::CULTURE, 'en');
+      $criteria->add(JobeetCategoryI18nPeer::SLUG, $slug);
+
+      return self::doSelectOne($criteria);
+    }
+</propel>
+<doctrine>
+    [yml]
+    # config/doctrine/schema.yml
+    JobeetCategory:
+      actAs:
+        Timestampable: ~
+        I18n:
+          fields: [name]
+          actAs:
+            Sluggable: { fields: [name], uniqueBy: [lang, name] }
+      columns:
+        name: { type: string(255), notnull: true }
+
+Включая поведение `I18n`, модель под названием `JobeetCategoryTranslation` 
+будет создана автоматически и указанные поля будут перемещены в эту модель.
+
+Заметьте, мы просто включаем поведение `I18n` и перемещаем поведение `Sluggable`
+в присоединенную модель `JobeetCategoryTranslation`, которая создается автоматически.
+Опция `uniqueBy` говорит поведению `Sluggable`, какие поля определять как слаг, и уникально оно или нет.
+В этом случае каждый слаг должен быть уникальным для каждой пары `lang` и `name`.
+
+И обновите начальные данные для категорий:
+
+    [yml]
+    # data/fixtures/categories.yml
+    JobeetCategory:
+      design:
+        Translation:
+          en:
+            name: Design
+          fr:
+            name: design
+      programming:
+        Translation:
+          en:
+            name: Programming
+          fr:
+            name: Programmation
+      manager:
+        Translation:
+          en:
+            name: Manager
+          fr:
+            name: Manager
+      administrator:
+        Translation:
+          en:
+            name: Administrator
+          fr:
+            name: Administrateur
+
+Нам также нужно перегрузить метод `findOneBySlug()` в `JobeetCategoryTable`.
+Поскольку Doctrine предоставляет некоторые "магические" методы поиска для всех столбцов в модели,
+нам нужно просто создать метод `findOneBySlug()`, который переопределеит "магическую" функциональность
+по умолчанию, которую предоставляет Doctrine.
+
+Нам нужно сделать несколько изменений, чтобы полученные категории базировались на
+английском слаге в таблице `JobeetCategoryTranslation`.
+
+    [php]
+    // lib/model/doctrine/JobeetCategoryTable.cass.php
+    public function findOneBySlug($slug)
+    {
+      $q = $this->createQuery('a')
+        ->leftJoin('a.Translation t')
+        ->andWhere('t.lang = ?', 'en')
+        ->andWhere('t.slug = ?', $slug);
+      return $q->fetchOne();
+    }
+
+Перестройте модель:
+
+    $ php symfony doctrine:build --all --and-load --no-confirmation
+    $ php symfony cc
+
+</doctrine>
+
+>**TIP**
+<propel>
+>Поскольку `propel:build-all` удаляет все таблицы и данные из базы данных,
+</propel>
+<doctrine>
+>Поскольку `doctrine:build --all --and-load` удаляет все таблицы и данные из базы данных,
+</doctrine>
+>не забудьте пересоздать пользователя для доступа к приложеню backend веб-сайта Jobeet с помощью
+>задачи `guard:create-user`. В качестве альтернативы, Вы можете добавить файл начальных данных для того, чтобы
+>он добавлялся автоматически.
+
+<propel>
+При построении модели, фреймворк Symfony создает методы-заместители в главном объекте
+`JobeetCategory` для доступа к соответствующим i18n-столбцам, определенным в
+`JobeetCategoryI18n`:
+
+    [php]
+    $category = new JobeetCategory();
+
+    $category->setName('foo');       // устанавливает имя для текущей локали
+    $category->setName('foo', 'fr'); // устанавливает имя для текущей French-локали
+
+    echo $category->getName();     // возвращает имя для текущей локали
+    echo $category->getName('fr'); // возвращает имя для текущей French-локали
+</propel>
+<doctrine>
+При использовании поведения `I18n`, будет создан заместитель между объектами `JobeetCategory`
+и `JobeetCategoryTranslation`, чтобы все старые функции для получения имени категории
+продолжали работать и возвращали значение для текущей локали.
+
+    [php]
+    $category = new JobeetCategory();
+    $category->setName('foo'); // устанавливает имя для текущей локали
+    $category->getName(); // возвращает имя для текущей локали
+
+    $this->getUser()->setCulture('fr'); // из класса контроллера
+
+    $category->setName('foo'); // устанавливает имя для текущей French-локали
+    echo $category->getName(); // возвращает имя для текущей French-локали
+</doctrine>
+
+<propel>
+>**TIP**
+>Для уменьшения количества запросов к базе данных, используйте метод `doSelectWithI18n()`
+>вместо обычного `doSelect()`. Он будет получать главный объект и i18n-объект в одном запросе.
+>
+>     [php]
+>     $categories = JobeetCategoryPeer::doSelectWithI18n($c, $culture);
+</propel>
+<doctrine>
+>**TIP**
+>Для уменьшения количества запросов к базе данных, связывайте `JobeetCategoryTranslation` в
+>Ваших запросах. Он будет получать главный объект и i18n-объект в одном запросе.
+>
+>     [php]
+>     $categories = Doctrine_Query::create()
+>       ->from('JobeetCategory c')
+>       ->leftJoin('c.Translation t WITH t.lang = ?', $culture)
+>       ->execute();
+>
+>Ключевое слово `WITH` будет добавлять условие к автоматически добавленному условию
+>`ON` в запрос. Т.е. условие `ON` связывания будет выглядеть так:
+>
+>     [sql]
+>     LEFT JOIN c.Translation t ON c.id = t.id AND t.lang = ?
+</doctrine>
+
+Поскольку маршрут `category` связан с классом модели `JobeetCategory` и
+<propel>
+поскольку `slug` теперь часть `JobeetCategoryI18n`, маршрут не может
+</propel>
+<doctrine>
+поскольку `slug` теперь часть `JobeetCategoryTranslation`, маршрут не может
+</doctrine>
+получить объект `Category` автоматически. Чтобы помочь системе маршрутизации,
+давайте создадим метод, который позаботится о получении объекта:
+
+<propel>
+    [php]
+    // lib/model/JobeetCategoryPeer.php
+    class JobeetCategoryPeer extends BaseJobeetCategoryPeer
+    {
+      static public function doSelectForSlug($parameters)
+      {
+        $criteria = new Criteria();
+        $criteria->addJoin(JobeetCategoryI18nPeer::ID, JobeetCategoryPeer::ID);
+        $criteria->add(JobeetCategoryI18nPeer::CULTURE, $parameters['sf_culture']);
+        $criteria->add(JobeetCategoryI18nPeer::SLUG, $parameters['slug']);
+
+        return self::doSelectOne($criteria);
+      }
+    }
+</propel>
+<doctrine>
+Поскольку мы уже перегрузили `findOneBySlug()` давайте отрефакторим его чуть больше,
+чтобы эти методы могли быть общими. Мы создадим новые методы `findOneBySlugAndCulture()`
+и `doSelectForSlug()` и изменим метод `findOneBySlug()` так, чтобы он просто использовал
+метод `findOneBySlugAndCulture()`.
+
+    [php]
+    // lib/model/doctrine/JobeetCategoryTable.class.php
+    public function doSelectForSlug($parameters)
+    {
+      return $this->findOneBySlugAndCulture($parameters['slug'], $parameters['sf_culture']);
+    }
+
+    public function findOneBySlugAndCulture($slug, $culture = 'en')
+    {
+      $q = $this->createQuery('a')
+        ->leftJoin('a.Translation t')
+        ->andWhere('t.lang = ?', $culture)
+        ->andWhere('t.slug = ?', $slug);
+      return $q->fetchOne();
+    }
+
+    public function findOneBySlug($slug)
+    {
+      return $this->findOneBySlugAndCulture($slug, 'en');
+    }
+</doctrine>
+
+Затем используем, опцию `method` для того, чтобы сказать маршруту `category`, что нужно использовать
+метод `doSelectForSlug()` для получения объекта:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    category:
+      url:     /:sf_culture/category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: category, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object, method: doSelectForSlug }
+      requirements:
+        sf_format: (?:html|atom)
+
+Нужно перезагрузить начальные данные для того, чтобы перегенерировать правильные слаги для категорий:
+
+    $ php symfony propel:data-load
+
+Теперь маршрут `category` интернационализирован и URL для категории включает слаг переведенной
+категории:
+
+    /frontend_dev.php/fr/category/programmation
+    /frontend_dev.php/en/category/programming
+
+### Генератор админки
+
+Для backend мы хотим что бы французский и английский переводы можно было редактировать
+в одной форме:
+
+![Backend categories](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
+
+Вложение i18n-форм может быть выполнено с помощью метода `embedI18N()`:
+
+    [php]
+    // lib/form/JobeetCategoryForm.class.php
+    class JobeetCategoryForm extends BaseJobeetCategoryForm
+    {
+      public function configure()
+      {
+<propel>
+        unset($this['jobeet_category_affiliate_list']);
+</propel>
+<doctrine>
+        unset(
+          $this['jobeet_affiliates_list'],
+          $this['created_at'], $this['updated_at']
+        );
+</doctrine>
+
+        $this->embedI18n(array('en', 'fr'));
+        $this->widgetSchema->setLabel('en', 'English');
+        $this->widgetSchema->setLabel('fr', 'French');
+      }
+    }
+
+Интерфейс генератора админки поддерживает интернационализацию из коробки.
+Он поставляется с переводом для более чем 20 языков, и достаточно просто
+добавить новый, или изменить существующий. Скопируйте файл для языка, который
+Вы хотите изменить из Symfony (переводы админки можно найти в
+<propel>
+`lib/vendor/symfony/lib/plugins/sfPropelPlugin/i18n/`) в папку приложения
+</propel>
+<doctrine>
+`lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/i18n/`) в папку приложения
+</doctrine>
+`i18n`. Поскольку файл в вашем приложении будет объединен с тем, что лежит
+в каталоге Symfony, оставьте только измененные строки в файле приложения.
+
+Вы заметите, что файлы переводов генератора админки названы
+`sf_admin.fr.xml`, вместо `fr/messages.xml`. На самом деле,
+`messages` это имя каталога по умолчанию используемое Symfony, и может
+быть изменено для улучшенного разделения между различными частями вашего приложения.
+Используя каталог, отличающийся от каталога по умолчанию, необходимо, чтобы Вы указали
+это в помощнике `__()`:
+
+    [php]
+    <?php echo __('About Jobeet', array(), 'jobeet') ?>
+
+В предыдущем вызове `__()`, Symfony будет искать строку "About Jobeet" в
+каталоге `jobeet`.
+
+### Тесты
+
+Исправление тестов это неотъемлемая часть миграции при интернационализации.
+Сначала обновите тестовые начальные данные для категорий, скопировав начальные данные, которые
+у нас уже
+<propel>
+определены в `test/fixtures/010_categories.yml`.
+</propel>
+<doctrine>
+определены в `test/fixtures/categories.yml`.
+</doctrine>
+
+Перестройте модель для окружения `test`:
+
+<propel>
+    $ php symfony propel:build-all-load --no-confirmation --env=test
+</propel>
+<doctrine>
+    $ php symfony doctrine:build --all -and-load --no-confirmation --env=test
+</doctrine>
+
+Теперь вы можете запустить все тесты для того, чтобы проверить, что все отлично работает:
+
+    $ php symfony test:all
+
+>**NOTE**
+>Когда мы разрабатывали интерфейс backend для Jobeet, мы не писали
+>фунциональные тесты. Но когда Вы создаете модуль с помощью командной строки,
+>Symfony также генерирует тестовые заглушки. Эти заглушки можно безопасно удалить.
+
+Локализация
+-----------
+
+### Шаблоны
+
+Поддержка различных локалей также означает поддержку различных способов форматирования дат
+и чисел. В шаблоне в Вашем распоряжении есть несколько помощников которые заботятся обо всех
+этих отличиях, основываясь на текущей локали пользователя:
+
+В группе помощников [`Date`](http://www.symfony-project.org/api/1_4/DateHelper):
+
+ | Помощник                       | Описание                                                                      |
+ | ------------------------------ | ----------------------------------------------------------------------------- |
+ | `format_date()`                | Форматирует дату                                                              |
+ | `format_datetime()`            | Фоматирует дату и время (часы, минуты, секунды)                               |
+ | `time_ago_in_words()`          | Отображает интервал времени между заданной датой и текущим временем в словах  |
+ | `distance_of_time_in_words()`  | Отображает интервал времени между двумя датами в словах                       |
+ | `format_daterange()`           | Форматирует диапазон дат                                                      |
+
+В группе помощников [`Number`](http://www.symfony-project.org/api/1_4/NumberHelper) :
+
+ | Помощник            | Описание           |
+ | ------------------- | ------------------ |
+ | `format_number()`   | Форматирует число  |
+ | `format_currency()` | Форматирует валюту |
+
+В группе помощников [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper):
+
+ | Помощник            | Описание                        |
+ | ------------------- | ------------------------------- |
+ | `format_country()`  | Отображает название страны      |
+ | `format_language()` | Отображает название языка       |
+
+### Формы
+
+Фреймворк форм предоставляет несколько виджетов и валидаторов для локализированных данных:
+
+ * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
+ * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
+ * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
+
+ * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCountry)
+ * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCurrency)
+ * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceLanguage)
+ * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceTimezone)
+
+ * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
+ * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
+
+Увидимся завтра!
+----------------
+
+Интернационализация и локализация - это первоклассные обитатели Symfony.
+Предоставление локализированного веб-сайта для ваших пользователей - это очень
+просто, поскольку фреймворк Symfony предоставляет все базовые инструменты и
+даже дает Вам задачи командной строки, для того, чтобы делать это быстро.
+
+Подготовьтесь к завтрашнему очень специфичному уроку, поскольку мы будем
+перемещать очень много файлов и исследовать различные подходы для организации
+проекта на Symfony.
+
+__ORM__
