@@ -1,0 +1,639 @@
+Jour 5 : Le Routage
+===================
+
+Si vous avez terminé le 4ème jour, vous connaissez maintenant le modèle MVC, cela doit vous
+paraître de plus en plus comme la meilleure manière de coder. Prenez le temps
+de le comprendre et vous ne le regretterez pas. Pour pratiquer un peu hier, nous avons
+personnalisé les pages Jobeet et dans le processus, nous avons également examiné plusieurs
+concepts de symfony, comme la mise en page, les helpers et les slots
+
+Aujourd'hui nous explorerons le monde merveilleux du routage avec symfony.
+
+Les ~URL~s
+----------
+
+Si vous cliquez sur un emploi sur la page d'accueil Jobeet, l'URL ressemble à ceci :
+`/job/show/id/1`. Si vous avez déjà développé des sites Web PHP, vous êtes probablement
+plus habitués à des URL comme `/job.php?id=1`. Comment symfony fait pour que cela fonctionne ?
+Comment symfony détermine quelle est l'action à appeler pour cette URL ? Pourquoi on
+récupère l'`id` du job avec `$request->getParameter('id')` ? Aujourd'hui, nous allons
+répondre à toutes ces questions.
+
+Tout d'abord, voyons ce que sont exactement les URLs. Dans un contexte web,
+une URL est l'identifiant unique d'un contenu web. Quand vous allez sur une URL, vous
+demandez au navigateur d'aller chercher un contenu identifié par cette URL. Ainsi, comme
+l'URL est l'interface entre le site et l'utilisateur, elle doit donner des informations
+utiles sur le contenu qu'elle référence. Toutefois, les URLs "traditionnelles" ne décrivent
+pas vraiment le contenu, elles exposent la structure interne de l'application.
+L'utilisateur ne se soucie pas que votre site est développé avec le langage PHP,
+ou qu'un emploi a un certain identifiant dans la base de données. Exposer le
+fonctionnement interne de votre application est aussi très mauvais en ce qui concerne la
+~sécurité|Sécurité~ : que faire si l'utilisateur essaie de deviner l'adresse URL pour le
+contenu où il n'a pas accès ? Bien sûr, le développeur doit sécuriser ces accès, mais
+la meilleure solution est de cacher les informations sensibles.
+
+Les URLs sont si importantes, que symfony possède un framework dédié à leur
+gestion : le framework de **~routage|Routage~**. Le routage gère aussi bien les
+URIs internes que les URLs externes. Après une requête, le routage analyse l'URL
+et la convertit en URI interne.
+
+Vous avez déjà vu une URI interne sur la page job dans le
+Template `showSuccess.php` :
+
+    'job/show?id='.$job->getId()
+
+Le ~helper `url_for()`~ convertit cette URI interne en une URL propre :
+
+    /job/show/id/1
+
+L'URI interne se compose de plusieures parties : `job` qui est le module, `show`
+qui est l'action et les paramètres servants à la requête passée à l'action.
+Le modèle générique pour une URI interne est :
+
+    MODULE/ACTION?key=value&key_1=value_1&...
+
+Comme le routage de symfony est un processus bi-directionnel. Vous pouvez changer
+les URLs sans changer l'exécution technique. C'est l'un des avantages principaux
+du front-controller design pattern.
+
+Configuration du Routage
+------------------------
+
+Le lien entre les URIs internes et les URLs externes se paramètre dans le
+fichier de configuration `~routing.yml~` :
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    homepage:
+      url:   /
+      param: { module: default, action: index }
+
+    default_index:
+      url:   /:module
+      param: { action: index }
+
+    default:
+      url:   /:module/:action/*
+
+Le fichier `routing.yml` décrit les routes. Une route possède un nom (`homepage`), un
+modèle (`/:module/:action/*`) et d'autres paramètres (après la clé `param`).
+
+A l'appel d'une requête, le routage essaye de faire correspondre un modèle avec
+l'URL donnée. La première route trouvée est utilisée, c'est pourquoi l'ordre
+dans `routing.yml` est important. Voyons quelques exemples pour mieux comprendre
+comment le routage fonctionne.
+
+A l'appel de la page d'accueil de Jobeet, avec l'URL `/job`, la première route
+qui correpond est `default_index`. Dans le modèle, un mot qui est
+~préfixé|Préfixe~ de deux points (`:`) est une variable. Donc le modèle `/:module`
+signifie : trouver un `/` suivi par quelquechose. Dans notre exemple, la variable
+`module` aura la valeur `job`. Cette valeur peut alors être recherchée avec
+`$request->getParameter('module')` dans l'action. Cette route définit aussi une
+valeur par défaut pour la variable `action`. Donc toutes les URLs correspondantes
+à cette route possèderont par défaut le paramètre `action` avec la valeur `index`.
+
+Si vous allez sur la page `/job/show/id/1`, symfony fera correspondre le dernier modèle :
+`/:module/:action/*`. Dans un modèle, une étoile (`*`) correspond à une collection de
+paires de variable/valeur séparées par des slashes (`/`) :
+
+  | Paramètre de la requête | Valeur |
+  | ----------------------- | ------ |
+  | module                  | job    |
+  | action                  | show   |
+  | id                      | 1      |
+
+>**NOTE**
+>Les variables `~module|Module~` et `~action|Action~` sont spéciales car elles sont utilisées par
+>symfony pour déterminer l'action à exécuter.
+
+L'URL `/job/show/id/1` peut être créee dans un Template en utilisant le helper
+`url_for()` :
+
+    [php]
+    url_for('job/show?id='.$job->getId())
+
+Vous pouvez aussi utiliser le nom de la route en le faisant précéder par `@` :
+
+    [php]
+    url_for('@default?module=job&action=show&id='.$job->getId())
+
+Les deux appels sont équivalents, mais celui-ci est beaucoup plus rapide car le routage n'a
+pas besoind'analyser toutes les routes pour trouver la meilleure correspondance, et elle est
+moins attachée à l'exécution (les noms du module et de l'action ne sont pas présents
+dans l'URI interne).
+
+Personnalisation des Routes
+---------------------------
+
+Pour l'instant, lorsque vous demandez l'URL `/` dans un navigateur, vous avez la page par
+défaut de félicitation de symfony. C'est parce que cette URL correspond à la
+~route|Route~ `homepage`. Mais il est logique de le changer la page d'accueil
+Jobeet. Pour faire le changement, modifiez la variable `module` de la route `homepage`
+par `job` :
+
+    [php]
+    # apps/frontend/config/routing.yml
+    homepage:
+      url:   /
+      param: { module: job, action: index }
+
+Nous pouvons maintenant modifier le lien du logo Jobeet dans le layout en utilisant
+la route `homepage` :
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <h1>
+      <a href="<?php echo url_for('@homepage') ?>">
+        <img src="/images/logo.jpg" alt="Jobeet Job Board" />
+      </a>
+    </h1>
+
+C'était facile !
+
+>**TIP**
+>Lorsque vous mettez à jour la configuration du routage, les modifications sont
+>immédiatement prises en compte dans l'environnement de développement. Mais pour les faire
+>fonctionner aussi dans l'environnement de production, vous devez vider le cache en
+>appelant la tâche `cache:clear`.
+
+Pour avoir quelque chose d'un peu plus impliqué, nous allons changer l'URL de la page job
+en quelque chose de plus significatif :
+
+    /job/sensio-labs/paris-france/1/web-developer
+
+Sans rien savoir de Jobeet, et sans regarder la page, vous pouvez comprendre
+à partir de l'URL que Sensio Labs est à la recherche d'un développeur Web pour
+travailler à Paris en France.
+
+>**NOTE**
+>Les URLs claires sont importantes car elles donnent des informations à
+>l'utilisateur. C'est aussi très utile lorsqu'on copie l'URL dans un email
+>ou pour optimiser le référencement de votre site sur les moteurs de recherche.
+
+Le modèle suivant correpond à une telle URL :
+
+    /job/:company/:location/:id/:position
+
+Editez le fichier `routing.yml` et ajouter la route `job_show_user` au début
+du fichier :
+
+    [yml]
+    job_show_user:
+      url:   /job/:company/:location/:id/:position
+      param: { module: job, action: show }
+
+Si vous actualisez la page d'accueil de Jobeet, les liens des emplois n'ont pas changé. C'est
+parce que pour générer une route, vous devez indiquer toutes les variables requises. Il
+faut donc modifier l'appel de `url_for()` dans `indexSuccess.php` par :
+
+    [php]
+    url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().
+      '&location='.$job->getLocation().'&position='.$job->getPosition())
+
+Une ~URI interne|URI interne~ peut aussi être définie dans un tableau :	  
+
+    [php]
+    url_for(array(
+      'module'   => 'job',
+      'action'   => 'show',
+      'id'       => $job->getId(),
+      'company'  => $job->getCompany(),
+      'location' => $job->getLocation(),
+      'position' => $job->getPosition(),
+    ))
+
+Requirements
+------------
+
+Dans le tutoriel du premier jour, nous avons parlé de la validation et de la gestion
+d'erreur qui sont indispensables. Le routage possède son propre système de
+~validation|Validation~. Chaque modèle de variable peut être validé par une expression
+régulière définie en utilisant l'entrée ~requirements~ avec une définition de
+la ~route|Route~ :
+
+    [yml]
+    job_show_user:
+      url:   /job/:company/:location/:id/:position
+      param: { module: job, action: show }
+      requirements:
+        id: \d+
+
+L'entrée `requirements` précédente requiert que `id` soit une valeur numérique.
+Si ce n'est pas le cas, la route ne fonctionnera pas.
+
+La classe de la route
+---------------------
+
+Chaque route définie dans `~routing.yml~` est convertie en objet de
+la classe [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute). Cette
+classe peut être modifiée en définissant une entrée `class` dans la définition
+de la route. Si le protocole ~HTTP~ vous est familier, vous savez qu'il définit
+plusieures "méthodes", `~GET|GET (Méthode HTTP)~`, `~POST|POST (Méthode HTTP)~`,
+`~HEAD|HEAD (Méthode HTTP)~`, `~DELETE|DELETE (Méthode HTTP)~`, et `~PUT|PUT (Méthode HTTP)~`.
+Les trois premières sont supportées par tous les navigateurs, mais pas les deux autres.
+
+Pour restreindre la route à une méthode déterminée, vous pouvez changer la
+classe de la route par
+[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute) et
+ajouter une condition pour la variable virtuelle `sf_method` :
+
+    [yml]
+    job_show_user:
+      url:   /job/:company/:location/:id/:position
+      class: sfRequestRoute
+      param: { module: job, action: show }
+      requirements:
+        id: \d+
+        sf_method: [get]
+
+>**NOTE**
+>Exiger qu'une route corresponde uniquement à une des ~méthodes HTTP|méthode HTTP~ n'est pas
+>totalement équivalent à l'utilisation de `sfWebRequest::isMethod()` dans vos actions.
+>En effet le routage continuera de chercher une correpondance si la
+>méthode ne correspond pas à celle définie.
+
+Objet de la classe de la route
+------------------------------
+
+La nouvelle URI interne pour un emploi est un peu longue et pénible à écrire
+(`url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().'&location='.$job->getLocation().'&position='.$job->getPosition())`).
+Mais comme nous venons de le voir dans la section précédente, la classe de la route
+peut être modifiée. Pour la route `job_show_user`, il est préférable d'utiliser la
+classe [`~sfPropelRoute~`](http://www.symfony-project.org/api/1_4/sfPropelRoute)
+optimisée pour les routes représentées par des objets ##ORM## ou des
+collections d'objets ##ORM## :
+
+    [yml]
+    job_show_user:
+      url:     /job/:company/:location/:id/:position
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: show }
+      requirements:
+        id: \d+
+        sf_method: [get]
+
+L'entrée `options` personnalise le comportement de la route. Ici, l'option
+`model` indique que la classe de modèle ##ORM## (`JobeetJob`) est liée à la route
+et l'option `type` indique que cette route est attachée à un objet (vous pouvez aussi
+utiliser l'option `list` si une route représente une collection d'objets).
+
+La route `job_show_user` sait maintenant qu'elle est liée avec `JobeetJob` et
+nous pouvons simplifier l'appel de ~`url_for()`|Helper `url_for()`~ :
+
+    [php]
+    url_for(array('sf_route' => 'job_show_user', 'sf_subject' => $job))
+
+ou simplement :
+
+    [php]
+    url_for('job_show_user', $job)
+
+>**NOTE**
+>Le premier exemple est utile quand vous devez passer plus d'arguments plutôt
+>que l'objet seul.
+
+Ca fonctionne car toutes les variables dans la route ont un accesseur correspondant
+dans la classe `JobeetJob` (par exemple, la variable `company` de la route est
+remplacée par la valeur de `getCompany()`).
+
+A ce stade, les URLs générées ne sont pas encore comme nous le
+voudrions :
+
+    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+
+Nous devons utiliser un "~slug|Slug~" sur la valeur de la colonne pour remplaçer tous les
+charactères non ASCII par un `-`. Ouvrez le fichier `JobeetJob` et ajouter les
+méthodes suivantes à la classe :
+
+    [php]
+<propel>
+    // lib/model/JobeetJob.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetJob.class.php
+</doctrine>
+    public function getCompanySlug()
+    {
+      return Jobeet::slugify($this->getCompany());
+    }
+
+    public function getPositionSlug()
+    {
+      return Jobeet::slugify($this->getPosition());
+    }
+
+    public function getLocationSlug()
+    {
+      return Jobeet::slugify($this->getLocation());
+    }
+
+Ensuite, créer le fichier `lib/Jobeet.class.php` et y ajouter la fonction
+`slugify` :
+
+    [php]
+    // lib/Jobeet.class.php
+    class Jobeet
+    {
+      static public function slugify($text)
+      {
+        // replace all non letters or digits by -
+        $text = preg_replace('/\W+/', '-', $text);
+
+        // trim and lowercase
+        $text = strtolower(trim($text, '-'));
+
+        return $text;
+      }
+    }
+
+>**NOTE**
+>Dans ce tutoriel, nous ne voyons jamais l'instruction d'ouverture `<?php` dans les
+>exemples de code qui contiennent uniquement du pur code PHP pour optimiser l'espace et
+>sauver un peu d'arbre. Vous devez évidemment ne pas oubliez de l'ajouter chaque fois que vous
+>créez un nouveau fichier PHP. Rappelez-vous juste de ne pas l'ajouter à des fichiers Templates.
+
+Nous venons de définir trois nouveaux accésseurs "virtuels" :  `getCompanySlug()`,
+`getPositionSlug()` et `getLocationSlug()`. Ils retournent la valeur correspondante
+à leur colonne après avoir appliqué la méthode `slugify()`. Maintenant, vous pouvez
+remplaçer le nom réel des colonnes par leur équivalent virtuel dans la route `job_show_user` :
+
+    [yml]
+    job_show_user:
+      url:     /job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: show }
+      requirements:
+        id: \d+
+        sf_method: [get]
+
+Les nouvelles URLs sont maintenant fonctionnelles :
+
+    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+
+Mais nous ne sommes qu'au milieu de l'histoire. La route est capable de générer une URL basée
+sur un objet, mais elle peut aussi trouver l'objet lié à une URL donnée. L'objet
+peut être récupéré avec la méthode `getObject()` de l'objet de la route. A l'analyse
+d'une requête entrante, le routage stocke la route correspondante en un objet qui
+peut être utilisé dans les actions. Donc, modifiez la méthode `executeShow()`
+pour utiliser l'objet de la route et retrouver l'objet `Jobeet` :
+
+    [php]
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+
+        $this->forward404Unless($this->job);
+      }
+
+      // ...
+    }
+
+Si vous essayez d'afficher un job avec un `id` inconnu, vous verrez la page d'erreur
+404 mais avec un message différent :
+
+![404 avec sfPropelRoute](http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png)
+
+C'est parce que l'erreur ~404|Erreur 404~ a été levée automatiquement par
+la méthode `getRoute()`. Donc, nous pouvons encore simplifier la méthode
+`executeShow` :
+
+    [php]
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+      }
+
+      // ...
+    }
+
+>**TIP**
+>Si vous ne voulez pas que la route génère une erreur 404, vous pouvez paramétrer
+>l'option de routage `allow_empty` sur `true`.
+
+-
+
+>**NOTE**
+>L'objet associé d'une route n'est pas chargé. Il est seulement récupéré de la
+>base de données si vous appelez la méthode `getRoute()`.
+
+Le routage dans les Actions et les Templates
+--------------------------------------------
+
+Dans un template, le helper `url_for()` convertit une URI interne en une URL externe.
+D'autres helpers de symfony utilisent aussi une URI interne en tant qu'argument, comme
+le helper `~link_to()~` qui génère une balise `<a>` :
+
+    [php]
+    <?php echo link_to($job->getPosition(), 'job_show_user', $job) ?>
+
+Il produit le code HTML suivant :
+
+    [php]
+    <a href="/job/sensio-labs/paris-france/1/web-developer">Web Developer</a>
+
+Tous les deux, `url_for()` et `link_to()` peuvent aussi générer des URLs absolues :
+
+    [php]
+    url_for('job_show_user', $job, true);
+
+    link_to($job->getPosition(), 'job_show_user', $job, true);
+
+Si vous voulez générer une URL depuis une action, vous pouvez utiliser la méthode
+`generateUrl()` :
+
+    [php]
+    $this->redirect('job_show_user', $job);
+
+>**SIDEBAR**
+>Les méthodes de la famille "~redirect|Redirection~"
+>
+>Dans le tutorial d'hier, nous avons parlé des méthodes "forward". Ces méthodes
+>renvoient la requête en cours vers une autre action sans rechargement de la page
+>avec le navigateur.
+>
+>Les méthodes "redirect" redirigent l'utilisateur vers une autre URL. Comme pour forward,
+>vous pouvez utiliser la méthode `redirect()` ou les méthodes de raccourci `redirectIf()` et
+>`redirectUnless()`.
+
+La classe Collection de la route
+--------------------------------
+
+Pour le module `job`, nous avons déjà personnalisé la route pour l'action `show`.
+Mais les URLs pour les autres méthodes (`index`, `new`, `edit`, `create`, `update`,
+et `delete`) sont encore gérées par la route `default` :
+
+    [yml]
+    default:
+      url: /:module/:action/*
+
+La route `default` est idéale pour commençer à coder sans avoir besoin de définir
+beaucoup de routes. Mais comme cette route agit comme un "fourre-tout", elle ne peut
+pas être configurée pour des besoins spécifiques.
+
+Toutes les actions pour `job` sont liées à la classe de modèle `JobeetJob`. Nous
+pouvons facilement définir une route ~`sfPropelRoute`~ personnalisée pour chaque action
+comme cela a été déjà fait pour l'action `~show`. Etant donné que le module `job` définit
+déjà les septs actions classiques pour un modèle, nous pouvons aussi utiliser la classe
+[`~sfPropelRouteCollection~`](http://www.symfony-project.org/api/1_4/sfPropelRouteCollection).
+Ouvrez le fichier `routing.yml` et modifiez le comme suit :
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    job:
+      class:   sfPropelRouteCollection
+      options: { model: JobeetJob }
+
+    job_show_user:
+      url:     /job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: show }
+      requirements:
+        id: \d+
+        sf_method: [get]
+
+    # default rules
+    homepage:
+      url:   /
+      param: { module: job, action: index }
+
+    default_index:
+      url:   /:module
+      param: { action: index }
+
+    default:
+      url:   /:module/:action/*
+
+La route `job` ci-dessus est tout simplement un raccourci qui génère automatiquement
+les sept routes `sfPropelRoute` suivantes :
+
+    [yml]
+    job:
+      url:     /job.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: list }
+      param:   { module: job, action: index, sf_format: html }
+      requirements: { sf_method: get }
+
+    job_new:
+      url:     /job/new.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: new, sf_format: html }
+      requirements: { sf_method: get }
+
+    job_create:
+      url:     /job.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: create, sf_format: html }
+      requirements: { sf_method: post }
+
+    job_edit:
+      url:     /job/:id/edit.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: edit, sf_format: html }
+      requirements: { sf_method: get }
+
+    job_update:
+      url:     /job/:id.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: update, sf_format: html }
+      requirements: { sf_method: put }
+
+    job_delete:
+      url:     /job/:id.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: delete, sf_format: html }
+      requirements: { sf_method: delete }
+
+    job_show:
+      url:     /job/:id.:sf_format
+      class:   sfPropelRoute
+      options: { model: JobeetJob, type: object }
+      param:   { module: job, action: show, sf_format: html }
+      requirements: { sf_method: get }
+
+>**NOTE**
+>Quelques routes générées par `sfPropelRouteCollection` ont la même ~URL~. Le
+>routage est capable de les utiliser correctement car elles ont toutes une
+>~méthode HTTP|Méthode HTTP~ différentes dans l'entrée requirements.
+
+Les routes `job_delete` et `job_update` requièrent des ~méthodes HTTP|Méthodes HTTP~
+non supportées par les navigateurs (respectivement `~DELETE|DELETE (Méthode HTTP)~` et
+`~PUT|PUT (Méthode HTTP)~`). Ca fonctionne car symfony les simulent. Pour voir
+un exemple, ouvrez le Template `_form.php` :
+
+    [php]
+    // apps/frontend/modules/job/templates/_form.php
+    <form action="..." ...>
+    <?php if (!$form->getObject()->isNew()): ?>
+      <input type="hidden" name="sf_method" value="PUT" />
+    <?php endif; ?>
+
+    <?php echo link_to(
+      'Delete',
+      'job/delete?id='.$form->getObject()->getId(),
+      array('method' => 'delete', 'confirm' => 'Are you sure?')
+    ) ?>
+
+Tous les helpers symfony peuvent être utilisés pour simuler n'importe quelle
+méthode HTTP grâce au paramètre spécial `sf_method`.
+
+>**NOTE**
+>symfony possède d'autres paramètres spéciaux comme `sf_method`, qui débutent tous
+>par le ~préfixe|Préfixe~ `sf_`. Dans les routes générées ci-dessus, vous pouvez en
+>voir un autre : `sf_format` qui sera expliqué un autre jour.
+
+Débogage d'une route
+--------------------
+
+Quand vous avez beaucoup de routes, il est parfois utile de lister les routes générées.
+La tâche `app:routes` affiche toutes les routes d'une application donnée :
+
+    $ php symfony app:routes frontend
+
+Il est également possible d'obtenir des informations de ~debog~age en passant le 
+nom de la route en argument :
+
+    $ php symfony app:routes frontend job_edit
+
+Routes par défaut
+-----------------
+
+Définir des ~route|Route~s pour toutes les URLs est une bonne méthode de travail. Puisque
+la route `job` définit toutes les routes nécessaires pour l'utilisation de 
+l'application Jobeet, nous pouvons supprimer ou commenter les routes par défaut
+dans le fichier de configuration `routing.yml` :
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    #default_index:
+    #  url:   /:module
+    #  param: { action: index }
+    #
+    #default:
+    #  url:   /:module/:action/*
+
+L'application Jobeet fonctionne toujours à l'identique.
+
+À demain
+----------------
+
+Aujourd'hui, le tutoriel contenait beaucoup de nouvelles informations. Vous avez
+appris comment utiliser le framework de routage de symfony et comment dissocier vos URLs
+de la réalisation technique
+
+Demain, nous n'allons pas introduire de nouveaux concepts, mais plutôt passer du temps à
+aller plus profondément dans ce que nous avons vu jusqu'à présent.
+
+__ORM__
