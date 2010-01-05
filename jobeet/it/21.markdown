@@ -151,7 +151,7 @@ Create un file `cache.yml` per il modulo `sfJobeetJob`:
     [yml]
     # plugins/sfJobeetJob/modules/sfJobeetJob/config/cache.yml
     index:
-      enabled:     on
+      enabled:     true
       with_layout: true
 
 >**TIP**
@@ -198,10 +198,10 @@ La pagina per l'inserimento di un'offerta di lavoro può essere inserita in cach
     [yml]
     # plugins/sfJobeetJob/modules/sfJobeetJob/config/cache.yml
     new:
-      enabled:     on
+      enabled:     true
 
     index:
-      enabled:     on
+      enabled:     true
 
     all:
       with_layout: true
@@ -246,10 +246,10 @@ conseguenza:
     [yml]
     # plugins/sfJobeetJob/modules/sfJobeetJob/config/cache.yml
     new:
-      enabled:     on
+      enabled:     true
 
     index:
-      enabled:     on
+      enabled:     true
 
     all:
       with_layout: false
