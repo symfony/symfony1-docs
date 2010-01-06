@@ -1,0 +1,896 @@
+День 20: Плагины
+================
+
+Вчера Вы научились интернационализировать и локализовать Ваши приложения
+на Symfony. Еще раз, благодаря стандартам ICU и множеству помощников,
+фреймворк Symfony делает это действительно простым.
+
+Сегодня мы поговорим о плагинах: что они собой представляют, что Вы можете упаковать
+в плагин, и для чего они могут использоваться.
+
+Плагины
+-------
+
+### Плагин Symfony
+
+Плагин Symfony предлагает способ для упаковки и распространения подмножества
+файлов вашего проекта. Как и проект, плагин может содержать классы, помощники, конфигурацию,
+задачи, модули, схемы и даже стили (CSS) и картинки.
+
+### Приватные плагины
+
+Для начала плагины используются для упрощения совместного использования в Ваших приложениях, или даже
+разных проектах. Вспомним, что приложения Symfony разделяют только модель.
+Плагины предоставляют способ для совместного использования большего количества компонентов
+в разных приложениях.
+
+Если Вам нужно повторно использовать ту же схему для другого проекта, или те же модули, переместите
+их в плагин. Поскольку плагин это просто папка, Вы можете подключать их достаточно просто с помощью
+создания SVN-хранилища, используя `svn:externals`, или просто копируя файлы из одного проекта
+в другой.
+
+Мы называем эти плагины "приватными" потому, что их использование ограничено одним разработчиком
+или компанией. Они не доступны публично.
+
+>**TIP**
+>Вы можете даже создать пакет из Ваших приватных плагинов, создать собственный канал плагинов 
+>Symfony и устанавливать их с помощью задачи `plugin:install`.
+
+### Публичные плагины
+
+Публичные плагины доступны для скачивания и установки всему сообществу. В течении
+<propel>
+этого обучения мы использовали несколько публичных плагинов: `sfGuardPlugin` и
+`sfFormExtraPlugin`.
+</propel>
+<doctrine>
+этого обучения мы использовали несколько публичных плагинов: `sfDoctrineGuardPlugin`
+и `sfFormExtraPlugin`.
+</doctrine>
+
+Они точно такие же как и приватные плагины. Единственное отличие это то, что
+кто угодно может установить их для своих проектов. Позже Вы узнаете как публиковать и 
+размещать публичные плагины на веб-сайте Symfony.
+
+### Различные способы организации кода
+
+Есть еще один способ восприятия и использования плагинов. Забудьте о
+повторном использовании и совместном использовании. Плагины могут быть использованы
+для другого способа организации вашего кода. Вместо организации файлов по уровням:
+все модели в папке `lib/model/`, шаблоны в папке `templates/`, ...; файлы группируются
+по функциональности: все файлы, относящие к вакансиям, вместе (модель, модули и шаблоны), 
+все файлы CMS вместе, и так далее.
+
+Структура файлов плагина
+------------------------
+
+Плагин - это просто структура папок с файлами, организованная определенным образом,
+в зависимости от характеристик файлов. Сегодня мы переместим большинство кода, который
+мы написали для Jobeet в `sfJobeetPlugin`. Простой макет который мы будем использовать:
+
+    sfJobeetPlugin/
+<propel>
+      config/
+        sfJobeetPluginConfiguration.class.php // Инициализация плагина
+        schema.yml                            // Схема базы данных
+        routing.yml                           // Маршрутизация
+</propel>
+<doctrine>
+      config/
+        sfJobeetPluginConfiguration.class.php // Инициализация плагина
+        routing.yml                           // Маршрутизация
+        doctrine/
+          schema.yml                          // Схема базы данных
+</doctrine>
+      lib/
+        Jobeet.class.php                      // Классы
+        helper/                               // Помощники
+        filter/                               // Классы фильтров
+        form/                                 // Классы форм
+        model/                                // Классы модели
+        task/                                 // Задачи
+      modules/
+        job/                                  // Модули
+          actions/
+          config/
+          templates/
+      web/                                    // JS, CSS и картинки
+
+Плагин Jobeet
+-------------
+
+В начале просто создадим новую папку в `plugins/`. Для Jobeet, давайте создадим папку `sfJobeetPlugin`:
+
+    $ mkdir plugins/sfJobeetPlugin
+
+>**NOTE**
+>Названия всех плагинов должны заканчиваться на `Plugin`. Также хорошая привычка ставить для них префикс
+>`sf`, но это не обязательно.
+
+### Модель
+
+<propel>
+Сначала переместите файл `config/schema.yml` в `plugins/sfJobeetPlugin/config/`:
+</propel>
+<doctrine>
+Сначала переместите файл `config/doctrine/schema.yml` в `plugins/sfJobeetPlugin/config/`:
+</doctrine>
+
+    $ mkdir plugins/sfJobeetPlugin/config/
+<propel>
+    $ mv config/schema.yml plugins/sfJobeetPlugin/config/schema.yml
+</propel>
+<doctrine>
+    $ mkdir plugins/sfJobeetPlugin/config/doctrine
+    $ mv config/doctrine/schema.yml plugins/sfJobeetPlugin/config/doctrine/schema.yml
+</doctrine>
+
+>**NOTE**
+>Все командные строки приведены для Unix-подобного окружения. Если Вы используете Windows, Вы можете перетащить
+>файлы в эксплорере. И если Вы используете Subversion, или какой нибудь другой инструмент
+>для управления кодом, используйте предоставленные встроенные инструменты (например `svn mv`
+>для перемещения файлов).
+
+Переместите файлы модели, форм, и фильтров в `plugins/sfJobeetPlugin/lib/`:
+
+    $ mkdir plugins/sfJobeetPlugin/lib/
+    $ mv lib/model/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/form/ plugins/sfJobeetPlugin/lib/
+    $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<doctrine>
+После того, как Вы переместите модели, формы и фильтры, классы должны быть переименованы, сделаны
+абстрактными и иметь префикс `Plugin`.
+
+>**TIP**
+>Добавляйте префикс `Plugin` только автоматически сгенерированным классам, а не всем подряд. 
+>Например, не надо добавлять префикс для классов, которые Вы написали в ручную.
+
+Например, мы перемещаем классы `JobeetAffiliate` и `JobeetAffiliateTable`.
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
+
+Код также должен быть обновлен:
+
+    [php]
+    abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
+    {
+      public function preValidate($event)
+      {
+        $object = $event->getInvoker();
+
+        if (!$object->getToken())
+        {
+          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+        }
+      }
+
+      // ...
+    }
+
+Теперь давайте переместим класс `JobeetAffiliateTable`:
+
+    $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliateTable.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliateTable.class.php
+
+Определение класса должно выглядеть вот так:
+
+    [php]
+    abstract class PluginJobeetAffiliateTable extends Doctrine_Table
+    {
+      // ...
+    }
+
+Теперь мы сделаем тоже самое для классов форм и фильтров. Переименуйте их, вставляя
+префикс `Plugin`.
+
+Удалите папку `base` в `plugins/sfJobeetPlugin/lib/*/doctrine/` в папках `form`, `filter` и `model`:
+
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/base
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/base
+
+Как только Вы перенесете, переименуете и удалите некоторые классы форм, фильтров и моделей
+запустите задачи для построения всех классов:
+
+    $ php symfony doctrine:build-model
+    $ php symfony doctrine:build-forms
+    $ php symfony doctrine:build-filters
+
+Теперь Вы заметите, что созданы некоторые новые папки для хранения моделей, созданных
+из схемы, включенной в `sfJobeetPlugin` из `lib/model/doctrine/sfJobeetPlugin/`.
+
+Эти папки содержат модели верхнего уровня и базовые классы, сгенерированные из схемы.
+Например модель `JobeetJob` теперь имеет такую структуру классов:
+
+  * `JobeetJob` (наследует `PluginJobeetJob`) в
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
+    Класс верхнего уровня, где может содержаться функциональность модели для всего проекта.
+	Здесь Вы можете добавлять и перегружать функциональность, которая идет с моделями плагина.
+
+  * `PluginJobeetJob` (наследует `BaseJobeetJob`) в
+    `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
+    Этот класс содержит всю функциональность, специфичную для плагина. Вы можете
+    перегрузить функциональность этого и базового класса, изменяя класс
+    `JobeetJob`.
+
+  * `BaseJobeetJob` (наследует `sfDoctrineRecord`) в
+    `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
+    Базовый класс, который генерируется из yaml-файла схемы каждый раз, когда Вы запускаете
+    `doctrine:build-model`.
+
+  * `JobeetJobTable` (наследует `PluginJobeetJobTable`) в
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+    Такой же, как и класс`JobeetJob`, исключая то, что это экземпляр
+    `Doctrine_Table`, который будет возвращен, когда Вы вызываете
+    `Doctrine::getTable('JobeetJob')`.
+
+  * `PluginJobeetJobTable` (наследует `Doctrine_Table`) в
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+    Этот класс содержит всю специфичную для плагина функциональность, для экземпляра
+    `Doctrine_Table` который будет возвращен, когда Вы вызываете
+    `Doctrine::getTable('JobeetJob')`.
+
+Используя эту сгенерированную структуру, Вы можете настроить модели плагина,
+отредактировав класс верхнего уровня `JobeetJob`. Вы можете настроить схему
+и добавить столбцы, добавить отношения с помощью перегрузки методов `setTableDefinition()` и
+`setUp()`.
+
+>**NOTE**
+>Когда Вы перемещаете классы форм, проверьте, что Вы изменили метод `configure()` на метод 
+>`setup()` и вызываете `parent::setup()`. Пример приведен ниже.
+>
+>     [php]
+>     abstract class PluginJobeetAffiliateForm extends BaseJobeetAffiliateForm
+>     {
+>       public function setup()
+>       {
+>         parent::setup();
+>       }
+>       
+>       // ...
+>     }
+</doctrine>
+
+<propel>
+Если Вы сейчас запустите задачу `propel:build-model`, Symfony сгенерирует
+файлы в `lib/model/`, но это не то чего мы хотим. Папка вывода для Propel
+может быть настроена с помощью добавления опции `package`. Откройте
+`schema.yml` и добавьте следующую настройку:
+
+    [yml]
+    # plugins/sfJobeetPlugin/config/schema.yml
+    propel:
+      _attributes:      { package: plugins.sfJobeetPlugin.lib.model }
+
+Теперь Symfony будет создавать эти файлы в папке
+`plugins/sfJobeetPlugin/lib/model/`. Построитель форм и фильтров
+так же принимает эту настройку во время генерации файлов.
+
+Задача `propel:build-sql` генерирует SQL-файлы для создания таблиц. Поскольку файлы
+называются так же, как и пакеты, удалите текущий файл:
+
+    $ rm data/sql/lib.model.schema.sql
+
+Теперь, если Вы запустите `propel:build-all-load`, Symfony будет генерировать файлы в
+папке плагина `lib/model/` как и ожидалось:
+
+    $ php symfony propel:build-all-load --no-confirmation
+
+После запуска задачи, проверьте что папка `lib/model/` не была создана.
+Тем не менее задача создала папки `lib/form/` и `lib/filter/`. Они обе включают
+базовые классы для всех форм Propel в вашем проекте.
+
+Поскольку эти файлы глобальные для проекта, удалите их из плагина:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseFormPropel.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/BaseFormFilterPropel.class.php
+</propel>
+<doctrine>
+Мы должны убедиться, что в нашем плагине нет базовых классов для всех форм Doctrine.
+Эти файлы глобальные для проекта и будут перегенерированы с помощью 
+`doctrine:build-forms` и `doctrine:build-filters`.
+
+Удалите файлы из плагина:
+
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/BaseFormDoctrine.class.php
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/BaseFormFilterDoctrine.class.php
+</doctrine>
+
+>**NOTE**
+>Если Вы используете Symfony 1.2.0 или 1.2.1, базовый класс фильтров форм находится в
+>папке `plugins/sfJobeetPlugin/lib/filter/base/`.
+
+Вы можете также перенести файл `Jobeet.class.php` в плагин:
+
+    $ mv lib/Jobeet.class.php plugins/sfJobeetPlugin/lib/
+
+Поскольку мы перемещали файлы, очистите кэш:
+
+    $ php symfony cc
+
+>**TIP**
+>Если Вы используете ускоритель PHP такой как APC и происходит что-то странное на этом шаге,
+>перезапустите Apache.
+
+Теперь, когда все файлы модели перемещены в плагин, запустите тесты для того, чтобы проверить,
+что все работает:
+
+    $ php symfony test:all
+
+### Контроллеры и представления
+
+Следующий логический шаг это переместить модули в плагин. Для предотвращения коллизий в названиях
+модулей, неплохо добавлять к названию модуля такой же префикс, как и название плагина:
+
+    $ mkdir plugins/sfJobeetPlugin/modules/
+    $ mv apps/frontend/modules/affiliate plugins/sfJobeetPlugin/modules/sfJobeetAffiliate
+    $ mv apps/frontend/modules/api plugins/sfJobeetPlugin/modules/sfJobeetApi
+    $ mv apps/frontend/modules/category plugins/sfJobeetPlugin/modules/sfJobeetCategory
+    $ mv apps/frontend/modules/job plugins/sfJobeetPlugin/modules/sfJobeetJob
+    $ mv apps/frontend/modules/language plugins/sfJobeetPlugin/modules/sfJobeetLanguage
+
+Для каждого модуля, Вы также должны изменить названия классов во всех файлах
+`actions.class.php` и `components.class.php` (например, класс
+`affiliateActions` нужно переименовать в `sfJobeetAffiliateActions`).
+
+Вызовы `include_partial()` и `include_component()` должны быть так же изменены в следующих
+шаблонах:
+
+  * `sfJobeetAffiliate/templates/_form.php` (измените `affiliate` на `sfJobeetAffiliate`)
+  * `sfJobeetCategory/templates/showSuccess.atom.php`
+  * `sfJobeetCategory/templates/showSuccess.php`
+  * `sfJobeetJob/templates/indexSuccess.atom.php`
+  * `sfJobeetJob/templates/indexSuccess.php`
+  * `sfJobeetJob/templates/searchSuccess.php`
+  * `sfJobeetJob/templates/showSuccess.php`
+  * `apps/frontend/templates/layout.php`
+
+Обновите действия `search` и `delete`:
+
+    [php]
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
+    class sfJobeetJobActions extends sfActions
+    {
+      public function executeSearch(sfWebRequest $request)
+      {
+        if (!$query = $request->getParameter('query'))
+        {
+          return $this->forward('sfJobeetJob', 'index');
+        }
+
+<propel>
+        $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+        $this->jobs = Doctrine::getTable('JobeetJob')
+          ➥ ->getForLuceneQuery($query);
+</doctrine>
+
+        if ($request->isXmlHttpRequest())
+        {
+          if ('*' == $query || !$this->jobs)
+          {
+            return $this->renderText('No results.');
+          }
+          else
+          {
+            return $this->renderPartial('sfJobeetJob/list',
+             ➥ array('jobs' => $this->jobs));
+          }
+        }
+      }
+
+      public function executeDelete(sfWebRequest $request)
+      {
+        $request->checkCSRFProtection();
+
+        $jobeet_job = $this->getRoute()->getObject();
+        $jobeet_job->delete();
+
+        $this->redirect('sfJobeetJob/index');
+      }
+
+      // ...
+    }
+
+Теперь обновите файл `routing.yml` для того, чтобы применить эти изменения:
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    affiliate:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetAffiliate
+        actions:        [new, create]
+        object_actions: { wait: GET }
+        prefix_path:    /:sf_culture/affiliate
+        module:         sfJobeetAffiliate
+      requirements:
+        sf_culture: (?:fr|en)
+
+    api_jobs:
+      url:     /api/:token/jobs.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetApi, action: list }
+      options: { model: JobeetJob, type: list, method: getForToken }
+      requirements:
+        sf_format: (?:xml|json|yaml)
+
+    category:
+      url:     /:sf_culture/category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: sfJobeetCategory, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object, method: doSelectForSlug }
+      requirements:
+        sf_format: (?:html|atom)
+        sf_culture: (?:fr|en)
+
+    job_search:
+      url:   /:sf_culture/search
+      param: { module: sfJobeetJob, action: search }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    job:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: PUT, extend: PUT }
+        prefix_path:    /:sf_culture/job
+        module:         sfJobeetJob
+      requirements:
+        token: \w+
+        sf_culture: (?:fr|en)
+
+    job_show_user:
+      url:     /:sf_culture/job/:company_slug/:location_slug/:id/:position_slug
+      class:   sfPropelRoute
+<propel>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_criteria: doSelectActive
+</propel>
+<doctrine>
+      options:
+        model: JobeetJob
+        type: object
+        method_for_query: retrieveActiveJob
+</doctrine>
+      param:   { module: sfJobeetJob, action: show }
+      requirements:
+        id:        \d+
+        sf_method: GET
+        sf_culture: (?:fr|en)
+
+    change_language:
+      url:   /change_language
+      param: { module: sfJobeetLanguage, action: changeLanguage }
+
+    localized_homepage:
+      url:   /:sf_culture/
+      param: { module: sfJobeetJob, action: index }
+      requirements:
+        sf_culture: (?:fr|en)
+
+    homepage:
+      url:   /
+      param: { module: sfJobeetJob, action: index }
+
+Наконец, разрешаем плагин вручную в файле `ProjectConfiguration.class.php`, поскольку 
+он не был установлен задачей `plugin:install`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+<propel>
+        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</propel>
+<doctrine>
+        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</doctrine>
+      }
+    }
+
+	Если Вы сейчас попробуете просмотреть веб-сайт Jobeet, Вы увидите исключения,
+которые говорят о том, что модули не включены. Поскольку плагины являются общими для всех
+приложений в проекте, Вам нужно специально включить модули которые Вам нужны для данного
+приложения в его файле настроек `settings.yml`:
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules:
+          - default
+          - sfJobeetAffiliate
+          - sfJobeetApi
+          - sfJobeetCategory
+          - sfJobeetJob
+          - sfJobeetLanguage
+
+Последний шаг миграции - это исправление функциональных тестов, где мы тестируем название
+модуля.
+
+### Задачи
+
+Задачи могут быть перемещены в плагин достаточно легко:
+
+    $ mv lib/task plugins/sfJobeetPlugin/lib/
+
+### Файлы i18n
+
+Плагин может также содержать файлы XLIFF:
+
+    $ mv apps/frontend/i18n plugins/sfJobeetPlugin/
+
+### Маршрутизация
+
+Плагин может также содержать правила маршрутизации:
+
+    $ mv apps/frontend/config/routing.yml plugins/sfJobeetPlugin/config/
+
+### Веб-содержимое
+
+Даже если это немного нелогично, плагин может также содержать собственные картинки, стили (CSS) и 
+JavaScripts. Поскольку мы не хотим распространять плагин Jobeet, в действительности это не имеет 
+смысла, но это возможно с помощью создания папки `plugins/sfJobeetPlugin/web/`.
+
+Веб-содержимое плагина должно быть доступно в папке `web/` проекта для того, чтобы его можно
+было просмотреть из браузера. Задача `plugin:publish-assets` заботится об этом, создавая
+символические ссылки в Unix системах и копируя файлы на платформе Windows:
+
+    $ php symfony plugin:publish-assets
+
+### Пользователь
+
+Перемещение методов класса `myUser`, которые имеют дело с историей вакансий чуть сложнее.
+Мы можем создать класс `JobeetUser` и сделать так, чтобы класс `myUser` наследовался от него.
+Но есть решение получше, особенно если несколько плагинов хотят добавить методы в класс.
+
+Объекты ядра Symfony оповещают о событиях в течение их жизненного цикла, и Вы можете их
+слушать. В нашем случае нужно слушать событие `user.method_not_found`, которое происходит когда
+вызывается метод не определенный в объекте `sfUser`.
+
+Когда Symfony инициализирован, все плагины тоже инициализированы, если у них есть класс
+конфигурации плагина:
+
+    [php]
+    // plugins/sfJobeetPlugin/config/sfJobeetPluginConfiguration.class.php
+    class sfJobeetPluginConfiguration extends sfPluginConfiguration
+    {
+      public function initialize()
+      {
+        $this->dispatcher->connect('user.method_not_found', array('JobeetUser', 'methodNotFound'));
+      }
+    }
+
+Оповещение о событиях управляется с помощью
+[`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher),
+объекта диспечера событий. Регистрация слушателя настолько же проста, как и вызов
+метода `connect()`. Метод `connect()` подключает название события к вызываемым PHP-объектам.
+
+>**NOTE**
+>[Вызываемый PHP-объект](http://www.php.net/manual/en/function.is-callable.php) это
+>переменная PHP которая может быть использована функцией `call_user_func()` и возвращает
+>`true` когда будет передана в функцию `is_callable()`. Строка представляет функцию,
+>а массив может представлять метод объекта или метод класса.
+
+С помощью следующего кода объект `myUser` будет вызывать статический метод
+`methodNotFound()` класса `JobeetUser` каждый раз, когда не сможет найти метод.
+После этого все зависит от метода `methodNotFound()` - обрабатывать пропущенный метод или нет.
+
+Удалите все методы из класса `myUser` и создайте класс `JobeetUser`:
+
+    [php]
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+    }
+
+    // plugins/sfJobeetPlugin/lib/JobeetUser.class.php
+    class JobeetUser
+    {
+      static public function methodNotFound(sfEvent $event)
+      {
+        if (method_exists('JobeetUser', $event['method']))
+        {
+          $event->setReturnValue(call_user_func_array(
+            array('JobeetUser', $event['method']),
+            array_merge(array($event->getSubject()), $event['arguments'])
+          ));
+
+          return true;
+        }
+      }
+
+      static public function isFirstRequest(sfUser $user, $boolean = null)
+      {
+        if (is_null($boolean))
+        {
+          return $user->getAttribute('first_request', true);
+        }
+        else
+        {
+          $user->setAttribute('first_request', $boolean);
+        }
+      }
+
+      static public function addJobToHistory(sfUser $user, JobeetJob $job)
+      {
+        $ids = $user->getAttribute('job_history', array());
+
+        if (!in_array($job->getId(), $ids))
+        {
+          array_unshift($ids, $job->getId());
+          $user->setAttribute('job_history', array_slice($ids, 0, 3));
+        }
+      }
+
+      static public function getJobHistory(sfUser $user)
+      {
+<propel>
+        return JobeetJobPeer::retrieveByPks($user->getAttribute('job_history', array()));
+</propel>
+<doctrine>
+        $ids = $user->getAttribute('job_history', array());
+
+        if (!empty($ids))
+        {
+          return Doctrine::getTable('JobeetJob')
+            ->createQuery('a')
+            ->whereIn('a.id', $ids)
+            ->execute();
+        } else {
+          return array();
+        }
+</doctrine>
+      }
+
+      static public function resetJobHistory(sfUser $user)
+      {
+        $user->getAttributeHolder()->remove('job_history');
+      }
+    }
+
+Когда диспечер вызовет метод `methodNotFound()`, он передаст объект
+[`sfEvent`](http://www.symfony-project.org/api/1_4/sfEvent).
+
+Если метод существует в классе `JobeetUser`, он будет вызван, и его возвращаемое значение
+будет передано дальше к регистратору. Если нет, Symfony будет пробовать найти 
+следующий слушатель или вернет исключение.
+
+Метод `getSubject()` возвращает регистратора события, в данном случае это объект `myUser`.
+
+### Структура по умолчанию против архитектуры плагина
+
+Использование архитектуры плагина дает Вам возможность организовать Ваш код другим
+способом:
+
+![Архитектура плагина](http://www.symfony-project.org/images/jobeet/1_4/20/plugin_architecture.png)
+
+Использование плагинов
+----------------------
+
+Когда Вы начинаете внедрять новую функциональность, или если Вы пытаетесь решить классическую
+проблему веб-программирования, возможно кто-то другой уже решил такую же проблему и возможно
+упаковал решение как плагин Symfony. Посмотрите в публичных плагинах Symfony в
+[секции плагинов](http://www.symfony-project.org/plugins/) на сайте фреймворка Symfony.
+
+Поскольку плагин - это самодостаточная папка, есть несколько способов для его установки:
+
+  * Используя задачу `plugin:install` (работает только если разработчик плагина создал
+    пакет плагина и загрузил его на веб-сайт Symfony)
+  * Загрузите пакет и вручную распакуйте его в папку `plugins/`
+    (также нужно, чтобы разработчик загрузил пакет)
+  * Создание `svn:externals` в `plugins/` для плагина (работает только если разработчик
+    плагина хостит этот плагин в Subversion)
+
+Последние два способа простые, но им не хватает гибкости. Первый способ позволяет Вам
+установить последнюю версию в зависимости от версии Symfony в проекте, легко
+обновить до последнего стабильного релиза, и легче управлять зависимостями между
+плагинами.
+
+Создание плагина
+----------------
+
+### Упаковка плагина
+
+Для создания пакета плагина, нужно добавить некоторые обязательные файлы в 
+структуру папок плагина. Сначала создайте файл `README` в корневой папке плагина
+и опишите как установить плагин, что он предоставляет и что нет.
+Файл `README` должен быть отформатирован в
+[формате Markdown](http://daringfireball.net/projects/markdown/syntax). Этот файл
+будет использован веб-сайтом Symfony как основная часть документации.
+Вы можете протестировать трансформацию вашего файла README в HTML используя
+[Symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus).
+
+>**SIDEBAR**
+>Разработка задач плагина
+>
+>Если Вы обнаружите, что Вы часто создаете частные и/или публичные плагины,
+>воспользуйтесь преимуществами некоторых задач в
+>[sfTaskExtraPlugin](http://www.symfony-project.com/plugins/sfTaskExtraPlugin).
+>Этот плагин, поддерживаемый разработчиками ядра Symfony, включает
+>ряд задач которые помогут Вам упростить жизненный цикл плагина:
+>
+> * `generate:plugin`
+> * `plugin:package`
+
+Вам также нужно создать файл `LICENSE`. Выбор лицензии не простая задача,
+но в секции плагинов Symfony показываются только плагины
+выпущенные под лицензией подобной лицензии Symfony (MIT, BSD, LGPL, and PHP).
+Содержимое файла `LICENSE` будет отображено на вкладке лицензии публичной страницы
+вашего плагина.
+
+Последний шаг это создание файла `package.xml` в корневой папке плагина.
+Этот файл `package.xml` соответствует
+[Синтаксис пакета PEAR](http://pear.php.net/manual/en/guide-developers.php).
+
+>**NOTE**
+>Лучший способ выучить синтаксис `package.xml` - это скопировать его из
+>[существующего плагина](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml).
+
+Как Вы видите в этом примере, файл `package.xml` состоит из нескольких частей:
+
+    [xml]
+    <!-- plugins/sfJobeetPlugin/package.xml -->
+    <?xml version="1.0" encoding="UTF-8"?>
+    <package packagerversion="1.4.1" version="2.0"
+       xmlns="http://pear.php.net/dtd/package-2.0"
+       xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+       http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0
+       http://pear.php.net/dtd/package-2.0.xsd"
+    >
+      <name>sfJobeetPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <summary>A job board plugin.</summary>
+      <description>A job board plugin.</description>
+      <lead>
+        <name>Fabien POTENCIER</name>
+        <user>fabpot</user>
+        <email>fabien.potencier@symfony-project.com</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-12-20</date>
+      <version>
+        <release>1.0.0</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.com/license">
+        MIT license
+      </license>
+      <notes />
+
+      <contents>
+        <!-- CONTENT -->
+      </contents>
+
+      <dependencies>
+       <!-- DEPENDENCIES -->
+      </dependencies>
+
+      <phprelease>
+    </phprelease>
+
+    <changelog>
+      <!-- CHANGELOG -->
+    </changelog>
+    </package>
+
+Тэг `<contents>` содержит файлы которые нужно поместить в пакет:
+
+    [xml]
+    <contents>
+      <dir name="/">
+        <file role="data" name="README" />
+        <file role="data" name="LICENSE" />
+
+        <dir name="config">
+          <file role="data" name="config.php" />
+          <file role="data" name="schema.yml" />
+        </dir>
+
+        <!-- ... -->
+      </dir>
+    </contents>
+
+Тэг `<dependencies>` указывает все зависимости которые могут быть у плагина:
+PHP, symfony, и также другие плагины. Эта информация используется задачей
+`plugin:install` для установки самой подходящей версии плагина для окружения
+проекта, и так же устанавливает плагины, требуемые в зависимостях если они есть.
+
+    [xml]
+    <dependencies>
+      <required>
+        <php>
+          <min>5.0.0</min>
+        </php>
+        <pearinstaller>
+          <min>1.4.1</min>
+        </pearinstaller>
+        <package>
+          <name>symfony</name>
+          <channel>pear.symfony-project.com</channel>
+          <min>1.3.0</min>
+          <max>1.5.0</max>
+          <exclude>1.5.0</exclude>
+        </package>
+      </required>
+    </dependencies>
+
+Вы должны всегда указывать зависимость от Symfony, как мы сделали тут.
+Заявление минимальной и максимальной версии дает возможность задаче
+`plugin:install` узнать, какая версия Symfony обязательна, поскольку разные
+версии фреймворка имеют очень разные API.
+
+Так же возможно заявление зависимостей от других плагинов:
+
+    [xml]
+    <package>
+      <name>sfFooPlugin</name>
+      <channel>plugins.symfony-project.org</channel>
+      <min>1.0.0</min>
+      <max>1.2.0</max>
+      <exclude>1.2.0</exclude>
+    </package>
+
+Тэг `<changelog>` опциональный, но дает полезную информацию о том, что было
+изменено между релизами. Эта информация так же доступна на вкладке "Changelog"
+и в [ленте плагинов](http://www.symfony-project.org/plugins/recently.rss).
+
+    [xml]
+    <changelog>
+      <release>
+        <version>
+          <release>1.0.0</release>
+          <api>1.0.0</api>
+        </version>
+        <stability>
+          <release>stable</release>
+          <api>stable</api>
+        </stability>
+        <license uri="http://www.symfony-project.com/license">
+          MIT license
+        </license>
+        <date>2008-12-20</date>
+        <license>MIT</license>
+        <notes>
+           * fabien: First release of the plugin
+        </notes>
+      </release>
+    </changelog>
+
+### Размещение плагинов на веб-сайте Symfony
+
+Если Вы разработали полезный плагин и хотите поделиться им с сообществом
+Symfony, [создайте аккаунт](http://www.symfony-project.org/user/new)
+если у Вас его еще нет и затем создайте
+[новый плагин](http://www.symfony-project.org/plugins/new).
+
+Вы автоматически станете администратором для плагина и увидите вкладку
+"admin" в интерфейсе. В этой вкладке Вы найдете все, что нужно для управления Вашим
+плагином и загрузки Ваших пакетов.
+
+>**NOTE**
+>[FAQ по плагинам](http://www.symfony-project.org/plugins/FAQ) содержит много
+>полезной информации для разработчиков плагинов.
+
+Увидимся завтра!
+----------------
+
+Создание плагинов и совместное их использование в сообществе - это один из лучших
+способов внести вклад в проект Symfony. Это настолько просто, что
+хранилище плагинов заполнено полезными, забавными, а иногда и нелепыми плагинами.
+
+__ORM__
