@@ -49,17 +49,17 @@ righe alla fine dello stesso:
 
     <VirtualHost 127.0.0.1:8080>
       DocumentRoot "/home/sfproject/web"
-      cartellaIndex index.php
-      <cartella "/home/sfproject/web">
+      DirectoryIndex index.php
+      <Directory "/home/sfproject/web">
         AllowOverride All
         Allow from All
-      </cartella>
+      </Directory>
 
       Alias /sf /home/sfproject/lib/vendor/symfony/data/web/sf
-      <cartella "/home/sfproject/lib/vendor/symfony/data/web/sf">
+      <Directory "/home/sfproject/lib/vendor/symfony/data/web/sf">
         AllowOverride All
         Allow from All
-      </cartella>
+      </Directory>
     </VirtualHost>
 
 
