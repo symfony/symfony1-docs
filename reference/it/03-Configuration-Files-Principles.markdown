@@ -10,7 +10,7 @@ Cache
 -----
 
 Tutti i file di configurazione di symfony sono salvati nella cache come file
-PHP da alcune classi handler dedicate a ciò. Quando l'impostazione `is_debug` è
+PHP da alcune classi apposite. Quando l'impostazione `is_debug` è
 impostata a `false` (per esempio per l'ambiente `prod`), i file YAML vengono letti
 solo per la prima richiesta; la cache PHP viene invece utilizzata per tutte
 le richieste successive. Questo significa che il lavoro "duro" viene fatto una
@@ -23,14 +23,14 @@ volta.
 >delle modifiche (symfony verifica la data dell'ultima modifica).
 
 Il parsing e l'inserimento in cache di ogni file di configurazione viene eseguito
-da classi handler specializzate configurate in 
+da classi specializzate, configurate in 
 [`config_handler.yml`](#chapter_14_config_handlers_yml).
 
-Nelle sezioni seguenti quando parleremo di "compilazione" intenderemo che la prima 
+Nelle sezioni seguenti, quando parleremo di "compilazione", intenderemo che la prima 
 volta un file YAML viene convertito in un file PHP e memorizzato nella cache.
 
 >**TIP**
->Per fare in modo che la cache dei file di configurazione venga ricaricata
+>Per fare in modo che la cache dei file di configurazione venga ricaricata,
 >è possibile usare il task `cache:clear`:
 >
 >     $ php symfony cache:clear --type=config
@@ -42,8 +42,8 @@ Costanti
 `databases.yml`, `filters.yml`, `view.yml`, `autoload.yml`
 
 Alcuni file di configurazione permettono di utilizzare costanti predefinite. Le
-costanti sono dichiarate tramite appositi segnaposto usando la notazione `%XXX%`
-(dove XXX è una chiave maiuscola) e sono rimpiazzate dal loro attuale valore
+costanti sono dichiarate tramite appositi segnaposto, usando la notazione `%XXX%`
+(dove XXX è una chiave maiuscola) e sono rimpiazzate con il loro vero valore
 al momento della compilazione.
 
 ### Impostazioni della configurazione
@@ -67,7 +67,7 @@ Si possono utilizzare anche le impostazioni definite nel file di configurazione
 
 ### Costanti speciali
 
-Per impostazione predefinita symfony definisce quattro costanti in relazione al front controller 
+Per impostazione predefinita, symfony definisce quattro costanti in relazione al front controller 
 corrente:
 
  | Costanti               | Descrizione                           | Metodo di configurazione |
@@ -83,8 +83,8 @@ Le costanti sono molto utili quando si ha bisogno di fare riferimento a cartelle
 o a percorsi di file senza inserirli nel codice. Symfony definisce alcune costanti
 per cartelle comuni a livello di progetto e di applicazione.
 
-La radice della gerarchia è la cartella root del progetto, `SF_ROOT_DIR`.
-Tutte le altre costanti derivano da questa cartella root.
+La radice della gerarchia è la cartella radice del progetto, `SF_ROOT_DIR`.
+Tutte le altre costanti derivano da questa cartella radice.
 
 La struttura delle cartelle del progetto è definita come segue:
 
@@ -132,10 +132,10 @@ Consapevolezza dell'ambiente
 *File di configurazione*: `settings.yml`, `factories.yml`, `databases.yml`,
 `app.yml`
 
-Alcuni file di configurazione di symfony sono ambiente dipendenti, la loro
+Alcuni file di configurazione di symfony dipendono dall'ambiente: la loro
 interpretazione dipende dall'attuale ambiente in uso. Questi file hanno sezioni
-diverse che definiscono come la configurazione deve variare per ogni ambiente.
-Quando si crea una nuova applicazione symfony crea configurazioni per i tre
+diverse, che definiscono come la configurazione deve variare per ogni ambiente.
+Quando si crea una nuova applicazione, symfony crea configurazioni per i tre
 ambienti predefiniti: `prod`, `test` e `dev`:
 
     [yml]
@@ -151,11 +151,11 @@ ambienti predefiniti: `prod`, `test` e `dev`:
     all:
       # Configurazione predefinita per tutti gli ambienti
 
-Quando symfony necessita di un valore da un file di configurazione procede facendo
-il merge (la fusione) della configurazione per l'ambiente corrente con la sezione
+Quando symfony necessita di un valore da un file di configurazione, procede facendo
+la fusione della configurazione per l'ambiente corrente con la sezione
 di configurazione definita in `all`. La sezione speciale `all` descrive la 
 configurazione predefinita per tutti gli ambienti. Se la sezione di un ambiente 
-specifico non è definita symfony ricade sulla configurazione `all`.
+specifico non è definita, symfony ricade sulla configurazione `all`.
 
 Configurazione a cascata
 ------------------------
@@ -165,10 +165,10 @@ Configurazione a cascata
 `filters.yml`, `view.yml`
 
 Alcuni file di configurazione possono essere definiti in molte sotto cartelle
-`config/` contenute nella struttura delle cartelle del progetto.
+`config/`, contenute nella struttura delle cartelle del progetto.
 
-Quando la configurazione viene compilata i valori da tutti i diversi file vengono
-fusi assieme rispettando il seguente ordine di precedenza:
+Quando la configurazione viene compilata, i valori da tutti i diversi file vengono
+fusi assieme, rispettando il seguente ordine di precedenza:
 
   * La configurazione del modulo (`PROJECT_ROOT_DIR/apps/APP_NAME/modules/MODULE_NAME/config/XXX.yml`)
   * La configurazione dell'applicazione (`PROJECT_ROOT_DIR/apps/APP_NAME/config/XXX.yml`)
@@ -176,14 +176,14 @@ fusi assieme rispettando il seguente ordine di precedenza:
   * La configurazione definita nei plugin (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
   * La configurazione definita nelle librerie di symfony (`SF_LIB_DIR/config/XXX.yml`)
 
-Per esempio quanto definito in `settings.yml` nella cartella di un'applicazione
-eredita dalla configurazione impostata nella cartella principale del progetto `config/`,
+Per esempio, quanto definito in `settings.yml` nella cartella di un'applicazione
+eredita dalla configurazione impostata nella cartella principale del progetto `config/`
 ed eventualmente dalla configurazione predefinita contenuta nel framework stesso
 (`lib/config/config/settings.yml`).
 
 >**TIP**
->Quando un file di configurazione è ambiente dipendente e può essere definito in 
->diverse cartelle si applica la seguente lista di priorità:
+>Quando un file di configurazione dipende dall'ambiente e può essere definito in 
+>diverse cartelle, si applica la seguente lista di priorità:
 >
 > 1. Modulo
 > 2. Applicazione

@@ -21,13 +21,13 @@ dal [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_ca
 e può includere [**costanti**](#chapter_03_costanti).
 
 Ogni connessione descritta nel file `databases.yml` deve comprendere un nome, un nome
-del gestore di classe del database e un set di parametri (`param`) usati per configurare
+del gestore di classe del database e un insieme di parametri (`param`) usati per configurare
 l'oggetto database:
 
     [yml]
-    CONNECTION_NAME:
-      class: CLASS_NAME
-      param: { ARRAY OF PARAMETERS }
+    NOME_CONNESSIONE:
+      class: NOME_CLASSE
+      param: { ARRAY DI PARAMETRI }
 
 Il nome `class` dovrebbe estendere la classe base `sfDatabase`.
 
@@ -35,9 +35,9 @@ Se la classe che gestisce il database non può essere autocaricata, un `file` pe
 definito e sarà automaticamente incluso prima che il factory sia creato:
 
     [yml]
-    CONNECTION_NAME:
-      class: CLASS_NAME
-      file:  ABSOLUTE_PATH_TO_FILE
+    NOME_CONNESSIONE:
+      class: NOME_CLASSE
+      file:  PERCORSO_ASSOLUTO_DEL_FILE
 
 >**NOTE**
 >Il file di configurazione `databases.yml` è salvato nella cache come file PHP; il
@@ -48,7 +48,7 @@ definito e sarà automaticamente incluso prima che il factory sia creato:
 
 >**TIP**
 >La configurazione del database può anche essere configurata utilizzando
->il task `database:configure`.  Questo task aggiorna il file `databases.yml`
+>il task `database:configure`. Questo task aggiorna il file `databases.yml`
 >in base ai parametri che gli vengono passati.
 
 Propel
@@ -80,7 +80,7 @@ Propel
         class:        sfPropelDatabase
         param:
           classname:  PropelPDO
-          dsn:        mysql:dbname=##PROJECT_NAME##;host=localhost
+          dsn:        mysql:dbname=##NOME_PROGETTO##;host=localhost
           username:   root
           password:   
           encoding:   utf8
@@ -102,7 +102,7 @@ I seguenti parametri possono essere personalizzati nella sezione `param`:
  | `debug`      | Opzoni per la classe `DebugPDO`          | n/a                |
 
 La voce `debug` definisce tutte le opzioni descritte nella
-[documentazione](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details).
+[documentazione](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)
 di Propel. Il seguente YAML mostra le opzioni disponibili:
 
     [yml]
