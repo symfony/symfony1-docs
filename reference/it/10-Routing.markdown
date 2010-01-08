@@ -165,11 +165,11 @@ espressioni regolari a cui i valori della variabile devono corrispondere.
 
 *Predefinito*: `null`
 
-Se valorizzato a `collection`, la rotta verrà letta come una collezione di rotte.
+Se valorizzato a `collection`, la rotta verrà letta come un insieme di rotte.
 
 >**NOTE**
 >Questa impostazione è automaticamente valorizzata a `collection` dalla classe che gestisce
->il config se il nome `class` contiene la parola `Collection`. Questo significa che,
+>il config, se il nome `class` contiene la parola `Collection`. Questo significa che,
 >la maggior parte delle volte, non si ha la necessità di usare questa impostazione.
 
 ~`sfRoute`~
@@ -203,8 +203,8 @@ associato con la rotta corrente.
 
 L'opzione `type` è obbligatoria ed è il tipo di rotta che si vuole per il
 modello; essa può essere `object` o `list`. Una rotta di tipo `object`
-rappresenta un oggetto per un singolo modello e una rotta di tipo `list` rappresenta una
-collezione di oggetti di modelli.
+rappresenta un oggetto per un singolo modello e una rotta di tipo `list` rappresenta un
+insieme di oggetti di modelli.
 
 ### ~`method`~
 
@@ -217,8 +217,8 @@ parametro.
 
 *Predefinito*: `true`
 
-Se l'opzione `allow_empty` è assegnata a `false`, la rotta lancerà una
-eccezione 404 se nessun oggetto è restituito dalla chiamata a `model` `method`.
+Se l'opzione `allow_empty` è `false`, la rotta lancerà una
+eccezione 404 se nessun oggetto è restituito dalla chiamata a `method` di `model`.
 
 ### ~`convert`~
 
@@ -234,7 +234,7 @@ della rotta (come definito dall'impostazione `url`).
 
 ### ~`method_for_criteria`~
 
-*Predefinito*: `doSelect` per collezioni, `doSelectOne` per oggetti singoli
+*Predefinito*: `doSelect` per insiemi, `doSelectOne` per oggetti singoli
 
 L'opzione `method_for_criteria` definisce il metodo chiamato sulla classe del
 modello Peer per recuperare l'oggetto (o gli oggetti) associati con la richiesta corrente. Il
@@ -257,7 +257,7 @@ Se l'opzione non è assegnata, la richiesta è solo "eseguita" con il metodo
 ~`sfRouteCollection`~
 ---------------------
 
-La classe base `sfRouteCollection` rappresenta una collezione di rotte.
+La classe base `sfRouteCollection` rappresenta un insieme di rotte.
 
 ~`sfObjectRouteCollection`~
 ---------------------------
@@ -275,8 +275,8 @@ L'opzione `actions` definisce un array di azioni autorizzate per la rotta. Le
 azioni devono essere un sotto insieme di tutte le azioni disponibili: `list`, `new`, `create`,
 `edit`, `update`, `delete` e `show`.
 
-Se l'opzione è assegnata a `false`, il valore predefinito, tutte le azioni saranno disponibili
-eccetto per la `show` se l'opzione `with_show` è assegnata a `false` (vedere
+Se l'opzione è `false`, il valore predefinito, tutte le azioni saranno disponibili
+eccetto per l'azione `show` se l'opzione `with_show` è `false` (vedere
 sotto).
 
 ### ~`module`~
@@ -303,7 +303,7 @@ univoco per l'oggetto del modello.
 
 *Predefinito*: `true`
 
-L'opzione `with_show` è usata quando l'opzione `actions` è assegnata a `false` per
+L'opzione `with_show` è usata quando l'opzione `actions` è `false` per
 determinare se l'azione `show` deve essere inclusa nell'elenco delle azioni
 autorizzate per la rotta.
 
@@ -329,7 +329,7 @@ si realizza definendo i metodi `list` e `object`:
 
 ### ~`requirements`~
 
-*Predefinito*: `\d+` per la `colonna`
+*Predefinito*: `\d+` per `column`
 
 L'opzione `requirements` definisce un array di requisiti da applicare
 alle variabili della rotta.
@@ -339,21 +339,21 @@ alle variabili della rotta.
 *Predefinito*: `false`
 
 L'opzione `with_wildcard_routes` permette ad ogni azione di essere acceduta tramite due
-rotte jolly: una per un singolo oggetto, ed un'altra per collezioni di oggetti.
+rotte jolly: una per un singolo oggetto, ed un'altra per insiemi di oggetti.
 
 ### ~`route_class`~
 
 *Predefinito*: `sfObjectRoute`
 
 L'opzione `route_class` può sovrascrivere l'oggetto della rotta predefinita utilizzata
-per la collezione.
+per l'insieme.
 
 ### ~`collection_actions`~
 
 *Predefinito*: Un array vuoto
 
 Lìopzione `collection_actions` definisce un array di azioni aggiuntive
-disponibili per la collezione di rotte.
+disponibili per l'insieme di rotte.
 
 ### ~`object_actions`~
 
