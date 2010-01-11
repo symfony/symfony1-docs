@@ -95,8 +95,8 @@ Voici les plus utilisés :
     `Criteria::CURRENT_TIMESTAMP`
 </propel>
 
-Debugging ##ORM## generated SQL
--------------------------------
+Débogage du SQL généré par ##ORM##
+----------------------------------
 
 Etant donné que vous n'écrivez pas les requêtes SQL à la main, ##ORM## se chargera de
 vous les différenciés entre les moteurs de base de données et générera les instructions SQL
