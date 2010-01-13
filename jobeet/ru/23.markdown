@@ -1,0 +1,338 @@
+Day 24: Другой взгляд на Symfony
+================================
+
+Сегодня последняя остановка в нашем путешествии по удивительному миру Symfony. На
+протяжении этих двадцати трех дней, Вы изучали Symfony по примерам: начиная от шаблонов
+проектирования используемых этим фреймворком и заканчивая мощными встроеными возможностями.
+Вы пока не стали "мастером", но у Вас уже есть все необходимые знания для того,
+чтобы с полной уверенностью начать разработку Вашего приложения.
+
+Мы завершаем цикл наших уроков, но давайте взглянем ещё раз на этот фреймворк.
+Забудьте на час о самом сайте Jobeet, и вспомните все те возможности которые Вы
+изучили за последние три недели.
+
+Фреймворк Symfony - что это?
+----------------------------
+
+Фреймворк Symfony, это набор [отдельных подфреймворков](#chapter_11_sidebar_using_the_form_framework_without_symfony),
+который образует полноценный [MVC framework](#chapter_04_the_mvc_architecture)
+(Модель, Вид, Контроллер).
+
+Перед тем, как начать писать код, уделите немного времени прочтению
+[истории и философии Symfony](#chapter_01_introduction). Затем проверьте
+[требования фреймворка](#chapter_01_prerequisites)
+и воспользуйтесь [скриптом `check_configuration.php`](#chapter_01_symfony_installation)
+для проверки настроек.
+
+Ну и наконец - [установите Symfony](#chapter_01_symfony_installation). Через некоторое
+время Вы возможно захотите [обновить Symfony](#chapter_22_sub_upgrading_symfony)
+до последней версии.
+
+Этот фреймворк также предоставляет инструменты для упрощения [развертывания приложения](#chapter_22_deploying).
+
+Модель
+------
+
+Часть Symfony для работы с моделями может быть реализована с помощью
+<propel>
+[Propel ORM](http://propel.phpdb.org/). На основе
+</propel>
+<doctrine>
+[Doctrine ORM](http://www.doctrine-project.org/). На основе
+</doctrine>
+[описания базы данных](#chapter_03_the_schema), оно генерирует классы для
+[объектов](#chapter_03_the_orm), [форм](#chapter_10_##ORM_LOWER##_forms), и
+[фильтров](#chapter_12_filters_configuration). ##ORM## также
+[генерирует SQL](#chapter_03_the_orm) код, используемый для создания таблиц в базе данных.
+
+Конфигурирование базы данных может быть сделано с помощью [задачи](#chapter_03_the_database)
+или изменения [конфигурационного файла](#chapter_03_the_database). Помимо конфигурации,
+также возможно вставить начальные данные в базу, благодаря
+[файлам с начальнымм данными (fixtures)](#chapter_03_the_initial_data).
+Вы даже можете сделать эти файлы динамическими.
+
+<propel>
+Объекты Propel могут быть с легкостью [интернационализированны](#chapter_19_sub_propel_objects).
+</propel>
+<doctrine>
+Объекты Doctrine могут быть с легкостью [интернационализированны](#chapter_19_sub_doctrine_objects).
+</doctrine>
+
+Представление
+-------------
+
+По умолчанию, слой представления архитектуры MVC использует обычные PHP файлы в качестве
+шаблонов.
+
+В шаблонах могут использоваться помощники(#chapter_04_the_stylesheets_images_and_javascripts)
+для повторяющихся задач, таких как создание [URL](#chapter_05_routing_in_actions_and_templates)
+или [ссылок](#chapter_05_routing_in_actions_and_templates).
+
+Шаблон может быть "декорирован" файлом [layout](#chapter_04_the_layout) для отделения
+заголовка и подвала (footer) страниц. Для того чтобы шаблоны были более универсальными,
+Вы можете использовать [слоты](#chapter_04_slot_s), [фрагменты](#chapter_07_partials_partial_templates) и
+[компоненты](#chapter_19_language_switching).
+
+Для ускорения работы приложения, Вы можете использовать [подфреймворк кэширования](#chapter_21_cache_configuration)
+для кэширования [целой страницы](#chapter_21_page_cache), только [действия] (#chapter_21_action_cache),
+или даже [фрагментов или компонентов](#chapter_21_partial_partial_templates_and_component_cache).
+Вы также можете [удалить кэш вручную] (#chapter_21_removing_the_cache_cache_removal).
+
+Контроллеры
+-----------
+
+Часть Symfony, отвечающая за [контроллеры](#chapter_01_the_environments) и [действия](#chapter_03_see_it_in_action_in_the_browser).
+
+Задачи могут быть использованы для создания [простых модулей](#chapter_07_job_category_module_creation),
+[CRUD модулей](#chapter_03_see_it_in_action_in_the_browser), или даже для создания
+полностью рабочих [модулей админки](#chapter_12_backend_modules) для моделей.
+
+Модули админки позволяют Вам построить полностью рабочее приложение без написания
+какого-либо кода.
+
+Для абстрагирования от технической реализации сайта, Symfony использует [маршрутизацию](#chapter_05_routing_configuration),
+подфреймворк, который генерирует [красивые URL](#chapter_05_url_s). Для реализации веб сервисов,
+Symfony поддерживает различные [форматы](#chapter_14_formats). Также Вы можете создавать
+свои [форматы](#chapter_15_sub_the_yaml_format_formats_creation).
+
+Действие может включать другое [действие (forward)](#chapter_04_sidebar_the_forward_action_forwarding_methods_family),
+ или быть [перенаправлено (redirect)](#chapter_05_sidebar_the_redirect_redirection_methods_family).
+
+Конфигурация
+------------
+
+В Symfony, достаточно просто иметь различные конфигурационные настройки
+для различных окружений приложения. [Окружение](#chapter_01_the_environments) - это набор
+настроек, которые устанавливают различные "поведения" на промышленном сервере или на
+сервере для разработки. 
+Вы также можете [создать новое окружение](#chapter_21_creating_a_new_environment).
+
+Конфигурационные файлы могут быть определены на
+[различных уровнях](#chapter_04_sidebar_configuration_principles_in_symfony) и
+многие из них [осведомлены об окружении](#chapter_08_sidebar_configuration_principles_in_symfony):
+
+ * [`app.yml`](#chapter_06_custom_configuration)
+ * [`cache.yml`](#chapter_21_cache_configuration)
+ * [`databases.yml`](#chapter_03_the_database)
+ * [`factories.yml`](#chapter_16_sub_factories)
+ * [`generator.yml`](#chapter_12_the_symfony_cache)
+ * [`routing.yml`](#chapter_05_routing_configuration)
+ * [`schema.yml`](#chapter_03_the_schema)
+ * [`security.yml`](#chapter_13_sub_authentication)
+ * [`settings.yml`](#chapter_11_sub_built_in_security_features)
+ * [`view.yml`](#chapter_04_the_stylesheets_images_and_javascripts)
+
+В основном конфигурационные файлы используют [формат YAML](#chapter_03_sidebar_the_yaml_format).
+
+Instead of using the default directory structure and organize your application
+files by layers, you can also organize them by feature, and bundle them in
+[a plugin](#chapter_20_sub_a_different_way_to_organize_code_code_organization). Speaking 
+of the default directory structure, you can also
+[customize it](#chapter_22_customizing_the_directory_structure)
+according to your needs.
+
+Вместо того, чтобы использовать структуру директорий по умолчанию,
+Вы можете также их организовать по функциональности и объединить в [плагин](#chapter_20_sub_a_different_way_to_organize_code_code_organization)
+Говоря о структуре директорий по умолчанию, Вы всегда её можете
+[изменить](#chapter_21_customizing_the_directory_structure) в соответствии с вашими нуждами.
+
+Отладка
+-------
+
+<propel>
+С помощью [записи действий в журнал(log)](#chapter_06_debugging_propel_generated_sql),
+[отладочной веб панели](#chapter_06_debugging_propel_generated_sql) и
+</propel>
+<doctrine>
+С помощью [записи действий в журнал(log)](#chapter_06_debugging_doctrine_generated_sql),
+[отладочной веб панели](#chapter_06_debugging_doctrine_generated_sql) и
+</doctrine>
+ [информативных исключений](#chapter_01_the_environments), Symfony предоставляет
+большой набор полезных инструментов для помощи разработчику в быстрой отладке кода.
+
+Основные объекты Symfony
+------------------------
+
+Фреймворк Symfony предоставляет несколько основных объектов, которые абстрагируют
+повторяющиеся задачи в веб проектах: [запрос (request)](#chapter_04_sub_the_request),
+[ответ (response)](#chapter_04_sub_the_response), [пользователь (user)](#chapter_13_sub_the_myuser_class),
+[запись в журнал (logging)](#chapter_22_sub_logging),
+[маршрутизация (routing)](#chapter_05_routing_configuration), [email-клиент (mailer)](#chapter_16), и
+[управление кэшированием представлений (view)](#chapter_16_sidebar_the_code_sfcontext_code_class).
+
+Эти объекты управляются [объектом `sfContext`](#chapter_16_sidebar_the_code_sfcontext_code_class)
+и они настроены с помощью [factories](#chapter_16_sub_factories).
+
+Объект "пользователь" управляет [аутентификацией](#chapter_13_sub_authentication),
+[авторизацией](#chapter_13_sub_authorization), [мгновенными сообщениями](#chapter_13_user_flashes),
+и [атрибутами](#chapter_13_user_attributes), которые хранятся в сессии.
+
+Безопасность
+------------
+
+Фреймворк Symfony содержит встроенные методы защиты против [XSS](#chapter_01_sub_application_creation) и
+[CSRF](#chapter_01_sub_application_creation) атак. Эти настройки могут быть изменены
+из [командной строки](#chapter_01_sub_application_creation), или в конфигурационном
+файле [configuration file](#chapter_11_sub_xss_and_csrf_protection).
+
+Подфреймворк форм также предоставляет [встроенные методы защиты](#chapter_11_sub_built_in_security_features).
+
+Формы
+-----
+
+Поскольку работа с формами - это одна из самых утомительных работ для разработчика,
+Symfony предоставляет [подфреймворк форм](#chapter_10_the_form_framework). Фреймворк
+форм поставляется с большим количеством [виджетов](http://www.Symfony-project.org/api/1_4/widget)
+и [валидаторов](http://www.Symfony-project.org/api/1_4/validator). Одним из достоинств
+подфреймворка форм является тот факт, что шаблоны очень легко
+[настраиваются](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form).
+
+Если Вы используете ##ORM##, фреймворк форм, также сделает проще
+<propel>
+[генерацию форм и фильтров](#chapter_10_propel_forms) на основе ваших моделей.
+</propel>
+<doctrine>
+[генерацию форм и фильтров](#chapter_10_doctrine_forms) на основе ваших моделей.
+</doctrine>
+
+Интернационализация и Локализация
+---------------------------------
+
+[Интернационализация](#chapter_19_internationalization) и [локализация](#chapter_19_localization)
+поддерживаются в Symfony благодаря стандарту ICU. ["Локаль пользователя"](#chapter_19_sub_the_user_culture)
+определяет язык и страну пользователя. Она может быть определена
+самим пользователем, или быть встроенной в [URL](#chapter_19_culture_in_the_url).
+
+Тесты
+-----
+
+Библиотека lime, используемая для **модульных тестов**, предоставляет большое количество
+[методов тестирования](#chapter_08_the_lime_lime_testing_framework_testing_framework).
+<propel>
+[Объекты Propel также могут быть тестированны](#chapter_08_propel_unit_tests) при помощи
+</propel>
+<doctrine>
+[Объекты Doctrine также могут быть тестированны](#chapter_08_doctrine_unit_tests) при помощи
+</doctrine>
+[выделенной базы данных](#chapter_08_sub_database_configuration) с использованием
+выделенных [начальных данных](#chapter_08_sub_test_data).
+
+Модульные тесты могут быть запущены либо [по-одному](#chapter_08_running_unit_tests),
+либо [все сразу](#chapter_08_unit_tests_harness).
+
+**Функциональные тесты** пишутся с использованием класса
+[`sfFunctionalTest`](#chapter_09_the_sftestfunctional_class), который использует
+[эмулятор браузера](#chapter_09_the_sfbrowser_class) и позволяет выполнять
+интроспекцию основных объектов Symfony при помощи 
+[тестеров](#chapter_09_the_sftestfunctional_class). Существуют тестеры для
+[запроса](#chapter_09_sub_the_request_tester), 
+[ответа](#chapter_09_sub_the_response_tester), 
+[пользователя](#chapter_13_user_testing), 
+[текущей формы](#chapter_11_the_form_tester), 
+[слоя кэша](#chapter_21_testing_the_cache_testing_cache) и
+<propel>
+[Propel объектов](#chapter_11_the_propel_tester).
+</propel>
+<doctrine>
+[Doctrine объектов](#chapter_11_the_doctrine_tester).
+</doctrine>
+
+Вы тааже можете использовать средства отладки для
+[ответа](#chapter_09_debugging_functional_tests)
+и [форм](#chapter_11_the_form_tester).
+
+Также, как и модульные тесты, функциональные тесты могут запускаться
+[по-одному](#chapter_09_running_functional_tests) или
+[все вместе](#chapter_09_functional_tests_harness).
+
+Такж Вы можете запустить [все тесты сразу](#chapter_09_tests_harness).
+
+Плагины
+-------
+
+Symfony предоставляет только фундамент для Вашего веб-приложения, и
+опирается на [плагины](#chapter_20_using_plugins), когда дело касается добавления
+дополнительных возможностей. В этом учебнике, мы говорили о [`sfGuardPlugin`](#chapter_13_plugins),
+[`sfFormExtraPlugin`](#chapter_19_language_switching) и
+[`sfTaskExtraPlugin`](#chapter_20_contributing_a_plugin).
+
+Плагин должен быть [активирован](#chapter_20_sidebar_plugin_activation) после установки.
+
+Плагин - это лучший способ [внести свой вклад](#chapter_20_contributing_a_plugin)
+в проект Symfony.
+
+Задачи
+------
+
+Интерфейс командной строки Symfony (CLI) предоставляет много задач (tasks),
+и самые полезные из них, мы обсуждали в наших уроках.
+
+ * [`app:routes`](#chapter_05_route_debugging)
+ * [`cache:clear`](#chapter_21_clearing_the_cache)
+ * [`configure:database`](#chapter_03_the_database)
+ * [`generate:project`](#chapter_01_sub_project_creation)
+ * [`generate:app`](#chapter_01_sub_application_creation)
+ * [`generate:module`](#chapter_07_job_category_module_creation)
+ * [`help`](#chapter_03_the_orm)
+ * [`i18n:extract`](#chapter_19_sub_i18n_extract)
+ * [`list`](#chapter_13_backend_security)
+ * [`plugin:install`](#chapter_13_plugins)
+ * [`plugin:publish-assets`](#chapter_20_sub_the_assets)
+ * [`project:deploy`](#chapter_22_sub_deploying_strategies)
+ * [`propel:build-all`](#chapter_03_the_orm)
+ * [`propel:build-all-load`](#chapter_07_update_the_database)
+<propel>
+ * [`propel:build-forms`](#chapter_10_propel_forms)
+</propel>
+<doctrine>
+ * [`doctrine:build --forms`](#chapter_10_doctrine_forms)
+</doctrine>
+ * [`propel:build-model`](#chapter_03_the_orm)
+ * [`propel:build-sql`](#chapter_03_the_orm)
+ * [`propel:data-load`](#chapter_03_the_initial_data)
+ * [`propel:generate-admin`](#chapter_12_backend_modules)
+ * [`propel:generate-module`](#chapter_03_see_it_in_action_in_the_browser)
+ * [`propel:insert-sql`](#chapter_03_the_orm)
+ * [`test:all`](#chapter_09_tests_harness)
+ * [`test:coverage`](#chapter_08_sidebar__code_coverage_)
+ * [`test:functional`](#chapter_09_running_functional_tests)
+ * [`test:unit`](#chapter_08_running_unit_tests)
+
+Вы также можете [создавать свои собственные задачи](#chapter_11_maintenance_tasks).
+
+До скорого!
+-----------
+
+### Обучение на практике
+
+Symfony также, как и любое программное обеспечение, имеет кривую обучения. В
+процессе обучения первый шаг - изучение на практических примерах при помощи
+такой книги, как эта. Второй шаг - это **практика**. Ничто и никогда не заменит 
+практику.
+
+Именно этим Вы можете сегодня заняться. Подумайте о простейшем веб-проекте,
+предоставляющем одну из следующих возможностей: список задач для выполнения, простой блог, конвертер
+времени или валют и т.д... Выберите одну и начните реализовывать, используя те знания, которые
+Вы имеете сегодня. Используйте подсказки задач командной строки, чтобы изучить разные их параметры, 
+изучайте код, сгенерированный Symfony, используйте текстовый редактор, который имеет возможность 
+автодополнения для PHP, например [Eclipse](http://www.eclipse.org/), обращайтесь к 
+[справочному руководству](http://www.symfony-project.org/reference/1_4/), чтобы изучить
+конфигурационные возможности фреймворка.
+
+Используйте любой доступный материал, чтобы узнать больше о Symfony.
+
+### Сообщество
+
+Перед тем как закончить, я хотел бы поговорить насчет одной вещи, касающейся Symfony.
+У фреймворка есть много замечательных возможностей и бесплатной документации.
+Но один из важнейших аспектов, который может иметь Open-Source проект,
+ это его сообщество. И у Symfony одно из самых изумителных и активных сообществ.
+Если Вы начинаете использовать Symfony для своих проектов, подумайте насчет
+вступления в это сообщество:
+
+  * Подпишитесь на [пользовательскую рассылку](http://groups.google.com/group/Symfony-users)
+  * Подпишитесь на оффициальную [ленту блога](http://feeds.feedburner.com/Symfony/blog)
+  * Подпишитесь на Symfony [ленту planet](http://feeds.feedburner.com/Symfony/planet)
+  * Заходите и общайтесь онлайн [#Symfony IRC](irc://irc.freenode.net/Symfony) канал на freenode.
+
+__ORM__
