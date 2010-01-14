@@ -1,0 +1,709 @@
+Jour 8 : Les tests unitaires
+============================
+
+Au cours des deux derniers jours, nous avons examiné tous les éléments appris au cours des
+cinq premiers jours du calendrier de l'avent, afin de personnaliser les fonctionnalités de Jobeet et
+d'en ajouter de nouvelles. Dans le processus, nous avons également abordé d'autres fonctionnalités
+plus avancées de symfony.
+
+Aujourd'hui, nous allons commencer à parler de quelque chose de complètement différent :
+les **tests** automatisés. Comme le sujet est assez vaste, il nous faudra deux jours complets
+pour tout couvrir.
+
+Les tests dans symfony
+----------------------
+
+Il existe deux différents types de ~test|Testing~s automatisés dans symfony: les **~tests unitaires|Test unitaire~**
+et les **~tests fonctionnels|Test fonctionnel~**.
+
+Les tests unitaires vérifient que chaque méthode et chaque fonction fonctionne correctement. Chaque test
+doit être aussi indépendante que possible des autres.
+
+D'autre part, des tests fonctionnels vérifient que l'application résultante
+se comporte correctement dans son ensemble.
+
+Tous les tests dans symfony sont situés sous le répertoire `test/` du projet.
+Il contient deux sous-répertoires, un pour les tests unitaires (`test/unit/`) et un pour
+les tests fonctionnels (`test/functional/`).
+
+Les tests unitaires seront couverts dans le tutoriel d'aujourd'hui et demain sera
+consacrée aux tests fonctionnels.
+
+Les tests unitaires
+-------------------
+
+L'écriture des tests unitaires est peut-être l'une des pratiques les plus difficiles du
+développement web à mettre en place. Car les développeurs web ne sont pas vraiment utilisé pour
+tester leur travail, beaucoup de questions se posent : Dois-je écrire des tests avant
+d'implémenter une fonctionnalité ? Que dois-je tester ? Mes tests doivent couvrir
+chaque ~cas limite|Cas limites~ ? Comment puis-je être sûr que tout est bien
+testé ? Mais d'habitude, la première question est beaucoup plus fondamentale : où commencer?
+
+Même si nous insistons fortement sur les tests, l'approche de symfony est pragmatique : il est
+toujours préférable d'avoir quelques tests que pas de test du tout. Avez-vous déjà beaucoup
+de code sans aucun test ? Pas de problème. Vous n'avez pas besoin d'avoir une suite de tests
+complète pour bénéficier des avantages des tests. Commencez par l'ajout de test lorsque
+vous trouvez un bogue dans votre code. Au fil du temps, votre code va devenir de meilleure
+qualité, la couverture du code va augmenter, et vous deviendrez plus confiant sur ce sujet.
+En commençant avec une approche pragmatique, vous vous sentirez plus à l'aise avec les
+tests dans le temps. L'étape suivante consiste à écrire des tests pour des nouvelles
+fonctionnalités. En peu temps, vous allez devenir accro aux tests.
+
+Le problème avec la plupart des bibliothèques de test est leur difficulté d'apprentissage.
+C'est pourquoi Symfony fournit une bibliothèque très simple de test, **lime**, pour faire
+de l'écriture de test avec une incroyable facilité.
+
+>**NOTE**
+>Même si ce tutoriel décrit intensivement la bibliothèque intégrée lime, vous
+>pouvez employer n'importe quelle bibliothèque de test, comme l'excellente
+>bibliothèque [PHPUnit](http://www.phpunit.de/).
+
+Le framework de test `~lime|Framework de test Lime~`
+----------------------------------------------------
+
+Tous les tests unitaires écrits avec le framework lime débutent avec le même code :
+
+    [php]
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(1);
+
+Tout d'abord, le fichier d'amorçage `unit.php` est inclus pour initialiser un certain nombre
+de choses. Puis, un nouvel objet `lime_test` est créé et le nombre de tests prévus à l'exécution
+est passé comme un argument.
+
+>**NOTE**
+>Le plan permet à lime d'afficher un message d'erreur au cas où trop peu de tests seraient
+>exécutés (par exemple quand un test génère une erreur fatale PHP).
+
+Les tests fonctionnent en appelant une méthode ou une fonction avec un ensemble
+d'entrées prédéfinies, puis en comparant les résultats avec ceux escomptés. Cette
+comparaison permet de déterminer si un test réussit ou échoue.
+
+Pour faciliter la comparaison, l'objet `lime_test` fournit plusieurs méthodes :
+
+ Méthode                       | Description
+ ----------------------------- | --------------------------------------------
+ `ok($test)`                   | Teste une condition et passe si elle est vrai
+ `is($value1, $value2)`        | Compare deux valeurs et passe si elles sont
+                               | égales (`==`)
+ `isnt($value1, $value2)`      | Compare deux valeurs et passe si elles ne sont
+                               | pas égales
+ `like($string, $regexp)`      | Teste une chaîne à une expression régulière
+ `unlike($string, $regexp)`    | Vérifie qu'une chaîne ne correspond pas à une
+                               | expression régulière
+ `is_deeply($array1, $array2)` | Vérifie que les deux tableaux ont les mêmes valeurs
+
+>**TIP**
+>Vous pouvez vous demander pourquoi lime définit tant de méthodes de test, car tous les
+>tests peuvent être écrits juste en employant la méthode `ok()`. L'avantage du choix des
+>méthodes se situe dans des messages d'erreur beaucoup plus explicites en cas de test échoué
+>et pour une lisibilité améliorée des tests.
+
+L'objet `lime_test` fournit également d'autres méthodes de test pratique :
+
+ Méthode                 | Description
+ ----------------------- | --------------------------------------------------
+ `fail()`                | Echoue toujours -- Utile pour tester les exceptions
+ `pass()`                | Passe toujours -- Utile pour tester les exceptions
+ `skip($msg, $nb_tests)` | Compte pour $nb_tests - utile pour les tests
+                         | conditionnels
+ `todo()`                | Compte pour un test - utile pour les tests qui ne
+                         | sont pas encore écrits
+
+Enfin, la méthode `comment($msg)` renvoie un commentaire, mais n'exécute aucun test.
+
+Exécution des tests unitaires
+-----------------------------
+
+Tous les tests unitaires sont stockés dans le répertoire `test/unit/`. Par convention,
+les tests sont nommés d'après la classe qu'ils testent et suffixé par `Test`. Même si
+vous pouvez organiser les fichiers sous le répertoire `test/unit/` comme vous le désirez,
+nous vous conseillons de reproduire la structure du répertoire `lib/`.
+
+Pour illustrer le test unitaire, nous allons tester la classe `Jobeet`.
+
+Créez un fichier `test/unit/JobeetTest.php` et copiez le code suivant à l'intérieur :
+
+    [php]
+    // test/unit/JobeetTest.php
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(1);
+    $t->pass('This test always passes.');
+
+Pour lancer les tests, vous pouvez exécuter le fichier directement :
+
+    $ php test/unit/JobeetTest.php
+
+Ou utilisez la tâche `test:unit` :
+
+    $ php symfony test:unit Jobeet
+
+![Tests en ligne de commande](http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png)
+
+>**Note**
+>~Windows~ en ligne de commande ne peut malheureusement pas mettre en évidence les
+>résultats des tests en couleur rouge ou verte. Mais si vous utilisez Cygwin, vous pouvez
+>forcer symfony pour utiliser des couleurs en passant l'option `--color` à la tâche.
+
+Tester `slugify`
+----------------
+
+Commençons notre voyage dans le monde merveilleux des tests unitaires en écrivant des
+tests pour la méthode `Jobeet::slugify()`.
+
+Nous avons créé la méthode `~slug|Slug~ify()` durant la journée 5 pour nettoyer une chaîne
+de sorte qu'elle ne puisse pas être dangereuse dans une URL. La conversion consiste à certaines
+transformations de base comme la conversion de tous les caractères non-ASCII par un tiret (`-`) ou
+de convertir la chaîne en minuscules:
+
+ | Entrée        | Sortie       |
+ | ------------- | ------------ |
+ | Sensio Labs   | sensio-labs  |
+ | Paris, France | paris-france |
+
+Remplacez le contenu du fichier de test avec le code suivant:
+
+    [php]
+    // test/unit/JobeetTest.php
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(6);
+
+    $t->is(Jobeet::slugify('Sensio'), 'sensio');
+    $t->is(Jobeet::slugify('sensio labs'), 'sensio-labs');
+    $t->is(Jobeet::slugify('sensio   labs'), 'sensio-labs');
+    $t->is(Jobeet::slugify('paris,france'), 'paris-france');
+    $t->is(Jobeet::slugify('  sensio'), 'sensio');
+    $t->is(Jobeet::slugify('sensio  '), 'sensio');
+
+Si vous jetez un coup d'œil aux tests que nous avons écrit, vous remarquerez que
+chaque ligne teste qu'une seule chose. C'est quelque chose que vous devez garder à
+l'esprit lors de l'écriture des tests unitaires. Testez une chose à la fois.
+
+Vous pouvez maintenant exécuter le fichier de test. Si tous les tests sont réussis, comme on peut
+s'y attendre, vous pourrez profiter de la "*barre verte*". Sinon, la fameuse "*barre rouge*" vous
+avertira que certains tests ne passent pas et que vous avez besoin de les corriger.
+
+![Tests slugify()](http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png)
+
+Si un test échoue, l'affichage sera de vous donner quelques informations sur la raison
+de cet échec, mais si vous avez des centaines de tests dans un fichier, il peut être
+difficile d'identifier rapidement le problème qui échoue.
+
+Toutes les méthodes de test de lime prennent une chaîne en dernier argument qui
+sert pour la description du test. C'est très pratique, car elle vous oblige à
+décrire ce que font vraiment les tests. Elle peut aussi servir comme une forme de
+~documentation|Documentation~ du comportement attendu d'une méthode. Ajoutons
+quelques messages au fichier de test `slugify`:
+
+    [php]
+    require_once dirname(__FILE__).'/../bootstrap/unit.php';
+
+    $t = new lime_test(6);
+
+    $t->comment('::slugify()');
+    $t->is(Jobeet::slugify('Sensio'), 'sensio',
+     ➥ '::slugify() converts all characters to lower case');
+    $t->is(Jobeet::slugify('sensio labs'), 'sensio-labs',
+     ➥ '::slugify() replaces a white space by a -');
+    $t->is(Jobeet::slugify('sensio   labs'), 'sensio-labs',
+     ➥ '::slugify() replaces several white spaces by a single -');
+    $t->is(Jobeet::slugify('  sensio'), 'sensio',
+     ➥ '::slugify() removes - at the beginning of a string');
+    $t->is(Jobeet::slugify('sensio  '), 'sensio',
+     ➥ '::slugify() removes - at the end of a string');
+    $t->is(Jobeet::slugify('paris,france'), 'paris-france',
+     ➥ '::slugify() replaces non-ASCII characters by a -');
+
+![tests slugify() avec des messages](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
+
+La chaîne de description du test est également un outil précieux pour comprendre ce test
+lors d'un essai. Vous pouvez voir une structure dans les chaînes de test : c'est des phrases
+décrivant comment la méthode doit se comporter et elles commencent toujours avec le nom
+de la méthode à tester.
+
+>**SIDEBAR**
+>~Couverture de code~
+>
+>Lorsque vous écrivez des tests, il est facile d'oublier une partie du code.
+>
+>Pour vous aider à vérifier que tout votre code est bien testé, symfony fournit la tâche
+>`test:coverage`. Passez cette tâche à un fichier ou à un répertoire de test et un fichier
+>ou un répertoire lib comme arguments et il vous indiquera la couverture de votre code :
+>
+>     $ php symfony test:coverage test/unit/JobeetTest.php lib/Jobeet.class.php
+>
+>Si vous voulez savoir quelles lignes ne sont pas couverts par vos tests,
+>passer l'option `--detailed` :
+>
+>     $ php symfony test:coverage --detailed test/unit/JobeetTest.php lib/Jobeet.class.php
+>
+>Gardez à l'esprit que lorsque la tâche indique que votre code est entièrement
+>testé unitairement, cela signifie juste que chaque ligne a été exécuté, mais cela ne
+>signifie pas que tous les ~cas limites|Cas limites~ ont été testés.
+>
+>Comme `test:coverage` repose sur `~XDebug~` pour collecter ses informations, vous
+>devez l'installer et l'activer en premier.
+
+Ajout de tests pour les nouvelles fonctionnalités
+-------------------------------------------------
+
+Le slug pour une chaîne vide est une chaîne vide. Vous pouvez le tester, il va
+fonctionner. Mais une chaîne vide dans une URL, ce n'est pas une bonne idée. Modifions
+donc la méthode `slugify()` de sorte qu'elle retourne la chaîne "n-a" dans le cas d'une
+chaîne vide.
+
+Vous pouvez écrire le premier test, puis mettre à jour la méthode, ou l'inverse.
+C'est vraiment une question de goût mais l'écriture du test vous donne d'abord la
+confiance que votre code implémente réellement ce que vous avez prévu :
+
+    [php]
+    $t->is(Jobeet::slugify(''), 'n-a',
+     ➥ '::slugify() converts the empty string to n-a');
+
+Cette méthodologie de développement, dans laquelle vous écrivez d'abord les tests
+puis l'implémentation des fonctionnalités, est appelé
+[Test Driven Development (~TDD|Test Driven Development~)](http://fr.wikipedia.org/wiki/Test_Driven_Development).
+
+Si vous lancez les tests maintenant, vous devez avoir une barre rouge. Sinon, cela
+signifie que la fonctionnalité est déjà implémenté ou que votre test ne teste pas ce
+qu'il est censé tester.
+
+Maintenant, modifiez la classe `Jobeet` et ajoutez la condition suivante au début :
+
+    [php]
+    // lib/Jobeet.class.php
+    static public function slugify($text)
+    {
+      if (empty($text))
+      {
+        return 'n-a';
+      }
+
+      // ...
+    }
+
+Le test doit maintenant passer comme prévu et vous pouvez profiter de la barre verte. Mais
+seulement si vous vous êtes rappelés de mettre à jour le plan de test. Sinon, vous aurez un
+message indiquant que vous avez prévu six tests et vous en avez exécuté un de plus. Avoir le
+nombre de tests prévus est important, car il vous tiendra au courant dès le début si le
+script de test échoue.
+
+Ajout de test en raison d'un bug
+--------------------------------
+
+Disons que le temps a passé et l'un de vos utilisateurs vous rapporte un
+~bogue|Debogger~ bizarre: certains liens des emplois pointent vers une page
+d'erreur 404. Après quelques recherches, vous trouvez pour une raison quelconque,
+que ces emplois ont une société, une position ou un emplacement vide.
+
+Comment cela est-il possible?
+
+Vous regardez à travers les enregistrements de la base de données et les colonnes ne
+sont certainement pas vide. Vous réfléchissez pendant un moment, et hop, vous trouvez la
+cause. Lorsqu'une chaîne ne contient que des caractères non-ASCII, la méthode `slugify()` la
+transforme en une chaîne vide. Tellement heureux d'avoir trouvé la cause, vous ouvrez la
+classe `Jobeet` et vous corrigez le problème immédiatement. C'est une mauvaise idée. Premièrement,
+nous allons ajouter un test :
+
+    [php]
+    $t->is(Jobeet::slugify(' - '), 'n-a',
+     ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
+
+![Bogue de slugify()](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png)
+
+Après avoir vérifié que le test ne passe pas, modifiez la classe `Jobeet` et passez
+la vérification de la chaîne vide à la fin de la méthode :
+
+    [php]
+    static public function slugify($text)
+    {
+      // ...
+
+      if (empty($text))
+      {
+        return 'n-a';
+      }
+
+      return $text;
+    }
+
+Le nouveau test passe désormais, comme tous les autres. Le `slugify()` avait
+un bug en dépit de notre couverture à 100%.
+
+Vous ne pouvez pas penser à tous les ~cas limites|Cas limites~ lors de l'écriture des
+tests et c'est très bien. Mais quand vous en découvrez un, vous devez écrire un test avant
+de corriger votre code. Cela signifie également que votre code va s'améliorer au fil du temps,
+ce qui est toujours une bonne chose.
+
+>**SIDEBAR**
+>Vers une meilleure méthode `slugify`
+>
+>Vous savez probablement que symfony a été créé par des Français, nous allons
+>donc ajouter un test avec un mot français qui contient un «accent» :
+>
+>     [php]
+>     $t->is(Jobeet::slugify('Développeur Web'), 'developpeur-web', '::slugify() removes accents');
+>
+>Le test doit échouer. Au lieu de remplacer `é` par `e`, la méthode `slugify()`
+>l'a remplacé par un tiret (`-`). C'est un problème difficile, appelé
+>*~translittération|Translittération~*. En espérant que vous avez installé
+>"~iconv|Librairie `iconv`~", 
+>il fera le travail pour nous. Remplacez le code de la méthode `slugify` avec le texte suivant :
+>
+>     [php]
+>     // code derived from http://php.vrana.cz/vytvoreni-pratelskeho-url.php
+>     static public function slugify($text)
+>     {
+>       // replace non letter or digits by -
+>       $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+>
+>       // trim
+>       $text = trim($text, '-');
+>
+>       // transliterate
+>       if (function_exists('iconv'))
+>       {
+>         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+>       }
+>
+>       // lowercase
+>       $text = strtolower($text);
+>
+>       // remove unwanted characters
+>       $text = preg_replace('~[^-\w]+~', '', $text);
+>
+>       if (empty($text))
+>       {
+>         return 'n-a';
+>       }
+>
+>       return $text;
+>     }
+>
+>N'oubliez pas de sauvegarder tous vos fichiers PHP avec l'encodage ~UTF-8~, car
+>cela est l'~encodage|Encodage~ de symfony par défaut et celle utilisée par «iconv» pour
+>faire la translitération.
+
+>Également modifier le fichier de test pour exécuter le test que si "iconv" est disponible :
+>
+>     [php]
+>     if (function_exists('iconv'))
+>     {
+>       $t->is(Jobeet::slugify('Développeur Web'), 'developpeur-web', '::slugify() removes accents');
+>     }
+>     else
+>     {
+>       $t->skip('::slugify() removes accents - iconv not installed');
+>     }
+
+Tests unitaires de ##ORM##
+--------------------------
+
+### Configuration de la base de données
+
+Les tests unitaires d'une classe modèle ##ORM## est un peu plus complexe, car elle requiert
+une connexion à la base de données. Vous avez déjà celle que vous utilisez pour votre développement,
+mais c'est une bonne habitude de créer une base de données dédiée pour des tests.
+
+Durant le jour 1, nous avons introduit les ~environnement|Environnements~s comme un moyen
+pour faire varier les paramètres d'une application. Par défaut, tous les tests de symfony sont
+lancées dans l'environnement de `test`, donc nous allons configurer une base de données
+différentes pour l'environnement de `test` :
+
+<propel>
+    $ php symfony configure:database --env=test
+     ➥ "mysql:host=localhost;dbname=jobeet_test" root mYsEcret
+</propel>
+<doctrine>
+    $ php symfony configure:database --name=doctrine
+     ➥ --class=sfDoctrineDatabase --env=test
+     ➥ "mysql:host=localhost;dbname=jobeet_test" root mYsEcret
+</doctrine>
+
+L'option `env` dit à la tâche que la configuration de la base de données est seulement pour
+l'environnement de `test`. Lorsque nous avons utilisé cette tâche pendant le jour 3, nous n'avions
+passé aucune option `env`, car la configuration a été appliquée à tous les environnements.
+
+>**NOTE**
+>Si vous êtes curieux, ouvrez le fichier de configuration `config/databases.yml` pour
+>voir comment symfony fait. Il est facile de modifier la configuration en fonction de
+>l'environnement.
+
+Maintenant que nous avons configuré la base de données, nous pouvons l'amorcer en
+employant la tâche `propel:insert-sql` :
+
+    $ mysqladmin -uroot -pmYsEcret create jobeet_test
+    $ php symfony propel:insert-sql --env=test
+
+>**SIDEBAR**
+>Principes de configuration dans symfony
+>
+>Au cours du jour 4, nous avons vu que les paramètres provenants des fichiers
+>de configuration peuvent être définis à différents niveaux.
+>
+>Ces ~paramètre|Paramètre~s peuvent également être dépendant de l'environnement. Cela est vrai
+>pour la plupart des fichiers de configuration que nous avons utilisé jusqu'à présent : `databases.yml`,
+>~`app.yml`~, ~`view.yml`~, et ~`settings.yml`~. Dans tous ces fichiers, la clé principale est
+>l'environnement, la clé `all` indiquant que ses paramètres sont sur tous les environnements :
+>
+>     [yml]
+>     # config/databases.yml
+>     dev:
+>       propel:
+>         class: sfPropelDatabase
+<propel>
+>         param:
+>           classname: DebugPDO
+</propel>
+>
+>     test:
+>       propel:
+>         class: sfPropelDatabase
+>         param:
+<propel>
+>           classname: DebugPDO
+</propel>
+>           dsn: 'mysql:host=localhost;dbname=jobeet_test'
+>
+>     all:
+>       propel:
+>         class: sfPropelDatabase
+>         param:
+>           dsn: 'mysql:host=localhost;dbname=jobeet'
+>           username: root
+>           password: null
+
+### Données de test
+
+Maintenant que nous avons une base de données dédiée pour nos tests, nous avons besoin d'un
+moyen pour charger les données de test. Durant la journée de 3, vous avez appris à utiliser la
+~tâche|Tâches~ `propel:data-load`, mais pour des tests, nous avons besoin de recharger les données
+chaque fois que nous les exécutons pour mettre la base de données dans un état connu.
+
+<propel>
+La tâche `propel:data-load` utilise en interne la
+classe [`sfPropelData`](http://www.symfony-project.org/api/1_4/sfPropelData)
+pour charger les données :
+
+    [php]
+    $loader = new sfPropelData();
+    $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+La tâche `doctrine:data-load` utilise en interne la
+méthode `Doctrine::loadData()` pour charger les données :
+
+    [php]
+    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+>**NOTE**
+>L'objet ~`sfConfig`~ peut être utilisé pour obtenir le chemin complet d'un
+>sous-répertoire du projet. Son utilisation permet à la structure de répertoire
+>par défaut pour être personnalisés.
+
+La méthode `loadData()` prend un répertoire ou un fichier comme premier argument. Elle
+peut également prendre un tableau de répertoires et/ou de fichiers.
+
+Nous avons déjà créé quelques données initiales dans le répertoire `data/fixtures/`.
+Pour les tests, nous mettrons les ~jeux de test|Jeux de test~ dans le répertoire `data/fixtures/`.
+Ces jeux de test seront utilisés pour les tests unitaires et fonctionnels de ##ORM##.
+
+Pour l'instant, copiez les fichiers à partir `data/fixtures/` vers le répertoire
+`test/fixtures/`.
+
+### Testing `JobeetJob`
+
+Nous allons créer quelques tests unitaires pour la classe du modèle `JobeetJob`.
+
+Comme tous nos tests unitaires pour ##ORM## débuteront avec le même code, créez un
+fichier `##ORM##.php` dans le répertoire de test `bootstrap/` avec le code suivant :
+
+    [php]
+    // test/bootstrap/##ORM##.php
+    include(dirname(__FILE__).'/unit.php');
+
+    $configuration =
+     ➥ ProjectConfiguration::getApplicationConfiguration(
+     ➥ 'frontend', 'test', true);
+
+    new sfDatabaseManager($configuration);
+
+<propel>
+    $loader = new sfPropelData();
+    $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+Le script est assez explicite :
+
+  * En ce qui concerne les contrôleurs frontaux, on initialise un objet de configuration pour
+    l'environnement `test` :
+
+        [php]
+        $configuration =
+         ➥ ProjectConfiguration::getApplicationConfiguration(
+         ➥ 'frontend', 'test', true);
+
+  * Nous créons un gestionnaire de base de données. Il initialise la connexion ##ORM## en
+    chargeant le fichier de configuration `databases.yml`.
+
+        [php]
+        new sfDatabaseManager($configuration);
+
+<propel>
+  * Nous chargeons nos données de test en utilisant `sfPropelData`:
+
+        [php]
+        $loader = new sfPropelData();
+        $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+  * Nous chargeons nos données de test en utilisant `Doctrine::loadData()`:
+
+        [php]
+        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+>**NOTE**
+>##ORM## se connecte à la base de données que si elle a des instructions SQL
+>à exécuter.
+
+Maintenant que tout est en place, nous pouvons commencer à tester la classe `JobeetJob`.
+
+Premièrement, nous avons besoin pour créer le fichier `JobeetJobTest.php` dans `test/unit/model`:
+
+    [php]
+    // test/unit/model/JobeetJobTest.php
+    include(dirname(__FILE__).'/../../bootstrap/##ORM##.php');
+
+    $t = new lime_test(1);
+
+Puis, nous allons commencer par ajouter un test pour la méthode `getCompanySlug()` :
+
+    [php]
+    $t->comment('->getCompanySlug()');
+<propel>
+    $job = JobeetJobPeer::doSelectOne(new Criteria());
+</propel>
+<doctrine>
+    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+</doctrine>
+    $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
+
+Remarquez que nous ne testons que la méthode `getCompanySlug()` et pas si le slug est
+correct ou non, car nous l'avons déjà testé ailleurs.
+
+L'écriture des tests pour la méthode `save()` est légèrement plus complexe :
+
+    [php]
+    $t->comment('->save()');
+    $job = create_job();
+    $job->save();
+    $expiresAt = date('Y-m-d', time() + 86400
+      ➥ * sfConfig::get('app_active_days'));
+<propel>
+    $t->is($job->getExpiresAt('Y-m-d'), $expiresAt, '->save() updates expires_at if not set');
+</propel>
+<doctrine>
+    $t->is($job->getDateTimeObject('expires_at')->format('Y-m-d'), $expiresAt, '->save() updates expires_at if not set');
+</doctrine>
+
+    $job = create_job(array('expires_at' => '2008-08-08'));
+    $job->save();
+<propel>
+    $t->is($job->getExpiresAt('Y-m-d'), '2008-08-08', '->save() does not update expires_at if set');
+</propel>
+<doctrine>
+    $t->is($job->getDateTimeObject('expires_at')->format('Y-m-d'), '2008-08-08', '->save() does not update expires_at if set');
+</doctrine>
+
+    function create_job($defaults = array())
+    {
+      static $category = null;
+
+      if (is_null($category))
+      {
+<propel>
+        $category = JobeetCategoryPeer::doSelectOne(new Criteria());
+</propel>
+<doctrine>
+        $category = Doctrine::getTable('JobeetCategory')
+          ->createQuery()
+          ->limit(1)
+          ->fetchOne();
+</doctrine>
+      }
+
+      $job = new JobeetJob();
+      $job->fromArray(array_merge(array(
+        'category_id'  => $category->getId(),
+        'company'      => 'Sensio Labs',
+        'position'     => 'Senior Tester',
+        'location'     => 'Paris, France',
+        'description'  => 'Testing is fun',
+        'how_to_apply' => 'Send e-Mail',
+        'email'        => 'job@example.com',
+        'token'        => rand(1111, 9999),
+        'is_activated' => true,
+<propel>
+      ), $defaults), BasePeer::TYPE_FIELDNAME);
+</propel>
+<doctrine>
+      ), $defaults));
+</doctrine>
+
+      return $job;
+    }
+
+>**NOTE**
+>Chaque fois que vous ajoutez des tests, n'oubliez pas de mettre à jour le nombre
+>de tests prévus (le plan) dans la méthode du constructeur `lime_test`. Pour le fichier
+>`JobeetJobTest`, vous devez le changer de 1 à 3.
+
+### Test sur les autres classes ##ORM##
+
+Vous pouvez maintenant ajouter des tests pour toutes les autres classes ##ORM##. Comme vous êtes
+habitués maintenant à utiliser le processus d'écriture des tests unitaires, cela devrait être assez facile.
+
+~Validation des tests unitaires~
+--------------------------------
+
+La ~tâche|Tâches~ `test:unit` peut également être utilisé pour lancer tous les
+tests unitaires pour un projet :
+
+    $ php symfony test:unit
+
+La tâche affiche pour chaque fichier test s'il passe ou s'il échoue :
+
+![Validation des tests unitaires](http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png)
+
+>**TIP**
+>Si la tâche `test:unit` retourne un "~état douteux|Etat douteux~" pour un
+>fichier, il indique quel script échoue avant la fin. L'exécution du fichier de
+>test à lui seul vous donne le message d'erreur exact.
+
+À demain
+--------
+
+Même si les tests d'une application sont assez importants, je sais que certains d'entre vous aurez
+pu être tenté de sauter le tutoriel d'aujourd'hui. Je suis content que vous ne l'ayez pas fait.
+
+Pour sûr, la compréhension de symfony est l'étude de toutes les grandes fonctionnalités du framework
+fournit, mais c'est aussi sa ~philosophie|Philosophie~ de développement et les
+~meilleures pratiques|Meilleures pratiques~ qu'il préconise. Et le test est un d'entre eux.
+Tôt ou tard, les tests unitaires économiseront des jours pour vous. Ils vous donnent une confiance
+solide de votre code et la liberté de le refactoriser sans crainte. Les tests unitaires
+sont une protection qui vous alertera si vous cassez quelque chose. Le framework symfony
+lui-même a plus de 9000 tests.
+
+Demain, nous allons écrire quelques tests fonctionnels pour les modules `job` et
+`category`. Jusque-là, prenez le temps d'écrire plus de tests unitaires pour les
+classes du modèle Jobeet.
+
+__ORM__
