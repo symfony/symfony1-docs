@@ -1,0 +1,700 @@
+Jour 9 : Les tests fonctionnels
+===============================
+
+Hier, nous avons vu comment faire des tests unitaires sur nos classes Jobeet en
+utilisant la bibliothèque intégrée lime avec symfony.
+
+Aujourd'hui, nous allons écrire des tests fonctionnels pour les fonctionnalités que nous
+avons déjà mis en œuvre dans les modules `job` et `category`.
+
+Les tests fonctionnels
+----------------------
+
+Les ~tests fonctionnels~ sont un excellent outil pour tester votre application de bout
+en bout : de la requête faite par un navigateur jusqu'à la réponse envoyée par le serveur.
+Ils testent toutes les couches d'une application : le routage, le modèle, les actions et les
+Templates. Ils sont très similaires à ce que vous avez sans doute déjà fait manuellement :
+chaque fois que vous ajoutez ou modifiez une action, vous devez aller dans le navigateur et
+vérifier que tout fonctionne comme prévu en cliquant sur les liens et en vérifiant
+les éléments sur la page rendue. En d'autres termes, vous exécutez un scénario
+correspondant au cas d'utilisation que vous venez de mettre en œuvre.
+
+Comme le processus est manuel, il est complexe et assujetti aux erreurs. Chaque fois que
+vous changer quelque chose dans votre code, vous devez faire défiler tous les scénarios
+pour vérifier que vous n'avez rien cassé. C'est insensé. Les tests fonctionnels dans symfony
+fournissent un moyen de décrire facilement des scénarios. Chaque scénario peut alors être
+automatiquement lu maintes et maintes fois en simulant l'expérience d'un utilisateur dans
+un navigateur. Comme les tests unitaires, ils vous donnent la confiance pour coder en paix.
+
+>**NOTE**
+>Les tests fonctionnels du framework ne remplace pas les outils tels que
+>"[~Selenium~](http://selenium.seleniumhq.org/)". Selenium s'exécute directement dans
+>le navigateur pour automatiser les tests sur plusieurs plateformes et navigateurs. Et en
+tant que tel, il est en mesure de tester le JavaScript de votre application.
+
+La classe `sfBrowser`
+---------------------
+
+Dans Symfony, les tests fonctionnels sont gérés via un ~navigateur|Navigateur~
+spécial, implémenté par la classe
+[~`sfBrowser`|Navigateur~](http://www.symfony-project.org/api/1_4/sfBrowser).
+Elle agit comme un navigateur tailler sur mesure pour votre application et elle est
+directement connectée à lui, sans la nécessité d'un serveur web. Elle vous donne accès à tous
+les objets de symfony avant et après chaque requête, vous donnant la possibilité de les
+introspecter et d'effectuer les vérifications que vous voulez par programmation.
+
+`sfBrowser` fournit des méthodes qui simule la navigation effectuée dans un
+navigateur classique :
+
+ | Méthode      | Description
+ | ------------ | -------------------------------------------------
+ | `get()`      | Obtient une URL
+ | `post()`     | Poste à une URL
+ | `call()`     | Appelle une URL (utilisé pour les méthodes `PUT` et `DELETE`)
+ | `back()`     | Revient en arrière d'une page dans l'historique
+ | `forward()`  | Avance d'une page dans l'historique
+ | `reload()`   | Recharge la page actuelle
+ | `click()`    | Clique sur un lien ou sur un bouton
+ | `select()`   | Sélectionne un radiobutton ou un checkbox
+ | `deselect()` | Dé-sélectionne un radiobutton ou un checkbox
+ | `restart()`  | Redémarre le navigateur
+
+Voici quelques exemples d'utilisation des méthodes `sfBrowser` :
+
+    [php]
+    $browser = new sfBrowser();
+
+    $browser->
+      get('/')->
+      click('Design')->
+      get('/category/programming?page=2')->
+      get('/category/programming', array('page' => 2))->
+      post('search', array('keywords' => 'php'))
+    ;
+
+`sfBrowser` contient des méthodes supplémentaires pour configurer le comportement du navigateur :
+
+ | Méthode            | Description
+ | ------------------ | -------------------------------------------------
+ | `setHttpHeader()`  | Définit une entête HTTP
+ | `setAuth()`        | Définit les informations d'authentification de base
+ | `setCookie()`      | Définit un cookie
+ | `removeCookie()`   | Enlève un cookie
+ | `clearCookies()`   | Vide tous les cookies courants
+ | `followRedirect()` | Suit une redirection
+
+La classe `sfTestFunctional`
+----------------------------
+
+Nous disposons d'un navigateur, mais nous avons besoin d'un moyen pour connaître les objets de
+symfony pour faire le test. Cela peut être fait avec lime et certaines méthodes de `sfBrowser`
+comme `getResponse()` et `getRequest()` mais symfony fournit une meilleure façon.
+
+Les méthodes de test sont fournis par une autre classe,
+[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)
+qui prend une instance `sfBrowser` dans son constructeur. La classe `sfTestFunctional`
+délègue les tests aux objets **~testeur|Testeurs~**. Plusieurs testeurs sont
+livrés avec symfony et vous pouvez également créer les vôtres.
+
+Comme nous l'avons vu hier, les tests fonctionnels sont stockés dans le répertoire
+`test/functional/`. Pour Jobeet, les tests se trouvent dans le sous-répertoire
+`test/functional/frontend/` car chaque application a son propre sous-répertoire.
+Ce répertoire contient déjà deux fichiers: `categoryActionsTest.php` et
+`jobActionsTest.php` car toutes les tâches qui génèrent un module, créent
+automatiquement un fichier de test fonctionnel de base :
+
+    [php]
+    // test/functional/frontend/categoryActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new sfTestFunctional(new sfBrowser());
+
+    $browser->
+      get('/category/index')->
+
+      with('request')->begin()->
+        isParameter('module', 'category')->
+        isParameter('action', 'index')->
+      end()->
+
+      with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('body', '!/This is a temporary page/')->
+      end()
+    ;
+
+Au début, le script ci-dessus peut vous sembler un peu étrange. C'est parce
+que les méthodes de `sfBrowser` et de `sfTestFunctional` implémente une
+[~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface)
+en retournant toujours `$this`. Cela vous permet d'enchaîner les appels de méthode pour
+une meilleure lisibilité. L'extrait ci-dessus est équivalent à :
+
+    [php]
+    // test/functional/frontend/categoryActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new sfTestFunctional(new sfBrowser());
+
+    $browser->get('/category/index');
+    $browser->with('request')->begin();
+    $browser->isParameter('module', 'category');
+    $browser->isParameter('action', 'index');
+    $browser->end();
+
+    $browser->with('response')->begin();
+    $browser->isStatusCode(200);
+    $browser->checkElement('body', '!/This is a temporary page/');
+    $browser->end();
+
+Les tests sont exécutés dans un bloc de contexte de testeur. Un bloc de contexte de
+testeur commence par `with('TESTER NAME')->begin()` et se termine avec `end()` :
+
+    [php]
+    $browser->
+      with('request')->begin()->
+        isParameter('module', 'category')->
+        isParameter('action', 'index')->
+      end()
+    ;
+
+Le code teste que le paramètre `module` de la requête est égal à `category` et
+`action` est égal à `index`.
+
+>**TIP**
+>Lorsque vous avez seulement besoin d'appeler une méthode de test sur un testeur, vous
+>n'avez pas besoin de créer un bloc: `with('request')->isParameter('module', 'category')`
+
+### Le testeur de requête
+
+Le **~testeur de requête|Requête HTTP (Test)~** fournit des méthodes de
+testeur pour introspecter et tester l'objet `sfWebRequest` :
+
+ | Method             | Description
+ | ------------------ | ------------------------------------------------
+ | `isParameter()`    | Vérifie la valeur du paramètre de la requête
+ | `isFormat()`       | Vérifie le format de la requête
+ | `isMethod()`       | Vérifie la méthode
+ | `hasCookie()`      | Vérifie si la requête a un cookie avec
+ |                    | le nom donné
+ | `isCookie()`       | Vérifie la valeur d'un cookie
+
+### Le testeur de réponse
+
+Il y a aussi une classe **~testeur de réponse|Réponse HTTP (Test)~** qui fournit des
+méthodes de testeur pour l'objet `sfWebResponse` :
+
+ | Method             | Description
+ | ------------------ | -----------------------------------------------------
+ | `checkElement()`   | Vérifie si le sélecteur CSS d'une réponse correspond à certains critères
+ | `isHeader()`       | Vérifie la valeur de l'entête
+ | `isStatusCode()`   | Vérifie le code du statut de la réponse
+ | `isRedirected()`   | Vérifie si la réponse actuelle est une redirection
+ | `isValid()`        | Vérifie si une réponse est bien formée en XML (vous validez aussi la réponse en plus de son type de document en passant `true` comme argument)
+
+>**NOTE**
+>Nous allons décrire plusieurs classes de [testeurs](http://www.symfony-project.org/api/1_4/test)
+>dans les prochains jours (pour les formulaires, l'utilisateur, le cache, ...).
+
+Exécution des tests fonctionnels
+--------------------------------
+
+Comme pour les tests unitaires, le lancement des tests fonctionnels peut être
+fait en exécutant le fichier de test directement :
+
+    $ php test/functional/frontend/categoryActionsTest.php
+
+Ou en utilisant la tâche `test:functional` :
+
+    $ php symfony test:functional frontend categoryActions
+
+![Tests par ligne de commande](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
+
+Données de test
+---------------
+
+Comme pour les tests unitaires ##ORM##, nous avons besoin de charger des données de test, chaque fois
+que nous lançons un test fonctionnel. On peut réutiliser le code que nous avons écrit hier :
+
+    [php]
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new sfTestFunctional(new sfBrowser());
+<propel>
+    $loader = new sfPropelData();
+    $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+Le chargement des données dans un test fonctionnel est un peu plus facile que pour les tests
+unitaires car la base de données a déjà été initialisée par le script de démarrage.
+
+Comme pour les tests unitaires, nous n'allons pas copier et coller cet extrait de code dans
+chaque fichier de test, mais nous allons plutôt créer notre propre classe fonctionnelle qui
+hérite de `sfTestFunctional` :
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function loadData()
+      {
+<propel>
+        $loader = new sfPropelData();
+        $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+        return $this;
+      }
+    }
+
+Ecriture des tests fonctionnels
+-------------------------------
+
+Ecrire des tests fonctionnels, c'est comme jouer un scénario dans un navigateur. Nous avons
+déjà écrit tous les scénarios que nous avons besoin de tester lors des histoires de la journée 2.
+
+D'abord, nous allons tester la page d'accueil Jobeet en éditant le fichier de test
+`jobActionsTest.php`. Remplacez le code par ce qui suit :
+
+### Les emplois expirés ne sont pas affichés
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->info('1 - The homepage')->
+      get('/')->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->begin()->
+        info('  1.1 - Expired jobs are not listed')->
+        checkElement('.jobs td.position:contains("expired")', false)->
+      end()
+    ;
+
+Comme avec `lime`, un message d'information peut être insérée en appelant la
+méthode `info()` pour rendre la sortie plus lisible. Pour vérifier l'exclusion des
+emplois expirés depuis la page d'accueil, nous vérifions que le ~sélecteur CSS~ `.jobs
+td.position:contains("expired")` ne correspond pas nulle part dans le contenu HTML de la
+réponse (n'oubliez pas que dans les fichiers fixtures, le seul emploi que nous avons expiré
+contient "expired" dans la position). Lorsque le deuxième argument de la méthode
+`checkElement()` est à 'true', la méthode teste l'existence de noeuds qui
+correspondent au sélecteur CSS.
+
+>**TIP**
+>La méthode `checkElement()` est capable d'interpréter la plupart des sélecteurs CSS3 valides.
+
+### Seulement n emplois sont affichés pour une catégorie
+
+Ajoutez le code suivant à la fin du fichier de test :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $max = sfConfig::get('app_max_jobs_on_homepage');
+
+    $browser->info('1 - The homepage')->
+      get('/')->
+      info(sprintf('  1.2 - Only %s jobs are listed for a category', $max))->
+      with('response')->
+        checkElement('.category_programming tr', $max)
+    ;
+
+La méthode `checkElement()` peut également vérifier que le sélecteur CSS correspond à 'n'
+noeuds dans le document en passant un entier comme second argument.
+
+### Une catégorie a un lien vers la page catégorie seulement si il y a plusieurs emplois
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->info('1 - The homepage')->
+      get('/')->
+      info('  1.3 - A category has a link to the category page only if too many jobs')->
+      with('response')->begin()->
+        checkElement('.category_design .more_jobs', false)->
+        checkElement('.category_programming .more_jobs')->
+      end()
+    ;
+
+Dans ces tests, nous vérifions qu'il n'y a pas de lien "more jobs" pour la catégorie
+design (`.category_design .more_jobs` n'existe pas), et qu'il existe un lien
+"more jobs" pour la catégorie programmation (`.category_programming
+.more_jobs` existe).
+
+### Les emplois sont triés par date
+
+    [php]
+<propel>
+    // most recent job in the programming category
+    $criteria = new Criteria();
+    $criteria->add(JobeetCategoryPeer::SLUG, 'programming');
+    $category = JobeetCategoryPeer::doSelectOne($criteria);
+
+    $criteria = new Criteria();
+    $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::GREATER_THAN);
+    $criteria->add(JobeetJobPeer::CATEGORY_ID, $category->getId());
+    $criteria->addDescendingOrderByColumn(JobeetJobPeer::CREATED_AT);
+
+    $job = JobeetJobPeer::doSelectOne($criteria);
+</propel>
+<doctrine>
+    $q = Doctrine_Query::create()
+      ->select('j.*')
+      ->from('JobeetJob j')
+      ->leftJoin('j.JobeetCategory c')
+      ->where('c.slug = ?', 'programming')
+      ->andWhere('j.expires_at > ?', date('Y-m-d', time()))
+      ->orderBy('j.created_at DESC');
+
+    $job = $q->fetchOne();
+</doctrine>
+
+    $browser->info('1 - The homepage')->
+      get('/')->
+      info('  1.4 - Jobs are sorted by date')->
+      with('response')->begin()->
+        checkElement(sprintf('.category_programming tr:first a[href*="/%d/"]', $job->getId()))->
+      end()
+    ;
+
+Pour tester si les emplois sont effectivement triés par date, nous devons vérifier que le
+premier emploi figurant sur la page d'accueil est celui que nous attendons. Cela peut être fait
+en vérifiant que l'URL contient la ~clé primaire|Clé primaire~ prévue. Comme la clé primaire
+peut changer entre les exécutions, nous avons besoin d'obtenir l'objet ##ORM## du
+premier de la base de données.
+
+Même si le test fonctionne tel quel, nous avons besoin de refactoriser un peu le code,
+car l'obtention du premier emploi de la catégorie programmation peut être réutilisé ailleurs
+dans nos tests. Nous ne voulons pas déplacer le code de la couche du Modèle car le code est le
+test spécifique. Au lieu de cela, nous allons déplacer le code, que nous avons créé plus tôt,
+de la classe `JobeetTestFunctional`. Cette classe se comporte comme une ~classe de testeur
+fonctionnel|Testeurs~ d'un domaine spécifique pour Jobeet :
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function getMostRecentProgrammingJob()
+      {
+<propel>
+        // most recent job in the programming category
+        $criteria = new Criteria();
+        $criteria->add(JobeetCategoryPeer::SLUG, 'programming');
+        $category = JobeetCategoryPeer::doSelectOne($criteria);
+
+        $criteria = new Criteria();
+        $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::GREATER_THAN);
+        $criteria->add(JobeetJobPeer::CATEGORY_ID, $category->getId());
+        $criteria->addDescendingOrderByColumn(JobeetJobPeer::CREATED_AT);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->select('j.*')
+          ->from('JobeetJob j')
+          ->leftJoin('j.JobeetCategory c')
+          ->where('c.slug = ?', 'programming');
+        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        return $q->fetchOne();
+</doctrine>
+      }
+
+      // ...
+    }
+
+Vous pouvez maintenant remplacer le code de test précédent par le suivant :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->info('1 - The homepage')->
+      get('/')->
+      info('  1.4 - Jobs are sorted by date')->
+      with('response')->begin()->
+        checkElement(sprintf('.category_programming tr:first a[href*="/%d/"]',
+          $browser->getMostRecentProgrammingJob()->getId()))->
+      end()
+    ;
+
+### Chaque emploi sur la page d'accueil est cliquable
+
+    [php]
+    $browser->info('2 - The job page')->
+      get('/')->
+
+      info('  2.1 - Each job on the homepage is clickable and give detailed information')->
+      click('Web Developer', array(), array('position' => 1))->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'show')->
+        isParameter('company_slug', 'sensio-labs')->
+        isParameter('location_slug', 'paris-france')->
+        isParameter('position_slug', 'web-developer')->
+        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+      end()
+    ;
+
+Pour tester le lien d'un emploi sur la page d'accueil, nous simulons un clic sur le text
+"Web Developer". Comme il y en a plusieurs sur la page, nous avons explicitement demandé au
+navigateur de cliquer sur le premier (`array('position' => 1)`).
+
+Chaque paramètre de la requête est ensuite testée pour s'assurer que le routage
+a fait son travail correctement.
+
+Apprendre par l'exemple
+-----------------------
+
+Dans cette section, nous avons fourni tout le code nécessaire pour tester les pages
+emploi et catégorie. Lisez le code avec soin car vous apprendrez quelques nouveaux trucs :
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function loadData()
+      {
+<propel>
+        $loader = new sfPropelData();
+        $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</propel>
+<doctrine>
+        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+</doctrine>
+
+        return $this;
+      }
+
+      public function getMostRecentProgrammingJob()
+      {
+<propel>
+        // most recent job in the programming category
+        $criteria = new Criteria();
+        $criteria->add(JobeetCategoryPeer::SLUG, 'programming');
+        $category = JobeetCategoryPeer::doSelectOne($criteria);
+
+        $criteria = new Criteria();
+        $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::GREATER_THAN);
+        $criteria->addDescendingOrderByColumn(JobeetJobPeer::CREATED_AT);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->select('j.*')
+          ->from('JobeetJob j')
+          ->leftJoin('j.JobeetCategory c')
+          ->where('c.slug = ?', 'programming');
+        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        return $q->fetchOne();
+</doctrine>
+      }
+
+      public function getExpiredJob()
+      {
+<propel>
+        // expired job
+        $criteria = new Criteria();
+        $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::LESS_THAN);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+</propel>
+<doctrine>
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j')
+          ->where('j.expires_at < ?', date('Y-m-d', time()));
+
+        return $q->fetchOne();
+</doctrine>
+      }
+    }
+
+    // test/functional/frontend/jobActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->info('1 - The homepage')->
+      get('/')->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->begin()->
+        info('  1.1 - Expired jobs are not listed')->
+        checkElement('.jobs td.position:contains("expired")', false)->
+      end()
+    ;
+
+    $max = sfConfig::get('app_max_jobs_on_homepage');
+
+    $browser->info('1 - The homepage')->
+      info(sprintf('  1.2 - Only %s jobs are listed for a category', $max))->
+      with('response')->
+        checkElement('.category_programming tr', $max)
+    ;
+
+    $browser->info('1 - The homepage')->
+      get('/')->
+      info('  1.3 - A category has a link to the category page only if too many jobs')->
+      with('response')->begin()->
+        checkElement('.category_design .more_jobs', false)->
+        checkElement('.category_programming .more_jobs')->
+      end()
+    ;
+
+    $browser->info('1 - The homepage')->
+      info('  1.4 - Jobs are sorted by date')->
+      with('response')->begin()->
+        checkElement(sprintf('.category_programming tr:first a[href*="/%d/"]', $browser->getMostRecentProgrammingJob()->getId()))->
+      end()
+    ;
+
+    $browser->info('2 - The job page')->
+      info('  2.1 - Each job on the homepage is clickable and give detailed information')->
+      click('Web Developer', array(), array('position' => 1))->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'show')->
+        isParameter('company_slug', 'sensio-labs')->
+        isParameter('location_slug', 'paris-france')->
+        isParameter('position_slug', 'web-developer')->
+        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+      end()->
+
+      info('  2.2 - A non-existent job forwards the user to a 404')->
+      get('/job/foo-inc/milano-italy/0/painter')->
+      with('response')->isStatusCode(404)->
+
+      info('  2.3 - An expired job page forwards the user to a 404')->
+      get(sprintf('/job/sensio-labs/paris-france/%d/web-developer', $browser->getExpiredJob()->getId()))->
+      with('response')->isStatusCode(404)
+    ;
+
+    // test/functional/frontend/categoryActionsTest.php
+    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+
+    $browser = new JobeetTestFunctional(new sfBrowser());
+    $browser->loadData();
+
+    $browser->info('1 - The category page')->
+      info('  1.1 - Categories on homepage are clickable')->
+      get('/')->
+      click('Programming')->
+      with('request')->begin()->
+        isParameter('module', 'category')->
+        isParameter('action', 'show')->
+        isParameter('slug', 'programming')->
+      end()->
+
+      info(sprintf('  1.2 - Categories with more than %s jobs also have a "more" link', sfConfig::get('app_max_jobs_on_homepage')))->
+      get('/')->
+      click('27')->
+      with('request')->begin()->
+        isParameter('module', 'category')->
+        isParameter('action', 'show')->
+        isParameter('slug', 'programming')->
+      end()->
+
+      info(sprintf('  1.3 - Only %s jobs are listed', sfConfig::get('app_max_jobs_on_category')))->
+      with('response')->checkElement('.jobs tr', sfConfig::get('app_max_jobs_on_category'))->
+
+      info('  1.4 - The job listed is paginated')->
+      with('response')->begin()->
+        checkElement('.pagination_desc', '/32 jobs/')->
+        checkElement('.pagination_desc', '#page 1/2#')->
+      end()->
+
+      click('2')->
+      with('request')->begin()->
+        isParameter('page', 2)->
+      end()->
+      with('response')->checkElement('.pagination_desc', '#page 2/2#')
+    ;
+
+Débogage des tests fonctionnels
+-------------------------------
+
+Parfois, un test fonctionnel échoue. Comme symfony simule un navigateur, sans aucune
+interface graphique, cela peut être difficile pour diagnostiquer le problème. Heureusement,
+symfony prévoit la méthode `~debug|Debogage~()` pour afficher l'entête de la réponse
+et le contenu :
+
+    [php]
+    $browser->with('response')->debug();
+
+La méthode `debug()` peut être inséré n'importe où dans un bloc de testeur de `response`
+et mettra fin à l'exécution de script.
+
+Validation des tests fonctionnels
+---------------------------------
+
+La tâche `test:functional` peut aussi être utilisée pour lancer tous les tests
+fonctionnels d'une application :
+
+    $ php symfony test:functional frontend
+
+La tâche renvoie une seule ligne pour chaque fichier de test :
+
+![Validation des tests fonctionnels](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
+
+Validation des tests
+--------------------
+
+Comme vous pouvez vous y attendre, il existe aussi une tâche pour lancer tous les tests
+pour un projet (unitaires et fonctionnels) :
+
+    $ php symfony test:all
+
+![Validation des tests](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
+
+Quand vous avez une grande série de test, cela peut prendre beaucoup de temps pour lancer
+tous les tests à chaque fois que vous effectuez un changement, surtout si certains tests échouent.
+Car chaque fois que vous fixer un test, vous devez exécuter la suite des tests à nouveau pour
+vous assurer que vous n'avez pas cassé autre chose. Mais tant que ces tests ne sont pas fixés,
+il est inutile de re-exécuter toutes les autres tests. La tâche `test:all` a une option
+`--only-failed` qui force la tâche à ré-exécuter seulement les tests qui ont échoué
+au cours de l'exécution précédente :
+
+    $ php symfony test:all --only-failed
+
+La première fois que vous exécutez la tâche, tous les tests sont exécutés comme d'habitude.
+Mais pour les séries de tests suivants, seuls les tests qui ont échoués la dernière fois
+sont exécutés. Comme vous corriger votre code, certains tests vont passer, et seront supprimés
+lors des prochains passages. Lorsque tous les tests passent, la suite complète des tests
+est exécutée ... Vous pouvez ensuite nettoyer et recommencer.
+
+>**TIP**
+>Si vous souhaitez intégrer votre suite de tests dans un processus d'intégration
+>continue, utilisez l'option `--xml` pour forcer la tâche `test:all` à générer une
+>sortie XML compatible JUnit.
+>
+>      $ php symfony test:all --xml=log.xml
+
+À demain
+--------
+
+Cela termine notre tour des outils de test de symfony. Vous n'avez aucune excuse
+pour ne plus tester vos applications ! Avec le framework lime et le framework de test
+fonctionnel, symfony fournit des outils puissants pour vous aider à écrire des tests
+avec peu d'effort.
+
+Nous n'avons fait que gratter la surface des tests fonctionnels. A partir de maintenant,
+chaque fois que nous mettrons en place une fonctionnalité, nous allons aussi écrire les tests
+pour apprendre plus de fonctionnalités du framework de test.
+
+Demain, nous parlerons encore d'une autre grande caractéristique de symfony: le framework de
+formulaire.
+
+__ORM__
