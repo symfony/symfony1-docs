@@ -1,0 +1,389 @@
+Chapter 8 - Internationalization and Localization
+=================================================
+
+A lot of popular Web applications are available in several languages, and sometimes, they are even customized based on the user culture. Symfony comes with a built-in framework that eases the management of these features (see chapter "[I18n And L10n](http://www.symfony-project.org/book/1_2/13-I18n-and-L10n)" (`http://www.symfony-project.org/book/1_2/13-I18n-and-L10n`) of the symfony book).
+
+The form framework also comes with built-in support for the user interface translation and provides an easy way to manage internationalized objects.
+
+Form Internationalization
+-------------------------
+
+A symfony form is internationalizable by default. The translation of the **labels**, the **help texts**, and the **errors messages** can be done by editing the translation files, be they in the `XLIFF`, `gettext`, or any other symfony supported format.
+
+Listing 8-1 shows the contact form we have developed in the previous chapters.
+
+Listing 8-1 - Contact Form
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'  => new sfWidgetFormInputText(), // the default label is "Name"
+          'email' => new sfWidgetFormInputText(), // the default label is "Email"
+          'body'  => new sfWidgetFormTextarea(),  // the default label is "Body"
+        ));
+
+        // Change the email widget label
+        $this->widgetSchema->setLabel('email', 'Email address');
+      }
+    }
+
+We can now define the label translations in the `XLIFF` file as shown in Listing 8-2 for the french language.
+
+Listing 8-2 - XLIFF translation file
+
+    [xml]
+    // apps/frontend/i18n/messages.fr.xml
+    <?xml version="1.0" ?>
+    <xliff version="1.0">
+      <file original="global" source-language="en" datatype="plaintext">
+        <body>
+          <trans-unit>
+            <source>Name</source>
+            <target>Nom</target>
+          </trans-unit>
+          <trans-unit>
+            <source>Email address</source>
+            <target>Adresse email</target>
+          </trans-unit>
+          <trans-unit>
+            <source>Body</source>
+            <target>Message</target>
+          </trans-unit>
+        </body>
+      </file>
+    </xliff>
+
+### Specify the catalogue to use for translations
+
+If you use the catalogue feature of the symfony i18n framework (`http://www.symfony-project.org/book/1_2/13-I18n-and-L10n#chapter_13_sub_managing_dictionaries`), you can bind a form to a given catalogue. In Listing 8-3, we associate the `ContactForm` form with the `contact_form` catalogue. So, the form element translations will be looked for in the `contact_form.fr.xml` file.
+
+Listing 8-3 - Translation Catalogue Customization
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('contact_form');
+      }
+    }
+
+>**Note**
+>The usage of catalogues allows a better organization of your translations by using one file per form for example.
+
+### Error Messages Internationalization
+
+Sometimes, the error messages embed the value submitted by the user (for example, "The email address user@domain is not valid."). We have already seen in Chapter 2 that this can be done easily in the form class by defining customized error messages and using references to the user submitted values. These references follow the `%parameter_name%` pattern.
+
+The Listing 8-4 shows how to apply this principle to the `name` field of the contact form.
+
+Listing 8-4 - Error Messages Internationalization
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+        
+        $this->validatorSchema['name'] = new sfValidatorEmail(
+          array('min_length' => 2, 'max_length' => 45),
+          array('min_length' => 'Name "%value%" must be at least %min_length% characters.',
+                'max_length' => 'Name "%value%" must not exceed %max_length% characters.',
+          ),
+        );
+      }
+    }
+
+We can now translate these error messages by editing the XLIFF file as shown in Listing 8-5.
+
+Listing 8-5 - XLIFF Translation File for Error Messages
+
+    [xml]
+    <trans-unit>
+      <source>Name "%value%" must be at least %min_length% characters</source>
+      <target>Le nom "%value%" doit comporter un minimum de %min_length% caractères</target>
+    </trans-unit>
+    <trans-unit>
+      <source>Name "%value%" must not exceed %max_length% characters</source>
+      <target>Le nom "%value%" ne peut comporter plus de %max_length% caractères</target>
+    </trans-unit>
+
+Customization of the Translation object
+---------------------------------------
+
+If you want to use the symfony form framework without the symfony i18n framework, you need to provide your own *translation object*.
+
+A translation object is just a *callable PHP*. It can be one of the following three things:
+
+  * a string representing a function name, like `my_function`
+
+  * an array with a reference to a class instance and the name of one of its methods, like `array($anObject, 'oneOfItsMethodsName')`
+
+  * a `sfCallable` instance. This class encapsulate a PHP callable in a consistent way.
+
+>**Note**
+>A PHP callable is a reference to a function or a method instance. It is also a PHP variable that returns `true` when passed to the `is_callable()` function.
+
+Let's take an example. You have to migrate a project which already has its own internationalization mechanism provided by the class show in Listing 8-6.
+
+Listing 8-6 - Custom I18N class
+
+    [php]
+    class myI18n
+    {
+      static protected $default_culture = 'en';
+      static protected $messages = array('fr' => array(
+        'Name'    => 'Nom',
+        'Email'   => 'Courrier électronique',
+        'Subject' => 'Sujet',
+        'Body'    => 'Message',
+      )); 
+
+      static public function translateText($text)
+      {
+        $culture = isset($_SESSION['culture']) ? $_SESSION['culture'] : self::$default_culture; 
+        if (array_key_exists($culture, self::$messages)
+            && array_key_exists($text, self::$messages[$culture]))
+        {
+          return self::$messages[$_SESSION['culture']][$text];
+        }
+        return $text;
+      }
+    }
+
+    // Class usage
+    $myI18n = new myI18n();
+
+    $_SESSION['culture'] = 'en';
+    echo $myI18n->translateText('Subject'); // => display "Subject"
+
+    $_SESSION['culture'] = 'fr';
+    echo $myI18n->translateText('Subject'); // => display "Sujet"
+
+Each form can define its very own callable which will manage the internationalization of the form elements as shown in Listing 8-7.
+
+Listing 8-7 - Overriding of the Internationalization Method for a Form
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+        $this->widgetSchema->getFormFormatter()->setTranslationCallable(array(new myI18n(), 'translateText'));
+      }
+    }
+
+### Translation Callable Accepted Parameters
+
+The translation callable can take up to three arguments :
+
+  * the **text to translate**;
+
+  * an **associative array** of arguments to replace within the original text, typically to replace dynamic arguments as we have seen previously in this chapter;
+
+  * a **catalogue name** to use when translating the text.
+
+Here is the call used by the `sfFormWidgetSchemaFormatter::translate()` method to call the translation callable:
+
+    [php]
+    return call_user_func(self::$translationCallable, $subject, $parameters, $catalogue);
+
+The `self::$translationCallable` is the reference to the translation callable. So, the previous code is equivalent to:
+
+    [php]
+    $myI18n->translateText($subject, $parameters, $catalogue);
+
+Here is the updated version of the `MyI18n` class that supports those extra arguments:
+
+    [php]
+    class myI18n
+    {
+      static protected $default_culture = 'en';
+      static protected $messages = array('fr' => array(
+        'messages' => array(
+          'Name'    => 'Nom',
+          'Email'   => 'Courrier électronique',
+          'Subject' => 'Sujet',
+          'Body'    => 'Message',
+        ),
+      ));
+
+      static public function translateText($text, $arguments = array(), $catalogue = 'messages')
+      {
+        $culture = isset($_SESSION['culture']) ? $_SESSION['culture'] : self::$default_culture; 
+        if (array_key_exists($culture, self::$messages) &&
+            array_key_exists($messages, self::$messages[$culture] &&
+            array_key_exists($text, self::$messages[$culture][$messages]))
+        {   
+          $text = self::$messages[$_SESSION['culture']][$messages][$text];
+          $text = strtr($text, $arguments);
+        }   
+        return $text;
+      }
+    }
+
+>**SIDEBAR**
+>Why do we use the `sfWidgetFormSchemaFormatter` to customize the Translation Process?
+>
+>As we have seen in Chapter 2, the form framework is based on the MVC architecture and the `sfWidgetFormSchemaFormatter` class belongs to the View layer. This class is responsible for all the text rendering, so it can intercept all the text strings and translate them on the fly.
+
+Propel Objects Internationalization
+-----------------------------------
+
+The form framework has built-in support for Propel objects that are internationalized. Let's take an internationalized model example to illustrate the way it works:
+
+    propel:
+      article:
+        id:
+        author:     varchar(255)
+        created_at:
+      article_i18n:
+        title:      varchar(255)
+        content:    longvarchar
+
+You can generate the Propel classes and the related form classes with the following commands:
+
+    $ php symfony build:model
+    $ php symfony build:forms
+
+Those commands generate some files in your symfony project:
+
+    lib/
+      form/
+        ArticleForm.class.php
+        ArticleI18nForm.class.php
+        BaseFormPropel.class.php
+      model/
+        Article.php
+        ArticlePeer.php
+        ArticleI18n.php
+        ArticleI18nPeer.php
+
+Listing 8-8 shows how to configure the `ArticleForm` to be able to edit the French and the English version of the article in the same form.
+
+Listing 8-8 - I18n forms for an internationalized Propel Object
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $this->embedI18n(array('en', 'fr'));
+      }
+    }
+
+You can also customize the language labels of the form by adding the following code to the `configure()` method as shown in Listing 8-9.
+
+Listing 8-9 - Language Labels Customizations
+
+    [php]
+    $this->widgetSchema->setLabel('en', 'English');
+    $this->widgetSchema->setLabel('fr', 'French');
+
+Figure 8-1 - Internationalized Propel Form
+
+![Internationalized Propel Form](/images/forms_book/en/08_01.png "Internationalized Propel Form")
+
+That's all there is to it. When you call the `save()` method of the form object, the associated Propel object and all the i18n objects are saved automatically.
+
+>**SIDEBAR**
+>How to pass the User Culture to a Form?
+>
+>If you want to bind a form to the current culture of the user, you can pass an optional `culture` option when you create the form:
+>
+>     [php]
+>     class articleActions extends sfActions
+>     {
+>       public function executeCreate($request)
+>       {
+>         $this->form = new ArticleForm(null, array('culture' => $this->getUser()->getCulture()));
+>
+>         if ($request->isMethod('post') && $this->form->bindAndSave($request->getParameter('article')))
+>         {
+>           $this->redirect('article/created');
+>         }
+>       }
+>     }
+>
+>In the `ArticleForm` class, you can now get the value from the `options` array:
+>
+>     [php]
+>     class ArticleForm extends BaseArticleForm
+>     {
+>       public function configure()
+>       {
+>         $this->embedI18n(array($this->getCurrentCulture()));
+>       }
+>
+>       public function getCurrentCulture()
+>       {
+>         return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+>       }
+>     }
+
+Localized Widgets
+-----------------
+
+The symfony form framework is bundled with some widgets that are i18n "aware". They can be used to localize some widgets according to the user culture.
+
+### Dates selectors
+
+Here are the available widgets to localize a date:
+
+  * The `sfWidgetFormI18nDate` widget displays inputs for a date (day, month, year):
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nDate(array('culture' => 'fr'));
+
+    You can also define the display format of the month, thanks to the `month_format` option which can take three different values:
+
+     * `name` to display the name of the month (the default)
+     * `short_name` to display the abbreviated name of the month
+     * `number` to display the number of the month (from 1 to 12)
+
+  * The `sfWidgetFormI18nTime` widget displays input for a time (hours, minutes, and seconds):
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nTime(array('culture' => 'fr'));
+
+  * The `sfWidgetFormI18nDateTime` widget displays inputs for a date and a time:
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nDateTime(array('culture' => 'fr'));
+
+### Country selector
+
+The `sfWidgetFormI18nChoiceCountry` widget displays a select box filled with a list of countries.
+The country names are translated in the given language:
+
+    [php]
+    $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
+
+You can also restrict the countries in the select box, thanks to the `countries` option:
+
+    [php]
+    $countries = array('fr', 'en', 'es', 'de', 'nl');
+    $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture'   => 'fr',
+                                                                             'countries' => $countries));
+
+### Culture selector
+
+The `sfWidgetFormI18nChoiceLanguage` widget displays a select box filled with a list of languages.
+The language names are translated in the given language:
+
+    [php]
+    $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'fr'));
+
+You can also restrict the languages in the select box, thanks to the `languages` option:
+
+    [php]
+    $languages = array('fr', 'en', 'es', 'de', 'nl');
+    $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture'   => 'fr',
+                                                                               'languages' => $languages));
