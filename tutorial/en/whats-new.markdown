@@ -147,7 +147,7 @@ only if the `multiple` option is `true`:
 
 The following validators have been added:
 
- * `sfValidatorI18nTimezone`
+ * `sfValidatorI18nChoiceTimezone`
 
 ### Default Error Messages
 

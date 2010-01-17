@@ -149,7 +149,7 @@ l'opzione `multiple` è `true`:
 
 Sono stati aggiunti i seguenti validatori:
 
- * `sfValidatorI18nTimezone`
+ * `sfValidatorI18nChoiceTimezone`
 
 ### Messaggi di Errore Predefiniti
 
