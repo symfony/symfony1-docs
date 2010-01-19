@@ -1,0 +1,826 @@
+Jour 11 : Testez votre formulaire
+=================================
+
+Hier, nous avons créé notre premier formulaire avec symfony. Les gens sont maintenant en mesure de
+publier un nouvel emploi dans Jobeet mais nous avons manqué de temps pour ajouter quelques tests.
+
+C'est ce que nous ferons aujourd'hui. En chemin, nous en apprendrons également plus sur le
+framework de formulaire.
+
+>**SIDEBAR**
+>Utilisation du framework de formulaire sans symfony
+>
+>Les composants du framework symfony sont assez ~découplés|Découplage~. Cela signifie que la
+>plupart d'entre eux peuvent être utilisés sans utiliser l'ensemble du framework MVC. C'est le cas
+>pour le framework de formulaire, qui n'a pas de dépendance sur symfony. Vous pouvez l'utiliser dans
+>n'importe quelle application PHP en prenant les répertoires `lib/form/`, `lib/widgets/` et
+>`lib/validators/`.
+>
+>Un autre composant réutilisable est le framework de routage. Copiez le répertoire
+>`lib/routing/` dans votre projet non-symfony, et profitez de jolies URL gratuitement.
+>
+>Les composants qui sont indépendants de symfony forment la
+>**~plateforme de symfony|Plateforme de symfony~**:
+>
+>![La plateforme de symfony](http://www.symfony-project.org/images/jobeet/1_4/11/platform.png)
+
+Soumission du formulaire
+------------------------
+
+Ouvrons le fichier `jobActionsTest` pour ajouter des ~test|Test~s fonctionnels à la
+création d'emploi et au processus de validation.
+
+A la fin du fichier, ajoutez le code suivant pour obtenir la page de création d'emploi :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->info('3 - Post a Job page')->
+      info('  3.1 - Submit a Job')->
+
+      get('/job/new')->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'new')->
+      end()
+    ;
+
+Nous avons déjà utilisé la méthode `click()` pour simuler des clics sur les liens. La
+même méthode `click()` peut être utilisée pour soumettre un ~formulaire|Formulaires~.
+Pour un formulaire, vous pouvez transmettre les valeurs à soumettre pour chaque champ en
+deuxième argument de la méthode. Comme un vrai navigateur, l'objet navigateur va fusionner
+les valeurs par défaut du formulaire avec les valeurs soumises.
+
+Mais pour passer les valeurs des champs, nous avons besoin de connaître leurs noms. Si
+vous ouvrez le code source ou utilisez la fonctionnalité "Formulaires > Afficher les détails
+du formulaire" de la barre d'outils web de Firefox, vous verrez que le nom du champ `company`
+est `jobeet_job[company]`.
+
+>**NOTE**
+>Lorsque PHP rencontre un champ de saisie avec un nom comme `jobeet_job[company]`, il le
+>convertit automatiquement en un tableau nommé `jobeet_job`.
+
+Pour rendre les choses un peu plus propre, nous allons changer le format de `job[%s]`
+en ajoutant le code suivant à la fin de la méthode `configure()` de
+`JobeetJobForm` :
+
+    [php]
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    $this->widgetSchema->setNameFormat('job[%s]');
+
+Après ce changement, le nom de `company` devrait être `job[company]` dans votre
+navigateur. Il est maintenant temps de cliquer sur le bouton "Preview your job" et
+de passer les valeurs valides au formulaire :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->info('3 - Post a Job page')->
+      info('  3.1 - Submit a Job')->
+
+      get('/job/new')->
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'new')->
+      end()->
+
+      click('Preview your job', array('job' => array(
+        'company'      => 'Sensio Labs',
+        'url'          => 'http://www.sensio.com/',
+        'logo'         => sfConfig::get('sf_upload_dir').'/jobs/sensio-labs.gif',
+        'position'     => 'Developer',
+        'location'     => 'Atlanta, USA',
+        'description'  => 'You will work with symfony to develop websites for our customers.',
+        'how_to_apply' => 'Send me an email',
+        'email'        => 'for.a.job@example.com',
+        'is_public'    => false,
+      )))->
+
+      with('request')->begin()->
+        isParameter('module', 'job')->
+        isParameter('action', 'create')->
+      end()
+    ;
+
+Le navigateur simule aussi des ~téléchargements de fichier|Téléchargements de fichier~,
+si vous passez le chemin absolu du fichier à télécharger.
+
+Après la soumission du formulaire, nous avons vérifié que l'action exécutée est `create`.
+
+Le testeur du formulaire
+------------------------
+
+Le formulaire que nous avons soumis doit être valide. Vous pouvez tester cela en
+utilisant le **testeur de formulaire** :
+
+    [php]
+    with('form')->begin()->
+      hasErrors(false)->
+    end()->
+
+Le testeur de formulaire dispose de plusieurs méthodes pour tester l'état du formulaire
+actuel, comme les erreurs.
+
+Si vous commettez une erreur lors de test, et que ce dernier ne passe pas, vous pouvez utiliser
+l'instruction `with('response')->~debug|Debug~()` que nous avons vu pendant le jour 9. Mais il
+vous faudra plonger dans le code HTML généré pour vérifier les messages d'erreur. Ce n'est
+pas vraiment commode. Le testeur de formulaire fournit également une méthode `debug()` qui
+renvoie l'état du formulaire et de tous les messages d'erreur qui lui sont associés :
+
+    [php]
+    with('form')->debug()
+
+Test de redirection
+-------------------
+
+Comme le formulaire est valide, l'emploi aurait dû être créé et l'utilisateur
+~redirigé|Redirection (Test)~ vers la page `show` :
+
+    [php]
+    with('response')->isRedirected()->
+    followRedirect()->
+
+    with('request')->begin()->
+      isParameter('module', 'job')->
+      isParameter('action', 'show')->
+    end()->
+
+Le `isRedirected()` teste si la page a été redirigée et la méthode
+`followRedirect()` suit la redirection.
+
+>**NOTE**
+>La classe du navigateur ne suit pas les redirections automatiquement car vous voudrez
+>peut-être introspecter les objets avant la redirection.
+
+Le testeur de ##ORM##
+---------------------
+
+Finalement, nous voulons tester que l'emploi a été créé dans la base de données et
+vérifier que la colonne `is_activated` est mise à `false` car l'utilisateur ne l'a pas
+encore publié.
+
+Cela peut se faire assez facilement en utilisant un autre ~testeur|Testeurs~, le
+**testeur ##ORM##**. Comme le testeur ##ORM## n'est pas enregistré par défaut,
+ajoutons-le maintenant :
+
+<propel>
+    [php]
+    $browser->setTester('propel', 'sfTesterPropel');
+</propel>
+<doctrine>
+    [php]
+    $browser->setTester('doctrine', 'sfTesterDoctrine');
+</doctrine>
+
+Le testeur ##ORM## fournit la méthode `check()` pour vérifier qu'un ou plusieurs
+objets dans la base de données correspondent à vos critères passée en argument.
+
+    [php]
+<propel>
+    with('propel')->begin()->
+</propel>
+<doctrine>
+    with('doctrine')->begin()->
+</doctrine>
+      check('JobeetJob', array(
+        'location'     => 'Atlanta, USA',
+        'is_activated' => false,
+        'is_public'    => false,
+      ))->
+    end()
+
+<propel>
+Les critères peuvent être un tableau de valeurs comme ci-dessus, ou une instance
+`Criteria` pour les queries les plus complexes. Vous pouvez tester l'existence
+d'objets correspondants aux critères avec un booléen en troisième argument (la valeur par
+défaut est `true`), ou le nombre d'objets correspondants en passant un nombre entier.
+</propel>
+<doctrine>
+Les critères peuvent être un tableau de valeurs comme ci-dessus, ou une instance
+`Doctrine_Query` pour les queries les plus complexes. Vous pouvez tester l'existence
+d'objets correspondants aux critères avec un booléen en troisième argument (la valeur par
+défaut est `true`), ou le nombre d'objets correspondants en passant un nombre entier.
+</doctrine>
+
+Test pour les ~Erreurs~
+-----------------------
+
+La création du ~formulaire|Formulaires~ d'emploi fonctionne comme prévu lorsque nous soumettons des valeurs valides.
+Ajoutons donc un test pour vérifier le comportement lorsque nous soumettons des données non valides :
+
+    [php]
+    $browser->
+      info('  3.2 - Submit a Job with invalid values')->
+
+      get('/job/new')->
+      click('Preview your job', array('job' => array(
+        'company'      => 'Sensio Labs',
+        'position'     => 'Developer',
+        'location'     => 'Atlanta, USA',
+        'email'        => 'not.an.email',
+      )))->
+
+      with('form')->begin()->
+        hasErrors(3)->
+        isError('description', 'required')->
+        isError('how_to_apply', 'required')->
+        isError('email', 'invalid')->
+      end()
+    ;
+
+La méthode `hasErrors()` permet de tester le nombre d'erreurs si un entier est passé.
+La méthode `isError()` teste le code erreur pour un champ donné.
+
+>**TIP**
+>Dans les tests que nous avons écrit pour la soumission de données non-valides , nous
+>n'avons pas re-testé de nouveau le formulaire en entier. Nous avons seulement ajouté des
+>tests pour des choses spécifiques.
+
+Vous pouvez également tester le code ~HTML~ généré afin de vérifier qu'il contient
+les messages d'erreur, mais il n'est pas nécessaire dans notre cas car nous n'avons
+pas personnalisé la présentation de formulaire.
+
+Maintenant, nous avons besoin de tester la barre d'administrateur trouvée sur la page de
+prévisualisation d'emploi. Lorsqu'un emploi n'a pas encore été activé, vous pouvez éditer, supprimer,
+ou publier l'emploi. Pour tester ces trois liens, nous aurons besoin de créer d'abord un emploi.
+Mais c'est beaucoup de copier et coller. Comme je n'aime pas gaspiller des e-arbres, nous allons ajouter
+une méthode de création d'emploi dans la classe `JobeetTestFunctional` :
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function createJob($values = array())
+      {
+        return $this->
+          get('/job/new')->
+          click('Preview your job', array('job' => array_merge(array(
+            'company'      => 'Sensio Labs',
+            'url'          => 'http://www.sensio.com/',
+            'position'     => 'Developer',
+            'location'     => 'Atlanta, USA',
+            'description'  => 'You will work with symfony to develop websites for our customers.',
+            'how_to_apply' => 'Send me an email',
+            'email'        => 'for.a.job@example.com',
+            'is_public'    => false,
+          ), $values)))->
+          followRedirect()
+        ;
+      }
+
+      // ...
+    }
+
+La méthode `createJob()` crée un emploi, suit la redirection et retourne le
+navigateur pour ne pas casser la fluent interface. Vous pouvez également passer un
+tableau de valeurs qui sera fusionnée avec certaines valeurs par défaut.
+
+Forcer la ~méthode HTTP~ d'un lien
+----------------------------------
+
+Le test du lien "Publish" est maintenant plus simple :
+
+    [php]
+    $browser->info('  3.3 - On the preview page, you can publish the job')->
+      createJob(array('position' => 'FOO1'))->
+      click('Publish', array(), array('method' => 'put', '_with_csrf' => true))->
+
+<propel>
+      with('propel')->begin()->
+</propel>
+<doctrine>
+      with('doctrine')->begin()->
+</doctrine>
+        check('JobeetJob', array(
+          'position'     => 'FOO1',
+          'is_activated' => true,
+        ))->
+      end()
+    ;
+
+Si vous vous souvenez du jour 10, le lien "Publish" a été configuré pour être
+appelé avec la méthode HTTP `~PUT|PUT (Méthode HTTP)~`. Comme les navigateurs
+ne comprennent pas les requêtes `PUT`, le helper `link_to()` convertit le lien
+vers un formulaire avec quelques JavaScript. Comme le navigateur de test n'exécute
+pas le code JavaScript, nous avons besoin de forcer la méthode à `PUT` en passant une
+troisième option à la méthode `click()`. En outre, le helper `link_to()` intégre aussi
+un ~jeton CSRF~ que nous avons activé par la protection CSRF durant le jour 1. L'option
+`_with_csrf` simule ce jeton.
+
+Tester le lien "Delete" est assez similaire :
+
+    [php]
+    $browser->info('  3.4 - On the preview page, you can delete the job')->
+      createJob(array('position' => 'FOO2'))->
+      click('Delete', array(), array('method' => 'delete', '_with_csrf' => true))->
+
+<propel>
+      with('propel')->begin()->
+</propel>
+<doctrine>
+      with('doctrine')->begin()->
+</doctrine>
+        check('JobeetJob', array(
+          'position' => 'FOO2',
+        ), false)->
+      end()
+    ;
+
+Les tests comme protection
+--------------------------
+
+Quand un emploi est publié, vous ne pouvez plus le modifier. Même si le lien "Edit"
+ne s'affiche plus sur la page de prévisualisation, ajoutons quelques tests de cette
+exigence.
+
+D'abord, ajoutez un autre argument à la méthode `createJob()` pour permettre la
+publication automatique de l'emploi, et créez une méthode `getJobByPosition()` qui
+renvoie pour un emploi donné sa valeur pour `position` :
+
+    [php]
+    // lib/test/JobeetTestFunctional.class.php
+    class JobeetTestFunctional extends sfTestFunctional
+    {
+      public function createJob($values = array(), $publish = false)
+      {
+        $this->
+          get('/job/new')->
+          click('Preview your job', array('job' => array_merge(array(
+            'company'      => 'Sensio Labs',
+            'url'          => 'http://www.sensio.com/',
+            'position'     => 'Developer',
+            'location'     => 'Atlanta, USA',
+            'description'  => 'You will work with symfony to develop websites for our customers.',
+            'how_to_apply' => 'Send me an email',
+            'email'        => 'for.a.job@example.com',
+            'is_public'    => false,
+          ), $values)))->
+          followRedirect()
+        ;
+
+        if ($publish)
+        {
+          $this->
+            click('Publish', array(), array('method' => 'put', '_with_csrf' => true))->
+            followRedirect()
+          ;
+        }
+
+        return $this;
+      }
+
+<propel>
+      public function getJobByPosition($position)
+      {
+        $criteria = new Criteria();
+        $criteria->add(JobeetJobPeer::POSITION, $position);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+      }
+</propel>
+<doctrine>
+      public function getJobByPosition($position)
+      {
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j')
+          ->where('j.position = ?', $position);
+
+        return $q->fetchOne();
+      }
+</doctrine>
+
+      // ...
+    }
+
+Si un emploi est publié, la page d'édition doit retourner un code erreur ~404|Erreur 404~ :
+
+    [php]
+    $browser->info('  3.5 - When a job is published, it cannot be edited anymore')->
+      createJob(array('position' => 'FOO3'), true)->
+      get(sprintf('/job/%s/edit', $browser->getJobByPosition('FOO3')->getToken()))->
+
+      with('response')->begin()->
+        isStatusCode(404)->
+      end()
+    ;
+
+Mais si vous exécutez les tests, vous n'aurez pas le résultat escompté, car nous
+avons oublié hier d'implémenter cette mesure de ~sécurité|Sécurité~. L'écriture des
+tests est aussi un excellent moyen de découvrir des bogues, car vous avez besoin de
+penser à tous les ~cas limites|Cas limites~.
+
+Résoudre le bogue est simple puisque nous avons juste besoin de transmettre une page
+404 si l'emploi est activé :
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeEdit(sfWebRequest $request)
+    {
+      $job = $this->getRoute()->getObject();
+      $this->forward404If($job->getIsActivated());
+
+      $this->form = new JobeetJobForm($job);
+    }
+
+Le correctif est trivial, mais êtes-vous sûr que tout le reste fonctionne toujours
+comme prévu ? Vous pouvez ouvrir votre navigateur et commencer à tester toutes les
+combinaisons possibles pour accéder à la page d'édition. Mais il y a un moyen plus
+simple : lancez votre suite de tests, si vous avez introduit une ~régression|Régression~,
+symfony va vous le dire tout de suite.
+
+Retour vers le futur dans le test
+---------------------------------
+
+Quand un emploi expire dans moins de cinq jours, ou s'il a déjà expiré,
+l'utilisateur peut étendre la validation de l'emploi pour 30 autres jours à
+compter de la date actuelle.
+
+la date d'expiration est automatiquement réglé lorsque le travail est créé pour 30 jours dans le futur.
+Le test de cette exigence dans un navigateur n'est pas facile, car la date d'expiration est automatiquement
+définie dans 30 jours dans le futur lorsque l'emploi est créé. Ainsi, lors de la récupération de la page emploi,
+le lien n'est pas présent pour prolonger l'emploi. Bien sûr, vous pouvez adapter la date d'expiration dans la base
+de données, ou peaufiner le Template pour afficher en permanence le lien, mais c'est fastidieux et plutôt sensibles
+aux erreurs. Comme vous l'avez déjà deviné, l'écriture de tests nous aidera encore une fois.
+
+Comme toujours, nous avons besoin d'ajouter une nouvelle route pour la première méthode `extend` :
+
+    [yml]
+    # apps/frontend/config/routing.yml
+    job:
+      class:   sfPropelRouteCollection
+      options:
+        model:          JobeetJob
+        column:         token
+        object_actions: { publish: PUT, extend: PUT }
+      requirements:
+        token: \w+
+
+Puis, mettez à jour le lien "Extend" codé dans le partial `_admin` :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/_admin.php -->
+    <?php if ($job->expiresSoon()): ?>
+     - <?php echo link_to('Extend', 'job_extend', $job, array('method' => 'put')) ?> for another <?php echo sfConfig::get('app_active_days') ?> days
+    <?php endif; ?>
+
+Puis, créez l'action `extend` :
+
+    [php]
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeExtend(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+
+      $job = $this->getRoute()->getObject();
+      $this->forward404Unless($job->extend());
+
+<propel>
+      $this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', $job->getExpiresAt('m/d/Y')));
+</propel>
+<doctrine>
+      $this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', $job->getDateTimeObject('expires_at')->format('m/d/Y')));
+</doctrine>
+
+      $this->redirect('job_show_user', $job);
+    }
+
+Comme prévu par l'action, la méthode `extend()` de `JobeetJob` retourne `true`
+si l'emploi a été prolongé ou `false` dans les autres cas :
+
+<propel>
+    [php]
+    // lib/model/JobeetJob.php
+    class JobeetJob extends BaseJobeetJob
+    {
+      public function extend()
+      {
+        if (!$this->expiresSoon())
+        {
+          return false;
+        }
+
+        $this->setExpiresAt(time() + 86400 * sfConfig::get('app_active_days'));
+
+        return $this->save();
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJob.class.php
+    class JobeetJob extends BaseJobeetJob
+    {
+      public function extend()
+      {
+        if (!$this->expiresSoon())
+        {
+          return false;
+        }
+
+        $this->setExpiresAt(date('Y-m-d', time() + 86400 * sfConfig::get('app_active_days')));
+
+        $this->save();
+
+        return true;
+      }
+
+      // ...
+    }
+</doctrine>
+
+Enfin, ajoutez un scénario de test :
+
+    [php]
+    $browser->info('  3.6 - A job validity cannot be extended before the job expires soon')->
+      createJob(array('position' => 'FOO4'), true)->
+      call(sprintf('/job/%s/extend', $browser->getJobByPosition('FOO4')->getToken()), 'put', array('_with_csrf' => true))->
+      with('response')->begin()->
+        isStatusCode(404)->
+      end()
+    ;
+
+    $browser->info('  3.7 - A job validity can be extended when the job expires soon')->
+      createJob(array('position' => 'FOO5'), true)
+    ;
+
+    $job = $browser->getJobByPosition('FOO5');
+<propel>
+    $job->setExpiresAt(time());
+</propel>
+<doctrine>
+    $job->setExpiresAt(date('Y-m-d'));
+</doctrine>
+    $job->save();
+
+    $browser->
+      call(sprintf('/job/%s/extend', $job->getToken()), 'put', array('_with_csrf' => true))->
+      with('response')->isRedirected()
+    ;
+
+<propel>
+    $job->reload();
+    $browser->test()->is(
+      $job->getExpiresAt('y/m/d'),
+      date('y/m/d', time() + 86400 * sfConfig::get('app_active_days'))
+    );
+</propel>
+<doctrine>
+    $job->refresh();
+    $browser->test()->is(
+      $job->getDateTimeObject('expires_at')->format('y/m/d'),
+      date('y/m/d', time() + 86400 * sfConfig::get('app_active_days'))
+    );
+</doctrine>
+
+Ce scénario de test introduit quelques nouveautés :
+
+ * La méthode `call()` récupère une URL avec une méthode différente `GET` ou
+   `POST`
+<propel>
+ * Après que l'emploi a été mis à jour par l'action, nous avons besoin de recharger
+   l'objet local avec `$job->reload()`
+</propel>
+<doctrine>
+ * Après que l'emploi a été mis à jour par l'action, nous avons besoin de recharger
+   l'objet local avec `$job->refresh()`
+</doctrine>
+ * A la fin, nous utilisons l'objet incorporé `lime` directement pour tester
+   la nouvelle date d'expiration.
+
+Sécurité des formulaires
+------------------------
+
+### La magie de la sérialisation des formulaires  !
+
+Les ~formulaire|Formulaires~s ##ORM## sont très faciles à utiliser car ils automatisent
+beaucoup de travail. Par exemple, la sérialisation d'un formulaire pour la base de données
+est aussi simple qu'un appel à `$form->save()`.
+
+Mais comment ça marche ? Fondamentalement, la méthode `save()` suit les étapes
+suivantes:
+
+ * Commence une transaction (car les formulaires imbriqués ##ORM## sont tous sauvés
+   d'un seul coup)
+ * Processe les valeurs soumises (en appelant les méthodes `updateCOLUMNColumn()` si
+   elles existent)
+ * Appelle la méthode `fromArray()` de l'objet ##ORM## pour mettre à jour les valeurs de la colonne
+ * Sauve l'objet vers la base de données
+ * Commit la transaction
+
+### Fonctionnalités de sécurité intégrées
+
+La méthode `fromArray()` prend un tableau de valeurs et met à jour les valeurs des
+colonnes correspondantes. Est-ce que ceci représente un problème de ~sécurité|Sécurité~ ?
+Que faire si quelqu'un essaie de sousmettre une valeur pour une colonne à laquelle il n'a pas
+l'autorisation ? Par exemple, puis-je forcer la colonne `token` ?
+
+Commençons par écrire un test pour simuler une soumission d'un emploi avec un champ `token` :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->
+      get('/job/new')->
+      click('Preview your job', array('job' => array(
+        'token' => 'fake_token',
+      )))->
+
+      with('form')->begin()->
+        hasErrors(7)->
+        hasGlobalError('extra_fields')->
+      end()
+    ;
+
+Lors de la soumission du formulaire, vous devez disposer d'une erreur globale `extra_fields`.
+C'est parce que les formulaires par défaut ne permettent pas que des champs supplémentaires soient
+présents dans les valeurs soumises. C'est aussi pourquoi tous les champs du formulaire doivent avoir
+un validateur associé.
+
+>**TIP**
+>Vous pouvez également soumettre des champs supplémentaires dans le confort de votre navigateur
+>en utilisant des outils comme la barre d'outils Firefox pour les développeurs Web.
+
+Vous pouvez contourner cette mesure de sécurité en mettant l'option `allow_extra_fields`
+à `true` :
+
+    [php]
+    class MyForm extends sfForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->validatorSchema->setOption('allow_extra_fields', true);
+      }
+    }
+
+Le test doit maintenant passer mais la valeur `token` a été sortie des valeurs.
+Donc, vous n'êtes toujours pas en mesure de contourner la mesure de sécurité. Mais si
+vous voulez vraiment la valeur, définissez l'option `filter_extra_fields` à `false` :
+
+    [php]
+    $this->validatorSchema->setOption('filter_extra_fields', false);
+
+>**NOTE**
+>Les tests écrits dans cette section sont uniquement à des fins de démonstration. Vous
+>pouvez maintenant les retirer du projet Jobeet car les tests n'ont pas besoin de valider
+>des caractéristiques de symfony.
+
+### Protection ~XSS~ et ~CSRF~
+
+Durant le jour 1, vous avez appris que la tâche `generate:app` crée une
+application sécurisée par défaut.
+
+Premièrement, elle a activé la protection contre les attaques XSS. Cela signifie que toutes
+les variables utilisées dans les Templates sont échappés par défaut. Si vous essayez de soumettre
+une description d'un emploi avec certaines balises HTML à l'intérieur, vous remarquerez que lorsque
+symfony rend la page des emplois, les balises HTML de la description ne sont pas interprétées,
+mais rendues en texte brut.
+
+Puis, elle a permis la protection CSRF. Quand un jeton CSRF est fixé, tous les
+formulaires intégrent un champ caché `_csrf_token`.
+
+>**TIP**
+>La stratégie d'échapement et le secret CSRF peuvent être modifiés à tout moment
+>en modifiant le fichier de ~configuration|Configuration~ `apps/frontend/config/settings.yml`.
+>Comme pour le fichier `databases.yml`, les paramètres sont configurables par
+>environnement :
+>
+>     [yml]
+>     all:
+>       .settings:
+>         # Form security secret (CSRF protection)
+>         csrf_secret: Unique$ecret
+>
+>         # Output escaping settings
+>         escaping_strategy: true
+>         escaping_method:   ESC_SPECIALCHARS
+
+Les tâches de maintenance
+-------------------------
+
+Même si symfony est un framework web, il est livré avec un outil de ~ligne de
+commande|Ligne de commande~. Vous l'avez déjà utilisé pour créer la structure des
+répertoires par défaut du projet et de l'application, mais aussi pour générer différents
+fichiers pour le modèle. L'ajout d'une nouvelle ~tâche|Tâches~ est plutôt facile car les
+outils utilisés par la ligne de commande de symfony sont intégrés dans un framework.
+
+Lorsqu'un utilisateur crée un emploi, il doit l'activer pour le mettre en ligne. Mais sinon,
+la base de données grandira avec des vieux emplois. Nous allons créer une tâche qui suppriment
+de vieux emplois de la base de données. Cette tâche devra être exécuté régulièrement dans une tâche cron.
+
+    [php]
+    // lib/task/JobeetCleanupTask.class.php
+    class JobeetCleanupTask extends sfBaseTask
+    {
+      protected function configure()
+      {
+        $this->addOptions(array(
+<doctrine>
+          new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application', 'frontend'),
+</doctrine>
+          new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environement', 'prod'),
+          new sfCommandOption('days', null, sfCommandOption::PARAMETER_REQUIRED, '', 90),
+        ));
+
+        $this->namespace = 'jobeet';
+        $this->name = 'cleanup';
+        $this->briefDescription = 'Cleanup Jobeet database';
+
+        $this->detailedDescription = <<<EOF
+    The [jobeet:cleanup|INFO] task cleans up the Jobeet database:
+
+      [./symfony jobeet:cleanup --env=prod --days=90|INFO]
+    EOF;
+      }
+
+      protected function execute($arguments = array(), $options = array())
+      {
+        $databaseManager = new sfDatabaseManager($this->configuration);
+
+<propel>
+        $nb = JobeetJobPeer::cleanup($options['days']);
+        $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
+</propel>
+<doctrine>
+        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
+</doctrine>
+      }
+    }
+
+La configuration des tâches se fait dans la méthode `configure()`. Chaque tâche doit
+avoir un nom unique (`namespace`:`name`), et peut avoir des arguments et des options.
+
+>**TIP**
+>Parcourez les tâches intégrées de symfony (`lib/task/`) pour plus d'exemples d'utilisation.
+
+La tâche `jobeet:cleanup` définit deux options : `--env` et `--days` avec certaines
+valeurs par défaut raisonnables.
+
+L'exécution de la tâche est similaire à l'exécution des autres tâches intégrées de symfony :
+
+    $ php symfony jobeet:cleanup --days=10 --env=dev
+
+<propel>
+Comme toujours, le code de nettoyage de la base de données a été pris
+dans la classe `JobeetJobPeer` :
+
+    [php]
+    // lib/model/JobeetJobPeer.php
+    static public function cleanup($days)
+    {
+      $criteria = new Criteria();
+      $criteria->add(self::IS_ACTIVATED, false);
+      $criteria->add(self::CREATED_AT, time() - 86400 * $days, Criteria::LESS_THAN);
+
+      return self::doDelete($criteria);
+    }
+
+La méthode `doDelete()` supprime les enregistrements de la base de données correspondant
+à l'objet `Criteria` donné. Il peut aussi prendre un tableau de clés primaires.
+</propel>
+<doctrine>
+Comme toujours, le code de nettoyage de la base de données a été pris
+dans la classe `JobeetJobTable` :
+
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    public function cleanup($days)
+    {
+      $q = $this->createQuery('a')
+        ->delete()
+        ->andWhere('a.is_activated = ?', 0)
+        ->andWhere('a.created_at < ?', date('Y-m-d', time() - 86400 * $days));
+
+      return $q->execute();
+    }
+</doctrine>
+
+>**NOTE**
+>Les tâches symfony se comportent bien avec leur environnement, car ils renvoient
+>une valeur en fonction du succès de la tâche. Vous pouvez forcer une valeur de retour
+>en retournant un entier de manière explicite à la fin de la tâche.
+
+À demain
+--------
+
+Les tests sont au cœur de la philosophie et des outils de symfony . Aujourd'hui, nous
+avons encore appris comment exploiter les outils symfony pour rendre le processus de
+développement plus facile, plus rapide et plus important, plus sûr.
+
+Le framework de formulaire symfony offre beaucoup plus que de simples widgets
+et validateurs : il vous donne un moyen simple de tester vos formulaires et assurer
+que vos formulaires sont sécurisés par défaut.
+
+Notre tour des fonctionnalités de symfony ne s'achève pas aujourd'hui. Demain, nous allons
+créer l'application backend pour Jobeet. La création d'une interface backend est un must pour
+la plupart des projets web et Jobeet n'est pas différent. Mais comment allons-nous pouvoir
+développer une telle interface en seulement une heure ? Simple, nous allons utiliser le framework
+admin generator de symfony. Jusque-là, prenez garde.
+
+__ORM__
