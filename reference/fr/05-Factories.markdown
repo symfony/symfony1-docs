@@ -740,6 +740,9 @@ lorsque vous utilisez une classe de cache basée sur la mémoire (`sfAPCCache` p
         level:   err
         loggers: ~
 
+Si vous n'utilisez pas le `sfAggregateLogger`, n'oubliez pas de spécifier la valeur
+`null` pour le paramètre `loggers`.
+
 >**CAUTION**
 >Ce factory est toujours défini, mais la journalisation se produit que si
 >le paramètre `logging_enabled` est à `true`.
