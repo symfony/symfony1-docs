@@ -247,7 +247,7 @@ Por ejemplo, puedes permitir hacer log sobre el sistema de archivos cambiando el
     logger:
       class: sfFileLogger
       param:
-        level: error
+        level: err
         file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 >**NOTE**

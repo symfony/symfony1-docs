@@ -323,7 +323,7 @@ class name to `sfFileLogger`:
     logger:
       class: sfFileLogger
       param:
-        level: error
+        level: err
         file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 >**NOTE**

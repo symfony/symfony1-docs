@@ -238,7 +238,7 @@ symfony のコアオブジェクトをカスタマイズする (別名はファ�
     logger:
       class: sfFileLogger
       param:
-        level: error
+        level: err
         file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 >**NOTE**
