@@ -247,8 +247,9 @@ Por ejemplo, puedes permitir hacer log sobre el sistema de archivos cambiando el
     logger:
       class: sfFileLogger
       param:
-        level: err
-        file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+        level:   err
+        loggers: ~
+        file:    %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 >**NOTE**
 >En el archivo de configuración `factories.yml`, las cadenas de tipo `%XXX%` son reemplazadas con

@@ -326,6 +326,7 @@ nome della classe `sfNoLogger`:
         param:
           level:   err
           loggers: ~
+          file:    %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 Si può ad esempio abilitare il log su filesystem cambiando il nome della
 classe in `sfFileLogger`:

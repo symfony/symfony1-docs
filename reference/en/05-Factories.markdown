@@ -740,6 +740,9 @@ when using a memory-based cache class (`sfAPCCache` for instance).
         level:   err
         loggers: ~
 
+If you don't use the `sfAggregateLogger`, don't forget to specify a `null`
+value for the `loggers` parameter.
+
 >**CAUTION**
 >This factory is always defined, but the logging only occurs if the
 >`logging_enabled` setting is set to `true`.

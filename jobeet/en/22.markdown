@@ -323,8 +323,9 @@ class name to `sfFileLogger`:
     logger:
       class: sfFileLogger
       param:
-        level: err
-        file:  %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+        level:   err
+        loggers: ~
+        file:    %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
 
 >**NOTE**
 >In the `factories.yml` configuration file, `%XXX%` strings are replaced with
