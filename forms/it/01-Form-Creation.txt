@@ -1,0 +1,710 @@
+Capitolo 1 - Creazione di form
+==============================
+
+Un form è composto da campi, che possono essere nascosti, di testo,
+di selezione e di spunta. Questo capitolo introduce la creazione di
+form e la gestione di campi di form usando il framework per i form di symfony.
+
+È richiesto symfony 1.1 per seguire questo libro. Si avrà anche bisogno
+di creare un progetto ed un'applicazione `frontend` per andare avanti.
+Fare riferimento all'introduzione per maggiori informazioni sulla
+creazione di un progetto symfony.
+
+Prima di iniziare
+-----------------
+
+Inizieremo aggiungendo un form di contatto ad un'applicazione symfony.
+
+La Figura 1-1 mostra il form di contatto come viene visto dagli utenti
+che vogliono inviare un messaggio.
+
+Figura 1-1 - Form di contatto
+
+![Form di contatto](http://www.symfony-project.org/images/forms_book/en/01_01.png "Form di contatto")
+
+Creeremo tre campi per questa form: il nome dell'utente, l'email
+dell'utente e il messaggio che l'utente vuole inviare. Mostreremo 
+semplicemente le informazioni inviate nel form per lo scopo di
+questo esercizio, come mostrato in Figura 1-2.
+
+Figura 1-2 - Pagina di ringraziamento
+
+![Pagina di ringraziamento](http://www.symfony-project.org/images/forms_book/en/01_02.png "Pagina di ringraziamento")
+
+Figura 1-3 - Interazione tra l'applicazione e l'utente
+
+![Interazione tra l'applicazione e l'utente](http://www.symfony-project.org/images/forms_book/en/01_03.png "Interazione tra l'applicazione e l'utente")
+
+Widget
+------
+
+### Le classi sfForm e sfWidget
+
+Gli utenti inseriscono le informazioni nei campi che compongono i form.
+In symfony, un form è un oggetto che eredita dalla classe `sfForm`.
+Nel nostro esempio, creeremo una classe `ContactForm` che eredita
+dalla classe `sfForm`.
+
+>**NOTE**
+>`sfForm` è la classe base di tutti i form e rende facile gestire
+>la configurazione ed il ciclo di vita dei propri form.
+
+Si può iniziare a configurare il proprio form aggiungendo **widget**
+usando il metodo `configure()`.
+
+Un **widget** rappresenta un campo di una form. Per il nostro
+esempio, abbiamo bisogno di tre widget che rappresentano i nostri
+tre campi: `name`, `email` e `message`. Il Listato 1-1 mostra la
+prima implementazione della classe `ContactForm`.
+
+Listato 1-1 - Classe `ContactForm` con tre campi
+
+    [php]
+    // lib/form/ContactForm.class.php
+    class ContactForm extends sfForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+      }
+    }
+
+>**NOTE**
+>In questo tutorial, non mostriamo mai l'istruzione di apertura `<?php`
+>negli esempi che contengono solo codice PHP, in modo da ottimizzare
+>lo spazio e salvare un po' di alberi. Ovviamente dovete ricordare
+>sempre di aggiungerla quando create un nuovo file PHP.
+
+I widget sono definiti nel metodo `configure()`. Questo metodo viene
+chiamato automaticamente dal costruttore della classe `sfForm`.
+
+Il metodo `setWidgets()` è usato dai widget nel form. Il metodo
+`setWidgets()` accetta un array associativo in cui le chiavi sono
+i nomi dei campi ed i valori sono gli oggetti widget. Ciascun widget
+è un oggetto che eredita dalla classe `sfWidget`. Per questo
+esempio abbiamo usato due tipi di widget:
+
+  * `sfWidgetFormInput` :  Questo widget rappresenta il campo di testo `input`
+  * `sfWidgetFormTextarea`: Questo widget rappresenta l'area di testo `textarea`
+
+>**NOTE**
+>Per convenzione, salviamo le classi dei form nella cartella `lib/form/`.
+>Si possono salvarle in qualsiasi cartella gestita dal meccanismo
+>di autoloading di symfony, ma, come vedremo dopo, symfony usa la
+>cartella `lib/form/` per generare i form dagli oggetti del modello.
+
+### Mostrare il form
+
+Il nostro form è ora pronto per essere usato. Possiamo creare un
+modulo symfony per mostrare il form:
+
+    [php]
+    $ cd ~/PATH/TO/THE/PROJECT
+    $ php symfony generate:module frontend contact
+
+Nel modulo `contact`, modifichiamo l'azione index per passare un'istanza
+del form al template, come mostrato nel Listato 1-2.
+
+Listato 1-2 - Classe `Actions` del modulo `contact`
+
+    [php]
+    // apps/frontend/modules/contact/actions/actions.class.php
+    class contactActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->form = new ContactForm();
+      }
+    }
+ 
+Quando si crea un form, il metodo `configure()`, definito prima,
+sarà chiamato automaticamente.
+
+Ora abbiamo solo bisogno di creare un template per mostrare il
+form, come mostrato nel Listato 1-3.
+
+Listato 1-3 - Template che mostra il form
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSuccess.php
+    <form action="<?php echo url_for('contact/submit') ?>" method="post">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Un form di symfony gestisce solo i widget che mostrano informazioni
+agli utenti. Nel template `indexSuccess`, la riga `<?php echo $form ?>`
+mostra solo tre campi. Gli altri elementi come il tag `form` ed il
+bottone `submit` devono essere aggiunti dallo sviluppatore. Questo
+potrebbe non sembrare ovvio inizialmente, ma vedremo più avanti quanto
+sia utile e facile inserire i form.
+
+Usare il costrutto `<?php echo $form ?>` è molto utile quando si
+creano e tipizzano i form. Consente allo sviluppatore di concentrarsi
+sulla logica del modello senza preoccuparsi degli aspetti visuali.
+Il Capitolo tre spiegherà come personalizzare il template e la
+visualizzazione del form.
+
+>**NOTE**
+>Quando si mostra un oggetto usando `<?php echo $form ?>`, il motore
+>PHP in realtà mostrerà la rappresentazione testuale dell'oggetto
+>`$form`. Per convertire l'oggetto in una stringa, PHP cerca di
+>eseguire il metodo magico `__toString()`. Ciascun widget implementa
+>tale metodo magico per convertire l'oggetto in codice HTML.
+>Richiamare `<?php echo $form ?>` è equivalente a chiamare
+>`<?php echo $form->__toString() ?>`.
+
+Possiamo ora vedere il form in un browser (Figura 1-4) e verificare
+il risultato inserendo l'indirizzo dell'azione `contact/index`
+(`/frontend_dev.php/contact`).
+
+Figura 1-4 - Form di contatto generato
+
+![Form di contatto generato](http://www.symfony-project.org/images/forms_book/en/01_04.png "Form di contatto generato")
+
+Il Listato 1-4 mostra il codice generato dal template.
+
+Listato 1-4 - Codice generato dal template
+
+    <form action="/frontend_dev.php/contact/submit" method="post">
+      <table>
+     
+        <!-- Inizio del codice generato da <?php echo $form ?>
+     -->
+        <tr>
+          <th><label for="name">Nome</label></th>
+          <td><input type="text" name="name" id="name" /></td>
+        </tr>
+        <tr>
+          <th><label for="email">Email</label></th>
+          <td><input type="text" name="email" id="email" /></td>
+        </tr>
+        <tr>
+          <th><label for="message">Messaggio</label></th>
+          <td><textarea rows="4" cols="30" name="message" id="message"></textarea></td>
+        </tr>
+        <!-- Fine del codice generato da <?php echo $form ?>
+     -->
+     
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+ 
+Possiamo vedere che il form viene mostrato con tre righe `<tr>` di
+una tabella HTML. Per questo abbiamo dovuto racchiuderla in un tag
+`<table>`. Ogni riga comprende un tag `<label>` ed un tag `<input>`
+o `<textarea>`.
+
+### Label
+
+Le etichette (`label`) di ogni campo sono generate automaticamente.
+Per default, le label sono una trasformazione del nome del campo seguendo
+due regole: una lettera maiuscola iniziale ed un trattino basso sono
+sostituiti da spazi. Se il nome del campo termina per "_id", il
+suffisso è rimosso dalla label.
+Esempio:
+
+    [php]
+    $this->setWidgets(array(
+      'first_name' => new sfWidgetFormInputText(), // label generata: "First name"
+      'last_name'  => new sfWidgetFormInputText(), // label generata: "Last name"
+      'author_id'  => new sfWidgetFormInputText(), // label generata: "Author"
+    ));
+
+Anche se la generazione automatica delle label è molto utile, il framework
+consente di definire label personalizzate col metodo `setLabels()`:
+
+    [php]
+    $this->widgetSchema->setLabels(array(
+      'name'    => 'Il tuo nome',
+      'email'   => 'La tua email',
+      'message' => 'Il tuo messaggio',
+    ));
+
+Puoi anche modificare solo una singola label usando il metodo `setLabel()`:
+
+    [php]
+    $this->widgetSchema->setLabel('email', 'La tua email');
+
+Infine, vedremo nel Capitolo tre che si possono estendere le label dal
+template per personalizzare ulteriormente il form.
+
+>**SIDEBAR**
+>Widget schema
+>Quando usiamo il metodo `setWidgets()`, symfony crea un oggetto
+>`sfWidgetFormSchema`. Questo oggetto è un widget che consente di
+>rappresentare un insieme di widget. Nel nostro form `ContactForm`,
+>abbiamo chiamato il metodo `setWidgets()`. Ciò è equivalente al
+>seguente codice:
+>
+>     [php]
+>     $this->setWidgetSchema(new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     )));
+>
+>     // quasi equivalente a :
+>     
+>     $this->widgetSchema = new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     ));
+>
+>Il metodo `setLabels()` è applicato ad un insieme di widget
+>inclusi nell'oggetto `widgetSchema`.
+>
+>Vedremo nel Capitolo 5 che la nozione di "schema widget" rende
+>più facile gestire form innestati.
+
+### Oltre le tabelle generate
+
+Anche se la visualizzazione del form per default è una tabella HTML,
+il formato della visualizzazione può essere modificato. Questi diversi
+tipi di formati di visualizzazione sono definiti in classi che ereditano
+da `sfWidgetFormSchemaFormatter`. Per default, un form usa il formato
+della tabella definito nella classe `sfWidgetFormSchemaFormatterTable`.
+Si può anche usare il formato lista:
+
+    [php]
+    class ContactForm extends sfForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+     
+        $this->widgetSchema->setFormFormatterName('list');
+      }
+    }
+
+Questi due formati sono di default e vedremo nel Capitolo 5 come
+creare le proprie classi per altri formati. Ora che sappiamo come
+visualizzare un form, vediamo come gestire l'invio.
+
+### Inviare il Form
+
+Quando abbiamo creato un template per mostrare il form, abbiamo usato
+la URL interna `contact/submit` nel tag form per inviare il form.
+Ora abbiamo bisogno di aggiungere l'azione `submit` nel modulo `contact`.
+Il Listato 1-5 mostra come un'azione può ottenere l'informazione
+dall'utente e redirigere alla pagina di ringraziamento dove mostriamo
+questa informazione all'utente.
+
+Listato 1-5 - Uso dell'azione `submit` nel modulo `contact`
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+     
+      $params = array(
+        'name'    => $request->getParameter('name'),
+        'email'   => $request->getParameter('email'),
+        'message' => $request->getParameter('message'),
+      );
+     
+      $this->redirect('contact/thankyou?'.http_build_query($params));
+    }
+     
+    public function executeThankyou()
+    {
+    }
+     
+    // apps/frontend/modules/contact/templates/thankyouSuccess.php
+    <ul>
+      <li>Name:    <?php echo $sf_params->get('name') ?></li>
+      <li>Email:   <?php echo $sf_params->get('email') ?></li>
+      <li>Message: <?php echo $sf_params->get('message') ?></li>
+    </ul>
+ 
+>**NOTE**
+>`http_build_query` è una funzione di libreria di PHP che genera una
+>query string URL-encoded da un array di parametri.
+
+Il metodo `executeSubmit()` esegue tre azioni:
+
+  * Per ragioni di sicurezza, verifichiamo che la pagina sia stata
+    inviata usando il metodo HTTP `POST`. Se non è stata inviata col
+    metodo `POST`, l'utente è rediretto ad una pagina 404. Nel template
+    `indexSuccess`, dichiariamo il metodo di invio come `POST`
+    (`<form ... method="post">`):
+
+      [php]
+      $this->forward404Unless($request->isMethod('post'));
+  * Poi prendiamo i valori inviati dall'utente per salvarli nella
+    tabella dei parametri:
+  
+      [php]
+      $params = array(
+        'name'    => $request->getParameter('name'),
+        'email'   => $request->getParameter('email'),
+        'message' => $request->getParameter('message'),
+      );
+  * Infine, redirigiamo l'utente ad una pagina di ringraziamenti
+    (`contact/thankyou`) per mostrare le sue informazioni:
+
+      [php]
+      $this->redirect('contact/thankyou?'.http_build_query($params));
+
+Invece di redirigere l'utente ad un'altra pagina, potremmo creare un
+template `submitSuccess.php`. Sebbene sia possibile, è una pratica
+migliore redirigere sempre l'utente dopo una richiesta con metodo `POST`:
+
+  * Questo previene il reinvio del form, se l'utente ricarica la pagina
+  * L'utente può anche cliccare sul bottone "indietro" senza vedere l'avviso
+    che gli chiede di inviare nuovamente il form.
+  
+>**TIP**
+>Forse avete notato che `executeSubmit()` è diverso da `executeIndex()`.
+>Quando chiama questi metodi, symfony passa l'oggetto `sfRequest`
+>corrente come primo parametro ai metodi `executeXXX()`. Con PHP, non
+>occorre raccogliere tutti i parametri, perciò non abbiamo definito la
+>variabile di `$request` in `executeIndex()`, perché non ne abbiamo bisogno.
+
+La Figura 1-5 mostra il flusso dei metodi quando interagiscono con l'utente.
+
+Figura 1-5 - Flusso dei metodi
+
+![Flusso dei metodi](http://www.symfony-project.org/images/forms_book/en/01_05.png "Flusso dei metodi")
+
+>**NOTE**
+>Quando si mostra di nuovo i dati immessi dall'utente nel template,
+>si corre il rischio di un attacco XSS (Cross-Site Scripting). Si possono
+>trovare ulteriori informazioni su come prevenire il rischio di XSS,
+>implementando una strategia di escape nel capitolo
+>[wiki:Documentation/it_IT/book/1.1/07-Inside-the-View-Layer All'interno del Layer Vista] della guida.
+
+Dopo aver inviato il form, si dovrebbe vedere la pagina in Figura 1-6.
+
+Figura 1-6 - Pagina visualizzata dopo l'invio del form
+
+![Pagina visualizzata dopo l'invio del form](http://www.symfony-project.org/images/forms_book/en/01_06.png "Pagina visualizzata dopo l'invio del form")
+
+Invece di creare l'array dei parametri, sarebbe più facile ottenere le
+informazioni dall'utente direttamente in un array. Il Listato 1-6
+modifica l'attributo HTML `name` nei widget, per memorizzare i valori
+dei campi nell'array `contact`.
+
+Listato 1-6 - Modifica dell'attributo HTML `name` nei widget
+
+    [php]
+    class ContactForm extends sfForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+     
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+
+Chiamare `setNameFormat()` ci consente di modificare l'attributo
+HTML `name` per tutti i widget. `%s` verrà sostituito automaticamente
+dal nome del campo durante la generazione del form. Per esempio,
+l'attributo `name` per il campo `email` sarà `contact[email]`. PHP
+crea automaticamente un array con i valori di una richiesta che include
+il formato `contact[email]`. In questo modo i campi saranno disponibili
+nell'array `contact`.
+
+Ora possiamo prendere direttamente l'array `contact` dall'oggetto
+richiesta, come mostrato nel Listato 1-7.
+
+Listato 1-7 - Nuovo formato degli attributi `name` nei widget dell'azione
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+     
+      $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+    }
+
+Quando si visualizza il sorgente HTML del form, puoi vedere che symfony
+ha generato un attributo `name` che dipende non solo dal nome e dal
+formato del campo, ma anche dall'attributo `id`. L'attributo `id` viene
+creato automaticamente dal nome sostituendo i caratteri non consentiti
+con dei trattini bassi (_):
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Attributo `name`</th>
+    <th>Attributo `id`</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>contact[name]</td>
+    <td>contact_name</td>
+  </tr>
+  <tr>
+    <td>email</td>
+    <td>contact[email]</td>
+    <td>contact_email</td>
+  </tr>
+  <tr>
+    <td>message</td>
+    <td>contact[message]</td>
+    <td>contact_message</td>
+  </tr>
+</table>
+
+### Un'altra soluzione
+
+In questo esempio, abbiamo usato due azioni per gestire il form:
+`index` per la visualizzazione, `submit` per l'invio. Poiché il form
+è visualizzato tramite il metodo `GET` e l'invio tramite il metodo
+`POST`, possiamo anche fondere i due metodi nel metodo `index`, come
+mostrato nel Listato 1-8.
+
+Listato 1-8 - Fondere le due azioni usate nel form
+
+    [php]
+    class contactActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new ContactForm();
+     
+        if ($request->isMethod('post'))
+        {
+          $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+        }
+      }
+    }
+ 
+Si può anche aver bisogno di cambiare l'attributo `action` del form
+nel template `indexSuccess.php`:
+
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+
+Come vedremo più avanti, preferiamo usare questa sintassi perché è più
+corta e rende il codice più coerente e comprensibile.
+
+Configurare i Widget
+--------------------
+
+### Opzioni dei widget
+
+Se un sito è gestito da diversi webmaster, ci piacerebbe certamente
+aggiungere un menù a tendina con i temi, per poter redirigere il
+messaggio a seconda di quanto viene richiesto (Figura 1-7). Il Listato
+1-9 aggiunge un campo `subject` con un menù a tendina che usa il
+widget `sfWidgetFormSelect`.
+
+Figura 1-7 - Aggiungere un campo `subject` al form
+
+![Aggiungere un campo `subject` al form](http://www.symfony-project.org/images/forms_book/en/01_07.png "Aggiungere un campo `subject` al form")
+
+Listato 1-9 - Aggiungere un campo `subject` al form
+
+    [php]
+    class ContactForm extends sfForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+     
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'subject' => new sfWidgetFormSelect(array('choices' => self::$subjects)),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+     
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+ 
+>**SIDEBAR**
+>L'opzione `choices` del widget `sfWidgetFormSelect`
+>
+>PHP non fa alcuna distinzione tra array semplici e associativi,
+>quindi l'array che abbiamo usato per la lista dei `subject` è
+>identico al codice sequente:
+>
+>     [php]
+>     $subjects = array(0 => 'Subject A', 1 => 'Subject B', 2 => 'Subject C');
+>
+>Il widget generato prende la chiave dell'array come valore dell'attributo
+>del tag `option` e il relativo valore come contenuto del tag:
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="0">Subject A</option>
+>       <option value="1">Subject B</option>
+>       <option value="2">Subject C</option>
+>     </select>
+>
+>Per poter cambiare gli attributi `value`, dobbiamo definire
+>le chiavi dell'array:
+>
+>     [php]
+>     $subjects = array('A' => 'Subject A', 'B' => 'Subject B', 'C' => 'Subject C');
+>
+>Che genera il template HTML:
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="A">Subject A</option>
+>       <option value="B">Subject B</option>
+>       <option value="C">Subject C</option>
+>     </select>
+     
+Il widget `sfWidgetFormSelect`, come tutti i widget, prende una
+lista di opzioni come primo parametro. Un'opzione può essere
+obbligatoria od opzionale. `sfWidgetFormSelectwidget` ha un'opzione
+obbligatoria, `choiches`. Ecco le opzioni disponibili per i widget
+che abbiamo già usato:
+
+  | **Widget**             | **Opzioni obbligatorie** | **Opzioni addizionali**         |
+  | ---------------------- | ------------------------ | ------------------------------- |
+  | `sfWidgetFormInput`    | -                        | `type` (default a `text`)       |
+  |                        |                          | `is_hidden` (default a `false`) |
+  | `sfWidgetFormSelect`   | `choices`                | `multiple` (default a `false`)  |
+  | `sfWidgetFormTextarea` | -                        | -                               |
+
+>**TIP**
+>Se si vuol conoscere tutte le opzioni per un widget, si può fare
+>riferimento alla documentazione completa delle API disponibile
+>online su http://www.symfony-project.org/api/1_2/. Tutte le opzioni
+>hanno una spiegazione, sia quelle addizionali che quelle di default.
+>Per esempio, tutte le opzioni per `sfWidgetFormSelect` sono
+>disponibili qui: http://www.symfony-project.org/api/1_2/sfWidgetFormSelect.
+
+### Gli attributi HTML dei widget
+
+Ogni widget accetta come secondo parametro opzionale una lista
+di attributi HTML. Questo è molto utile per definire degli attributi
+di default per i tag del form generati. Il Listato 1-10 mostra come
+aggiungere un attributo `class` al campo `email`.
+
+Listato 1-10 - Definire attributi per un widget
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email'));
+     
+    // HTML generato
+    <input type="text" name="contact[email]" class="email" id="contact_email" />
+ 
+Gli attributi HTML permettono anche di sovrascrivere l'identificatore
+generato automaticamente, come mostrato nel Listato 1-11.
+
+Listato 1-11 - Sovrascrivere l'attributo `id`
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email', 'id' => 'email'));
+     
+    // HTML generato
+    <input type="text" name="contact[email]" class="email" id="email" />
+
+È anche possibile impostare dei valori predefiniti usando l'attributo
+`value`, come mostra il Listato 1-12.
+
+Listato 1-12 - Valori predefiniti per i widget usando gli attributi HTML
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('value' => 'Your Email Here'));
+     
+    // HTML generato
+    <input type="text" name="contact[email]" value="Your Email Here" id="contact_email" />
+
+Questa opzione funziona per i widget `input`, ma è difficile da
+utilizzare con i widget `checkbox` o `radio`, e addirittura impossibile
+con un widget `textarea`. La classe `sfForm` offre dei metodi specifici
+per definire dei valori predefiniti per ogni campo in un modo uniforme
+per tutti i tipi di widget.
+
+>**NOTE**
+>Raccomandiamo di definire gli atttributi HTML dentro al template e non
+>nel form stesso (anche se è possibile) per preservare i livelli di
+>separazione, come vedremo nel Capitolo tre.
+
+## Definire dei valori predefiniti per i campi
+
+Spesso è utile definire dei valori di default per ogni campo.
+Per esempio, quando mostriamo un messaggio di aiuto nel campo, che
+scompare quando l'utente fa click sul campo stesso. Il Listato 1-13
+mostra come definire dei valori predefiniti usando i metodi
+`setDefault()` e `setDefaults()`.
+
+Listato 1-13 - Valori predefiniti dei widget usando i metodi `setDefault()` e `setDefaults()`
+
+    [php]
+    class ContactForm extends sfForm
+    {
+      public function configure()
+      {
+        // ...
+     
+        $this->setDefault('email', 'Your Email Here');
+     
+        $this->setDefaults(array('email' => 'La tua email', 'name' => 'Il tuo nome'));
+      }
+    }
+
+I metodi `setDefault()` e `setDefaults()` sono molto utili per ogni
+istanza della stessa classe di form. Se vogliamo modificare un oggetto
+esistente che usa un form, i valori predefiniti dipenderanno dall'istanza,
+quindi devono essere dinamici. Il Listato 1-14 mostra che il costruttore
+`sfForm` ha un primo parametro che imposta i valori predefiniti dinamicamente.
+
+Listato 1-14 - Valori predefiniti dei widget usando il costruttore di `sfForm`
+
+    [php]
+    public function executeIndex($request)
+    {
+      $this->form = new ContactForm(array('email' => 'Your Email Here', 'name' => 'Your Name Here'));
+     
+      // ...
+    }
+
+>**SIDEBAR**
+>Protezione dagli XSS (Cross-Site Scripting)
+>
+>Quando si impostano gli attributi HTML per i widget, o si definiscono
+>dei valori predefiniti, la classe `sfForm` protegge automaticamente questi
+>valori dagli attacchi XSS durante la generazione del codice HTML. Tale
+>protezione non dipende dalla configurazione di `escaping_strategy` nel
+>file `settings.yml`. Se un contenuto è già stato protetto da un altro
+>metodo, la protezione non si applicherà ulteriormente.
+>
+>Protegge anche i caratteri `'` e `"`, che possono invalidare il codice
+>HTML generato.
+>
+>Ecco un esempio di tale protezione:
+>
+>     [php]
+>     $emailWidget = new sfWidgetFormInputText(array(), array(
+>       'value' => 'Hello "World!"',
+>       'class' => '<script>alert("foo")</script>',
+>     ));
+>     
+>     // HTML generato
+>     <input
+>       value="Hello &quot;World!&quot;"
+>       class="&lt;script&gt;alert(&quot;foo&quot;)&lt;/script&gt;"
+>       type="text" name="contact[email]" id="contact_email"
+>     />

@@ -1,0 +1,749 @@
+Capitolo 3 - Form per i web designer
+====================================
+
+Abbiamo osservato nei Capitoli 1 e 2 come creare form usando
+widget e regole di validazione. Abbiamo usato l'istruzione
+`<?php echo $form ?>` per mostrare i form. Questa istruzione
+consente agli sviluppatore di codificare la logica dell'applicazione
+senza pensare a come sarà mostrata alla fine. Cambiare il template
+ogni volta che si modifica o si aggiunge un campo (nome, widget,
+ecc.) non è necessario. L'istruzione va bene anche per prototipizzare
+la fase iniziale di sviluppo, quando lo sviluppatore deve
+focalizzarsi su modello e business logic.
+
+Una volta che il modello si è stabilizzato e si hanno delle linee
+guida stilistiche, il web designer può fare un passo indietro e
+formattare i vari form dell'applicazione.
+
+Prima di iniziare questo capitolo, si dovrebbe già avere familiarità
+col sistema dei template di symfony e con il livello della Vista.
+Per farlo, si può leggere il capitolo 
+[All'interno del layer Vista](http://trac.symfony-project.org/wiki/Documentation/it_IT/book/1.1/07-Inside-the-View-Layer)
+nella guida di symfony.
+
+>**NOTE**
+>Il sistema dei form di symfony è costruito secondo il modello MVC.
+Il pattern MVC aiuta a disaccoppiare ogni compito del team di
+sviluppo: gli sviluppatori creano i form e gestiscono i loro cicli
+di vita, i web designer li formattano e impostano gli stili. La
+separazione degli ambiti non potrà mai essere un sostituto alla
+comunicazione all'interno del team di progetto.
+
+Prima di iniziare
+-----------------
+
+Ora ci occuperemo del form `contact` elaborato nei Capitoli 1 e
+2 (Figura 3-1). Ecco uno schema tecnico per i web designer che
+leggeranno solo questo capitolo:
+
+  * il form è composto da quattro campi: `name`, `email`, `subject`, `message`.
+  * il form è gestito dal modulo `contact`.
+  * L'azione `index` passa al template una variabile `form` che rappresenta il form.
+
+Questo capitolo ha lo scopo di mostrare le possibilità a
+disposizione per personalizzare il template prototipo per
+visualizzare il form (Listato 3-1).
+
+Figura 3-1 - il form `contact`
+
+![il form contact](http://www.symfony-project.org/images/forms_book/en/03_01.png "il form contact")
+
+Listato 3-1 - Il template prototipo che visualizza il form `contact`
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSuccess.php
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+ 
+>**SIDEBAR**
+>Invio di file
+>
+>Quando in un form si usa un campo per inviare un file, occorre
+>aggiungere l'attributi `enctype` al tag `form`:
+>
+>     [php]
+>     <Form action="<?php echo url_for('contact/index') ?>" method="post" enctype="multipart/data">
+>
+>Il metodo `isMultipart()` dell'oggetto `form` restituisce `true`
+>se il form necessita di tale attributo:
+>
+>     [php]
+>     <Form action="<?php echo url_for('contact/index') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data"' ?>>
+
+Il template prototipo
+---------------------
+
+Finora nel template prototipo abbiamo usato l'istruzione
+`<?php echo $form ?>` per generare automaticamente l'HTML per
+visualizzare il form.
+
+Un form è fatta di campi. A livello di template, ogni campo
+è formato da tre elementi:
+
+  * La label
+  * Il tag form
+  * Gli eventuali messaggi di errore
+
+L'istruzione `<?php echo $form ?>` genera automaticamente tutti
+questi elementi, come mostra il Listato 3-2 in caso di invio
+non valido.
+
+Listato 3-2 - Template generato in caso di invio non valido
+
+    [php]
+    <form action="/frontend_dev.php/contact" method="post">
+      <table>
+        <tr>
+          <th><label for="contact_name">Name</label></th>
+          <td><input type="text" name="contact[name]" id="contact_name" /></td>
+        </tr>
+        <tr>
+          <th><label for="contact_email">Email</label></th>
+          <td>
+            <ul class="error_list">
+              <li>This email address is invalid.</li>
+            </ul>
+            <input type="text" name="contact[email]" value="fabien" id="contact_email" />
+          </td>
+        </tr>
+        <tr>
+          <th><label for="contact_subject">Subject</label></th>
+          <td>
+            <select name="contact[subject]" id="contact_subject">
+              <option value="0" selected="selected">Subject A</option>
+              <option value="1">Subject B</option>
+              <option value="2">Subject C</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="contact_message">Message</label></th>
+          <td>
+            <ul class="error_list">
+              <li>The message "foo" is too short. It must be of 4 characters at least.</li>
+            </ul>
+            <textarea rows="4" cols="30" name="contact[message]" id="contact_message">foo</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+>**TIP**
+>C'è un'altra scorciatoia per generare il tag di apertura del form:
+>`echo $form->renderFormTag(url_for('contact/index'))`. Questo consente
+>anche di passare un numero arbitrario di attributi addizionali al tag
+>form in modo più semplice, usando un array. Lo svantaggio di usare questa
+>scorciatoia sta nel fatto che gli strumenti di design avranno più
+>difficoltà ad individuare correttamente il form.
+
+Analizziamo questo codice. La Figura 3-2 evidenzia le righe
+`<tr>` prodotte per ogni campo.
+
+Figura 3-2 - il form suddiviso per campi
+
+![Il form suddiviso per campi](http://www.symfony-project.org/images/forms_book/en/03_02.png "il form suddiviso per campi")
+
+Tre pezzi di codice HTML sono stati generati per ogni campo
+(Figura 3-3), in corrispondenza dei tre elementi del campo.
+Ecco il codice HTML generato per il campo `email`:
+
+  * La **label**
+
+        [php]
+        <label for="contact_email">Email</label>
+ 
+  * Il **tag form**
+
+        [php]
+        <input type="text" name="contact[email]" value="fabien" id="contact_email" />
+  
+  * I **messaggi di errore**
+
+        [php]
+        <ul class="error_list">
+          <li>The email address is invalid.</li>
+        </ul>
+       
+Figura 3-3 - Scomposizione del campo `email`
+
+![Scomposizione del campo email](http://www.symfony-project.org/images/forms_book/en/03_03.png "Scomposizione del campo email")
+
+>**TIP**
+>Ogni campo ha un attributo generato `id`, che consente agli
+>sviluppatori di aggiungere facilmente stili o comportamenti
+>Javascript.
+
+Personalizzazione del template prototipo
+----------------------------------------
+
+L'istruzione `<?php echo $form ?>` può essere sufficiente per
+form semplici come il form `contact`. Di fatto è solamente una
+scorciatoia per l'istruzione `<?php echo $form->render() ?>`.
+
+L'uso del metodo `render()` consente di passare degli attributi
+HTML come parametro per ogni campo. Il Listato 3-3 mostra come
+aggiungere una classe al campo `email`.
+
+Listato 3-3 - Personalizzazione degli attributi HTML usando il metodo `render()`
+
+    [php]
+    <?php echo $form->render(array('email' => array('class' => 'email'))) ?>
+     
+    // HTML generato
+    <input type="text" name="contact[email]" value="" id="contact_email" class="email" />
+
+Questo consente di personalizzare gli stili del form, ma non
+fornisce quel livello di flessibilità necessario a personalizzare
+l'organizzazione dei campi nella pagina.
+
+Personalizzazione della visualizzazione
+---------------------------------------
+
+Oltre alla personalizzazione consentita dal metodo `render()`,
+vedremo ora come spezzare la visualizzazione di ogni campo per
+guadagnare in flessibilità, usando il metodo `renderRow()` su
+un campo.
+
+### Usare il metodo `renderRow()`
+
+Il primo modo consiste nel generare ogni campo individualmente.
+Di fatto, l'istruzione `<?php echo $form ?> equivale a chiamare il
+metodo `renderRow()` quattro volte sul form, come mostrato nel
+Listato 3-4.
+
+Listato 3-4 - Uso di `renderRow()`
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <?php echo $form['name']->renderRow() ?>
+        <?php echo $form['email']->renderRow() ?>
+        <?php echo $form['subject']->renderRow() ?>
+        <?php echo $form['message']->renderRow() ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Possiamo accedere ad ogni campo usando l'oggetto `form` come un
+array PHP. Si può accedere al campo `email` tramite
+`$form['email']`. Il metodo `renderRow()` visualizza il campo
+come una riga di una tabella HTML. L'espressione
+`$form['email']->renderRow()` genera una riga per il campo
+`email`. Ripetendo lo stesso tipo di codice per gli altri tre
+campi `subject`, `email` e `message`, possiamo completare la
+visualizzazione del form.
+
+>**SIDEBAR**
+>Come può un oggetto comportarsi come un array?
+>
+>Dalla versione 5 di PHP, agli oggetti possono essere dati gli
+>stessi comportamenti di un array. La classe `sfForm` implementa
+>l'interfaccia `ArrayAccess` per consentire l'accesso ad ogni
+>campo usando una sintassi breve e semplice. La chiave
+>dell'array è il nome del campo e il valore restituito è
+>associato con l'oggetto `widget`:
+>
+>     [php]
+>     <?php echo $form['email'] ?>
+>
+>     // Sintassi che si sarebbe dovuta usare se sfForm non avesse implementato l'interfaccia ArrayAccess
+>     <?php echo $form->getField('email') ?>
+>
+>Tuttavia, dovendo essere ogni variabile del template in sola
+>lettura, qualsiasi tentativo di modificare il campo solleverà
+>un'eccezione `LogicException`:
+>
+>     [php]
+>     <?php $form['email'] = ... ?>
+>     <?php unset($form['email']) ?>
+
+Questo template ed il template originale con cui abbiamo
+iniziato sono funzionalmente identici. Tuttavia, se la
+visualizzazione è la stessa, la personalizzazione è ora più
+facile. Il metodo `renderRow()` accetta due parametri: un
+array di attributi HTML ed il nome di una label. Il Listato
+3-5 usa questi due parametri per personalizzare il form
+(la Figura 3-4 mostra il risultato).
+
+Listato 3-5 - Usare i parametri del metodo `renderRow()` per personalizzare la visualizzazione
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <?php echo $form['name']->renderRow() ?>
+        <?php echo $form['email']->renderRow(array('class' => 'email')) ?>
+        <?php echo $form['subject']->renderRow() ?>
+        <?php echo $form['message']->renderRow(array(), 'Your message') ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Figura 3-4 - Personalizzazione della visualizzazione del form usando il metodo `renderRow()`
+
+![Personalizzazione della visualizzazione del form usando il metodo renderRow()](http://www.symfony-project.org/images/forms_book/en/03_04.png "Personalizzazione della visualizzazione del form usando il metodo renderRow()")
+
+Guardiamo più da vicino i parametri inviati a
+`renderRow()` per generare il campo `email`:
+
+  * `array('class' => 'email')` aggiunge la classe `email` al tag `<input>`
+
+Funziona nello stesso modo col campo `message`:
+
+  * `array()` vuol dire che non vogliamo aggiungere nessun
+     attributo HTML al tag `<textarea>`
+  * 'Your message' sostituisce il nome predefinito della label
+
+Ogni metodo `renderRow()` è opzionale, quindi nessuno di essi è
+obbligatorio, come abbiamo fatto per i campi `name` e `subject`.
+
+Anche se il metodo `renderRow()` aiuta a personalizzare gli elementi
+di ogni campo, la visualizzazione è limitata dal codice HTML che
+decora tali elementi, come mostrato in Figura 3-5.
+
+Figura 3-5 - Struttura HTML usata da `renderRow()` e `render()`
+
+![Struttura HTML usata da renderRow() e render()](http://www.symfony-project.org/images/forms_book/en/03_05.png "Struttura HTML usata da renderRow() e render()")
+
+>**SIDEBAR**
+>Come cambiare il formato della struttura usato dal prototipo?
+>
+>Per default, symfony usa un array HTML per visualizzare un form.
+>Questo comportamento può essere modificato usando dei
+>formattatori specifici, sia che siano già pronti, sia che siano
+>sviluppati appositamente per il progetto. Per creare un
+>formattatore, devi creare una classe, come descritto nel Capitolo 5.
+
+Per potersi liberare da questa struttura, ogni campo ha un metodo
+che genera i suoi elementi, come mostrato in Figura 3-6:
+
+  * `renderLabel()` : la label (il tag `<label>` legato al campo)
+  * `render()`      : il tag `field` stesso (ad esempio il tag `<input>`)
+  * `renderError()` : i messagi di errore (come nella lista `<ul class="error_list">`)
+
+Figura 3-6 - Metodi disponibili per personalizzare un campo
+
+![Metodi disponibili per personalizzare un campo](http://www.symfony-project.org/images/forms_book/en/03_06.png "Metodi disponibili per personalizzare un campo")
+
+Questi metodi saranno spiegati alla fine di questo capitolo.
+
+### Usare il metodo `render()` su un campo
+
+Supponiamo di voler visualizzare il form in due colonne.
+Come mostrato in Figura 3-7, i campi `name` ed `email` sono
+sulla stessa riga, mentre i campi `subject` e `message` sono
+ognuno nella propria riga.
+
+Figura 3-7 - Visualizzare il form su più righe
+
+![Visualizzare il form su più righe](http://www.symfony-project.org/images/forms_book/en/03_07.png "Visualizzare il form su più righe")
+
+Dobbiamo poter generare separatamente ogni elemento di un
+campo per poter fare questo. Abbiamo già osservato che potremmo
+usare l'oggetto `form` come un array associativo per accedere ad
+un campo, usando il nome del campo come chiave. Ad esempio, il
+campo `email` può essere acceduto tramite `$form['email']`. Il
+Listato 3-6 mostra come implementare il form con due righe.
+
+Listato 3-6 - Personalizzare la visualizzazione con due colonne
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><?php echo $form['name']->render() ?></td>
+          <th>Email:</th>
+          <td><?php echo $form['email']->render() ?></td>
+        </tr>
+        <tr>
+          <th>Subject:</th>
+          <td colspan="3"><?php echo $form['subject']->render() ?></td>
+        </tr>
+        <tr>
+          <th>Message:</th>
+          <td colspan="3"><?php echo $form['message']->render() ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Essendo l'uso esplicito del metodo `render()` su un campo non
+obbligatorio quando si usa `<?php echo $form ?>`, possiamo
+riscrivere il template come nel Listato 3-7.
+
+Listato 3-7 - Semplificazione della personalizzazione su due colonne
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><?php echo $form['name'] ?></td>
+          <th>Email:</th>
+          <td><?php echo $form['email'] ?></td>
+        </tr>
+        <tr>
+          <th>Subject:</th>
+          <td colspan="3"><?php echo $form['subject'] ?></td>
+        </tr>
+        <tr>
+          <th>Message:</th>
+          <td colspan="3"><?php echo $form['message'] ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+ 
+Come per il form, ogni campo può essere personalizzato
+passando un array di attributi HTML al metodo `render()`.
+Il Listato 3-8 mostra come modificare la classe HTML del
+campo `email`.
+
+Listato 3-8 - Modificare gli attributi HTML usando il metodo `render()`
+
+    [php]
+    <?php echo $form['email']->render(array('class' => 'email')) ?>
+     
+    // HTML generato
+    <input type="text" name="contact[email]" class="email" id="contact_email" />
+ 
+### Usare il metodo `renderLabel()` su un campo
+
+Non abbiamo generato le label durante la personalizzazione
+nel paragrafo precedente. Il Listato 3-9 usa il metodo
+`renderLabel()` per generare una label per ogni campo.
+
+Listato 3-9 - Usare `renderLabel()`
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <tr>
+          <th><?php echo $form['name']->renderLabel() ?>:</th>
+          <td><?php echo $form['name'] ?></td>
+          <th><?php echo $form['email']->renderLabel() ?>:</th>
+          <td><?php echo $form['email'] ?></td>
+        </tr>
+        <tr>
+          <th><?php echo $form['subject']->renderLabel() ?>:</th>
+          <td colspan="3"><?php echo $form['subject'] ?></td>
+        </tr>
+        <tr>
+          <th><?php echo $form['message']->renderLabel() ?>:</th>
+          <td colspan="3"><?php echo $form['message'] ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+
+    </form>
+
+Il nome della label è generato automaticamente dal nome del
+campo. Può essere personalizzato passando un parametro al
+metodo `renderLabel()`, come mostrato nel Listato 3-10.
+
+Listato 3-10 - Modificare il nome della label
+
+    [php]
+    <?php echo $form['message']->renderLabel('Your message') ?>
+     
+    // HTML generato
+    <label for="contact_message">Your message</label>
+
+A cosa serve il metodo `renderLabel()` se inseriamo il nome
+della label passandolo come parametro? Perché non usiamo
+semplicemente un tag HTML `label`? Perché il metodo
+`renderLabel()` genera il tag `label` ed aggiunge
+automaticamente un attributo `for` corrispondente
+all'identificativo del campo correlato (`id`). Questo assicura
+che il campo sia accessibile; quando si clicca sulla label,
+il focus passa automaticamente sul campo:
+
+    [php]
+    <label for="contact_email">Email</label>
+    <input type="text" name="contact[email]" id="contact_email" />
+
+Inoltre, gli attributi HTML possono essere aggiunti passando
+un secondo parametro al metodo `renderLabel()`:
+
+    [php]
+    <?php echo $form['send_notification']->renderLabel(null, array('class' => 'inline')) ?>
+     
+    // HTML generato
+    <label for="contact_send_notification" class="inline">Send notification</label>
+ 
+In questo esempio il primo parametro è `null`, quindi la
+generazione automatica della label è preservata.
+
+### Usare il metodo `renderError()` su un campo
+
+Il template attuale non gestisce i messaggi di errore. Il Listato 3-11 li reintroduce usando il metodo `renderError()`.
+
+Listato 3-11 - Mostrare i messaggi di errore usando il metodo `renderError()`
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <tr>
+          <th><?php echo $form['name']->renderLabel() ?>:</th>
+          <td>
+            <?php echo $form['name']->renderError() ?>
+            <?php echo $form['name'] ?>
+          </td>
+          <th><?php echo $form['email']->renderLabel() ?>:</th>
+          <td>
+            <?php echo $form['email']->renderError() ?>
+            <?php echo $form['email'] ?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo $form['subject']->renderLabel() ?>:</th>
+          <td colspan="3">
+            <?php echo $form['subject']->renderError() ?>
+            <?php echo $form['subject'] ?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo $form['message']->renderLabel() ?>:</th>
+          <td colspan="3">
+            <?php echo $form['message']->renderError() ?>
+            <?php echo $form['message'] ?>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+### Personalizzazione avanzata dei messaggi di errore
+
+Il metodo `renderError()` genera la lista degli errori
+associati ad un campo. Genera codice HTML solo se il campo
+ha degli errori. Per default, la list è generata come una
+lista HTML non ordinata (`<ul>`).
+
+Anche se tale comportamento soddisfa i casi più comuni, i
+metodi `hasError()` e `getError()` consentono di accedere
+agli errori in modo diretto. Il Listato 3-12 mostra come
+personalizzare i messaggi di errore per il campo `email`.
+
+Listato 3-12 - Accedere ai messaggi di errore
+
+    [php]
+    <?php if ($form['email']->hasError()): ?>
+      <ul class="error_list">
+        <?php foreach ($form['email']->getError() as $error): ?>
+          <li><?php echo $error ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+
+In questo esempio, il codice generato è esattamente lo stesso
+del codice generato dal metodo `renderError()`.
+
+### Gestione dei campi nascosti
+
+Supponiamo ora che ci sia un campo nascosto obbligatorio nel
+form. Questo campo memorizza la pagina di provenienza
+dell'utente quando accede al form. L'istruzione
+`<?php echo $form ?>` genera il codice HTML per i campi
+nascosti e li aggiunge quando genera l'ultimo campo
+visibile, come mostrato nel Listato 3-13.
+
+Listato 3-13 - Generazione del codice dei campi nascosti
+
+    [php]
+    <tr>
+      <th><label for="contact_message">Message</label></th>
+      <td>
+        <textarea rows="4" cols="30" name="contact[message]" id="contact_message"></textarea>
+        <input type="hidden" name="contact[referrer]" id="contact_referrer" />
+      </td>
+    </tr>
+ 
+Come si può notare, nel codice generato per il campo
+nascosto `referrer` è stato aggiunto all'output solo
+l'elemento tag. Ha senso non generare una label. E i
+possibili errori che potrebbero scaturire da questo campo?
+Anche se il campo è nascosto, può essere alterato durante
+il processo, sia intenzionalmente che a causa di un errore
+nel codice. Questi errori non sono connessi direttamente al
+campo `referrer`, ma sono aggiunti agli errori globali.
+Vedremo nel Capitolo 5 che la nozione di errore globale è
+estesa anche ad altri casi. La Figura 3-8 mostra come viene
+visualizzato il messaggio di errore quando c'è un errore sul
+campo `referrer`, mentre il Listato 3-14 mostra il codice
+generato da tali errori.
+
+Figura 3-8 - Visualizzazione dei messaggi di errore globali
+
+![Visualizzazione dei messaggi di errore globali](http://www.symfony-project.org/images/forms_book/en/03_08.png "Visualizzazione dei messaggi di errore globali")
+
+Listato 3-14 - Generazione dei messaggi di errore globali
+
+    [php]
+    <tr>
+      <td colspan="2">
+        <ul class="error_list">
+          <li>Referrer: Required.</li>
+        </ul>
+      </td>
+    </tr>
+
+>**CAUTION**
+>Ogni volta che si personalizza un form, non dimenticare di
+>inserire i campi nascosti ed i messaggi di errore globali.
+
+### Gestione degli errori globali
+
+Ci sono tre tipi di errore in un form:
+
+  * Errori associati ad un campo specifico
+  * Errori globali
+  * Errori su campi nascosti o su campi che non sono visualizzati
+    nel form. Questi sono aggiunti agli errori globali.
+
+Abbiamo già visto l'implementazione dei messaggi di errore associati
+ad un campo e il Listato 3-15 mostra l'implementazione dei
+messaggi di errore globali.
+
+Listato 3-15 - Implementazione dei messaggi di errore globali
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="post">
+      <table>
+        <tr>
+          <td colspan="4">
+            <?php echo $form->renderGlobalErrors() ?>
+          </td>
+        </tr>
+     
+        // ...
+      </table>
+
+La chiamata al metodo `renderGlobalErrors()` visualizza la lista
+degli errori globali. Inoltre è possibile accedere agli errori
+globali usando i metodi `hasGlobalErrors()` e `getGlobalErrors()`,
+come mostrato nel Listato 3-16.
+
+Listato 3-16 - Personalizzazione degli errori globali con i metodi `hasGlobalErrors()` e `getGlobalErrors()`
+
+    [php]
+    <?php if ($form->hasGlobalErrors()): ?>
+      <tr>
+        <td colspan="4">
+          <ul class="error_list">
+            <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
+              <li><?php echo $name.': '.$error ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </td>
+      </tr>
+    <?php endif; ?>
+
+Ogni errore globale ha un nome (`name`) ed un messaggio (`error`).
+Il nome è vuoto quando c'è un "vero" errore globale, ma quando
+c'è un errore da un campo nascosto o da un campo non visualizzato,
+il nome è il nome della label del campo.
+
+Anche se il template è ora tecnicamente equivalente al template
+con cui abbiamo iniziato (Figura 3-8), il nuovo template ora è
+personalizzabile.
+
+Figura 3-8 - Form personalizzato con i metodi per i campi
+
+![Form personalizzato con i metodi per i campi](http://www.symfony-project.org/images/forms_book/en/03_08.png "Form personalizzato con i metodi per i campi")
+
+Internazionalizzazione
+----------------------
+
+Ogni elemento del form, come le label e i messaggi di errore, è
+gestito automaticamente dal sistema di internazionalizzazione di
+symfony. Questo vuol dire che il web designer non deve fare nulla
+di speciale per internazionalizzare i form, anche quando sovrascrive
+esplicitamente una label col metodo `renderLabel()`. La traduzione
+viene presa in considerazione in modo automatico. Per ulteriori
+informazioni sull'internazionalizzazione, si veda il Capitolo 9.
+
+Interazione con lo sviluppatore
+-------------------------------
+
+Concludiamo questo capitolo con la descrizione di un tipico scenario
+di sviluppo di un form con symfony:
+
+  * Il team di sviluppo inizia implementando la classe del form e
+    la sua azione. Il template per ora non è altro che l'istruzione
+    prototipo `<?php echo $form ?>`.
+    
+  * Nel frattempo, i designer disegnano le linee guida dello stile
+    e le regole di visualizzazione che si applicano ai form:
+    struttura globale, regole per visualizzare i messaggi di errore,
+    ecc...
+    
+  * Una volta che la business logic è a posto e le linee guida sono
+    state confermate, il team dei web designer può modificare i
+    template del form e personalizzarli. Il team ha bisogno di sapere
+    solamente i nomi dei campi e l'azione richiesta per gestire il
+    ciclo di vita del form.
+
+Quando questo primo ciclo è finito, sia le modifiche alle regole
+di business che le modifiche ai template possono essere
+eseguite contemporaneamente.
+
+Senza impatto sui template, quindi senza che ci sia bisogno
+dell'intervento di un team di designer, il team di sviluppo è
+in grado di:
+
+  * Modificare i widget del form
+  * Personalizzare i messaggi di errore
+  * Modificare, aggiungere, o cancellare le regole di validazione
+
+Similmente, il team dei designer è libero di eseguire qualsiasi
+cambiamento ergonomico o grafico senza doversi rivolgere al team
+di sviluppo.
+
+Ma le seguenti azioni implicano un coordinamento tra i due team:
+
+  * Rinominare un campo
+  * Aggiungere o cancellare un campo
+
+Questa cooperazione ha senso se coinvolge sia le regole di
+business che la visualizzazione del form. Come abbiamo chiarito
+all'inzio di questo capitolo, anche se il sistema dei form separa
+chiaramente i compiti, non c'è niente come la comunicazione tra
+i team.
