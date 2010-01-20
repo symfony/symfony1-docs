@@ -387,3 +387,11 @@ You can also restrict the languages in the select box, thanks to the `languages`
     $languages = array('fr', 'en', 'es', 'de', 'nl');
     $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture'   => 'fr',
                                                                                'languages' => $languages));
+
+### Timezone selector
+
+The `sfWidgetFormI18nChoiceTimezone` widget displays a select box filled with a list of timezones.
+
+    [php]
+    $this->widgetSchema['timezone'] = new sfWidgetFormI18nChoiceTimzione();
+
