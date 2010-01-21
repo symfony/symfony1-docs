@@ -165,6 +165,7 @@ Widget
  * [`sfWidgetFormI18nChoiceCountry`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicecountry)
  * [`sfWidgetFormI18nChoiceLanguage`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicelanguage)
  * [`sfWidgetFormI18nChoiceCurrency`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicecurrency)
+ * [`sfWidgetFormI18nChoiceTimezone`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicetimezone)
  * [`sfWidgetFormI18nTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ntime)
  * [`sfWidgetFormInput`](A-Widgets#chapter_a_sub_sfwidgetforminput)
  * [`sfWidgetFormInputCheckbox`](A-Widgets#chapter_a_sub_sfwidgetforminputcheckbox)
@@ -508,7 +509,7 @@ scelta con un doppio elenco:
 >     [php]
 >     $files = $w->getJavascripts();
 
-| Optizione            | Descrizione
+| Opzione              | Descrizione
 | -------------------- | -----------
 | `choices`            | Un array di possibili scelte (obbligatorio)
 | `class`              | La classe principale del widget
@@ -934,7 +935,7 @@ Widget I18n
 
 | Opzione     | Descrizione
 | ----------- | -----------
-| `culture`   | La cultura da usare per le stringhe internazionalizzate (obbligatoria)
+| `culture`   | La cultura da usare per le stringhe internazionalizzate (`en` di default)
 | `countries` | Un array di codici di paesi da usare
 | `add_empty` | Se aggiungere o meno una prima opzione vuota (`false` di default)
 |             | Se l'opzione non è un booleano, il valore sarà usato come testo.
@@ -950,7 +951,7 @@ Widget I18n
 
 | Opzione     | Descrizione
 | ----------- | -----------
-| `culture`   | La cultura da usare per le stringhe internazionalizzate (obbligatoria)
+| `culture`   | La cultura da usare per le stringhe internazionalizzate (`en` di default)
 | `languages` | Un array di codici di lingue da usare
 | `add_empty` | Se aggiungere o meno una prima opzione vuota (`false` di default)
 |             | Se l'opzione non è un booleano, il valore sarà usato come testo.
@@ -964,12 +965,26 @@ Widget I18n
 
 ![Valute I18n](/images/forms_book/en/A_i18n_currencies.png)
 
-| Optzone      | Descrizione
+| Opzione      | Descrizione
 | ------------ | -----------
-| `culture`    | La cultura da usare per le stringhe internazionalizzate (obbligatoria)
+| `culture`    | La cultura da usare per le stringhe internazionalizzate (`en` di default)
 | `currencies` | Un array di codici di valute da usare
 | `add_empty`  | Se aggiungere o meno una prima opzione vuota (`false` di default)
 |              | Se l'opzione non è un booleano, il valore sarà usato come testo.
+
+### ~`sfWidgetFormI18nChoiceTimezone`~
+
+`sfWidgetFormI18nChoiceTimezone` rappresenta una scelta di fusi orari:
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceTimezone(array('culture' => 'fr'));
+
+| Opzione      | Descrizione
+| ------------ | -----------
+| `culture`    | La cultura da usare per le stringhe internazionalizzate (`en` di default)
+| `add_empty`  | Se aggiungere o meno una prima opzione vuota (`false` di default)
+|              | Se l'opzione non è un booleano, il valore sarà usato come testo.
+
 
 Widget Captcha
 --------------

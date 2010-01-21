@@ -8,7 +8,7 @@ Il framework dei form di symfony viene rilasciato con un gran
 numero di validatori utili. Questi validatori coprono la
 maggior parte delle necessità di molti progetti. Questo capitolo
 descrive i validatori standard distribuiti con symfony.
-Abbiamo anche incluso i validatori dei plugin `sfPropelPlugin`
+Sono inclusi anche i validatori dei plugin `sfPropelPlugin`
 e `sfDoctrinePlugin`, in quanto questi plugin sono supportati
 dal team ufficiale e contengono alcuni validatori molto utili.
 
@@ -16,7 +16,7 @@ dal team ufficiale e contengono alcuni validatori molto utili.
 >Anche se non si usa il framework MVC di symfony, si possono usare
 >i validatori definiti nei plugin 
 >[`sfFormExtraPlugin`](http://svn.symfony-project.com/plugins/sfFormExtraPlugin),
->`sfPropelPlugin` e `sfDoctrinePlugin` inserendo le cartelle
+>`sfPropelPlugin` e `sfDoctrinePlugin`, inserendo le cartelle
 >`validator/` nel proprio progetto.
 
 Prima di approfondire ogni validatore in dettaglio, vediamo cosa
@@ -44,7 +44,7 @@ metodi `setOptions()` e `setMessages()`:
     [php]
     $v = new sfValidatorString();
     $v->setOptions(array('required' => true));
-    $v->setMessages(array('required' => 'Questo valore è necessario.'));
+    $v->setMessages(array('required' => 'Questo valore è obbligatorio.'));
 
 I metodi `setOption()` e `setMessage()` permettono di impostare una
 singola opzione o un singolo messaggio di errore:
@@ -52,7 +52,7 @@ singola opzione o un singolo messaggio di errore:
     [php]
     $v = new sfValidatorString();
     $v->setOption('required', true);
-    $v->setMessage('required', 'Questo valore è necessario.');
+    $v->setMessage('required', 'Questo valore è obbligatorio.');
 
 Un valore grezzo può essere validato invocando il metodo `clean()`:
 
@@ -82,7 +82,7 @@ I messaggi di errore di default definiti da `sfValidatorBase` sono i seguenti:
 | `required` | Il messaggio di errore usato quando il valore grezzo è vuoto ed obbligatorio (`Required.` di default).
 | `invalid`  | Un messaggio di errore generico restituito quando un errore viene riconosciuto (`Invalid.` di default).
 
-Si possono cambiare le stringhe di default usate per gli errori di `required`
+Si possono cambiare le stringhe predefinite usate per gli errori di `required`
 e `invalid`, invocando il metodo `setDefaultMessage()`. Occorre farlo
 prima che qualsiasi validatore sia caricato, ad esempio nel metodo `setup()`:
 
@@ -104,8 +104,8 @@ Ogni messaggio di errore può, inoltre, definire un segnaposto specifico.
 >Nella seguente sezione, il segnaposto predefinito `%value%` non
 >è menzionato in quanto è sempre disponibile.
 
-Per alcuni validatori è necessario sapere qual è il charset utilizzato dai
-valori grezzi. Normalmente il charset usato è `UTF-8`, ma può essere
+Per alcuni validatori è necessario sapere qual è il set di caratteri utilizzato dai
+valori grezzi. Normalmente il set di caratteri usato è `UTF-8`, ma può essere
 sostituito usando il metodo `setCharset()`:
 
     [php]
@@ -113,7 +113,7 @@ sostituito usando il metodo `setCharset()`:
 
 >**NOTE**
 >Se si usano i validatori all'interno del framework MVC di symfony,
->il charset è configurato automaticamente con quello definito nel file
+>il set di caratteri è configurato automaticamente con quello definito nel file
 >`settings.yml`.
 
 ### Validatori Schema
@@ -167,7 +167,7 @@ Validatori semplici
 
 ### `sfValidatorString`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorString` controlla che una variabile grezza
 sia una stringa e la restituisce come tale.
@@ -192,7 +192,7 @@ sia una stringa e la restituisce come tale.
 
 ### `sfValidatorRegex`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorRegex` controlla che una stringa verifichi
 una certa espressione regolare.
@@ -204,14 +204,14 @@ una certa espressione regolare.
 
 ### `sfValidatorEmail`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorEmail` può controllare gli indirizzi email
 ed eredita da `sfValidatorRegex`.
 
 ### `sfValidatorUrl`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorUrl` può validare indirizzi, URL HTTP
 ed URL FTP. Eredita da `sfValidatorRegex`.
@@ -222,7 +222,7 @@ ed URL FTP. Eredita da `sfValidatorRegex`.
 
 ### `sfValidatorInteger`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorInteger` controlla che il valore immesso
 sia di tipo intero e lo converte come tale.
@@ -233,7 +233,7 @@ sia di tipo intero e lo converte come tale.
 | `min`   | `min`  | Il minimo numero accettabile
 
 | Errore | Segnaposti | Valori predefiniti
-| ------ | ---------- | -------------
+| ------ | ---------- | ------------------
 | `max`  | `max`      | "%value%" must be less than %max%.
 | `min`  | `min`      | "%value%" must be greater than %min%.
 
@@ -242,7 +242,7 @@ not an integer.`.
 
 ### `sfValidatorNumber`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorNumber` controlla un numero (o una stringa
 che PHP possa tradurre tramite la funzione [`floatval()`](www.php.net/floatval))
@@ -254,15 +254,15 @@ e lo converte in un tipo float.
 | `min`   | `min`  | Il minimo numero accettabile
 
 | Errore | Segnaposti | Valori predefiniti
-| ----- | ----------- | -------------
-| `max` | `max`       | "%value%" must be less than %max%.
-| `min` | `min`       | "%value%" must be greater than %min%.
+| ------ | ---------- | ------------------
+| `max`  | `max`      | "%value%" must be less than %max%.
+| `min`  | `min`      | "%value%" must be greater than %min%.
 
 Il messaggio di errore predefinito per `invalid` è `"%value%" is not a number.`.
 
 ### `sfValidatorBoolean`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorBoolean` controlla che il dato inserito sia
 di tipo booleano e restituisce i valori `true` o `false`.
@@ -274,7 +274,7 @@ di tipo booleano e restituisce i valori `true` o `false`.
 
 ### `sfValidatorChoice`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorChoice` controlla se i valori inseriti
 appartengono ad una lista di valori definiti.
@@ -292,14 +292,14 @@ appartengono ad una lista di valori definiti.
 
 ### `sfValidatorPass`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorPass` è un validatore fittizio che restituisce
 i valori di input così come sono.
 
 ### `sfValidatorCallback`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorCallback` delega il controllo ad un callback
 di PHP.
@@ -333,7 +333,7 @@ Validatori di date
 
 ### `sfValidatorDate`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorDate` controlla date semplici e con orari (le
 date con orari sono abilitate con l'opzione `with_time`). 
@@ -367,14 +367,14 @@ specificato nei parametri `date_output` o `datetime_output`.
 >formato riconosciuto dalla funzione `date()` di PHP.
 
 | Errore       | Segnaposti    | Valori predefiniti
-| ------------ | ------------- | -------------
+| ------------ | ------------- | ------------------
 | `bad_format` | `date_format` | "%value%" does not match the date format (%date_format%).
 | `min`        | `min`         | The date must be after %min%.
 | `max`        | `max`         | The date must be before %max%.
 
 ### `sfValidatorTime`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorTime` controlla i formati orario.
 
@@ -399,12 +399,12 @@ nei parametri `date_output` o `datetime_output`.
 >formato riconosciuto dalla funzione `date()` di PHP.
 
 | Errore       | Segnaposti    | Valori predefiniti
-| ------------ | ------------- | -------------
+| ------------ | ------------- | ------------------
 | `bad_format` | `date_format` | "%value%" does not match the time format (%time_format%).
 
 ### `sfValidatorDateTime`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorDateTime` controlla le date con gli orari.
 
@@ -415,7 +415,7 @@ Il validatore `sfValidatorDateTime` controlla le date con gli orari.
 
 ### `sfValidatorDateRange`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorDateTime` controlla intervalli di date.
 
@@ -435,7 +435,7 @@ Validatore di file
 
 ### `sfValidatorFile`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorFile` controlla i file caricati.
 
@@ -467,13 +467,13 @@ mime-type del file caricato. Il validatore offre tre modi per fare questo:
  * `guessFromFileBinary`:      Usa il file binario (funziona solo sui sistemi *nix)
 
 | Errore       | Segnaposti                    | Valori predefiniti
-| ------------ | ----------------------------- | -------------
-| `max_size`   | `%size%`, `%max_size%`        | Il file è troppo grande (il massimo è %max_size% bytes).
-| `mime_types` | `%mime_types%`, `%mime_type%` | Mime type non valido (%mime_type%).
-| `partial`    |                               | Il file è stato caricato solo parzialmente.
-| `no_tmp_dir` |                               | Manca una directory temporanea.
-| `cant_write` |                               | Errore nella scrittura su disco.
-| `extension`  |                               | Caricamento del file interrotto dall'estensione.
+| ------------ | ----------------------------- | ------------------
+| `max_size`   | `%size%`, `%max_size%`        | File is too large (maximum is %max_size% bytes)
+| `mime_types` | `%mime_types%`, `%mime_type%` | Invalid mime type (%mime_type%).
+| `partial`    |                               | The uploaded file was only partially uploaded.
+| `no_tmp_dir` |                               | Missing a temporary folder.
+| `cant_write` |                               | Failed to write file to disk.
+| `extension`  |                               | File upload stopped by extension.File upload stopped by extension.
 
 Il validatore mappa gli errori PHP nel modo seguente:
 
@@ -489,9 +489,9 @@ Validatori logici
 
 ### `sfValidatorAnd`
 
-*Schema validator*: No
+*Validatore schema**: No
 
-Il validatore `sfValidatorAnd` controlla un valore grezzo se passa una lista di validatori.
+Il validatore `sfValidatorAnd` controlla se un valore grezzo passa una lista di validatori.
 
 Il costruttore di `sfValidatorAnd` accetta una lista di validatori come primo parametro:
 
@@ -522,7 +522,7 @@ La lista di validatori inclusi può essere inoltre gestita usando i metodi
 
 ### `sfValidatorOr`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorOr` controlla un valore grezzo se passa almeno un validatore
 in una lista.
@@ -549,7 +549,7 @@ La lista di validatori inclusi può essere inoltre gestita usando i metodi
 
 ### `sfValidatorSchema`
 
-*Schema validator*: Sì
+*Validatore schema**: Sì
 
 Il validatore `sfValidatorSchema` rappresenta un validatore composto da diversi campi.
 Un campo è semplicemente un validatore a cui è assegnato un nome:
@@ -584,10 +584,10 @@ che ricevono tutti i valori. Possono essere impostati con i metodi
 | `allow_extra_fields`  | `extra_fields` | se `false`, il validatore aggiunge un errore se campi extra vengono inseriti nell'array dei valori di input (default impostato a `false`)
 | `filter_extra_fields` | n/a            | se `true`, il validatore filtra i campi extra dall'array restituito con i valori puliti (default impostato a `true`)
 
-| Errore          | Segnaposti   | Valori predefiniti
-| --------------- | ------------ | -------------
-| `extra_fields`  | `%field%`    | Unexpected extra form field named "%field%".
-| `post_max_size` |              | The form submission cannot be processed. It probably means that you have uploaded a file that is too big.
+| Errore          | Segnaposti  | Valori predefiniti
+| --------------- | ----------- | ------------------
+| `extra_fields`  | `%field%`   | Unexpected extra form field named "%field%".
+| `post_max_size` |             | The form submission cannot be processed. It probably means that you have uploaded a file that is too big.
 
 Il validatore `sfValidatorSchema` può essere usato come un array per accedere ai validatori
 inclusi:
@@ -607,7 +607,7 @@ array:
 
 ### `sfValidatorSchemaCompare`
 
-*Schema validator*: Sì
+*Validatore schema**: Sì
 
 Il validatore `sfValidatorSchemaCompare` compara diversi valori dell'array di dati grezzi
 passato:
@@ -641,7 +641,7 @@ Il messaggio di errore `invalid` accetta i seguenti valori: `%left_field%`,
 
 ### `sfValidatorSchemaFilter`
 
-*Schema validator*: Sì
+*Validatore schema**: Sì
 
 Il validatore `sfValidatorSchemaFilter` converte un validatore di tipo non-schema
 ad un validatore di tipo schema. A volte è utile nell'ambito dei post validatori:
@@ -657,7 +657,7 @@ Validatori I18n
 
 ### `sfValidatorI18nChoiceCountry`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorI18nChoiceCountry` controlla che un valore grezzo rientri
 in un codice paese valido secondo ISO 3166.
@@ -668,7 +668,7 @@ in un codice paese valido secondo ISO 3166.
 
 ### `sfValidatorI18nChoiceLanguage`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorI18nChoiceLanguage` controlla che un valore grezzo rientri
 tra le lingue valide.
@@ -679,17 +679,21 @@ tra le lingue valide.
 
 ### `sfValidatorI18nChoiceTimezone`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il vadlidator `sfValidatorI18nChoiceTimezone` verifica che il valore
 grezzo sia un fuso orario valido.
+
+| Opzione     | Errore    | Descrizione
+| ----------- | --------- | -----------
+| `languages` | `invalid` | Un array di lingue da usare
 
 Validatori Propel
 -----------------
 
 ### `sfValidatorPropelChoice`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorPropelChoice` controlla che un valore grezzo sia nella
 lista di record di un dato modello Propel.
@@ -701,7 +705,7 @@ cambiato utilizzando l'opzione `column`.
 
 | Opzione      | Errore | Descrizione
 | ------------ | ------ | -----------
-| `model`      | n/a    | La classe modello (obbligatorio)
+| `model`      | n/a    | La classe del modello (obbligatorio)
 | `criteria`   | n/a    | Un criterio da usare per recuperare gli oggetti
 | `column`     | n/a    | Il nome della colonna (nullo di default, significa che viene usata la chiave primaria) - deve avere lo stesso formato del nome del campo
 | `connection` | n/a    | La connessione Propel da usare (`null` di default)
@@ -712,7 +716,7 @@ cambiato utilizzando l'opzione `column`.
 
 ### `sfValidatorPropelUnique`
 
-*Schema validator*: Sì
+*Validatore schema**: Sì
 
 Il validatore `sfValidatorPropelUnique` controlla l'unicità di una colonna o di un
 gruppo di colonne (opzione `column`) per un modello Propel.
@@ -722,7 +726,7 @@ impostando l'opzione `throw_global_error`.
 
 | Opzione              | Errore | Descrizione
 | -------------------- | ------ | -----------
-| `model`              | n/a    | La classe modello (obbligatorio)
+| `model`              | n/a    | La classe del modello (obbligatorio)
 | `column`             | n/a    | Il nome della colonna unica con formato del nome Propel (obbligatorio). Se l'unicità è per più colonne si può passare un array con i nomi dei campi
 | `field`              | n/a    | Nome del campo usato dal form, diverso dal nome della colonna
 | `primary_key`        | n/a    | Il nome della colonna per la chiave primaria in formato Propel (opzionale, verrà ricavato se non passato). Si può passare un array se la tabella ha più chiavi primarie
@@ -734,7 +738,7 @@ Validatori Doctrine
 
 ### `sfValidatorDoctrineChoice`
 
-*Schema validator*: No
+*Validatore schema**: No
 
 Il validatore `sfValidatorDoctrineChoice` controlla che un valore grezzo sia nella
 lista di record di un dato modello Doctrine.
@@ -746,10 +750,10 @@ cambiato utilizzando l'opzione `column`.
 
 | Opzione      | Errore | Descrizione
 | ------------ | ------ | -----------
-| `model`      | n/a    | La classe modello (obbligatorio)
+| `model`      | n/a    | La classe del modello (obbligatorio)
 | `alias`      | n/a    | L'alias del componente root usato nella query
 | `query`      | n/a    | La query da usare per recuperare gli oggetti
-| `column`     | n/a    | Il nome della colonna (nullo di default, significa che viene usata la chiave primaria) - deve avere lo stesso formato del nome del campo
+| `column`     | n/a    | Il nome della colonna (`null` di default, viene usata la chiave primaria) - deve avere lo stesso formato del nome del campo
 | `connection` | n/a    | La connessione Doctrine da usare (`null` di default)
 
 >**NOTE**
@@ -757,7 +761,7 @@ cambiato utilizzando l'opzione `column`.
 
 ### `sfValidatorDoctrineUnique`
 
-*Schema validator*: Sì
+*Validatore schema**: Sì
 
 Il validatore `sfValidatorDoctrineUnique` controlla l'unicità di una colonna o di un
 gruppo di colonne (opzione `column`) per un modello Doctrine.
@@ -767,10 +771,8 @@ impostando l'opzione `throw_global_error`.
 
 | Opzione              | Errore | Descrizione
 | -------------------- | ------ | -----------
-| `model`              | n/a    | La classe modello (obbligatorio)
+| `model`              | n/a    | La classe del modello (obbligatorio)
 | `column`             | n/a    | Il nome della colonna unica con formato del nome Doctrine (obbligatorio). Se l'unicità è per più colonne si può passare un array con i nomi dei campi
 | `primary_key`        | n/a    | Il nome della colonna per la chiave primaria in formato Doctrine (opzionale, verrà ricavato se non passato). Si può passare un array se la tabella ha più chiavi primarie
 | `connection`         | n/a    | La connessione Doctrine da usare (`null` di default)
 | `throw_global_error` | n/a    | Se lanciare un errore globale (`false` di default) o un errore legato al primo dei campi specificati nell'opzione `column`
-
-

@@ -74,21 +74,21 @@ Listato 1-1 - Classe `ContactForm` con tre campi
     }
 
 >**NOTE**
->In questo tutorial, non mostriamo mai l'istruzione di apertura `<?php`
+>In questo tutorial, non viene mai mostrata l'istruzione di apertura `<?php`
 >negli esempi che contengono solo codice PHP, in modo da ottimizzare
->lo spazio e salvare un po' di alberi. Ovviamente dovete ricordare
->sempre di aggiungerla quando create un nuovo file PHP.
+>lo spazio e salvare un po' di alberi. Ovviamente si deve ricordare
+>sempre di aggiungerla, quando si crea un nuovo file PHP.
 
 I widget sono definiti nel metodo `configure()`. Questo metodo viene
 chiamato automaticamente dal costruttore della classe `sfForm`.
 
 Il metodo `setWidgets()` è usato dai widget nel form. Il metodo
-`setWidgets()` accetta un array associativo in cui le chiavi sono
+`setWidgets()` accetta un array associativo, in cui le chiavi sono
 i nomi dei campi ed i valori sono gli oggetti widget. Ciascun widget
 è un oggetto che eredita dalla classe `sfWidget`. Per questo
 esempio abbiamo usato due tipi di widget:
 
-  * `sfWidgetFormInput` :  Questo widget rappresenta il campo di testo `input`
+  * `sfWidgetFormInputText`: Questo widget rappresenta il campo di testo `input`
   * `sfWidgetFormTextarea`: Questo widget rappresenta l'area di testo `textarea`
 
 >**NOTE**
