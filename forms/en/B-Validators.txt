@@ -687,6 +687,9 @@ valid language.
 The `sfValidatorI18nChoiceTimezone` validates that the tainted value is a
 valid timezone.
 
+| Option      | Error     | Description
+| ----------- | --------- | -----------
+| `languages` | `invalid` | An array of languages to use
 
 Propel Validators
 -----------------

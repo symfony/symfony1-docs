@@ -165,6 +165,7 @@ Widgets
  * [`sfWidgetFormI18nChoiceCountry`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicecountry)
  * [`sfWidgetFormI18nChoiceLanguage`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicelanguage)
  * [`sfWidgetFormI18nChoiceCurrency`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicecurrency)
+ * [`sfWidgetFormI18nChoiceTimezone`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicetimezone)
  * [`sfWidgetFormI18nTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ntime)
  * [`sfWidgetFormInput`](A-Widgets#chapter_a_sub_sfwidgetforminput)
  * [`sfWidgetFormInputCheckbox`](A-Widgets#chapter_a_sub_sfwidgetforminputcheckbox)
@@ -932,7 +933,7 @@ The `sfWidgetFormI18nChoiceCountry` represents a choice of countries:
 
 | Option      | Description
 | ----------- | -----------
-| `culture`   | The culture to use for internationalized strings (required)
+| `culture`   | The culture to use for internationalized strings (default: `en`)
 | `countries` | An array of country codes to use (ISO 3166)
 | `add_empty` | Whether to add a first empty value or not (`false` by default)
 |             | If the option is not a Boolean, the value will be used as the text value.
@@ -948,7 +949,7 @@ The `sfWidgetFormI18nChoiceLanguage` represents a choice of languages:
 
 | Option      | Description
 | ----------- | -----------
-| `culture`   | The culture to use for internationalized strings (required)
+| `culture`   | The culture to use for internationalized strings (default: `en`)
 | `languages` | An array of language codes to use
 | `add_empty` | Whether to add a first empty value or not (`false` by default)
 |             | If the option is not a Boolean, the value will be used as the text value.
@@ -966,6 +967,19 @@ The `sfWidgetFormI18nChoiceCurrency` represents a choice of currencies:
 | ------------ | -----------
 | `culture`    | The culture to use for internationalized strings (required)
 | `currencies` | An array of currency codes to use
+| `add_empty`  | Whether to add a first empty value or not (`false` by default)
+|              | If the option is not a Boolean, the value will be used as the text value.
+
+### ~`sfWidgetFormI18nChoiceTimezone`~
+
+The `sfWidgetFormI18nChoiceTimezone` represents a choice of timzones:
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceTimezone(array('culture' => 'fr'));
+
+| Option       | Description
+| ------------ | -----------
+| `culture`    | The culture to use for internationalized strings (default: `en`)
 | `add_empty`  | Whether to add a first empty value or not (`false` by default)
 |              | If the option is not a Boolean, the value will be used as the text value.
 
