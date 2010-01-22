@@ -708,7 +708,7 @@ token before a new job is saved:
 </propel>
 <doctrine>
     // lib/model/doctrine/JobeetJob.class.php
-    public function save(Doctrine_Connection $con = null)
+    public function save(Doctrine_Connection $conn = null)
 </doctrine>
     {
       // ...

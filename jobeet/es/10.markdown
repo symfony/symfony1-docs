@@ -577,7 +577,7 @@ Actualiza el método `save()` de `JobeetJob` para agregar la lógica que genera 
 </propel>
 <doctrine>
     // lib/model/doctrine/JobeetJob.class.php
-    public function save(Doctrine_Connection $con = null)
+    public function save(Doctrine_Connection $conn = null)
 </doctrine>
     {
       // ...

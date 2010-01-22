@@ -708,7 +708,7 @@ génère le jeton avant qu'un nouvel emploi soit enregistré :
 </propel>
 <doctrine>
     // lib/model/doctrine/JobeetJob.class.php
-    public function save(Doctrine_Connection $con = null)
+    public function save(Doctrine_Connection $conn = null)
 </doctrine>
     {
       // ...

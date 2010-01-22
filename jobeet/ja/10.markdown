@@ -584,7 +584,7 @@ symfony のフォームは1つ以上のフィールドから構成されるク�
 </propel>
 <doctrine>
     // lib/model/doctrine/JobeetJob.class.php
-    public function save(Doctrine_Connection $con = null)
+    public function save(Doctrine_Connection $conn = null)
 </doctrine>
     {
       // ...
