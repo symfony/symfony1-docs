@@ -1,0 +1,551 @@
+Chapitre 1 - La Création de Formulaires
+=======================================
+
+Un formulaire Web est composé de champs de saisie (texte, liste déroulante, cases à cocher, etc.). Ce chapitre présente la gestion de ces champs en utilisant le système de formulaires de symfony.
+
+En pré-requis de ce chapitre et des suivants, vérifiez que vous avez bien installé symfony 1.1, créé un projet et une application `frontend`. Pour plus d'informations, référez-vous au Chapitre Introduction.
+
+Avant de commencer
+------------------
+
+Dans ce chapitre, nous allons voir comment ajouter un formulaire de contact à une application symfony.
+
+La Figure 1-1 montre le formulaire de contact que nous souhaitons implémenter afin que les internautes puissent nous laisser un message.
+
+Figure 1-1 - Le Formulaire de Contact
+
+![Le Formulaire de Contact](/images/forms_book/en/01_01.png "Le Formulaire de Contact")
+
+Ce formulaire est composé de 3 champs : le nom de l'internaute, son email et le message qu'il souhaite nous adresser. Pour rester simple, lorsque l'internaute soumet le formulaire, nous ne faisons qu'afficher les informations saisies comme illustré sur la Figure 1-2.
+
+Figure 1-2 - La page de Remerciements
+
+![La page de Remerciements](/images/forms_book/en/01_02.png "La page de Remerciements")
+
+La Figure 1-3 illustre l'interaction entre l'application et l'internaute.
+
+![Schéma d'Interaction avec l'Internaute](/images/forms_book/en/01_03.png "Schéma d'Interaction avec l'Internaute")
+
+Les Widgets
+-----------
+
+### Les classes `sfForm` et `sfWidget`
+
+Un formulaire est composé de champs représentants les différentes informations que nous demandons à l'internaute de remplir. Dans symfony, un formulaire se matérialise sous la forme d'un objet héritant de la classe `sfForm`. Dans notre cas, nous allons donc créer une classe `ContactForm` qui hérite de la classe `sfForm`. 
+
+>**Note**
+>`sfForm`, classe de base de tous les formulaires, permet de faciliter la gestion de la configuration et du cycle de vie du formulaire.
+
+La configuration d'un formulaire consiste en premier lieu à ajouter des **widgets** en implémentant la méthode `configure()`.
+
+Un **widget** représente un champ du formulaire. Pour le formulaire de contact, nous devons donc ajouter trois widgets correspondants aux trois champs : `name`, `email` et `message`. Le listing 1-1 montre la première implémentation de la classe `ContactForm`.
+
+Listing 1-1 - La classe Formulaire avec les trois Champs
+
+    [php]
+    // lib/form/ContactForm.class.php
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+      }
+    }
+
+>**NOTE**
+>Dans ce livre, nous ne montrons pas l'instruction d'ouverture `<?php` dans les exemples de code
+>qui contiennent uniquement du pur code PHP pour optimiser l'espace et sauver
+>quelques arbres. Vous devez évidemment ne pas oublier d'ajouter chaque fois que
+>vous créez un nouveau fichier PHP.
+
+Les widgets sont définis dans la méthode `configure()`. Cette méthode est automatiquement appelée par le constructeur de la classe `sfForm` lors de la création d'un formulaire.
+
+La méthode `setWidgets()` permet de définir les widgets composant le formulaire, sous la forme d'un tableau PHP associatif dont les clés sont le nom des champs et les valeurs les objets widgets. Chaque widget est un objet héritant de la classe `sfWidget`. Ici, nous avons utilisé deux widgets :
+
+  * `sfWidgetFormInput`    : Ce widget représente un champ `input`
+  * `sfWidgetFormTextarea` : Ce widget représente un champ `textarea`
+
+>**Note**
+>Vous pouvez stocker les classes de formulaires dans n'importe quel répertoire géré par l'autoloading de symfony, mais par convention, nous les stockons dans le répertoire `lib/form/` car il est utilisé par symfony lorsqu'il génère des formulaires.
+
+### L'affichage du formulaire
+
+Maintenant que le formulaire est prêt à l'emploi, nous pouvons créer un module symfony afin de pouvoir l'afficher :
+
+    $ cd ~/PATH/TO/THE/PROJECT
+    $ php symfony generate:module frontend contact
+
+Dans le module `contact`, modifions l'action `index` pour passer une instance du formulaire à le Template comme dans le Listing 1-2.
+
+Listing 1-2 - La Classe Actions du Module `contact`
+
+    [php]
+    // apps/frontend/modules/contact/actions/actions.class.php
+    class contactActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->form = new ContactForm();
+      }
+    }
+
+Lorsque vous créez un formulaire, la méthode `configure()`, définie précédemment, sera appelé automatiquement.
+
+Il ne reste plus qu'à créer un Template pour afficher le formulaire à l'internaute comme dans le Listing 1-3.
+
+Listing 1-3 - La Template permettant d'afficher le Formulaire
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSuccess.php
+    <form action="<?php echo url_for('contact/submit') ?>" method="POST">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Un formulaire symfony ne gère que l'affichage des champs proprement dits. Dans le Template `indexSuccess`, la ligne `<?php echo $form ?>` ne génère donc que les champs. Le développeur doit prendre en charge le tag `form` et le bouton de soumission. Même si les raisons ne sont pas évidentes pour le moment, nous verrons par la suite que cela permettra par exemple d'imbriquer des formulaires les uns dans les autres de façon très simple.
+
+L'utilisation de la construction `<?php echo $form ?>` est très pratique en phase de prototypage et de définition des formulaires. Elle permet au développeur de se concentrer sur l'implémentation de la logique métier sans avoir à se préoccuper de l'aspect visuel. Nous verrons au Chapitre 3 comment remplacer cette instruction par une mise en page personnalisée.
+
+>**Note**
+>Lorsqu'on affiche un objet en utilisant `<?php echo $form ?>`, on demande en fait au moteur PHP d'afficher la représentation textuelle de l'objet `$form`. Pour convertir l'objet en chaîne de caractères, PHP tente d'exécuter la méthode magique `__toString()`. Chaque widget implémente cette méthode magique pour pouvoir convertir l'objet sous forme de code HTML. L'appel à `<?php echo $form ?>` est donc équivalent à l'appel `<?php echo $form->__toString() ?>`.
+
+Nous pouvons maintenant visualiser le formulaire dans un navigateur (Figure 1-4) et vérifier le résultat en tapant l'adresse de l'action `contact/index` (`/frontend_dev.php/contact`).
+
+Figure 1-4 - Formulaire généré
+
+![Formulaire généré](/images/forms_book/en/01_04.png "Formulaire généré")
+
+Listing 1-4 reproduit le code généré par le Template.
+
+    [html]
+    <form action="/frontend_dev.php/contact/submit" method="POST">
+      <table>
+        
+        <!-- Début du code généré par <?php echo $form ?> -->
+        <tr>
+          <th><label for="name">Name</label></th>
+          <td><input type="text" name="name" id="name" /></td>
+        </tr>
+        <tr>
+          <th><label for="email">Email</label></th>
+          <td><input type="text" name="email" id="email" /></td>
+        </tr>
+        <tr>
+          <th><label for="message">Message</label></th>
+          <td><textarea rows="4" cols="30" name="message" id="message"></textarea></td>
+        </tr>
+        <!-- Fin du code généré par <?php echo $form ?> -->
+
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+Nous constatons que le formulaire est représenté par trois lignes `<tr>` d'un tableau HTML. C'est pour cette raison que nous avons englobé l'appel dans un tag `<table>`. Chaque ligne comporte un tag `<label>` et un tag de formulaire (`<input>` ou `<textarea>`).
+
+### Les Labels
+
+Les labels de chaque champ ont été générés de façon automatique. Par défaut, les labels
+sont une transformation du nom du champ en capitalisant la première lettre et en
+remplaçant les éventuels caractères blancs soulignés (`_`) par des espaces,
+Si le nom du champs se termine avec "_id", le suffixe est enlevé du label. 
+
+Exemple :
+
+    [php]
+    $this->setWidgets(array(
+      'first_name' => new sfWidgetFormInputText(), // generated label: "First name"
+      'last_name'  => new sfWidgetFormInputText(), // generated label: "Last name"
+      'author_id'  => new sfWidgetFormInputText(), // generated label: "Author"
+    ));
+ 
+Même si la génération automatique des labels est très pratique, le framework permet la définition de labels personnalisés grâce à l'utilisation de la méthode `setLabels()` :
+
+    [php]
+    $this->widgetSchema->setLabels(array(
+      'name'    => 'Your name',
+      'email'   => 'Your email address',
+      'message' => 'Your message',
+    ));
+
+Vous pouvez également ne modifier qu'un seul label en utilisant la méthode `setLabel()` :
+
+    [php]
+    $this->widgetSchema->setLabel('email', 'Your email address');
+
+Enfin, nous verrons au Chapitre 3 qu'il est possible de redéfinir les labels depuis le Template.
+
+>**Sidebar**
+>La classe `WidgetSchema`
+>
+>Lorsqu'on utilise la méthode `setWidgets()`, symfony crée un objet `sfWidgetFormSchema`. Cet objet est un widget permettant de représenter une collection de widgets. L'appel à `setWidgets()` dans notre formulaire `ContactForm` est donc équivalent au code suivant :
+>
+>     [php]
+>     $this->setWidgetSchema(new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     )));
+>
+>     // qui est également quasiment équivalent à :
+>
+>     $this->widgetSchema = new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     ));
+>
+>La méthode `setLabels()` est donc une méthode qui s'applique à la collection de widgets contenue dans l'objet `widgetSchema`.
+>
+>Nous verrons dans le Chapitre 5 que la notion de "widget schema" facilitera la gestion des formulaires imbriqués.
+
+### Au-delà de la génération de tables
+
+Même si le formulaire est affiché par défaut sous forme d'un tableau HTML, il est possible de changer de stratégie de formatage. Les différents types de formatage sont définis dans des classes héritant de `sfWidgetFormSchemaFormatter`. Par défaut, un formulaire utilise le formateur `table` tel que défini dans la classe `sfWidgetFormSchemaFormatterTable`. Il est également possible d'utiliser le formateur `list` :
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setFormFormatterName('list');
+      }
+    }
+
+Ces deux formateurs sont livrés en standard et nous verrons dans le Chapitre 5 comment créer ses propres classes de formatages. Maintenant que nous savons comment afficher le formulaire, voyons la gestion de sa soumission.
+
+### La soumission du formulaire
+
+Lors de la création de le Template d'affichage du formulaire, nous avons utilisé l'URL interne `contact/submit` pour le tag `form`. Pour gérer la soumission du formulaire, il faut donc ajouter l'action `submit` dans le module `contact`. Le Listing 1-5 montre comment cette action récupère les informations saisies par l'internaute ; puis comment elle le redirige vers la page de remerciements où nous affichons simplement ces informations.
+
+Listing 1-5 - Implémentation de l'Action `submit` dans le Module `contact`
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+
+      $params = array(
+        'name'    => $request->getParameter('name'),
+        'email'   => $request->getParameter('email'),
+        'message' => $request->getParameter('message'),
+      );
+
+      $this->redirect('contact/thankyou?'.http_build_query($params));
+    }
+
+    public function executeThankyou()
+    {
+    }
+
+    // apps/frontend/modules/contact/templates/thankyouSuccess.php
+    <ul>
+      <li>Name:    <?php echo $sf_params->get('name') ?></li>
+      <li>Email:   <?php echo $sf_params->get('email') ?></li>
+      <li>Message: <?php echo $sf_params->get('message') ?></li>
+    </ul>
+
+>**Note**
+>`http_build_query` est une fonction PHP qui génère une chaîne de requête encodée à partir d'un tableau de paramètres.
+
+La méthode `executeSubmit()` effectue trois actions :
+
+  * Par mesure de sécurité, nous vérifions que la page a été soumise en `POST` et redirigeons l'internaute vers une page 404 si ce n'est pas le cas. En effet, dans le Template `indexSuccess`, nous avons déclaré que la méthode de soumission devait être `POST` (`<form ... method="POST">`):
+
+        [php]
+        $this->forward404Unless($request->isMethod('post'));
+
+  * Nous récupérons ensuite les valeurs saisies par l'internaute pour les stocker dans le tableau `params` :
+
+        [php]
+        $params = array(
+          'name'    => $request->getParameter('name'),
+          'email'   => $request->getParameter('email'),
+          'message' => $request->getParameter('message'),
+        );
+
+  * Enfin, nous redirigeons l'internaute vers une page de remerciements (`contact/thankyou`) pour lui afficher les informations qu'il a saisies :
+
+        [php]
+        $this->redirect('contact/thankyou?'.http_build_query($params));
+
+Au lieu de rediriger l'internaute vers une autre page, nous aurions pu créer un Template `submitSuccess.php`. Cependant, il est préférable de toujours rediriger l'internaute après une requête avec la méthode `POST` :
+
+  * Cela évite la double-soumission du formulaire si l'internaute rafraîchit la page de remerciements.
+
+  * L'internaute peut revenir à la page précédente sans déclencher l'affichage de la pop-up de confirmation de re-soumission du formulaire.
+
+>**Tip**
+>Vous avez peut-être remarqué que `executeSubmit()` est différent de `executeIndex()`. Lorsque l'appel de ces méthodes symfony passe de l'objet `sfRequest` actuel en tant que premier argument de la méthode `executeXXX()`. Avec PHP, vous n'avez pas à recueillir tous les paramètres, c'est pourquoi nous ne définissons pas la variable `request` dans `executeIndex()` puisque nous n'en avons pas besoin.
+
+La Figure 1-5 illustre l'enchaînement des méthodes durant l'interaction avec l'internaute.
+
+Figure 1-5 - Enchaînement des Méthodes
+
+![Enchaînement des Méthodes](/images/forms_book/en/01_05.png "Enchaînement des Méthodes")
+
+>**Note**
+>En réaffichant les données soumises par l'internaute dans le Template, nous nous exposons au risque d'une attaque XSS (Cross-Site Scripting). Vous trouverez plus d'information sur la façon de se prémunir de ce risque en appliquant une stratégie d'échappement dans le chapitre [Inside the View Layer](http://www.symfony-project.org/book/1_2/07-Inside-the-View-Layer#chapter_07_output_escaping) du livre "The Definitive Guide to symfony".
+
+En soumettant le formulaire dans votre navigateur, vous devriez maintenant voir une page correspondant à la Figure 1-6.
+
+Figure 1-6 - Page affichée après la Soumission du Formulaire
+
+![Page affichée après la Soumission du Formulaire](/images/forms_book/en/01_06.png "Page affichée après la Soumission du Formulaire")
+
+Au lieu de créer le tableau `params`, il serait plus pratique de récupérer les informations saisies par l'internaute directement dans un tableau. Le Listing 1-6 modifie l'attribut HTML `name` des widgets pour que les valeurs des champs soient stockées dans le tableau `contact`.
+
+Listing 1-6 - Modification du Format de l'Attribut HTML `name` des Widgets
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+
+L'appel à `setNameFormat()` permet de modifier le format de l'attribut HTML `name` pour tous les widgets. Le `%s` sera automatiquement remplacé par le nom du champ lors de la génération du formulaire. Par exemple pour le champ `email`, l'attribut `name` sera donc `contact[email]`. Comme en PHP les paramètres de la requête sous la forme `contact[email]` sont automatiquement transformés en tableau, les valeurs des champs seront disponibles dans le tableau `contact`.
+
+Nous pouvons maintenant simplifier l'action en récupérant directement le tableau `contact` depuis l'objet `request` comme dans le Listing 1-7.
+
+Listing 1-7 - Prise en compte du nouveau Format des Attributs `name` des Widgets dans l'Action
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+
+      $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+    }
+
+En affichant la source HTML de la page de formulaire, vous constaterez que symfony a non seulement généré un attribut `name` en fonction du nom des champs et du format que nous lui avons donnés, mais également un attribut `id`. L'attribut `id` est automatiquement déduit de l'attribut `name` en remplaçant les caractères interdits par des blancs soulignés (`_`) :
+
+  | **Nom**     | **Attribut `name`**  | **Attribut `id`**   |
+  | ----------- | -------------------- | ------------------- |
+  | name        | contact[name]        | contact_name        |
+  | email       | contact[email]       | contact_email       |
+  | message     | contact[message]     | contact_message     |
+
+### Une autre approche
+
+Dans le module `contact`, nous avons utilisé deux actions pour gérer le formulaire : l'action `index` pour l'affichage et l'action `submit` pour gérer la soumission. Mais comme le formulaire est affiché avec la méthode `GET` et soumis avec la méthode `POST`, il est également possible de fusionner ces deux méthodes dans la méthode `index` comme dans le Listing 1-8.
+
+Listing 1-8 - Fusion des deux Actions gérant le Formulaire
+
+    [php]
+    class contactActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new ContactForm();
+
+        if ($request->isMethod('post'))
+        {
+          $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+        }
+      }
+    }
+
+Il faut prendre en compte cette modification dans le Template `indexSuccess.php` en modifiant l'URL du tag `form` : 
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+
+Nous verrons par la suite que cette forme est généralement privilégiée car elle est plus courte et permet d'améliorer la cohésion et la compréhension du code.
+
+La Configuration des Widgets
+----------------------------
+
+### Les options des widgets
+
+Si notre site est géré par plusieurs webmasters, nous voudrons certainement ajouter une liste déroulante contenant des thèmes afin de rediriger le message en fonction de la demande (Figure 1-7). Le Listing 1-9 intègre un champ `subject` en utilisant le widget `sfWidgetFormSelect`.
+
+Figure 1-7 - Ajout d'un Champ `subject` dans le Formulaire
+
+![Ajout d'un Champ `subject` dans le Formulaire](/images/forms_book/en/01_07.png "Ajout d'un Champ `subject` dans le Formulaire")
+
+Listing 1-9 - Ajout d'un Champ `subject` dans le Formulaire
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'subject' => new sfWidgetFormSelect(array('choices' => self::$subjects)),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+
+>**SIDEBAR**
+>L'option `choices` du Widget `sfWidgetFormSelect`
+>
+>PHP ne faisant aucune distinction entre un tableau et un tableau associatif, le tableau que nous avons utilisé pour la liste des sujets est équivalent au code suivant :
+>
+>     [php]
+>     $subjects = array(0 => 'Subject A', 1 => 'Subject B', 2 => 'Subject C');
+>
+>Le widget généré prend la clé du tableau pour l'attribut `value` du tag `option` et la valeur pour le contenu de ce tag :
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="0">Subject A</option>
+>       <option value="1">Subject B</option>
+>       <option value="2">Subject C</option>
+>     </select>
+>
+>Pour modifier les attributs `value`, il suffit donc de définir les clés du tableau :
+>
+>     [php]
+>     $subjects = array('A' => 'Subject A', 'B' => 'Subject B', 'C' => 'Subject C');
+>
+>Ce qui nous donne au niveau de le Template HTML générée :
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="A">Subject A</option>
+>       <option value="B">Subject B</option>
+>       <option value="C">Subject C</option>
+>     </select>
+
+Le widget `sfWidgetFormSelect`, comme tous les widgets, prend en premier argument une liste d'options. Une option peut-être obligatoire ou facultative. Le widget `sfWidgetFormSelect` a une option obligatoire, `choices`. Voici les options disponibles pour les widgets que nous avons déjà utilisés :
+
+  | **Widget**             | **Options obligatoires** | **Options facultatives**         |
+  | ---------------------- | ------------------------ | -------------------------------- |
+  | `sfWidgetFormInput`    | -                        | `type` (default to `text`)       |
+  |                        |                          | `is_hidden` (default to `false`) |
+  | `sfWidgetFormSelect`   | `choices`                | `multiple` (default to `false`)  |
+  | `sfWidgetFormTextarea` | -                        | -
+
+>**Tip**
+>Pour connaître toutes les options d'un widget, vous pouvez vous reporter à la documentation API en ligne ([http://www.symfony-project.org/api/1_2/](http://www.symfony-project.org/api/1_2/)). Toutes les options y sont décrites, ainsi que les valeurs par défaut pour les options facultatives (les options du widget `sfWidgetFormSelect` sont par exemple disponibles à l'adresse [http://www.symfony-project.org/api/1_2/sfWidgetFormSelect](http://www.symfony-project.org/api/1_2/sfWidgetFormSelect)).
+
+### Les attributs HTML des widgets
+
+Tous les widgets prennent également une liste d'attributs HTML comme deuxième argument facultatif. Cela permet de définir des attributs HTML par défaut pour le tag de formulaire généré. Le Listing 1-10 montre comment ajouter un attribut `class` pour le champ `email`.
+
+Listing 1-10 - Définition d'Attributs pour un Widget
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email'));
+
+    // HTML généré
+    <input type="text" name="contact[email]" class="email" id="contact_email" />
+
+Les attributs HTML permettent également de surcharger l'identifiant généré automatiquement comme l'illustre le Listing 1-11.
+
+Listing 1-11 - Surcharge de l'Attribut `id`
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email', 'id' => 'email'));
+
+    // HTML généré
+    <input type="text" name="contact[email]" class="email" id="email" />
+
+Il est même possible de donner des valeurs par défaut aux champs en utilisant l'attribut `value` comme le montre le Listing 1-12.
+
+Listing 1-12 - Valeurs par Défaut des Widgets via des Attributs HTML
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('value' => 'Votre email ici'));
+
+    // HTML généré
+    <input type="text" name="contact[email]" value="Votre email ici" id="contact_email" />
+
+Si cette approche est viable pour les widgets `input`, elle est difficile à gérer pour les widgets `checkbox` ou `radio`, et même impossible dans le cas d'un widget `textarea`. La classe `sfForm` propose des méthodes spécifiques pour définir les valeurs par défaut de chaque champ de façon uniforme quel que soit le type de widget.
+
+
+>**Note**
+>Même s'il est possible de définir des attributs HTML au niveau du formulaire, il est généralement préférable de les déclarer dans le Template pour respecter la séparation des couches comme nous le verrons dans le Chapitre 3.
+
+### Les valeurs par défaut des champs
+
+Il est parfois intéressant de définir des valeurs par défaut pour chaque champ par exemple pour afficher un message d'aide dans le champ qu'on supprime lorsqu'il obtient le focus grâce à un petit bout de JavaScript. Le Listing 1-13 illustre la façon de déclarer des valeurs par défaut via les méthodes `setDefault()` et `setDefaults()`.
+
+Listing 1-13 - Valeurs par défaut des Widgets via les Méthodes `setDefault()` et `setDefaults()`
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->setDefault('email', 'Votre email ici');
+
+        $this->setDefaults(array('email' => 'Votre email ici', 'name' => 'Votre nom ici'));
+      }
+    }
+
+Les méthodes `setDefault()` et `setDefaults()` sont très pratiques pour définir
+des valeurs par défaut, identiques pour toutes les instances d'une même classe de
+formulaire. Mais si l'on souhaite modifier un objet existant via un formulaire, les
+valeurs par défaut sont différentes en fonction de l'instance et doivent donc être
+dynamiques. Le Listing 1-14 utilise le premier argument du constructeur de `sfForm`
+pour passer ces valeurs de façon dynamique.
+
+Listing 1-14 - Valeurs par défaut des Widgets via le construteur de `sfForm`
+
+    [php]
+    public function executeIndex($request)
+    {
+      $this->form = new ContactForm(array('email' => 'Votre email ici', 'name' => 'Votre nom ici'));
+
+      // ...
+    }
+
+>**SIDEBAR**
+>Protection XSS (Cross-Site Scripting)
+>
+>Lorsqu'on passe des attributs HTML aux widgets, ou qu'on définit des valeurs par défaut, la classe `sfForm` protège automatiquement ces valeurs contre les attaques XSS lors de la génération du code HTML. Cette protection est indépendante de la configuration `escaping_strategy` du fichier `settings.yml`. Elle est également assez intelligente pour ne pas protéger un contenu déjà protégé par une autre méthode.
+>
+>Elle protège également les caractères `'` et `"` qui peuvent invalider le HTML généré.
+>
+>Voici un exemple qui illustre cette protection :
+>
+>     [php]
+>     $emailWidget = new sfWidgetFormInputText(array(), array(
+>       'value' => 'Hello "World!"',
+>       'class' => '<script>alert("foo")</script>',
+>     ));
+>     
+>     // HTML généré
+>     <input
+>       value="Hello &quot;World!&quot;"
+>       class="&lt;script&gt;alert(&quot;foo&quot;)&lt;/script&gt;"
+>       type="text" name="contact[email]" id="contact_email"
+>     />
