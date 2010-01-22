@@ -1,0 +1,692 @@
+Chapitre 2 - La Validation des Formulaires
+==========================================
+
+Nous avons vu dans le Chapitre 1 comment créer et afficher un formulaire. Ce chapitre est consacré à la validation des formulaires.
+
+Avant de commencer
+------------------
+
+Le formulaire de contact que nous avons développé au Chapitre 1 n'est pas encore opérationnel. En effet,
+que se passerait-il si l'internaute soumettait une adresse email invalide ou si le message était vide ?
+Dans ce cas, nous souhaiterions afficher à l'utilisateur des messages d'erreurs l'invitant à corriger
+sa saisie comme l'illustre la Figure 2-1.
+
+Figure 2-1 - Affichage des Messages d'Erreurs
+
+![Affichage des Messages d'Erreurs](/images/forms_book/en/02_01.png "Affichage des Messages d'Erreurs")
+
+Voici les règles de validation que nous souhaitons mettre en place :
+
+  * `name`    : Champ facultatif
+  * `email`   : Champ obligatoire, la valeur doit être un email valide
+  * `subject` : Champ obligatoire, la valeur sélectionnée doit être parmi les valeurs proposées
+  * `message` : Champ obligatoire, la longueur du message doit être d'au moins 4 caractères
+
+>**Note**
+>Pourquoi vouloir valider le champ `subject` ? En effet, avec un tag `<select>`, ne forçons-nous pas déjà l'utilisateur à choisir parmi des valeurs pré-définies ? Pour l'internaute moyen les choix sont contraints par le navigateur. Cependant, il est tout à fait possible de soumettre le formulaire avec d'autres valeurs en utilisant des outils comme la Web Developer Toolbar de Firefox ou en simulant une requête avec des outils comme `curl` ou `wget` disponibles en standard sur Linux ou Mac OS X.
+
+Dans ce chapitre, nous ne modifierons pas le Template que nous avons utilisée au Chapitre 1 et qui est rappelée dans le Listing 2-1.
+
+Listing 2-1 - Template du Formulaire `contact`
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSucces.php
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+La Figure 2-2 détaille l'interaction entre l'application et l'internaute. La première étape consiste à afficher le formulaire à l'internaute. Lorsque celui-ci le soumet, soit sa saisie est valide et il est redirigé vers la page de remerciements, soit sa saisie comporte des champs invalides et le formulaire est ré-affiché avec des messages d'erreurs.
+
+Figure 2-2 - Interaction entre l'Application et l'Internaute
+
+![Interaction entre l'Application et l'Internaute](/images/forms_book/en/02_02.png "Interaction entre l'Application et l'Internaute")
+
+Les Validateurs
+---------------
+
+Un formulaire symfony est composé de champs. Nous avons vu au Chapitre 1 que chaque champ était identifié par un nom unique. De la même manière que nous avons associé un widget à chaque champ pour lui permettre d'être affiché à l'utilisateur, voyons maintenant comment lui attacher des règles de validation.
+
+### La classe `sfValidatorBase`
+
+La validation de chaque champ est gérée par des objets héritant de la classe `sfValidatorBase`. Pour valider le formulaire de contact, nous devons donc définir des objets validateurs pour les quatre champs : `name`, `email`, `subject` et `message`. Le Listing 2-2 montre l'intégration de ces validateurs dans la classe de formulaire en utilisant la méthode `setValidators()`.
+
+Listing 2-2 - Ajout de Validateurs à la Classe `ContactForm`
+
+    [php]
+    // lib/form/ContactForm.class.php
+    class ContactForm extends BaseForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+      
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'subject' => new sfWidgetFormSelect(array('choices' => self::$subjects)),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+        $this->widgetSchema->setNameFormat('contact[%s]');
+
+        $this->setValidators(array(
+          'name'    => new sfValidatorString(array('required' => false)),
+          'email'   => new sfValidatorEmail(),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4)),
+        ));
+      }
+    }
+
+Nous avons utilisé trois validateurs différents :
+
+  * `sfValidatorString` : Ce validateur permet de valider une chaîne de caractères
+  * `sfValidatorEmail`  : Comme son nom l'indique, ce validateur permet de valider une adresse email
+  * `sfValidatorChoice` : Ce validateur permet de s'assurer que la valeur soumise est incluse dans une liste pré-définie
+
+Chaque validateur prend en premier argument une liste d'options. Comme pour les widgets, certaines de ces options sont obligatoires, d'autres facultatives. Le validateur `sfValidatorChoice` prend par exemple une option obligatoire, `choices`. Tous les validateurs prennent au moins les options facultatives `required` et `trim` définies par défaut par la classe `sfValidatorBase` :
+
+  | **Option**   | **Valeur par défaut** | **Description**
+  | ------------ | --------------------- | ---------------
+  | required     | `true`                | Permet de définir si le champ est obligatoire
+  | trim         | `false`               | Supprime automatiquement les blancs en début et fin de chaîne avant la validation
+
+Voyons maintenant les options disponibles pour les validateurs que nous avons utilisés :
+
+  | **Validateur**    | **Options obligatoires** | **Options facultatives** |
+  | ----------------- | ------------------------ | ------------------------ |
+  | sfValidatorString |                          | `max_length`             |
+  |                   |                          | `min_length`             |
+  | sfValidatorEmail  |                          | `pattern`                |
+  | sfValidatorChoice | `choices`                |                          |
+
+Si vous essayez de soumettre le formulaire avec des valeurs invalides, vous ne verrez aucun changement de comportement. En effet, il faut maintenant modifier le module `contact` pour valider les données soumises par l'internaute comme le montre le Listing 2-3.
+
+Listing 2-3 - Intégration de la Validation dans le Module `contact`
+
+    [php]
+    class contactActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new ContactForm();
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('contact'));
+          if ($this->form->isValid())
+          {
+            $this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+          }
+        }
+      }
+
+      public function executeThankyou()
+      {
+      }
+    }
+
+Le Listing 2-3 introduit de nombreux concepts :
+
+  * Dans le cas de l'appel initial en `GET`, on initialise le formulaire pour le passer à le Template. Le formulaire est alors dans un **état initial** :
+
+        [php]
+        $this->form = new ContactForm();
+
+  * Lorsque l'internaute soumet le formulaire en `POST`, la méthode `bind()` permet de lier le formulaire avec les données saisies et déclenche le mécanisme de validation. Le formulaire passe à un **état lié**.
+
+        [php]
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('contact'));
+
+  * Une fois le formulaire à l'état lié, il est possible de tester sa validité avec la méthode `isValid()` :
+
+      * Si la valeur de retour est `true`, le formulaire est valide et on peut rediriger l'internaute vers la page de remerciements :
+
+            [php]
+            if ($this->form->isValid())
+            {
+              $this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+            }
+
+      * Sinon, le Template `indexSuccess` est évaluée comme lors de l'affichage initial. La validation ayant injecté les messages d'erreurs dans le formulaire, ceux-ci sont affichés à l'internaute.
+
+>**Note**
+>Lorsqu'un formulaire est dans l'état initial, la méthode `isValid()` renvoie toujours `false` et la méthode `getValues()` renvoie un tableau vide.
+
+La Figure 2-3 permet de visualiser le code exécuté lors de l'interaction entre l'application et l'internaute.
+
+Figure 2-3 - Visualisation du Code exécuté lors de l'Interaction entre l'Application et l'Internaute
+
+![Visualisation du Code exécuté lors de l'Interaction entre l'Application et l'Internaute](/images/forms_book/en/02_03.png "Visualisation du Code exécuté lors de l'Interaction entre l'Application et l'Internaute")
+
+### Rôle des validateurs
+
+Lors de la redirection vers la page de remerciements, vous avez peut-être remarqué que nous n'utilisons pas le tableau `$request->getParameter('contact')` mais `$this->form->getValues()`. En effet, `$request->getParameter('contact')` retourne les données saisies par l'internaute alors que `$this->form->getValues()` retourne les données validées.
+
+Si le formulaire est valide, pourquoi ces deux constructions de code ne seraient-elles pas équivalentes ? Chaque validateur a en fait deux rôles : un **rôle de validation** des données mais également un **rôle de nettoyage** des données. La méthode `getValues()` retourne donc les valeurs validées et nettoyées.
+
+Le nettoyage peut avoir deux actions principales : **uniformiser** et **convertir** les données saisies.
+
+Nous avons déjà vu un cas d'uniformisation des données avec l'option `trim`. Mais l'action d'uniformisation est beaucoup plus importante pour un champ date par exemple. Pour valider une date, on peut utiliser le validateur `sfValidatorDate`. Ce validateur accepte comme valeur d'entrée de très nombreux formats (timestamp, format défini par une expression régulière, ...). Au lieu de renvoyer la valeur d'entrée, il la convertit par défaut dans le format `Y-m-d H:i:s`. De ce fait, le développeur est sûr d'obtenir un format stable quel que soit le format d'entrée utilisé par l'internaute. Le système offre donc une très grande souplesse dans la saisie de l'internaute et garantit l'uniformité au développeur.
+
+Prenons maintenant un cas de conversion, le téléchargement de fichiers. La validation d'un fichier peut s'effectuer grâce au validateur `sfValidatorFile`. Une fois le fichier validé, au lieu de retourner le nom du fichier téléchargé par l'internaute, le validateur retourne un objet `sfValidatedFile` qui permet de manipuler facilement le fichier. L'utilisation de ce validateur est détaillée plus loin dans ce chapitre.
+
+>**Tip**
+>La méthode `getValues()` renvoie un tableau contenant toutes les valeurs validées et nettoyées. Mais il est parfois utile de récupérer seulement une valeur. Dans ce cas, il est préférable d'utiliser la méthode `getValue()` : `$email = $this->form->getValue('email')`.
+
+### Formulaire invalide
+
+Lorsque le formulaire comporte des champs invalides, le Template `indexSuccess` est évaluée. La Figure 2-4 montre ce qu'on obtient en soumettant un formulaire invalide.
+
+Figure 2-4 - Formulaire invalide
+
+![Formulaire invalide](/images/forms_book/en/02_04.png "Formulaire invalide")
+
+Sans rien changer à le Template, l'appel à `<?php echo $form ?>` a pris en compte automatiquement les messages d'erreurs associés à chaque champ et a conservé les données saisies par l'internaute.
+
+Lorsqu'on lie le formulaire à des données externes, via la méthode `bind()`, le formulaire passe à un état lié, ce qui déclenche les actions suivantes :
+
+  * La validation est exécutée
+
+  * Les messages d'erreurs sont stockés dans le formulaire pour qu'ils soient accessibles par le Template
+
+  * Les valeurs par défaut du formulaire sont remplacées par les données saisies par l'internaute
+
+Toutes les informations nécessaires à l'affichage des messages d'erreurs et au re-peuplement des données saisies par l'internaute sont donc disponibles automatiquement via la variable `form` depuis le Template.
+
+>**Caution**
+>Comme nous l'avons vu au Chapitre 1, il est possible de passer des valeurs par défaut au constructeur des classes de formulaire. Dans l'exemple précédent, ces valeurs n'ont pas été conservées après la soumission d'un formulaire invalide au profit des données soumises par l'utilisateur pour lui permettre de corriger ses erreurs. Il ne faut donc jamais utiliser les données saisies par l'utilisateur comme valeurs par défaut comme dans cet exemple : `$this->form->setDefaults($request->getParameter('contact'))`.
+
+La Personnalisation des Validateurs
+-----------------------------------
+
+### Personnalisation des messages d'erreurs
+
+Comme vous avez pu le remarquer dans la Figure 2-4, les messages d'erreurs ne sont pas très explicites. Nous allons maintenant voir comment les personnaliser.
+
+Chaque validateur peut ajouter des erreurs au formulaire. Une erreur est composée d'un code et d'un message. Tous les validateurs héritent des erreurs `required` et `invalid` définies dans la classe `sfValidatorBase` :
+
+  | **Code**     | **Message**     | **Description**
+  | ------------ | --------------- | ---------------
+  | required     | `Required.`     | Le champ est obligatoire et la valeur vide
+  | invalid      | `Invalid.`      | Le champ est invalide
+
+Voici les codes erreur des validateurs que nous avons utilisés :
+
+  | **Validateur**    | **Codes erreur** |
+  | ----------------- | ----------------- |
+  | sfValidatorString | `max_length`      |
+  |                   | `min_length`      |
+  | sfValidatorEmail  |                   |
+  | sfValidatorChoice |                   |
+
+La personnalisation des messages d'erreurs est possible en passant un deuxième argument lors de la création des objets de validation. Le Listing 2-4 personnalise quelques messages d'erreurs et la Figure 2-5 illustre les messages d'erreurs personnalisés en action.
+
+Listing 2-4 - Personnalisation des Messages d'Erreurs
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+      
+      public function configure()
+      {
+        // ...
+
+        $this->setValidators(array(
+          'name'    => new sfValidatorString(array('required' => false)),
+          'email'   => new sfValidatorEmail(array(), array('invalid' => 'L\'adresse email est invalide.')),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4), array('required' => 'Le champ message est obligatoire.')),
+        ));
+      }
+    }
+
+Figure 2-5 - Messages d'Erreurs Personnalisés
+
+![Messages d'Erreurs Personnalisés](/images/forms_book/en/02_05.png "Messages d'Erreurs Personnalisés")
+
+La Figure 2-6 montre le message d'erreur que vous obtenez si vous essayez de rentrer un message trop court (nous avons défini une longueur minimum de 4 caractères).
+
+Figure 2-6 - Erreur sur un Message trop court
+
+![Erreur sur un Message trop court](/images/forms_book/en/02_06.png "Erreur sur un Message trop court")
+
+Le message d'erreur par défaut associé à ce code erreur (`min_length`) est différent des messages que nous avons déjà vus puisqu'il intègre deux valeurs dynamiques : la donnée soumise par l'internaute (`foo`) et le nombre minimum de caractères autorisés pour ce champ (`4`). Le Listing 2-5 personnalise ce message en intégrant ces valeurs dynamiques et la Figure 2-7 illustre le résultat.
+
+Listing 2-5 - Personnalisation de Messages d'Erreurs contenant des Valeurs dynamiques
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->setValidators(array(
+          'name'    => new sfValidatorString(array('required' => false)),
+          'email'   => new sfValidatorEmail(array(), array('invalid' => 'L\'adresse email est invalide.')),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4), array(
+            'required'   => 'Le champ message est obligatoire.',
+            'min_length' => 'Le message "%value%" est trop court. Il faut au moins %min_length% caractères.',
+          )),
+        ));
+      }
+    }
+
+Figure 2-7 - Messages d'Erreurs Personnalisés avec Valeurs dynamiques
+
+![Messages d'Erreurs Personnalisés avec Valeurs dynamiques](/images/forms_book/en/02_07.png "Messages d'Erreurs Personnalisés avec Valeurs dynamiques")
+
+Chaque message d'erreur peut contenir des valeurs dynamiques en indiquant le nom de la valeur entouré par le caractère pourcent (`%`). Les valeurs disponibles sont généralement la donnée soumise par l'utilisateur (`value`) et les valeurs des options du validateur en relation avec l'erreur.
+
+>**Tip**
+>Pour connaître tous les codes erreur, les options et les messages par défaut d'un validateur, vous pouvez vous reporter à la documentation API en ligne ([http://www.symfony-project.org/api/1_2/](http://www.symfony-project.org/api/1_2/)). Tous les codes, options et messages y sont décrits, ainsi que les valeurs par défaut (par exemple, l'API du validateur `sfValidatorString` est disponible à l'adresse [http://www.symfony-project.org/api/1_2/sfValidatorString](http://www.symfony-project.org/api/1_2/sfValidatorString)).
+
+La Sécurité des Validateurs
+---------------------------
+
+Par défaut, un formulaire n'est valide que si tous les champs soumis par l'internaute possèdent un validateur. Cela permet de s'assurer que chaque champ possède ses règles de validation et qu'il n'est pas possible d'injecter des valeurs pour des champs non définis dans le formulaire.
+
+Pour mieux comprendre cette règle de sécurité, prenons l'exemple d'un objet utilisateur comme défini dans le Listing 2-6.
+
+Listing 2-6 - Classe `User`
+
+    [php]
+    class User
+    {
+      protected
+        $name = '',
+        $is_admin = false;
+
+      public function setFields($fields)
+      {
+        if (isset($fields['name']))
+        {
+          $this->name = $fields['name'];
+        }
+
+        if (isset($fields['is_admin']))
+        {
+          $this->is_admin = $fields['is_admin'];
+        }
+      }
+
+      // ...
+    }
+
+Un object utilisateur (`User`) est composé de deux propriétés, le nom de l'utilisateur (`name`) et un boolean permettant de savoir s'il est administrateur (`is_admin`). La méthode `setFields()` permet de mettre à jour ces deux propriétés. Le Listing 2-7 montre le formulaire associé à la classe `User` permettant à l'internaute de modifier uniquement la propriété `name`.
+
+Listing 2-7 - Formulaire d'Edition pour la classe `User`
+
+    [php]
+    class UserForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array('name' => new sfWidgetFormInputString()));
+        $this->widgetSchema->setNameFormat('user[%s]');
+
+        $this->setValidators(array('name' => new sfValidatorString()));
+      }
+    }
+
+Enfin, le Listing 2-8 montre une implémentation du module `user` utilisant le formulaire défini précédemment pour permettre à l'internaute de modifier son nom.
+
+Listing 2-8 - Implémentation du Module `user`
+
+    [php]
+    class userActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new UserForm();
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('user'));
+          if ($this->form->isValid())
+          {
+            $user = // récupération de l'utilisateur courant
+
+            $user->setFields($this->form->getValues());
+
+            $this->redirect('...');
+          }
+        }
+      }
+    }
+
+Sans aucune protection spécifique, si l'internaute soumet un formulaire contenant non seulement une valeur pour le champ `name` mais également pour le champ `is_admin`, via l'utilisation d'un outil comme Firebug par exemple, notre code est vulnérable. En effet, le champ `is_admin` ne possédant pas de validateur dans le formulaire, sa valeur est toujours valide. Quelle que soit sa valeur, la méthode `setFields()` va donc mettre à jour non seulement la propriété `name` mais également la propriété `is_admin`.
+
+Si vous testez ce code en soumettant une valeur pour le champ `name` et `is_admin`, vous obtiendrez une erreur globale "Extra field name." comme illustré Figure 2-8. Par défaut, le système a généré une erreur car certains champs soumis ne possèdent pas de validateur ; le champ `is_admin` n'est pas défini dans le formulaire `UserForm`.
+
+Figure 2-8 - Erreur s'il manque un Validateur
+
+![Erreur s'il manque un Validateur](/images/forms_book/en/02_08.png "Erreur s'il manque un Validateur")
+
+Jusqu'à maintenant, nous avons vu que les validateurs généraient des erreurs associées à des champs. D'où peut donc provenir cette erreur globale ? Lorsqu'on utilise la méthode `setValidators()`, symfony crée un objet `sfValidatorSchema`. La classe `sfValidatorSchema` permet de définir une collection de validateurs. L'appel à `setValidators()` est équivalent au code suivant :
+
+    [php]
+    $this->setValidatorSchema(new sfValidatorSchema(array(
+      'email'   => new sfValidatorEmail(),
+      'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+      'message' => new sfValidatorString(array('min_length' => 4)),
+    )));
+
+La classe `sfValidatorSchema` possède des règles de validation par défaut permettant de protéger la collection de validateurs. Ces règles sont paramétrables via deux options : `allow_extra_fields` et `filter_extra_fields`.
+
+L'option `allow_extra_fields`, qui est à `false` par défaut, consiste à vérifier que chaque donnée soumise par l'internaute possède un validateur. Si ce n'est pas le cas, une erreur globale "Extra field name." est générée, comme dans l'exemple précédent. Lors du développement, cela permet également d'être alerté si on oublie de valider explicitement un champ.
+
+Revenons au formulaire de contact. Changeons les règles de validation en rendant le champ `name` obligatoire. Comme la valeur par défaut de l'option `required` est `true`, nous pourrions changer le validateur `name` par :
+
+    [php]
+    $nameValidator = new sfValidatorString();
+
+Ce validateur n'a aucune incidence puisqu'il ne possède ni d'option `min_length`, ni d'option `max_length` ; dans ce cas, nous pourrions également le remplacer explicitement par un validateur vide :
+
+    [php]
+    $nameValidator = new sfValidatorPass();
+
+Au lieu de définir un validateur vide, nous pourrions le supprimer, mais la protection par défaut que nous avons vue précédemment nous l'empêche. Le Listing 2-9 montre comment désactiver la protection en utilisant l'option `allow_extra_fields`.
+
+Listing 2-9 - Désactivation de la Protection `allow_extra_fields`
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->setValidators(array(
+          'email'   => new sfValidatorEmail(),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4)),
+        ));
+
+        $this->validatorSchema->setOption('allow_extra_fields', true);
+      }
+    }
+
+Vous devriez maintenant pouvoir valider le formulaire comme illustré dans la Figure 2-9.
+
+Figure 2-9 - Validation avec `allow_extra_fields` à `true`
+
+![Validation avec `allow_extra_fields` à `true`](/images/forms_book/en/02_09.png "Validation avec `allow_extra_fields` à `true`")
+
+En observant la page de remerciements, vous vous apercevrez que même si le formulaire a passé la validation, la valeur du champ `name` est toujours vide, quelle que soit la donnée que vous soumettez. En fait, la valeur n'est même pas définie dans le tableau retourné par `$this->form->getValues()`. La désactivation de l'option `allow_extra_fields` a permis de supprimer l'erreur liée à l'absence de validateur mais l'option `filter_extra_fields`, qui est à `true` par défaut, filtre ces valeurs en les retirant des valeurs validées. Il est bien évidemment possible de modifier ce comportement comme le montre le Listing 2-10.
+
+Listing 2-10 - Désactivation de la Protection `filter_extra_fields`
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->setValidators(array(
+          'email'   => new sfValidatorEmail(),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4)),
+        ));
+
+        $this->validatorSchema->setOption('allow_extra_fields', true);
+        $this->validatorSchema->setOption('filter_extra_fields', false);
+      }
+    }
+
+Vous devriez maintenant pouvoir revalider votre formulaire et récupérer la valeur saisie dans la page de remerciement.
+
+Nous verrons dans le Chapitre 4 que ces protections permettront de sauvegarder simplement et de façon sécurisée les formulaires basés sur des objets Propel.
+
+Les Validateurs Logiques
+------------------------
+
+Il est possible de définir plusieurs validateurs pour un même champ grâce aux validateurs logiques :
+
+  * `sfValidatorAnd` : Pour être valide, le champ doit remplir toutes les conditions de validation
+  
+  * `sfValidatorOr` : Pour être valide, le champ doit remplir au moins une des conditions de validation
+
+Le constructeur des opérateurs logiques prend une liste de validateurs comme premier argument. Le Listing 2-11 utilise le validateur `sfValidatorAnd` pour associer deux validateurs obligatoires au champ `name`.
+
+Listing 2-11 - Utilisation du Validateur `sfValidatorAnd`
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+     public function configure()
+     {
+        // ...
+
+        $this->setValidators(array(
+          // ...
+          'name' => new sfValidatorAnd(array(
+            new sfValidatorString(array('min_length' => 5)),
+            new sfValidatorRegex(array('pattern' => '/[\w- ]+/')),
+          )),
+        ));
+      }
+    }
+
+En soumettant le formulaire, la donnée saisie pour le champ `name` doit être composée d'au moins cinq caractères **et** elle doit être conforme à l'expression régulière (`[\w- ]+`).
+
+Les validateurs logiques étant eux-mêmes des validateurs, il est possible de les combiner pour définir des expressions logiques complexes comme le montre le Listing 2-12.
+
+Listing 2-12 - Combinaisons de plusieurs Opérateurs logiques
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+     public function configure()
+     {
+        // ...
+
+        $this->setValidators(array(
+          // ...
+          'name' => new sfValidatorOr(array(
+            new sfValidatorAnd(array(
+              new sfValidatorString(array('min_length' => 5)),
+              new sfValidatorRegex(array('pattern' => '/[\w- ]+/')),
+            )),
+            new sfValidatorEmail(),
+          )),
+        ));
+      }
+    }
+
+Les Validateurs Globaux
+-----------------------
+
+Tous les validateurs que nous avons vus jusqu'à présent sont attachés à un champ spécifique et ne permettent donc de valider qu'une seule valeur à la fois. Ils agissent isolément des autres données soumises par l'internaute. Mais parfois, la validation d'un champ est contextuelle et dépend d'un ou plusieurs autres champs comme par exemple pour valider que deux mots de passe sont identiques, ou qu'une date de départ est bien antérieure à une date de fin.
+
+Dans ce cas, il faut utiliser un validateur global qui permet de valider les données soumises par l'internaute dans leur contexte. Il est possible d'enregistrer un validateur global avant ou après la validation individuelle des champs en utilisant respectivement un pré-validateur ou un post-validateur. Il est généralement préférable d'utiliser un post-validateur car les données sont déjà validées et surtout nettoyées, donc avec un format prévisible. Le Listing 2-13 montre l'implémentation de la comparaison de deux mots de passe en utilisant le validateur `sfValidatorSchemaCompare`.
+
+Listing 2-13 - Utilisation du Validateur `sfValidatorSchemaCompare`
+
+    [php]
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again'));
+
+A partir de symfony 1.2, vous pouvez également utiliser les opérateurs PHP plutôt que les constantes de la classe `sfValidatorSchemaCompare`. L'exemple précédent est équivalent au code suivant :
+
+    [php]
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('password', '==', 'password_again'));
+
+>**Tip**
+>La classe `sfValidatorSchemaCompare` hérite du validateur `sfValidatorSchema` comme tous les validateurs globaux. `sfValidatorSchema` est lui-même un validateur global puisqu'il permet de valider l'ensemble des données soumises par l'internaute en déléguant la validation de chaque champ à d'autres validateurs.
+
+Le Listing 2-14 montre l'utilisation du même validateur pour valider qu'une date de départ est antérieure à une date de fin avec une personnalisation de message d'erreur.
+
+Listing 2-14 - Utilisation du Validateur `sfValidatorSchemaCompare`
+
+    [php]
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorSchemaCompare('start_date', sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'end_date',
+        array(),
+        array('invalid' => 'The start date ("%left_field%") must be before the end date ("%right_field%")')
+      )
+    );
+
+L'utilisation d'un post-validateur permet de garantir que la comparaison des deux dates sera possible. En effet, quel que soit le format de dates utilisé par l'internaute lors de sa saisie, la validation des champs `start_date` et `end_date` a permis leur conversion dans un format comparable (`Y-m-d H:i` par défaut).
+
+Par défaut, les pré-validateurs et les post-validateurs renvoient des erreurs globales au formulaire. Néanmoins, certains d'entre eux permettent d'attacher l'erreur à un champ en particulier. Par exemple, l'option `throw_global_error` du validateur `sfValidatorSchemaCompare` permet de choisir entre une erreur globale (Figure 2-10) et une erreur attachée au premier champ passé en argument du constructeur (Figure 2-11). Le Listing 2-15 montre l'utilisation de l'option `throw_global_error`.
+
+Listing 2-15 - Utilisation de l'option `throw_global_error`
+
+    [php]
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorSchemaCompare('start_date', sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'end_date',
+        array('throw_global_error' => true),
+        array('invalid' => 'The start date ("%left_field%") must be before the end date ("%right_field%")')
+      )
+    );
+
+Figure 2-10 - Erreur globale pour un Validateur global
+
+![Erreur globale pour un Validateur global](/images/forms_book/en/02_10.png "Erreur globale pour un Validateur global")
+
+Figure 2-11 - Erreur locale pour un Validateur global
+
+![Erreur locale pour un Validateur global](/images/forms_book/en/02_11.png "Erreur locale pour un Validateur global")
+
+Enfin, l'utilisation d'un validateur logique permet de combiner plusieurs post-validators comme le montre le Listing 2-16.
+
+Listing 2-16 - Combinaison de plusieurs Post-Validateurs grâce à un Validateur logique
+
+    [php]
+    $this->validatorSchema->setPostValidator(new sfValidatorAnd(array(
+      new sfValidatorSchemaCompare('start_date', sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'end_date'),
+      new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again'),
+    )));
+
+Le téléchargement de Fichiers
+-----------------------------
+
+En PHP, comme dans tous les langages utilisés pour le Web, la gestion du téléchargement de fichiers nécessite
+une prise en charge particulière tant au niveau du code HTML que pour la récupération des fichiers côté
+serveur. Nous allons voir dans cette section les outils que le framework de formulaire met à la disposition
+du développeur pour lui simplifier la vie. Nous verrons également comment éviter les principaux pièges.
+
+Modifions le formulaire de contact pour permettre aux internautes d'attacher une pièce jointe à
+leur message. Pour cela, ajoutons un champ `file` comme le montre le Listing 2-17.
+
+Listing 2-17 - Ajout d'un Champ `file` au Formulaire `ContactForm`
+
+    [php]
+    // lib/form/ContactForm.class.php
+    class ContactForm extends BaseForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'subject' => new sfWidgetFormSelect(array('choices' => self::$subjects)),
+          'message' => new sfWidgetFormTextarea(),
+          'file'    => new sfWidgetFormInputFile(),
+        ));
+        $this->widgetSchema->setNameFormat('contact[%s]');
+
+        $this->setValidators(array(
+          'name'    => new sfValidatorString(array('required' => false)),
+          'email'   => new sfValidatorEmail(),
+          'subject' => new sfValidatorChoice(array('choices' => array_keys(self::$subjects))),
+          'message' => new sfValidatorString(array('min_length' => 4)),
+          'file'    => new sfValidatorFile(),
+        ));
+      }
+    }
+
+Lorsqu'un formulaire contient un widget de type `sfWidgetFormInputFile` permettant le téléchargement d'un fichier, il ne faut pas oublier d'ajouter l'attribut `enctype` au tag `form` comme le montre le Listing 2-18.
+
+Listing 2-18 - Modification de la Template pour prendre en compte le Champ `file`
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST" enctype="multipart/form-data">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+>**Note**
+>Si vous générez dynamiquement le Template associée à un formulaire, la méthode `isMultipart()` de l'objet formulaire permet de savoir si un formulaire nécessite l'attribut `enctype`.
+
+En PHP, les informations sur les fichiers téléchargés ne sont pas stockées avec les autres valeurs soumises. Il faut donc modifier l'appel à la méthode `bind()` pour lui passer ces informations en deuxième argument comme le montre le Listing 2-19.
+
+Listing 2-19 - Passage des Fichiers téléchargés à la Méthode `bind()`
+
+    [php]
+    class contactActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new ContactForm();
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('contact'), $request->getFiles('contact'));
+          if ($this->form->isValid())
+          {
+            $values = $this->form->getValues();
+            // do something with the values
+
+            // ...
+          }
+        }
+      }
+
+      public function executeThankyou()
+      {
+      }
+    }
+
+Maintenant que le formulaire est opérationnel, il reste à modifier l'action pour stocker le fichier téléchargé. Comme nous l'avons vu au début de ce chapitre, le validateur `sfValidatorFile` convertit les informations concernant le fichier téléchargé en un objet `sfValidatedFile`. Le Listing 2-20 montre comment manipuler cet objet pour stocker le fichier dans le répertoire `web/uploads`.
+
+Listing 2-20 - Utilisation de l'Objet `sfValidatedFile`
+
+    [php]
+    if ($this->form->isValid())
+    {
+      $file = $this->form->getValue('file');
+
+      $filename = 'uploaded_'.sha1($file->getOriginalName());
+      $extension = $file->getExtension($file->getOriginalExtension());
+      $file->save(sfConfig::get('sf_upload_dir').'/'.$filename.$extension);
+
+      // ...
+    }
+
+Le tableau suivant détaille les méthodes de l'objet `sfValidatedFile` :
+
+  | **Méthode**            | **Description**
+  | ---------------------- | ---------------
+  | save()                 | Sauvegarde le fichier téléchargé
+  | isSaved()              | Retourne `true` si le fichier a été sauvegardé
+  | getSavedName()         | Retourne le nom du fichier sauvegardé
+  | getExtension()         | Retourne l'extension du fichier en fonction du type mime
+  | getOriginalName()      | Retourne le nom du fichier téléchargé
+  | getOriginalExtension() | Retourne l'extension du nom du fichier téléchargé
+  | getTempName()          | Retourne le chemin vers le fichier temporaire
+  | getType()              | Retourne le type mime du fichier
+  | getSize()              | Retourne la taille du fichier
+
+>**Tip**
+>Le type mime fourni par le navigateur lors du téléchargement d'un fichier n'est pas considéré comme une donnée fiable. Pour assurer une sécurité maximum, les fonctions `finfo_open`, `mime_content_type` et l'utilitaire `file` sont utilisés à tour de rôle lors de la validation du fichier. Si aucune de ces fonctions n'arrive à déterminer le type mime ou si aucune n'est disponible sur le système, le type mime du navigateur est alors utilisé. Il est possible d'ajouter ou de modifier les fonctions déterminant le mime type en passant l'option `mime_type_guessers` au validateur `sfValidatorFile`.
