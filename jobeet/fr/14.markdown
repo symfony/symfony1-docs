@@ -1,0 +1,414 @@
+Jour 14 : Les Flux
+==================
+
+Hier, vous avez commencé à développer votre première application symfony. Ne vous arrêtez
+pas maintenant. Car vous en apprendrez davantage sur symfony, essayez d'ajouter de nouvelles
+fonctionnalités à votre application, l'héberger quelque part, et la partager avec la communauté. 
+
+Passons à quelque chose de complètement différent aujourd'hui.
+
+Si vous êtes à la recherche d'un emploi, vous aurez probablement besoin d'être informé
+dès qu'un nouveau poste est affiché. Parce qu'il n'est pas très pratique de vérifier le
+site web toutes les heures, nous allons ajouter plusieurs flux d'emploi aujourd'hui pour
+que nos utilisateurs Jobeet soient mis au courant.
+
+Les formats
+-----------
+
+Le framework symfony a un support natif pour les ~formats|Formats~ et les
+~mime-types|Mime Types~. Cela signifie que le même modèle et contrôleur peut
+avoir différents ~Templates|Templates~ basés sur le format requêté. Le
+format par défaut est HTML, mais symfony  supporte ~plusieurs autres formats|Formats
+intégrés~ comme `txt`, `js`, `css`, `json`, `xml`, `rdf`, ou
+`atom`.
+
+Le format peut être définie en utilisant la méthode `setRequestFormat()` de l'objet de
+la ~requête|Requête HTTP~ :
+
+    [php]
+    $request->setRequestFormat('xml');
+
+Mais la plupart du temps, le format est incorporé dans l'URL. Dans ce cas, symfony
+va le mettre pour vous, si la variable spéciale ~`sf_format`~ est utilisé dans la route
+correspondante. Pour la liste des emplois, l'URL de la liste est :
+
+    http://jobeet.localhost/frontend_dev.php/job
+
+Cette URL est équivalent à :
+
+    http://jobeet.localhost/frontend_dev.php/job.html
+
+Les deux URL sont équivalentes car les routes générés par la classe
+`sfPropelRouteCollection` ont le `sf_format` comme l'extension et parce
+que le HTML est le format par défaut. Vous pouvez le vérifier vous-même en
+exécutant la tâche `app:routes` :
+
+![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
+
+Les flux
+--------
+
+### Le flux du dernier emploi
+
+Le support de différents formats est aussi facile que la création de Templates différents.
+Pour créer un [flux Atom](http://en.wikipedia.org/wiki/Atom_(standard)) pour les derniers
+emplois, créez un Template `indexSuccess.atom.php` :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="" rel="self"/>
+      <link href=""/>
+      <updated></updated>
+      <author><name>Jobeet</name></author>
+      <id>Unique Id</id>
+
+      <entry>
+        <title>Job title</title>
+        <link href="" />
+        <id>Unique id</id>
+        <updated></updated>
+        <summary>Job description</summary>
+        <author><name>Company</name></author>
+      </entry>
+    </feed>
+
+>**SIDEBAR**
+>Les noms des Templates
+>
+>Comme `html` est le format le plus couramment utilisé pour les applications web, il peut être
+>omis du nom du Template. Les deux Templates `indexSuccess.php` et `indexSuccess.html.php`
+>sont équivalents et symfony utilise le premier qu'il trouve.
+>
+>Pourquoi les Templates par défaut sont suffixés avec `Success` ? Une action ne peut
+>retourner une valeur pour indiquer le Template à rendre. Si l'action renvoie rien, il
+>est équivalent au code suivant :
+>
+>     [php]
+>     return sfView::SUCCESS; // == 'Success'
+>
+>Si vous voulez changer le suffixe, retournez simplement autre chose :
+>
+>     [php]
+>     return sfView::ERROR; // == 'Error'
+>
+>     return 'Foo';
+>
+>Comme nous l'avons vu dans la journée précédente, le nom du Template peut
+>également être modifié en utilisant la méthode `setTemplate()` :
+>
+>     [php]
+>     $this->setTemplate('foo');
+
+Par défaut, symfony va changer le `~Content-Type~` de la réponse en fonction du
+format, et pour tous les formats non-HTML, le layout est désactivé. Pour un flux Atom,
+symfony change le `Content-Type` en `application/atom+xml;
+charset=utf-8`.
+
+Dans le pied de page de Jobeet, mettez à jour le lien vers le flux :
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <li class="feed">
+      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+    </li>
+
+L'~URI interne|URI interne~ est la même que pour la liste `job` avec le
+`sf_format` ajouté comme une variable.
+
+Ajoutez un balise `<link>` dans la section d'entête du layout pour permettre
+de découvrir par le navigateur automatiquement notre flux :
+
+    [php]
+    <!-- apps/frontend/templates/layout.php -->
+    <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
+      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+
+Pour l'attribut `href` du lien, une ~URL (Absolue)~ est utilisée grâce au second
+argument du helper `url_for()`.
+
+Remplacer l'entête du Template Atom avec le code suivant :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <title>Jobeet</title>
+    <subtitle>Latest Jobs</subtitle>
+    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+    <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+    <author>
+      <name>Jobeet</name>
+    </author>
+    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+<propel>
+Notez l'utilisation du `U` comme un argument pour `getCreatedAt()` pour obtenir
+la date comme un timestamp. Pour obtenir la date du dernier post, créez la méthode
+`getLatestPost()` :
+</propel>
+<doctrine>
+Notez l'utilisation du `U` comme un argument pour `format()` pour obtenir la date
+comme un timestamp. Pour obtenir la date du dernier post, créez la méthode
+`getLatestPost()` :
+</doctrine>
+
+<propel>
+    [php]
+    // lib/model/JobeetJobPeer.php
+    class JobeetJobPeer extends BaseJobeetJobPeer
+    {
+      static public function getLatestPost()
+      {
+        $criteria = new Criteria();
+        self::addActiveJobsCriteria($criteria);
+
+        return JobeetJobPeer::doSelectOne($criteria);
+      }
+
+      // ...
+    }
+</propel>
+<doctrine>
+    [php]
+    // lib/model/doctrine/JobeetJobTable.class.php
+    class JobeetJobTable extends Doctrine_Table
+    {
+      public function getLatestPost()
+      {
+        $q = Doctrine_Query::create()
+          ->from('JobeetJob j');
+        $this->addActiveJobsQuery($q);
+
+        return $q->fetchOne();
+      }
+
+      // ...
+    }
+</doctrine>
+
+Les entrées du flux peuvent être générées par le code suivant :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?php use_helper('Text') ?>
+    <?php foreach ($categories as $category): ?>
+      <?php foreach ($category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')) as $job): ?>
+        <entry>
+          <title>
+            <?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)
+          </title>
+          <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+          <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+          <summary type="xhtml">
+           <div xmlns="http://www.w3.org/1999/xhtml">
+             <?php if ($job->getLogo()): ?>
+               <div>
+                 <a href="<?php echo $job->getUrl() ?>">
+                   <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                     alt="<?php echo $job->getCompany() ?> logo" />
+                 </a>
+               </div>
+             <?php endif; ?>
+
+             <div>
+               <?php echo simple_format_text($job->getDescription()) ?>
+             </div>
+
+             <h4>How to apply?</h4>
+
+             <p><?php echo $job->getHowToApply() ?></p>
+           </div>
+          </summary>
+          <author>
+            <name><?php echo $job->getCompany() ?></name>
+          </author>
+        </entry>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+
+La méthode `getHost()` de l'objet de la requête (`$sf_request`) retourne
+l'hôte actuel, qui est très pratique pour créer un lien absolu pour le logo
+de l'entreprise.
+
+![Flux](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
+
+>**TIP**
+>Lors de la création d'un flux, le ~débogage|Deboguer~ est plus facile si vous utilisez
+>des outils en ligne de commande comme [`curl`](http://curl.haxx.se/) ou
+>[`wget`](http://www.gnu.org/software/wget/), car vous voyez le contenu actuel
+>du flux.
+
+### Les derniers emplois dans le flux de la catégorie
+
+L'un des objectifs de Jobeet est d'aider les gens à trouver un emploi plus ciblées. Donc,
+nous devons fournir un flux pour chaque catégorie.
+
+D'abord, nous allons mettre à jour la route `category` pour ajouter le support de différents formats :
+
+    [yml]
+    // apps/frontend/config/routing.yml
+    category:
+      url:     /category/:slug.:sf_format
+      class:   sfPropelRoute
+      param:   { module: category, action: show, sf_format: html }
+      options: { model: JobeetCategory, type: object }
+      requirements:
+        sf_format: (?:html|atom)
+
+Maintenant, la route `category` comprend à la fois les formats `html` et `atom`.
+Mettez à jour les flux de la catégorie dans les ~Templates|Templates~ :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+    <!-- apps/frontend/modules/category/templates/showSuccess.php -->
+    <div class="feed">
+      <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
+    </div>
+
+La dernière étape consiste à créer le Template `showSuccess.atom.php`. Mais comme ce
+flux sera également la liste des emplois, nous pouvons ~refactoriser|Refactorisation~ le
+code qui génère les entrées du flux en créant un partial `_list.atom.php`. Comme pour le
+format `html`, les ~partials|Templates Partial~ ont un format spécifique :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/_list.atom.php -->
+    <?php use_helper('Text') ?>
+
+    <?php foreach ($jobs as $job): ?>
+      <entry>
+        <title><?php echo $job->getPosition() ?> (<?php echo $job->getLocation() ?>)</title>
+        <link href="<?php echo url_for('job_show_user', $job, true) ?>" />
+        <id><?php echo sha1($job->getId()) ?></id>
+<propel>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+          <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $job->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+        <summary type="xhtml">
+         <div xmlns="http://www.w3.org/1999/xhtml">
+           <?php if ($job->getLogo()): ?>
+             <div>
+               <a href="<?php echo $job->getUrl() ?>">
+                 <img src="http://<?php echo $sf_request->getHost().'/uploads/jobs/'.$job->getLogo() ?>"
+                   alt="<?php echo $job->getCompany() ?> logo" />
+               </a>
+             </div>
+           <?php endif; ?>
+
+           <div>
+             <?php echo simple_format_text($job->getDescription()) ?>
+           </div>
+
+           <h4>How to apply?</h4>
+
+           <p><?php echo $job->getHowToApply() ?></p>
+         </div>
+        </summary>
+        <author>
+          <name><?php echo $job->getCompany() ?></name>
+        </author>
+      </entry>
+    <?php endforeach; ?>
+
+Vous pouvez utiliser le partial `_list.atom.php` pour simplifier le Template du flux emploi :
+
+    [php]
+    <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
+      <link href="<?php echo url_for('@homepage', true) ?>"/>
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+
+    <?php foreach ($categories as $category): ?>
+      <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
+    <?php endforeach; ?>
+    </feed>
+
+Enfin, créez le Template `showSuccess.atom.php` :
+
+    [php]
+    <!-- apps/frontend/modules/category/templates/showSuccess.atom.php -->
+    <?xml version="1.0" encoding="utf-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <title>Jobeet (<?php echo $category ?>)</title>
+      <subtitle>Latest Jobs</subtitle>
+      <link href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom'), true) ?>" rel="self" />
+      <link href="<?php echo url_for('category', array('sf_subject' => $category), true) ?>" />
+<propel>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getCreatedAt('U')) ?></updated>
+</propel>
+<doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', $category->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+</doctrine>
+      <author>
+        <name>Jobeet</name>
+      </author>
+      <id><?php echo sha1(url_for('category', array('sf_subject' => $category), true)) ?></id>
+
+      <?php include_partial('job/list', array('jobs' => $pager->getResults())) ?>
+    </feed>
+
+Quant au flux principal des emplois, nous avons besoin de la date du dernier emploi pour une catégorie :
+
+    [php]
+<propel>
+    // lib/model/JobeetCategory.php
+</propel>
+<doctrine>
+    // lib/model/doctrine/JobeetCategory.class.php
+</doctrine>
+    class JobeetCategory extends BaseJobeetCategory
+    {
+      public function getLatestPost()
+      {
+        $jobs = $this->getActiveJobs(1);
+
+        return $jobs[0];
+      }
+
+      // ...
+    }
+
+![Flux de la catégorie](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
+
+À demain
+--------
+
+Comme avec de nombreuses fonctionnalités de symfony, le support du format natif vou
+permet d'ajouter des flux à vos sites Web sans effort.
+ 
+Aujourd'hui, nous avons amélioré l'expérience du demandeur d'emploi. Demain, nous allons
+voir comment assurer une plus grande exposition aux annonceurs en leur fournissant un service Web.
+
+__ORM__
