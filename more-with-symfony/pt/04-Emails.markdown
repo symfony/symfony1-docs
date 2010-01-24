@@ -1,7 +1,7 @@
 ﻿Emails
 ======
 
-*por Fabien potencier*
+*por Fabien Potencier*
 
 O envio de ~e-mails~ com o symfony é simples e poderoso, graças ao uso
 da biblioteca [Swift Mailer](http://www.swiftmailer.org/). Apesar do ~Swift Mailer~
