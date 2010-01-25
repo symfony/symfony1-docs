@@ -347,7 +347,7 @@ The following paragraph is an excerpt from the "Getting Started with symfony",
 page: "The sandbox is a dead-easy-to-install pre-packaged symfony project,
 already configured with some sensible defaults. It is a great way to practice
 using symfony without the hassle of a proper installation that respects the
-web best practices.
+web best practices".
 
 The sandbox is pre-configured to use SQLite as a database engine. On Windows,
 there's nothing specific to install: SQLite support is directly implemented in
