@@ -469,7 +469,7 @@ Explorer, displaying "Symfony Project Created":
 ![IIS Manager - Type http://localhost/web in the URL. Success!](http://www.symfony-project.org/images/more-with-symfony/windows_31.png)
 
 By the way, you may see a light yellow band at the top saying "Intranet
-settings are now turned off by default. Intranet settings are less secure than
+settings are now turned off by default". Intranet settings are less secure than
 Internet settings. Click for options. Don't be afraid of this message.
 
 To close it permanently, just right-click the yellow band, and select the
