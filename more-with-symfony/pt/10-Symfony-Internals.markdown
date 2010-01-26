@@ -1,4 +1,3 @@
-
 Funcionamento Interno do symfony
 =================
 

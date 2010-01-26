@@ -1,5 +1,4 @@
-﻿
-Desenvolvendo aplicações Facebook
+﻿Desenvolvendo aplicações Facebook
 =======================
 
 *por Fabrice Bernhard*

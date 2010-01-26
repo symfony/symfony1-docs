@@ -1,5 +1,4 @@
-﻿
-Aproveitando o Poder da Linha de Comando
+﻿Aproveitando o Poder da Linha de Comando
 ========================================
 
 *por Geoffrey Bachelet*
