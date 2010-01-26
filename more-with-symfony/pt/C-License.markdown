@@ -1,4 +1,4 @@
-Apêndice C - Licença
+ApÃªndice C - LicenÃ§a
 ====================
 
 Attribution-Share Alike 3.0 Unported License
