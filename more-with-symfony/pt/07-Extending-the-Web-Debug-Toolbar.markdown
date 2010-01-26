@@ -1,10 +1,9 @@
-﻿
-Estendendo a barra de ferramenta de depuração Web
-==================================
+﻿Estendendo a Barra de Ferramenta para Debug Web
+===============================================
 
 * por Ryan Weaver*
 
-Por padrão, a barra de ferramentas de depuração web do symfony contém uma variedade de ferramentas que auxiliam
+Por padrão, a barra de ferramentas para debug web do symfony contém uma variedade de ferramentas que auxiliam
 com a depuração, melhoria de desempenho e muito mais. A ferramenta de depuração Web
 consiste de várias ferramentas, chamada *painéis de debug web*, que se relacionam com a memória cache,
 config, logs, uso de memória, versão do symfony e tempo de processamento. Além disso, o
@@ -20,8 +19,8 @@ Além disso, o [ac2009WebDebugPlugin](http://www.symfony-project.org/plugins/ac2
 contém vários painéis úteis e interessante que empregam algumas das 
 técnicas utilizadas neste capítulo.
 
-Criando um novo painel de depuração Web
-------------------------------
+Criando um novo Painel de Depuração Web
+---------------------------------------
 
 Os componentes individuais da ferramenta de depuração web são conhecidos como os *painéis de depuração web*
 e são classes especiais que estendem a classe `~sfWebDebugPanel~`. Criar um novo 

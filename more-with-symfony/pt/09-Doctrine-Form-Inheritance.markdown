@@ -1,6 +1,5 @@
-﻿
-Vantagens da Herança de tabelas do Doctrine
-==============================================
+﻿Vantagens da Herança de tabelas do Doctrine
+===========================================
 
 *por Hugo Hamon*
 

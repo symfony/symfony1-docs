@@ -1,5 +1,4 @@
-﻿
-Sobre os Autores
+﻿Sobre os Autores
 =================
 
 Fabien Potencier

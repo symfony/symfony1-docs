@@ -1,6 +1,5 @@
-﻿
-Brincando com o Cache da Configuração do symfony
-===================================
+﻿Brincando com o Cache da Configuração do symfony
+================================================
 
 *por Kris Wallsmith*
 

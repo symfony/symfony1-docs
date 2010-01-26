@@ -1,8 +1,7 @@
-﻿
-Introdução
-============
+﻿Introdução
+==========
 
-* por Fabien potencier *
+* por Fabien Potencier *
 
 Durante a escrita destas linhas, o projeto symfony comemorou um marco importante:
 seu [quarto aniversário](http://trac.symfony-project.org/changeset/1). Em apenas

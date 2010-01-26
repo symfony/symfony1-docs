@@ -1,8 +1,7 @@
-﻿
-Aumente a sua produtividade
-=========================
+﻿Aumente a sua produtividade
+===========================
 
-*por Fabien potencier*
+*por Fabien Potencier*
 
 Usar o symfony já é uma grande maneira de aumentar sua produtividade 
 como desenvolvedor. Claro, todo mundo já sabe quão as exceções detalhadas 

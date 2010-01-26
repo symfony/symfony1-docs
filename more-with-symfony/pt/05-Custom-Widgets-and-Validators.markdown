@@ -1,6 +1,5 @@
-﻿
-Widgets e Validators Personalizados
-=============================
+﻿Widgets e Validators Personalizados
+===================================
 
 * por Thomas Rabaix *
 

@@ -1,11 +1,10 @@
-﻿
-Usando Doctrine em modo Avançado
-=======================
+﻿Uso Avançado do Doctrine 
+========================
 
 * Por Jonathan H. Wage *
 
 Criando um comportamento para Doctrine
----------------------------
+--------------------------------------
 
 Nesta seção vamos demonstrar como você pode escrever um comportamento usando Doctrine 1.2.
 Iremos criar um exemplo que lhe permitirá manter facilmente um contador em cache dos relacionamentos

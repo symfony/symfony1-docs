@@ -1,5 +1,5 @@
 Funcionamento Interno do symfony
-=================
+================================
 
 *por Geoffrey Bachelet*
 
