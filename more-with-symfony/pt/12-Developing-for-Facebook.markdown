@@ -1,5 +1,5 @@
-﻿Desenvolvendo aplicações Facebook
-=======================
+﻿Desenvolvendo Aplicações Facebook
+=================================
 
 *por Fabrice Bernhard*
 
@@ -22,7 +22,7 @@ demonstrando através de uma aplicação simples "Olá você!" e, finalmente, da
 e truques para resolver os problemas mais comuns.
 
 Desenvolvendo para o Facebook
------------------------
+-----------------------------
 
 Embora a API seja basicamente a mesma em ambas, existem duas formas muito
 diferentes de desenvolver as aplicações: criar uma aplicação dentro do Facebook e implementar o 

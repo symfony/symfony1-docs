@@ -1,5 +1,5 @@
-ApÃ©ndice C - Licencia
-=====================
+Apêndice C - Licença
+====================
 
 Attribution-Share Alike 3.0 Unported License
 --------------------------------------------
