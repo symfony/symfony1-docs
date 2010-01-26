@@ -112,9 +112,9 @@ répertoire `apps/frontend/` :
 >  * `--csrf-secret`: active les jetons de session dans les formulaires
 >
 >Si vous ne savez rien sur
->[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) ou
->[CSRF](http://en.wikipedia.org/wiki/CSRF), prenez le temps d'en apprendre d'avantage sur
->ces failles de sécurité.
+>[XSS](http://fr.wikipedia.org/wiki/Cross-site_scripting) ou
+>[CSRF](http://fr.wikipedia.org/wiki/Cross-site_request_forgery), prenez le temps d'en
+>apprendre d'avantage sur ces failles de sécurité.
 
 Droits sur les répertoires structurés
 --------------------------
