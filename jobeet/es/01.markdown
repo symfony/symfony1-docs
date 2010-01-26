@@ -234,7 +234,7 @@ Una vez más, la tarea `generate:app` crea por defecto la estructura necesaria d
 >  * `--csrf-secret`: Permite tokens de sesión en los formularios para prevenir los ataques CSRF
 >
 >
->Si no sabes nada acerca de [XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) o [CSRF](http://en.wikipedia.org/wiki/CSRF), date un tiempo para aprender más de estas vulnerabilidades de seguridad.
+>Si no sabes nada acerca de [XSS](http://es.wikipedia.org/wiki/Cross-site_scripting) o [CSRF](http://es.wikipedia.org/wiki/Cross_Site_Request_Forgery), date un tiempo para aprender más de estas vulnerabilidades de seguridad.
 
 ### La Ruta de Symfony
 
