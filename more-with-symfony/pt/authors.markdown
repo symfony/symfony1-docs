@@ -94,7 +94,7 @@ Thomas é um fã do symfony desde os primeiros dias. Ele está atualmente trabal
 Thomas também ajuda as empresas com questões de Quality Assurance e Arquitetura
 nos desafiadores projetos em symfony.
 
-** Seu Site**: *http://rabaix.net*
+**Seu Site**: *http://rabaix.net*
 
 Stefan Koopmanschap
 -------------------
