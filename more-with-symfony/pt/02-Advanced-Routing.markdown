@@ -1,12 +1,12 @@
 ﻿Roteamento Avançado
 ===================
 
-* por Ryan Weaver *
+*por Ryan Weaver*
 
-Em sua essência, o framework de roteamento funciona como um mapa que faz a ligação de cada URL para uma localização
+Em sua essência, o framework de roteamento é um mapa que liga cada URL a uma localização
 específica dentro de um projeto symfony e vice-versa. Ele pode facilmente criar belas
-URLs mesmo permanecendo completamente independente da lógica de aplicaçào. Com
-melhorias realizadas para versões recentes do symfony, o framework de roteamento agora vai muito
+URLs mesmo permanecendo completamente independente da lógica de aplicação. Com
+melhorias realizadas em versões recentes do symfony, o framework de roteamento agora vai muito
 além.
 
 Este capítulo ilustra como criar uma simples aplicação web, onde
@@ -14,21 +14,21 @@ cada cliente utiliza um subdomínio separado (por exemplo `client1.mydomain.com`
 `client2.mydomain.com`). Estendendo o framework de roteamento, isto torna-se uma tarefa
 bem simples.
 
-> ** NOTA **
-> Este capítulo requer que você utilize o Doctrine como ORM para o seu projeto.
+>**NOTE**
+>Este capítulo requer que você utilize o Doctrine como *ORM* para o seu projeto.
 
 Configuração do Projeto: Um CMS para Muitos Clientes
 -------------------------------------
 
-Neste projeto, uma empresa fictícia - Sympal Builder - quer criar um
-CMS para que seus clientes possam construir sites como subdomínios de `sympalbuilder.com`.
+Neste projeto, uma empresa fictícia - *Sympal Builder* - quer criar um
+*CMS* para que seus clientes possam construir sites como subdomínios de `sympalbuilder.com`.
 Especificamente, o cliente XXX pode visualizar seu site em `xxx.sympalbuilder.com` e utilizar
-a área de administração em `xxx.sympalbuilder.com/backend.php`.
+a área administrativa em `xxx.sympalbuilder.com/backend.php`.
 
-> ** NOTA **
-> O nome "Sympal" foi pego emprestado de Jonathan Wage e seu
-> [Sympal] (http://www.sympalphp.org/), um framework de gerenciamento de conteúdo (CMF)
-> construído com o symfony.
+>**NOTE**
+>O nome *`Sympal`* foi pego emprestado de Jonathan Wage e seu
+>[Sympal](http://www.sympalphp.org/), um framework de gerenciamento de conteúdo (CMF)
+>construído com o symfony.
 
 Este projeto possui dois requisitos básicos:
 
@@ -39,15 +39,15 @@ Este projeto possui dois requisitos básicos:
     gerencia a frontend e backend de todos os sites de clientes, determinando
     o cliente e carregando os dados corretos de acordo com o subdomínio.
 
-> ** NOTA **
-> Para criar esta aplicação, o servidor terá de ser configurado para encaminhar todos os
-> `*.sympalbuilder.com` subdomínios para o mesmo documento raíz - o diretório web
-> do projeto symfony.
+>**NOTE**
+>Para criar esta aplicação, o servidor terá de ser configurado para encaminhar todos os
+>subdomínios `*.sympalbuilder.com` para o mesmo documento raiz - o diretório web
+>do projeto symfony.
 
-# # # O Esquema e os Dados
+### O Esquema e os Dados
 
-O banco de dados para o projeto consiste de objetos `Client` e `Page`. Cada 
-`Client` representa um subdomínio que é constituído por muitos objetos `Page`.
+O banco de dados para o projeto consiste de objetos *`Client`* (Cliente) e *`Page`* (Página). Cada 
+*`Client`* representa um subdomínio que é constituído por muitos objetos *`Page`*.
 
     [yml]
     # config/doctrine/schema.yml
@@ -76,9 +76,9 @@ O banco de dados para o projeto consiste de objetos `Client` e `Page`. Cada
           fields: [slug, client_id]
           type: unique
 
-> ** NOTA **
-> Embora os índices de cada tabela não sejam necessários, eles são uma boa idéia
-> pois a aplicação realizará consultas freqüentes com base nestas colunas.
+>**NOTE**
+>Embora os índices de cada tabela não sejam necessários, eles são uma prática
+>pois a aplicação realizará consultas freqüentes com base nestas colunas.
 
 Para trazer o projeto à vida, coloque os dados de teste a seguir no arquivo 
 `data/fixtures/fixtures.yml`:
@@ -106,13 +106,13 @@ Para trazer o projeto à vida, coloque os dados de teste a seguir no arquivo
         Client: client_pub
 
 Os dados de teste introduzem inicialmente dois websites, cada um com uma página.
-A URL completa de cada página é definida por ambas as colunas `subdomain` do
+A URL completa de cada página é definida por ambas as colunas *`subdomain`* de
 `Client` e a coluna `slug` do objeto `Page`.
 
     http://pete.sympalbuilder.com/location
     http://citypub.sympalbuilder.com/menu
 
-# # # O Roteamento
+### O Roteamento
 
 Cada página de um website Sympal Builder corresponde diretamente a um objeto de modelo `Page`,
 que define o título e o conteúdo de sua saída. Para fazer a ligação de cada URL
@@ -136,11 +136,11 @@ que corresponda à url:
 A rota acima irá casar corretamente a página
 `http://pete.sympalbuilder.com/location` com o objeto `Page` correto. Infelizmente, a rota acima casaria
 *também* a URL `http://pete.sympalbuilder.com/menu`, significando que o
-menu do restaurante será exibido no site Pete! Neste momento, a
+menu do restaurante será exibido no site do Pete! Neste momento, a
 rota desconhece a importância dos subdomínios de clientes.
 
-Para trazer a aplicação à vida, a rota precisa ser mais esperta. Ela deve
-casar o objeto `Page` correto baseando-se tanto no `slug` *e* no `client_id`,
+Para trazer a aplicação à vida, a rota precisa ser mais esperta. Ela deveria
+casar o objeto `Page` correto baseando-se tanto em `slug` *e* em `client_id`,
 que pode ser determinado ligando o host (por exemplo, `pete.sympalbuilder.com`)
 com a coluna `subdomain` do modelo `Client`. Para conseguir isso, vamos
 melhorar o framework de roteamento através da criação de uma classe de roteamento personalizada.
@@ -161,17 +161,17 @@ importantes:
    rota.
 
 As informações para rotas individuais são normalmente configuradas dentro de cada
-diretório de configurações das aplicações localizado em `app/nomedoseuapp/config/routing.yml`.
+diretório de configurações da aplicação localizado em `app/nomedoseuapp/config/routing.yml`.
 Lembre-se de que cada rota é *"um objeto do tipo `sfRoute`"*. Então como é que estas
 entradas simples em arquivos YAML se tornam objetos `sfRoute`?
 
-### Manipulação da Configuração do Cache de Roteamento
+### Processador do Cache de Configuração de Roteamento
 
 Apesar do fato de a maioria das rotas serem definidas em um arquivo YAML, cada entrada neste
 arquivo é transformada em um objeto real no momento da requisição através de um tipo especial
-de classe chamada de manipulador de configuração de cache. O resultado final é um código PHP que representa
-cada rota na aplicação. Embora as especificidades deste processo
-estão fora do escopo deste capítulo, vamos dar uma olhada na versão final, compilada
+de classe chamada de processador do cache de configuração. O resultado final é um código PHP que
+representa cada rota na aplicação. Embora as especificidades deste processo
+estejam fora do escopo deste capítulo, vamos dar uma olhada na versão final, compilada
 da rota `page_show`. O arquivo compilado está localizado em
 `cache/nomedoseuapp/nomeambiente/config/config_routing.yml.php` para o ambiente
 e aplicação específicos. Abaixo está uma versão simplificada de como
@@ -188,32 +188,32 @@ a rota `page_show` parece:
       'type' => 'object',
     ));
 
->**Dica**
+>**TIP**
 >O nome da classe de cada rota é definido pela chave `class` dentro do arquivo `routing.yml`.
 > Se nenhuma chave `class` for especificada, a rota utilizará uma classe do tipo
 >`sfRoute`. outra classe de roteamento comum é a `sfRequestRoute` que permite que
 >o desenvolvedor crie rotas RESTful. Uma lista completa de classes de roteamento e suas
->opções está disponível em
->[The symfony Reference Book](http://www.symfony-project.org/reference/1_3/en/10-Routing)
+>opções está disponível no
+>[Livro de Referência do symfony](http://www.symfony-project.org/reference/1_3/en/10-Routing)
 
 ### Casando uma Requisição de Entrada com uma Rota Específica
 
 Uma das principais tarefas do framework de roteamento é casar cada URL de entrada
 com o objeto de roteamento correto. A classe ~`sfPatternRouting`~ representa o
 núcleo do motor de roteamento e é encarregada desta exata tarefa. Apesar de sua importância,
-um desenvolvedor raramente irá interagir com a `sfPatternRouting`.
+um desenvolvedor raramente irá interagir com `sfPatternRouting`.
 
 Para casar com a rota correta, `sfPatternRouting` itera sobre cada `sfRoute` e
 e "pede" à rota se ela coincide com a URL de entrada. Internamente, isso significa
-que a `sfPatternRouting` invoca o método ~`sfRoute::matchesUrl()`~ para cada
-objeto de roteamento. Este método simplesmente retorna `falso` se a rota não coincide com a
+que `sfPatternRouting` invoca o método ~`sfRoute::matchesUrl()`~ para cada
+objeto de roteamento. Este método simplesmente retorna `false` se a rota não coincide com a
 URL de entrada.
 
 No entanto, se a rota *corresponder* à URL de entrada, `sfRoute::matchesUrl()`
-faz mais do que simplesmente retornar `verdadeiro`. Em vez disso, a rota retorna uma matriz
+faz mais do que simplesmente retornar `true`. Em vez disso, a rota retorna um array
 de parâmetros que são agrupados no objeto da requisição. Por exemplo, a URL
 `http://pete.sympalbuilder.com/location` coincide com a rota `page_show`
-cujo método `matchesUrl()` retornaria a seguinte matriz:
+cujo método `matchesUrl()` retornaria o seguinte array:
 
     [php]
     array('slug' => 'location')
@@ -267,7 +267,7 @@ roteamento. Em `routing.yml`, atualize a chave `class` para a rota:
         action: show
 
 Até agora, `acClientObjectRoute` não adiciona qualquer funcionalidade, mas todas as peças
-estão presentes. O método action: show possui duas funções específicas.
+estão presentes. O método `matchesUrl()` possui duas funções específicas.
 
 ### Adicionando Lógica à Rota Personalizada
 
@@ -309,7 +309,7 @@ arquivo `acClientObjectRoute.class.php` com o conteúdo a seguir.
 
 A chamada inicial para `parent::matchesUrl()` é importante pois ela é executada
 através do processo de roteamento normal. Neste exemplo, uma vez que a URL `/location` case
-a rota `page_show`, `parent::matchesUrl()` retornaria uma matriz contendo
+a rota `page_show`, `parent::matchesUrl()` retornaria um array contendo
 o parâmetro `slug` correspondente.
 
     [php]
@@ -340,14 +340,14 @@ que o restante do método se concentre em realizar o casamento baseado no subdom
 Realizando uma simples substituição de string, podemos isolar a parte do subdomínio
 do host e, em seguida, consultar o banco de dados para ver se algum dos objetos `Client`
 possui esse subdomínio. Se nenhum objeto `Client` corresponder ao subdomínio, então
-retornamos falso, indicando que a requisição de entrada não coincide com a rota.
+retornamos `false`, indicando que a requisição de entrada não coincide com a rota.
 No entanto, se há um objeto `Client` com o subdomínio atual, nós agrupamos
 um parâmetro extra, `client_id` no array retornado.
 
->**Dica**
+>**TIP**
 >O array `$context` passado à `matchesUrl()` é preenchido com diversas
 >informações úteis sobre a requisição atual, incluindo o `host`, um
->booleano `is_secure`, `request_uri`, o `método` HTTP e muito mais.
+>booleano `is_secure`, `request_uri`, o método (*`method`*) HTTP e muito mais.
 
 Mas, o que a rota personalizada realmente conseguiu? A classe `acClientObjectRoute`
 agora faz o seguinte:
@@ -361,8 +361,8 @@ agora faz o seguinte:
 ### Aproveitando-se do Roteamento Personalizado
 
 Agora que o parâmetro `client_id` correto está sendo retornado por `acClientObjectRoute`,
-temos acesso a ele através do objeto da requisição. por exemplo, a ação `page/show`
-poderia utilizar o `client_id` para encontrar objeto `Page` correto:
+temos acesso a ele através do objeto da requisição. Por exemplo, a ação (*action*) `page/show`
+poderia utilizar o `client_id` para encontrar o objeto `Page` correto:
 
     [php]
     public function executeShow(sfWebRequest $request)
@@ -375,12 +375,12 @@ poderia utilizar o `client_id` para encontrar objeto `Page` correto:
       $this->forward404Unless($this->page);
     )
 
->**NOTA**
+>**NOTE**
 >O método `findOneBySlugAndClientId()` é um tipo de
->[Localizador mágico] (http://www.doctrine-project.org/upgrade/1_2#Expanded%20Magic%20Finders%20to%20Multiple%20Fields)
+>[Localizador mágico](http://www.doctrine-project.org/upgrade/1_2#Expanded%20Magic%20Finders%20to%20Multiple%20Fields)
 >novo no Doctrine 1.2 que realiza consultas por objetos utilizando-se de múltiplos campos.
 
-Tão agradável como seja, o framework de roteamento permite uma solução ainda mais elegante.
+Embora isso já seja muito bom, o framework de roteamento permite uma solução ainda mais elegante.
 Primeiro, adicione o seguinte método à classe `acClientObjectRoute`:
 
     [php]
@@ -405,26 +405,26 @@ objetos de rota, a ação irá automaticamente redirecionar à uma página 404 c
 objeto correspondente seja encontrado.
 
 Mas como isso funciona? Objetos de rota, como `sfDoctrineRoute`, que a
-classe `acClientObjectRoute` estende, busca automaticamente pelo objeto
+classe `acClientObjectRoute` estende, buscam automaticamente pelo objeto
 relacionado com base nas variáveis na chave `url` da rota. Por exemplo, a
 rota `page_show`, que contém a variável `:slug` em sua `url`, busca
 pelo objeto `Page` através da coluna `slug`.
 
 Nesta aplicação, no entanto, a rota `page_show` deve também buscar por objetos
-`Page` com base na coluna `client_id`. Para fazer isso, nós sobreescrevemos o
+`Page` com base na coluna `client_id`. Para fazer isso, nós sobreescrevemos
 ~`sfObjectRoute::getRealVariables()`~, que é chamado internamente, para determinar
 que colunas usar para a busca do objeto. Ao adicionar o campo `client_id`
 a este array, `acClientObjectRoute` irá consultar com base em ambas as colunas
 `slug` e `client_id`.
 
->**NOTA**
->Rotas de objetos ignoram automaticamente quais variáveis que não correspondam
+>**NOTE**
+>Rotas de objetos ignoram automaticamente quaisquer variáveis que não correspondam
 >à uma coluna real. Por exemplo, se a chave URL contiver uma variável `:page`,
 >mas não existir uma coluna `page` na tabela relevante, a variável será ignorada.
 
 Neste ponto, a classe de roteamento personalizada realiza o necessário com
 pouquíssimo esforço. Nas próximas seções, iremos reutilizar a nova rota para criar
-área administrativa especifica a cada cliente.
+uma área administrativa especifica a cada cliente.
 
 ### Gerando a Rota Correta
 
@@ -457,24 +457,24 @@ Para corrigir isto, adicione o seguinte método à classe `acClientObjectRoute`:
 
 Quando um objeto rota é gerado, ele tenta recuperar todas informações
 necessárias chamando `doConvertObjectToArray()`. Por padrão, `client_id`
-é retornado na array `$parâmetros`. Anulando sua atribuição, no entanto, evitamos
+é retornado no array `$parameters`. Anulando sua atribuição, no entanto, evitamos
 que ele seja incluído na URL gerada. Lembre-se de que temos esse luxo
 pois a informação sobre `Client` é armazenada no próprio subdomínio.
 
->**Dica**
+>**TIP**
 >Você pode sobrescrever o processo `doConvertObjectToArray()` completamente e tratá-lo
 >você mesmo, adicionando um método `toParams()` à classe de modelo. Este método
 >deve retornar um array de parâmetros que você quer que seja utilizado durante a
 >geração da rota.
 
-Coleções (*Collections*) de Rota
+Coleções de Rota
 -----------------
 
 Para terminar a aplicação Sympal Builder, precisamos criar uma área administrativa
 onde cada `Client` possa administrar suas `Pages`. Para fazer isso, precisaremos
 de um conjunto de ações que nos permita listar, criar, atualizar e excluir objetos `Page`.
 Como estes tipos de módulos são bastante comuns, symfony pode gerar o módulo
-automaticamente. Executar a seguinte tarefa na linha de comando para gerar
+automaticamente. Execute a seguinte tarefa na linha de comando para gerar
 o módulo `pageAdmin` dentro da aplicação chamada `backend`:
 
     $ php symfony doctrine:generate-module backend pageAdmin Page --with-doctrine-route --with-show
@@ -498,7 +498,7 @@ uma simples linha:
 
 No total, precisamos de rotas para as ações `index`, `new`, `create`, `edit`,
 `update` e `delete`. Normalmente, a criação destas rotas de uma maneira
-[RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer)
+[RESTful](http://pt.wikipedia.org/wiki/REST)
 exigiria uma configuraçào significativa em `routing.yml`.
 
     [yml]
@@ -567,7 +567,7 @@ de cada rota para uma aplicação específica:
     pageAdmin_delete DELETE /pages/:id
     pageAdmin_show GET /pages/:id
 
-### Substituindo as Rotas com uma Coleção de Rota
+### Substituindo as Rotas com uma Coleção de Rotas
 
 Felizmente, o symfony fornece uma maneira muito mais fácil para especificar todas as rotas
 que pertencem a um CRUD tradicional. Substitua todo o conteúdo em `routing.yml` com uma simples rota.
@@ -614,7 +614,7 @@ as páginas nas fixtures - a página `location` do Pet Shop do Pete e a página
 `menu` do *City Pub*.
 
 Para corrigir isso, vamos reutilizar `acClientObjectRoute` que foi criada para a
-*frontend*. A classe `sfDoctrineRouteCollection` gera um grupo de objetos `sfDoctrineRoute`. Nesta aplicação, precisaremos gerar um grupo objetos `acClientObjectRoute`
+*frontend*. A classe `sfDoctrineRouteCollection` gera um grupo de objetos `sfDoctrineRoute`. Nesta aplicação, precisaremos gerar um grupo de objetos `acClientObjectRoute`
 em seu lugar.
 
 Para conseguir isso, vamos precisar usar uma coleção de classes de roteamento personalizadas. Crie
@@ -629,266 +629,266 @@ diretório `lib/routing`. Seu conteúdo é extremamente simples:
         $routeClass = 'acClientObjectRoute';
     )
 
-A propriedade `$routeClas` define a classe que será utilizado para a criação
+A propriedade `$routeClass` define a classe que será utilizada para a criação
 de cada rota subjacente. Agora que cada rota subjacente é uma rota `acClientObjectRoute`,
 o trabalho esta na verdade finalizado. Por exemplo:
 `http://pete.sympalbuilder.com/backend.php/pages` agora irá listar apenas *uma*
 página: a página `location` do Pet Shop do Pete. Graças à classe de roteamento
-personalizada, a ação index retornam apenas objetos `Page` que tenham relação com o `Client`
+personalizada, a ação index retorna apenas objetos `Page` que tenham relação com o `Client`
 correto, baseado no subdomínio da requisição. Com apenas algumas linhas de
 código, criamos um módulo de backend inteiro que pode tranquilamento ser utilizado por
 vários clientes.
 
-### Parte Faltante: Criando Novas Páginas
+### Peça Faltante: Criando Novas Páginas
 
-Atualmente, um «cliente» selecione exibe uma caixa na parte posterior ao criar ou editar
-`` Page objetos. Em vez de permitir que os usuários escolham o «cliente» (o que seria
-um risco de segurança), vamos definir o «cliente» automaticamente com base no subdomínio actual
-o pedido.
+Atualmente, uma caixa de seleção de Clientes (*`Client`*) é exibida na backend ao criar ou editar
+objetos `Page`. Em vez de permitir que os usuários escolham `Client` (o que seria
+um risco de segurança), vamos defini-lo automaticamente baseando-se no subdomínio atual da
+requisição.
 
-Primeiro, atualize o pageform `objeto` lib / form / PageForm.class.php ».
+Primeiro, atualize o objeto `PageForm` em `lib/form/PageForm.class.php`.
 
     [php]
-    public function configure ()
+    public function configure()
     (
-      $ this-> useFields (array (
+      $this->useFields(array(
         'title',
-        "conteúdo",
+        'content',
       ));
     )
 
-A caixa de seleção está faltando na página «formas», conforme necessário. No entanto, quando novas
-`` Page objetos são criados, o client_id `não está definido. Para resolver este problema, manualmente
-definir os relacionados `Cliente`, tanto no «novo» e «criar» ações.
+A caixa de seleção está agora faltando nos formulários de `Page`, como necessário. No entanto, quando
+novos objetos `Page` são criados, `client_id` nunca é definido. Para resolver isso, defina
+manualmente o `Client` relacionado em ambas as ações `new` e `create`.
 
     [php]
-    executeNew função pública (sfWebRequest $ request)
+    public function executeNew(sfWebRequest $request)
     (
-      $ page = new Page ();
-      $ page-> clientes = $ this-> GetRoute () -> getClient ();
-      $ this-> form = new pageform ($ page);
+      $ page = new Page ();$page = new Page();
+      $page->Client = $this->getRoute()->getClient();
+      $this->form = new PageForm($page);
     )
 
-Isto introduz uma nova função, getClient `()`, que não existe actualmente
-na classe `acClientObjectRoute. Vamos adicioná-lo para a classe, fazendo algumas
+Aqui é introduzido um novo método, `getClient()`, que não existe atualmente na
+classe `acClientObjectRoute`. Vamos adicioná-lo à classe fazendo algumas
 simples modificações:
 
     [php]
-    / / Lib / roteamento / acClientObjectRoute.class.php
-    acClientObjectRoute classe estende sfDoctrineRoute
+    // lib/routing/acClientObjectRoute.class.php
+    class acClientObjectRoute extends sfDoctrineRoute
     (
       / / ...
 
-      protected $ cliente = null;
+      protected $client = null;
 
-      matchesUrl função pública (contexto $ url, $ = array ())
+      public function matchesUrl($url, $context = array())
       (
         / / ...
 
-        cliente $ this-> client = $;
+        $this->client = $client;
 
-        array_merge return (array ( 'client_id' => $ client-> id), $ parameters);
+        return array_merge(array('client_id' => $client->id), $parameters);
       )
 
-      getClient função pública ()
+      public function getClient()
       (
-        return $ this-> cliente;
+        return $this->client;
       )
     )
 
-Ao adicionar um cliente $ `` propriedade de classe e defini-lo no matchesUrl `()` função,
-podemos facilmente fazer o `Cliente` objeto disponível através da rota. O `client_id`
-column of new `Page` objects will now be automatically and correctly set based
-no subdomínio do host atual.
+Ao adicionar a propriedade `$client` e defini-la no método `matchesUrl()`,
+podemos facilmente fazer o objeto `Client` disponível através da rota. A coluna
+`client_id` dos novos objetos `Page` será definida automaticamente e de maneira correta
+baseando-se no subdomínio do host atual.
 
-Personalizando um objeto Rota Collection
+Personalizando um Objeto de Coleção de Roteamento
 --------------------------------------
 
-Ao utilizar a estrutura de roteamento, temos agora facilmente resolvidos os problemas colocados pelo
-criação do Sympal Application Builder. Como a aplicação cresce, o dono da obra
-será capaz de reutilizar as rotas personalizadas para os outros módulos na área de back-end
-(por exemplo, para cada cliente »,« pode gerenciar suas galerias de foto).
+Ao utilizar o framework de roteamento, resolvemos agora facilmente os problemas que surgiram
+ao criar a aplicação Sympal Builder. Conforme a aplicação cresce, o desenvolvedor
+será capaz de reutilizar as rotas personalizadas para os outros módulos na área de backend
+(por exemplo, para que cada `Client` possa gerenciar suas galerias de foto).
 
-Outro motivo comum para criar uma coleção personalizada é rota para acrescentar,
-comumente usadas rotas. Por exemplo, suponhamos que um projeto emprega muitos modelos, cada um
-com uma coluna de `is_active. Na área administrativa, é preciso haver uma maneira fácil
-para alternar a `value` is_active para qualquer objeto em particular. Primeiramente, modificar
-`` acClientObjectRouteCollection e instruí-lo para adicionar uma nova rota para a coleção:
+Outro motivo comum para criar uma coleção de roteamento personalizada é para acrescentar rotas
+adicionais, de uso comum. Por exemplo, imagine que um projeto utilize muitos modelos, cada um
+com uma coluna `is_active`. Na área administrativa, é preciso haver uma maneira fácil
+para alternar o valor de `is_active` para qualquer objeto em particular. Primeiramente, modifique
+`acClientObjectRouteCollection` e instrua-lo à adicionar uma nova rota para a coleção:
 
     [php]
-    / / Lib / roteamento / acClientObjectRouteCollection.class.php
-    protegidos generateRoutes função ()
+    // lib/routing/acClientObjectRouteCollection.class.php
+    protected function generateRoutes()
     (
-      parent:: generateRoutes ();
+      parent::generateRoutes();
 
-      if (isset ($ this-> options [ 'with_is_active']) & & $ this-> options [ 'with_is_active'])
+      if (isset($this->options['with_is_active']) && $this->options['with_is_active'])
       (
-        routeName $ = $ this-> options [ 'nome'].'_ toggleActive';
+        $routeName = $this->options['name'].'_toggleActive';
 
-        $ this-> linhas [$ routeName] = $ this-> getRouteForToggleActive ();
+        $this->routes[$routeName] = $this->getRouteForToggleActive();
       )
     )
 
-O ~ `sfObjectRouteCollection:: generateRoutes ()` ~ método é chamado quando o
-objeto de coleção é instanciado e é responsável pela criação de todos os
-rotas necessárias e adicioná-los à $ «rotas», matriz de propriedade de classe. Neste
-caso, descarregar a criação efectiva do percurso para um novo método protegido
-getRouteForToggleActive chamado `()`:
+O método ~`sfObjectRouteCollection::generateRoutes()`~ é chamado quando o
+objeto de coleção é instanciado e é responsável pela criação de todas as
+rotas necessárias e de adicioná-las à propriedade `$routes` da classe. Neste
+caso, passamos a criação efetiva da rota para um novo método protegido
+chamado `getRouteForToggleActive()`:
 
     [php]
-    protegidos getRouteForToggleActive função ()
+    protected function getRouteForToggleActive()
     (
-      $ url = sprintf (
-        '% s /% s / toggleActive.: sf_format',
-        $ this-> options [ 'prefix_path'],
-        $ this-> options [ 'coluna']
+      $url = sprintf(
+        '%s/:%s/toggleActive.:sf_format',
+        $this->options['prefix_path'],
+        $this->options['column']
       );
 
-      $ params = array (
-        'module' => $ this-> options [ 'module'],
+      $params = array(
+        'module' => $this->options['module'],
         'action' => 'toggleActive',
         'sf_format' => 'html'
       );
 
-      Requisitos $ sf_method = array ( '=>' put ');
+      $requirements = array('sf_method' => 'put');
 
-      $ options = array (
-        'model' => $ this-> options [ 'modelo'],
-        'tipo' => 'objeto',
-        model_methods 'method' => $ this-> options [ ''] [ 'objeto']
+      $options = array(
+        'model' => $this->options['model'],
+        'type' => 'object',
+        'method' => $this->options['model_methods']['object']
       );
 
-      return new $ this-> routeClass (
-        $ url,
-        $ params,
-        Requisitos $,
-        $ options
+      return new $this->routeClass(
+        $url,
+        $params,
+        $requirements,
+        $options
       );
     )
 
-A única etapa restante é para configurar a rota de coleta em `routing.yml».
-Observe que generateRoutes `()` procura uma opção chamada `` with_is_active
-antes de adicionar a nova rota. Adicionando esta lógica nos dá mais controle em caso
-Queremos usar o acClientObjectRouteCollection `em algum lugar mais tarde que não
-a necessidade de «rota» toggleActive:
+O único passo restante é configurar a coleção de roteamento em `routing.yml`.
+Observe que `generateRoutes()` procura por uma opção chamada `with_is_active`
+antes de adicionar a nova rota. Adicionando esta lógica nos dá mais controle no caso
+de querermos utilizar `acClientObjectRouteCollection` em algum lugar, depois, que não
+precise da rota `toggleActive`:
 
     [yml]
-    # Apps / frontend / config / routing.yml
+    # apps/frontend/config/routing.yml
     pageAdmin:
-      Classe: acClientObjectRouteCollection
-      opções:
-        Modelo: Page
-        prefix_path: / pages
-        Módulo: pageAdmin
+      class: acClientObjectRouteCollection
+      options:
+        model: Page
+        prefix_path: /pages
+        module: pageAdmin
         with_is_active: true
 
-Verifique o app `:` rotas tarefa e verificar que o novo «rota» toggleActive
-está presente. A única parte restante é para criar a ação que irá fazer
-que o trabalho real. Desde que você pode querer usar esta coleção de rota e
-ação correspondente em vários módulos, criar um novo
-`backendActions.class.php arquivo` em `apps / backend / lib / acção»
-diretório (você vai precisar para criar esse diretório):
+Verifique a tarefa `app:routes` e assegure-se de que a nova rota `toggleActive`
+está presente. A única parte restante é criar a ação que irá fazer
+o trabalho de verdade. Devido ao fato de que que você pode querer usar esta coleção de rota e
+ação correspondente em vários módulos, crie um novo
+arquivo `backendActions.class.php` dentro do diretório
+`apps/backend/lib/action` (você precisará criar esse diretório):
 
     [php]
-    # Apps / backend / lib / acção / backendActions.class.php
-    backendActions classe estende sfActions
+    # apps/backend/lib/action/backendActions.class.php
+    class backendActions extends sfActions
     (
-      executeToggleActive da função pública (sfWebRequest $ request)
+      public function executeToggleActive(sfWebRequest $request)
       (
-        $ obj = $ this-> GetRoute () -> GetObject ();
+        $obj = $this->getRoute()->getObject();
 
-        $ obj-> is_active =!$ obj-> is_active;
+        $obj->is_active = !$obj->is_active;
 
-        $ obj-> save ();
+        $obj->save();
 
-        $ this-> redirect ($ this-> GetModuleName ().'/ index ');
+        $this->redirect($this->getModuleName().'/index');
       )
     )
 
-Finalmente, alterar a classe base do pageAdminActions `classe para estender essa
-`` backendActions nova classe.
+Finalmente, altere a classe base da classe `pageAdminActions` para estender essa
+nova classe `backendActions`.
 
     [php]
-    pageAdminActions classe estende backendActions
+    class pageAdminActions extends backendActions
     (
       / / ...
     )
 
-O que temos apenas realizado? Ao adicionar uma rota para a coleta de rota e
-uma ação associada a uma acção de base de arquivos, qualquer novo módulo pode automaticamente
-utilizar esta funcionalidade simplesmente usando o acClientObjectRouteCollection `e
-prorroga o backendActions `classe. Desta forma, a funcionalidade comum pode
-ser facilmente compartilhados entre muitos módulos.
+O que nós acabamos de fazer? Ao adicionar uma rota para a colação de rotas e
+uma ação associada a um arquivo de ações base, qualquer novo módulo pode automaticamente
+utilizar esta funcionalidade simplesmente usando `acClientObjectRouteCollection` e
+estendendo a classe `backendActions`. Desta forma, funcionalidade comum pode
+ser facilmente compartilhada entre muitos módulos.
 
-Opções sobre uma coleção Rota
+Opções de uma Coleção de Rotas
 -----------------------------
 
-Coleções rota Objeto conter uma série de opções que lhe permitam ser altamente
+Um objeto de Coleção de Rota contem uma série de opções que lhe permite ser altamente
 personalizado. Em muitos casos, um desenvolvedor pode usar essas opções para configurar
-a coleção sem precisar criar um novo personalizado classe coleção de rota.
-Uma lista detalhada das opções de rota de coleta está disponível através de
-[O symfony Livro de referência] (http://www.symfony-project.org/reference/1_3/en/10-Routing chapter_10_sfobjectroutecollection #).
+a coleção sem precisar criar uma nova classe de coleção de roteamento personalizada.
+Uma lista detalhada das opções da coleção de rotas está disponível através do
+[Livro de referência do symfony](http://www.symfony-project.org/reference/1_3/en/10-Routing#chapter_10_sfobjectroutecollection).
 
-# # # Action Rotas
+### Rotas de Ações
 
-Cada coleção rota objeto aceita três opções diferentes que determinam
-As rotas exatas geradas na coleção. Sem entrar em grandes detalhes,
-a seguinte coleção geraria todas as sete rotas padrão ao longo
-com um percurso de recolha adicional e via objeto:
+Cada objeto de coleção de roteamento aceita três opções diferentes que determinam
+as rotas exatas geradas na coleção. Sem entrar em grandes detalhes,
+a seguinte coleção geraria todas as sete rotas padrão junto com
+uma coleção de rotas e um objeto de roteamento adicional:
 
     [yml]
     pageAdmin:
-      Classe: acClientObjectRouteCollection
-      opções:
+      class: acClientObjectRouteCollection
+      options:
         # ...
-        ações: [lista, de novo, criar, editar, atualizar, excluir, mostrar]
+        actions: [list, new, create, edit, update, delete, show]
         collection_actions:
-          indexAlt: [obter]
+          indexAlt: [get]
         object_actions:
-          alternância: [colocar]
+          toggle: [put]
 
-# # # Coluna
+### Coluna
 
-Por padrão, a chave primária do modelo é utilizado em todas as urls geradas
+Por padrão, a chave primária do modelo é utilizada em todas as urls geradas
 e é usado para consultar os objetos. Isto, naturalmente, pode ser facilmente alterado.
-Por exemplo, o código a seguir usar o `coluna` lesma em vez do
+Por exemplo, o código a seguir utilizaria a coluna `slug` em vez da
 chave primária:
 
     [yml]
     pageAdmin:
-      Classe: acClientObjectRouteCollection
-      opções:
+      class: acClientObjectRouteCollection
+      options:
         # ...
-        coluna: lesma
+        column: slug
 
-# # # Métodos Modelo
+### Métodos de Modelo
 
-Por padrão, o percurso recupera todos os objetos relacionados para uma rota de coleta
-e consultas sobre a coluna «determinada» para as rotas de objeto. Se você
-necessidade de substituir esta, adicione a opção `` model_methods para a rota. Neste
-exemplo, o `fetchAll ()` e `findForRoute ()` métodos que devem ser adicionados
-para a classe `PageTable. Ambos os métodos receberá uma matriz de pedido
-parâmetros como um argumento:
+Por padrão, a rota recupera todos os objetos relacionados para uma coleção de rotas
+e os procura utilizando-se da coluna definida para as rotas de objeto. Se você
+precisa sobrescrever isso, adicione a opção `model_methods` para a rota. Neste
+exemplo, os métodos `fetchAll()` e `findForRoute()` deveriam ser adicionados
+para a classe `PageTable`. Ambos os métodos receberão um array de parâmetros
+da requisição como argumento:
 
     [yml]
     pageAdmin:
-      Classe: acClientObjectRouteCollection
-      opções:
+      class: acClientObjectRouteCollection
+      options:
         # ...
         model_methods:
-          lista: fetchAll
-          Objeto: findForRoute
+          list: fetchAll
+          object: findForRoute
 
-# # # Default Parameters
+### Parâmetros Padrão
 
-Finalmente, suponha que você precisa para fazer um parâmetro de solicitação específica disponível
-no pedido de cada rota na coleção. Isso é facilmente feito com
-default_params `a opção:
+Finalmente, suponha que você precise disponibilizar um parâmetro de entrada
+na requisição para cada rota na coleção. Isso é facilmente obtido utilizando
+a opção `default_params`:
 
     [yml]
     pageAdmin:
-      Classe: acClientObjectRouteCollection
-      opções:
+      object: findForRoute
+      options:
         # ...
         default_params:
           foo: bar
@@ -896,9 +896,8 @@ default_params `a opção:
 Reflexões finais
 --------------
 
-O emprego tradicional do quadro de roteamento - para combinar e gerar URLs --
-evoluiu para um sistema totalmente personalizável capaz de férias para a maioria da
-complexas exigências URL de um projeto. Ao assumir o controle dos objetos de rota,
-a estrutura de URL especial pode ser captada longe da lógica de negócios e
-mantido inteiramente dentro da rota em que ele pertence. O resultado final é mais controle,
-mais flexibilidade e mais código gerenciável.
+A função tradicional do framework de roteamento - para combinar e gerar URLs -
+evoluiu para um sistema totalmente personalizável capaz de servir à maioria das
+exigências por URLs complexas de um projeto. Ao assumir o controle dos objetos de rota,
+a estrutura especial da URL pode ser abstraida da lógica de negócio e
+mantida inteiramente dentro da rota em que ela pertence. O resultado final é mais controle, mais flexibilidade e um código mais fácil de manter.
