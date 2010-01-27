@@ -1,5 +1,4 @@
-﻿
-Trabalhar com a comunidade symfony
+﻿Trabalhando com a comunidade symfony
 ==================================
 
 * por Stefan Koopmanschap *
