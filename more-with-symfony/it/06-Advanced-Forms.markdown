@@ -721,10 +721,10 @@ valori. La logica del validatore stesso è abbastanza semplice:
 
 >**TIP**
 >Poiché il validatore personalizzato in questa situazione è destinato ad essere
->utilizzato come post-validatore, il metodo `doClean ()` si aspetta un array dei
+>utilizzato come post-validatore, il metodo `doClean()` si aspetta un array dei
 >valori uniti e restituisce un array di valori puliti. I validatori personalizzati,
 >tuttavia, possono essere facilmente creati per singoli campi. In tal caso, il
->metodo `doClean ()` si aspetta un solo valore (il valore del campo inviato) e
+>metodo `doClean()` si aspetta un solo valore (il valore del campo inviato) e
 >restituirà un solo valore.
 
 L'ultimo passo è quello di sovrascrivere il metodo `saveEmbeddedForms()` di
@@ -952,7 +952,7 @@ cartella `lib/widget/` (è necessario creare questa cartella):
 
 Anche se il formato di questa classe è strano, l'idea generale è che il metodo
 `renderRow()` utilizzerà il codice `$rowFormat` per organizzare il suo output.
-Un formattatore di schema dei form, offre molte altre opzioni di formattazione che
+Un formattatore di schema dei form offre molte altre opzioni di formattazione, che
 in questa sede non vengono mostrare in dettaglio. Per maggiori informazioni, consultare
 le [API di symfony 1.3](http://www.symfony-project.org/api/1_3/sfWidgetFormSchemaFormatter).
 

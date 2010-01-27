@@ -25,7 +25,7 @@ applicazione-dipendente dietro symfony.
 
 >**TIP**
 >Symfony dà già un po' di controllo su quello che succede qui, consentendo
->di passare una cartella root personalizzata per l'applicazione come quarto
+>di passare una cartella radice personalizzata per l'applicazione come quarto
 >parametro di ~`ProjectConfiguration::getApplicationConfiguration()`~, così come
 >una classe personalizzata del contesto come terzo (e ultimo) parametro di
 >[`sfContext::createInstance()`](http://www.symfony-project.org/api/1_3/sfContext#method_createinstance)
@@ -487,7 +487,7 @@ Il lavoro reale, in questo caso particolare, è l'esecuzione della catena dei fi
 >dopo il resto della esecuzione della catena.
 
 La configurazione della catena dei filtri è recuperata dal modulo corrente
-[`filters.yml`](http://trac.symfony-project.org/browser/branches/1.3/lib/config/config/filters.yml),
+[`filters.yml`](http://trac.symfony-project.org/browser/branches/1.3/lib/config/config/filters.yml)
 ed è il motivo per cui l'istanza dell'azione è necessaria. A questo punto c'è la
 possibilità di modificare la serie di filtri eseguiti dalla catena. Basta ricordare
 che il filtro di rendering dovrebbe essere sempre il primo della lista (si vedrà
@@ -521,7 +521,7 @@ e se si ha una richiesta, perché eseguire nuovamente l'azione? Naturalmente, qu
 funzionerà solo per una pagina che si possa mettere completamente in cache,
 che non è il caso per la stragrande maggioranza delle pagine.
 
-Ma questo filtro ha una seconda logica che viene eseguita dopo l'esecuzione del
+Ma questo filtro ha una seconda logica, che viene eseguita dopo l'esecuzione del
 filtro e appena prima del filtro di rendering. Questo codice è responsabile per
 la corretta costituzione della cache degli header HTTP e per l'inserimento della pagina
 nella cache, se necessario, grazie al metodo
@@ -529,11 +529,11 @@ nella cache, se necessario, grazie al metodo
 
 ### Il filtro di esecuzione
 
-Ultimo ma non meno importante, il filtro `execution`, si prenderà infine cura di
+Ultimo, ma non meno importante, il filtro `execution` si prenderà infine cura di
 eseguire la logica dell'applicazione e di gestire la visualizzazione associata.
 
 Tutto inizia quando il filtro controlla la cache per l'azione in corso. Naturalmente,
-se se ha qualcosa nella cache, l'esecuzione attuale dell'azione salta e viene
+se ha qualcosa nella cache, l'esecuzione attuale dell'azione salta e viene
 eseguita la vista `Success`.
 
 Se l'azione non viene trovata nella cache, allora è il momento di eseguire la
@@ -567,19 +567,19 @@ La prima cosa da fare è recuperare un oggetto [`sfView`](http://trac.symfony-pr
 attraverso il metodo [`sfController::getView()`](http://www.symfony-project.org/api/1_3/sfController#method_getview). Questo oggetto può provenire da
 due posti diversi. In primo luogo si potrebbe avere un oggetto personalizzato
 per la vista per questa specifica azione (supponendo che il corrente modulo/azione,
-sia modulo/azione) `actionSuccessView` o `module_actionSuccessView` in un file
+sia module/action) `actionSuccessView` o `module_actionSuccessView` in un file
 chiamato `apps/frontend/modules/module/view/actionSuccessView.class.php`.
 In caso contrario, sarà usata la classe definita nella voce di configurazione
 `mod_module_view_class`. Il suo valore predefinito è [`sfPHPView`](http://trac.symfony-project.org/browser/branches/1.3/lib/view/sfPHPView.class.php).
 
 >**TIP**
->Utilizzare la propria classe di visualizzazione, dà la possibilità di eseguire
+>Utilizzare la propria classe di visualizzazione dà la possibilità di eseguire
 >delle logiche specifiche per la vista, attraverso il metodo [`sfView::execute()`](http://www.symfony-project.org/api/1_3/sfView#method_execute)
 >Ad esempio, è possibile creare un'istanza per il proprio motore di template.
 
 Ci sono tre possibili modalità di rendering per la vista:
 
-1. `sfView::RENDER_NONE`": equivalente a `sfView::NONE`, cancella qualunque rendering che potrebbe essere visualizzato
+1. `sfView::RENDER_NONE`: equivalente a `sfView::NONE`, cancella qualunque rendering che potrebbe essere visualizzato
 1. `sfView::RENDER_VAR`: popola la presentazione delle azioni, che è quindi accessibile tramite il metodo [`sfActionStackEntry::getPresentation()`](http://www.symfony-project.org/api/1_3/sfActionStackEntry#method_getpresentation) con le voci del suo stack.
 1. `sfView::RENDER_CLIENT`, la modalità predefinita, visualizzerà la vista e il contenuto della risposta
 
@@ -590,9 +590,9 @@ Ci sono tre possibili modalità di rendering per la vista:
 
 ### Il filtro per il rendering
 
-La trattazione è quesi finita, rimane solo un ultimo passaggio. La catena dei filtri ha
+La trattazione è quasi finita, rimane solo un ultimo passaggio. La catena dei filtri ha
 quasi terminato la sua esecuzione, ma bisogna ricordarsi del filtro di rendering.
-È rimasto in attesa dall'inizio della catena, che tutti completassero il proprio
+È rimasto in attesa, dall'inizio della catena, che tutti completassero il proprio
 lavoro, in modo che alla fine possa svolgere il suo compito. Il filtro di rendering
 invia il contenuto della risposta al browser, utilizzando
 [`sfWebResponse::send()`](http://www.symfony-project.org/api/1_3/sfWebResponse#method_send).
@@ -636,5 +636,5 @@ Considerazioni finali
 È tutto! La richiesta è stata gestita e ora si è pronti per gestirne un'altra.
 Certo, si potrebbe scrivere un intero libro sui processi interni di symfony, però
 questo capitolo è utile per avere una buona visione d'insieme. Siete più che
-benvenuti a esplorare da soli i sorgenti: questo è e sarà sempre, il modo
+benvenuti a esplorare da soli i sorgenti: questo è, e sarà sempre, il modo
 migliore per imparare i reali meccanismi di qualunque framework o libreria.

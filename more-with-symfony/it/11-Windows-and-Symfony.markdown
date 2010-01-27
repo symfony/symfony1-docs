@@ -475,8 +475,8 @@ Digitare `http://localhost/web` nella barra del browser per l'URL, invece che so
 ![IIS Manager - Digitare http://localhost/web nell'URL. Successo!](http://www.symfony-project.org/images/more-with-symfony/windows_31.png)
 
 Tra l'altro, si può vedere una banda gialla in alto che dice "Ora le impostazioni
-Intranet, per impostazione predefinita sono disattivate. Le impostazioni
-Intranet sono meno sicure delle impostazioni Internet. Cliccare per le opzioni.".
+Intranet sono disattivate per impostazione predefinita." Le impostazioni
+Intranet sono meno sicure delle impostazioni Internet. Cliccare per le opzioni.
 Non c'è da preoccuparsi per questo messaggio.
 
 Per chiuderlo definitivamente, basta cliccare con il tasto destro nella banda
