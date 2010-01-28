@@ -47,10 +47,10 @@ Nun kann alles für das Schema gebaut werden:
 
 Zunächst muss die Basis-`Doctrine_Template`-Kinderklasse erstellt werden. Diese 
 wird sich darum kümmern, dass die Felder dem Modell hinzugefügt werden, welche 
-die Werte speichert.
+die Werte speichern.
 
 Die Klasse kann einfach irgendwo im `lib/`-Verzeichnis des Projekts gespeichert 
-werden und symfony lädt sie automatisch:
+werden. Symfony lädt sie dann automatisch:
 
     [php]
     // lib/count_cache/CountCache.class.php
@@ -65,7 +65,8 @@ werden und symfony lädt sie automatisch:
       }
     }
 
-Now let's modify the `Post` model to `actAs` the `CountCache` behavior:
+Als nächstes modifizieren wir das `Post`-Modell mit `actAs` `CountCache`-
+Behaviour:
 
     [yml]
     # config/doctrine/schema.yml
@@ -74,8 +75,8 @@ Now let's modify the `Post` model to `actAs` the `CountCache` behavior:
         CountCache: ~
       # ...
 
-Now that we have the `Post` model using the `CountCache` behavior let me explain
-a little about what happens with it.
+Jetzt da das `Post`-Modell die `CountCache`-Behaviour nutzt, zeigt der nächste 
+Abschnitt, was man damit machen kann.
 
 When the mapping information for a model is instantiated, any attached behaviors
 get the `setTableDefinition()` and `setUp()` methods invoked. Just like you have
