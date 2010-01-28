@@ -1,7 +1,7 @@
 Jour 17 : La recherche
 ======================
 
-Il ya deux jours, nous avons ajouté certains flux pour tenir au courant les utilisateurs de Jobeet
+Il y a deux jours, nous avons ajouté certains flux pour tenir au courant les utilisateurs de Jobeet
 pour les nouveaux emplois. Aujourd'hui, nous allons continuer à améliorer l'expérience utilisateur en
 implémentant la dernière caractéristique principale du site web Jobeet : le ~moteur de recherche|Moteur de recherche~.
 
