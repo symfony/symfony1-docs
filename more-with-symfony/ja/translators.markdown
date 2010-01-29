@@ -55,3 +55,10 @@ Kousuke Ebihara (海老原 昂輔)
 
 **Twitter**: *http://twitter.com/co3k*
 
+Hideki Suzuki (鈴木 秀樹)
+----------------------------
+
+某建築設備会社の社内システム担当。次期社内システムの構築は symfony 採用の方向で検討中。
+
+**Web サイト**: *http://d.hatena.ne.jp/hidehide55*
+
