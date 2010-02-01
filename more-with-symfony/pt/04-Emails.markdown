@@ -10,7 +10,7 @@ tornar o envio de e-mails ainda mais flexível e poderoso. Este capítulo vai en
 como ter todo o seu poder à sua disposição.
 
 >**NOTE**
->O symfony 1,3 vem com o Swift Mailer versão 4.1.
+>O symfony 1.3 vem com o Swift Mailer versão 4.1.
 
 Introdução
 ------------
@@ -30,10 +30,10 @@ Este tutorial explica a integração do *Swift Mailer* no symfony. Se você quis
 aprender os pequenos detalhes da biblioteca *Swift Mailer*, veja a
 [documentação](http://www.swiftmailer.org/docs) dedicada.
 
-Enviar e-mails a partir de uma action*
+Enviando e-mails a partir de uma ação
 -----------------------------
 
-Em uma *action*, recuperar a instância do *mailer* é simples
+Em uma ação, é simples recuperar a instância do *mailer* 
 utilizando o método atalho `getMailer()`:
 
     [php]
@@ -95,7 +95,7 @@ anexo (*~attachment|e-mail attachment~*) como mostrado abaixo:
       ->attach(Swift_Attachment::fromPath('/caminho/para/um/arquivo.zip/'))
     ;
 
-    // Enviar a mensagem
+    // Envia a mensagem
     $this->getMailer()->send($mensagem);
 
 ### A Forma Poderosa
@@ -407,7 +407,7 @@ Depuração
 Tradicionalmente, a depuração de e-mails tem sido um pesadelo. Com o symfony, é muito
 fácil, graças à ~web debug toolbar~ (barra de ferramentas para debug web).
 
-A partir do conforto do seu navegador, você pode facilmente e rapidamente ver quantas
+A partir do conforto do seu navegador, você pode fácil e rapidamente ver quantas
 mensagens foram enviadas pela ação atual:
 
 ![E-mails na Barra de Ferramentas para Debug Web](http://www.symfony-project.org/images/more-with-symfony/emails_wdt.png "E-mails na Barra de Ferramentas para Debug Web")
