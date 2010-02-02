@@ -74,7 +74,7 @@ Web application frameworks were getting popular at that time, and the need for a
 
 The public source repository and ticketing system offer a variety of ways to contribute, and all volunteers are welcome. Fabien is still the main committer in the trunk of the source code repository, and guarantees the quality of the code.
 
-Today, the symfony [forum](http://forum.symfony-project.org/), [mailing](http://groups.google.com/group/symfony-users) [lists](http://groups.google.com/group/symfony-devs), and Internet Relay Chat (IRC) [channel](irc://irc.freenode.net/symfony) offer ideal support outlets, with seemingly each question getting an average of four answers. Newcomers install symfony every day, and the wiki and code snippets sections host a lot of user-contributed documentation. Nowadays, symfony is one of the most popular PHP framework.
+Today, the symfony [forum](http://forum.symfony-project.org/), [mailing](http://groups.google.com/group/symfony-users) [lists](http://groups.google.com/group/symfony-devs), and Internet Relay Chat (IRC) [channel](irc://irc.freenode.net/symfony) offer ideal support outlets, with seemingly each question getting an average of four answers. Newcomers install symfony every day, and the wiki and code snippets sections host a lot of user-contributed documentation. Nowadays, symfony is one of the most popular PHP frameworks.
 
 The symfony community is the third strength of the framework, and we hope that you will join it after reading this book.
 
@@ -167,7 +167,7 @@ This book will describe how to use the Propel and Doctrine objects, but for a mo
 
 ### Rapid Application Development (RAD)
 
-Programming web applications has long been a tedious and slow job. Following the usual software engineering life cycles (like the one proposed by the Rational Unified Process, for instance), the development of web applications could not start before a complete set of requirements was written, a lot of Unified Modeling Language (UML) diagrams were drawn, and tons of preliminary documentation were produced. This was due to the general speed of development, to the lack of versatility of programming languages (you had to build, compile, restart, and who knows what else before actually seeing your program run), and most of all, to the fact that clients were quite reasonable and didn't change their minds constantly.
+Programming web applications has long been a tedious and slow job. Following the usual software engineering life cycles (like the one proposed by the Rational Unified Process, for instance), the development of web applications could not start before a complete set of requirements was written, a lot of Unified Modeling Language (UML) diagrams were drawn, and tons of preliminary documentation was produced. This was due to the general speed of development, the lack of versatility of programming languages (you had to build, compile, restart, and who knows what else before actually seeing your program run), and most of all, to the fact that clients were quite reasonable and didn't change their minds constantly.
 
 Today, business moves faster, and clients tend to constantly change their minds in the course of the project development. Of course, they expect the development team to adapt to their needs and modify the structure of an application quickly. Fortunately, the use of scripting languages like Python, Ruby, and PHP makes it easy to apply other programming strategies, such as rapid application development (RAD) or agile software development.
 
@@ -186,7 +186,7 @@ Symfony is the perfect tool for RAD. As a matter of fact, the framework was buil
 
 ### YAML
 
-According to the official YAML [website](http://www.yaml.org/), YAML is "is a human friendly data serialization standard for all programming languages". Put another way, YAML is a very simple language used to describe data in an XML-like way but with a much simpler syntax. It is especially useful to describe data that can be translated into arrays and hashes, like this:
+According to the official YAML [website](http://www.yaml.org/), YAML is "a human friendly data serialization standard for all programming languages". Put another way, YAML is a very simple language used to describe data in an XML-like way but with a much simpler syntax. It is especially useful to describe data that can be translated into arrays and hashes, like this:
 
     [php]
     $house = array(
