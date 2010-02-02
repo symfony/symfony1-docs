@@ -71,7 +71,7 @@ die Web Debug Werkzeugleiste die möglichen Paneele sammelt. Bearbeiten Sie als 
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       // ...
 

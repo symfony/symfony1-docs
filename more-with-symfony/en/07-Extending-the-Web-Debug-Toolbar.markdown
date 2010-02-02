@@ -72,7 +72,7 @@ is collecting the potential panels. First, modify the
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       // ...
 

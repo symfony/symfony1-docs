@@ -50,7 +50,7 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       //...
 

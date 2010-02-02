@@ -768,6 +768,7 @@ necesario crear un método que ordene los mensajes por prioridad:
       {
         return $this->createQuery('m')
           ->orderBy('m.priority')
+          ->execute()
         ;
       }
 

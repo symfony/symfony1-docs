@@ -779,6 +779,7 @@ ordnet:
       {
         return $this->createQuery('m')
           ->orderBy('m.priority')
+          ->execute()
         ;
       }
 

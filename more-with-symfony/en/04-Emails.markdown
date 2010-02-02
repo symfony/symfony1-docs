@@ -751,6 +751,7 @@ messages by priority:
       {
         return $this->createQuery('m')
           ->orderBy('m.priority')
+          ->execute()
         ;
       }
 

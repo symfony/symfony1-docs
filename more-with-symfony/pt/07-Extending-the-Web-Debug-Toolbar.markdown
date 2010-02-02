@@ -72,7 +72,7 @@ está recolhendo os painéis potencial. Primeiramente, modificar o arquivvo
 
     [php]
     //Config/ProjectConfiguration.class.php
-    function initialize()
+    function setup()
     (
       //...
 

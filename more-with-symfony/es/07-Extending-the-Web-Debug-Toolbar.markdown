@@ -77,7 +77,7 @@ obtiene los paneles que se van a mostrar. En primer lugar, modificar el archivo
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       // ...
 

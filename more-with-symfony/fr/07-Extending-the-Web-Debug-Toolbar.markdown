@@ -55,7 +55,7 @@ Pour finir cette implémentation, il ne reste plus qu'à informer l'application 
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       // ...
 

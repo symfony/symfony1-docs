@@ -75,7 +75,7 @@ insieme i potenziali pannelli. Innanzitutto, modificare il file
 
     [php]
     // config/ProjectConfiguration.class.php
-    public function initialize()
+    public function setup()
     {
       // ...
 
