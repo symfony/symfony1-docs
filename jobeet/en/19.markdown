@@ -1111,7 +1111,7 @@ define above in `test/fixtures/categories.yml`.
 
 Rebuild the model for the `test` environment:
 
-    $ php symfony propel:build --all -and-load --no-confirmation --env=test
+    $ php symfony propel:build --all --and-load --no-confirmation --env=test
 
 You can now launch all tests to check that they are running fine:
 
