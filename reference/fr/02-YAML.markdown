@@ -277,7 +277,7 @@ L'exemple suivant illustre la syntaxe YAML expliquée dans cette section :
 
     [yml]
     "symfony 1.0":
-      end_of_maintainance: 2010-01-01
+      end_of_maintenance: 2010-01-01
       is_stable:           true
       release_manager:     "Gregoire Hubert"
       description: >
@@ -289,7 +289,7 @@ L'exemple suivant illustre la syntaxe YAML expliquée dans cette section :
       archives:            { source: [zip, tgz], sandbox: [zip, tgz] }
 
     "symfony 1.2":
-      end_of_maintainance: 2008-11-01
+      end_of_maintenance: 2008-11-01
       is_stable:           true
       release_manager:     'Fabian Lange'
       description: >
