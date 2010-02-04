@@ -62,3 +62,11 @@ Hideki Suzuki (鈴木 秀樹)
 
 **Web サイト**: *http://d.hatena.ne.jp/hidehide55*
 
+Yoshihiro TAKAHARA (高原 芳浩)
+----------------------------
+
+[株式会社ディノ](http://www.dino.co.jp/)の代表取締役社長。2005年から symfony を使ってアプリケーション開発をしているので構築数と期間だけはかなりのもの。symfony 版の heroku 作りたくてしょうがない。 有効活用されていませんが、 symfony.jp のドメイン登録しています。最近ひどく多忙で書いていないのですが、 [symfonyで開発日記](http://blog.symfony.jp)の運営もしています。
+
+**Web サイト**: *http://d.hatena.ne.jp/tumf*
+
+**Twitter**: *http://twitter.com/tumf*
