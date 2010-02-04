@@ -99,7 +99,7 @@ Ihnen die Möglichkeit geben, die externen Subversion-Sourcen zu konfigurieren.
 Wenn Sie eher vorsichtig eingestellt sind, knüpfen Sie Ihr Projekt an eine 
 bestimmte Release (ein Subversion-Tag):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Immer dann, wenn eine neue Release erscheint (angekündigt im symfony 
 [Blog](http://www.symfony-project.org/blog/), müssen Sie die URL auf die neue 
@@ -108,7 +108,7 @@ Version setzen.
 Wollen Sie den Weg an der vordersten Front gehen, dann verwenden Sie den 
 1.4-Branch:
 
-    symfony http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/
 
 Durch die Verwendung des Branch profitiert Ihr Projekt automatisch von den 
 Bugfixes, sobald Sie ein `svn update` starten.

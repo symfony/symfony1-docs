@@ -96,7 +96,7 @@ dostęp do konfiguracji zewnętrznego repozytorium Subversion.
 Jeśli jesteś tradycjonallistą, możesz również ograniczyć się do ściśle określonego
 wydania (subversion tag):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Za każdym razem, gdy zostanie wydana nowa wersja (dowiesz się o tym na oficjalnym
 [blogu](http://www.symfony-project.org/blog/)), wtedy będziesz musiał/a zmienić adres URL
@@ -104,7 +104,7 @@ na nową wersję.
 
 Jeśli chcesz zaufać naszym aktualizacjion, skorzystać z branchy 1.4:
 
-    symfony http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/
 
 Korzystając z branchy, ustrzeżesz projekt od odkrytych błędów dzięki automatycznej
 aktualizacji, za każdym razem gdy wywołasz `svn update`.

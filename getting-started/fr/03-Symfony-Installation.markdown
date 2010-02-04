@@ -94,7 +94,7 @@ la possibilité de configurer les sources extérieures Subversion.
 Si vous êtes conservateur, liez votre projet à une version release (un tag de
 subversion) :
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0 
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0 
 
 Chaque fois qu'une nouvelle version sort (comme annoncé sur le
 [blog](http://www.symfony-project.org/blog/) de Symfony), vous devrez modifier l'URL
@@ -102,7 +102,7 @@ vers la nouvelle version.
 
 Si vous voulez aller sur la route de l'avant-garde, utilisez la branche 1.4 :
 
-    symfony http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/
 
 Grâce à l'utilisation de cette branche, votre projet bénéficie des corrections de bogues automatiquement
 chaque fois que vous exécutez `svn update`.

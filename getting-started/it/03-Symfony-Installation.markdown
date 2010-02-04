@@ -96,7 +96,7 @@ per poter configurare i sorgenti esterni di Subversion.
 Per un approccio conservativo, legare il progetto ad un rilascio specifico
 (un tag di Subversion):
 
-    symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
 Ogni volta che esce un nuovo rilascio (come annunciato sul
 [blog](http://www.symfony-project.org/blog/) di symfony), occorrerà
@@ -104,7 +104,7 @@ modificare l'URL.
 
 Se si preferisce la strada dell'aggiornamento continuo, usare il ramo 1.4:
 
-    symfony http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/
 
 L'uso del ramo apporta ai progetti i benefici dei bug risolti ogni volta
 che si esegue il comando `svn update`.
