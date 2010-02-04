@@ -66,7 +66,7 @@ Les widgets sont définis dans la méthode `configure()`. Cette méthode est aut
 
 La méthode `setWidgets()` permet de définir les widgets composant le formulaire, sous la forme d'un tableau PHP associatif dont les clés sont le nom des champs et les valeurs les objets widgets. Chaque widget est un objet héritant de la classe `sfWidget`. Ici, nous avons utilisé deux widgets :
 
-  * `sfWidgetFormInput`    : Ce widget représente un champ `input`
+  * `sfWidgetFormInputText` : Ce widget représente un champ `input`
   * `sfWidgetFormTextarea` : Ce widget représente un champ `textarea`
 
 >**Note**
