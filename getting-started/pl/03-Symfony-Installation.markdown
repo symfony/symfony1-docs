@@ -65,7 +65,7 @@ na stronie wersją symfony. Aby to zrobić, przejdź na stronę instalacyjną we
 symfony [1.4](http://www.symfony-project.org/installation/1_4) for instance.
 
 
-Pod linkiem "**Źródło**" lub "**Source Download**", znajdziesz pliki archiwum `.tgz`
+Pod linkiem "**Źródło**" lub "**Download as an Archive**", znajdziesz pliki archiwum `.tgz`
 lub `.zip`. Pobierz plik archiwum i umieść go w nowo utworzonym katalogu
 `lib/vendor/`, rozpakuj go i zmień nazwę katalogu na `symfony`:
 

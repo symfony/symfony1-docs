@@ -67,7 +67,7 @@ der Version, die Sie von der symfony-Website ausgesucht haben. Gehen Sie zur
 Installations-Seite der gewählten Version, z.B. symfony 
 [1.4](http://www.symfony-project.org/installation/1_4).
 
-Im Abschnitt "**Source Download**" finden Sie das Archiv im `.tgz` oder im `.zip` 
+Im Abschnitt "**Installing from an archive**" finden Sie das Archiv im `.tgz` oder im `.zip` 
 Format. Laden Sie das Archiv herunter, speichern es im frisch erstellten 
 Verzeichnis `lib/vendor`, entpacken es und benennen das Verzeichnis um zu 
 `symfony`:
