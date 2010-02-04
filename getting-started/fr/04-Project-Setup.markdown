@@ -47,6 +47,47 @@ lors de l'exécution d'une tâche.
 Ainsi, à partir de maintenant, au lieu d'utiliser le chemin complet pour le programme
 symfony, vous pouvez utiliser le raccourci `symfony`.
 
+### Vérification de l'installation
+
+Maintenant que symfony est correctement installé, vérifiez la en utilisant la
+ligne de commande de symfony pour afficher la version de symfony (notez que le `V` est en majuscule) :
+
+    $ cd ../..
+    $ php lib/vendor/symfony/data/bin/symfony -V
+
+Sur Windows:
+
+    c:\> cd ..\..
+    c:\> php lib\vendor\symfony\data\bin\symfony -V
+
+L'option `-V` affiche également le chemin vers le répertoire d'installation de symfony,
+qui est stocké dans `config/ProjectConfiguration.class.php`.
+
+Si le chemin de symfony est absolue (ce qui ne devrait pas l'être par défaut si vous
+suivez les instructions ci-dessus), changez-le de sorte qu'il soit lu comme l'exemple suivant
+pour une meilleure portabilité :
+
+    [php] 
+    // config/ProjectConfiguration.class.php 
+    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php'; 
+
+De cette façon, vous pouvez déplacer le répertoire du projet n'importe où sur votre machine ou
+une autre, et cela fonctionnera bien.
+
+>**TIP**
+>Si vous êtes curieux de savoir ce que cet outil en ligne de commande peut faire pour vous, tapez
+>`symfony` pour lister les options et les tâches disponibles :
+>
+>     $ php lib/vendor/symfony/data/bin/symfony
+>
+>Sur Windows:
+>
+>     c:\> php lib\vendor\symfony\data\bin\symfony
+>
+>La ligne de commande symfony est le meilleur ami du développeur. Il fournit de nombreux
+>utilitaires qui permettent d'améliorer votre productivité sur les activités quotidiennes comme
+>le vidage du cache, la génération de code, et bien plus encore.
+
 Configuration de la base de données
 ------------------------
 

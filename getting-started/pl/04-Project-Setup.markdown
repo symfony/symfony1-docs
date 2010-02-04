@@ -46,6 +46,47 @@ kolejne zadania.
 Tak więc, od tego momentu, zamiast wpisywać pełną ścieżkę do skryptu symfony,
 możesz użyć skrótu `symfony`.
 
+### Weryfikacja instalacji
+
+Gdy symfony mamy już zainstalowane, sprawdź czy wszystko udało się pomyślnie podając
+w wierszu poleceń, komendę wyświetlającą wersję symfony (pamiętaj o dużej literze `V`):
+
+    $ cd ../..
+    $ php lib/vendor/symfony/data/bin/symfony -V
+
+Lub w Windowsie:
+
+    c:\> cd ..\..
+    c:\> php lib\vendor\symfony\data\bin\symfony -V
+
+Opcja `-V` wyświetla również ścieżkę do katalogu instalacyjnego symfony, która jest 
+określona w pliku `config/ProjectConfiguration.class.php`.
+
+Jeżeli ścieżka do symfony jest absolutna, a nie relatywna (domyślnie nie powinna być, 
+jeśli podążałeś/aś wg powyższej instrukcji), zmień to, żeby zachować lepszą 
+migrowalność projektu: 
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
+
+Dzięki temu, możesz przenosić katalog projektu gdziekolwiek na maszynie lub na inny
+komputer i będzie on działać bez problemów. 
+
+>**TIP**
+>Jeżeli jesteś ciekawy na temat dostępnych komend w wierszu poleceń, napisz
+>`symfony` aby wyświetlić listę dostępnych opcji i zadań:
+>
+>     $ php lib/vendor/symfony/data/bin/symfony
+>
+>W Windowsie:
+>
+>     c:\> php lib\vendor\symfony\data\bin\symfony
+>
+>Wiersz poleceń symfony jest dla programisty programisty najlepszym przyjacielem. 
+>Wprowadza on wiele dodatków które usprawnią twoją codzienną pracę, np.  
+>wyczyści pamięć cache, generuje kod i wiele więcej.
+
 ### Konfiguracja bazy danych
 
 Framework symfony wspiera wszystkie bazy danych w pakiecie [PDO](http://www.php.net/PDO)
