@@ -66,7 +66,7 @@ The widgets are defined in the `configure()` method. This method is automaticall
 
 The `setWidgets()` method is used to define the widgets used in the form. The `setWidgets()` method accepts an associative array where the keys are the field names and the values are the widget objects. Each widget is an object inheriting from the `sfWidget` class. For this example we used two types of widgets:
 
-  * `sfWidgetFormInput`  : This widget represents the `input` field
+  * `sfWidgetFormInputText`: This widget represents the `input` field
   * `sfWidgetFormTextarea`: This widget represents the `textarea` field
 
 >**Note**

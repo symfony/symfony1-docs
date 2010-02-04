@@ -710,7 +710,7 @@ passing the `column` option.
 | ------------ | ----- | -----------
 | `model`      | n/a   | The model class (required)
 | `criteria`   | n/a   | A criteria to use when retrieving objects
-| `column`     | n/a   | The column name (null by default which means the primary key is used) - must be in field name format
+| `column`     | n/a   | The column name (`null` by default which means the primary key is used) - must be in field name format
 | `connection` | n/a   | The Propel connection to use (`null` by default)
 | `multiple`   | n/a   | `true` if the select tag must allow multiple selections
 

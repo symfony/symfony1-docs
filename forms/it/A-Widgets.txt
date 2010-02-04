@@ -255,7 +255,7 @@ L'opzione `needs_multipart` è automaticamente impostata a `true`.
 ### ~`sfWidgetFormInputFileEditable`~
 
 `sfWidgetFormInputFileEditable` è un widget input file, che estende il
-widget `sfWidgetFormInputFile`per aggiungere la possibilità di mostrare o rimuovere un
+widget `sfWidgetFormInputFile` per aggiungere la possibilità di mostrare o rimuovere un
 file caricato in precedenza.
 
 | Opzione        | Descrizione

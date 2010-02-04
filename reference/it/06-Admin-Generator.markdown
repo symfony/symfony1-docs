@@ -30,7 +30,7 @@ file `apps/backend/modules/model/article/generator.yml`:
     generator:
       class: sfPropelGenerator
       param:
-        # An array of parameters
+        # Un array di parametri
 
 Il file contiene due voci principali: `class` e `param`. La classe è
 `sfPropelGenerator` per Propel e `sfDoctrineGenerator` per Doctrine.
@@ -70,7 +70,7 @@ generatore di admin attraverso la voce `config`.
 
 >**NOTE**
 >Tutte le opzioni sono disponibili sia per Propel che per Doctrine e funzionano
->allo stesso modo se non diversamente indicato.
+>allo stesso modo, se non diversamente indicato.
 
 ### Campi
 

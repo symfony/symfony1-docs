@@ -59,14 +59,14 @@ del progetto. Quindi, per prima cosa, creiamo questa cartella:
 Installazione di symfony
 ------------------------
 
-### Installazion da un archivio
+### Installazione da un archivio
 
 Il modo più facile per installare symfony è quello di scaricare l'archivio
 della versione scelta dal sito di symfony. Andate sulla pagina di installazione
 per la versione appena scelta,
 [symfony 1.4](http://www.symfony-project.org/installation/1_4) per esempio.
 
-Nella sezione "**Source Download**" sono disponibili gli archivi nei formati
+Nella sezione "**Download as an Archive**" sono disponibili gli archivi nei formati
 `.tgz` o `.zip`. Scaricare l'archivio nella cartella appena creata 
 `lib/vendor/`, scompattarlo e rinominare la cartella in `symfony`:
 
@@ -133,7 +133,7 @@ migliore portabilità:
     // config/ProjectConfiguration.class.php
     require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 
-In questo modo, si può spotare la cartella del progetto ovunque, senza
+In questo modo, si può spostare la cartella del progetto ovunque, senza
 problemi.
 
 >**TIP**
@@ -146,7 +146,7 @@ problemi.
 >
 >     c:\> php lib\vendor\symfony\data\bin\symfony
 >
->La riga di comando di symfony è la migliore amica dello sviluppatore. Mette
->a disposizione molti strumenti che migliorano la vostra produttività per 
+>La riga di comando di symfony è il migliore amico dello sviluppatore. Mette
+>a disposizione molti strumenti che migliorano la produttività per 
 >attività giornaliere come pulizia della cache, generazione di codice e molto
 >altro.

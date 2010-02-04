@@ -44,7 +44,7 @@ o più spazi significativi.
 
 >**TIP**
 >Lo stile con apici doppi fornisce un modo per esprimere stringhe arbitrarie,
-> usando delle sequenze di escape `\`. È molto utile quando si ha bisogno
+>usando delle sequenze di escape `\`. È molto utile quando si ha bisogno
 >di inserire un `\n` o un carattere unicode in una stringa.
 
 Quando una stringa contiene degli "a capo", si può usare lo stile letterale,
@@ -283,7 +283,7 @@ L'esempio seguente illustra la sintassi YAML spiegata in questa sezione:
 
     [yml]
     "symfony 1.0":
-      end_of_maintainance: 2010-01-01
+      end_of_maintenance: 2010-01-01
       is_stable:           true
       release_manager:     "Gregoire Hubert"
       description: >
@@ -295,7 +295,7 @@ L'esempio seguente illustra la sintassi YAML spiegata in questa sezione:
       archives:            { source: [zip, tgz], sandbox: [zip, tgz] }
 
     "symfony 1.2":
-      end_of_maintainance: 2008-11-01
+      end_of_maintenance: 2008-11-01
       is_stable:           true
       release_manager:     'Fabian Lange'
       description: >

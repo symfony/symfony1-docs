@@ -167,7 +167,7 @@ dall'helper `link_to()` quando c'è la necessità di convertire un link ad un fo
 (per simulare un metodo HTTP `DELETE` per esempio).
 
 È vivamente consigliato di cambiare il valore predefinito con una chiave segreta
-univoca di vostra scelta.
+univoca di propria scelta.
 
 >**TIP**
 >Queste impostazioni possono essere dichiarate quando si crea un'applicazione 

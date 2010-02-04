@@ -603,7 +603,7 @@ Listato 2-10 - Disabilitare la protezione `filter_extra_fields`
       }
     }
 
-Dovreste ora poter validare la vostra form e recuperare il valore
+Si dovrebbe ora poter validare il form e recuperare il valore
 inviato nella pagina di ringraziamento.
 
 Nel Capitolo 4 vedremo che queste protezioni possono essere usate
