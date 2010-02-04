@@ -26,7 +26,7 @@ chiedete al browser di utilizzare una risorsa identificata da quell'URL.
 Perciò, siccome l'URL è l'interconnessione tra il sito web e l'utente, deve 
 comunicare significative informazioni riguardo alla risorsa che identifica. Ma 
 gli URL "tradizionali" non descrivono davvero una risorsa, essi mostrano la 
-struttura interna di un'applicazione. All'utente non interessa che il vostro
+struttura interna di un'applicazione. All'utente non interessa che il 
 sito sia realizzato in PHP o che una particolare offerta di lavoro abbia un certo
 identificatore sul database. Mostrare il funzionamento interno dell'applicazione
 è piuttosto dannoso in termini di ~sicurezza|Sicurezza~: cosa succederebbe se l'utente

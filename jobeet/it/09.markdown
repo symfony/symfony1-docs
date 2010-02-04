@@ -10,7 +10,7 @@ moduli `job` e `category`.
 Test funzionali
 ---------------
 
-I ~test funzionali|Test Funzionali~ sono un ottimo strumento per testare la vostra applicazione
+I ~test funzionali|Test Funzionali~ sono un ottimo strumento per testare la propria applicazione
 in modo completo: dalla richiesta fatta da un browser alla risposta inviata
 dal server. Permettono di testare tutti i livelli di un'applicazione: il routing,
 il modello, le azioni ed i template. Molto probabilmente sono molto simili a
@@ -33,14 +33,14 @@ scrivere codice in tranquillità.
 >"[~Selenium~](http://selenium.seleniumhq.org/)". Selenium gira
 >direttamente nel browser, per automatizzare i test tra le
 >varie piattaforme ed i vari browser, quindi è in grado di
->testare i JavaScript della vostra applicazione.
+>testare i JavaScript della propria applicazione.
 
 La classe `sfBrowser`
 ---------------------
 
 In symfony i test funzionali vengono eseguiti attraverso un ~browser|Browser~ speciale
 implementato dalla classe [`sfBrowser`](http://www.symfony-project.org/api/1_4/sfBrowser).
-Esso si comporta come un browser realizzato per la vostra applicazione e direttamente
+Esso si comporta come un browser realizzato per la propria applicazione e direttamente
 connesso ad essa, senza il bisogno di un server web. Vi dà l'accesso a tutti gli
 oggetti di symfony prima e dopo ogni richiesta, dandovi l'opportunità di analizzarli
 e fare i controlli di cui avete bisogno.
@@ -97,7 +97,7 @@ I metodi di test sono forniti da un'altra classe,
 [`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)
 che accetta un'istanza di `sfBrowser` nel suo costruttore. La classe `sfTestFunctional`
 delega i test agli oggetti **~tester|Tester~**. Svariati tester sono distribuiti con 
-symfony, inoltre potete realizzarne di vostri.
+symfony, inoltre se ne possono realizzarne altri.
 
 Come abbiamo visto ieri, i test funzionali vengono memorizzati nella cartella
 `test/functional/`. Per Jobeet, i test si trovano nella sotto-cartella

@@ -409,7 +409,7 @@ A domani
 --------
 
 Come per molte feature di symfony il supporto nativo vi permette di aggiungere
-feed al vostro sito senza particolari sforzi.
+feed al proprio sito, senza particolari sforzi.
 
 Oggi abbiamo migliorato l'esperienza di ricerca di lavoro. Domani vedremo come
 dare maggiore possibilità di inserimento a chi pubblica offerte di lavoro 

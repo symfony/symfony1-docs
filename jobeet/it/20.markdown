@@ -259,7 +259,7 @@ la cartella del plugin `lib/model/`, come ci si dovrebbe aspettare:
 
 Dopo aver lanciato il task, verificare che non sia stata creata la cartella `lib/model/`.
 Il task ha comunque creato le cartelle `lib/form/` e `lib/filter/`. Entrambe
-contengono le classi di base per i form Propel del vostro progetto.
+contengono le classi di base per i form Propel del progetto.
 
 Poiché tali file sono globali per un progetto, rimuoverli dal plugin:
 
@@ -704,7 +704,7 @@ file sarà utilizzato nel sito web di symfony come pezzo principale per la docum
 È anche necessario creare un file `LICENSE`. La scelta di una licenza non è un compito
 facile, ma la sezione dei plugin symfony elenca solo i plugin che vengono rilasciati
 sotto una licenza simile a quella utilizzata da symfony (MIT, BSD, LGPL e PHP). Il
-contenuto del file `LICENSE` verrà visualizzato sotto la scheda licenza della vostra 
+contenuto del file `LICENSE` verrà visualizzato sotto la scheda licenza della 
 pagina pubblica del plugin.
 
 L'ultimo passo è quello di creare un file `package.xml` nella cartella principale del plugin.
@@ -714,7 +714,7 @@ Questo file `package.xml` segue la
 >**NOTE**
 >Il modo migliore per imparare la sintassi del file `package.xml` è sicuramente quello di copiarne uno
 >tra quelli presenti nei
->[plugin esistenti](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml).
+>[plugin esistenti](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.3/package.xml).
 
 Il file `package.xml` è costituito da più parti, come potete vedere in questo esempio:
 

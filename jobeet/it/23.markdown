@@ -19,17 +19,17 @@ Il ~framework|Framework~ symfony è un insieme di
 che formano un completo [framework MVC](#chapter_04_l_architettura_mvc)
 (Modello, Vista, Controllore).
 
-Prima di pensare al codice, prendetevi un po' di tempo per leggere
+Prima di pensare al codice, meglio spendere un po' di tempo per leggere
 la [storia e la filosofia di symfony](#chapter_01_introduzione).
-Quindi, verificate i [prerequisiti](#chapter_01_prerequisiti) del framework,
-ed usate lo [script `check_configuration.php`](#chapter_01_installazione_di_symfony)
-per validare la vostra configurazione.
+Quindi, verificare i [prerequisiti](#chapter_01_prerequisiti) del framework,
+ed usare lo [script `check_configuration.php`](#chapter_01_installazione_di_symfony)
+per validare la propria configurazione.
 
-Infine, [installate symfony](#chapter_01_installazione_di_symfony). Dopo un po'
-di tempo forse vorrete anche [aggiornare](#chapter_22_sub_aggiornare_aggiornamento_symfony)
+Infine, [installare symfony](#chapter_01_installazione_di_symfony). Dopo un po'
+di tempo, forse si vorrà anche [aggiornare](#chapter_22_sub_aggiornare_aggiornamento_symfony)
 all'ultima versione del framework.
 
-Il framework fornisce anche degli strumenti per facilitare il [deployment](#chapter_22_rilascio).
+Il framework fornisce anche degli strumenti per facilitare il [rilascio](#chapter_22_rilascio).
 
 Il ~Modello~
 ------------
@@ -323,16 +323,16 @@ processo di apprendimento, il primo passo è imparare da esempi pratici con
 un libro come questo. Il secondo passo è fare **pratica**. Niente potrà mai
 sostituire la pratica.
 
-Questo è ciò che si può iniziare a fare oggi. Pensate al progetto web più semplice
+Questo è ciò che si può iniziare a fare oggi. Pensare al progetto web più semplice
 che possa fornire un qualche valore: un gestore di cose da fare, un semplice blog, un
-convertitore di tempo o di valuta, qualunque cosa... Sceglietene uno e iniziate a realizzarlo
-con le conoscenze che avete oggi. Usate i messaggi di aiuto dei task per imparare le differenti
-opzioni, guardate il codice generato da symfony, usate un editor di testi che abbia il supporto
-all'auto-completamento del PHP come [Eclipse](http://www.eclipse.org/), e andate a vedere
+convertitore di tempo o di valuta, qualunque cosa... Sceglierne uno e iniziare a realizzarlo
+con le conoscenze attuali. Usare i messaggi di aiuto dei task per imparare le differenti
+opzioni, guardare il codice generato da symfony, usare un editor di testi che abbia il supporto
+all'auto-completamento del PHP, come [Eclipse](http://www.eclipse.org/), e andare a vedere
 nella [guida di riferimento](http://www.symfony-project.org/reference/1_4/) tutte le
 configurazioni previste dal framework.
 
-Fruite di tutto il materiale gratuito che avete a vostra disposizione per imparare di più
+Fruire di tutto il materiale gratuito che si ha a disposizione per imparare di più
 su symfony.
 
 ### La comunità
@@ -345,6 +345,7 @@ del mondo. Se iniziate ad usare symfony per i vostri progetti, considerate
 di unirvi alla community di symfony:
 
   * Iscrivendovi alla [mailing list degli utenti](http://groups.google.com/group/symfony-users)
+  * Iscrivendovi alla [mailing list italiana](http://groups.google.com/group/symfony-it)
   * Iscrivendovi al [feed del blog ufficiale](http://feeds.feedburner.com/symfony/blog)
   * Iscrivendovi al [feed di symfony planet](http://feeds.feedburner.com/symfony/planet)
   * Chattando sul canale[IRC #symfony](irc://irc.freenode.net/symfony) su freenode

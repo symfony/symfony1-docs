@@ -25,33 +25,33 @@ Lo so, gli sviluppatori symfony non sono molto preoccupati, ecco perché volete
 imparare symfony prima di tutto. Ricordate però che è abbastanza difficile trovare
 buoni sviluppatori per symfony.
 
-Dove potete trovare uno sviluppatore symfony? Dove potete pubblicizzare le vostre skill
-su symfony?
+Dove si può trovare uno sviluppatore symfony? Dove si possono pubblicizzare le
+proprie abilità con symfony?
 
-Avete bisogno di trovare una buona bacheca per gli annunci di lavoro. Avete detto Monster?
-Pensate meglio. Quello di cui avete bisogno è una bacheca molto specifica. Una dove
+Occorre trovare una buona bacheca per gli annunci di lavoro. Chi ha detto Monster?
+Pensiamoci meglio. Quello che serve è una bacheca molto specifica. Una dove
 trovare le persone migliori, gli esperti. Una bacheca dove sia semplice, veloce e divertente
 cercare un lavoro oppure offrirlo.
 
-Non cercate più. Jobeet è quello che vi serve. **Jobeet è un software Open Source**
+Non serve più cercare. Jobeet è quello che serve. **Jobeet è un software Open Source**
 che fa solamente una cosa, ma la fa bene. È facile da usare, personalizzare, ampliare e
-integrare nei vostri siti. Supporta diverse lingue di default e certamente usa le ultime
-tecnologie in fatto di Web 2.0 per rendere migliore la user experience dell'utente.
+integrare nei propri siti. Supporta diverse lingue di default e certamente usa le ultime
+tecnologie in fatto di Web 2.0 per rendere migliore l'esperienza dell'utente.
 Inoltre mette a disposizione feed e API per interagire con essa.
 
-Esiste già? Come utente potreste trovare diverse bacheche per gli annunci di 
+Esiste già? Come utente si possono trovare diverse bacheche per gli annunci di 
 lavoro simili a Jobeet su Internet. Ma provate a trovarne una Open-Source e ricca 
 di funzionalità come quella che proponiamo qui.
 
 
 >**NOTE**
->Se state veramente cercando un lavoro con symfony, oppure volete assumere
->uno sviluppatore symfony, potente consultare il sito [symfonians](http://symfonians.net/)
+>Se si cerca veramente un lavoro con symfony, oppure si vuole assumere
+>uno sviluppatore symfony, si può consultare il sito [symfonians](http://symfonians.net/)
 
 Le ~User Story~ del progetto
---------------------------
+----------------------------
 
-Prima di tuffarsi nel codice a capofitto descriviamo un po' di più il progetto.
+Prima di tuffarsi nel codice a capofitto, descriviamo un po' di più il progetto.
 La sezione seguente descrive le funzionalità che vogliamo implementare nella prima
 versione/~iterazione~ del progetto con alcune semplici storie.
 

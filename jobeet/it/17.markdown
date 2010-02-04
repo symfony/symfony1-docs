@@ -595,11 +595,11 @@ A domani
 --------
 
 Oggi abbiamo implementato un motore di ricerca con molte caratteristiche in meno
-di un'ora. Ogni volta che avete bisogno di aggiungere una nuova caratteristica
-ad un vostro progetto, controllate che qualcun'altro non ci abbia già pensato.
-Controllate inoltre che non sia implementato nativamente nel
-[framework symfony ](http://www.symfony-project.org/api/1_4/). Poi, controllate i
-[plugin di symfony](http://www.symfony-project.org/plugins/). E non dimenticate
+di un'ora. Ogni volta che occorre aggiungere una nuova caratteristica
+al proprio progetto, controllare che qualcun altro non ci abbia già pensato.
+Controllare inoltre che non sia implementato nativamente nel
+[framework symfony ](http://www.symfony-project.org/api/1_4/). Poi, controllare i
+[plugin di symfony](http://www.symfony-project.org/plugins/). E non dimenticare
 di controllare anche le librerie di [Zend Framework](http://framework.zend.com/manual/en/)
 e quelle di [ezComponent](http://ezcomponents.org/docs).
 

@@ -293,9 +293,9 @@ dei test è morto prematuramente.
 Aggiungere test a causa di un bug
 ---------------------------------
 
-Ipotizziamo che sia passato del tempo e che uno dei vostri utenti vi abbia
-riportato uno strano ~bug~: alcuni link di lavori puntano ad una pagina di
-errore 404. Dopo alcune investigazioni, trovate che per qualche ragione questi
+Ipotizziamo che sia passato del tempo e che un utente abbia
+segnalato uno strano ~bug~: alcuni link di lavori puntano ad una pagina di
+errore 404. Dopo alcune investigazioni, si scopre che per qualche ragione questi
 lavori mancano dello slug della compagnia, della posizione o del posto.
 
 Come è possibile?

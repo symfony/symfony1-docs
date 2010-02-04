@@ -234,7 +234,7 @@ per incorporare symfony nella cartella `lib/vendor/` del progetto:
 >L'importazione del progetto in un nuovo repository Subversion è spiegata alla fine
 >di questo capitolo.
 
-Se tutto procede bene, questo comando lancierà il vostro editor preferito per
+Se tutto procede bene, questo comando lancierà l'editor preferito per
 dare la possibilità di configurare le fonti esterne di Subversion.
 
 >**TIP**
@@ -281,7 +281,7 @@ Su Windows:
 >    c:\> php lib\vendor\symfony\data\bin\symfony
 >
 >La linea di comando di symfony è il miglior amico dello sviluppatore. Mette
->a disposizione molti strumenti che aumentano la vostra produttività per le 
+>a disposizione molti strumenti che aumentano la produttività per le 
 >attività giornaliere come la pulizia della cache, la generazione del codice
 >e molto altro.
 
@@ -348,7 +348,7 @@ Ora create l'applicazione frontend usando il task `generate:app`:
 >Visto che il file symfony è eseguibile, gli utenti Unix possono sostituire tutte le 
 >occorrenze di '`php symfony`' con '`./symfony`' da qui in avanti.
 >
->Su Windows potete copiare il file 'symfony.bat' nel vostro progetto ed utilizzare
+>Su Windows si può copiare il file 'symfony.bat' nel progetto ed utilizzare
 >'`symfony`' invece che '`php symfony`':
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
@@ -406,24 +406,24 @@ appropriati, in modo che il server web possa scriverci:
 >programm SCM utilizzato (ad esempio se si utilizza Subversion, configurando la
 >proprietà `svn:ignore`).
 
-Setup del ~server Web~: la via brutta
+Setup del ~server web~: la via brutta
 -------------------------------------
 
 Nella sezione precedente è stata creata una cartella per contenere il progetto
-Jobeet. Se l'avete creata da qualche parte dentro la ~cartella principale web~
-del vostro server web, siete in grado di accedere al progetto da un browser web.
+Jobeet. Se è stata creata da qualche parte dentro la ~cartella principale web~
+del server, si è in grado di accedere al progetto da un browser web.
 
 Chiaramente, visto che non è richiesta nessuna configurazione, il tutto è stato 
-molto rapido da realizzare, tuttavia provate ad accedere al file `config/databases.yml`
-nel vostro browser per capire quante pericolose conseguenze può implicare 
-questo modo di agire dettato dalla pigrizia. Se l'utente sa che il sito
+molto rapido da realizzare, se tuttavia si prova ad accedere al file `config/databases.yml`
+nel vostro browser, si può capire quante pericolose conseguenze può implicare 
+questo modo di agire, dettato dalla pigrizia. Se l'utente sa che il sito
 è stato sviluppato con symfony, avrà accesso a molti file sensibili.
 
-**Mai e poi mai utilizzare un setup di questo tipo su un server in produzione** e
-leggete la prossima sezione per imparare a configurare correttamente il 
-vostro web server.
+**Mai e poi mai utilizzare un setup di questo tipo su un server in produzione**, 
+leggere la prossima sezione per imparare a configurare correttamente il 
+proprio server web.
 
-Setup del server Web: la via sicura
+Setup del server web: la via sicura
 -----------------------------------
 
 Una buona pratica web è quella di mettere nella cartella principale web solamente i
@@ -478,7 +478,7 @@ configurazioni alla fine:
 >
 >     c:\development\sfprojects\jobeet\web
 
-Questa configurazione mette Apache in ascolto sulla porta `8080` della vostra macchina, 
+Questa configurazione mette Apache in ascolto sulla porta `8080` della propria macchina, 
 quindi il sito Jobeet sarà accessibile dal seguente URL:
 
     http://~localhost~:8080/
@@ -629,38 +629,38 @@ e di un accesso HTTP ad esso.
 >o anche cercare "free subversion repository" su Google per avere
 >molte più opzioni.
 
-Innanzitutto, create un nuovo repository per il progetto `jobeet`:
+Innanzitutto, creare un nuovo repository per il progetto `jobeet`:
 
     $ svnadmin create /path/to/jobeet/repository
 
-Sulla vostra macchina, create la struttura di base delle cartelle:
+Sulla propria macchina, creare la struttura di base delle cartelle:
     
     $ svn mkdir -m "creata struttura la base delle cartelle"
     ➥ http://svn.example.com/jobeet/trunk
     ➥ http://svn.example.com/jobeet/tags
     ➥ http://svn.example.com/jobeet/branches
 
-Ed eseguite il checkout della cartella vuota `trunk/`:
+Eseguire il checkout della cartella vuota `trunk/`:
 
     $ cd /home/sfprojects/jobeet
     $ svn co http://svn.example.com/jobeet/trunk/ .
 
-Poi rimuovete il contenuto delle cartelle `cache/` e `log/`, visto che
+Poi rimuovere il contenuto delle cartelle `cache/` e `log/`, visto che
 non intendiamo inserirle nel repository.
 
     $ rm -rf cache/* log/*
 
-Ora assicuratevi di impostare i giusti permessi di scrittura sulle cartelle `cache`
-e `log`, per fare in modo che il web server possa scriverci dentro:
+Ora assicurarsi di impostare i giusti permessi di scrittura sulle cartelle `cache`
+e `log`, per fare in modo che il server web possa scriverci dentro:
 
     $ chmod 777 cache/ log/
 
-Ora, importate tutti i file e le cartelle:
+Ora, importare tutti i file e le cartelle:
 
     $ svn add *
 
-Siccome non avremo mai bisogno di eseguire il commit per file delle cartelle 
-`cache/` e `/log`, potete specificare delle opzioni di "ignore":
+Siccome non sarà mai necessario di eseguire il commit per file delle cartelle 
+`cache/` e `/log`, si possono specificare delle opzioni di "ignore":
 
     $ svn propedit svn:ignore cache
 
@@ -675,7 +675,7 @@ Ripetere la procedura per la cartella `log/`:
 
     $ svn propedit svn:ignore log
 
-E inserite:
+E inserire:
 
     *
 

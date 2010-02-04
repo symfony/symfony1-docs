@@ -210,7 +210,7 @@ Si possono configurare i nomi delle cartelle nella classe
 ### La ~cartella radice del web|Cartella radice del web~
 
 Su alcuni host web, non si può modificare il nome della cartella radice
-del web. Ipotizziamo che sul vostro host web sia chiamata `public_html/`
+del web. Ipotizziamo che sul proprio host web sia chiamata `public_html/`
 invece di `web/`:
 
     [php]

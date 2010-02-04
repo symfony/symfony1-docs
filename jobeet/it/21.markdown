@@ -8,14 +8,14 @@ i moduli generati dall'admin generator sono salvati in cache per avere
 migliori ~performance|Performance~.
 
 Ma oggi parleremo di un altro tipo di cache: la cache HTML. Per migliorare le
-performance del vostro sito web potete inserire in cache tutte le pagine HTML o
+performance del sitoi, si possono inserire in cache tutte le pagine HTML o
 solo parte di esse.
 
 Creare un nuovo ambiente
 ------------------------
 
 Di default la funzionalità per la cache dei template è abilitata nel file di
-configurazione `settings.yml` per l'~ambiente|Ambienti~ `prod` ma non per quello `test` o
+configurazione `settings.yml` per l'~ambiente|Ambienti~ `prod`, ma non per quello `test` o
 `dev`:
 
     [yml]
@@ -60,7 +60,7 @@ il `dev` front controller `web/frontend_dev.php` in `web/frontend_cache.php`:
 L'unica differenza è il secondo parametro del metodo `getApplicationConfiguration()`,
 che rappresenta il nome dell'ambiente, `cache`.
 
-Potete testare l'ambiente `cache` nel vostro browser chiamando il suo front
+Si può testare l'ambiente `cache` nel browser, richiamando il suo front
 controller:
 
     http://jobeet.localhost/frontend_cache.php/
@@ -103,13 +103,12 @@ configurazione all'inizio del file:
           classname: DebugPDO
 </propel>
 
-Visto che la configurazione di default salva in cache tutte le impostazioni
-avrete bisogno di cancellarla prima di poter vedere i cambiamenti nel vostro
-browser:
+Visto che la configurazione di default salva in cache tutte le impostazioni,
+occorre cancellarla prima di poter vedere i cambiamenti nel browser:
 
     $ php symfony cc
 
-Ora se aggiornate la pagina nel browser la web debug toolbar dovrebbe essere 
+Ora, se si aggiorna la pagina nel browseri, la web debug toolbar dovrebbe essere 
 presente nell'angolo in alto a destra della pagina, come succede per l'ambiente
 `dev`.
 
@@ -117,7 +116,7 @@ Configurazione della Cache
 --------------------------
 
 La cache dei template di symfony può essere configurata attraverso il file 
-~`cache.yml`~. La configurazione di default per l'applicazione può essere trovata 
+~`cache.yml`~. La configurazione predefinita per l'applicazione può essere trovata 
 in `apps/frontend/config/cache.yml`:
 
     [yml]
@@ -128,15 +127,15 @@ in `apps/frontend/config/cache.yml`:
 
 Di default, visto che tutte le pagine possono contenere contenuti dinamici, la
 cache è disabilitata in modo globale (`enabled: false`). Non abbiamo bisogno di 
-cambiare questa impostazione dato che abiliteremo la cache pagina per pagina.
+cambiare questa impostazione, dato che abiliteremo la cache pagina per pagina.
 
 L'impostazione `lifetime` definisce la ~durata della cache|Durata della cache~
 lato server in secondi (`86400` secondi equivalgono ad un giorno).
 
 >**TIP**
->Potete anche lavorare in modo contrario: abilitare la cache in modo globale e 
->poi disabilitarla su pagine specifiche che non devono essere inserite in cache. 
->Dipende da quale metodo rappresenta quello meno impegnativo per la vostra 
+>Si può anche lavorare in modo contrario: abilitare la cache in modo globale e 
+>poi disabilitarla su pagine specifiche, che non devono essere inserite in cache. 
+>Dipende da quale metodo rappresenta quello meno impegnativo per la propria 
 >applicazione.
 
 Cache delle pagine
@@ -320,15 +319,15 @@ Form in cache
 -------------
 
 Memorizzare la pagina di creazione del lavoro in cache è problematico,
-perché essa contiene un form. Per capire meglio il problema, andate
-alla pagina "Post a Job" nel vostro browser, in modo da metterla in cache.
-Quindi cancellate il cookie di sessione e provate di nuovo ad inviare
-il form. Dovreste vedere un messaggio di errore che vi avverte di
+perché essa contiene un form. Per capire meglio il problema, si apra
+la pagina "Post a Job" nel browser, in modo da metterla in cache.
+Quindi si cancelli il cookie di sessione e si provi di nuovo ad inviare
+il form. Dovrebbe apparire un messaggio di errore, che avverte di
 un attacco ~CSRF~:
 
 ![CSRF e Cache](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
 
-Perché? Siccome abbiamo configurato un segreto CSRF quando abbiamo creato
+Perché? Siccome abbiamo configurato una chiave CSRF segreta quando abbiamo creato
 l'applicazione frontend, symfony inserisce un token CSRF in tutti i form.
 Per proteggersi dagli attacchi CSRF, questo token è unico per ogni
 utente e per ogni form.

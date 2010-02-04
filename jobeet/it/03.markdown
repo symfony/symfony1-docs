@@ -275,7 +275,7 @@ omettere il terzo parametro.
 >**CAUTION**
 >Passare la password del database nella linea di comando è comodo, ma
 >[~non sicuro|Sicurezza~](http://dev.mysql.com/doc/refman/5.1/en/password-security.html).
->A seconda di chi accede al vostro ambiente, potrebbe essere meglio
+>A seconda di chi accede all'ambiente, potrebbe essere meglio
 >modificare `config/databases.yml` per cambiare la password. Ovviamente,
 >per mantenere la password al sicuro, l'accesso al file di configurazione
 >dovrebbe essere ristretto.

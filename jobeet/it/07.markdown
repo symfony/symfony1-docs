@@ -1,7 +1,7 @@
 Giorno 7: Giocare con la pagina delle categorie
 ===============================================
 
-Ieri avete ampliato le vostre conoscenze su symfony in diverse aree:
+Ieri avete ampliato le conoscenze su symfony in diverse aree:
 oggetti di ##ORM##, fixture, routing, debug e configurazioni
 personalizzate. Abbiamo finito con una piccola sfida per oggi.
 

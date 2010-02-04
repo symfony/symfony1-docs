@@ -84,8 +84,8 @@ comporre e inviare una mail in un unico passo, utilizzando il metodo
 >**TIP**
 >Il messaggio email è una istanza della classe `Swift_Message`. Fare riferimento
 >alla [documentazione](http://www.swiftmailer.org/docs) ufficiale di Swift Mailer
->per imparare di più su questo oggetto, e per fare cose più avanzate come
->allegare file.
+>per imparare di più su questo oggetto e per fare cose più avanzate, come ad esempio
+>allegare un file.
 
 Configurazione
 --------------
@@ -94,16 +94,16 @@ Per impostazione predefinita, il metodo `send()` prova a usare un server locale 
 messaggio al destinatario. Naturalmente, come molte altre cose in symfony, questo è
 completamente configurabile.
 
-### ~Factories~
+### ~Factories|Factory~
 
-Nei giorni precedenti, abbiamo già parlato riguardo gli oggetti core di symfony
+Nei giorni precedenti, abbiamo già parlato degli oggetti principali di symfony
 come `user`, `request`, `response`, o il `routing`. Questi oggetti sono
 creati, configurati e gestiti automaticamente dal framework symfony. Inoltre
-sono sempre accessibili dall'oggetto ~`sfContext`~ e come molte cose nel
+sono sempre accessibili dall'oggetto ~`sfContext`~ e, come molte cose nel
 framework, sono configurabili attraverso un file di configurazione:
 ~`factories.yml`~. Questo file è configurabile per l'ambiente.
 
-Quando `sfContext` inizializza i factorie del core, legge il
+Quando `sfContext` inizializza i factory principali, legge il
 file `factories.yml` per i nomi della classe (`class`) e i parametri
 (`param`) da passare al costruttore:
 
@@ -119,7 +119,7 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 >**SIDEBAR**
 >La classe `sfContext`
 >
->L'oggetto ~`sfContext`~ contiene riferimenti a oggetti del core di symfony come
+>L'oggetto ~`sfContext`~ contiene riferimenti a oggetti di symfony come
 >request, response, user, ecc. Dal momento che `sfContext` agisce come un
 >singleton, si può utilizzare `sfContext::getInstance()`
 >da qualsiasi parte e quindi avere accesso a qualsiasi oggetto del core di symfony:
@@ -129,10 +129,10 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 >
 >Ogni volta che si vuole utilizzare `sfContext::getInstance()` in una delle
 >proprie classi, sarebbe meglio pensarci due volte, perché introduce un ~forte accoppiamento|Forte Accoppiamento~.
->È quasi sempre meglio passare l'oggetto che è necessario come parametro.
+>È quasi sempre meglio passare l'oggetto necessario come parametro.
 >
 >È anche possibile utilizzare ~`sfContext`~ come un registro e aggiungere i propri oggetti usando
->metodi `set()`. Accetta un nome e un oggetto come parametri e il metodo `get()`
+>i metodi `set()`. Accetta un nome e un oggetto come parametri e il metodo `get()`
 >può essere usato in seguito per recuperare l'oggetto in base al nome:
 >
 >     [php]
@@ -185,11 +185,11 @@ impostazione predefinita, symfony ha quattro differenti strategie:
  * `none`:           I messaggi sono semplicemente ignorati.
 
 Qualunque sia la strategia, le email sono sempre salvate in un log e disponibili
-nel pannello "mailer" della barra web con gli strumenti di debug.
+nel pannello "mailer" della web debug toolbar.
 
-### ~Il mezzo della mail~
+### ~Trasporto della mail~
 
-I messaggi mail vengono inviati effettivamente da un mezzo. Il mezzo è configurato nel
+I messaggi mail vengono inviati effettivamente da un mezzo di trasporto. Il mezzo è configurato nel
 file di configurazione `factories.yml` e la configurazione predefinita utilizza il
 server SMTP della macchina locale:
 
@@ -222,7 +222,7 @@ Testare le email
 
 Ora che abbiamo visto come inviare una email con il mailer di symfony,
 scriviamo alcuni test funzionali per assicurarci di aver fatto bene le cose. Per
-impostazione predefinita, symfony registra un tester `mailer`  (~`sfMailerTester`~) che
+impostazione predefinita, symfony registra un tester `mailer` (~`sfMailerTester`~), che
 facilita il test delle mail nei test funzionali.
 
 Sostituire il file del test funzionale `affiliate` per l'applicazione di backend con

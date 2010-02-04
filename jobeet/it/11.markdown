@@ -17,8 +17,8 @@ framework dei form.
 >Potete usarlo in ogni applicazione PHP, usando le cartelle `lib/form/`, `lib/widgets/`
 >e `lib/validators/`.
 >
->Un altro componente riutilizzabile è il framework del routing. Copiate la cartella
->`lib/routing/` nel vostro progetto non-symfony e sfruttatene i benefici per gli URL
+>Un altro componente riutilizzabile è il framework del routing. Copiando la cartella
+>`lib/routing/` nel proprio progetto non symfony, se ne possono sfruttare i benefici per gli URL
 >gratuitamente.
 >
 >I componenti che sono indipendenti da symfony formano la

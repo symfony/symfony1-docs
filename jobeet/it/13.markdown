@@ -464,8 +464,8 @@ dal sito di symfony ed estrarlo, oppure creare un collegamento `svn:externals` a
 suo [repository di Subversion](http://svn.symfony-project.com/plugins/sfDoctrineGuardPlugin).
 
 >**TIP**
->Ricordate di assicurarvi che il plugin sia abilitato dopo la sua installazione,
->a meno di non usare il metodo `enableAllPluginsExcept()` nella vostra classe
+>Assicurarsi che il plugin sia abilitato dopo la sua installazione,
+>a meno di non usare il metodo `enableAllPluginsExcept()` nella classe
 >`config/ProjectConfiguration.class.php`.
 
 </doctrine>
