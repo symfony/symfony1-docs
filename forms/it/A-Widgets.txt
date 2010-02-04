@@ -157,7 +157,7 @@ Widget
  * [`sfWidgetFormDate`](A-Widgets#chapter_a_sub_sfwidgetformdate)
  * [`sfWidgetFormDateRange`](A-Widgets#chapter_a_sub_sfwidgetformdaterange)
  * [`sfWidgetFormDateTime`](A-Widgets#chapter_a_sub_sfwidgetformdatetime)
- * [`sfWidgetFormDoctrineChoice`](A-Widgets#chapter_a_sub_scelta_legata_ad_un_modello_doctrine)
+ * [`sfWidgetFormDoctrineChoice`](A-Widgets#chapter_a_sub_scelta_legata_a_un_modello_doctrine)
  * [`sfWidgetFormFilterInput`](A-Widgets#chapter_a_sub_sfwidgetformfilterinput)
  * [`sfWidgetFormFilterDate`](A-Widgets#chapter_a_sub_sfwidgetformfilterdate)
  * [`sfWidgetFormI18nDate`](A-Widgets#chapter_a_sub_sfwidgetformi18ndate)
@@ -175,7 +175,7 @@ Widget
  * [`sfWidgetFormInputPassword`](A-Widgets#chapter_a_sub_sfwidgetforminputpassword)
  * [`sfWidgetFormJQueryAutocompleter`](A-Widgets#chapter_a_sub_autocompletamento)
  * [`sfWidgetFormJQueryDate`](A-Widgets#chapter_a_sub_sfwidgetformjquerydate)
- * [`sfWidgetFormPropelChoice`](A-Widgets#chapter_a_sub_scelta_legata_ad_un_modello_Propel)
+ * [`sfWidgetFormPropelChoice`](A-Widgets#chapter_a_sub_scelta_legata_a_un_modello_propel)
  * [`sfWidgetFormReCaptcha`](A-Widgets#chapter_a_widget_captcha)
  * [`sfWidgetFormSchema`](A-Widgets#chapter_a_sfwidgetformschema)
  * [`sfWidgetFormSchemaDecorator`](A-Widgets#chapter_a_sub_sfwidgetformschemadecorator)
@@ -264,18 +264,18 @@ file caricato in precedenza.
 | `edit_mode`    | Un booleano: `true` per abilitare la modalità modifica, `false` altrimenti
 | `is_image`     | Se il file è una immagine visualizzabile
 | `with_delete`  | Se aggiungere un checkbox di cancellazione o no
-| `delete_label` | La label delete utilizzata dal template
+| `delete_label` | La label di cancellazione utilizzata dal template
 | `template`     | Il template HTML da utilizzare per generare questo widget
 |                | I segnaposto disponibili sono:
 |                |   * `input` (il widget di caricamento immagini)
-|                |   * `delete` (la checkbox di cancellazione)
+|                |   * `delete` (il checkbox di cancellazione)
 |                |   * `delete_label` (il testo della label di cancellazione)
 |                |   * `file` (il tag file)
 
 >**CAUTION**
 >Nella modalità `edit`, questo widget genera un widget aggiuntivo chiamato
->dopo l'upload di file con un widget con un suffisso "_delete". Così, quando si crea
->un form, non dimenticate di aggiungere un validatore per questo ulteriore campo.
+>come il widget del file da caricare, ma con un suffisso "_delete". Così, quando si crea
+>un form, non dimenticare di aggiungere un validatore per questo ulteriore campo.
 
 ### ~`sfWidgetFormTextarea`~
 
@@ -348,10 +348,10 @@ rappresentazione, come si vedrà più avanti.
 generazione a un altro widget. La costruzione è controllata da due opzioni:
 `expanded` e `multiple`:
 
- |                          | `expanded` è `false`     | `expanded` è `true`
- | ------------------------ | ------------------------ | ----------------------------
- | `multiple` è `false`     | `sfWidgetFormSelect`     | `sfWidgetFormSelectRadio`
- | `multiple` è `true`      | `sfWidgetFormSelectMany` | `sfWidgetFormSelectCheckbox`
+ |                      | `expanded` è `false`     | `expanded` è `true`
+ | -------------------- | ------------------------ | ----------------------------
+ | `multiple` è `false` | `sfWidgetFormSelect`     | `sfWidgetFormSelectRadio`
+ | `multiple` è `true`  | `sfWidgetFormSelectMany` | `sfWidgetFormSelectCheckbox`
 
 >**NOTE**
 >~`sfWidgetFormSelect`~, ~`sfWidgetFormSelectMany`~,
@@ -472,14 +472,14 @@ Ecco un elenco di tutte le opzioni supportate per il widget:
 I widget `sfWidgetFormSelectCheckbox` e `sfWidgetFormSelectRadio` supportano
 le seguenti opzioni:
 
-| Opzione            | Descrizione
-| ------------------ | -----------
-| `label_separator`  | Il separatore da utilizzare tra il bottone input checkbox/radiobutton e la label
-| `class`            | La classe da utilizzare per il tag principale `<ul>`
-| `separator`        | Il separatore da utilizzare tra ciascun bottone di input checkbox/radio
-| `formatter`        | Un callable da chiamare per formattare la scelta con checkbox
-|                    | Il callable riceve il widget e l'array di input come parametri
-| `template`         | Il template da utilizzare per l'opzione di raggruppamento in gruppi (`%group% %options%`)
+| Opzione           | Descrizione
+| ----------------- | -----------
+| `label_separator` | Il separatore da utilizzare tra il bottone input checkbox/radiobutton e la label
+| `class`           | La classe da utilizzare per il tag principale `<ul>`
+| `separator`       | Il separatore da utilizzare tra ciascun bottone di input checkbox/radio
+| `formatter`       | Un callable da chiamare per formattare la scelta con checkbox
+|                   | Il callable riceve il widget e l'array di input come parametri
+| `template`        | Il template da utilizzare per l'opzione di raggruppamento in gruppi (`%group% %options%`)
 
 ### Rappresentazione con doppio elenco
 
@@ -560,7 +560,7 @@ la funzione PHP `json_encode()` per convertire un array in JSON).
 | `config`         | Un array JavaScript che configura il widget JQuery di autocompletamento
 | `value_callback` | Una callback che converte il valore prima che venga visualizzato
 
-Se le scelte sono collegate ad un modello di Propel, il
+Se le scelte sono collegate a un modello di Propel, il
 widget `sfWidgetFormPropelJQueryAutocompleter` è ottimizzato per la ricerca di
 chiavi esterne:
 
@@ -573,14 +573,14 @@ chiavi esterne:
       ),
     ));
 
-| Opzione          | Descrizione
-| ---------------- | -----------
-| `model`          | La classe model (obbligatoria)
-| `method`         | Il metodo da utilizzare oer convertire un oggetto in una stringa (`__toString()` di default)
+| Opzione  | Descrizione
+| -------- | -----------
+| `model`  | La classe del modello (obbligatoria)
+| `method` | Il metodo da utilizzare per convertire un oggetto in una stringa (`__toString()` di default)
 
-### Scelta legata ad un modello Propel
+### Scelta legata a un modello Propel
 
-Se le scelte sono legate ad un modello Propel (di solito quando si vuole consentire
+Se le scelte sono legate a un modello Propel (di solito quando si vuole consentire
 all'utente di cambiare una chiave esterna), è possibile utilizzare il
 widget ~`sfWidgetFormPropelChoice`~:
 
@@ -609,9 +609,9 @@ insieme di opzioni dedicate:
 | `multiple`    | `true` se il tag select deve consentire selezioni multiple
 | `peer_method` | Il metodo peer da usare per il fetch degli oggetti
 
-### Scelta legata ad un modello Doctrine
+### Scelta legata a un modello Doctrine
 
-Se le scelte sono legate ad un modello Doctrine (di solito quando si vuole
+Se le scelte sono legate a un modello Doctrine (di solito quando si vuole
 consentire all'utente di cambiare una chiave esterna), si può usare il
 widget ~`sfWidgetFormDoctrineChoice`~:
 
@@ -654,7 +654,7 @@ Possono anche essere personalizzati a seconda della cultura dell'utente.
 >Ovviamente il formato data è protetto lato server da un validatore.
 >Fortunatamente, il validatore delle date di symfony propone un validatore
 >potente e molto flessibile a proposito del formato di data che è in
->grado di riconoscere ed analizzare.
+>grado di riconoscere e analizzare.
 
 ### ~`sfWidgetFormDate`~
 
@@ -711,7 +711,7 @@ corrente. Si può cambiare questo comportamento usando l'opzione `years`:
     );
 
 Le opzioni `years`, `months` e `days` accettano un array in cui le chiavi
-sono i valori dei tag `option` ed i valori sono le stringhe mostrate
+sono i valori dei tag `option` e i valori sono le stringhe mostrate
 all'utente.
 
 ### ~`sfWidgetFormTime`~
@@ -783,13 +783,13 @@ i propri valori per ognuno dei tre tag:
 ![Widget ora con tag secondi personalizzato](/images/forms_book/en/A_time_seconds.png)
 
 Le opzioni `hours`, `minutes` e `seconds` accettano un array in cui le
-chiavi sono i valori dei tag `option` ed i valori sono le stringhe
+chiavi sono i valori dei tag `option` e i valori sono le stringhe
 mostrate all'utente.
 
 ### ~`sfWidgetFormDateTime`~
 
 `sfWidgetFormDateTime` è un widget che mostra altri due widget: un widget
-`sfWidgetFormDate` ed uno `sfWidgetFormTime`:
+`sfWidgetFormDate` e uno `sfWidgetFormTime`:
 
     [php]
     $w = new sfWidgetFormDateTime();
@@ -833,7 +833,7 @@ Questa accetta tre valori: `name` (predefinito), `short_name`, o `number`.
 ![Widget data i18n con short name](/images/forms_book/en/A_date_i18n_short.png)
 
 A seconda della cultura, il widget riconosce anche l'ordine dei
-tre diversi tag select ed il separatore da usare tra loro.
+tre diversi tag select e il separatore da usare tra loro.
 
 >**CAUTION**
 >Questo widget dipende dal sotto-framework i18n di symfony.
@@ -843,7 +843,7 @@ tre diversi tag select ed il separatore da usare tra loro.
 `sfWidgetFormI18nTime` estende il widget standard `sfWidgetFormTime`.
 
 Secondo la cultura passata come opzione, il widget conosce l'ordine
-dei tre diversi select ed il separatore da usare tra loro:
+dei tre diversi select e il separatore da usare tra loro:
 
     [php]
     $w = new sfWidgetFormI18nTime(array('culture' => 'ar'));
@@ -856,7 +856,7 @@ dei tre diversi select ed il separatore da usare tra loro:
 ### ~`sfWidgetFormI18nDateTime`~
 
 `sfWidgetFormI18nDateTime` è un widget che mostra altri due a widget:
-un widget `sfWidgetFormI18nDate` ed uno `sfWidgetFormI18nTime`.
+un widget `sfWidgetFormI18nDate` e uno `sfWidgetFormI18nTime`.
 
 >**CAUTION**
 >Questo widget dipende dal sotto-framework i18n di symfony.
@@ -910,13 +910,13 @@ con interfaccia JQuery UI:
 >**CAUTION**
 >Questo widget fa parte del plugin `sfFormExtraPlugin`. Siccome
 >JQuery e JQuery UI non sono distribuiti con `sfFormExtraPlugin`, occorre
->installarli ed includerli manualmente.
+>installarli e includerli manualmente.
 
-| Opzione     | Descrizione
-| ----------- | -----------
-| `image`     | Il percorso dell'immagine per rappresentare il widget (`false` di default)
-| `config`    | Un array JavaScript che configura il widget data di JQuery
-| `culture`   | La cultura dell'utente
+| Opzione    | Descrizione
+| ---------- | -----------
+| `image`    | Il percorso dell'immagine per rappresentare il widget (`false` di default)
+| `config`   | Un array JavaScript che configura il widget data di JQuery
+| `culture`  | La cultura dell'utente
 
 Widget I18n
 -----------
@@ -1125,7 +1125,7 @@ ai widget contenuti:
 
 >**CAUTION**
 >Quando uno schema di widget è contenuto in un form, il form
->dà accesso ad un campo "bound" nel template, non al widget
+>dà accesso a un campo "bound" nel template, non al widget
 >stesso. Si veda il capitolo del libro dei form per ulteriori
 >informazioni.
 

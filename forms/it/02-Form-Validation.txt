@@ -433,7 +433,7 @@ Listato 2-6 - La classe `user`
     }
 
 Un oggetto `User` è composto da due proprietà, il nome dell'utente
-(`name`) ed un booleano che memorizza lo stato di amministratore
+(`name`) e un booleano che memorizza lo stato di amministratore
 (`is_admin`). Il metodo `setFields()` aggiorna entrambe le
 proprietà. Il Listato 2-7 mostra il form relativo alla classe
 `User`, che consente all'utente di modificare solo la proprietà

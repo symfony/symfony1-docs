@@ -64,7 +64,7 @@ Listato 4-1 - Schema del database
 Ecco le relazioni tra le tabelle:
 
   * Relazione 1-n tra la tabella `article` e la tabella `author`:
-    un articolo è scritto da uno ed un solo autore
+    un articolo è scritto da uno e un solo autore
   * Relazione 1-n tra la tabella `article` e la tabella `category`:
     un articolo appartiene ad una o nessuna categoria
   * Relazione n-n tra le tabelle `article` e `tag`
@@ -115,7 +115,7 @@ Dopo aver eseguito questi task, una struttura di file è stata creata
           BaseTagForm.class.php
 
 Il task `propel:build-forms` genera due classi per ogni tabella dello
-schema, una classe base nella cartella `lib/form/base` ed una nella
+schema, una classe base nella cartella `lib/form/base` e una nella
 cartella `lib/form/`. Ad esempio la tabella `author` ha le classi
 generate `BaseAuthorForm` e `AuthorForm` nei file
 `lib/form/base/BaseAuthorForm.class.php` e
@@ -257,7 +257,7 @@ I nomi dei campi del form sono identici ai nomi delle colonne dello
 schema: `id`, `first_name`, `last_name`, `email`.
 
 Per ogni colonna della tabella `author`, il task `propel:build-forms`
-genera un widget ed un validatore secondo la definizione dello schema.
+genera un widget e un validatore secondo la definizione dello schema.
 Il task genera sempre i validatori più sicuri possibile. Consideriamo
 il campo `id`. Potremmo solo verificare se il valore è un intero valido.
 Invece il validatore generato ci consente anche di validare che
@@ -440,7 +440,7 @@ Listato 4-6 - Il template `editSuccess`
     </form>
 
 >**TIP**
->L'opzione `--with-show` ci consente di generare un'azione ed un template
+>L'opzione `--with-show` ci consente di generare un'azione e un template
 >che possiamo usare per vedere un oggetto (in sola lettura).
 
 Ora si può aprire in un browser l'URL `/frontend_dev.php/author` per vedere
@@ -1038,7 +1038,7 @@ Il metodo `save()` aggiorna automaticamente gli oggetti Propel, ma non può
 gestire gli elementi collaterali come l'invio di file.
 
 Vediamo come allegare un file ad ogni articolo. I file sono memorizzati
-nella cartella `web/uploads` ed un riferimento al percorso del file viene
+nella cartella `web/uploads` e un riferimento al percorso del file viene
 tenuto nel campo `file` della tabella `article`, come mostrato nel Listato 4-24.
 
 Listato 4-24 - Schema per la tabella `article` con file associato
@@ -1056,13 +1056,13 @@ oggetti, il database e i relativi form:
     $ ./symfony propel:build-all
 
 >**CAUTION**
->Ricordate che il task `propel:build-all` cancella tutte le tabelle dello
+>Ricordare che il task `propel:build-all` cancella tutte le tabelle dello
 >schema e le ricrea. I dati presenti nelle tabelle sono quindi
->sovrascritti. Per questo è importante creare dei dati di test (`fixtures`)
+>sovrascritti. Per questo è importante creare dei dati di test (`fixtures`),
 >che si possono ricaricare ad ogni modifica del modello.
 
 Il Listato 4-25 mostra come modificare la classe `ArticleForm` per
-collegare un widget ed un validatore al campo `file`.
+collegare un widget e un validatore al campo `file`.
 
 Listato 4-25 - Modifica del campo `file` del form `ArticleForm`.
 

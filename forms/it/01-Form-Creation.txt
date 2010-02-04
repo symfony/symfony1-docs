@@ -6,7 +6,7 @@ di selezione e di spunta. Questo capitolo introduce la creazione di
 form e la gestione di campi di form usando il framework per i form di symfony.
 
 È richiesto symfony 1.1 per seguire questo libro. Si avrà anche bisogno
-di creare un progetto ed un'applicazione `frontend` per andare avanti.
+di creare un progetto e un'applicazione `frontend` per andare avanti.
 Fare riferimento all'introduzione per maggiori informazioni sulla
 creazione di un progetto symfony.
 
@@ -206,14 +206,14 @@ Listato 1-4 - Codice generato dal template
  
 Possiamo vedere che il form viene mostrato con tre righe `<tr>` di
 una tabella HTML. Per questo abbiamo dovuto racchiuderla in un tag
-`<table>`. Ogni riga comprende un tag `<label>` ed un tag `<input>`
+`<table>`. Ogni riga comprende un tag `<label>` e un tag `<input>`
 o `<textarea>`.
 
 ### Label
 
 Le etichette (`label`) di ogni campo sono generate automaticamente.
 Per default, le label sono una trasformazione del nome del campo seguendo
-due regole: una lettera maiuscola iniziale ed un trattino basso sono
+due regole: una lettera maiuscola iniziale e un trattino basso sono
 sostituiti da spazi. Se il nome del campo termina per "_id", il
 suffisso è rimosso dalla label.
 Esempio:
