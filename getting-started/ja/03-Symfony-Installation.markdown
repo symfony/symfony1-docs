@@ -35,7 +35,7 @@ symfonyフレームワークにはいくつかの安定ブランチが存在しs
 
 たとえば[symfony 1.2](http://www.symfony-project.org/installation/1_4)など選んだバージョン用のインストールの手引きのページに進みます。
 
-"**Source Download**"セクションの下で、`.tgz`フォーマットもしくは`.zip`フォーマットでアーカイブが見つかります。
+"**Download as an Archive**"セクションの下で、`.tgz`フォーマットもしくは`.zip`フォーマットでアーカイブが見つかります。
 アーカイブをダウンロードし`lib/vendor/`ディレクトリの下に設置し再度展開します:
 
     $ cd lib/vendor
