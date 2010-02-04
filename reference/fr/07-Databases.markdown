@@ -96,7 +96,7 @@ Les paramètres suivants peuvent être personnalisés dans la section `param` :
  | `username`   | L'utilisateur de la base                 | -                 |
  | `password`   | Le mot de passe de la base               | -                 |
  | `pooling`    | Pour activer le pooling                  | `true`            |
- | `encoding`   | Le jeu de caractères par défaut          | `UTF-8`           |
+ | `encoding`   | Le jeu de caractères par défaut          | `utf8`           |
  | `persistent` | Pour créer des connexions persistantes   | `false`           |
  | `options`    | Une série d'options Propel               | -                 |
  | `debug`      | Options pour la classe `DebugPDO`        | n/a               |
@@ -153,7 +153,7 @@ Les paramètres suivants peuvent être personnalisés dans la section `param` :
  | `dsn`        | Le DSN du PDO (obligatoire)              | -                 |
  | `username`   | L'utilisateur de la base                 | -                 |
  | `password`   | Le mot de passe de la base               | -                 |
- | `encoding`   | Le jeu de caractères par défaut          | `UTF-8`           |
+ | `encoding`   | Le jeu de caractères par défaut          | `utf8`           |
  | `attributes` | Une série d'attributs Doctrine           | -                 |
 
 Les paramètres suivants peuvent être personnalisés dans la section `attributes` :

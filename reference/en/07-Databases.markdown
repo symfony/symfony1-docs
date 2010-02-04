@@ -96,7 +96,7 @@ The following parameters can be customized under the `param` section:
  | `username`   | The database username                    | -             |
  | `password`   | The database password                    | -             |
  | `pooling`    | Whether to enable pooling                | `true`        |
- | `encoding`   | The default charset                      | `UTF-8`       |
+ | `encoding`   | The default charset                      | `UTF8`       |
  | `persistent` | Whether to create persistent connections | `false`       |
  | `options`    | A set of Propel options                  | -             |
  | `debug`      | Options for the `DebugPDO` class         | n/a           |
@@ -153,7 +153,7 @@ The following parameters can be customized under the `param` section:
  | `dsn`        | The PDO DSN (required)                   | -             |
  | `username`   | The database username                    | -             |
  | `password`   | The database password                    | -             |
- | `encoding`   | The default charset                      | `UTF-8`       |
+ | `encoding`   | The default charset                      | `UTF8`       |
  | `attributes` | A set of Doctrine attributes             | -             |
 
 The following attributes can be customized under the `attributes` section:
