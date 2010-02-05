@@ -935,7 +935,7 @@ lighter markup when outputting the form. Create a new file named
 Though the format of this class is strange, the general idea is that the `renderRow()`
 method will use the `$rowFormat` markup to organize its output. A form schema
 formatter class offers many other formatting options which I won't cover here
-in detail. Form more information, consult the
+in detail. For more information, consult the
 [symfony 1.3 API](http://www.symfony-project.org/api/1_3/sfWidgetFormSchemaFormatter).
 
 To use the new form schema formatter across all form objects in your project,
