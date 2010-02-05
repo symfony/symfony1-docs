@@ -64,7 +64,7 @@ you choose from the symfony website. Go to the installation page for the
 version you have just chosen, symfony
 [1.4](http://www.symfony-project.org/installation/1_4) for instance.
 
-Under the "**Installing from an archive**" section, you will find the archive in `.tgz`
+Under the "**Download as an Archive**" section, you will find the archive in `.tgz`
 or in `.zip` format. Download the archive, put it under the freshly created
 `lib/vendor/` directory, un-archive it, and rename the directory to `symfony`:
 
