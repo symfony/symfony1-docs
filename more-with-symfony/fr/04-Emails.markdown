@@ -608,7 +608,7 @@ Ensuite, la méthode `setMessage()` par défaut doit être surchargée afin de  
         $msg = unserialize($message);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($message);
+        return parent::setMessage($message);
       }
     }
 
@@ -620,7 +620,7 @@ Ensuite, la méthode `setMessage()` par défaut doit être surchargée afin de  
         $msg = unserialize($message);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $message);
+        return $this->_set('message', $message);
       }
     }
 
@@ -698,5 +698,5 @@ C'est tout ce qu'il y'a à faire. Maintenant, chaque fois que la tâche `project
 >       $this->setCriteria($criteria);
 >       $headers->remove('X-Queue-Criteria');
 >     
->       parent::setMessage($message);
+>       return parent::_set('message', serialize($msg));
 >     }

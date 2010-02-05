@@ -737,7 +737,7 @@ die Priorität des `MailMessage`-Objekts zu ändern:
         $msg = unserialize($message);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($message);
+        return parent::setMessage($message);
       }
     }
 
@@ -749,7 +749,7 @@ die Priorität des `MailMessage`-Objekts zu ändern:
         $msg = unserialize($message);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $message);
+        return $this->_set('message', $message);
       }
     }
 
@@ -832,5 +832,5 @@ aufgerufen wird.
 >       $this->setCriteria($criteria);
 >       $headers->remove('X-Queue-Criteria');
 >     
->       parent::setMessage($message);
+>       return parent::_set('message', serialize($msg));
 >     }

@@ -727,7 +727,7 @@ la prioridad del propio objeto `MailMessage`:
         $msg = unserialize($mensaje);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($mensaje);
+        return parent::setMessage($mensaje);
       }
     }
 
@@ -739,7 +739,7 @@ la prioridad del propio objeto `MailMessage`:
         $msg = unserialize($mensaje);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $mensaje);
+        return $this->_set('message', $mensaje);
       }
     }
 
@@ -819,5 +819,5 @@ Y eso es todo lo que hay que hacer. Ahora, cuando ejecutes la tarea
 >       $this->setCriteria($criteria);
 >       $cabeceras->remove('X-Queue-Criteria');
 >     
->       parent::setMessage($mensaje);
+>       return parent::_set('message', serialize($msg));
 >     }

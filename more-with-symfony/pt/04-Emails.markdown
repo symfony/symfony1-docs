@@ -706,7 +706,7 @@ objeto `MailMessage`:
         $msg = unserialize($mensagem);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($mensagem);
+        return parent::setMessage($mensagem);
       }
     }
 
@@ -718,7 +718,7 @@ objeto `MailMessage`:
         $msg = unserialize($mensagem);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $mensagem);
+        return $this->_set('message', $mensagem);
       }
     }
 
@@ -799,5 +799,5 @@ cada e-mail será enviado de acordo com a sua prioridade.
 >       $this->setCriteria($criteria);
 >       $headers->remove('X-Queue-Criteria');
 >    
->       parent::setMessage($mensagem);
+>       return parent::_set('message', serialize($msg));
 >     }

@@ -617,7 +617,7 @@ Swift Mailer プラグインを使うには、`mailer.configure` イベントを
         $msg = unserialize($message);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($message);
+        return parent::setMessage($message);
       }
     }
 
@@ -629,7 +629,7 @@ Swift Mailer プラグインを使うには、`mailer.configure` イベントを
         $msg = unserialize($message);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $message);
+        return $this->_set('message', $message);
       }
     }
 
@@ -705,5 +705,5 @@ Swift Mailer プラグインを使うには、`mailer.configure` イベントを
 >       $this->setCriteria($criteria);
 >       $headers->remove('X-Queue-Criteria');
 >     
->       parent::setMessage($message);
+>       return parent::_set('message', serialize($msg));
 >     }

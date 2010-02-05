@@ -710,7 +710,7 @@ Then, override the default `setMessage()` method to change the priority of the
         $msg = unserialize($message);
         $this->setPriority($msg->getPriority());
 
-        parent::setMessage($message);
+        return parent::setMessage($message);
       }
     }
 
@@ -722,7 +722,7 @@ Then, override the default `setMessage()` method to change the priority of the
         $msg = unserialize($message);
         $this->priority = $msg->getPriority();
 
-        $this->_set('message', $message);
+        return $this->_set('message', $message);
       }
     }
 
@@ -803,5 +803,5 @@ task, each email will be sent according to its priority.
 >       $this->setCriteria($criteria);
 >       $headers->remove('X-Queue-Criteria');
 >     
->       parent::setMessage($message);
+>       return parent::_set('message', serialize($msg));
 >     }
