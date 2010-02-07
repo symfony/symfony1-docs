@@ -1,5 +1,5 @@
-1.3の廃止予定および削除される機能
-================================
+1.3 での廃止予定および削除される機能
+===================================
 
 このドキュメントでは symfony 1.3 で廃止予定もしくは削除されるすべての設定、クラス、メソッド、関数とタスクの一覧を示します。 
 
@@ -8,7 +8,7 @@
 
 次のコアプラグインは symfony 1.3 で廃止予定になり symfony 1.4 で削除されます:
 
-  * `sfCompat10Plugin`: このプラグインを廃止予定にすることで、動作するためにこのプラグインに依存するほかのすべての要素も廃止予定にします (1.0の admin ジェネレーターとフォームシステム)。これは `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される1.0の admin ジェネレーターのデフォルトテーマも含みます。
+  * `sfCompat10Plugin`: このプラグインを廃止予定になることで、動作するためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0 のアドミンジェネレーターとフォームシステム)。これは `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される 1.0 のアドミンジェネレーターのデフォルトテーマも含まれます。
 
   * `sfProtoculousPlugin`: このプラグインによって提供されるヘルパーは控えめな JavaScript をサポートしないので、今後は使うべきではありません。
 
@@ -17,7 +17,7 @@
 
 次のメソッドと関数は symfony 1.3 かそれ以前で廃止予定になり、symfony 1.4 で削除されます:
 
-  * `sfToolkit::getTmpDir()`: このメソッドのすべての呼び出しを `sys_get_temp_dir()` に置き換えます。
+  * `sfToolkit::getTmpDir()`: このメソッドのすべての呼び出しは `sys_get_temp_dir()` に置き換えます。
 
   * `sfValidatorBase::setInvalidMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッドの呼び出しに置き換えます。
 
@@ -25,11 +25,11 @@
 
   * `sfTesterResponse::contains()`: より強力な `matches()` メソッドを使うことができます
 
-  * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、`isRequestParameter()`、`isResponseHeader()`、`isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは1.2以降で廃止予定になり、テスタークラスに置き換えられました。
+  * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、`isRequestParameter()`、`isResponseHeader()`、`isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換えられました。
 
   * `sfFilesystem::sh()`: このメソッドのすべての呼び出しを新しい `sfFilesystem::execute()` メソッドの呼び出しに置き換えます。このメソッドの戻り値は `stdout` 出力と `stderr` 出力で構成される配列であることに注意してください。
 
-  * `sfAction::getDefaultView()`、`sfAction::handleError()`、`sfAction::validate()`: これらのメソッドは symfony 1.1 で廃止になり、またあまり便利なものではありませんでした。symfony 1.1 に関して、`compat_10` 設定を `on` にセットする必要があります。
+  * `sfAction::getDefaultView()`、`sfAction::handleError()`、`sfAction::validate()`: これらのメソッドは symfony 1.1 で廃止予定になり、またあまり便利なものではありませんでした。symfony 1.1 に関して、`compat_10` 設定を `on` にセットする必要があります。
 
   * `sfComponent::debugMessage()`: 代わりに `log_message()` ヘルパーを使います。
 
@@ -68,13 +68,13 @@
 
   * `sfNoRouting` と `sfPathInfoRouting`
 
-  * `sfRichTextEditor`、`sfRichTextEditorFCK` と `sfRichTextEditorTinyMCE`: これらはウィジェットシステムに置き換えられました(下記の"ヘルパー"の節を参照)。
+  * `sfRichTextEditor`、`sfRichTextEditorFCK` と `sfRichTextEditorTinyMCE`: これらはウィジェットシステムに置き換えられました (下記の"ヘルパー"のセクションを参照)。
 
-  * `sfCrudGenerator`、`sfAdminGenerator`、`sfPropelCrudGenerator`、`sfPropelAdminGenerator`: これらのクラスは 1.0の admin ジェネレーターで使われていました。
+  * `sfCrudGenerator`、`sfAdminGenerator`、`sfPropelCrudGenerator`、`sfPropelAdminGenerator`: これらのクラスは 1.0のアドミンジェネレーターで使われていました。
 
-  * `sfPropelUniqueValidator`、`sfDoctrineUniqueValidator`: これらのクラスは1.0のフォームシステムで使われていました。
+  * `sfPropelUniqueValidator`、`sfDoctrineUniqueValidator`: これらのクラスは 1.0 のフォームシステムで使われていました。
 
-  * `sfLoader`: "メソッドと関数"の節を参照。
+  * `sfLoader`: "メソッドと関数"のセクションを参照。
 
   * `sfConsoleRequest`、`sfConsoleResponse`、`sfConsoleController`
 
@@ -82,35 +82,35 @@
 
   * `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry`: 対応する `Choice` ウィジェットを使います (対応するのは順に `sfWidgetFormI18nChoiceLanguage`、`sfWidgetFormI18nChoiceCurrency` と `sfWidgetFormI18nChoiceCountry`)。カスタマイズできることを除いて、これらはまったく同じように動作します。
 
-  * `SfExtensionObjectBuilder`、`SfExtensionPeerBuilder`、`SfMultiExtendObjectBuilder`、`SfNestedSetBuilder`、`SfNestedSetPeerBuilder`、`SfObjectBuilder`、`SfPeerBuilder`: カスタムの Propel ビルダークラスは Propel 1.4 の新しいビヘイビアシステムに移植されました。
+  * `SfExtensionObjectBuilder`、`SfExtensionPeerBuilder`、`SfMultiExtendObjectBuilder`、`SfNestedSetBuilder`、`SfNestedSetPeerBuilder`、`SfObjectBuilder`、`SfPeerBuilder`:  Propel のカスタムビルダークラスは Propel 1.4 の新しいビヘイビアシステムに移植されました。
 
 次のクラスは symfony 1.3 で削除されます:
 
-  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は "プロジェクトを1.2から1.3/1.4にアップグレードする"のチュートリアルの"共通フィルターの削除"を参照してください。
+  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は "プロジェクトを 1.2 から 1.3/1.4 にアップグレードする"のチュートリアルの"共通フィルターの削除"を参照してください。
 
 ヘルパー
 --------
 
 次のヘルパーグループは symfony 1.3 で廃止予定になり symfony 1.4 で削除されます:
 
-  * `sfCompat10Plugin` によって提供される1.0フォームシステムに関連するすべてのヘルパー: `DateForm`、`Form`、`ObjectAdmin`、`Object`と`Validation`
+  * `sfCompat10Plugin` によって提供される 1.0 フォームシステムに関連するすべてのヘルパー: `DateForm`、`Form`、`ObjectAdmin`、`Object` と `Validation`
 
 `form_tag()` ヘルパーは `Form` ヘルパーグループから `Url` ヘルパーグループに移動したので、 symfony 1.4 でも利用加能です。
 
-PHP のインクルードパスからヘルパーをロードする機能は1.3 で廃止予定になり1.4で削除されました。ヘルパーはプロジェクト、アプリケーションもしくはモジュールの `lib/helper/` ディレクトリのどれかひとつに設置しなければなりません。
+PHP のインクルードパスからヘルパーをロードする機能は 1.3 で廃止予定になり 1.4 で削除されました。ヘルパーはプロジェクト、アプリケーションもしくはモジュールの `lib/helper/` ディレクトリのどれか 1 つに設置しなければなりません。
 
 設定
 ----
 
 次の設定 (`settings.yml` 設定で管理される) は symfony 1.3 から削除されました:
 
-  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動クリーニングを可能にするために数年前に導入されました。これは主にすべての顧客のあいだで symfony のバージョンが共有される共用ホスティングのコンフィギュレーションに便利でした。symfony 1.1 以降ではバッドプラクティスです (プロジェクトごとに symfony のバージョンを埋め込む必要がある)、設定は意味をなしません。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、それぞれのリクエストに小さなオーバーヘッドを追加します。
+  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動クリーニングを可能にするために数年前に導入されました。これは主にすべての顧客のあいだで symfony のバージョンが共有される共用ホスティングのコンフィギュレーションに便利でした。symfony 1.1 以降ではバッドプラクティスですので (プロジェクトごとに symfony のバージョンを埋め込む必要がある)、設定は無意味です。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、それぞれのリクエストに小さなオーバーヘッドを追加します。
 
-  * `max_forwards`: この設定は symfony が例外を投げる前に許容されるフォワードの最大回数をコントロールします。これを設定可能にする値はありません。5回より多くのフォワードが必要な場合、問題の認識とパフォーマンスの両方で問題があります。
+  * `max_forwards`: この設定は symfony が例外を投げる前に許容されるフォワードの最大回数をコントロールします。これを設定可能にする値はありません。5 回より多くのフォワードが必要な場合、問題の認識とパフォーマンスの両方で問題があります。
 
-  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善として導入され、この設定はビューキャッシュのために遅延キャッシュキージェネレーションを有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも呼び出される `sfViewCacheManager::isCacheable()` に頼る人もいました。symfony 1.3 に関しては、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
+  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善として導入され、この設定はビューキャッシュのために遅延キャッシュキージェネレーションを有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも呼び出される `sfViewCacheManager::isCacheable()` に頼るひともいました。symfony 1.3 に関しては、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
 
-  * `strip_comments`: `strip_comments` は PHP 5.0.x バージョンのトークナイザーのバグが原因のコメントのストリッピングを無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリーの大量消費を避けるためにも使われました。最初の問題は PHP の最小バージョンが5.2なので関係なくなっており2番目の問題はコメントのストリッピング機能をシミュレートした正規表現を削除することですでに修正されています。
+  * `strip_comments`: `strip_comments` は PHP 5.0.x バージョンのトークナイザーのバグが原因のコメントのストリッピング機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリーの大量消費を避けるためにも使われました。最初の問題は PHP の最小バージョンが 5.2 なので関係なくなっており 2 番目の問題はコメントのストリッピング機能をシミュレートした正規表現を削除することですでに修正されています。
 
   * `lazy_routes_deserialize`: このオプションはもう必要ありません。
 
@@ -120,20 +120,20 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3 
 
   * `validation_error_prefix`、`validation_error_suffix`、`validation_error_class`、`validation_error_id_prefix`: これらの設定は Validation ヘルパーグループによって使われ、symfony 1.3 で廃止予定です。
 
-  * `is_internal` (`module.yml`): `is_internal` フラグはブラウザーからアクションが呼び出されるのを防止するために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートはこのトリックを必要としなくなったので、このフラグは削除され symfony コアではチェックされません。
+  * `is_internal` (`module.yml`): `is_internal` フラグはブラウザーからアクションが呼び出されるのを防ぐために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートはこのトリックを必要としなくなったので、このフラグは削除され symfony コアではチェックされません。
 
 タスク
 ------
 
 次のタスクは symfony 1.3 で削除されました:
 
-  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に埋め込むために使われました。これらはもはや必要ありません。長期間をかけて symfony をプロジェクトに埋め込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。 symfony を手作業で埋め込むのもとても単純で symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけ必要です (`lib/vendor/symfony/`が推奨されます)。
+  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に埋め込むために使われました。これらはもはや必要ありません。長期間をかけて symfony をプロジェクトに埋め込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。symfony を手作業で埋め込むのもとても単純で symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけ必要です (`lib/vendor/symfony/` が推奨されます)。
 
 次のタスクは symfony 1.3 で廃止予定で、symfony 1.4 で削除されます:
 
   * symfony 1.0 のすべてのタスクのエイリアス
 
-  * `propel:init-admin`: このタスクは symfony 1.0 の admin ジェネレーターモジュールを生成しました。
+  * `propel:init-admin`: このタスクは symfony 1.0 のアドミンジェネレーターモジュールを生成しました。
 
 次の Doctrine タスクは `doctrine:build` にマージされ symfony 1.4 で削除されます:
 
@@ -161,6 +161,6 @@ symfony 1.3 に関して、サイトが利用不可能なときに表示され�
 
 プロジェクトのルートの `doc/` ディレクトリは生成されなくなりました。symfony 自身でも使われていないからです。そして関連する `sf_doc_dir` も削除されました。
 
-`sfDoctrinePlugin_doctrine_lib_path` 設定は、以前 Doctrine のカスタム lib ディレクトリを指定するのに使われていましたが、 1.3 で廃止予定になり 1.4 で削除されます。代わりに `sf_doctrine_dir` 設定を使ってください。
+`sfDoctrinePlugin_doctrine_lib_path` 設定は、以前 Doctrine のカスタム lib ディレクトリを指定するのに使われていましたが、1.3 で廃止予定になり 1.4 で削除されます。代わりに `sf_doctrine_dir` 設定を使ってください。
 
 symfony のすべての `Base*` クラスは `abstract` とマークされていません。
