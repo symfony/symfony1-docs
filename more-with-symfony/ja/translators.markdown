@@ -31,7 +31,7 @@ Katsuhiro Ogawa (小川 雄大)
 Hidenori Goto (後藤 秀宣)
 ------------------------
 
-インクス株式会社で symfony を使ったWebサイト構築などを行うエンジニア。翻訳会社に勤務していた経験から symfony のドキュメント翻訳プロジェクトに参加。ORMを使った開発が大好き。
+インクス株式会社で symfony を使った Web サイト構築などを行うエンジニア。翻訳会社に勤務していた経験から symfony のドキュメント翻訳プロジェクトに参加。ORM を使った開発が大好き。
 
 **Web サイト**: *http://d.hatena.ne.jp/innx_hidenori*
 
@@ -70,3 +70,12 @@ Yoshihiro TAKAHARA (高原 芳浩)
 **Web サイト**: *http://d.hatena.ne.jp/tumf*
 
 **Twitter**: *http://twitter.com/tumf*
+
+Masaki Kagaya (加賀谷 昌樹)
+---------------------------
+
+PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。2010 年より PHP 公式マニュアルの翻訳も始める。
+
+** Web サイト**: *http://sarabande.jp*
+
+**Twitter**: *http://twitter.com/masakielastic*
