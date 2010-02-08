@@ -480,7 +480,12 @@ Plugins
 ------------------------
 
 Каждый плагин содежит
+<propel>
 [README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)
+</propel>
+<doctrine>
+[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)
+</doctrine>
 файл, который объясняет, как его использовать.
 
 Давайте посмотрим, как настроить новый плагин. Поскольку плагин предоставляет несколько

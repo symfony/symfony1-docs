@@ -474,7 +474,12 @@ Sicurezza nel backend
 ---------------------
 
 Ogni plugin ha un file
+<propel>
 [README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)
+</propel>
+<doctrine>
+[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)
+</doctrine>
 che spiega come configurarlo.
 
 Vediamo come configurare un nuovo plugin. Siccome il plugin fornisce

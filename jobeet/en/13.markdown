@@ -486,7 +486,12 @@ Backend Security
 ----------------
 
 Each plugin has a
+<propel>
 [README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)
+</propel>
+<doctrine>
+[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)
+</doctrine>
 file that explains how to configure it.
 
 Let's see how to configure the new plugin. As the plugin provides several new

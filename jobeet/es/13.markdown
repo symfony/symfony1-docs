@@ -404,7 +404,12 @@ Seguridad del Backend
 ---------------------
 
 Cada plugin tiene un archivo 
+<propel>
 [README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)
+</propel>
+<doctrine>
+[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)
+</doctrine>
 que explica cómo configurarlo.
 
 Vamos a ver cómo configurar el nuevo plugin. Como el plugin ofrece varias nuevas clases al modelo para la gestión de usuarios, grupos y permisos, necesitas reconstruir tu modelo:

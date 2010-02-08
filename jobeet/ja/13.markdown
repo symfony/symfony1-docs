@@ -393,7 +393,14 @@ symfony フレークワークの大きな強みの1つは[プラグインのエ�
 バックエンドのセキュリティ
 --------------------------
 
-それぞれのプラグインには設定方法を説明している [README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme) ファイルが含まれます。
+それぞれのプラグインには設定方法を説明している
+<propel>
+[README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)
+</propel>
+<doctrine>
+[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)
+</doctrine>
+ファイルが含まれます。
 
 新しいプラグインの作り方を見てみましょう。ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります:
 
