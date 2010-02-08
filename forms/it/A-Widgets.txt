@@ -273,14 +273,14 @@ file caricato in precedenza.
 |                |   * `file` (il tag file)
 
 >**CAUTION**
->Nella modalità `edit`, questo widget genera un widget aggiuntivo chiamato
+>Nella modalità `edit`, questo widget ne genera un altro, chiamato
 >come il widget del file da caricare, ma con un suffisso "_delete". Così, quando si crea
 >un form, non dimenticare di aggiungere un validatore per questo ulteriore campo.
 
 ### ~`sfWidgetFormTextarea`~
 
-Il widget `sfWidgetFormTextarea` impostare automaticamente i valori di default per gli
-attributi HTML `rows` e `cols` in quanto sono obbligatori.
+Il widget `sfWidgetFormTextarea` imposta automaticamente i valori predefiniti per gli
+attributi HTML `rows` e `cols`, in quanto sono obbligatori.
 
     [php]
     $w = new sfWidgetFormTextarea();
@@ -302,22 +302,22 @@ Se si desidera generare un widget con editor WYSIWYG, è possibile usare
 >**CAUTION**
 >Questo widget fa parte del plugin di symfony `sfFormExtraPlugin`.
 
-Poiché i file di Tiny MCE JavaScript non sono in bundle con il plugin, è necessario
+Poiché i file JavaScript di TinyMCE non sono distribuiti con il plugin, è necessario
 installarli e includerli manualmente.
 
 | Opzione  | Descrizione
 | -------- | -----------
-| `theme`  | Il tema di Tiny MCE (`advanced` di default)
+| `theme`  | Il tema di TinyMCE (`advanced` di default)
 | `width`  | Larghezza
 | `height` | Altezza
-| `config` | Un array di specifiche configurazioni JavaScript
+| `config` | Un array di configurazione JavaScript
 
 Widget di scelta
 ----------------
 
 ### Rappresentazioni per la scelta
 
-Quando l'utente vuole fare una scelta tra un elenco di possibilità, l'HTML
+Quando l'utente vuole scegliere tra un elenco di possibilità, l'HTML
 offre diverse modalità per rappresentare la scelta
 
  * Un tag `select`:
@@ -336,7 +336,7 @@ offre diverse modalità per rappresentare la scelta
 
    ![Lista di checkbox](/images/forms_book/en/A_04.png)
 
-Ma in definitiva, tutti permettono all'utente di effettuare una scelta singola o multipla
+Ma, in definitiva, tutti permettono all'utente di effettuare una scelta singola o multipla
 all'interno di un numero finito di possibilità.
 
 Il widget ~`sfWidgetFormChoice`~ standardizza tutte queste possibilità
@@ -357,11 +357,11 @@ generazione a un altro widget. La costruzione è controllata da due opzioni:
 >~`sfWidgetFormSelect`~, ~`sfWidgetFormSelectMany`~,
 >~`sfWidgetFormSelectCheckbox`~ e ~`sfWidgetFormSelectRadio`~ sono widget
 >usati da ~`sfWidgetFormChoice`~, ma sono semplici widget come
->ogni altro e possono essere usati direttamente. non sono documentati in questa
->sezione dal momento che è meglio usare il più flessibile
+>ogni altro e possono essere usati direttamente. Non sono documentati in questa
+>sezione, dal momento che è quasi sempre meglio usare il più flessibile
 >widget `sfWidgetFormChoice`.
 
-E qui di seguito c'è il codice HTML che rappresenta ciascuna possibilità:
+Ecco il codice HTML che rappresenta ciascuna possibilità:
 
     [php]
     $w = new sfWidgetFormChoice(array(
@@ -397,8 +397,8 @@ E qui di seguito c'è il codice HTML che rappresenta ciascuna possibilità:
 
 ### Scelte di raggruppamento
 
-Il widget `sfWidgetFormChoice` ha al suo interno il supporto per gruppi di scelte
-passando un array di arrays per le opzioni `choices`:
+Il widget `sfWidgetFormChoice` ha al suo interno il supporto per gruppi di scelte,
+passando un array di array per l'opzione `choices`:
 
     [php]
     $choices = array(
@@ -464,9 +464,9 @@ Ecco un elenco di tutte le opzioni supportate per il widget:
 | `choices`          | Un array di scelte possibili (obbligatorio)
 | `multiple`         | `true` se il tag  select deve consentire selezioni multiple
 | `expanded`         | `true` per visualizzare un widget esteso
-| `renderer_class`   | La classe da usare al posto di quello predefinita
-| `renderer_options` | Le opzioni da passare al costruttore renderer
-| `renderer`         | Un widget renderer  (sovrascrive le opzioni `expanded` e `renderer_options`)
+| `renderer_class`   | La classe da usare al posto di quella predefinita
+| `renderer_options` | Le opzioni da passare al costruttore del renderer
+| `renderer`         | Un widget renderer (sovrascrive le opzioni `expanded` e `renderer_options`)
 |                    | L'opzione `choices` sarà: `new sfCallable($thisWidgetInstance, 'getChoices')`
 
 I widget `sfWidgetFormSelectCheckbox` e `sfWidgetFormSelectRadio` supportano
@@ -498,7 +498,7 @@ scelta con un doppio elenco:
 ![Lista doppia](/images/forms_book/en/A_double_list.png)
 
 >**CAUTION**
->Questo widget fa parte del plugin symfony `sfFormExtraPlugin`.
+>Questo widget fa parte del plugin di symfony `sfFormExtraPlugin`.
 
 -
 
@@ -515,7 +515,7 @@ scelta con un doppio elenco:
 | `class`              | La classe principale del widget
 | `class_select`       | La classe per i due tag selezioanti
 | `label_unassociated` | La label per i non associati
-| `label_associated`   | La label per quelli associati
+| `label_associated`   | La label per gli associati
 | `unassociate`        | L'HTML per il link non associato
 | `associate`          | L'HTML per il link associato
 | `template`           | Il template HTML da usare per costruire questo widget
@@ -526,10 +526,10 @@ scelta con un doppio elenco:
 Quando si desidera che l'utente effettui una selezione tra un sacco di elementi, mostrarli
 tutti in un select box diventa improponibile.
 ~`sfWidgetFormJQueryAutocompleter`~ risolve questo problema mediante la conversione di un semplice
-tag `input` con un select box con funzionalità di autocompletamento.
+tag `input` in un select con funzionalità di autocompletamento.
 
 >**CAUTION**
->Questo widget fa parte del plugin symfony `sfFormExtraPlugin`. Dal momento che
+>Questo widget fa parte del plugin di symfony `sfFormExtraPlugin`. Dal momento che
 >JQuery e JQuery UI non sono inclusi in `sfFormExtraPlugin`, è necessario
 >installarli e includerli manualmente.
 
@@ -635,12 +635,12 @@ insieme di opzioni dedicate:
 | `order_by`     | Un array composto da due campi:
 |                |  * La colonna su cui ordinare i risultati (deve essere nel formato `PhpName`)
 |                |  * `asc` oppure `desc`
-| `query`        | Un oggetto query da usare quando di recuperano gli oggetti
+| `query`        | Un oggetto query da usare quando si recuperano gli oggetti
 | `connection`   | Il nome della connessione Propel da usare (`null` di default)
 | `multiple`     | `true` se il tag select deve consentire selezioni multiple
 | `table_method` | Il metodo da usare per il fetch degli oggetti
 
-Widget per le Date
+Widget per le date
 ------------------
 
 I widget per le data possono essere usati per facilitare l'inserimento di

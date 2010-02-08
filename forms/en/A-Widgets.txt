@@ -302,12 +302,12 @@ If you want to render a WYSIWYG editor widget, you can use
 >**CAUTION**
 >This widget is part of the `sfFormExtraPlugin` symfony plugin.
 
-As the Tiny MCE JavaScript files are not bundled with the plugin, you must
+As the TinyMCE JavaScript files are not bundled with the plugin, you must
 install it and include it by yourself.
 
 | Option   | Description
 | -------- | -----------
-| `theme`  | The Tiny MCE theme (`advanced` by default)
+| `theme`  | The TinyMCE theme (`advanced` by default)
 | `width`  | Width
 | `height` | Height
 | `config` | An array of specific JavaScript configuration
