@@ -15,21 +15,21 @@
 メソッドと関数
 --------------
 
-次のメソッドと関数は symfony 1.3 かそれ以前で廃止予定になり、symfony 1.4 で削除されます:
+次のメソッドと関数は symfony 1.3 もしくはそれ以前で廃止予定になり、symfony 1.4 で削除されます:
 
-  * `sfToolkit::getTmpDir()`: このメソッドのすべての呼び出しは `sys_get_temp_dir()` に置き換えます。
+  * `sfToolkit::getTmpDir()`: このメソッドのすべての呼び出しは `sys_get_temp_dir()` に置き換わります。
 
-  * `sfValidatorBase::setInvalidMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッドの呼び出しに置き換えます。
+  * `sfValidatorBase::setInvalidMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッドの呼び出しに置き換わります。
 
-  * `sfValidatorBase::setRequiredMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッドの呼び出しに置き換えます。
+  * `sfValidatorBase::setRequiredMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッドの呼び出しに置き換わります。
 
   * `sfTesterResponse::contains()`: より強力な `matches()` メソッドを使うことができます
 
-  * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、`isRequestParameter()`、`isResponseHeader()`、`isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換えられました。
+  * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、`isRequestParameter()`、`isResponseHeader()`、`isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わりました。
 
-  * `sfFilesystem::sh()`: このメソッドのすべての呼び出しを新しい `sfFilesystem::execute()` メソッドの呼び出しに置き換えます。このメソッドの戻り値は `stdout` 出力と `stderr` 出力で構成される配列であることに注意してください。
+  * `sfFilesystem::sh()`: このメソッドのすべての呼び出しを新しい `sfFilesystem::execute()` メソッドの呼び出しに置き換わります。このメソッドの戻り値は `stdout` 出力と `stderr` 出力で構成される配列であることに注意してください。
 
-  * `sfAction::getDefaultView()`、`sfAction::handleError()`、`sfAction::validate()`: これらのメソッドは symfony 1.1 で廃止予定になり、またあまり便利なものではありませんでした。symfony 1.1 に関して、`compat_10` 設定を `on` にセットする必要があります。
+  * `sfAction::getDefaultView()`、`sfAction::handleError()`、`sfAction::validate()`: これらのメソッドは symfony 1.1 で廃止予定になり、またあまり役に立つものではありませんでした。symfony 1.1 に関して、`compat_10` 設定を `on` にセットする必要があります。
 
   * `sfComponent::debugMessage()`: 代わりに `log_message()` ヘルパーを使います。
 
@@ -39,7 +39,7 @@
 
   * `sfController::sendEmail()`
 
-  * `sfGeneratorManager::initialize()`: 何もしません。
+  * `sfGeneratorManager::initialize()`: 何も行いません。
 
   * `debug_message()`: 代わりに `log_message()` ヘルパーを使います。
 
@@ -51,7 +51,7 @@
 
   * `sfVarLogger::getXDebugStack()`: 代わりに `sfVarLogger::getDebugBacktrace()` を使います。
 
-  * `sfVarLogger`: `debug_backtrace` の値を推奨するのでロギングされる `debug_stack` の値は廃止予定です。
+  * `sfVarLogger`: ロギングでは `debug_backtrace` の値が推奨されるので `debug_stack` の値は廃止予定です。
 
   * `sfContext::retrieveObjects()`: このメソッドを使うのは `ObjectHelper` のみなので、廃止予定です
 
@@ -68,13 +68,13 @@
 
   * `sfNoRouting` と `sfPathInfoRouting`
 
-  * `sfRichTextEditor`、`sfRichTextEditorFCK` と `sfRichTextEditorTinyMCE`: これらはウィジェットシステムに置き換えられました (下記の"ヘルパー"のセクションを参照)。
+  * `sfRichTextEditor`、`sfRichTextEditorFCK` と `sfRichTextEditorTinyMCE`: これらはウィジェットシステムに置き換わりました (下記の「ヘルパー」のセクションを参照)。
 
-  * `sfCrudGenerator`、`sfAdminGenerator`、`sfPropelCrudGenerator`、`sfPropelAdminGenerator`: これらのクラスは 1.0のアドミンジェネレーターで使われていました。
+  * `sfCrudGenerator`、`sfAdminGenerator`、`sfPropelCrudGenerator`、`sfPropelAdminGenerator`: これらのクラスは 1.0 のアドミンジェネレーターで使われていました。
 
   * `sfPropelUniqueValidator`、`sfDoctrineUniqueValidator`: これらのクラスは 1.0 のフォームシステムで使われていました。
 
-  * `sfLoader`: "メソッドと関数"のセクションを参照。
+  * `sfLoader`: 「メソッドと関数」のセクションを参照してください。
 
   * `sfConsoleRequest`、`sfConsoleResponse`、`sfConsoleController`
 
@@ -86,7 +86,7 @@
 
 次のクラスは symfony 1.3 で削除されます:
 
-  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は "プロジェクトを 1.2 から 1.3/1.4 にアップグレードする"のチュートリアルの"共通フィルターの削除"を参照してください。
+  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は「プロジェクトを 1.2 から 1.3/1.4 にアップグレードする」のチュートリアルの「共通フィルターの削除」を参照してください。
 
 ヘルパー
 --------
@@ -95,22 +95,22 @@
 
   * `sfCompat10Plugin` によって提供される 1.0 フォームシステムに関連するすべてのヘルパー: `DateForm`、`Form`、`ObjectAdmin`、`Object` と `Validation`
 
-`form_tag()` ヘルパーは `Form` ヘルパーグループから `Url` ヘルパーグループに移動したので、 symfony 1.4 でも利用加能です。
+`form_tag()` ヘルパーは `Form` ヘルパーグループから `Url` ヘルパーグループに移動したので、 symfony 1.4 でも利用可能です。
 
 PHP のインクルードパスからヘルパーをロードする機能は 1.3 で廃止予定になり 1.4 で削除されました。ヘルパーはプロジェクト、アプリケーションもしくはモジュールの `lib/helper/` ディレクトリのどれか 1 つに設置しなければなりません。
 
 設定
 ----
 
-次の設定 (`settings.yml` 設定で管理される) は symfony 1.3 から削除されました:
+次の設定 (`settings.yml` 設定で管理されます) は symfony 1.3 から削除されました:
 
-  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動クリーニングを可能にするために数年前に導入されました。これは主にすべての顧客のあいだで symfony のバージョンが共有される共用ホスティングのコンフィギュレーションに便利でした。symfony 1.1 以降ではバッドプラクティスですので (プロジェクトごとに symfony のバージョンを埋め込む必要がある)、設定は無意味です。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、それぞれのリクエストに小さなオーバーヘッドを追加します。
+  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動クリーニングを可能にするために数年前に導入されました。これは主にすべての顧客のあいだで同じバージョンの symfony が共有される共用ホスティングのコンフィギュレーションに便利でした。symfony 1.1 以降ではバッドプラクティスですので (プロジェクトごとに symfony のバージョンを組み込む必要があるため)、設定は無意味です。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、それぞれのリクエストに小さなオーバーヘッドが追加されてしまいます。
 
-  * `max_forwards`: この設定は symfony が例外を投げる前に許容されるフォワードの最大回数をコントロールします。これを設定可能にする値はありません。5 回より多くのフォワードが必要な場合、問題の認識とパフォーマンスの両方で問題があります。
+  * `max_forwards`: この設定は symfony が例外を投げる前に許容される転送の最大回数をコントロールします。これを設定可能にする値はありません。5 回よりも多くの転送が必要な場合、問題の認識とパフォーマンスの両方で問題があります。
 
-  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善として導入され、この設定はビューキャッシュのために遅延キャッシュキージェネレーションを有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも呼び出される `sfViewCacheManager::isCacheable()` に頼るひともいました。symfony 1.3 に関しては、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
+  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善のために導入され、この設定はビューキャッシュのために遅延キャッシュキージェネレーションを有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも呼び出される `sfViewCacheManager::isCacheable()` に頼るひともいました。symfony 1.3 に関しては、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
 
-  * `strip_comments`: `strip_comments` は PHP 5.0.x バージョンのトークナイザーのバグが原因のコメントのストリッピング機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリーの大量消費を避けるためにも使われました。最初の問題は PHP の最小バージョンが 5.2 なので関係なくなっており 2 番目の問題はコメントのストリッピング機能をシミュレートした正規表現を削除することですでに修正されています。
+  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザーのバグが原因のコメントのストリッピング機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリーの大量消費を避けるためにも使われました。最初の問題は PHP の最小バージョンが 5.2 なので関係なくなっており 2 番目の問題はコメントのストリッピング機能をシミュレートした正規表現を削除することですでに修正されています。
 
   * `lazy_routes_deserialize`: このオプションはもう必要ありません。
 
@@ -127,7 +127,7 @@ PHP のインクルードパスからヘルパーをロードする機能は 1.3
 
 次のタスクは symfony 1.3 で削除されました:
 
-  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に埋め込むために使われました。これらはもはや必要ありません。長期間をかけて symfony をプロジェクトに埋め込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。symfony を手作業で埋め込むのもとても単純で symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけ必要です (`lib/vendor/symfony/` が推奨されます)。
+  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に組み込むために使われました。これらはもはや必要ありません。長期間に渡って symfony をプロジェクトに組み込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。symfony を手作業で組み込むこともとても単純で symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけ必要です (`lib/vendor/symfony/` が推奨されます)。
 
 次のタスクは symfony 1.3 で廃止予定で、symfony 1.4 で削除されます:
 
@@ -151,11 +151,11 @@ PHP のインクルードパスからヘルパーをロードする機能は 1.3
 
   * `sfParameterHolder::get()`、`sfParameterHolder::has()`、`sfParameterHolder::remove()`、`sfNamespacedParameterHolder::get()`、`sfNamespacedParameterHolder::has()` と `sfNamespacedParameterHolder::remove()` メソッドは配列表記 (`[]`) をサポートし廃止予定で symfony 1.4 では利用できません (パフォーマンスの向上)。
 
-symfony CLI はグローバルな `--dry-run` オプションを受け取ることはありません。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクのひとつがこのオプションに依存する場合、これをタスククラスのローカルオプションとして追加できます。
+symfony CLI はグローバルな `--dry-run` オプションを受け取ることはありません。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクの 1 つがこのオプションに依存する場合、これをタスククラスのローカルオプションとして追加できます。
 
-1.0の admin ジェネレーターの Propel テンプレートと1.0の CRUD は symfony 1.4 で削除されます (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`)。
+1.0 のアドミンジェネレーターの Propel テンプレートと 1.0 の CRUD は symfony 1.4 で削除されます (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`)。
 
-"Dynarch Calendar" (`data/web/calendar/` で見つかる) は symfony 1.4 は削除されます。これは symfony 1.4 で削除される Form ヘルパーグループのみが使っていたからです。
+"Dynarch Calendar" (`data/web/calendar/` で見つかります) は symfony 1.4 は削除されます。これは symfony 1.4 で削除される Form ヘルパーグループのみが使っていたからです。
 
 symfony 1.3 に関して、サイトが利用不可能なときに表示されるページは `%SF_APP_CONFIG_DIR%/` と `%SF_CONFIG_DIR%/` ディレクトリでのみ探されます。まだこれを `%SF_WEB_DIR%/errors/` に保存している場合、symfony 1.4 へのマイグレーションを行う前に削除しなければなりません。
 
