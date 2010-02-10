@@ -28,10 +28,10 @@ Pero hasta ahora, todos los puestos de trabajo serán mostrados, sea que estén 
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -56,14 +56,14 @@ Cambiemos para que solo seleccione los puestos de trabajo activos:
       $criteria = new Criteria();
       $criteria->add(JobeetJobPeer::CREATED_AT, time() - 86400 * 30, Criteria::GREATER_THAN);
 
-      $this->jobeet_job_list = JobeetJobPeer::doSelect($criteria);
+      $this->jobeet_jobs = JobeetJobPeer::doSelect($criteria);
 </propel>
 <doctrine>
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
         ->where('j.created_at > ?', date('Y-m-d h:i:s', time() - 86400 * 30));
 
-      $this->jobeet_job_list = $q->execute();
+      $this->jobeet_jobs = $q->execute();
 </doctrine>
     }
 
@@ -195,14 +195,14 @@ Ahora, vamos a cambiar la acción para usar la columna `expires_at` en lugar de 
       $criteria = new Criteria();
       $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::GREATER_THAN);
 
-      $this->jobeet_job_list = JobeetJobPeer::doSelect($criteria);
+      $this->jobeet_jobs = JobeetJobPeer::doSelect($criteria);
 </propel>
 <doctrine>
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
         ->where('j.expires_at > ?', date('Y-m-d h:i:s', time()));
 
-      $this->jobeet_job_list = $q->execute();
+      $this->jobeet_jobs = $q->execute();
 </doctrine>
     }
 
@@ -363,10 +363,10 @@ Ahora el código de la acción puede usar este nuevo método para obtener los pu
     public function executeIndex(sfWebRequest $request)
     {
 <propel>
-      $this->jobeet_job_list = JobeetJobPeer::getActiveJobs();
+      $this->jobeet_jobs = JobeetJobPeer::getActiveJobs();
 </propel>
 <doctrine>
-      $this->jobeet_job_list =  Doctrine::getTable('JobeetJob')->getActiveJobs();
+      $this->jobeet_jobs =  Doctrine::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 

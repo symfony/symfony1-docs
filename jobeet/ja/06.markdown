@@ -27,10 +27,10 @@ Doctrine クエリオブジェクト
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -56,7 +56,7 @@ Doctrine クエリオブジェクト
       $criteria->add(JobeetJobPeer::CREATED_AT,
        ➥ time() - 86400 * 30, Criteria::GREATER_THAN);
 
-      $this->jobeet_job_list = JobeetJobPeer::doSelect($criteria);
+      $this->jobeet_jobs = JobeetJobPeer::doSelect($criteria);
 </propel>
 <doctrine>
       $q = Doctrine_Query::create()
@@ -64,7 +64,7 @@ Doctrine クエリオブジェクト
         ->where('j.created_at > ?',
          ➥ date('Y-m-d H:i:s', time() - 86400 * 30));
 
-      $this->jobeet_job_list = $q->execute();
+      $this->jobeet_jobs = $q->execute();
 </doctrine>
     }
 
@@ -196,14 +196,14 @@ Doctrine が `created_at`カラムに対して WHERE 句 (`WHERE j.created_at > 
       $criteria = new Criteria();
       $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::GREATER_THAN);
 
-      $this->jobeet_job_list = JobeetJobPeer::doSelect($criteria);
+      $this->jobeet_jobs = JobeetJobPeer::doSelect($criteria);
 </propel>
 <doctrine>
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
         ->where('j.expires_at > ?', date('Y-m-d H:i:s', time()));
 
-      $this->jobeet_job_list = $q->execute();
+      $this->jobeet_jobs = $q->execute();
 </doctrine>
     }
 
@@ -364,10 +364,10 @@ Jobeet のホームページをブラウザーでリフレッシュしても数�
     public function executeIndex(sfWebRequest $request)
     {
 <propel>
-      $this->jobeet_job_list = JobeetJobPeer::getActiveJobs();
+      $this->jobeet_jobs = JobeetJobPeer::getActiveJobs();
 </propel>
 <doctrine>
-      $this->jobeet_job_list =
+      $this->jobeet_jobs =
         ➥ Doctrine::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
