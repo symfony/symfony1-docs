@@ -61,10 +61,10 @@ Per aggiornare un progetto:
         $ php symfony project:upgrade1.3
 
     Il task può essere lanciato diverse volte, senza effetti collaterali.
-    Ogni volta che si aggiorna ad una versione di symfony 1.3 beta / RC o all
+    Ogni volta che si aggiorna a una versione di symfony 1.3 beta / RC o all
     versione finale symfony 1.3, si deve lanciare il task.
 
-  * Occorre ricostruire i modelli ed i form, a causa di alcune modifiche
+  * Occorre ricostruire i modelli e i form, a causa di alcune modifiche
     descritte più avanti:
 
         # Doctrine
@@ -165,14 +165,14 @@ richiamando esplicitamente gli helper `include_stylesheets()` e
 Il filtro è stato rimosso per diverse ragioni:
 
  * Abbiamo già una soluzione migliore, semplice e più flessibile (gli
-   helper `include_stylesheets()` ed `include_javascripts()`)
+   helper `include_stylesheets()` e `include_javascripts()`)
 
  * Anche se il filtro può essere rimosso facilmente, non è semplice farlo,
-   perché richiede di conoscerne l'esistenza ed il suo lavoro "dietro le quinte"
+   perché richiede di conoscerne l'esistenza e il suo lavoro "dietro le quinte"
 
  * L'uso degli helper fornisce un controllo più granulare su quando e dove
    includere gli elementi nel layout (ad esempio, i fogli di stile nel tag `head`
-   ed i JavaScript subito prima della fine del tag `body`)
+   e i JavaScript subito prima della fine del tag `body`)
 
  * È sempre meglio essere espliciti piuttosto che impliciti (nessuna magia e
    nessun effetto indesiderato; si veda la mailing list degli utenti per
@@ -302,9 +302,9 @@ ambienti:
         delivery_strategy: none
 
 Con tale configurazione, i messaggi email non saranno inviati. Ovviamente,
-saranno ancora nei log ed il tester `mailer` funzionerà nei test funzionali.
+saranno ancora nei log e il tester `mailer` funzionerà nei test funzionali.
 
-Se invece si preferisce ricevere tutti i messaggi email ad un unico indirizzo,
+Se invece si preferisce ricevere tutti i messaggi email a un unico indirizzo,
 si può usare la strategia di invio `single_address` (ad esempio per l'ambiente
 `dev`):
 
@@ -333,7 +333,7 @@ modificherà (per evitare ad esempio di perdere dei commenti). Le correzioni
 vanno eseguite manualmente.
 
 Se non si vogliono controllare tutti i proprio file YAML, si può forzare il
-parser YAML ad usare le specifiche YAML 1.1, usando il metodo
+parser YAML a usare le specifiche YAML 1.1, usando il metodo
 `sfYaml::setSpecVersion()`:
 
     [php]

@@ -2,7 +2,7 @@ Elementi deprecati e rimossi in 1.3
 ===================================
 
 Questo documento elenca tutte le impostazioni, le classi, i metodi, le funzioni
-ed i task che sono stati deprecati o rimossi in symfony 1.3.
+e i task che sono stati deprecati o rimossi in symfony 1.3.
 
 Plugin del Core
 ---------------
@@ -129,7 +129,7 @@ in symfony 1.4:
   * `sfWidgetFormChoiceMany`, `sfWidgetFormPropelChoiceMany`,
     `sfWidgetFormDoctrineChoiceMany`, `sfValidatorChoiceMany`,
     `sfValidatorPropelChoiceMany`, `sfValidatorPropelDoctrineMany`: Usare le
-    stesse classi, ma senza `Many` finale ed impostando l'opzione `multiple` a
+    stesse classi, ma senza `Many` finale e impostando l'opzione `multiple` a
     `true`
 
   * `SfExtensionObjectBuilder`, `SfExtensionPeerBuilder`,
@@ -173,7 +173,7 @@ state rimosse da symfony 1.3:
     di symfony era condivisa tra diversi clienti. Essendo una cattiva pratica da
     symfony 1.1 (occorre inserire la versione di symfony in ciascun progetto),
     l'impostazione non ha più senso. Inoltre, quando l'impostazione è impostata
-    a `on`, la verifica aggiunge anche un piccolo overhead ad ogni richiesta,
+    a `on`, la verifica aggiunge anche un piccolo overhead a ogni richiesta,
     poiché ha bisogno di recuperare il contenuto di un file.
   
   * `max_forwards`: Questa impostazione controlla il numero di rinvii consentiti
@@ -221,7 +221,7 @@ Task
 
 I seguenti task sono stati rimossi in symfony 1.3:
 
-  * `project:freeze` e `project:unfreeze`: Questi task servivano ad includere
+  * `project:freeze` e `project:unfreeze`: Questi task servivano a includere
     la versione di symfony usata dal progetto nel progetto stesso. Non servono
     più, perché la cosa migliore già da tempo è includere symfony nel progetto.
     Inoltre, cambiando versione di symfony è ora molto semplice, dati che basta
@@ -266,7 +266,7 @@ L'interfaccia a linea di comandi di symfony non accetta più l'opzione globale
 task si basava su tale opzione, la si può aggiungere come opzione locale nella
 classe del task.
 
-I template di Propel per l'admin generator 1.0 ed il CRUD 1.0 saranno rimossi
+I template di Propel per l'admin generator 1.0 e il CRUD 1.0 saranno rimossi
 in symfony 1.4 (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`).
 
 Il "Dynarch calendar" (che si trova in data/web/calendar/) sarà rimosso in

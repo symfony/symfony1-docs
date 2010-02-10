@@ -26,7 +26,7 @@ in un'azione:
     $this->getMailer()->composeAndSend('from@example.com', 'to@example.com', 'Oggetto', 'Corpo');
 
 Se si ha bisogno di maggiore flessibilità, si può anche usare il metodo
-`compose()` ed inviare in seguito. Ecco ad esempio come aggiungere un allegato
+`compose()` e inviare in seguito. Ecco ad esempio come aggiungere un allegato
 al messaggio:
 
     [php]
@@ -204,9 +204,9 @@ Form
 Il nuovo metodo `sfForm::useFields()` rimuove da un form tutti i campi non
 nascosti, tranne quelli passati come parametro. A volte è più semplice
 esplicitare i campi da mantenere piuttosto che eliminare tutti quelli non
-necessari. Ad esempio, quando si aggiungono nuovi campi ad un form di base,
+necessari. Ad esempio, quando si aggiungono nuovi campi a un form di base,
 essi non appariranno nel form a meno che non siano esplicitamente aggiunti
-(si pensi ad un modello di form in cui si aggiungono nuove colonne alla
+(si pensi a un modello di form in cui si aggiungono nuove colonne alla
 tabella relativa).
 
     [php]
@@ -224,7 +224,7 @@ per disabilitare il riordinamento automatico.
 
 ### `sfForm::getEmbeddedForm($name)`
 
-Ora si può accedere ad uno specifico form annidato, usando il metodo
+Ora si può accedere a uno specifico form annidato, usando il metodo
 `->getEmbeddedForm()`. È stato aggiunto un paramentro per disabilitare
 la ricorsione, utile se si rendono dei form annidati usando un formatter.
 
@@ -248,7 +248,7 @@ form. Si può accedere al dispatcher da dentro le proprie classi di form tramite
 
   * `form.post_configure`:   Questo evento è notificato dopo che ogni form è
                              configurato
-  * `form.filter_values`:    Questo evento filtra i parametri ed i file fusi e
+  * `form.filter_values`:    Questo evento filtra i parametri e i file fusi e
                              quelli grezzi subito prima del bind
   * `form.validation_error`: Questo evento è notificato ogni volta che un form
                              fallisce
@@ -323,7 +323,7 @@ ogni volta che si sistema un test, si dovrebbe rieseguire da capo l'intera lista
 di test per assicurarsi di non aver creato problemi altrove. Ma finché
 i test falliti non sono sistemati, non serve eseguire di nuovo tutti gli
 altri test. Da symfony 1.3/1.4, i task `test:all` e `symfony:test` hanno un'opzione
-`--only-failed` (scorciatoia: `-f`), che forza i task ad eseguire nuovamente
+`--only-failed` (scorciatoia: `-f`), che forza i task a eseguire nuovamente
 solo i test falliti durante la precedente esecuzione:
 
     $ php symfony test:all --only-failed
@@ -539,7 +539,7 @@ parametri `arguments` e `options.
 
 ### Miglioramenti a `sfTask::run()`
 
-Si può ora passare un array associativo di parametri ed opzioni al task
+Si può ora passare un array associativo di parametri e opzioni al task
 `sfTask::run()`:
 
     [php]
@@ -667,9 +667,9 @@ il nome della connessione dei database coinvolti.
 
 ### `propel:generate-module`, `propel:generate-admin`, `propel:generate-admin-for-route`
 
-The `propel:generate-module`, `propel:generate-admin`, and
-`propel:generate-admin-for-route` tasks now takes a `--actions-base-class` option that allows
-the configuration of the actions base class for the generated modules.
+I task `propel:generate-module`, `propel:generate-admin` e
+`propel:generate-admin-for-route` ora accettano un'opzione `--actions-base-class`, che
+consente la configurazione della classe base delle azioni per i moduli generati.
 
 ### Comportamenti di Propel
 
@@ -754,7 +754,7 @@ CLI
 
 ### Colorazione dell'Otput 
 
-Symfony prova ad indovinare se la console supporta i colori, quando si usano
+Symfony prova a indovinare se la console supporta i colori, quando si usano
 gli strumenti della CLI. Ma a volte symfony si sbaglia; ad esempio quando si
 usa Cygwin (poiché la colorazione è sempre spenta su Windows).
 
@@ -854,7 +854,7 @@ seguenti righe in `settings.yml`:
       .settings:
         file_link_format: txmt://open?url=file://%f&line=%l
 
-Il segnaposto `%f` sarà sostituito con il percorso assoluto del file ed il
+Il segnaposto `%f` sarà sostituito con il percorso assoluto del file e il
 segnaposto `%l` sarà sostituito dal numero di riga.
 
 Integrazione con Doctrine
@@ -928,7 +928,7 @@ esistono sul disco ma non nello schema YAML, usando il task
 
     $ php symfony doctrine:clean-model-files
 
-Il task confronterà i file di schema YAML con i modelli ed i file che
+Il task confronterà i file di schema YAML con i modelli e i file che
 sono stati generati e determinerà quali rimuovere. Questi modelli
 sono passati al task `doctrine:delete-model-files`. Una conferma
 sarà richiesta prima della cancellazione effettiva.
@@ -945,7 +945,7 @@ Il seguente comando:
 
     $ php symfony doctrine:reload-data
 
-equivale ad eseguire questi comandi:
+equivale a eseguire questi comandi:
 
     $ php symfony doctrine:drop-db
     $ php symfony doctrine:build-db
@@ -975,7 +975,7 @@ filtri (`:build-filters`) ed esegue le migrazioni pendenti (`:migrate`).
     $ php symfony doctrine:build --model --and-migrate --and-append=data/fixtures/categories.yml
 
 Questo costruisce il modello (`:build-model`), migra il database (`:migrate`)
-ed appende le fixture per le categorie
+e appende le fixture per le categorie
 (`:data-load --append --dir=data/fixtures/categories.yml`).
 
 Per ulteriori informazioni, si veda la pagina di aiuto del task
@@ -1001,7 +1001,7 @@ migrazione sarà creata, per una facile modifica.
 
     $ php symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate
 
-Questo esempio genererà la nuova classe di migrazione ed aprirà il nuovo
+Questo esempio genererà la nuova classe di migrazione e aprirà il nuovo
 file in TextMate.
 
 #### `doctrine:generate-migrations-diff`
@@ -1121,7 +1121,7 @@ oggetto query. Qualsiasi dei seguenti metodi `sfFormFilterDoctrine` è valido:
     }
 
 La personalizzazione di un form filtro è ora più facile. Per aggiungere
-un campo al filtro, basta aggiungere il widget ed un metodo per
+un campo al filtro, basta aggiungere il widget e un metodo per
 processarlo.
 
     [php]
@@ -1274,7 +1274,7 @@ Il contenuto della richiesta è ora accessibile tramite il metodo
 
 ### Parametri `PUT` e `DELETE`
 
-Quando una richiesta arriva con metodo HTTP `PUT` o `DELETE` ed il
+Quando una richiesta arriva con metodo HTTP `PUT` o `DELETE` e il
 content-type impostato a `application/x-www-form-urlencoded`, symfony 
 ora analizza il body grezzo e rende i parametri accessibili come
 normali parametri `POST`.
