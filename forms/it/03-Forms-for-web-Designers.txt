@@ -274,11 +274,11 @@ visualizzazione del form.
 >     <?php $form['email'] = ... ?>
 >     <?php unset($form['email']) ?>
 
-Questo template ed il template originale con cui abbiamo
+Questo template e il template originale con cui abbiamo
 iniziato sono funzionalmente identici. Tuttavia, se la
 visualizzazione è la stessa, la personalizzazione è ora più
 facile. Il metodo `renderRow()` accetta due parametri: un
-array di attributi HTML ed il nome di una label. Il Listato
+array di attributi HTML e il nome di una label. Il Listato
 3-5 usa questi due parametri per personalizzare il form
 (la Figura 3-4 mostra il risultato).
 
@@ -485,7 +485,7 @@ Listato 3-10 - Modificare il nome della label
 A cosa serve il metodo `renderLabel()` se inseriamo il nome
 della label passandolo come parametro? Perché non usiamo
 semplicemente un tag HTML `label`? Perché il metodo
-`renderLabel()` genera il tag `label` ed aggiunge
+`renderLabel()` genera il tag `label` e aggiunge
 automaticamente un attributo `for` corrispondente
 all'identificativo del campo correlato (`id`). Questo assicura
 che il campo sia accessibile; quando si clicca sulla label,
@@ -627,7 +627,7 @@ Listato 3-14 - Generazione dei messaggi di errore globali
 
 >**CAUTION**
 >Ogni volta che si personalizza un form, non dimenticare di
->inserire i campi nascosti ed i messaggi di errore globali.
+>inserire i campi nascosti e i messaggi di errore globali.
 
 ### Gestione degli errori globali
 
@@ -676,7 +676,7 @@ Listato 3-16 - Personalizzazione degli errori globali con i metodi `hasGlobalErr
       </tr>
     <?php endif; ?>
 
-Ogni errore globale ha un nome (`name`) ed un messaggio (`error`).
+Ogni errore globale ha un nome (`name`) e un messaggio (`error`).
 Il nome è vuoto quando c'è un "vero" errore globale, ma quando
 c'è un errore da un campo nascosto o da un campo non visualizzato,
 il nome è il nome della label del campo.

@@ -47,7 +47,7 @@ dalla classe `sfForm`.
 
 >**NOTE**
 >`sfForm` è la classe base di tutti i form e rende facile gestire
->la configurazione ed il ciclo di vita dei propri form.
+>la configurazione e il ciclo di vita dei propri form.
 
 Si può iniziare a configurare il proprio form aggiungendo **widget**
 usando il metodo `configure()`.
@@ -84,7 +84,7 @@ chiamato automaticamente dal costruttore della classe `sfForm`.
 
 Il metodo `setWidgets()` è usato dai widget nel form. Il metodo
 `setWidgets()` accetta un array associativo, in cui le chiavi sono
-i nomi dei campi ed i valori sono gli oggetti widget. Ciascun widget
+i nomi dei campi e i valori sono gli oggetti widget. Ciascun widget
 è un oggetto che eredita dalla classe `sfWidget`. Per questo
 esempio abbiamo usato due tipi di widget:
 
@@ -144,7 +144,7 @@ Listato 1-3 - Template che mostra il form
 
 Un form di symfony gestisce solo i widget che mostrano informazioni
 agli utenti. Nel template `indexSuccess`, la riga `<?php echo $form ?>`
-mostra solo tre campi. Gli altri elementi come il tag `form` ed il
+mostra solo tre campi. Gli altri elementi come il tag `form` e il
 bottone `submit` devono essere aggiunti dallo sviluppatore. Questo
 potrebbe non sembrare ovvio inizialmente, ma vedremo più avanti quanto
 sia utile e facile inserire i form.

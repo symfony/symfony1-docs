@@ -164,7 +164,7 @@ Listato 4-2 - Classe `AuthorForm`
     }
 
 Il Listato 4-3 mostra la classe `BaseAuthorForm`, con i validatori
-ed i widget generati tramite l'introspezione del modello per la
+e i widget generati tramite l'introspezione del modello per la
 tabella `author`.
 
 Listato 4-3 - Classe `BaseAuthorForm`, che rappresenta il form della tabella `author`
@@ -513,9 +513,9 @@ le tabelle. Tutto ciò avviene senza scrivere una sola riga di codice!
 delle classi considerano già diversi elementi, alcuni aspetti avranno
 bisogno di una personalizzazione.
 
-### Personalizzare i validatori ed i widget
+### Personalizzare i validatori e i widget
 
-Iniziamo col configurare i validatori ed i widget generati di default.
+Iniziamo col configurare i validatori e i widget generati di default.
 
 Il form `ArticleForm` ha un campo `slug`. Lo slug è una stringa di
 caratteri che rappresenta univocamente l'articolo nell'URL. Per esempio,
@@ -529,7 +529,7 @@ modifichiamo il validatore e lo rendiamo opzionale, come nel Listato 4-8.
 Personalizzeremo anche il campo `content`, aumentando la sua dimensione e
 forzando l'utente ad inserirvi almeno cinque caratteri.
 
-Listato 4-8 - Personalizzare i validatori ed i widget
+Listato 4-8 - Personalizzare i validatori e i widget
 
     [php]
     class ArticleForm extends BaseArticleForm
@@ -547,7 +547,7 @@ Listato 4-8 - Personalizzare i validatori ed i widget
 
 Abbiamo usato gli oggetti `validatorSchema` e `widgetSchema` come array PHP.
 Questi array prendono il nome del campo come chiave e restituiscono
-rispettivamente l'oggetto validatore ed il relativo oggetto widget.
+rispettivamente l'oggetto validatore e il relativo oggetto widget.
 
 >**NOTE**
 >Per poter usare gli oggetti come array PHP, le classi `sfValidatorSchema`
@@ -819,7 +819,7 @@ Listato 4-20 - Cancellare un campo usando il form come array PHP
 
 ### Riassunto
 
-Per riassumere, il Listato 4-21 ed il Listato 4-22 mostrano i form `ArticleForm`
+Per riassumere, il Listato 4-21 e il Listato 4-22 mostrano i form `ArticleForm`
 e `AuthorForm` dopo la nostra personalizzazione.
 
 Listato 4-21 - form `ArticleForm`
@@ -894,7 +894,7 @@ inviato al costruttore come primo parametro. Dal momento che il costruttore
 di un form "medio" accetta un array di valori come primo parametro, il
 costruttore di un form Doctrine accetta un oggetto Doctrine. Tale oggetto viene
 usato per definire il valore di default di ogni campo del form. Il metodo
-`getObject()` restituisce l'oggetto correlato all'istanza corrente ed il
+`getObject()` restituisce l'oggetto correlato all'istanza corrente e il
 metodo `isNew()` consente di sapere se l'oggetto è stato inviato tramite
 il costruttore:
 
@@ -1036,7 +1036,7 @@ ogni aggiornamento in una transazione.
 >Usare il metodo `bindAndSave()`
 >
 >Il metodo `bindAndSave()` collega i dati che l'utente ha inviato nel form,
->valida tale form ed aggiorna gli oggetti correlati nel database, tutto in
+>valida tale form e aggiorna gli oggetti correlati nel database, tutto in
 >una sola operazione:
 >
 >     [php]
@@ -1141,7 +1141,7 @@ conterrà tale percorso assoluto.
 >**TIP**
 >Se si vuole memorizzare il percorso relativo alla cartella
 >`sfConfig::get('sf_upload_dir')`, si può creare una classe che eredita da
->`sfValidatedFile` ed usare l'opzione `validated_file_class` per inviare
+>`sfValidatedFile` e usare l'opzione `validated_file_class` per inviare
 >al validatore `sfValidatorFile` il nome della nuova classe. Il validatore
 >restituirà un'istanza della propria classe. Vedremo nel resto di questo
 >capitolo un altro approccio, che consiste nel modificare il valore della
@@ -1263,7 +1263,7 @@ un'eccezione, l'oggetto non viene salvato.
 ### Personalizzare il metodo `updateObject()`
 
 A volte è necessario modificare l'oggetto connesso con il form tra
-l'aggiornamento ed il salvataggio nel database.
+l'aggiornamento e il salvataggio nel database.
 
 Nel nostro esempio di invio di file, invece di memorizzare il percorso
 assoluto del file caricato nella colonna `file`, vogliamo memorizzare il

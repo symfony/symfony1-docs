@@ -158,7 +158,7 @@ può essere una delle seguenti tre cose:
 >metodo. È anche una variabile PHP che restituisce `true` quando
 >passata ad una funzione `is_callable()`.
 
-Facciamo un esempio. Dovete migrare un progetto che ha già il suo
+Facciamo un esempio. Si deve migrare un progetto che ha già il suo
 sistema di internazionalizzazione, fornito dalla classe mostrata nel
 Listato 8-6.
 
@@ -269,7 +269,7 @@ Questa è la versione aggiornata della classe `MyI18n` che supporta questi param
 >il processo di traduzione?
 >
 >Come abbiamo visto nel Capitolo 2, il framework dei form è basato su una
->architettura MVC e la classe `sfWidgetFormSchemaFormatter` appartiene allo
+>architettura MVC e la classe `sfWidgetFormSchemaFormatter` appartiene al
 >livello della Vista. Questa classe è responsabile per tutte le
 >visualizzazioni di testo, così può intercettare tutte le stringhe di
 >testo e tradurle al volo.
@@ -339,7 +339,7 @@ Figure 8-1 - Form Propel internazionalizzato
 
 ![Form Propel internazionalizzato](/images/forms_book/en/08_01.png "Form Propel internazionalizzato")
 
-Questo è tutto quello che c'è da fare. Quando chiamate il metodo
+Questo è tutto quello che c'è da fare. Richiamando il metodo
 `save()` dell'oggetto del form, l'oggetto Propel associato e tutti
 gli oggetti i18n sono salvati automaticamente.
 

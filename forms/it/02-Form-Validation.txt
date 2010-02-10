@@ -128,12 +128,12 @@ classe `sfValidatorBase`:
 
 Vediamo le opzioni disponibili per i validatori che abbiamo appena usato:
 
-  | **Validatore**     | **Opzioni obbligatorie** | **Opzioni non obbligatorie** |
-  | ------------------ | ------------------------ | ---------------------------- |
-  | sfValidatorString  |                          | `max_length`                 |
-  |                    |                          | `min_length`                 |
-  | sfValidatorEmail   |                          | `pattern`                    |
-  | sfValidatorChoice  | `choices`                |                              |
+  | **Validatore**    | **Opzioni obbligatorie** | **Opzioni non obbligatorie** |
+  | ----------------- | ------------------------ | ---------------------------- |
+  | sfValidatorString |                          | `max_length`                 |
+  |                   |                          | `min_length`                 |
+  | sfValidatorEmail  |                          | `pattern`                    |
+  | sfValidatorChoice | `choices`                |                              |
 
 
 Se si prova ad inviare il form con valori non validi, non si vedrà
@@ -174,7 +174,7 @@ Il Listato 2-3 introduce molti nuovi concetti:
         $this->form = new ContactForm();
 
   * Quando l'utente invia il form con una richiesta `POST`,
-    il metodo `bind()` lega il form ai dati utente ed attiva
+    il metodo `bind()` lega il form ai dati utente e attiva
     il meccanismo di validazione. il form quindi passa ad uno
     **stato vincolato**.
 
@@ -201,7 +201,7 @@ Il Listato 2-3 introduce molti nuovi concetti:
 
 >**NOTE**
 >Quando una form è in uno stato iniziale, il metodo `isValid()`
->restituisce sempre `false` ed il metodo `getValues()`
+>restituisce sempre `false` e il metodo `getValues()`
 >restituirà sempre un array vuoto.
 
 La Figura 2-3 mostra il codice che viene eseguito durante l'interazione
@@ -236,7 +236,7 @@ regolare, ...). Invece di restituire semplicemente il valore
 immesso, lo converte di default nel formato `Y-m-d H:i:s`.
 Quindi, lo sviluppatore ha la garanzia di ottenere un formato
 stabile, quale che sia il formato immesso. Questo sistema
-offre molta flessibilità all'utente ed assicura coerenza allo
+offre molta flessibilità all'utente e assicura coerenza allo
 sviluppatore.
 
 Ora, consideriamo un'azione di conversione, come l'invio di un
@@ -295,22 +295,22 @@ Come forse avete notato nella Figura 2-4, i messaggi di errore non
 sono molto utili. Vediamo come personalizzarli per renderli più intuitivi.
 
 Ogni validatore può aggiungere errori al form. Un errore consiste
-in un codice di errore ed in un messaggio di errore. Tutti i validatori
-hanno almeno gli errori `required` ed `invalid` definiti in `sfValidatorBase`:
+in un codice di errore e in un messaggio di errore. Tutti i validatori
+hanno almeno gli errori `required` e `invalid` definiti in `sfValidatorBase`:
 
-  | **Codicee**     | **Messaggio**     | **Descrizione**
-  | --------------- | ----------------- | ---------------
-  | required        | `Required.`       | Il campo è obbligatorio ed il valore è vuoto
-  | invalid         | `Invalid.`        | Il campo non è valido
+  | **Codicee** | **Messaggio** | **Descrizione**
+  | ----------- | ------------- | ---------------
+  | required    | `Required.`   | Il campo è obbligatorio e il valore è vuoto
+  | invalid     | `Invalid.`    | Il campo non è valido
 
 Ecco i codici di errore associati ai validatori che abbiamo già usato:
 
-  | **Validatore**     | **Codici di errore** |
-  | ------------------ | -------------------- |
-  | sfValidatorString  | `max_length`         |
-  |                    | `min_length`         |
-  | sfValidatorEmail   |                      |
-  | sfValidatorChoice  |                      |
+  | **Validatore**    | **Codici di errore** |
+  | ----------------- | -------------------- |
+  | sfValidatorString | `max_length`         |
+  |                   | `min_length`         |
+  | sfValidatorEmail  |                      |
+  | sfValidatorChoice |                      |
 
 La personalizzazione dei messaggi di errore può essere fatta
 passando un secondo parametro durante la creazione degli oggetti
@@ -353,7 +353,7 @@ Figura 2-6 - Messaggio di errore per stringa troppo corta
 Il messaggio di errore predefinito relativo a questo codice
 di errore (`min_length`) è diverso dai messaggi che abbiamo già
 visto, poiché implementa due valori dinamici: i dati inseriti
-dall'utente (`foo`) ed il numero minimo di caratteri consentiti
+dall'utente (`foo`) e il numero minimo di caratteri consentiti
 per questo campo (`4`). Il Listato 2-5 personalizza questo messaggio
 usando tali valori dinamici e la Figura 2-7 ne mostra il risultato.
 
@@ -482,7 +482,7 @@ Listato 2-8 - Implementazione del modulo `user`
     }
 
 Senza nessuna protezione, se l'utente invia un form con un
-valore per il campo `name` ed insieme per il campo `is_admin`,
+valore per il campo `name` e insieme per il campo `is_admin`,
 allora il nostro codice è vulnerabile. Si può fare
 facilmente usando uno strumento come Firebug. Di fatto, il
 valore `is_admin` è sempre valido, perché il campo non ha un
@@ -734,7 +734,7 @@ dall'utente, la validazione dei campi `start_date` ed `end_date`
 sarà sempre convertito in un formato comparabile (di default
 `Y-m-d H:i:s`).
 
-Per default, i pre-validatori ed i post-validatori restituiscono
+Per default, i pre-validatori e i post-validatori restituiscono
 errori globali al form. Tuttavia, alcuni di essi possono associare
 un errore ad un campo specifico. Per esempio, l'opzione
 `throw_global_error` del validatore `sfValidatorSchemaCompare` può

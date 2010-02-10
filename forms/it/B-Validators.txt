@@ -79,7 +79,7 @@ I messaggi di errore di default definiti da `sfValidatorBase` sono i seguenti:
 
 | Errore     | Descrizione
 | ---------- | -----------
-| `required` | Il messaggio di errore usato quando il valore grezzo è vuoto ed obbligatorio (`Required.` di default).
+| `required` | Il messaggio di errore usato quando il valore grezzo è vuoto e obbligatorio (`Required.` di default).
 | `invalid`  | Un messaggio di errore generico restituito quando un errore viene riconosciuto (`Invalid.` di default).
 
 Si possono cambiare le stringhe predefinite usate per gli errori di `required`
