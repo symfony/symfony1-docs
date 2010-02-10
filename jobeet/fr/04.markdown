@@ -67,7 +67,7 @@ de symfony et la manière de séparer le code entre les couches.
 La mise en page
 ---------------
 
-D'abord, si vous regardez de plus prêt la maquette, vous remarquerez que la quantité de
+D'abord, si vous regardez de plus près la maquette, vous remarquerez que la quantité de
 chaque page vous semble le même. Vous savez déjà que la duplication de code est mauvais,
 si nous parlons de code HTML ou PHP, donc nous devons trouver un moyen
 d'empêcher ces éléments communs de la vue d'aboutir à la duplication du code.
