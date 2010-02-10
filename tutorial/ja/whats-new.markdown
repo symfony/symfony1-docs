@@ -622,7 +622,7 @@ symfony 1.3/1.4 では、新しく作られたプロジェクトでプラグイ�
 `sfProtoculousPlugin` もしくは `sfCompat10Plugin` のようなコアプラグインを使いたい場合、必要なのは対応する `enablePlugins()` ステートメントを `ProjectConfiguration` クラスに追加することだけです。
 
 >**NOTE**
->1.2からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。このふるまいの変更は symfony 1.3/1.4 の新規プロジェクトのみです。
+>1.2 からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。このふるまいの変更は symfony 1.3/1.4 の新規プロジェクトのみです。
 
 ### `sfPluginConfiguration::connectTests()`
 
