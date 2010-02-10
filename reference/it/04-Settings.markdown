@@ -111,7 +111,7 @@ I paragrafi seguenti descrivono tutte le possibili impostazioni ordinate per
 importanza.
 
 Tutte le impostazioni definite nella sezione `.settings` sono disponibili in qualsiasi
-punto del codice, utilizzando l'oggetto `sfConfig` ed anteponendo al nome dell'impostazione
+punto del codice, utilizzando l'oggetto `sfConfig` e anteponendo al nome dell'impostazione
 il prefisso `sf_`. Per esempio, per ottenere il valore dell'impostazione `charset`
 utilizzare:
 
@@ -358,7 +358,7 @@ L'impostazione `compressed` abilita la compressione nativa di PHP delle risposte
 Se impostato a `true` symfony utilizzerà [`ob_gzhandler`](http://www.php.net/ob_gzhandler)
 come funzione di callback per `ob_start()`.
 
-È raccomandabile tenere questo valore a `false` ed utilizzare invece il meccanismo 
+È raccomandabile tenere questo valore a `false` e utilizzare invece il meccanismo 
 di compressione nativo del web server utilizzato.
 
 ### ~`use_database`~

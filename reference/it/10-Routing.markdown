@@ -338,8 +338,8 @@ alle variabili della rotta.
 
 *Predefinito*: `false`
 
-L'opzione `with_wildcard_routes` permette ad ogni azione di essere acceduta tramite due
-rotte jolly: una per un singolo oggetto, ed un'altra per insiemi di oggetti.
+L'opzione `with_wildcard_routes` permette a ogni azione di essere acceduta tramite due
+rotte jolly: una per un singolo oggetto e un'altra per insiemi di oggetti.
 
 ### ~`route_class`~
 

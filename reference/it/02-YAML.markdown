@@ -163,7 +163,7 @@ che equivale al seguente codice PHP:
 >**NOTE**
 >In una mappatura, una chiave può essere un qualsiasi scalare valido per YAML.
 
-Il numero di spazi tra i "due punti" ed il valore non ha importanza, purché
+Il numero di spazi tra i "due punti" e il valore non ha importanza, purché
 ce ne sia almeno uno:
 
     [yml]

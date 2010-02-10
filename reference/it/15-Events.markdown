@@ -5,7 +5,7 @@ I componenti principali di symfony sono disaccoppiati, grazie all'oggetto
 `sfEventDispatcher`. Tale oggetto gestisce le comunicazioni tra i
 componenti.
 
-Ogni oggetto può notificare un evento al dispatcher ed ogni altro oggetto
+Ogni oggetto può notificare un evento al dispatcher e ogni altro oggetto
 può connettersi al dispatcher per ascoltare un evento specifico.
 
 Un evento non è altro che un nome composto da uno spazio di nomi e da un
@@ -15,7 +15,6 @@ Uso
 ---
 
 Si può notificare un evento iniziando con il creare un oggetto evento:
-
 
     [php]
     $event = new sfEvent($this, 'user.change_culture', array('culture' => $culture));

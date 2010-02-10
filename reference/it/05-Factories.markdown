@@ -33,7 +33,7 @@ I nomi dei factory supportati sono: `controller`, `logger`, `i18n`, `request`,
 `view_cache_manager`.
 
 Quando `sfContext` inizializza i factory, legge dal file `factories.yml`
-i nomi delle classi dei factory (`class`) ed i relativi parametri (`param`)
+i nomi delle classi dei factory (`class`) e i relativi parametri (`param`)
 per configurare i corrispettivi oggetti:
 
     [yml]
@@ -318,7 +318,7 @@ a `HTTP_X_REWRITE_URL`.
 
 ### ~`formats`~
 
-L'opzione `formats` definisce un array di estensioni di file ed il corrispettivo
+L'opzione `formats` definisce un array di estensioni di file e il corrispettivo
 `Content-Type`. È usata automaticamente dal framework per gestire il `Content-Type` di una risposta, 
 in base all'estensione dell'URI richiesta.
 

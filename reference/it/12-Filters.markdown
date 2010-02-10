@@ -66,7 +66,7 @@ Per togliere un filtro, occorre disabilitarlo impostando la chiave
 
 Ci sono due nomi speciali di filtri: `rendering` e `execution`. Entrambi
 sono obbligatori e sono identificati dal parametro `type`. Il filtro
-`rendering` dovrebbe essere sempre il primo registrato ed il filtro
+`rendering` dovrebbe essere sempre il primo registrato e il filtro
 `execution` dovrebbe essere sempre l'ultimo:
 
     [yml]

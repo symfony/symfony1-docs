@@ -1218,7 +1218,7 @@ Il task `doctrine:migrate` migra il database:
 
     ./symfony doctrine:migrate
 
-Fornire un numero di versione per migrare ad una versione specifica:
+Fornire un numero di versione per migrare a una versione specifica:
 
     ./symfony doctrine:migrate 10
 
