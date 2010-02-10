@@ -263,7 +263,169 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
 ### 簡単なデバッグ
 
-テストが通らなかったことをテストハーネスが報告するときにデバッグを簡単にするためにばまだ動きます:
+テストが通らなかったことをテストハーネスが報告するときにデバッグを簡単にするために、通らないものについて詳細な出力ができる `--trace` オプションを渡すことができるようになりました:
+
+    $ php symfony test:all -t
+
+### lime によるカラー出力
+
+symfony 1.3/1.4 では、lime はカラー出力を正しく行うようになりました。これが意味することは、ほとんどの場合において `lime_test` の lime コンストラクターの第 2 引数を省略できるということです:
+
+    [php]
+    $t = new lime_test(1);
+
+### `sfTesterResponse::checkForm()`
+
+フォームのすべてのフィールドが正しくレンダリング処理されてレスポンスに含まれているかどうかをより簡単に確かめられるメソッドがレスポンステスターに入りました:
+
+    [php]
+    $browser->with('response')->begin()->
+      checkForm('ArticleForm')->
+    end();
+
+もしくは、望むのであれば、フォームオブジェクトを渡すことができます:
+
+
+    [php]
+    $browser->with('response')->begin()->
+      checkForm($browser->getArticleForm())->
+    end();
+
+レスポンスに複数のフォームが含まれる場合は、どの DOM 部分をテストするかをピンポイントで指定する CSS セレクターを提供するオプションがあります:
+
+    [php]
+    $browser->with('response')->begin()->
+      checkForm('ArticleForm', '#articleForm')->
+    end();
+
+### `sfTesterResponse::isValid()`
+
+レスポンスが整形式の XML であるかをレスポンステスターの `->isValid()` メソッドでチェックできます:
+
+    [php]
+    $browser->with('response')->begin()->
+      isValid()->
+    end();
+
+引数として `true` を渡すことでドキュメントの種類に対するレスポンスをバリデートすることもできます:
+
+    [php]
+    $browser->with('response')->begin()->
+      isValid(true)->
+    end();
+
+バリデートする XSD もしくは RelaxNG スキーマがある場合、代わりにこのスキーマファイルへのパスを提供できます:
+
+    [php]
+    $browser->with('response')->begin()->
+      isValid('/path/to/schema.xsd')->
+    end();
+
+### `context.load_factories` をリスニングする
+
+`context.load_factories` イベントのリスナーを機能テストに追加できるようになりました。これは symfony の以前のバージョンでは利用できませんでした。
+
+
+    [php]
+    $browser->addListener('context.load_factories', array($browser, 'listenForNewContext'));
+
+### 改良された `->click()`
+
+`->click()` メソッドに CSS セレクターを渡すことが可能で、セマンティックにしたい要素をターゲットにするのがはるかに楽になりました。
+
+    [php]
+    $browser
+      ->get('/login')
+      ->click('form[action$="/login"] input[type="submit"]')
+    ;
+
+タスク
+------
+
+symfony の CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの 78 カラムに合わせようとします。
+
+### `sfTask::askAndValidate()`
+
+ユーザーに質問をして得られた入力内容をバリデートする `sfTask::askAndValidate()` メソッドが新しく用意されました:
+
+    [php]
+    $anwser = $this->askAndValidate('What is you email?', new sfValidatorEmail());
+
+このメソッドはオプションの配列を受けることもできます (より詳しい情報は API ドキュメントを参照してください)。
+
+### `symfony:test`
+
+ときには、開発者は特定のプラットフォームで symfony が正しく動くのかをチェックするために symfony のテストスイートを実行する必要があります。従来は、symfony に附属している `prove.php` スクリプトを実行し確認しなければなりませんでした。symfony 1.3/1.4 では組み込みのタスク、コマンドラインから symfony のコアテストスイートを起動できる `symfony:test` タスクが用意され、ほかのタスクと同じように使うことができます:
+
+    $ php symfony symfony:test
+
+`php test/bin/prove.php` に慣れていれば、同等の `php data/bin/symfony symfony:test` コマンドを使うことができます。
+
+
+### `project:deploy`
+
+`project:deply` タスクは少し改良されました。リアルタイムでファイルの転送状況を表示するようになりました。ただし、`-t` オプションが渡されたときだけです。もしオプションが指定されていなければタスクは何も表示しません、もちろんエラーは除きます。エラーのときには、簡単に問題を認識できるように赤色の背景にエラー情報を出力します。
+
+### `generate:project`
+
+symfony 1.3/1.4 では、`generate:project` タスクを実行するとき、初期設定では ORM は Doctrine になります:
+
+    $ php /path/to/symfony generate:project foo
+
+Propel のプロジェクトを生成するには、`--orm` オプションを渡します:
+
+    $ php /path/to/symfony generate:project foo --orm=Propel
+
+Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm` オプションに `none` を渡します:
+
+    $ php /path/to/symfony generate:project foo --orm=none
+
+新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります: `installDir()`、`runTask()`、`ask()`、`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、 `enablePlugin()` そして `disablePlugin()`
+
+より詳しい情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
+
+プロジェクトを生成するとき、2 番目の引数として著者の名前を渡すことができます。これは symfony が新しいクラスを生成するときに PHPDoc の `@author` タグに使う値を指定します。
+
+    $ php /path/to/symfony generate:project foo "Joe Schmo"
+
+### `sfFileSystem::execute()`
+
+`sfFileSystem::execute()` メソッドは `sfFileSystem::sh()` メソッドをより強力な機能に置き換えます。このメソッドは `stdout` と `stderr` 出力のリアルタイム処理のコールバックをとります。また両方の出力を配列として返すこともできます。`sfProjectDeployTask` クラスで使い方の例を見つけることができます。
+
+### `task.test.filter_test_files`
+
+`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメーターがあります。
+
+### `sfTask::run()` の強化
+
+`sfTask:run()` に次のような引数とオプションの連想配列を渡すことができるようになりました:
+
+    [php]
+    $task = new sfDoctrineConfigureDatabaseTask($this->dispatcher, $this->formatter);
+    $task->run(
+      array('dsn' => 'mysql:dbname=mydb;host=localhost',
+    ), array(
+      'name' => 'master',
+    ));
+
+これまでのバージョンでは、次のようにすればまだ動きます:
+
+    [php]
+    $task->run(
+      array('mysql:dbname=mydb;host=localhost'),
+      array('--name=master')
+    );
+
+### `sfBaseTask::setConfiguration()`
+
+PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()` に `--application` と `--env` オプションを渡す必要はもはやありません。その代わりに、ただ `->setConfiguration()` を呼び出すだけで設定オブジェクトを直接セットすることができます。
+
+    [php]
+    $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
+    $task->setConfiguration($this->configuration);
+    $task->run();
+
+これまでのバージョンでは、次のようにすればまだ動きます:
 
     [php]
     $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
