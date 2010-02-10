@@ -417,7 +417,8 @@ symfony framework предоставляет встроенный конфигу
       $this->jobeet_jobs = JobeetJobPeer::getActiveJobs();
 </propel>
 <doctrine>
-      $this->jobeet_jobs = Doctrine::getTable('JobeetJob')->getActiveJobs();
+      $this->jobeet_jobs =
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -527,7 +528,8 @@ symfony framework предоставляет встроенный конфигу
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories =
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -621,7 +623,7 @@ symfony framework предоставляет встроенный конфигу
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 Метод `JobeetCategory::getActiveJobs()` использует
@@ -684,7 +686,7 @@ symfony framework предоставляет встроенный конфигу
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 
@@ -744,7 +746,7 @@ symfony framework предоставляет встроенный конфигу
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 Будьте внимательны, парсеру YAML не понравится, если Вы напутаете с отступами.
 Помните эти простые советы, когда добавляете код PHP в файл YAML:
@@ -815,7 +817,7 @@ symfony framework предоставляет встроенный конфигу
     }
 </propel>
 <doctrine>
-Метод `retrieveActiveJob` получает объект `Doctrine_Query` сформированный
+Метод `retrieveActiveJob()` получает объект `Doctrine_Query` сформированный
 данным маршрутом:
 
     [php]

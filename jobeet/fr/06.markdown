@@ -434,7 +434,7 @@ Maintenant le code de l'action peut utiliser cette nouvelle méthode pour récup
 </propel>
 <doctrine>
       $this->jobeet_jobs =
-        ➥ Doctrine::getTable('JobeetJob')->getActiveJobs();
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -545,7 +545,7 @@ Modifiez l'action `index` en conséquence :
 </propel>
 <doctrine>
       $this->categories =
-       ➥ Doctrine::getTable('JobeetCategory')->getWithJobs();
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -648,7 +648,7 @@ classe `JobeetCategory` :
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 La méthode `JobeetCategory::getActiveJobs()` utilise la méthode
@@ -712,7 +712,7 @@ C'est assez simple de l'ajouter à la méthode `getActiveJobs()` :
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 
@@ -771,7 +771,7 @@ PHP qui sera évalué juste avant l'analyse du fichier. Editez le fichier fixtur
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 Attention ! L'analyseur de YAML n'aime pas les erreurs d'
 ~indentation|Formatage du code~. Gardez bien à l'esprit les conseils suivants si
@@ -783,17 +783,14 @@ vous ajoutez du code PHP dans un fichier YAML :
  * Si l'instructione `<?php ?>` termine une ligne, vous devez indiquer clairement une
    nouvelle ligne ("\n").
 
-Rechargez les jeux de test avec la tâche `propel:data-load` et vérifiez que seulement
-`10` emplois soient affichés en page d'accueil pour la catégorie `Programming`.
-Dans la capture d'écran suivante, nous avons modifié le nombre maximum d'emplois sur
-5 pour avoir une image de taille raisonnable :
+Rechargez les jeux de test avec la tâche `propel:data-load` et vérifiez que seulement `10` offres d'emplois soient affichées en page d'accueil pour la catégorie `Programming`. Dans la capture d'écran suivante, nous avons diminué le nombre maximum d'offres à 5 afin d'obtenir une image de taille raisonnable :
 
 ![Pagination](http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png)
 
 Sécurisez la page emploi
 ------------------------
 
-Même si vous connaissez l'URL d'un emploi qui a expiré, il ne doit plus être possible
+Même si vous connaissez l'URL d'une offre qui a expiré, il ne doit plus être possible
 d'y accéder. Essayez l'URL d'un emploi expiré (remplacez l'`id` par l'`id`
 correspondant dans la base de donnée - `SELECT id, token FROM jobeet_job WHERE
 expires_at < NOW()`) :
@@ -848,8 +845,7 @@ route :
     }
 </propel>
 <doctrine>
-La méthode `retrieveActiveJob` va recevoir l'objet `Doctrine_Query` construit par la
-route :
+La méthode `retrieveActiveJob()` recevra l'objet `Doctrine_Query` construit par la route :
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php
@@ -881,16 +877,13 @@ En fait, vous avez tout le temps nécessaire pour mettre en pratique tout ce que
 nous avons déjà appris et implémenter cette fonction par vous-même. Vous pourrez
 vérifier votre travail demain.
 
-À demain
---------
+Conclusion
+----------
 
-Travaillez votre projet Jobeet en locale. N'hésitez pas à abuser de la documentation en ligne
+Prenez le temps de développer votre projet Jobeet en local. N'hésitez pas à abuser de la documentation en ligne
 de l'[~API~](http://www.symfony-project.org/api/1_4/) et de toute la
 [~documentation|Documentation~](http://www.symfony-project.org/doc/1_4/)
 gratuite disponible
-sur le site pour vous aider. On se retrouve demain pour découvrir l'implémentation
-de la page catégorie.
-
-Bonne chance !
+sur le site pour vous aider. Le chapitre suivant donne la solution d'implémentation de cette fonctionnalité.
 
 __ORM__

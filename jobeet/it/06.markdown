@@ -429,7 +429,8 @@ i lavori attivi.
       $this->jobeet_jobs = JobeetJobPeer::getActiveJobs();
 </propel>
 <doctrine>
-      $this->jobeet_jobs = Doctrine::getTable('JobeetJob')->getActiveJobs();
+      $this->jobeet_jobs =
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -538,7 +539,8 @@ Cambiamo l'azione `index` di conseguenza:
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories =
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -637,7 +639,7 @@ classe `JobeetCategory`:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 Il metodo `JobeetCategory::getActiveJobs()` usa il metodo
@@ -703,7 +705,7 @@ Questo è semplice quanto aggiungere il metodo `getActiveJobs()`:
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 
@@ -759,7 +761,7 @@ che viene valutato appena prima di leggere il file. Modifichiamo il file fixture
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 State attenti, il parser YAML si arrabbierà se si fa confusione con
 l'~indentazione~. Tenete a mente i seguenti semplici consigli, quando
@@ -836,7 +838,7 @@ Il metodo `doSelectActive()` riceverà l'oggetto `Criteria` costruito dalla rott
     }
 </propel>
 <doctrine>
-Il metodo `retrieveActiveJob` riceverà l'oggetto `Doctrine_Query` costruito dalla rotta:
+Il metodo `retrieveActiveJob()` riceverà l'oggetto `Doctrine_Query` costruito dalla rotta:
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php

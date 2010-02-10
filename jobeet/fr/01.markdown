@@ -683,14 +683,13 @@ Enfin, valider ces modifications dans le dépôt :
 >Les utilisateurs de ~Windows~ peuvent utiliser l'excellent client [TortoiseSVN](http://tortoisesvn.tigris.org/)
 pour gérer leur dépôt Subversion.
 
-A demain
-----------------
+Conclusion
+----------
 
-Eh bien, le temps est fini pour aujourd'hui! Même si nous n'avons pas encore commencé à parler de
-symfony, nous avons créé un environnement de développement solide, nous avons parlé des bonnes pratiques
-du développement web, et nous sommes prêts à commencer à coder.
+Ce premier chapitre s'achève ici. Bien que nous n'ayons pas encore commencé à parler de
+symfony, nous avons cependant créé un environnement de développement solide. Nous avons aussi évoqué quelques bonnes pratiques
+du développement web, et nous sommes à présent prêts à développer.
 
-Demain, nous révèlerons ce que l'application va faire et nous parlerons des
-exigences que nous devons mettre en œuvre pour Jobeet.
+Le chapitre suivant dévoilera les fonctionnalités de la future application et détaillera les besoins fonctionnels et techniques à satisfaire dans Jobeet.
 
 __ORM__

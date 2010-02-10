@@ -175,8 +175,8 @@ an affiliate and can also disable one.
 When the admin activates a new affiliate, the system creates a unique token
 to be used by the affiliate.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 As for any web development, you never start coding the first day. You need
 to gather the requirements first and work on a mockup design. That's what we

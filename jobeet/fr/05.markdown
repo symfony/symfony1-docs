@@ -626,14 +626,13 @@ dans le fichier de configuration `routing.yml` :
 
 L'application Jobeet fonctionne toujours à l'identique.
 
-À demain
-----------------
+Conclusion
+----------
 
-Aujourd'hui, le tutoriel contenait beaucoup de nouvelles informations. Vous avez
-appris comment utiliser le framework de routage de symfony et comment dissocier vos URLs
-de la réalisation technique
+Ce chapitre a introduit beaucoup de nouvelles informations. Vous avez
+appris à utiliser le framework de routage de symfony et à dissocier vos URLs
+de la réalisation technique.
 
-Demain, nous n'allons pas introduire de nouveaux concepts, mais plutôt passer du temps à
-aller plus profondément dans ce que nous avons vu jusqu'à présent.
+Au cours du chapitre suivant, nous n'introduirons aucun concept nouveau, mais nous passerons davantage de temps à étudier plus en détails tout ce que nous avons découvert jusqu'à présent.
 
 __ORM__

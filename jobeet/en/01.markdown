@@ -683,14 +683,13 @@ Finally, commit these changes to the repository:
 >~Windows~ users can use the great [TortoiseSVN](http://tortoisesvn.tigris.org/)
 client to manage their subversion repository.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 Well, time is over for today! Even if we have not yet started talking about
 symfony, we have setup a solid development environment, we have talked about web
 development best practices, and we are ready to start coding.
 
-Tomorrow, we will reveal what the application will do and talk about the
-requirements we need to implement for Jobeet.
+The following chapter will reveal what the application will do and talk about the requirements we need to implement for Jobeet.
 
 __ORM__

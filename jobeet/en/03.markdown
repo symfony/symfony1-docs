@@ -744,8 +744,8 @@ rules by introspecting the database schema.
 
 ![validation](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 That's all for today. I have warned you in the introduction. Today, we have
 barely written PHP code but we have a working web module for the job model,

@@ -864,15 +864,15 @@ fichier `view.yml` et dans les templates. Finalement, ces deux techniques utilis
 >parcourir [la documentation de l'API](http://www.symfony-project.org/api/1_4/)
 >pour en apprendre plus sur les classes internes de symfony.
 
-À demain
---------
+Conclusion
+----------
 
-Aujourd'hui, nous avons décrit quelques modèles de conception utilisés par symfony. Espérons que
+Tout au long de ce chapitre, nous avons décrit quelques uns des modèles de conception utilisés par symfony. Espérons que
 la structure des répertoires du projet ait maintenant plus de sens. Nous avons joué avec les
 Templates en manipulant la mise en page et les fichiers des Templates. Nous avons également rendu
 les pages un peu plus dynamiques grâce aux slots et aux actions.
 
-Demain, nous en apprendrons plus sur le helper `url_for()` que nous avons aperçu aujourd'hui,
+Au cours du prochain chapitre, nous en apprendrons davantage sur le helper `url_for()` que nous avons aperçu aujourd'hui,
 et le "sous-framework" de routage qui lui est associé.
 
 __ORM__

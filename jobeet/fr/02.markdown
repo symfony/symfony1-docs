@@ -175,10 +175,10 @@ d'un affilié et peut également les désactiver.
 Lorsque l'administrateur active une nouvelle filiale, le système crée un jeton unique
 a utilisé par la filiale.
 
-A demain
-----------------
+Conclusion
+----------
 
-Comme pour tout développement Web, vous ne commencez jamais la codification la première journée. Vous avez
+Comme pour tout développement Web, vous ne commencez jamais la programmation la première journée. Vous avez
 besoin de recueillir les premières exigences et les travaux sur une maquette. C'est ce que nous
 avons fait aujourd'hui.
 

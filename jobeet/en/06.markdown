@@ -434,7 +434,7 @@ Now the action code can use this new method to retrieve the active jobs.
 </propel>
 <doctrine>
       $this->jobeet_jobs =
-        ➥ Doctrine::getTable('JobeetJob')->getActiveJobs();
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -545,7 +545,7 @@ Change the `index` action accordingly:
 </propel>
 <doctrine>
       $this->categories =
-       ➥ Doctrine::getTable('JobeetCategory')->getWithJobs();
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -648,7 +648,7 @@ For this to work, we need to add the `getActiveJobs()` method to the
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 The `JobeetCategory::getActiveJobs()` method uses the
@@ -712,7 +712,7 @@ That's simple enough to add to the `getActiveJobs()` method:
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 
@@ -771,7 +771,7 @@ that will be evaluated just before the parsing of the file. Edit the
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 Be careful, the YAML parser won't like you if you mess up with
 ~Indentation|Code Formatting~. Keep in mind the following simple tips when
@@ -848,8 +848,7 @@ route:
     }
 </propel>
 <doctrine>
-The `retrieveActiveJob` method will receive the `Doctrine_Query` object built by
-the route:
+The `retrieveActiveJob()` method will receive the `Doctrine_Query` object built by the route:
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php
@@ -888,9 +887,6 @@ Do work on an implementation on your local Jobeet project. Please, abuse the
 online [~API~ documentation](http://www.symfony-project.org/api/1_4/) and all
 the free
 [~documentation|Documentation~](http://www.symfony-project.org/doc/1_4/)
-available on the symfony website to help you out. We'll see you again tomorrow
-with our take on this implementation.
-
-Good luck!
+available on the symfony website to help you out. The following chapter will give you the solution on how to implement this feature.
 
 __ORM__

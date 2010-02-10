@@ -744,12 +744,12 @@ par introspection du schéma de la base de données.
 
 ![validation](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
-A demain
-----------------
+Conclusion
+----------
 
-C'est tout pour aujourd'hui. Je vous l'indiquais dans l'introduction. Aujourd'hui, nous avons
-à peine écrit du code PHP, mais nous avons un module web de travail pour le modèle job,
-prêts à être modifié et personnalisé. Rappelez-vous, pas de code PHP signifie pas de bogues non plus !
+C'est tout pour ce chapitre. Nous vous avions prévenu en guise introduction. Au cours de ce troisième chapitre, nous avons
+à peine écrit du code PHP, mais nous avons néanmoins un module web de travail pour le modèle job,
+prêt à être modifié et personnalisé. Rappelez-vous, pas de code PHP signifie pas de bogues non plus !
 
 Si vous avez encore de l'énergie, n'hésitez pas à lire le code généré pour
 le module et le modèle et essayer de comprendre comment il fonctionne. Sinon, ne

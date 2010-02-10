@@ -366,7 +366,8 @@ Ahora el código de la acción puede usar este nuevo método para obtener los pu
       $this->jobeet_jobs = JobeetJobPeer::getActiveJobs();
 </propel>
 <doctrine>
-      $this->jobeet_jobs =  Doctrine::getTable('JobeetJob')->getActiveJobs();
+      $this->jobeet_jobs =
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -470,7 +471,8 @@ Cambia la acción `index` adecuadamente:
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories =
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -564,7 +566,7 @@ Para que funcione, necesitamos agregar el método `getActiveJobs()` a la clase `
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 El método `JobeetCategory::getActiveJobs()` usa al método `Doctrine::getTable('JobeetJob')->getActiveJobs()` para obtener los puestos de trabajo activos para una categoría dada.
@@ -623,7 +625,7 @@ Es tán simple de agregar al método `getActiveJobs()`:
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 
@@ -678,7 +680,7 @@ La duplicación esta mal, aún es archivos fixture.
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 Ten cuidado, al analizar YAML no olvides ninguna indentación.
 Manten en mente los siguientes simples tips cuando añadas código PHP a un archivo YAML 
@@ -743,7 +745,7 @@ El método `doSelectActive()` recibirá el objeto `Criteria` ya listo por parte 
     }
 </propel>
 <doctrine>
-El método `retrieveActiveJob` recibirá el objeto `Doctrine_Query` ya listo por parte de la ruta:
+El método `retrieveActiveJob()` recibirá el objeto `Doctrine_Query` ya listo por parte de la ruta:
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php

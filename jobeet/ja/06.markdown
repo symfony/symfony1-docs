@@ -368,7 +368,7 @@ Jobeet のホームページをブラウザーでリフレッシュしても数�
 </propel>
 <doctrine>
       $this->jobeet_jobs =
-        ➥ Doctrine::getTable('JobeetJob')->getActiveJobs();
+        ➥ Doctrine_Core::getTable('JobeetJob')->getActiveJobs();
 </doctrine>
     }
 
@@ -471,7 +471,7 @@ index アクションを適宜変更します:
 </propel>
 <doctrine>
       $this->categories =
-       ➥ Doctrine::getTable('JobeetCategory')->getWithJobs();
+       ➥ Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -561,7 +561,7 @@ index アクションを適宜変更します:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
 `JobeetCategory::getActiveJobs()` メソッドは渡されたカテゴリーに対してアクティブな求人を読み取るために`Doctrine::getTable('JobeetJob')->getActiveJobs()` メソッドを使います。
@@ -618,7 +618,7 @@ index アクションを適宜変更します:
         ->where('j.category_id = ?', $this->getId())
         ->limit($max);
 
-      return Doctrine::getTable('JobeetJob')->getActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 </doctrine>
 適切な ~`LIMIT`~ 句は Model の中で決め打ちされていますが、この値を設定可能にすることはよいことです。`app.yml` にセットした求人の最大件数をテンプレートに渡すように変更します:
@@ -671,7 +671,7 @@ symfony の ~YAML~ ファイルはファイルを解析する直前に評価さ�
         token:        job_<?php echo $i."\n" ?>
         email:        job@example.com
 
-    <?php endfor; ?>
+    <?php endfor ?>
 
 YAML パーサーは~インデント|コードのフォーマッティング~が崩れていると動作しない点に注意してください。YAML ファイルに PHP コードを追加する場合の簡単なティップスを下記に示すので覚えておいてください:
 
@@ -736,7 +736,7 @@ YAML パーサーは~インデント|コードのフォーマッティング~が
     }
 </propel>
 <doctrine>
-`retrieveActiveJob` メソッドはルートによってビルドされた `Doctrine_Query` オブジェクトを受け取ります:
+`retrieveActiveJob()` メソッドはルートによってビルドされた `Doctrine_Query` オブジェクトを受け取ります:
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php
