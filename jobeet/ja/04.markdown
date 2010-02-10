@@ -289,10 +289,10 @@ job モジュールのホームページ
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -302,10 +302,10 @@ job モジュールのホームページ
     }
 
 <propel>
-コードをよく見てみましょう: `executeIndex()` メソッド (Controller) はすべての求人情報を検索するために Model の`JobeetJobPeer` を呼び出します (`new Criteria()`)。これは `jobeet_job_list` オブジェクトプロパティに割り当てられた `JobeetJob` オブジェクトの配列を返します。
+コードをよく見てみましょう: `executeIndex()` メソッド (Controller) はすべての求人情報を検索するために Model の`JobeetJobPeer` を呼び出します (`new Criteria()`)。これは `jobeet_jobs` オブジェクトプロパティに割り当てられた `JobeetJob` オブジェクトの配列を返します。
 </propel>
 <doctrine>
-コードをよく見てみましょう: すべての求人情報を検索するクエリを作るために `executeIndex()` メソッド (Controller) はテーブルの `JobeetJob` を呼び出します。`jobeet_job_list` オブジェクトプロパティに割り当てられた `JobeetJob` オブジェクトの `Doctrine_Collection` を返します。
+コードをよく見てみましょう: すべての求人情報を検索するクエリを作るために `executeIndex()` メソッド (Controller) はテーブルの `JobeetJob` を呼び出します。`jobeet_jobs` オブジェクトプロパティに割り当てられた `JobeetJob` オブジェクトの `Doctrine_Collection` を返します。
 </doctrine>
 このような全てオブジェクトプロパティは自動的にテンプレート (View) に渡されます。Controller からのデータを View に渡すには、下記のように新しいプロパティを作ります:
 
@@ -342,7 +342,7 @@ job モジュールのホームページ
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <?php foreach ($jobeet_jobs as $jobeet_job): ?>
         <tr>
           <td>
             <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
@@ -361,7 +361,7 @@ job モジュールのホームページ
 
     <a href="<?php echo url_for('job/new') ?>">New</a>
 
-テンプレートコード内では `foreach` と `Job` オブジェクト (`$jobeet_job_list`) のリストを繰り返し取得して、各求人ごとのカラムごとに出力させます。覚えておいて欲しいのは、カラムの値は `get` から始まりカラム名の~キャメルケース|コードのフォーマッティング~ (camelCase) になっているアクセサーメソッドが呼び出されていることです (たとえば、`getCreatedAt()` メソッドは `create_at` カラムからデータを取得します)。
+テンプレートコード内では `foreach` と `Job` オブジェクト (`$jobeet_jobs`) のリストを繰り返し取得して、各求人ごとのカラムごとに出力させます。覚えておいて欲しいのは、カラムの値は `get` から始まりカラム名の~キャメルケース|コードのフォーマッティング~ (camelCase) になっているアクセサーメソッドが呼び出されていることです (たとえば、`getCreatedAt()` メソッドは `create_at` カラムからデータを取得します)。
 
 利用できるカラムのみを表示するように整理してみましょう:
 
@@ -371,7 +371,7 @@ job モジュールのホームページ
 
     <div id="jobs">
       <table class="jobs">
-        <?php foreach ($jobeet_job_list as $i => $job): ?>
+        <?php foreach ($jobeet_jobs as $i => $job): ?>
           <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
             <td class="location"><?php echo $job->getLocation() ?></td>
             <td class="position">

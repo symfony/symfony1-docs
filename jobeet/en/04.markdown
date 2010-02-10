@@ -385,10 +385,10 @@ of the action). It retrieves all the jobs from the database:
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -401,13 +401,13 @@ of the action). It retrieves all the jobs from the database:
 Let's have a closer look at the code: the `executeIndex()` method (the
 Controller) calls the Model `JobeetJobPeer` to retrieve all the jobs
 (`new Criteria()`). It returns an array of `JobeetJob` objects that are assigned to
-the `jobeet_job_list` object property.
+the `jobeet_jobs` object property.
 </propel>
 <doctrine>
 Let's have a closer look at the code: the `executeIndex()` method (the
 Controller) calls the Table `JobeetJob` to create a query to retrieve all the
 jobs. It returns a `Doctrine_Collection` of `JobeetJob` objects that are assigned to
-the `jobeet_job_list` object property.
+the `jobeet_jobs` object property.
 </doctrine>
 
 All such object properties are then automatically passed to the template (the
@@ -449,7 +449,7 @@ is the current template code:
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <?php foreach ($jobeet_jobs as $jobeet_job): ?>
         <tr>
           <td>
             <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
@@ -469,7 +469,7 @@ is the current template code:
     <a href="<?php echo url_for('job/new') ?>">New</a>
 
 In the template code, the `foreach` iterates through the list of `Job` objects
-(`$jobeet_job_list`), and for each job, each column value is output. Remember,
+(`$jobeet_jobs`), and for each job, each column value is output. Remember,
 accessing a column value is as simple as calling an accessor method which name
 begins with `get` and the ~camelCased|Code Formatting~ column name (for
 instance the `getCreatedAt()` method for the `created_at` column).
@@ -482,7 +482,7 @@ Let's clean this up a bit to only display a sub-set of the available columns:
 
     <div id="jobs">
       <table class="jobs">
-        <?php foreach ($jobeet_job_list as $i => $job): ?>
+        <?php foreach ($jobeet_jobs as $i => $job): ?>
           <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
             <td class="location"><?php echo $job->getLocation() ?></td>
             <td class="position">
@@ -800,8 +800,7 @@ PHP functions and PHP global variables.
 
 ### The Request
 
-The `sfWebRequest` class wraps the ~`$_SERVER`~, ~`$_COOKIE`~, ~`$_GET`~, ~`$_POST`~,
-and ~`$_FILES`~ PHP global arrays:
+The `sfWebRequest` class wraps the ~`$_SERVER`~, ~`$_COOKIE`~, ~`$_GET`~, ~`$_POST`~, and ~`$_FILES`~ PHP global arrays:
 
  Method name          | PHP equivalent
  -------------------- | --------------------------------------------------

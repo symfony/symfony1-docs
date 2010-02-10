@@ -303,10 +303,10 @@ Esto recupera todos los puestos de trabajo de la base de datos:
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -317,10 +317,10 @@ Esto recupera todos los puestos de trabajo de la base de datos:
 
 <propel>
 Echemos un vistazo más de cerca al código: el método `executeIndex()` (el Controlador) llama al Módelo `JobeetJobPeer` para recuperar todos los puestos de trabajo
-(`new Criteria()`). Devuelve un array de objetos `Job` que se asignan a la propiedad `jobeet_job_list` del objeto.
+(`new Criteria()`). Devuelve un array de objetos `Job` que se asignan a la propiedad `jobeet_jobs` del objeto.
 </propel>
 <doctrine>
-Echemos un vistazo más de cerca al código: el método `executeIndex()` (el Controlador) llama a la Tabla `JobeetJob` para crear una consulta que recupere todos los puestos de trabajo. Devuelve una `Doctrine_Collection` de objetos `JobeetJob` que se asignan a la propiedad `jobeet_job_list` del objeto.
+Echemos un vistazo más de cerca al código: el método `executeIndex()` (el Controlador) llama a la Tabla `JobeetJob` para crear una consulta que recupere todos los puestos de trabajo. Devuelve una `Doctrine_Collection` de objetos `JobeetJob` que se asignan a la propiedad `jobeet_jobs` del objeto.
 </doctrine>
 
 Todas las propiedades del objeto luego se pasan automáticamente a la plantilla (la Vista). Para pasar los datos del Controlador a la Vista, solo crea una nueva propiedad:
@@ -358,7 +358,7 @@ La plantilla `indexSuccess.php` genera una tabla HTML para todos los puestos de 
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <?php foreach ($jobeet_jobs as $jobeet_job): ?>
         <tr>
           <td>
             <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
@@ -377,7 +377,7 @@ La plantilla `indexSuccess.php` genera una tabla HTML para todos los puestos de 
 
     <a href="<?php echo url_for('job/new') ?>">New</a>
 
-En el código de plantilla, el `foreach` itera a través de la lista de objetos `Job` (`$jobeet_job_list`), y para cada puesto de trabajo, cada valor de la columna es mostrado.
+En el código de plantilla, el `foreach` itera a través de la lista de objetos `Job` (`$jobeet_jobs`), y para cada puesto de trabajo, cada valor de la columna es mostrado.
 Recuerda, el acceso a un valor de una columna es tan simple como una llamada al método de acceso cuyo nombre comienza con `get` y el nombre de la columna en formato CamelCase (por ejemplo, el método `getCreatedAt()` para la columna `created_at`).
 
 Vamos a limpiar esto un poco para mostrar sólo un subconjunto de las columnas disponibles:
@@ -388,7 +388,7 @@ Vamos a limpiar esto un poco para mostrar sólo un subconjunto de las columnas d
 
     <div id="jobs">
       <table class="jobs">
-        <?php foreach ($jobeet_job_list as $i => $job): ?>
+        <?php foreach ($jobeet_jobs as $i => $job): ?>
           <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
             <td class="location"><?php echo $job->getLocation() ?></td>
             <td class="position">

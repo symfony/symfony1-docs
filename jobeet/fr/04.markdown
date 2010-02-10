@@ -385,10 +385,10 @@ cela renvoie tous les jobs de la base de données :
       public function executeIndex(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -401,13 +401,13 @@ cela renvoie tous les jobs de la base de données :
 Analysons de plus près le code : la méthode `executeIndex()` (le Contrôleur)
 appelle le Modèle `JobeetJobPeer` pour renvoyer tous les jobs (`new Criteria()`).
 Le modèle renvoie un tableau d'objet de type `JobeetJob` que l'on affecte à la propriété
-`jobeet_job_list` de l'objet courant.
+`jobeet_jobs` de l'objet courant.
 </propel>
 <doctrine>
 Analysons de plus près le code : la méthode `executeIndex()` (le Contrôleur)
 appelle la Table `JobeetJob` pour créer une requête renvoyant tous les jobs.
 La Table renvoie une 'Doctrine_Collection` d'objets de type `JobettJob` que l'on affecte 
-à la propriété `jobeet_job_list` de l'objet courant.
+à la propriété `jobeet_jobs` de l'objet courant.
 </doctrine>
 
 Toutes les propriétés des objets sont automatiquement passées au template (la Vue).
@@ -449,7 +449,7 @@ le code  du Template actuel :
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <?php foreach ($jobeet_jobs as $jobeet_job): ?>
         <tr>
           <td>
             <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
@@ -468,7 +468,7 @@ le code  du Template actuel :
 
     <a href="<?php echo url_for('job/new') ?>">New</a>
 
-Dans ce code, la boucle `foreach` parcourt la liste d'objets `job` (`$jobeet_job_list`)
+Dans ce code, la boucle `foreach` parcourt la liste d'objets `job` (`$jobeet_jobs`)
 et pour chaque job, chaque valeur de colonne est affichée.
 Souvenez-vous, pour accéder à la valeur d'une colonne, il suffit simplement d'appeller une méthode accesseur.
 dont le nom commence par `get` et suivit du nom de la colonne en ~camelCased|Formattage du code~
@@ -482,7 +482,7 @@ Faisons un peu de tri dans tout ça afin de n'afficher qu'une partie des colonne
 
     <div id="jobs">
       <table class="jobs">
-        <?php foreach ($jobeet_job_list as $i => $job): ?>
+        <?php foreach ($jobeet_jobs as $i => $job): ?>
           <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
             <td class="location"><?php echo $job->getLocation() ?></td>
             <td class="position">

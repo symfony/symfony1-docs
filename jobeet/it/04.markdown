@@ -383,10 +383,10 @@ L'azione recupera tutti i lavori dal database:
       public function executeFooBar(sfWebRequest $request)
       {
 <propel>
-        $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
+        $this->jobeet_jobs = JobeetJobPeer::doSelect(new Criteria());
 </propel>
 <doctrine>
-        $this->jobeet_job_list = Doctrine::getTable('JobeetJob')
+        $this->jobeet_jobs = Doctrine::getTable('JobeetJob')
           ->createQuery('a')
           ->execute();
 </doctrine>
@@ -399,13 +399,13 @@ L'azione recupera tutti i lavori dal database:
 Diamo uno sguardo da vicino al codice: il metodo `executeIndex()` (il Controllore)
 chiama il Modello `JobeetJobPeer` per recuperare tutti i lavori (`new Criteria()`).
 Esso restituisce un array di oggetti `JobeetJob` che sono assegnati alla
-proprietà `jobeet_job_list`.
+proprietà `jobeet_jobs`.
 </propel>
 <doctrine>
 Diamo uno sguardo da vicino al codice: il metodo `executeIndex()` (il Controllore)
 chiama il Modello `JobeetJob` per creare una query per recuperare tutti i
 lavori. Esso restituisce un `Doctrine_Collection` di oggetti `JobeetJob` che
-sono assegnati alla proprietà `jobeet_job_list`.
+sono assegnati alla proprietà `jobeet_jobs`.
 </doctrine>
 Ognuna di queste proprietà è automaticamente passata al template (la Vista). Per
 passare dati dal Controllore alla Vista, basta creare una nuova proprietà:
@@ -445,7 +445,7 @@ Ecco il codice attuale del template:
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($jobeet_job_list as $jobeet_job): ?>
+        <?php foreach ($jobeet_jobs as $jobeet_job): ?>
         <tr>
           <td>
             <a href="<?php echo url_for('job/show?id='.$jobeet_job->getId()) ?>">
@@ -465,7 +465,7 @@ Ecco il codice attuale del template:
     <a href="<?php echo url_for('job/new') ?>">New</a>
 
 Nel codice del template, il `foreach` scorre attraverso la lista di oggetti `Job`
-(`$jobeet_job_list`) e, per ognuno di loro, ogni valore delle colonne è visualizzato.
+(`$jobeet_jobs`) e, per ognuno di loro, ogni valore delle colonne è visualizzato.
 Ricordate che accedere al valore di una colonna è semplice come chiamare un metodo getter,
 il cui nome inizia con `get` ed è seguito dal nome della colonna in formato
 ~camelCase~ (per esempio il metodo `getCreatedAt()` per la colonna `created_at`).
@@ -478,7 +478,7 @@ Ripuliamolo un po', per visualizzare solo un sottoinsieme di colonne disponibili
 
     <div id="jobs">
       <table class="jobs">
-        <?php foreach ($jobeet_job_list as $i => $job): ?>
+        <?php foreach ($jobeet_jobs as $i => $job): ?>
           <tr class="<?php echo fmod($i, 2) ? 'even' : 'odd' ?>">
             <td><?php echo $job->getLocation() ?></td>
             <td>
