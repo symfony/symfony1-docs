@@ -773,5 +773,5 @@ ottiene il seguente risultato:
     )
 
 Bene questo è tutto! Abbastanza semplice vero? Si spera che quanto detto possa
-tornare utile e che come risultato la comunità crei dei nuovi ed interessanti
+tornare utile e che come risultato la comunità crei dei nuovi e interessanti
 idratatori!

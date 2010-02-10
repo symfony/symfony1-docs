@@ -66,7 +66,7 @@ Può aggiungere una classe ai campi in input:
 
     <?php echo $form['body']->render(array('class' => 'comment')) ?>
 
-Queste modifiche sono facili ed intuitive. Ma se c'è la necessità di modificare
+Queste modifiche sono facili e intuitive. Ma se c'è la necessità di modificare
 un messaggio di errore?
 
 ![Il form in uno stato di errore](http://www.symfony-project.org/images/more-with-symfony/config_cache_form_error.png)

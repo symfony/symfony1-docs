@@ -33,10 +33,10 @@ stesso e lo sviluppo di una applicazione che tramite Facebook Connect funziona s
 Le Applicazioni Facebook sono applicazioni web che funzionano all'interno del social software.
 La loro principale qualità è quella di essere inclusa nella piattaforma social utilizzata da oltre 300
 milioni di utenti, e di conseguenza ogni applicazione virale sviluppata cresce a velocità incredibile.
-Farmville è uno dei più importanti ed ultimi esempi, con oltre 60 milioni di utenti attivi ogni mese e 
+Farmville è uno dei più importanti e ultimi esempi, con oltre 60 milioni di utenti attivi ogni mese e 
 2 milioni di fan racimolati in pochi mesi! Un numero che potrebbe rappresentare l'equivalente della 
 popolazione Francese che torna alle proprie fattorie virtuali ogni mese! Le Applicazioni Facebook 
-interagiscono con il sito Facebook ed il suo social graph in diversi modi. Qui di seguito una spiegazione su 
+interagiscono con il sito Facebook e il suo social graph in diversi modi. Qui di seguito una spiegazione su 
 dove una applicazione può apparire:
 
 #### Il Canvas
@@ -65,7 +65,7 @@ del profilo.
 
 Alcune informazioni statiche, associate ad uno specifico utente o ad una applicazione, possono
 essere mostrate in una scheda informazioni del profilo utente. Subito sotto l'età, 
-l'indirizzo ed il curriculum.
+l'indirizzo e il curriculum.
 
 #### Pubblicare avvisi all'interno dello Stream
 
@@ -190,8 +190,8 @@ possono essere utilizzati, per la maggior parte delle volte, con i valori standa
    plugin riproduce il comportamento del metodo `sfGuardPlugin` dopo la registrazione.
 
  * `js_framework` può essere utilizzato per specificare qual'è il framework JS da usare. È
-   particolarmente raccomandato l'uso di un framework javascript come jQuery su un sito Facebook Connect
-   in quanto il javascript utilizzato da Facebook Connect è pesante e può causare, se non istanziato al momento giusto, 
+   particolarmente raccomandato l'uso di un framework JavaScript come jQuery su un sito Facebook Connect
+   in quanto il JavaScript utilizzato da Facebook Connect è pesante e può causare, se non istanziato al momento giusto, 
    errori fatali (!) ad IE6.
 
  * `user_permissions` è un array di permessi che sarà associato al nuovo utente 
@@ -201,7 +201,7 @@ possono essere utilizzati, per la maggior parte delle volte, con i valori standa
 
 La connessione tra un utente Facebook e un utente di `sfGuardPlugin` è fatta abbastanza
 logicamente usando una colonna `facebook_uid` nella tabella `Profile`. Il plugin
-presuppone che il legame tra l'utente `sfGuardUser` ed il suo profilo sia fatto utilizzando
+presuppone che il legame tra l'utente `sfGuardUser` e il suo profilo sia fatto utilizzando
 il metodo `getProfile()`. Questo è il comportamento predefinito di
 `sfPropelGuardPlugin`, ma deve essere configurato come tale in
 `sfDoctrineGuardPlugin`. Qui di seguito un possibile file `schema.yml`:
@@ -283,7 +283,7 @@ dipende se l'applicazione viene visualizzata all'interno di Facebook o no.
 Se il progetto è un sito con Facebook Connect, c'è solo una scelta: XFBML.
 Mentre, se si tratta di una applicazione Facebook, le scelte possibili sono due:
 
- * Includere l'applicazione all'interno di un Iframe all'interno di una pagina applicazione, ed usare
+ * Includere l'applicazione all'interno di un Iframe all'interno di una pagina applicazione e usare
    quindi XFBML all'interno di questo Iframe;
 
  * Lasciare a Facebook il compito di visualizzare l'applicazione, trasparentemente, 
@@ -303,7 +303,7 @@ Facebook incoraggia i programmatori ad usare la seconda soluzione, denominata "e
 
 Ma l'utilizzo di FBML ha anche alcuni svantaggi notevoli:
 
- * Ogni javascript è eseguito all'interno di una sandbox, rendendo impossibile l'uso
+ * Ogni JavaScript è eseguito all'interno di una sandbox, rendendo impossibile l'uso
    di librerie esterne come quelle di Google Maps, jQuery o un qualsiasi sistema di statistiche
    diverso da Google Analytics, ufficialmente supportato da Facebook;
 
@@ -313,8 +313,8 @@ Ma l'utilizzo di FBML ha anche alcuni svantaggi notevoli:
  * E più difficile fare il debug, in particolare per l'errore HTTP 500, che Facebook
    sostituisce con messaggi di errore standard.
 
-Allora, qual è la scelta consigliata? La buona notizia è che con symfony ed il plugin
-`sfFacebookConnectPlugin` non bisogna scegliere nulla! E possibile scrivere
+Allora, qual è la scelta consigliata? La buona notizia è che con symfony e il plugin
+`sfFacebookConnectPlugin` non bisogna scegliere nulla! È possibile scrivere
 applicazioni agnostiche e passare indifferentemente da un iframe ad una applicazione embedded
 per un sito con Facebook Connect utilizzando lo stesso codice. Ciò è possibile
 perché tecnicamente la differenza principale è in realtà nel layout... che è
@@ -474,7 +474,7 @@ Un'altra importante caratteristica di Facebook Connect è che gli utenti di Face
 spesso connessi su Facebook durante la navigazione in Internet. In questo caso
 il filtro `sfFacebookConnectRememberMeFilter` si dimostra molto utile, in quanto fa 
 il log-in automatico sul sito. Esattamente come se ci fosse una funzionalità "Ricordati di me" 
-tra Facebook Connect ed il sito.
+tra Facebook Connect e il sito.
 
     [php]
     $sfGuardUser = sfFacebook::getSfGuardUserByFacebookSession();
@@ -488,14 +488,14 @@ fare il logout dal sito, dal momento che, fino a quando questi sono connessi su
 Facebook, il filtro provvederà a riconnetterli automaticamente. 
 Bisogna usarlo quindi con cautela.
 
-### Una implementazione pulita per evitare un errore irreversibile di IE con javascript
+### Una implementazione pulita per evitare un errore irreversibile di IE con JavaScript
 
 Uno dei bug più temibili che è possibile avere su un sito web è quello per IE che esegue una "Operazione
 interrotta", cioé l'errore può bloccare il rendering del sito... client-side! 
-Ciò è dovuto alla cattiva qualità del motore di rendering di IE6 ed IE7, 
+Ciò è dovuto alla cattiva qualità del motore di rendering di IE6 e IE7, 
 che può mandare in crash il browser, se si aggiungono elementi DOM per il tag `body` da uno
 script che non è direttamente un figlio del tag `body`. E questo è esattamente 
-il caso del javascript di Facebook Connect quando viene caricato senza fare attenzione al 
+il caso del JavaScript di Facebook Connect quando viene caricato senza fare attenzione al 
 completo caricamento del documento. 
 Fortunatamente questo bug può essere risolto con symfony utilizzando gli slot. Infatti è possibile utilizzare
 uno slot per inserire lo script di Facebook Connect ogni volta che è necessario nel template, e caricarlo 
@@ -531,7 +531,7 @@ per comunicare con il server di Facebook, inoltre la porta 80 della nostra macch
 raggiungibile da remoto al fine di poter scambiare i cookie di autenticazione.
 Inoltre c'è un altro vincolo: una applicazione Facebook Connect può essere collegata ad un solo host. 
 Questo è un problema spinoso se l'applicazione è sviluppata su una macchina, testata su un'altra, 
-messa in pre-produzione su un terzo server ed utilizzata, infine, su un quarto. 
+messa in pre-produzione su un terzo server e utilizzata, infine, su un quarto. 
 In tal caso la soluzione più semplice è quella di creare effettivamente una applicazione per ogni server 
 e creare quindi un ambiente symfony per ciascuno di essi. 
 Questo è molto semplice in symfony: basta fare un semplice copia e incolla del file `frontend_dev.php`, 

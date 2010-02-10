@@ -241,8 +241,8 @@ default è necessario aggiungerle a mano nel task:
       ));
     }
 
-In questo esempio l'applicazione `frontend` verrà usata automaticamente, ed a 
-meno di non specificare un ambiente il task verrà eseguito nell'ambiente `dev`.
+In questo esempio l'applicazione `frontend` verrà usata automaticamente e, a 
+meno di non specificare un ambiente, il task verrà eseguito nell'ambiente `dev`.
 
 Accedere al database
 --------------------
@@ -289,7 +289,7 @@ lavorando all'interno di un'applicazione symfony.
 >**NOTE**
 >Fate molta attenzione quando eseguite processi batch utilizzando gli oggetti
 >del vostro ORM preferito. Sia Propel che Doctrine soffrono di un ben noto bug
->di PHP legato alle referenze cicliche ed al garbage collector che si manifestano
+>di PHP legato alle referenze cicliche e al garbage collector che si manifestano
 >con una perdita di memoria. Questo è stato parzialmente risolto in PHP 5.3.
 
 Inviare email
@@ -347,9 +347,9 @@ per la mail che si sta per inviare:
 ### Utilizzare il decorator plugin di Swift Mailer
 
 Swift Mailer mette a disposizione un plugin conosciuto come 
-[`Decorator`](http://swiftmailer.org/docs/decorator-plugin) che non è altro che
-un semplicissimo, quanto efficiente, template engine che può prendere delle coppie
-di valori recipiente-rimpiazzo da utilizzare ed applicarli a tutte le email da inviare.
+[`Decorator`](http://swiftmailer.org/docs/decorator-plugin), che non è altro che
+un semplicissimo, quanto efficiente, motore di template, che può prendere delle coppie
+di valori recipiente-rimpiazzo da utilizzare e applicarli a tutte le email da inviare.
 
 Leggere la [documentazione di Swift Mailer](http://swiftmailer.org/docs/) per
 ulteriori informazioni.
@@ -668,7 +668,7 @@ Ma sicomme siamo pigri, `runTask` farà tutto al posto nostro:
     [php]
     $this->runTask('cache:clear');
 
-Ovviamente, si possono passare parametri ed opzioni (in questo ordine):
+Ovviamente, si possono passare parametri e opzioni (in questo ordine):
 
     [php]
     $this->runTask('plugin:install', array('sfGuardPlugin'), array('install_deps' => true));
@@ -721,7 +721,7 @@ Usare degli Scheletri per generare i File
 -----------------------------------------
 
 Un altro uso comune dei task è quello di generare file. I file possono essere
-generati facilmente, usando gli scheletri ed il summenzionato metodo
+generati facilmente, usando gli scheletri e il summenzionato metodo
 `sfFilesystem::replaceTokens()`. Come il nome suggerisce, questo metodo sostituisce
 dei token dentro un insieme di file. Quindi, si passa un array di file, una lista
 di token ed esso sostituisce ogni occorrenza di ogni token col valore assegnato,
@@ -855,14 +855,14 @@ Metodi di Aiuto: Log
 
 Il sistema dei task di symfony prova fortemente a rendere la vita dello
 sviluppatore più facile, fornendo dei metodi di aiuto per operazioni
-comuni, come scrivere nei log ed interagire con l'utente.
+comuni, come scrivere nei log e interagire con l'utente.
 
 Si possono facilmente mandare in output dei messaggi, usando la famiglia
 dei metodi `log`:
 
   * `log`, accetta un array di messaggi
   * `logSection`, un po' più elaborato, formatta il messaggio con un prefisso
-    (primo parametro) ed un tipo di messaggio (quarto parametro). Quando si
+    (primo parametro) e un tipo di messaggio (quarto parametro). Quando si
     inserisce un messaggio troppo lungo, come il percorso di un file, 
     `logSection` solitamente lo accorcia, il che potrebbe risultare
     fastidioso. Usare il terzo parametro per specificare una dimensione
@@ -894,7 +894,7 @@ Altri tre metodi d'aiuto facilitano l'interazione con l'utente:
   * `askAndValidate()`, molto utile, scrive una domanda e valida la risposta
     dell'utente tramite un `sfValidator`, passato come secondo parametro. Il
     terzo parametro è un array di opzioni in cui si può passare un valore
-    predefinito (`value`), un numero massimo di tentativi (`attempts`) ed uno
+    predefinito (`value`), un numero massimo di tentativi (`attempts`) e uno
     stile di formattazione (`style`).
 
 Ad esempio, si può chiedere all'utente il suo indirizzo email e validarlo al volo:
@@ -909,7 +909,7 @@ Quasi tutti i sistemi UNIX e GNU/Linux consentono la pianificazione di task,
 tramite un meccanismo noto come *cron*. Il *cron* controlla un file di
 configurazione (chiamato *crontab*), che contiene comandi da eseguire a
 determinati orari. I task di symfony possono essere facilmente integrati
-nel crontab ed il task `project:send-emails` è un perfetto candidato come
+nel crontab e il task `project:send-emails` è un perfetto candidato come
 esempio:
 
     MAILTO="you@example.org"
@@ -923,7 +923,7 @@ all'indirizzo *you@example.org*.
 >Per maggiori informazioni sulla configurazione di crontab, si può scrivere
 >`man 5 crontab` in un terminale.
 
-Si può, e in realtà si dovrebbe, passare parametri ed opzioni:
+Si può, e in realtà si dovrebbe, passare parametri e opzioni:
 
     MAILTO="you@example.org"
     0 3 * * *       /usr/bin/php /var/www/yourproject/symfony project:send-emails --env=prod --application=frontend
@@ -980,4 +980,4 @@ Considerazioni Finali
 Quello che si può ottenere coi task è limitato solo dalla propria
 immaginazione. Il sistema dei task di symfony è abbastanza potente
 e flessibile da poter fare quasi ogni cosa vi possa venire in mente.
-Aggiungete la potenza del terminale UNIX ed amerete veramente i task.
+Aggiungete la potenza del terminale UNIX e amerete veramente i task.

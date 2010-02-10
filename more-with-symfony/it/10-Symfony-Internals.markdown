@@ -376,8 +376,8 @@ eccezione `sfError404Exception`.
 
 >**NOTE**
 >[`sfGeneratorConfigHandler`](http://trac.symfony-project.org/browser/branches/1.3/lib/config/sfGeneratorConfigHandler.class.php) è
->uno speciale gestore di configurazione che si occupa di istanziare la giusta
->classe generatore per il modulo, ed eseguirla. Per ulteriori informazioni sulla
+>uno speciale gestore di configurazione, che si occupa di istanziare la giusta
+>classe generatore per il modulo ed eseguirla. Per ulteriori informazioni sulla
 >configurazione dei gestori, vedere *Una parola sul gestore di configurazione*
 >in questo capitolo. Inoltre, per maggiori informazioni su `generator.yml`, vedere
 >il [capitolo 6 della guida di riferimento a symfony](http://www.symfony-project.org/reference/1_4/it/06-Admin-Generator).

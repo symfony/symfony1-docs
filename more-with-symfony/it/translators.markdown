@@ -1,7 +1,6 @@
 A proposito dei traduttori
 ==========================
 
-
 Fabrizio Pucci
 --------------
 
@@ -21,8 +20,8 @@ Francesco Fullone
 
 Francesco Fullone è un geek che cerca di spacciarsi per il CEO di una piccola
 web agency italiana chiamata Ideato, con la quale cerca, con un certo successo,
-di portare i principi dello sviluppo agile anche nel mondo PHP. E’ un
-evangelista PHP ed Open- Source e l’attuale presidente del GrUSP, il principale
+di portare i principi dello sviluppo agile anche nel mondo PHP. È un
+evangelista PHP e Open- Source e l’attuale presidente del GrUSP, il principale
 PHP User Group italiano, che ha come scopo il miglioramento dell’ecosistema PHP
 in Italia e che ogni anno organizza il phpDay in giro per la penisola. Si sente
 felice ogni volta che qualche altro sviluppatore italiano partecipa attivamente
@@ -44,7 +43,7 @@ Daniel Londero
 Daniel Londero è uno sviluppatore PHP dal 2005, anno in cui consegue la laurea
 in Informatica. Negli ultimi anni ha raccolto parecchia esperienza anche con
 PostgreSQL, XHTML e CSS. Nel 2007 si avvicina a symfony, che inizia a
-studiare per hobby, decidendo poi di introdurlo ed utilizzarlo in azienda per
+studiare per hobby, decidendo poi di introdurlo e utilizzarlo in azienda per
 importanti progetti web. Nel tempo libero dà il suo contributo alla community
 di symfony, traducendo la documentazione ufficiale e cercando di chiudere
 qualche ticket aperto dagli utenti. Linux è il suo unico sistema operativo.

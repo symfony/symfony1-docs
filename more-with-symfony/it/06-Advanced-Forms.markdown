@@ -475,7 +475,7 @@ Usando gli array `widgetSchema` e `validatorSchema` definiti in ogni classe del 
 `sfForm` genera automaticamente un terzo array chiamato `sfFormFieldSchema`.
 Questo array contiene un oggetto speciale per ciascun campo, che agisce come una
 classe helper responsabile per la visualizzazione dei campi. L'oggetto, di tipo
-~`sfFormField`~, è una combinazione di widget validator di ogni campo, ed è
+~`sfFormField`~, è una combinazione di widget validator di ogni campo ed è
 creato automaticamente.
 
     [php]
@@ -582,7 +582,7 @@ che è chiamato ricorsivamente su tutti i form incorporati.
 
 >**NOTE**
 >La maggior parte del processo di salvataggio avviene all'interno del metodo
->~`sfFormObject::doSave()`~, che è chiamato da `sfFormObject::save()`, ed esegue
+>~`sfFormObject::doSave()`~, che è chiamato da `sfFormObject::save()` ed esegue
 >una transazione nel database. Se c'è la necessità di modificare il processo di
 >salvataggio stesso, generalmente `sfFormObject::doSave()` è il posto migliore
 >per farlo.
@@ -728,7 +728,7 @@ valori. La logica del validatore stesso è abbastanza semplice:
 >restituirà un solo valore.
 
 L'ultimo passo è quello di sovrascrivere il metodo `saveEmbeddedForms()` di
-`ProductForm`, per cancellare i form di foto vuoti, ed evitare si salvare una foto
+`ProductForm`, per cancellare i form di foto vuoti ed evitare di salvare una foto
 vuota nel database (altrimenti dovrebbe lanciare una eccezione, dal momento che
 la colonna `caption` è obbligatoria):
 

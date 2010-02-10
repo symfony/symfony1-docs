@@ -14,11 +14,11 @@ informazioni sulla vista (`view`) e per il debug della posta (`mail`).
 ![Web Debug Toolbar](http://www.symfony-project.org/images/more-with-symfony/web_debug_01.png "La web debug toolbar con gli elementi predefiniti in symfony 1.3")
 
 Da symfony 1.2, gli sviluppatori possono creare facilmente i propri
-*pannelli di debug* ed aggiungerli alla web debug toolbar. In questo
+*pannelli di debug* e aggiungerli alla web debug toolbar. In questo
 capitolo creeremo alcuni *pannelli di web debug* e giocheremo un po'
 con i vari strumenti e con le personalizzazioni disponibili.
 Inoltre il plugin [ac2009WebDebugPlugin](http://www.symfony-project.org/plugins/ac2009WebDebugPlugin)
-contiene molti pannelli di debug utili ed interessanti, che usano
+contiene molti pannelli di debug utili e interessanti, che usano
 alcune tecniche analizzate in questo capitolo.
 
 Creare un Nuovo Pannello di Debug
@@ -57,7 +57,7 @@ Come minimo, tutti i pannelli di debug devono implementare i metodi `getTitle()`
 
  * ~`sfWebDebugPanel::getTitle()`~: Stabilisce come il pannello apparirà nella
    toolbar stessa. Come la maggior parte dei pannelli, il nostro pannello
-   personalizzato include una piccola icona ed un breve nome per il pannello.
+   personalizzato include una piccola icona e un breve nome per il pannello.
 
  * ~`sfWebDebugPanel::getPanelTitle()`~: Usato come testo del tag `h1` che
    apparirà in cima al contenuto del panello. È anche usato come attributo
@@ -117,7 +117,7 @@ Dietro le quinte, ci sono tre tipi molto diversi di pannelli di debug.
 
 ### Il Tipo di Pannello *Solo-Icona*
 
-Il tipo più elementare di pannello è quello che mostra una icona ed un testo
+Il tipo più elementare di pannello è quello che mostra una icona e un testo
 nella toolbar, niente di più. Il classico esempio è il pannello `memory`,
 che mostra l'uso della memoria, ma non fa nulla se viene cliccato. Per creare
 un pannello *solo-icona*, si imposti semplicemente il pannello per restituire
@@ -171,10 +171,10 @@ che `getPanelContent()` restituisca qualcosa che non sia una stringa vuota.
 Personalizzare il Contenuto del Pannello
 ----------------------------------------
 
-Ora che abbiamo creato ed aggiunto un pannello personalizzato alla toolbar,
+Ora che abbiamo creato e aggiunto un pannello personalizzato alla toolbar,
 l'aggiunta di contenuto può essere fatta facilmente con il metodo
 `getPanelContent()`. Symfony fornisce diversi metodi che aiutano a
-rendere questo contenuto ricco ed usabile.
+rendere questo contenuto ricco e usabile.
 
 ### ~`sfWebDebugPanel::setStatus()`~
 
@@ -234,7 +234,7 @@ una lista di contenuti in un pannello:
     }
 
 Il metodo `getToggler` accetta due paramentri: l'`id` del DOM dell'elemento
-da mostrare/nascondere ed un titolo `title` da attribuire al collegamento.
+da mostrare/nascondere e un titolo `title` da attribuire al collegamento.
 Occorre creare a mano sia l'attributo `id` che qualsiasi eventuale etichetta
 descrittiva (come ad esempio "Elementi della Lista").
 

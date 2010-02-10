@@ -171,12 +171,12 @@ funzionalità che si trovano nelle applicazioni web odierne.
 ### Conferenze ed eventi
 
 Oltre a partecipare alla comunità attraverso i canali digitali come descritto
-in precedenza, è possibile comunicare con la comunità alle conferenze ed in
-occasione di altri eventi. La maggioranza delle conferenze legate a PHP ed anche 
+in precedenza, è possibile comunicare con la comunità alle conferenze e in
+occasione di altri eventi. La maggioranza delle conferenze legate a PHP e anche 
 alcune di quelle dedicate ad un pubblico più ampio del solo PHP, vedono alcuni 
 membri della comunità di symfony come partecipanti, oppure come relatori. Grazie 
 al lavoro di questi membri della comunità alle conferenze è possibile ricevere
-aiuto ed imparare cose nuove. Esistono eventi completamente dedicati a symfony.
+aiuto e imparare cose nuove. Esistono eventi completamente dedicati a symfony.
 Alcuni esempi lampanti sono [Symfony Live](http://www.symfony-live.com/), 
 [Symfony Day](http://www.symfonyday.com/) e [SymfonyCamp](http://www.symfonycamp.com/). 
 Tutti questi eventi hanno alle spalle un'azienda, ma gran parte del lavoro è frutto
@@ -222,7 +222,7 @@ Ogni comunità funziona solamente basandosi sul sistema dare/avere. Se non ci
 fosse nessuno che offre qualcosa alla comunità, non ci sarebbe niente da prendere
 e la comunità stessa non esisterebbe. Quindi come si prende qualcosa dalla comunità,
 è utile pensare anche a come dare il proprio contributo. Come aiutarla
-a migliorare e crescere? Come contribuire all'esistenza ed alla forza
+a migliorare e crescere? Come contribuire all'esistenza e alla forza
 della comunità? Si vedranno assieme alcune vie percorribili per dare il proprio 
 contributo.
 
@@ -476,7 +476,7 @@ Un altro esempio lampante è l'organizzazione di conferenze della comunità, qua
 [SymfonyDay Cologne](http://www.symfonyday.com/). Entrambe le conferenze vennero
 organizzate da aziende che sviluppano con PHP utilizzando symfony e che volevano
 offrire qualcosa alla comunità. Tutte queste conferenze ottennero una buona 
-partecipazione, con in programma partecipanti noti, ed un bellissimo spirito di 
+partecipazione, con in programma partecipanti noti, e un bellissimo spirito di 
 comunità.
 
 ### Diventare attivi localmente
@@ -486,7 +486,7 @@ contenuti tecnici in inglese. Inoltre a volte può essere piacevole non dover
 parlare di symfony solamente online. Ci si può attivare localmente. Un buon 
 esempio per questo, sono i gruppi di utenti symfony. Durante l'anno scorso si 
 sono viste diverse iniziative per l'avvio di nuovi gruppi di utenti, molti hanno 
-organizzato diversi incontri per persone interessate a symfony ed al suo utilizzo.
+organizzato diversi incontri per persone interessate a symfony e al suo utilizzo.
 Gran parte di questi eventi sono molto informali, gratuiti e sono completamente
 guidati dalla comunità.
 
@@ -545,7 +545,7 @@ contatto con essa, questo è il posto giusto dove farle.
 Da diverso tempo ormai, symfony ha una pagina speciale sul wiki intitolata
 [Come contribuire a symfony](http://trac.symfony-project.org/wiki/HowToContributeToSymfony).
 Questa pagina elenca tutte le possibilità per dare il proprio aiuto a symfony 
-come progetto ed alla sua comunità, qualsiasi siano le proprie abilità, indicando
+come progetto e alla sua comunità, qualsiasi siano le proprie abilità, indicando
 i posti migliori dove si potrebbe essere d'aiuto. È una lettura raccomandata per
 tutti quelli che vogliano partecipare attivamente alla comunità di symfony.
 
@@ -560,7 +560,7 @@ con symfony.
 #### Symfonians
 
 La [comunità Symfonians](http://www.symfonians.net/) è una comunità che elenca
-le persone e le aziende che lavorano con symfony ed i progetti realizzati con
+le persone e le aziende che lavorano con symfony e i progetti realizzati con
 symfony. Il sito permette alle aziende di pubblicare offerte di lavoro e 
 permette agli utenti di ricercare utenti, aziende e progetti nel proprio paese.
 

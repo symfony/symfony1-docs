@@ -63,7 +63,7 @@ divertirsi e diventare famoso.
 
 Questo libro è stato scritto da dieci autori che usano symfony quotidianamente,
 come sviluppatori o project manager. Hanno un'approfondita conoscenza del
-framework ed hanno provato a condividere essa e la loro esperienza in 
+framework e hanno provato a condividere essa e la loro esperienza in 
 questi capitoli.
 
 Ammissioni
@@ -75,7 +75,7 @@ pubblicarlo in cinque diverse lingue simultaneamente! Sicuramente coinvolgere
 la comunità in un progetto così grande è fondamentale. Ho inziato a parlare
 dell'idea durante la PHP conference in Giappone e in un paio d'ore il team
 di traduttori giapponesi era pronto a partecipare. È stato bellissimo! La
-risposta dagli autori e dai traduttori è stata incoraggiante ed in un brevissimo
+risposta dagli autori e dai traduttori è stata incoraggiante e in un brevissimo
 tempo "Di più con symfony" è nato.
 
 Voglio ringraziare tutti quelli che hanno partecipato in qualche modo alla

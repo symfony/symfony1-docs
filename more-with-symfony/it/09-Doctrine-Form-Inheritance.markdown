@@ -261,7 +261,7 @@ Integrazione con symfony dell'ereditarietà delle tabelle
 Prima di symfony 1.3, l'~ereditarietà delle tabelle~ con Doctrine non era pienamente supportata dal 
 framework, perché le classi dei filtri e dei form non ereditavano dalla classe base. 
 Di conseguenza, gli sviluppatori che avevano bisogno di usare l'ereditarietà erano
-forzati a modificare form e filtri, ed erano costretti a sovrascrivere molti metodi
+forzati a modificare form e filtri ed erano costretti a sovrascrivere molti metodi
 per ottenere il comportamento dell'ereditarietà.
 
 Grazie al feedback della comunità, il team del core di symfony ha migliorato form e
@@ -754,7 +754,7 @@ nel file `data/fixtures.yml` del progetto symfony.
         quantity:       1
 
 Una volta che il plugin `csDoctrineActAsSortablePlugin` è installato e il modello dei dati
-è pronto, il nuovo plugin, per essere caricato ed utilizzato, deve essere attivato nella
+è pronto, il nuovo plugin, per essere caricato e utilizzato, deve essere attivato nella
 classe ~`ProjectConfiguration`~, presente nel file `config/ProjectConfiguration.class.php`:
 
     [php]
@@ -997,14 +997,14 @@ comportamenti JavaScript ajax. In questo caso, tutte le righe HTML delle tabelle
 utilizzare il drag & drop grazie al plugin jQuery ~`tableDnD`~. Una chiamata ajax
 sarà eseguita quando l'utente si fermerà di muovere una riga nella tabella HTML.
 
-Per prima cosa scaricare ed installare il framework jQuery sotto la cartella `web/js` e poi
-ripetere l'operazione per il plugin `tableDnD` il cui codice sorgente è ospitato su un
+Per prima cosa, scaricare e installare il framework jQuery sotto la cartella `web/js` e poi
+ripetere l'operazione per il plugin `tableDnD`, il cui codice sorgente è ospitato su un
 repository di [Google Code](http://code.google.com/p/tablednd/).
 
 Per lavorare, il visualizzatore dell'elenco di ogni modulo deve includere il frammento
-JavaScript, ed entrambe le tabelle hanno bisogno di un attributo `id`. Come tutti i
+JavaScript ed entrambe le tabelle hanno bisogno di un attributo `id`. Come tutti i
 template del generatore di amministrativo. Siccome nel generatore di amministrativo
-i template ed i partial possono essere sovrascritti, il file `_list.php` presente
+i template e i partial possono essere sovrascritti, il file `_list.php`, presente
 nella cache per impostazione predefinita, deve essere copiato in entrambi i moduli.
 
 Ma ragioniamo un attimo... copiare il file `_list.php` sotto la cartella `templates/` di entrambi i
@@ -1172,7 +1172,7 @@ dell'oggetto. Implementare questo nuovo metodo in entrambe le classi
     }
 
 C'è ancora un'ultima funzionalità mancante da realizzare. Per ora, le righe delle
-tabelle non sono trascinabili ed inoltre non è eseguita nessuna chiamata ajax quando una
+tabelle non sono trascinabili e inoltre non è eseguita nessuna chiamata ajax quando una
 riga spostata viene rilasciata. Per realizzare questo, entrambi i moduli hanno bisogno
 di una rotta specifica per accedere alle loro corrispondenti azioni `move`. Di
 conseguenza, il file `apps/backend/config/routing.yml` può accogliere le due nuove
@@ -1231,7 +1231,7 @@ La tabella HTML è ora pienamente funzionante. Le righe implementano il drag & d
 e la nuova posizione di una riga è automaticamente salvata grazie ad una chiamata ajax.
 Con pochi pezzi di codice, l'usabilità del backend è stata ampiamente migliorata per
 offrire all'utente finale una migliore esperienza. Il generatore di amministrativo è
-abbastanza flessibile per essere esteso e personalizzato, ed inoltre lavora perfettamente
+abbastanza flessibile per essere esteso e personalizzato e inoltre lavora perfettamente
 con l'ereditarietà delle tabelle di Doctrine.
 
 Sentitevi liberi di migliorare i due backend rimuovendo le vecchie azioni `moveUp` e

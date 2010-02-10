@@ -167,9 +167,8 @@ cosa si voglia. Quando si crea un nuovo progetto symfony, invece di eseguire
 continuamente sempre gli stessi task, è possibile creare il proprio script di
 installazione e modificare l'installazione per il proprio progetto di symfony
 nel modo desiderato. Creare un nuovo progetto con un programma di installazione
-è molto più rapido, ed inoltre evita di dimenticarsi di alcuni passi. Si possono
+è molto più rapido e inoltre evita di dimenticarsi di alcuni passi. Si possono
 anche condividere i propri script di installazione con quelli degli altri!
-
 
 Sviluppare più velocemente
 --------------------------
@@ -451,7 +450,7 @@ l'integrazione di tutti i pezzi dell'applicazione. Scrivere i test funzionali è
 facile, ma richiede tempo. Ma siccome ogni file di test funzionale è uno
 scenario che simula un utente che naviga nel sito e siccome navigare una
 applicazione è più rapido che scrivere del codice PHP, l'ideale sarebbe registrare
-una sessione del browser ed averla convertita automaticamente in codice PHP.
+una sessione del browser e averla convertita automaticamente in codice PHP.
 Fortunatamente, symfony ha un tale plugin. Si chiama
 [swFunctionalTestGenerationPlugin](http://www.symfony-project.org/plugins/swFunctionalTestGenerationPlugin),
 e permette di generare in pochi minuti degli scheletri di test pronti per

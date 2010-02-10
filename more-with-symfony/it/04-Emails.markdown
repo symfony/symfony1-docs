@@ -451,7 +451,7 @@ Ogni email inviata può essere testata ulteriormente usando i metodi
       end()
     ;
 
-Il secondo parametro del metodo `checkHeader()` ed il primo parametro del metodo
+Il secondo parametro del metodo `checkHeader()` e il primo parametro del metodo
 `checkBody()` possono essere:
 
  * una stringa che corrisponda esattamente a quella restituita;
@@ -584,7 +584,7 @@ Ricette
 ### Inviare una email con ~Gmail~
 
 Se non si ha a disposizione un server SMTP ma solo un account Gmail, 
-è possibile usare quest'ultimo per inviare ed archiviare i messaggi:
+è possibile usare quest'ultimo per inviare e archiviare i messaggi:
 
     [yml]
     transport:
