@@ -648,7 +648,6 @@ Dans cet exemple, le message est linéarisé par la file d'attente. Par conséqu
       {
         return $this->createQuery('m')
           ->orderBy('m.priority')
-          ->execute()
         ;
       }
 

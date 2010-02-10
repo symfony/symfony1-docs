@@ -658,7 +658,6 @@ Swift Mailer プラグインを使うには、`mailer.configure` イベントを
       {
         return $this->createQuery('m')
           ->orderBy('m.priority')
-          ->execute()
         ;
       }
 
