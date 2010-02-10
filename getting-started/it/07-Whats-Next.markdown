@@ -10,7 +10,7 @@ Ulteriore documentazione è disponibile nella pagina principale della
 
 Su questa pagina si troverà il tutorial Jobeet, che è probabilmente
 il modo migliore per imparare symfony. Esso spiega in gran dettaglio
-lo sviluppo di un'applicazione web dall'inizio alla fine ed insegna
+lo sviluppo di un'applicazione web dall'inizio alla fine e insegna
 le best practice dello sviluppo web. È anche possibile acquistare
 un [libro stampato](http://www.amazon.com/gp/product/2918390151).
 
@@ -24,7 +24,7 @@ come [libro stampato](http://www.amazon.com/gp/product/2918390143).
 Il framework symfony ha molte grandi caratteristiche e molta
 documentazione liberamente disponibile. Ma uno dei più grandi
 valori che un progetto Open Source può avere è la sua comunità
-e symfony ha una delle comunità più attive ed amichevoli che si
+e symfony ha una delle comunità più attive e amichevoli che si
 possono trovare. Iniziando ad usare symfony per i propri progetti,
 si consideri l'ipotesi di unirsi alla comunità di symfony:
 

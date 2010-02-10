@@ -3,7 +3,7 @@ Preparazione del progetto
 
 In symfony, le **applicazioni** che condividono lo stesso modello dei dati
 sono raggruppate in **progetti**. Per la maggior parte dei progetti si
-avranno due diverse applicazioni: un frontend ed un backend.
+avranno due diverse applicazioni: un frontend e un backend.
 
 Creazione del progetto
 ----------------------
@@ -78,7 +78,7 @@ problemi.
 
 >**TIP**
 >Volendo sapere di più su questa riga di comando, digitare 
->`symfony` per elencare le opzioni ed i task disponibili:
+>`symfony` per elencare le opzioni e i task disponibili:
 >
 >     $ php lib/vendor/symfony/data/bin/symfony
 >
@@ -125,8 +125,8 @@ Creare l'applicazione frontend, eseguendo il task `generate:app`:
 >possono d'ora in poi sostituire tutte le occorrenze di '`php symfony`'
 >con '`./symfony`'
 >
->Su Windows si può copiare il file '`symfony.bat`' all'interno del
->progetto ed usare '`symfony`' invece di '`php symfony`':
+>Su Windows, si può copiare il file '`symfony.bat`' all'interno del
+>progetto e usare '`symfony`' invece di '`php symfony`':
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
 
