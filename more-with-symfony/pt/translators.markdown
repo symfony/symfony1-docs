@@ -8,6 +8,18 @@ Andréia Bohner
 
 **No Twitter** : *http://twitter.com/andreiabohner*
 
+Gabriel Vaz
+-----------
+
+Atuando na área de TI desde 2004, Gabriel Vaz é amante da cultura software livre e certificado em ITIL Fundation desde maio de 2009. Serviu ao Exército Brasileiro de 2001 a 2008, onde teve vivência de liderança, superação, disciplina, analise e outros. Analista do Sistema entregou seu primeiro projeto Symfony com Oracle em outubro de 2009.
+Caminha para desenvolver projetos sociais envolvendo softwares livres como Symfony, Joomla, Moodle - levando o estudo e acesso a tecnologia à comunidades carentes.
+
+Membro ativo do grupo symfony-pt.
+
+**Seu currículo** : *http://www.via6.com/gabriel_vaz*
+
+**No Twitter** : *http://www.twitter.com/gabriel_vaz*
+
 
 Lucas Stephanou
 ---------------
