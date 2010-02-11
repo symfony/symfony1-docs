@@ -38,7 +38,7 @@ La classe `sfBrowser`
 Dans Symfony, les tests fonctionnels sont gérés via un ~navigateur|Navigateur~
 spécial, implémenté par la classe
 [~`sfBrowser`|Navigateur~](http://www.symfony-project.org/api/1_4/sfBrowser).
-Elle agit comme un navigateur tailler sur mesure pour votre application et elle est
+Elle agit comme un navigateur taillé sur mesure pour votre application et elle est
 directement connectée à lui, sans la nécessité d'un serveur web. Elle vous donne accès à tous
 les objets de symfony avant et après chaque requête, vous donnant la possibilité de les
 introspecter et d'effectuer les vérifications que vous voulez par programmation.
@@ -661,7 +661,7 @@ pour un projet (unitaires et fonctionnels) :
 
 Quand vous avez une grande série de test, cela peut prendre beaucoup de temps pour lancer
 tous les tests à chaque fois que vous effectuez un changement, surtout si certains tests échouent.
-Car chaque fois que vous fixer un test, vous devez exécuter la suite des tests à nouveau pour
+Car chaque fois que vous fixez un test, vous devez exécuter la suite des tests à nouveau pour
 vous assurer que vous n'avez pas cassé autre chose. Mais tant que ces tests ne sont pas fixés,
 il est inutile de re-exécuter toutes les autres tests. La tâche `test:all` a une option
 `--only-failed` qui force la tâche à ré-exécuter seulement les tests qui ont échoué

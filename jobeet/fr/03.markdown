@@ -1,7 +1,7 @@
 Jour 3 : Le ~modèle de données~
 =======================
 
-Ceux d'entre vous qui brûlent d'ouvrir votre éditeur de texte et de définir un peu de PHP seront
+Ceux d'entre vous qui brûlent d'ouvrir leur éditeur de texte et de définir un peu de PHP seront
 heureux d'apprendre que le tutoriel d'aujourd'hui va nous entraîner dans un certain développement. Nous allons
 définir le modèle de données de Jobeet, utiliser un ORM pour interagir avec la base de données, et
 construire le premier module de l'application. Mais, comme symfony fait beaucoup de
@@ -11,7 +11,7 @@ de code PHP.
 Le ~modèle~ relationnel
 ----------------------
 
-Les histoires d'utilisateurs que nous avons écrit hier, décrivent les objets principaux de notre
+Les histoires d'utilisateurs que nous avons écrites hier, décrivent les objets principaux de notre
 projet : les emplois, les sociétés affiliées et les catégories. Voici le schéma correspondant aux
 relations entre entités :
 

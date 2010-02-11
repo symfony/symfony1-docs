@@ -78,8 +78,8 @@ pour `email` est équivalente à `new sfValidatorEmail(array('required' => true)
 >     $this->mergeForm(new AnotherForm());
 >     $this->embedForm('name', new AnotherForm());
 
-Les formulmaires de ##ORM##
----------------------------
+Les formulaires de ##ORM##
+--------------------------
 
 La plupart du temps, un formulaire doit être sérialisé à la base de données. Comme
 symfony sait déjà tout sur le modèle de votre base de données, il peut générer automatiquement
@@ -478,7 +478,7 @@ La classe `JobeetJobForm` finale se lit comme suit :
 ### Le template du formulaire
 
 Maintenant que la classe de formulaire a été personnalisé, nous avons besoin de
-l'afficher. Le ~Template|Templates~ du formulaire est le même, que vous voulez créer
+l'afficher. Le ~Template|Templates~ du formulaire est le même, que vous vouliez créer
 un nouvel emploi ou modifier un existant. En fait, les deux Templates `newSuccess.php`
 et `editSuccess.php`sont assez similaires:
 
@@ -1043,7 +1043,7 @@ ajouter la nouvelle exigence.
 --------
 
 Le tutoriel d'aujourd'hui a été composé avec beaucoup de nouvelles informations, mais nous
-espérons que vous avez maintenant une meilleure compréhension du framework de formulaire desymfony.
+espérons que vous avez maintenant une meilleure compréhension du framework de formulaire de symfony.
 
 Je sais que certains d'entre vous ont remarqué que nous avons oublié quelque chose aujourd'hui ...
 Nous n'avons pas mis en œuvre de test pour les nouvelles fonctionnalités. Parce que l'écriture de

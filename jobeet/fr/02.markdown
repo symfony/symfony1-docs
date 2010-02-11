@@ -1,10 +1,10 @@
 Jour 2 : Le Projet
 ==================
 
-Nous n'avons pas écrit une seule ligne de PHP pour le moment, mais hier, nous avons configurer
-l'environnement, créer un projet symfony vide, et fait en sorte que nous commencions avec
+Nous n'avons pas écrit une seule ligne de PHP pour le moment, mais hier, nous avons configuré
+l'environnement, créé un projet symfony vide, et fait en sorte que nous commencions avec
 une bonne sécurité par défaut. Si vous avez suivi tout le long, vous avez regardé
-votre écran avec délices depuis qu'il affiche la belle page par défaut
+votre écran avec délice depuis qu'il affiche la belle page par défaut
 de symfony pour de nouvelles applications.
 
 ![Page de félicitations](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)

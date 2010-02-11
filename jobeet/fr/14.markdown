@@ -39,7 +39,7 @@ Cette URL est équivalent à :
     http://jobeet.localhost/frontend_dev.php/job.html
 
 Les deux URL sont équivalentes car les routes générés par la classe
-`sfPropelRouteCollection` ont le `sf_format` comme l'extension et parce
+`sfPropelRouteCollection` ont le `sf_format` comme extension et parce
 que le HTML est le format par défaut. Vous pouvez le vérifier vous-même en
 exécutant la tâche `app:routes` :
 

@@ -112,7 +112,7 @@ fichier `factories.yml` pour passer au constructeur les noms des classes
         send_http_headers: false
 
 Dans l'extrait ci-dessus, pour créer le factory response, symfony instancie
-un objet `sfWebResponse` et passe l'option `send_http_headers` ciomme un
+un objet `sfWebResponse` et passe l'option `send_http_headers` comme un
 paramètre.
 
 >**SIDEBAR**

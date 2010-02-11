@@ -61,7 +61,7 @@ régions de la page sans rafraîchir toute la page.
 Au lieu d'ajouter le comportement avec un attribut HTML `on*()`, le principe essentiel
 de jQuery est d'ajouter des comportements au ~DOM~ après que la page soit complètement
 chargée. De cette façon, si vous désactivez le support JavaScript dans votre navigateur,
-aucun comportement est enregistrée, et le formulaire fonctionne toujours comme avant.
+aucun comportement n'est enregistré, et le formulaire fonctionne toujours comme avant.
 
 La première étape est d'intercepter chaque fois qu'un utilisateur tape sur une touche dans le champ de recherche :
 
@@ -167,7 +167,7 @@ Vous devez également mettre à jour le layout pour inclure ce nouveau fichier :
 >**SIDEBAR**
 >JavaScript comme une action
 >
->Bien que le JavaScript que nous avons écrit pour le moteur de recherche est statique,
+>Bien que le JavaScript que nous avons écrit pour le moteur de recherche soit statique,
 >parfois, vous avez besoin d'appeler un peu de code PHP (pour utiliser le helper
 >`url_for()` par exemple).
 >

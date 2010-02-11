@@ -571,12 +571,12 @@ Le script est assez explicite :
 </doctrine>
 
 >**NOTE**
->##ORM## se connecte à la base de données que si elle a des instructions SQL
+>##ORM## ne se connecte à la base de données que si elle a des instructions SQL
 >à exécuter.
 
 Maintenant que tout est en place, nous pouvons commencer à tester la classe `JobeetJob`.
 
-Premièrement, nous avons besoin pour créer le fichier `JobeetJobTest.php` dans `test/unit/model`:
+Premièrement, nous avons besoin de créer le fichier `JobeetJobTest.php` dans `test/unit/model`:
 
     [php]
     // test/unit/model/JobeetJobTest.php

@@ -20,7 +20,7 @@ nous mêmes à partir de zéro.
 Aujourd'hui, nous voulons ajouter un moteur de recherche à Jobeet, et le Zend
 Framework fournit une grande bibliothèque, appelée
 [~Zend Lucene~](http://framework.zend.com/manual/en/zend.search.lucene.html),
-qui est un portage du projet bien connue Java Lucene. Au lieu de créer encore
+qui est un portage du projet bien connu Java Lucene. Au lieu de créer encore
 un autre moteur de recherche pour Jobeet, ce qui est une tâche complexe, nous
 allons utiliser Zend Lucene.
 
@@ -226,14 +226,14 @@ est d'abord enlevée si le poste existe déjà dans l'index.
 
 L'indexation de l'emploi lui-même est simple : la clé primaire est stockée pour un référencement
 ultérieur lors de la recherche d'emplois et les colonnes principales (`position`, `company`,
-`location` et `description`) sont indexés, mais pas stockés dans l'index car nous allons
+`location` et `description`) sont indexeés, mais pas stockeés dans l'index car nous allons
 utiliser les objets réels pour afficher les résultats.
 
 ### ~Transactions~ de ##ORM##
 
 Et si il y a un problème lors de l'indexation d'un emploi ou si l'emploi n'est pas
 enregistré dans la base de données ? ##ORM## et Zend Lucene lèveront une exception. Mais,
-dans certaines circonstances, nous pourrions avoir un emploi enregistrées dans la base de
+dans certaines circonstances, nous pourrions avoir un emploi enregistré dans la base de
 données sans l'indexation correspondante. Pour éviter cela, on peut envelopper les deux
 mises à jour dans une transaction et faire ~rollback|Rollback (Transaction base de données)~
 en cas d'erreur :

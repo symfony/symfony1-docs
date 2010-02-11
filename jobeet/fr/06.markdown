@@ -99,7 +99,7 @@ Débogage du SQL généré par ##ORM##
 ----------------------------------
 
 Etant donné que vous n'écrivez pas les requêtes SQL à la main, ##ORM## se chargera de
-vous les différenciés entre les moteurs de base de données et générera les instructions SQL
+vous les différencier entre les moteurs de base de données et générera les instructions SQL
 optimisé pour le moteur de base choisi pendant la journée 3. Mais parfois,
 voir le SQL généré par ##ORM## est d'une grande aide, par exemple, pour
 ~déboguer|Déboguer~ une requête qui ne fonctionne pas comme prévu. Dans

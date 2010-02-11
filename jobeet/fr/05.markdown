@@ -29,7 +29,7 @@ L'utilisateur ne se soucie pas que votre site est développé avec le langage PH
 ou qu'un emploi a un certain identifiant dans la base de données. Exposer le
 fonctionnement interne de votre application est aussi très mauvais en ce qui concerne la
 ~sécurité|Sécurité~ : que faire si l'utilisateur essaie de deviner l'adresse URL pour le
-contenu où il n'a pas accès ? Bien sûr, le développeur doit sécuriser ces accès, mais
+contenu auquel il n'a pas accès ? Bien sûr, le développeur doit sécuriser ces accès, mais
 la meilleure solution est de cacher les informations sensibles.
 
 Les URLs sont si importantes, que symfony possède un framework dédié à leur

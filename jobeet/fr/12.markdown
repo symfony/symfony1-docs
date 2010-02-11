@@ -952,10 +952,10 @@ generator peut être surchargée en définissant l'option `class` :
 >**NOTE**
 >Comme nous avons ajouté une nouvelle classe, n'oubliez pas de vider le cache.
 
-Le formulaire `edit` a toujours un petit ennui. Le logo actuel ~téléchargé|Téléchargement
-de fichier~ ne s'affiche pas partout et vous ne pouvez pas supprimer l'actuelle.
-Le widget `sfWidgetFormInputFileEditable` ajoute des capacités d'édition pour un widget
-d'un simple fichier en entrée :
+Le formulaire `edit` a toujours un petit ennui. Le logo de ~téléchargement|Téléchargement
+de fichier~ ne s'affiche pas partout et vous ne pouvez pas supprimer l'actuel.
+Le widget `sfWidgetFormInputFileEditable` ajoute des possibilités d'édition à une
+simple saisie de fichier :
 
     [php]
 <propel>

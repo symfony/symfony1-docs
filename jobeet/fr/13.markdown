@@ -11,7 +11,7 @@ que chaque requête est indépendante de ses précédentes ou suivantes. Les sit
 ont besoin d'un moyen de maintenir les données entre les requêtes pour améliorer l'expérience
 utilisateur.
 
-Une ~session|Session~ d'utilisateur peut être identifié à l'aide d'un ~cookie|Cookies~.
+Une ~session|Session~ d'utilisateur peut être identifiée à l'aide d'un ~cookie|Cookies~.
 Dans Symfony, le développeur n'a pas besoin de manipuler la session directement, mais
 utilise plutôt l'objet ~`sfUser`~, qui représente l'utilisateur final de l'application.
 
@@ -107,19 +107,19 @@ ajoutée dans l'~historique de l'utilisateur|Session~ et stocké dans la session
 
 >**NOTE**
 >Nous aurions pu en pratique stocker les objets `JobeetJob` directement dans la session.
->Cela est fortement déconseillée, car les variables de session sont sérialisés entre les
+>Cela est fortement déconseillé, car les variables de session sont sérialisées entre les
 >requêtes. Et lorsque la session est chargée, les objets `JobeetJob` sont
 >dé-sérialisés et peuvent être "bloqués", s'ils ont été modifiés ou supprimés
 >entre-temps.
 
 ### `getAttribute()`, `setAttribute()`
 
-Pour un identifiant donnée, la méthode `sfUser::getAttribute()` récupère les valeurs de
+Pour un identifiant donné, la méthode `sfUser::getAttribute()` récupère les valeurs de
 la session de l'utilisateur. Inversement, la méthode `setAttribute()` stocke toutes
 les variables PHP dans la session pour un identifiant donné.
 
-La méthode `getAttribute()` prend également une valeur facultative par défaut pour
-retourner si l'identifiant n'est pas encore défini.
+La méthode `getAttribute()` prend également une valeur facultative par défaut qu'elle
+retourne si l'identifiant n'est pas encore défini.
 
 >**NOTE**
 >La valeur par défaut prise par la méthode `getAttribute()` est un raccourci pour :
@@ -310,7 +310,7 @@ symfony transmet la requête à l'action `login` configuré dans `settings.yml` 
 
 >**TIP**
 >Comme nous l'avons vu pendant le jour 4, le même fichier de configuration peut être
->définie dans plusieurs endroits. C'est également le cas pour `security.yml`. Pour
+>défini dans plusieurs endroits. C'est également le cas pour `security.yml`. Pour
 >~sécuriser ou dé-sécuriser|Restriction d'accès~ seulement une seule action ou un module
 >complet, créer un ~`security.yml`~ dans le répertoire `config/` du module :
 >

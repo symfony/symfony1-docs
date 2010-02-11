@@ -280,7 +280,7 @@ Tous les formats partagent la même action `list` :
 
 Plutôt que de transmettre un tableau d'objets `JobeetJob` aux Templates, on passe
 un tableau de chaînes. Comme nous avons trois Templates différents pour la même action,
-la logique pour traiter les valeurs a été refactoriser dans la méthode
+la logique pour traiter les valeurs a été refactorisée dans la méthode
 `JobeetJob::asArray()` :
 
     [php]
@@ -354,8 +354,8 @@ Le support du [format JSON](http://json.org/) est similaire :
 
 ### ~Le format `yaml`|Formats (Création)~
 
-Pour les formats intégrés,  symfony fait une certaine configuration en arrière-plan, comme
-changer le type de contenu ou la désactivation de la mise en page.
+Pour les formats intégrés, symfony fait une certaine configuration en arrière-plan, comme
+changer le type de contenu ou désactiver la mise en page.
 
 Comme le format YAML n'est pas dans la liste des formats prédéfinis d'une requête, le
 type de contenu de la réponse peut être modifié et la mise en page désactivée dans l'action :
@@ -583,7 +583,7 @@ Enfin, modifiez le lien dans le pied de page pour qu'il pointe vers le module `a
 ### Les actions
 
 Ici encore, comme nous n'utiliserons que le formulaire de création, ouvrez le
-fichier `actions.class.php` et supprimez toutes les méthodes `executeNew()`,
+fichier `actions.class.php` et supprimez toutes les méthodes sauf `executeNew()`,
 `executeCreate()` et `processForm()`.
 
 Pour l'action `processForm()`, modifiez l'URL de redirection pour l'action `wait` :
@@ -645,7 +645,7 @@ relation est rendue comme une liste déroulante grâce au widget `sfWidgetFormCh
 voit pendant le jour 10, nous avons changé le tag rendu en utilisant l'option
 `expanded`.
 
-Comme les emails et les URL ont tendance à être très supérieure à la taille par défaut d'une balise
+Comme les emails et les URL ont tendance à être très supérieurs à la taille par défaut d'une balise
 input, les attributs HTML par défaut peuvent être définis en utilisant la méthode `setAttribute()`.
 
 ![Formulaire de l'affilié](http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png)
