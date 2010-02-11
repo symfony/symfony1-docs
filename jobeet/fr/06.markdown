@@ -783,7 +783,10 @@ vous ajoutez du code PHP dans un fichier YAML :
  * Si l'instructione `<?php ?>` termine une ligne, vous devez indiquer clairement une
    nouvelle ligne ("\n").
 
-Rechargez les jeux de test avec la tâche `propel:data-load` et vérifiez que seulement `10` offres d'emplois soient affichées en page d'accueil pour la catégorie `Programming`. Dans la capture d'écran suivante, nous avons diminué le nombre maximum d'offres à 5 afin d'obtenir une image de taille raisonnable :
+Rechargez les jeux de test avec la tâche `propel:data-load` et vérifiez que seulement
+`10` offres d'emplois soient affichées en page d'accueil pour la catégorie `Programming`.
+Dans la capture d'écran suivante, nous avons diminué le nombre maximum d'offres à 5 afin
+d'obtenir une image de taille raisonnable :
 
 ![Pagination](http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png)
 

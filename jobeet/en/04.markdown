@@ -866,8 +866,12 @@ object `addStylesheet()` and `addJavascript()` methods.
 Final Thoughts
 --------------
 
-In this fourth chapter, we have described some design patterns used by symfony. Hopefully the project directory structure now makes more sense. We have played with templates by manipulating the layout and template files. We have also made them a bit more dynamic thanks to slots and actions.
+In this fourth chapter, we have described some design patterns used by symfony.
+Hopefully the project directory structure now makes more sense. We have played
+with templates by manipulating the layout and template files. We have also made
+them a bit more dynamic thanks to slots and actions.
 
-In the following chapter, we will learn more about the `url_for()` helper we have used today, and the routing sub-framework associated with it.
+In the following chapter, we will learn more about the `url_for()` helper we
+have used today, and the routing sub-framework associated with it.
 
 __ORM__

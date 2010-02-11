@@ -629,8 +629,11 @@ The Jobeet application must still work as before.
 Final Thoughts
 --------------
 
-This chapter was packed with a lot of new information. You have learned how to use the routing framework of symfony and how to decouple your URLs from the technical implementation.
+This chapter was packed with a lot of new information. You have learned how to
+use the routing framework of symfony and how to decouple your URLs from the technical
+implementation.
 
-In the following chapter, we won't introduce any new concept, but rather spend time going deeper into what we've covered so far.
+In the following chapter, we won't introduce any new concept, but rather spend
+time going deeper into what we've covered so far.
 
 __ORM__

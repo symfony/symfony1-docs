@@ -633,6 +633,7 @@ Ce chapitre a introduit beaucoup de nouvelles informations. Vous avez
 appris à utiliser le framework de routage de symfony et à dissocier vos URLs
 de la réalisation technique.
 
-Au cours du chapitre suivant, nous n'introduirons aucun concept nouveau, mais nous passerons davantage de temps à étudier plus en détails tout ce que nous avons découvert jusqu'à présent.
+Au cours du chapitre suivant, nous n'introduirons aucun concept nouveau, mais nous passerons
+davantage de temps à étudier plus en détails tout ce que nous avons découvert jusqu'à présent.
 
 __ORM__
