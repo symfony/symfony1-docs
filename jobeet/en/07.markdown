@@ -3,9 +3,9 @@ Day 7: Playing with the Category Page
 
 Yesterday you expanded your knowledge of symfony in a lot of different areas:
 querying with ##ORM##, fixtures, routing, debugging, and custom configuration.
-And we finished with a little challenge for today.
+And we finished with a little challenge to start this chapter.
 
-I hope you worked on the Jobeet category page as today's tutorial will then be
+We hope you worked on the Jobeet category page as today's tutorial will then be
 much more valuable for you.
 
 Ready? Let's talk about a possible implementation.
@@ -104,7 +104,7 @@ file with the following code:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
 The `countActiveJobs()` method uses a `countActiveJobs()` method that does not
@@ -453,8 +453,7 @@ The `sfPropelPager::setCriteria()` method takes a `Criteria` object to use
 when selecting the items from the database.
 </propel>
 <doctrine>
-The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use when
-selecting the items from the database.
+The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use when selecting items from the database.
 </doctrine>
 
 <propel>
@@ -484,7 +483,7 @@ Add the `getActiveJobsQuery()` method:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
     }
 </doctrine>
 

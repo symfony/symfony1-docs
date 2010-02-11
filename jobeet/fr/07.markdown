@@ -104,7 +104,7 @@ pas encore dans le modèle `JobeetJobPeer`. Remplacer le contenu du fichier
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
 La méthode `countActiveJobs()` utilise la méthode `countActiveJobs()` qui n'existe
@@ -484,7 +484,7 @@ Ajoutez la méthode `getActiveJobsQuery()` :
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
     }
 </doctrine>
 

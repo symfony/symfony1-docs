@@ -89,7 +89,7 @@
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
 `countActiveJobs()` メソッドは `JobeetJobTable` にまだ存在しない `countActiveJobs()` メソッドを使用します。`JobeetJobTable.php` ファイルの内容を次のコードで置き換えます:
@@ -419,7 +419,7 @@ job の `indexSuccess.php` テンプレートから求人リストを作成す�
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
     }
 </doctrine>
 

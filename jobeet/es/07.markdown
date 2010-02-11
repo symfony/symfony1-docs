@@ -94,7 +94,7 @@ El método `countActiveJobs()` emplea un método `countActiveJobs()` que aún no
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
 El método `countActiveJobs()` emplea un método `countActiveJobs()` que aún no existe en 
@@ -440,7 +440,7 @@ Agrega el método `getActiveJobsCriteria()`:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
     }
 </doctrine>
 

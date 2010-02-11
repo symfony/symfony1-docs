@@ -107,7 +107,7 @@ codice seguente:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->countActiveJobs($q);
+      return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
 Il metodo `countActiveJobs()` usa un metodo `countActiveJobs()`
@@ -492,7 +492,7 @@ Aggiungiamo il metodo `getActiveJobsQuery()`:
         ->from('JobeetJob j')
         ->where('j.category_id = ?', $this->getId());
 
-      return Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+      return Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
     }
 </doctrine>
 
