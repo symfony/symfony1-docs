@@ -494,10 +494,10 @@ pour charger les données :
 </propel>
 <doctrine>
 La tâche `doctrine:data-load` utilise en interne la
-méthode `Doctrine::loadData()` pour charger les données :
+méthode `Doctrine_Core::loadData()` pour charger les données :
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -537,7 +537,7 @@ fichier `##ORM##.php` dans le répertoire de test `bootstrap/` avec le code suiv
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Le script est assez explicite :
@@ -564,10 +564,10 @@ Le script est assez explicite :
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * Nous chargeons nos données de test en utilisant `Doctrine::loadData()`:
+  * Nous chargeons nos données de test en utilisant `Doctrine_Core::loadData()`:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -592,7 +592,7 @@ Puis, nous allons commencer par ajouter un test pour la méthode `getCompanySlug
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -633,7 +633,7 @@ L'écriture des tests pour la méthode `save()` est légèrement plus complexe :
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();

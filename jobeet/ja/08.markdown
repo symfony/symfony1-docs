@@ -376,10 +376,10 @@ URL に文字列を安全に含められるようにクリーンナップする�
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-`doctrine:data-load` タスクは内部でデータをロードするために `Doctrine::loadData()` メソッドを使います:
+`doctrine:data-load` タスクは内部でデータをロードするために `Doctrine_Core::loadData()` メソッドを使います:
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -412,7 +412,7 @@ URL に文字列を安全に含められるようにクリーンナップする�
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 スクリプトは自分自身をよく説明しています:
@@ -437,10 +437,10 @@ URL に文字列を安全に含められるようにクリーンナップする�
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * `Doctrine::loadData()` を使ってテストデータをロードします:
+  * `Doctrine_Core::loadData()` を使ってテストデータをロードします:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -464,7 +464,7 @@ URL に文字列を安全に含められるようにクリーンナップする�
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -504,7 +504,7 @@ URL に文字列を安全に含められるようにクリーンナップする�
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();

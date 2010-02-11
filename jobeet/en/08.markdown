@@ -1,14 +1,11 @@
 Day 8: The Unit Tests
 =====================
 
-During the last two days, we reviewed all the features learned during the
-first five days of the advent calendar to customize Jobeet features and add
-new ones. In the process, we have also touched on other more advanced symfony
-features.
+During the last two chapters, we reviewed all the features learned during the
+first five chapters of the Practical symfony book to customize Jobeet features and add new ones. In the process, we have also touched on other more advanced symfony features.
 
 Today, we will start talking about something completely different: automated
-**tests**. As the topic is quite large, it will take us two full days to cover
-everything.
+**tests**. As the topic is quite large, it will take us two full chapters to cover everything.
 
 Tests in symfony
 ----------------
@@ -26,7 +23,7 @@ All tests in symfony are located under the `test/` directory of the project.
 It contains two sub-directories, one for unit tests (`test/unit/`) and one for
 functional tests (`test/functional/`).
 
-Unit tests will be covered in today's tutorial, whereas tomorrow's will be
+Unit tests will be covered in this chapter, whereas the following will be
 dedicated to functional tests.
 
 Unit Tests
@@ -100,7 +97,7 @@ To ease the comparison, the `lime_test` object provides several methods:
 >lies in much more explicit error messages in case of a failed test and in 
 >improved readability of the tests.
 
-The `lime_test` object also provides other convenient test methods:
+The `lime_test` object also provides other convenient testing methods:
 
  Method                  | Description
  ----------------------- | --------------------------------------------------
@@ -219,7 +216,7 @@ messages to the `slugify` test file:
 
 ![slugify() tests with messages](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
-The test description string is also an valuable tool when trying to figure out
+The test description string is also a valuable tool when trying to figure out
 what to test. You can see a pattern in the test strings: they are sentences
 describing how the method must behave and they always start with the method
 name to test.
@@ -479,7 +476,7 @@ Now that we have configured the database, we can bootstrap it by using the
 ### Test Data
 
 Now that we have a dedicated database for our tests, we need a way to load
-some test data. During day 3, you learned to use the `propel:data-load`
+some test data. During chapter 3, you learned to use the `propel:data-load`
 ~task|Tasks~, but for tests, we need to reload the data each time we run them
 to put the database in a known state.
 
@@ -494,10 +491,10 @@ class to load the data:
 </propel>
 <doctrine>
 The `doctrine:data-load` task internally uses
-the `Doctrine::loadData()` method to load the data:
+the `Doctrine_Core::loadData()` method to load the data:
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -537,7 +534,7 @@ As all our ##ORM## unit tests will begin with the same code, create a
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 The script is pretty self-explanatory:
@@ -564,10 +561,10 @@ The script is pretty self-explanatory:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * We load our test data by using `Doctrine::loadData()`:
+  * We load our test data by using `Doctrine_Core::loadData()`:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -592,7 +589,7 @@ Then, let's start by adding a test for the `getCompanySlug()` method:
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -633,7 +630,7 @@ Writing tests for the `save()` method is slightly more complex:
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();

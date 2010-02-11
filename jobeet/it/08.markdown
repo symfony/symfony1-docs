@@ -499,10 +499,10 @@ per caricare i dati:
 </propel>
 <doctrine>
 Il task `doctrine:data-load` usa internamente il metodo
-`Doctrine::loadData()` per caricare i dati:
+`Doctrine_Core::loadData()` per caricare i dati:
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -542,7 +542,7 @@ test, con il seguente codice:
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Lo script è praticamente auto-esplicante:
@@ -567,10 +567,10 @@ Lo script è praticamente auto-esplicante:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * Carichiamo i nostri dati di test usando `Doctrine::loadData()`:
+  * Carichiamo i nostri dati di test usando `Doctrine_Core::loadData()`:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -594,7 +594,7 @@ Poi, iniziamo aggiungendo un testo per il metodo `getCompanySlug()`:
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -634,7 +634,7 @@ Scrivere test per il metodo `save()` è un po' più complesso:
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();

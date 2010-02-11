@@ -496,10 +496,10 @@ slugify:
 </propel>
 <doctrine>
 Команда `doctrine:data-load` для загрузки данных использует метод
-`Doctrine::loadData()`:
+`Doctrine_Core::loadData()`:
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -539,7 +539,7 @@ slugify:
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Приятно очевидный скрипт:
@@ -566,10 +566,10 @@ slugify:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * Мы загружаем наши тестовые данные используя `Doctrine::loadData()`:
+  * Мы загружаем наши тестовые данные используя `Doctrine_Core::loadData()`:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -593,7 +593,7 @@ slugify:
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -635,7 +635,7 @@ slugify:
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();

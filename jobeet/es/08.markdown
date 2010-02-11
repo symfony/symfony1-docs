@@ -386,10 +386,10 @@ para cargar los datos:
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-La tarea `doctrine:data-load` internamente utiliza el método `Doctrine::loadData()` para cargar los datos:
+La tarea `doctrine:data-load` internamente utiliza el método `Doctrine_Core::loadData()` para cargar los datos:
 
     [php]
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
     
 </doctrine>
 
@@ -426,7 +426,7 @@ Como todos nuestros objetos ##ORM## harán las pruebas unitarias comenzarán con
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 El script se explica bastante por sí mismo:
@@ -449,10 +449,10 @@ El script se explica bastante por sí mismo:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-  * Cargamos nuestros datos de prueba mediante el uso de `Doctrine::loadData()`:
+  * Cargamos nuestros datos de prueba mediante el uso de `Doctrine_Core::loadData()`:
 
         [php]
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 >**NOTE**
@@ -477,7 +477,7 @@ Entonces, vamos a empezar por agregar una prueba para el método `getCompanySlug
     $job = JobeetJobPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-    $job = Doctrine::getTable('JobeetJob')->createQuery()->fetchOne();
+    $job = Doctrine_Core::getTable('JobeetJob')->createQuery()->fetchOne();
 </doctrine>
     $t->is($job->getCompanySlug(), Jobeet::slugify($job->getCompany()), '->getCompanySlug() return the slug for the company');
 
@@ -517,7 +517,7 @@ Escribir pruebas para el método `save()` es ligeramente más complejo:
         $category = JobeetCategoryPeer::doSelectOne(new Criteria());
 </propel>
 <doctrine>
-        $category = Doctrine::getTable('JobeetCategory')
+        $category = Doctrine_Core::getTable('JobeetCategory')
           ->createQuery()
           ->limit(1)
           ->fetchOne();
