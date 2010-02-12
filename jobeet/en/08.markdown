@@ -2,10 +2,13 @@ Day 8: The Unit Tests
 =====================
 
 During the last two chapters, we reviewed all the features learned during the
-first five chapters of the Practical symfony book to customize Jobeet features and add new ones. In the process, we have also touched on other more advanced symfony features.
+first five chapters of the Practical symfony book to customize Jobeet features
+and add new ones. In the process, we have also touched on other more advanced
+symfony features.
 
 Today, we will start talking about something completely different: automated
-**tests**. As the topic is quite large, it will take us two full chapters to cover everything.
+**tests**. As the topic is quite large, it will take us two full chapters to cover
+everything.
 
 Tests in symfony
 ----------------

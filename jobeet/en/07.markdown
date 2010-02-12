@@ -453,7 +453,8 @@ The `sfPropelPager::setCriteria()` method takes a `Criteria` object to use
 when selecting the items from the database.
 </propel>
 <doctrine>
-The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use when selecting items from the database.
+The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use
+when selecting items from the database.
 </doctrine>
 
 <propel>

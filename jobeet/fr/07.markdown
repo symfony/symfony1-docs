@@ -3,9 +3,9 @@ Jour 7 : Jouons avec la page Catégorie
 
 Hier, vous avez pu améliorer vos connaissances dans plusieurs domaines : requêtes
 avec ##ORM##, jeux de test, routage, débogage et la configuration personnalisée.
-Et nous avions fini la leçon en vous laissant un petit défi.
+Et nous avions fini la leçon en vous laissant un petit défi pour débuter ce chapitre.
 
-J'espère que vous avez travaillé sur la page catégorie de Jobeet car le tutoriel
+Nous espèrons que vous avez travaillé sur la page catégorie de Jobeet car le tutoriel
 d'aujourd'hui aura alors beaucoup plus de valeur pour vous.
 
 Prêt ? Voici une des implémentations possibles.

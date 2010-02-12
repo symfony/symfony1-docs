@@ -2,7 +2,7 @@ Jour 8 : Les tests unitaires
 ============================
 
 Au cours des deux derniers jours, nous avons examiné tous les éléments appris au cours des
-cinq premiers jours du calendrier de l'avent, afin de personnaliser les fonctionnalités de Jobeet et
+cinq premiers chapitres du Pratical symfony book, afin de personnaliser les fonctionnalités de Jobeet et
 d'en ajouter de nouvelles. Dans le processus, nous avons également abordé d'autres fonctionnalités
 plus avancées de symfony.
 
@@ -26,8 +26,8 @@ Tous les tests dans symfony sont situés sous le répertoire `test/` du projet.
 Il contient deux sous-répertoires, un pour les tests unitaires (`test/unit/`) et un pour
 les tests fonctionnels (`test/functional/`).
 
-Les tests unitaires seront couverts dans le tutoriel d'aujourd'hui et demain sera
-consacrée aux tests fonctionnels.
+Les tests unitaires seront couverts dans ce chapitre et le suivant sera
+consacré aux tests fonctionnels.
 
 Les tests unitaires
 -------------------
@@ -479,7 +479,7 @@ employant la tâche `propel:insert-sql` :
 ### Données de test
 
 Maintenant que nous avons une base de données dédiée pour nos tests, nous avons besoin d'un
-moyen pour charger les données de test. Durant la journée de 3, vous avez appris à utiliser la
+moyen pour charger les données de test. Durant le chapitre 3, vous avez appris à utiliser la
 ~tâche|Tâches~ `propel:data-load`, mais pour des tests, nous avons besoin de recharger les données
 chaque fois que nous les exécutons pour mettre la base de données dans un état connu.
 
