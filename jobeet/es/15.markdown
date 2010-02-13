@@ -80,7 +80,7 @@ En el archivo de datos, los tokens están hardcodeados para simplificar las prue
 </propel>
 <doctrine>
     [php]
-    // lib/model/doctrine/JobeetAffiliate.php
+    // lib/model/doctrine/JobeetAffiliate.class.php
     class JobeetAffiliate extends BaseJobeetAffiliate
     {
       public function preValidate($event)
@@ -145,7 +145,8 @@ El método `getForToken()` es llamado cuando la acción recupera la colección d
     {
       public function getForToken(array $parameters)
       {
-        $affiliate = Doctrine::getTable('JobeetAffiliate')->findOneByToken($parameters['token']);
+        $affiliate = Doctrine::getTable('JobeetAffiliate')
+          ➥ ->findOneByToken($parameters['token']);
         if (!$affiliate || !$affiliate->getIsActive())
         {
           throw new sfError404Exception(sprintf('Affiliate with token "%s" does not exist or is not activated.', $parameters['token']));
@@ -209,6 +210,7 @@ El método `getForToken()` utiliza un nuevo método llamado `getActiveJobs()` y 
       // ...
     }
 </propel>
+
 <doctrine>
     [php]
     // lib/model/doctrine/JobeetAffiliate.class.php
@@ -251,7 +253,8 @@ Todos los formatos comparten la misma acción `list`:
       $this->jobs = array();
       foreach ($this->getRoute()->getObjects() as $job)
       {
-        $this->jobs[$this->generateUrl('job_show_user', $job, true)] = $job->asArray($request->getHost());
+        $this->jobs[$this->generateUrl('job_show_user', $job, true)] =
+         ➥ $job->asArray($request->getHost());
       }
     }
 
@@ -340,7 +343,8 @@ Como el Formato YAML no esta en la lista de los formatos nativos, la respuesta y
         $this->jobs = array();
         foreach ($this->getRoute()->getObjects() as $job)
         {
-          $this->jobs[$this->generateUrl('job_show_user', $job, true)] = $job->asArray($request->getHost());
+          $this->jobs[$this->generateUrl('job_show_user', $job, true)] =
+           ➥ $job->asArray($request->getHost());
         }
 
         switch ($request->getRequestFormat())
@@ -438,13 +442,13 @@ Para probar el servicio web, copia los datos de los afiliados de `data/fixtures/
       info('3 - The web service supports the JSON format')->
       get('/api/sensio_labs/jobs.json')->
       with('request')->isFormat('json')->
-      with('response')->contains('"category": "Programming"')->
+      with('response')->matches('/"category"\: "Programming"/')->
 
       info('4 - The web service supports the YAML format')->
       get('/api/sensio_labs/jobs.yaml')->
       with('response')->begin()->
         isHeader('content-type', 'text/yaml; charset=utf-8')->
-        contains('category: Programming')->
+        matches('/category\: Programming/')->
       end()
     ;
 
@@ -463,13 +467,13 @@ Ahora que el servicio web está listo para ser utilizado, vamos a crear el Formu
 Lo sabes. La ruta es la primera cosa a crear:
 
     [yml]
-    // apps/frontend/config/routing.yml
+    # apps/frontend/config/routing.yml
     affiliate:
       class:   sfPropelRouteCollection
       options:
         model: JobeetAffiliate
         actions: [new, create]
-        object_actions: { wait: get }
+        object_actions: { wait: get 
 
 Se trata de una clásica colección de rutas ##ORM## con una nueva opción de configuración: `actions`. Como no necesitamos todas las siete acciones definidas por defecto para la ruta, la opción `actions` instruye a la ruta para sólo coincidir con las acciones `new` y `create` . La ruta adicional `wait` se utilizarán para dar al inminente afiliado algunos comentarios acerca de su cuenta.
 
@@ -551,7 +555,12 @@ La acción `wait` es simple que no hace falta pasarle nada a la plantilla:
 El afiliado no puede elegir su token, ni puede activar su cuenta inmediatamente. Abre el archivo `JobeetAffiliateForm` para personalizar el formulario:
 
     [php]
+<propel>
+    // lib/form/JobeetAffiliateForm.class.php
+</propel>
+<doctrine>
     // lib/form/doctrine/JobeetAffiliateForm.class.php
+</doctrine>
     class JobeetAffiliateForm extends BaseJobeetAffiliateForm
     {
       public function configure()
@@ -615,7 +624,7 @@ Sustituye las pruebas generadas para el módulo `affiliate` con el código sigui
         'jobeet_categories_list'         => array(Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
 </doctrine>
       )))->
-      isRedirected()->
+      with('response')->isRedirected()->
       followRedirect()->
       with('response')->checkElement('#content h1', 'Your affiliate account has been created')->
 
@@ -635,10 +644,11 @@ Sustituye las pruebas generadas para el módulo `affiliate` con el código sigui
     ;
 
 <propel>
+
 Para simular la selección de las casillas, pasar una array de identificadores, para comprobar. Para simplificar la tarea, un nuevo método `getProgrammingCategory()` ha sido creado en la clase `JobeetTestFunctional`:
 
     [php]
-    // lib/model/JobeetTestFunctional.class.php
+    // lib/test/JobeetTestFunctional.class.php
     class JobeetTestFunctional extends sfTestFunctional
     {
       public function getProgrammingCategory()
@@ -680,14 +690,16 @@ Para acceder al nuevo módulo creado, añade un enlace en el menú principal con
     [php]
     <!-- apps/backend/templates/layout.php -->
     <li>
-      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
 <propel>
+      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
         Affiliates - <strong><?php echo JobeetAffiliatePeer::countToBeActivated() ?></strong>
+      </a>
 </propel>
 <doctrine>
+      <a href="<?php echo url_for('@jobeet_affiliate_affiliate') ?>">
         Affiliates - <strong><?php echo Doctrine::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
-</doctrine>
       </a>
+</doctrine>
     </li>
 
 <propel>
@@ -762,14 +774,24 @@ El único otro código a escribir es para las acciones `activate`, `deactivate` 
       {
         $this->getRoute()->getObject()->activate();
 
+<propel>
         $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
       }
 
       public function executeListDeactivate()
       {
         $this->getRoute()->getObject()->deactivate();
 
+<propel>
         $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
       }
 
       public function executeBatchActivate(sfWebRequest $request)
@@ -790,7 +812,12 @@ El único otro código a escribir es para las acciones `activate`, `deactivate` 
           $affiliate->activate();
         }
 
+<propel>
         $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
       }
 
       public function executeBatchDeactivate(sfWebRequest $request)
@@ -811,7 +838,12 @@ El único otro código a escribir es para las acciones `activate`, `deactivate` 
           $affiliate->deactivate();
         }
 
+<propel>
         $this->redirect('@jobeet_affiliate');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_affiliate_affiliate');
+</doctrine>
       }
     }
 
