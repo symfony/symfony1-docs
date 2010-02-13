@@ -49,7 +49,7 @@ As PHP configurations can vary a lot from one OS to another, or even between
 different Linux distributions, you need to check that your PHP configuration
 meets the symfony minimum requirements.
 
-First, ensure that you have PHP 5.2.4 at a minimum installed by using the
+First, ensure that you have PHP 5.2.4 as a minimum installed by using the
 `phpinfo()` built-in function or by running `php -v` on the command line. Be
 aware that on some configurations, you might have two different PHP versions
 installed: one for the command line, and another for the web.
@@ -123,10 +123,10 @@ symfony website.
 ### Choosing the Symfony Installation Location
 
 You can install symfony globally on your machine, or embed it into each of
-your project. The latter is the recommended one as projects will then be
-totally independent from each others. Upgrading your locally installed symfony
-won't break some of your projects unexpectedly. It means you will be able to
-have projects on different versions of symfony, and upgrade them one at a time
+your projects. The latter is the recommended approach as projects will then be
+totally independent from each other and ugrading your locally installed symfony
+won't break some of your projects unexpectedly. It also means you will be able to
+have projects using different versions of symfony, and upgrade them one at a time
 as you see fit.
 
 As a best practice, many people install the symfony framework files in the
@@ -183,8 +183,8 @@ If you want to go the bleeding-edge route, use the 1.4 branch:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Using the branch makes your project benefits from the bug fixes automatically
-whenever you run a `svn update`.
+Using the branch makes your project benefit from bug fixes automatically
+whenever you run an `svn update`.
 
 #### Installation Verification
 
@@ -199,12 +199,13 @@ On Windows:
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
-The `-V` option also displays the path to the symfony installation directory,
-which is stored in `config/ProjectConfiguration.class.php`.
+After you have created your project (below), running this command also 
+displays the path to the symfony installation directory, which is stored
+in `config/ProjectConfiguration.class.php`.
 
-If the path to symfony is an absolute one (which should not be by default if
-you follow the above instructions), change it so it reads like follows for
-better portability:
+If when you check this, the path to symfony is an absolute one (which should 
+not be by default if you follow the below instructions), change it so it reads
+like follows for better portability:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -254,6 +255,7 @@ files needed for a symfony project:
  | `cache/`    | The files cached by the framework
  | `config/`   | The project configuration files
  | `data/`     | Data files like initial fixtures
+ | `doc/`      | The project documentation files
  | `lib/`      | The project libraries and classes
  | `log/`      | The framework log files
  | `plugins/`  | The installed plugins
@@ -262,7 +264,7 @@ files needed for a symfony project:
 
 >**NOTE**
 >Why does symfony generate so many files? One of the main benefits of using
->a full-stack framework is to standardize your developments. Thanks to
+>a full-stack framework is to standardize your development. Thanks to
 >symfony's default structure of files and directories, any developer with
 >some symfony knowledge can take over the maintenance of any symfony project.
 >In a matter of minutes, he will be able to dive into the code, fix bugs,
@@ -318,6 +320,7 @@ creates the default directory structure needed for the application under the
  | Directory    | Description
  | ------------ | -------------------------------------
  | `config/`    | The application configuration files
+ | `i18n/`      | Tha application XLIFF files for translation
  | `lib/`       | The application libraries and classes
  | `modules/`   | The application code (MVC)
  | `templates/` | The global template files
@@ -339,21 +342,21 @@ creates the default directory structure needed for the application under the
 >
 >If you know nothing about
 >[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) or
->[CSRF](http://en.wikipedia.org/wiki/CSRF), take the time to learn more these
->security vulnerabilities.
+>[CSRF](http://en.wikipedia.org/wiki/CSRF), take the time to learn more about 
+>these security vulnerabilities.
 
 ### Directory Structure Rights
 
 Before trying to access your newly created project, you need to set the write
 permissions on the `cache/` and `log/` directories to the appropriate levels,
-so that your web server can write to them:
+so that both your web server and command line user can write to them:
 
-    $ chmod 777 cache/ log/
+    $ symfony project:permissions
 
 >**SIDEBAR**
->Tips for People using a SCM Tool
+>Tips for People using an SCM Tool
 >
->symfony only ever writes in two directories of a symfony project,
+>symfony only ever writes to two directories of a symfony project,
 >`cache/` and `log/`. The content of these directories should be ignored
 >by your SCM (by editing the `svn:ignore` property if you use Subversion
 >for instance).
@@ -377,9 +380,9 @@ section to learn how to configure your web server properly.
 
 ### The secure Way
 
-A good web practice is to put under the web root directory only the files that
-need to be accessed by a web browser, like stylesheets, JavaScripts and
-images. By default, we recommend to store these files under the `web/`
+A good web practice is to only put the files that need to be accessed by a 
+web browser under the web root directory , such as stylesheets, JavaScripts and
+images. By default, we recommend storing these files under the `web/`
 sub-directory of a symfony project.
 
 If you have a look at this directory, you will find some sub-directories for
@@ -442,7 +445,7 @@ they do not require administrator rights.
 >
 >If you are an administrator on your machine, it is better to setup
 >virtual hosts instead of adding a new port each time you start a new
->project. Instead of choosing a port and add a `Listen` statement,
+>project. Instead of choosing a port and adding a `Listen` statement,
 >choose a domain name (for instance the real domain name with
 >`.localhost` added at the end) and add a `ServerName` statement:
 >
@@ -454,10 +457,10 @@ they do not require administrator rights.
 >
 >The domain name `www.myproject.com.localhost` used in the Apache configuration
 >has to be declared locally. If you run a Linux system, it has to be
->done in the `/etc/hosts` file. If you run Windows XP, this file is
+>done in the `/etc/hosts` file. If you run Windows XP, Vista or Win7, this file is
 >located in the `C:\WINDOWS\system32\drivers\etc\` directory.
 >
->Add in the following line:
+>Add the following line:
 >
 >     127.0.0.1 www.myproject.com.localhost
 
@@ -542,10 +545,10 @@ Summary
 
 To test and play with symfony on your local server, your best option for installation is definitely the sandbox, which contains a preconfigured symfony environment.
 
-For a real development or in a production server, opt for the archive installation or the SVN checkout. This will install the symfony libraries, and you still need to initialize a project and an application. The last step of the application setup is the server configuration, which can be done in many ways. Symfony works perfectly fine with a virtual host, and it is the recommended solution.
+For a real development or on a production server, opt for the archive installation or the SVN checkout. This will install the symfony libraries, and you still need to initialize a project and an application. The last step of the application setup is the server configuration, which can be done in many ways. Symfony works perfectly fine with a virtual host, and it is the recommended solution.
 
 If you have any problems during installation, you will find many tutorials and answers to frequently asked questions on the symfony website. If necessary, you can submit your problem to the symfony community, and you will get a quick and effective answer.
 
-Once your project is initiated, it is a good habit to start a version-control process.
+Once your project is initialised, it is a good habit to start a version-control process.
 
 Now that you are ready to use symfony, it is time to see how to build a basic web application.
