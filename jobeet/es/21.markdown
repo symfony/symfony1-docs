@@ -126,13 +126,13 @@ Crea un archivo `cache.yml` para el módulo `sfJobeetJob:
 
 Si actualizas tu navegador, verás que Symfony ha decorado la página con un cuadro que indica que el contenido se ha puesto en el cache:
 
-![Fresh Cache](http://www.symfony-project.org/images/jobeet/1_4/22/fresh_cache.png)
+![Fresh Cache](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
 
 El cuadro da una valiosa información acerca del cache para la depuración, como la vida útil del cache, y la duración hasta el momento de ella.
 
 Si actualizas la página de nuevo, el color de la caja cambia de verde a amarillo, lo que indica que la página se ha recuperado del cache:
 
-![Cache](http://www.symfony-project.org/images/jobeet/1_4/22/cache.png)
+![Cache](http://www.symfony-project.org/images/jobeet/1_4/21/cache.png)
 
 Observa también que no hay consultas a la base de datos en el segundo caso, como se muestra en la web debug toolbar.
 
@@ -142,7 +142,7 @@ Observa también que no hay consultas a la base de datos en el segundo caso, com
 
 Cuando una página es cacheable, y si el cache aún no existe, Symfony almacena el objeto response en el cache al final de la petición. Para todos los demás de las peticiones, Symfony se enviará la respuesta del cache sin llamar al controlador:
 
-![Flujo Cache de una Página](http://www.symfony-project.org/images/jobeet/1_4/22/flow_cache_page.png)
+![Flujo Cache de una Página](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
 Esto tiene un gran impacto en el rendimiento ya que puedes medirlo por tí mismo mediante el uso de herramientas como [JMeter](http://jakarta.apache.org/jmeter/).
 
@@ -181,7 +181,7 @@ En lugar de limpiar el cache cada vez que hagas un cambio, puendes también
 deshabilitar el cache agregando cualquier cadena de consulta a la URL, o usando el boton "Ignore cache" de la barra de herramientas de depuración web:
 
 
-![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_4/22/debug.png)
+![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_4/21/debug.png)
 
 La Acción en el Cache
 ---------------------
@@ -213,17 +213,17 @@ Limpiar el cache:
 
 Actualiza tu navegador para ver la diferencia:
 
-![Action Cache](http://www.symfony-project.org/images/jobeet/1_4/22/action_cache.png)
+![Action Cache](http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png)
 
 Incluso si el flujo de la petición es bastante similar en el diagrama simplificado, guardar cache sin el layout es mucho más intensivo el uso de recursos.
 
-![Action Cache Flow](http://www.symfony-project.org/images/jobeet/1_4/22/flow_cache_action.png)
+![Action Cache Flow](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png)
 
 Partial y Componente en el Cache
 --------------------------------
 Para sitios web muy dinámicos, a veces es incluso imposible guardar en cache toda la plantilla de la acción. Para esos casos, necesitas una manera de configurar el cache a nivel fino. Afortunadamente, los partials y componentes También se puede poner en el cache.
 
-![Partial Cache](http://www.symfony-project.org/images/jobeet/1_4/22/partial_cache.png)
+![Partial Cache](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
 
 Vamos a guardar en el cache el componente `language` creando un archivo `cache.yml` para el módulo `sfJobeetLanguage`:
 
@@ -234,7 +234,7 @@ Vamos a guardar en el cache el componente `language` creando un archivo `cache.y
 
 La configuración del cache para un partial o un componente es tan simple como añadir un ítem con su nombre. Con la opción `with_layout` no se tiene en cuenta para este tipo de cache ya que no tiene ningún sentido:
 
-![Secuencia del Cache para Partial y Componente](http://www.symfony-project.org/images/jobeet/1_4/22/flow_cache_partial.png)
+![Secuencia del Cache para Partial y Componente](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
 
 >**SIDEBAR**
 >Contextual o no?
@@ -261,7 +261,7 @@ Formularios en el Cache
 
 El almacenamiento de la página de creación de empleo en el cache es problemática ya que contiene un formulario. Para comprender mejor el problema, ve a la página "Post a Job" en tu navegador. Entonces, limpia tu cookie de sesión, y trata de enviar un puesto de trabajo. Debes ver un mensaje de error con una alerta de "CSRF attack":
 
-![CSRF y Cache](http://www.symfony-project.org/images/jobeet/1_4/22/csrf.png)
+![CSRF y Cache](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
 
 ¿Por qué? Como se ha configurado un CSRF secreto cuando se creó el frontend, Symfony incorpora un token CSRF en todos sus formularios. Para protegerte contra los ataques CSRF, este token es único para un determinado usuario, así como para un determinado formulario.
 
@@ -349,7 +349,7 @@ la limpieza del cache:
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect($this->generateUrl('job_show_user', $job));
+      $this->redirect('job_show_user', $job);
     }
 
 El cache es gestionado por la clase `sfViewCacheManager`. El método `remove()` remueve el cache asociado con una URI interna. Para eliminar el cache para todos los posibles parámetros de una variable, utiliza el `*` como valor. El `sf_culture=*` que usamos en código anterior significa que Symfony eliminará del cache la página principal del Inglés y del Francés.
