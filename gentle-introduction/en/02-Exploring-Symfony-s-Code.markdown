@@ -447,6 +447,7 @@ These are the directories found at the root of a symfony project:
     config/
     data/
       sql/
+    doc/
     lib/
       model/
     log/
@@ -471,6 +472,7 @@ Directory  |  Description
 `cache/`   | Contains the cached version of the configuration, and (if you activate it) the cache version of the actions and templates of the project. The cache mechanism (detailed in Chapter 12) uses these files to speed up the answer to web requests. Each application will have a subdirectory here, containing preprocessed PHP and HTML files.
 `config/`  | Holds the general configuration of the project.
 `data/`    | Here, you can store the data files of the project, like a database schema, a SQL file that creates tables, or even a SQLite database file.
+`doc/`     | A default place to store project documentation
 `lib/`     | Dedicated to foreign classes or libraries. Here, you can add the code that needs to be shared among your applications. The `model/` subdirectory stores the object model of the project (described in Chapter 8).
 `log/`     | Stores the applicable log files generated directly by symfony. It can also contain web server log files, database log files, or log files from any part of the project. Symfony creates one log file per application and per environment (log files are discussed in Chapter 16).
 `plugins/` | Stores the plug-ins installed in the application (plug-ins are discussed in Chapter 17).
@@ -536,7 +538,7 @@ Directory    | Description
 `templates/` | Contains the templates corresponding to the actions of the module. A default template, called `indexSuccess.php`, is created during module setup.
 
 >**NOTE**
->The `config/`, and `lib/` directories are empty for a new module and rarely useful.
+>The `config/`, and `lib/` directories are not created automatically for a new module so you will need to create them manually if required
 
 #### Web Tree Structure
 
@@ -555,12 +557,12 @@ Table 2-4 - Typical Web Subdirectories
 Directory  | Description
 ---------- | -----------
 `css/`     | Contains style sheets with a `.css` extension.
-`images/`  | Contains images with a `.jpg`, `.png`, or `.gif` format.
-`js/`      | Holds JavaScript files with a `.js` extension.
+`images/`  | Contains images with a `.jpg`, `.png`, or `.gif` extension.
+`js/`      | Contains JavaScript files with a `.js` extension.
 `uploads/` | Can contain the files uploaded by the users. Even though the directory usually contains images, it is distinct from the images directory so that the synchronization of the development and production servers does not affect the uploaded images.
 
 >**NOTE**
->Even though it is highly recommended that you maintain the default tree structure, it is possible to modify it for specific needs, such as to allow a project to run in a server with different tree structure rules and coding conventions. Refer to Chapter 19 for more information about modifying the file tree structure.
+>Even though it is highly recommended that you maintain the default tree structure, it is possible to modify it for specific needs, such as to allow a project to run on a server with different tree structure rules and coding conventions. Refer to Chapter 19 for more information about modifying the file tree structure.
 
 Common Instruments
 ------------------
@@ -611,7 +613,7 @@ Listing 2-16 - Using the Attribute Holder Getter's Default Value
     echo $request->getParameter('foobar', 'default');
      => default
 
-Some symfony core classes also use a parameter holder that support namespaces (thanks to the `sfNamespacedParameterHolder` class). If you specify a third argument to a setter or a getter, it is used as a namespace, and the parameter will be defined only within that namespace. Listing 2-17 shows an example.
+Some symfony core classes also use a parameter holder that supports namespaces (thanks to the `sfNamespacedParameterHolder` class). If you specify a third argument to a setter or a getter, it is used as a namespace, and the parameter will be defined only within that namespace. Listing 2-17 shows an example.
 
 Listing 2-17 - Using the `sfUser` Parameter Holder Namespace
 
@@ -623,7 +625,7 @@ Listing 2-17 - Using the `sfUser` Parameter Holder Namespace
     echo $user->getAttribute('foo', null, 'my/name/space');
      => 'bar2'
 
-Of course, you can add a parameter holder to your own classes to take advantage of its syntax facilities. Listing 2-18 shows how to define a class with a parameter holder.
+Of course, you can add a parameter holder to your own classes to take advantage of their syntax facilities. Listing 2-18 shows how to define a class with a parameter holder.
 
 Listing 2-18 - Adding a Parameter Holder to a Class
 
@@ -674,18 +676,18 @@ On large projects with many classes and a deep directory structure, keeping trac
     [php]
     $myObject = new MyClass();
 
-Symfony will then look for a `MyClass` definition in all files ending with `php` in one of the project's `lib/` directories. If the class definition is found, it will be included automatically.
+Symfony will then look for a `MyClass` definition in all files ending with `class.php` in one of the project's `lib/` directories. If the class definition is found, it will be included automatically.
 
-So if you store all your classes in `lib/` directories, you don't need to include classes anymore. That's why the symfony projects usually do not contain any `include_once` or `require_once` statements.
+So if you store all your classes in `lib/` directories, you don't need to include classes anymore. That's why symfony projects usually do not contain any `include_once` or `require_once` statements.
 
 >**NOTE**
->For better performance, the symfony autoloading scans a list of directories (defined in an internal configuration file) during the first request. It then registers all the classes these directories contain and stores the class/file correspondence in a PHP file as an associative array. That way, future requests don't need to do the directory scan anymore. This is why you need to clear the cache every time you add or move a class file in your project by calling the `symfony cache:clear` command (except in the development environment, where symfony clears the cache when it cannot find a class). You will learn more about the cache in Chapter 12, and about the autoloading configuration in Chapter 19.
+>For better performance, the symfony autoloader scans a list of directories (defined in an internal configuration file) during the first request. It then registers all the classes these directories contain and stores the class/file correspondence in a PHP file as an associative array. That way, future requests don't need to do the directory scan anymore. This is why you need to clear the cache every time you add or move a class file in your project by calling the `symfony cache:clear` command (except in the development environment, where symfony clears the cache when it cannot find a class). You will learn more about the cache in Chapter 12, and about the autoloading configuration in Chapter 19.
 
 Summary
 -------
 
-Using an MVC framework forces you to divide and organize your code according to the framework conventions. Presentation code goes to the view, data manipulation code goes to the model, and the request manipulation logic goes to the controller. It makes the application of the MVC pattern both very helpful and quite restricting.
+Using an MVC framework forces you to divide and organize your code according to the framework's conventions. Presentation code goes to the view, data manipulation code goes to the model, and the request manipulation logic goes to the controller. This makes applying the MVC pattern both very helpful and at the same time quite restrictive.
 
-Symfony is an MVC framework written in PHP. Its structure is designed to get the best of the MVC pattern, but with great ease of use. Thanks to its versatility and configurability, symfony is suitable for all web application projects.
+Symfony is an MVC framework written in PHP. Its structure is designed to get the best out of the MVC pattern, whilst maintaining great ease of use. Thanks to its versatility and configurability, symfony is suitable for all web application projects.
 
 Now that you understand the underlying theory behind symfony, you are almost ready to develop your first application. But before that, you need a symfony installation up and running on your development server.
