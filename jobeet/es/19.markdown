@@ -216,7 +216,8 @@ Abre el archivo `jobActionsTest` y añade las siguientes pruebas:
 
       info('  6.1 - For the first request, symfony guesses the best culture')->
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()->
+      followRedirect()->
       with('user')->isCulture('fr')->
 
       info('  6.2 - Available cultures are en and fr')->
@@ -229,7 +230,8 @@ Abre el archivo `jobActionsTest` y añade las siguientes pruebas:
       info('  6.3 - The culture guessing is only for the first request')->
 
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()->
+      followRedirect()->
       with('user')->isCulture('fr')
     ;
 
@@ -560,15 +562,15 @@ En la página de categoría, el número de puestos de trabajo en la categoría a
 
     [php]
     <!-- apps/frontend/modules/category/templates/showSuccess.php -->
-    <strong><?php echo $pager->getNbResults() ?></strong> jobs in this category
+    <strong><?php echo count($pager) ?></strong> jobs in this category
 
 Cuando una oración tiene diferentes traducciones de acuerdo con un número, el helper `format_number_choice()` debe utilizarse:
 
     [php]
     <?php echo format_number_choice(
         '[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category',
-        array('%count%' => '<strong>'.$pager->getNbResults().'</strong>'),
-        $pager->getNbResults()
+        array('%count%' => '<strong>'.count($pager).'</strong>'),
+        count($pager)
       )
     ?>
 
@@ -999,17 +1001,19 @@ El framework de formualrios da varios widgets y los validadores para datos local
  * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)
  * [`sfWidgetFormI18nTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nTime)
 
- * [`sfWidgetFormI18nSelectCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectCountry)
- * [`sfWidgetFormI18nSelectCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectCurrency)
- * [`sfWidgetFormI18nSelectLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nSelectLanguage)
+ * [`sfWidgetFormI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCountry)
+ * [`sfWidgetFormI18nChoiceCurrency`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceCurrency)
+ * [`sfWidgetFormI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceLanguage)
+ * [`sfWidgetFormI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nChoiceTimezone)
 
  * [`sfValidatorI18nChoiceCountry`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceCountry)
  * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
+ * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
 
 Nos vemos mañana
 ----------------
 
-Internacionalización y localización son clases de first-class en symfony.
+Internacionalización y localización son clases principales en symfony.
 Dar un sitio web localizado para tus usuarios es muy fácil con lo que symfony da con todas las herramientas básicas e incluso le da la línea de comandos para realizar tareas rápidamente.
 
 Preparate para un especial tutorial de mañana puesto que se va a mover un montón de archivos y la exploración en torno a un enfoque diferente para la organización de un proyecto symfony.
