@@ -1,7 +1,7 @@
 Día 20: Los Plugins
 ===================
 
-Ayer aprendímos a internacionalizar y localizar tus aplicaciones symfony. Una vez más, gracias al ICU standard y un montón de helpers,
+Ayer aprendímos a internacionalizar y localizar tus aplicaciones symfony. Una vez más, gracias al ICU standard y a un montón de helpers,
 Symfony lo hace muy fácil.
 
 Hoy, vamos a hablar de plugins: lo que son, lo que puede tener un plugin, y para que pueden ser utilizados.
@@ -11,7 +11,7 @@ Los Plugins
 
 ### Un Plugin Symfony
 
-Un plugin ofrece una manera de empaquetar y distribuir una parte de archivos del proyecto. Al igual que un proyecto, un plugin puede tener clases, helpers, configuraciones, tareas, módulos, esquemas, e incluso recursos Web (CSS, JavaScript, etc.).
+Un plugin ofrece una manera de empaquetar y distribuir un conjunto de archivos del proyecto. Al igual que un proyecto, un plugin puede tener clases, helpers, configuraciones, tareas, módulos, esquemas, e incluso recursos Web (CSS, JavaScript, etc.).
 
 ### Plugins Privados 
 
@@ -173,21 +173,40 @@ Ejemplo:
 
 Una vez que se ha mudado, cambiado de nombre y se eliminan algunas clases forms, filters y model corre las tarea para la re-construcción de todas las clases.
 
-    $ php symfony doctrine:build --forms
-    $ php symfony doctrine:build --filters
-    $ php symfony doctrine:build --models
+    $ php symfony doctrine:build --all-classes
 
 Ahora te darás cuenta que algunos de los nuevos directorios creados para mantener los modelos creados a partir de el esquema estan incluido en el `sfJobeetPlugin` en `lib/model/doctrine/sfJobeetPlugin`.
 
 Este directorio contiene los modelos de nivel superior y la base de clases generada por el esquema. Por ejemplo, el modelo `JobeetJob` tiene ahora esta estructura de clases.
 
-| Class Name            | Extends                    | Path                        | Description                 |
-|-----------------------|----------------------------|-----------------------------|-----------------------------|
-| JobeetJob             | PluginJobeetJob            | lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php | Top level class where all project model functionality can be placed. This is where you can add and override functionality that comes with the plugin models. |
-| PluginJobeetJob       | BaseJobeetJob              | plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php | This class contains all the plugin specific functionality. You can override functionality in this class and the base by modifying the `JobeetJob` class. |
-| BaseJobeetJob         | sfDoctrineRecord           | lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php | Base class that is generated from the yaml schema file each time you run `doctrine:build --model`. |
-| JobeetJobTable        | PluginJobeetJobTable       | lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php | Same as the `JobeetJob` class except this is the instance of `Doctrine_Table` that will be returned when you call `Doctrine::getTable('JobeetJob')`. |
-| PluginJobeetJobTable  | Doctrine_Table             | lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php | This class contains all the plugin specific functionality for the instance of `Doctrine_Table` that will be returned when you call `Doctrine::getTable('JobeetJob')`.
+  * `JobeetJob` (extiende de `PluginJobeetJob`) en
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
+    Nivel superior donde toda la funcionalidad del modélo puede guardarse. Esto 
+    es donde puedas agregar y sobreescribir funcionalidades que ya vienen con los
+    modelos del plugin.
+
+  * `PluginJobeetJob` (extiende de `BaseJobeetJob`) en
+    `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
+    Esta clase contiene todas las funciones específicas del plugin. Puedes
+    sobreescribir la funcionalidad en esta clasa y la base modificando la clase
+    `JobeetJob`.
+
+  * `BaseJobeetJob` (extiende de `sfDoctrineRecord`) en
+    `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
+    Clase base que es generada desde el archivo yaml del esquema cada vez
+    que ejecutes `doctrine:build --model`.
+
+  * `JobeetJobTable` (extiende de `PluginJobeetJobTable`) en
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+    Lo mismo que para la clase `JobeetJob` excepto que esta e la instancia de
+    `Doctrine_Table` que obtendrás cuando llames a 
+    `Doctrine::getTable('JobeetJob')`.
+
+  * `PluginJobeetJobTable` (extiende de `Doctrine_Table`) en
+    `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
+    Esta clase contiene todas las funciones específicas para la instancia
+    de `Doctrine_Table` que obtendrás cuando llames a 
+    `Doctrine::getTable('JobeetJob')`.
 
 Con esta estructura que has generado tienes la posibilidad de personalizar los modelos de un plugin editando la clase de nivel superior `JobeetJob`. Puede personalizar el esquema y añadir columnas, añadir relaciones sobreescribiendo los métodos `setTableDefinition()` y `setUp()`.
 
@@ -332,7 +351,7 @@ Actualiza las acciones `search` y `delete` :
       // ...
     }
 
-Eventualmente, modifica el archivo `routing.yml` para tomar en cuenta estos cambios:
+Ahora, modifica el archivo `routing.yml` para tomar en cuenta estos cambios:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -417,6 +436,24 @@ Eventualmente, modifica el archivo `routing.yml` para tomar en cuenta estos camb
       url:   /
       param: { module: sfJobeetJob, action: index }
 
+Eventualmente, habilita el plugin a mano en `ProjectConfiguration.class.php` ya
+que no fue instalado via la tarea `plugin:install`:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+<propel>
+        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</propel>
+<doctrine>
+        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
+</doctrine>
+      }
+    }
+    
 Si tratas de navegar por la página web Jobeet ahora, tendrás excepciones diciendo que los módulos no están habilitados. Como los plugins son compartidos entre todas las aplicaciones en un proyecto, necesitas específicamente habilitar el módulo que necesitas para una aplicación determinada en su archivo de configuración `settings.yml`:
 
     [yml]
@@ -432,38 +469,6 @@ Si tratas de navegar por la página web Jobeet ahora, tendrás excepciones dicie
           - sfJobeetLanguage
 
 El último paso de la migración es arreglar las pruebas funcionales donde probamos por el nombre del módulo.
-
->**SIDEBAR**
->Activación del Plugin
->
->Para que un plugin este disponible en un proyecto, debe estar habilitado en la clase
->`ProjectConfiguration`.
->
->Este paso no es necesario con la configuración por defecto, ya que Symfony tiene un
->enfoque "black-list" que habilita todos los plugins excepto algunos de ellos:
->
->     [php]
->     // config/ProjectConfiguration.class.php
->     public function setup()
->     {
->       $this->enableAllPluginsExcept(array('sfDoctrinePlugin', 'sfCompat10Plugin'));
->     }
->
->Este enfoque es necesario para mantener la compatibilidad hacia atrás con viejas versiones Symfony
->pero es mejor tener un enfoque "white-list" y utilizar el método 
->`enablePlugins()` en su lugar:
->
->     [php]
->     // config/ProjectConfiguration.class.php
->     public function setup()
->     {
-<propel>
->       $this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
-</propel>
-<doctrine>
->       $this->enablePlugins(array('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
-</doctrine>
->     }
 
 ### Las Tareas
 
@@ -599,6 +604,11 @@ Cuando el dispatcher llama al método `methodNotFound()`, este pasa un objeto [`
 Si existe el método en la clase `JobeetUser` , este se llama y su valor devuelto es subsecuentemente devuelto al notificador. Si no, Symfony tratará con el próximo listener registrado o lanzará una Rxcepción.
 
 El método `getSubject()` regresa el notificador del evento, que en este caso es el actual objeto `myUser`.
+
+Como siempre cuando creas nuevas clases, no olvides de limpiar el cache antes de
+navegar o ejecutar las pruebas:
+
+    $ php symfony cc
 
 ### Arquitectura por defecto vs. Arquitectura de los Plugins
 
