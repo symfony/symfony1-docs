@@ -33,10 +33,16 @@ Como vamos a necesitar jQuery en todas las páginas, actualiza el layout para in
 
 Podríamos haber incluido jQuery directamente con un tag `<script>`, pero utilizando el helper `use_javascript()` nos aseguramos que el mismo JavaScript no se incluirá dos veces.
 
+>**NOTE**
+>Por 
+>[~razones de rendimiento|Performances~](http://developer.yahoo.com/performance/rules.html#js_bottom),
+>podrías también mover el helper `include_javascripts()` justo
+>antes de la etiqueta de cierre `</body>`.
+
 Agregando comportamientos
 -------------------------
 
-Implementar un buscardo vivo implica que cada vez que el usuario escribe una letra en el cuadro de búsqueda, se hace una llamada al servidor; a continuación, el servidor devolverá la información necesaria para actualizar la areas seleccionadas de la página sin actualizar toda la página.
+Implementar un buscador vivo implica que cada vez que el usuario escribe una letra en el cuadro de búsqueda, se hace una llamada al servidor; a continuación, el servidor devolverá la información necesaria para actualizar la areas seleccionadas de la página sin actualizar toda la página.
 
 En lugar de añadir el comportamiento con atributos `on*()` del HTML, el principio fundamental detrás de jQuery es agregar comportamientos al DOM después de que la página está completamente cargada. De esta forma, si desactivas el soporte de JavaScript en tu navegador, ningún comportamiento es registrado, y el formulario sigue funcionando como antes.
 
@@ -52,7 +58,7 @@ El primer paso es interceptar cuando un usuario introduce una tecla en el cuadro
     });
 
 >**NOTE**
->No añadas el código de ahora, ya que vamos a modificar en gran medida todo. El código
+>No añadas el código por ahora, ya que vamos a modificar todo en gran medida. El código
 >JavaScript final se añadirá al layout en la siguiente sección.
 
 Cada vez que el usuario introduce una tecla, jQuery executa la función anónima que se definió en el código anterior, pero sólo si el usuario ha escrito más de 3 caracteres o si se elimina todo, de la etiqueta input.
@@ -70,9 +76,9 @@ Hacer una llamada AJAX al servidor es tan sencillo como utilizar el método `loa
       }
     });
 
-Para gestionar las llamadas AJAX, la misma acción "normal" es llamada. Los cambios necesarios en la acción se harán en la siguiente sección.
+Para gestionar las llamadas AJAX, la misma acción "normal y corriente" es ejecutada. Los cambios necesarios en la acción se harán en la siguiente sección.
 
-Pero primero, vamos a quitar el botón de búsqueda, si JavaScript está habilitado:
+Por último, pero no por ello menos importante, si JavaScript está habilitado, y queremos a quitar el botón de búsqueda:
 
     [php]
     $('.search input[type="submit"]').hide();
@@ -80,9 +86,9 @@ Pero primero, vamos a quitar el botón de búsqueda, si JavaScript está habilit
 Respuesta al Usuario
 --------------------
 
-Cuando usted haces una llamada AJAX, la página no se actualiza inmediatamente. El navegador esperará la respuesta del servidor antes de actualizar la página. En el ínterin, es necesario proporcionar respuesta visual para el usuario para informarle de que algo está pasando.
+Cuando haces una llamada AJAX, la página no se actualiza inmediatamente. El navegador esperará la respuesta del servidor antes de actualizar la página. En el ínterin, es necesario proporcionar respuesta visual al usuario para informarle de que algo está ejecutandose.
 
-Una convención es para mostrar un icono de cargador durante la llamada  AJAX. Actualiza el layout para añadir la imagen del cargador y ocultarla por defecto:
+Una convención es mostrar un icono de cargador durante la llamada AJAX. Actualiza el layout para añadir la imagen del cargador y ocultarla por defecto:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
@@ -237,7 +243,7 @@ Como el navegador Symfony no puede simular JavaScript, necesitas ayudarlo cuando
 
       get('/search?query=sens*')->
       with('response')->begin()->
-        checkElement('table tr', 3)->
+        checkElement('table tr', 2)->
       end()
     ;
 
