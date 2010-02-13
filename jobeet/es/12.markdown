@@ -120,7 +120,7 @@ Sustituye el contenido por defecto del `layout.php` con el siguiente:
           <div id="header">
             <h1>
               <a href="<?php echo url_for('@homepage') ?>">
-                <img src="/images/jobeet.gif" alt="Jobeet Job Board" />
+                <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
           </div>
@@ -128,10 +128,20 @@ Sustituye el contenido por defecto del `layout.php` con el siguiente:
           <div id="menu">
             <ul>
               <li>
+<propel>
                 <?php echo link_to('Jobs', '@jobeet_job') ?>
+</propel>
+<doctrine>
+                <?php echo link_to('Jobs', '@jobeet_job_job') ?>
+</doctrine>
               </li>
               <li>
+<propel>
                 <?php echo link_to('Categories', '@jobeet_category') ?>
+</propel>
+<doctrine>
+                <?php echo link_to('Categories', '@jobeet_category_category') ?>
+</doctrine>
               </li>
             </ul>
           </div>
@@ -301,7 +311,7 @@ La configuración por defecto de los campos pueden ser personalizada con la secc
     config:
       fields:
         is_activated: { label: Activated?, help: Whether the user has activated the job, or not }
-        is_public:    { label: Public? }
+        is_public:    { label: Public?, help: Whether the job can also be published on affiliate websites, or not }
 
 ![Configuración de los Campos](http://www.symfony-project.org/images/jobeet/1_4/12/fields.png)
 
@@ -372,7 +382,7 @@ que es el otro layout de serie:
         params:  |
           %%is_activated%% <small>%%category_id%%</small> - %%company%%
            (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
-
+           
 En `stacked`, cada objeto está representado por una única cadena, que se define por la opción `params`.
 
 >**NOTE**
@@ -391,7 +401,7 @@ Sin embargo, la clase `JobeetJob` ya tiene un método `getJobeetCategory()` que 
     [yml]
     # apps/backend/modules/job/config/generator.yml
     %%is_activated%% <small>%%jobeet_category%%</small> - %%company%%
-     (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
+     (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%))
 
 ![Stacked layout](http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png)
 
@@ -470,7 +480,12 @@ framework. Si actualizas tu navegador y seleccionas las acciones extendidas, sym
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
+<propel>
         $this->redirect('@jobeet_job');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_job_job');
+</doctrine>
       }
     }
 
@@ -478,7 +493,6 @@ Las claves primarias seleccionadas son almacenados en el parámetro `ids` de la 
 argumento extra para pasar la comprobacion de expiración.
 
 Actualiza el método `extend()` para tomar este nuevo argumento en cuenta:
-
 
     [php]
 <propel>
@@ -547,13 +561,18 @@ Como para las batch actions, las acciones `_delete` y `_edit` son las definidas 
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
+<propel>
         $this->redirect('@jobeet_job');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_job_job');
+</doctrine>
       }
 
       // ...
     }
 
-![Perzonalizar object action](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
+![Perzonalizar el objeto action](http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png)
 
 ### `actions`
 
@@ -594,7 +613,12 @@ Crea la acción `listDeleteNeverActivated` en el módulo `job`:
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
+<propel>
         $this->redirect('@jobeet_job');
+</propel>
+<doctrine>
+        $this->redirect('@jobeet_job_job');
+</doctrine>
       }
 
       // ...
@@ -637,6 +661,7 @@ los puestos de trabajo utilizando la opción `table_method`:
 </doctrine>
 
     [yml]
+    # apps/backend/modules/job/config/generator.yml
     config:
       list:
 <propel>
@@ -687,8 +712,8 @@ La opción `display` para vistas form también se puede utilizar para organizar 
       form:
         display:
           Content: [category_id, type, company, logo, url, position,
-            âž¥ location, description, how_to_apply, is_public, email]
-          Admin:   [_generated_token, is_activated, expires_at]
+            ➥ location, description, how_to_apply, is_public, email]
+          Admin:   [_generated_token, is_activated, expires_atxpires_at]
 
 La configuración anterior define dos grupos (`Content` y `Admin`), each
 que contienen un subconjunto de los campos del formulario.
@@ -756,7 +781,10 @@ Para tener diferentes formularios para el frontend y el backend, tenemos que cre
       {
         $this->removeFields();
 
-        $this->validatorSchema['email'] = new sfValidatorEmail();
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
 
         // ...
       }
@@ -883,7 +911,7 @@ Para el módulo `job` , vamos a eliminar algunos de ellos:
     # apps/backend/modules/job/config/generator.yml
     filter:
       display: [category_id, company, position, description, is_activated,
-       âž¥ is_public, email, expires_at]
+       ➥ is_public, email, expires_at]
 
 Como los filtros son siempre opcional, no hay necesidad de sobreescribir clase filtro para configurar los campos que se mostrarán.
 
