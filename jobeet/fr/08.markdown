@@ -503,13 +503,13 @@ méthode `Doctrine_Core::loadData()` pour charger les données :
 >**NOTE**
 >L'objet ~`sfConfig`~ peut être utilisé pour obtenir le chemin complet d'un
 >sous-répertoire du projet. Son utilisation permet à la structure de répertoire
->par défaut pour être personnalisés.
+>par défaut pour être personnalisée.
 
 La méthode `loadData()` prend un répertoire ou un fichier comme premier argument. Elle
 peut également prendre un tableau de répertoires et/ou de fichiers.
 
 Nous avons déjà créé quelques données initiales dans le répertoire `data/fixtures/`.
-Pour les tests, nous mettrons les ~jeux de test|Jeux de test~ dans le répertoire `data/fixtures/`.
+Pour les tests, nous mettrons les ~jeux de test|Jeux de test~ dans le répertoire `test/fixtures/`.
 Ces jeux de test seront utilisés pour les tests unitaires et fonctionnels de ##ORM##.
 
 Pour l'instant, copiez les fichiers à partir `data/fixtures/` vers le répertoire
