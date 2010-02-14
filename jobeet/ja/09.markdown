@@ -143,6 +143,9 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
  | メソッド           | 説明
  | ------------------ | ------------------------------------------------------
  | `checkElement()`   | レスポンスの CSS セレクターが基準を満たすかチェックする
+ | `checkForm()`      | Checks an `sfForm` form object
+ | `debug()`          | Prints the response output to ease debug
+ | `matches()`        | Tests a response against a regexp
  | `isHeader()`       | ヘッダーの値をチェックする
  | `isStatusCode()`   | レスポンスステータスコードをチェックする
  | `isRedirected()`   | 現在のレスポンスがリダイレクトであるかをチェックする
@@ -178,7 +181,7 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 すでにデータベースがブートストラップスクリプトで初期化されているので、機能テストでのデータのロードはユニットテストよりも少し簡単です。
@@ -196,7 +199,7 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -334,7 +337,7 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -359,6 +362,8 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
 ### ホームページのそれぞれの求人はクリックできる
 
     [php]
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
       get('/')->
 
@@ -367,10 +372,10 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()
     ;
 
@@ -394,7 +399,7 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -420,7 +425,8 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -487,16 +493,20 @@ symfony において、機能テストは [~`sfBrowser`|ブラウザー~](http:/
       end()
     ;
 
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
+      get('/')->
+
       info('  2.1 - Each job on the homepage is clickable and give detailed information')->
       click('Web Developer', array(), array('position' => 1))->
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()->
 
       info('  2.2 - A non-existent job forwards the user to a 404')->

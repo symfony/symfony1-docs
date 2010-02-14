@@ -185,7 +185,12 @@ méthodes de testeur pour l'objet `sfWebResponse` :
 
  | Method             | Description
  | ------------------ | -----------------------------------------------------
- | `checkElement()`   | Vérifie si le sélecteur CSS d'une réponse correspond à certains critères
+ | `checkElement()`   | Vérifie si le sélecteur CSS d'une réponse correspond à 
+ |                    | certains critères
+ | `checkForm()`      | Vérifie un objet de formulaire `sfForm`
+ | `debug()`          | Affiche le contenu de la réponse afin de faciliter le 
+ |                    | débogage
+ | `matches()`        | Teste une réponse avec une expression régulière
  | `isHeader()`       | Vérifie la valeur de l'entête
  | `isStatusCode()`   | Vérifie le code du statut de la réponse
  | `isRedirected()`   | Vérifie si la réponse actuelle est une redirection
@@ -224,7 +229,7 @@ que nous lançons un test fonctionnel. On peut réutiliser le code que nous avon
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Le chargement des données dans un test fonctionnel est un peu plus facile que pour les tests
@@ -245,7 +250,7 @@ hérite de `sfTestFunctional` :
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -404,7 +409,7 @@ fonctionnel|Testeurs~ d'un domaine spécifique pour Jobeet :
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -429,6 +434,8 @@ Vous pouvez maintenant remplacer le code de test précédent par le suivant :
 ### Chaque emploi sur la page d'accueil est cliquable
 
     [php]
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
       get('/')->
 
@@ -437,10 +444,10 @@ Vous pouvez maintenant remplacer le code de test précédent par le suivant :
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()
     ;
 
@@ -468,7 +475,7 @@ emploi et catégorie. Lisez le code avec soin car vous apprendrez quelques nouve
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -494,7 +501,7 @@ emploi et catégorie. Lisez le code avec soin car vous apprendrez quelques nouve
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -561,16 +568,20 @@ emploi et catégorie. Lisez le code avec soin car vous apprendrez quelques nouve
       end()
     ;
 
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
+      get('/')->
+
       info('  2.1 - Each job on the homepage is clickable and give detailed information')->
       click('Web Developer', array(), array('position' => 1))->
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()->
 
       info('  2.2 - A non-existent job forwards the user to a 404')->

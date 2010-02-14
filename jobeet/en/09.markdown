@@ -1,10 +1,9 @@
 Day 9: The Functional Tests
 ===========================
 
-Yesterday, we saw how to unit test our Jobeet classes using the lime testing
-library packaged with symfony.
+In the previous chapter, we saw how to unit test our Jobeet classes using the lime testing library packaged with symfony.
 
-Today, we will write functional tests for the features we have already
+In this chapter, we will write functional tests for the features we have already
 implemented in the `job` and `category` modules.
 
 Functional Tests
@@ -14,10 +13,7 @@ Functional Tests
 from the request made by a browser to the response sent by the server. They
 ~test|Testing~ all the layers of an application: the routing, the model, the
 actions, and the templates. They are very similar to what you probably already
-do manually: each time you add or modify an action, you need to go to the browser
-and check that everything works as expected by clicking on links and checking
-elements on the rendered page. In other words, you run a scenario
-corresponding to the use case you have just implemented.
+do manually: each time you add or modify an action, you need to go to the browser and check that everything works as expected by clicking on links and checking elements on the rendered page. In other words, you run a scenario corresponding to the use case you have just implemented.
 
 As the process is manual, it is tedious and error prone. Each time you change
 something in your code, you must step through all the scenarios to ensure that
@@ -96,7 +92,7 @@ that takes a `sfBrowser` instance in its constructor. The `sfTestFunctional`
 class delegates the tests to **~tester|Testers~** objects. Several testers are
 bundled with symfony, and you can also create your own.
 
-As we saw yesterday, functional tests are stored under the `test/functional/`
+As we saw in chapter 8, functional tests are stored under the `test/functional/`
 directory. For Jobeet, tests are to be found in the
 `test/functional/frontend/` sub-directory as each application has its own
 subdirectory. This directory already contains two files:
@@ -123,10 +119,10 @@ a module automatically create a basic functional test file:
       end()
     ;
 
-At first, the script above may look a bit strange to you. That's because
+At first sight, the script above may look a bit strange to you. That's because
 methods of `sfBrowser` and `sfTestFunctional` implement a
 [~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface) 
-by always returning `$this`. It allows you to chain the method calls for better
+by always returning `$this`. It allows you to chain method calls for better
 readability. The above snippet is equivalent to:
 
     [php]
@@ -186,10 +182,15 @@ tester methods against the `sfWebResponse` object:
  | Method             | Description
  | ------------------ | -----------------------------------------------------
  | `checkElement()`   | Checks if a response CSS selector match some criteria
+ | `checkForm()`      | Checks an `sfForm` form object
+ | `debug()`          | Prints the response output to ease debug
+ | `matches()`        | Tests a response against a regexp
  | `isHeader()`       | Checks the value of a header
  | `isStatusCode()`   | Checks the response status code
  | `isRedirected()`   | Checks if the current response is a redirect
- | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
+ | `isValid()`        | Checks if a response is well-formed XML (you also 
+ |                    | validate the response again its document type be passing 
+ |                    | `true` as an argument)
 
 >**NOTE**
 >We will describe more [testers](http://www.symfony-project.org/api/1_4/test)
@@ -224,7 +225,7 @@ functional test. We can reuse the code we have written yesterday:
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Loading data in a functional test is a bit easier than in unit tests as the
@@ -245,7 +246,7 @@ file, but we will rather create our own functional class that inherits from
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -404,7 +405,8 @@ class|Testers~ for Jobeet:
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -429,6 +431,8 @@ You can now replace the previous test code by the following one:
 ### Each job on the homepage is clickable
 
     [php]
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
       get('/')->
 
@@ -437,10 +441,10 @@ You can now replace the previous test code by the following one:
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()
     ;
 
@@ -468,7 +472,7 @@ category pages. Read the code carefully as you may learn some new neat tricks:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -494,7 +498,8 @@ category pages. Read the code carefully as you may learn some new neat tricks:
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -561,16 +566,20 @@ category pages. Read the code carefully as you may learn some new neat tricks:
       end()
     ;
 
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
+      get('/')->
+
       info('  2.1 - Each job on the homepage is clickable and give detailed information')->
       click('Web Developer', array(), array('position' => 1))->
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()->
 
       info('  2.2 - A non-existent job forwards the user to a 404')->

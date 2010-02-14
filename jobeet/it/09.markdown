@@ -189,6 +189,9 @@ per analizzare e testare gli oggetti `sfWebResponse`:
  | Metodo             | Descrizione
  | ------------------ | -----------------------------------------------------
  | `checkElement()`   | Verifica se un selettore CSS di risposta corrisponda ad un criterio
+ | `checkForm()`      | Checks an `sfForm` form object
+ | `debug()`          | Prints the response output to ease debug
+ | `matches()`        | Tests a response against a regexp
  | `isHeader()`       | Controlla il valore dell'header
  | `isStatusCode()`   | Controlla il codice di stato della risposta
  | `isRedirected()`   | Controlla se la risposta corrente è un rinvio
@@ -228,7 +231,7 @@ codice scritto ieri:
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Caricare dati in un test funzionale è più facile rispetto ad un test unitario,
@@ -248,7 +251,7 @@ test, ma creeremo piuttosto una nostra classe che eredita da `sfTestFunctional`:
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -437,6 +440,8 @@ Ora possiamo sostituire il codice precedente del test con il nuovo:
 ### Ogni lavoro nella homepage è cliccabile
 
     [php]
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
       get('/')->
 
@@ -445,10 +450,10 @@ Ora possiamo sostituire il codice precedente del test con il nuovo:
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()
     ;
 
@@ -478,7 +483,7 @@ potreste imparare alcuni interessanti nuovi trucchi.
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -572,16 +577,20 @@ potreste imparare alcuni interessanti nuovi trucchi.
       end()
     ;
 
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
+      get('/')->
+
       info('  2.1 - Each job on the homepage is clickable and give detailed information')->
       click('Web Developer', array(), array('position' => 1))->
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()->
 
       info('  2.2 - A non-existent job forwards the user to a 404')->

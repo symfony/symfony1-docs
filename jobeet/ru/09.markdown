@@ -190,6 +190,9 @@ symfony предлагает решение по лучше.
  | ------------------ | -------------------------------------------------------
  | `checkElement()`   | Проверяет в ответном HTML наличие элементов 
  |                    | соответствующих CSS селектору
+ | `checkForm()`      | Checks an `sfForm` form object
+ | `debug()`          | Prints the response output to ease debug
+ | `matches()`        | Tests a response against a regexp
  | `isHeader()`       | Проверяет значение заголовка (header)
  | `isStatusCode()`   | Проверяет код статуса ответа
  | `isRedirected()`   | Проверяет является ли ответ перенаправлением
@@ -231,7 +234,7 @@ symfony предлагает решение по лучше.
     $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-    Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
 Загрузка данных для функциональных тестов чуть проще, чем для модульных, так как
@@ -252,7 +255,7 @@ symfony предлагает решение по лучше.
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -409,7 +412,7 @@ position содержат "expired"). Когда в метод `checkElement()` 
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -434,6 +437,8 @@ position содержат "expired"). Когда в метод `checkElement()` 
 ### Каждая вакансия на главной странице кликабельна
 
     [php]
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
       get('/')->
 
@@ -442,10 +447,10 @@ position содержат "expired"). Когда в метод `checkElement()` 
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()
     ;
 
@@ -474,7 +479,7 @@ position содержат "expired"). Когда в метод `checkElement()` 
         $loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </propel>
 <doctrine>
-        Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+        Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
         return $this;
@@ -500,7 +505,7 @@ position содержат "expired"). Когда в метод `checkElement()` 
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
 </doctrine>
@@ -567,16 +572,20 @@ position содержат "expired"). Когда в метод `checkElement()` 
       end()
     ;
 
+    $job = $browser->getMostRecentProgrammingJob();
+
     $browser->info('2 - The job page')->
+      get('/')->
+
       info('  2.1 - Each job on the homepage is clickable and give detailed information')->
       click('Web Developer', array(), array('position' => 1))->
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'show')->
-        isParameter('company_slug', 'sensio-labs')->
-        isParameter('location_slug', 'paris-france')->
-        isParameter('position_slug', 'web-developer')->
-        isParameter('id', $browser->getMostRecentProgrammingJob()->getId())->
+        isParameter('company_slug', $job->getCompanySlug())->
+        isParameter('location_slug', $job->getLocationSlug())->
+        isParameter('position_slug', $job->getPositionSlug())->
+        isParameter('id', $job->getId())->
       end()->
 
       info('  2.2 - A non-existent job forwards the user to a 404')->
