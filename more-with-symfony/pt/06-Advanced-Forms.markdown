@@ -1,25 +1,25 @@
 ﻿Formulários Avançados
 =====================
 
-* por Ryan Weaver, Fabien potencier *
+*por Ryan Weaver, Fabien potencier*
 
-O framework de formulários do Symfony prepara o desenvolvedor com as ferramentas 
+O framework de formulários do Symfony equipa o desenvolvedor com as ferramentas 
 necessárias para facilmente processar e validar os dados do formulário de uma 
-formulário orientada a objeto. Graças as classes ~`sfFormDoctrine`~ and ~`sfFormPropel`~ 
-o ferecidas por cada ORM, o framework de formulários pode facilmente mostrar e 
+forma orientada à objeto. Graças as classes ~`sfFormDoctrine`~ and ~`sfFormPropel`~ 
+oferecidas por cada ORM, o framework de formulários pode facilmente mostrar e 
 salvar formulários que estão intimamente relacionados a camada de dados.
 
 Situações do mundo real, porém, muitas vezes exigem ao desenvolvedor personalizar
-e estender os formulários. Neste capítulo iremos apresentar e resolver várias comuns 
-e desafiadores problemas de formulários. Também vamos dissecar o objeto ~`sfForm`~ e
+e estender os formulários. Neste capítulo iremos apresentar e resolver vários problemas comuns 
+mas desafiadores. Também vamos dissecar o objeto ~`sfForm`~ e
 remover alguns de seus mistérios.
 
-Mini-Projeto: Produtos & Fotos
+Mini-Projeto: Produtos e Fotos
 -------------------------------
 
 O primeiro problema gira em torno da edição de um produto individual e um
 número ilimitado de fotos para esse produto. O usuário deve ser capaz de editar
-tanto o produto e fotos do produto no mesmo formulário. Nós também precisamos
+tanto o produto quanto as suas fotos no mesmo formulário. Nós também precisamos
 permiter ao usuário fazer upload de até duas fotos novas do produto de cada vez.
 Aqui está um possível esquema:
 
@@ -29,7 +29,7 @@ Aqui está um possível esquema:
         name:           { type: string(255), notnull: true }
         price:          { type: decimal, notnull: true }
 
-                ProductPhoto:
+    ProductPhoto:
       columns:
         product_id:     { type: integer }
         filename:       { type: string(255) }
@@ -41,39 +41,38 @@ Aqui está um possível esquema:
           foreignAlias: Photos
           onDelete:     cascade
 
-Quando concluído, o formulário será parecido com isto:
+Quando concluído, o formulário será parecido com o seguinte:
 
 ![Formulário de Produto e Foto](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_01.png "Form de Produto com form ProductPhoto inserido")
 
-Saiba mais fazendo o Exemplos
---------------------------------
+Aprenda mais fazendo o Exemplos
+-------------------------------
 
-A melhor maneira de aprender técnicas avançadas é acompanhar e testar o exemplos
+A melhor maneira de aprender técnicas avançadas é acompanhar e testar os exemplos
 passo a passo. Graças ao recurso `--installer` do [symfony](#chapter_03), nós 
 fornecemos uma maneira simples para você criar um projeto funcional com um banco de 
 dados SQLite, o esquema do banco Doctrine, algumas fixtures, uma aplicação `frontend`
 e um módulo `produto` para trabalhar.
-Baixe o instalador
-[script] (http://www.symfony-project.org/images/more-with-symfony/advanced_form_installer.php.src)
-e executar o seguinte comando para criar o projeto symfony:
+Baixe o [script](http://www.symfony-project.org/images/more-with-symfony/advanced_form_installer.php.src)
+do instalador e execute o seguinte comando para criar o projeto symfony:
 
     $ php symfony generate:project advanced_form --installer=/path/to/advanced_form_installer.php
 
 Este comando cria um projeto totalmente funcional com o esquema de banco de dados 
-que temos haviamos introduzido na seção anterior.
+que havíamos introduzido na seção anterior.
 
->**NOTA**
+>**NOTE**
 >Neste capítulo, os caminhos de arquivo são para um projeto symfony rodando com o
 >Doctrine, como gerado na tarefa anterior.
 
-Configuração básica de Formulário
---------------------------------
+Configuração Básica do Formulário
+---------------------------------
 
-Como os requisitos envolvem mudanças de dois modelos diferentes ( `Product`
-e `ProductPhoto`), a solução terá de incorporar dois diferentes formulários
-symfony ( `ProductForm` e `ProductPhotoForm`). Felizmente, o framework de 
-formulário pode facilmente combinar múltiplas forms em uma via ~`sfForm::embedForm()`~.
-Primeiramente, a configuração do `ProductPhotoForm` de formulário independente.  
+Como os requisitos envolvem mudanças em dois modelos diferentes (`Product`
+e `ProductPhoto`), a solução terá de incorporar dois formulários do symfony diferentes 
+(`ProductForm` e `ProductPhotoForm`). Felizmente, o framework de 
+formulário pode facilmente combinar múltiplos formulários em um utilizando o ~`sfForm::embedForm()`~.
+Primeiro, configure o `ProductPhotoForm` independentemente.  
 Neste exemplo, vamos usar o campo `filename` como um campo de upload de arquivo:
 
     [php]
