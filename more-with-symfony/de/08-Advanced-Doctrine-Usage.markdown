@@ -583,7 +583,7 @@ We have a few other convenient methods we can use to delete cache entries if the
  * `deleteBySuffix($suffix)`: Deletes cache entries that have the passed
    suffix;
 
- * `deleteByRegularExpression($regex)`: Deletes cache entries that match the
+ * `deleteByRegex($regex)`: Deletes cache entries that match the
    passed regular expression;
 
  * `deleteAll()`: Deletes all cache entries.

@@ -598,7 +598,7 @@ Si el método `deleteByPrefix()` no es suficiente, existen otros métodos muy
  * `deleteBySuffix($sufijo)`: borra las entradas de la cache que contengan el
    sufijo indicado.
 
- * `deleteByRegularExpression($regex)`: borra las entradas de la cache cuya clave
+ * `deleteByRegex($regex)`: borra las entradas de la cache cuya clave
    cumpla con la expresión regular indicada.
 
  * `deleteAll()`: borra todas las entradas de la cache.

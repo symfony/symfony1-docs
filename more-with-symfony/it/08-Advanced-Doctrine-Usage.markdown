@@ -590,7 +590,7 @@ cancellare le voci della cache se `deleteByPrefix()` non è sufficiente:
 
  * `deleteBySuffix($suffix)`: Cancella le voci della cache che hanno il suffisso passato;
 
- * `deleteByRegularExpression($regex)`:  Cancella le voci della cache che combaciano
+ * `deleteByRegex($regex)`:  Cancella le voci della cache che combaciano
    con l'espressione regolare passata;
 
  * `deleteAll()`: Cancella tutte le voci della cache.

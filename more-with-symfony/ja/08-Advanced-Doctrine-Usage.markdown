@@ -517,7 +517,7 @@ DQL の DELETE 文で残りの 2 レコードをまとめて削除しても動�
 
  * `deleteBySuffix($suffix)`: 接尾辞を渡してキャッシュを削除します。
 
- * `deleteByRegularExpression($regex)`: 正規表現にマッチするキャッシュを削除します。
+ * `deleteByRegex($regex)`: 正規表現にマッチするキャッシュを削除します。
 
  * `deleteAll()`: すべてのキャッシュを削除します。
 

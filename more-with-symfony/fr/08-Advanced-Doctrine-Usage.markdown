@@ -516,7 +516,7 @@ Il existe d'autres méthodes très utiles facilitant la suppression des entrées
  * `deleteBySuffix($suffix)` supprime les entrées du cache enregistrées avec le 
    suffixe passé en paramètre ;
 
- * `deleteByRegularExpression($regex)` supprime les entrées du cache qui 
+ * `deleteByRegex($regex)` supprime les entrées du cache qui 
    correspondent à l'expression régulière passée en paramètre ;
 
  * `deleteAll()` supprime toutes les entrées du cache.

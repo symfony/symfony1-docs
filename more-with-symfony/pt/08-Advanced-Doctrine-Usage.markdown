@@ -581,7 +581,7 @@ metódo `deleteByPrefix()` não for suficiente para você:
 * `deleteBySuffix($suffix)`: Exclui as entradas de cache que combinem com o sufixo
    passado;
 
-* `deleteByRegularExpression($regex)`: Exclui as entradas de cache que correspondam à
+* `deleteByRegex($regex)`: Exclui as entradas de cache que correspondam à
    expressão regular passada;
 
 * `deleteAll()`: Exclui todas as entradas de cache.
