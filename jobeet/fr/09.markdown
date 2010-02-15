@@ -4,7 +4,7 @@ Jour 9 : Les tests fonctionnels
 Dans le chapitre précédent, nous avons vu comment faire des tests unitaires sur nos classes Jobeet en
 utilisant la bibliothèque intégrée lime avec symfony.
 
-Dans ce capitre, nous allons écrire des tests fonctionnels pour les fonctionnalités que nous
+Dans ce chapitre, nous allons écrire des tests fonctionnels pour les fonctionnalités que nous
 avons déjà mis en œuvre dans les modules `job` et `category`.
 
 Les tests fonctionnels
