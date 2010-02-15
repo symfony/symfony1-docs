@@ -1,7 +1,8 @@
 Day 9: The Functional Tests
 ===========================
 
-In the previous chapter, we saw how to unit test our Jobeet classes using the lime testing library packaged with symfony.
+In the previous chapter, we saw how to unit test our Jobeet classes using the lime testing
+library packaged with symfony.
 
 In this chapter, we will write functional tests for the features we have already
 implemented in the `job` and `category` modules.
@@ -13,7 +14,10 @@ Functional Tests
 from the request made by a browser to the response sent by the server. They
 ~test|Testing~ all the layers of an application: the routing, the model, the
 actions, and the templates. They are very similar to what you probably already
-do manually: each time you add or modify an action, you need to go to the browser and check that everything works as expected by clicking on links and checking elements on the rendered page. In other words, you run a scenario corresponding to the use case you have just implemented.
+do manually: each time you add or modify an action, you need to go to the browser
+and check that everything works as expected by clicking on links and checking
+elements on the rendered page. In other words, you run a scenario
+corresponding to the use case you have just implemented.
 
 As the process is manual, it is tedious and error prone. Each time you change
 something in your code, you must step through all the scenarios to ensure that
@@ -188,9 +192,7 @@ tester methods against the `sfWebResponse` object:
  | `isHeader()`       | Checks the value of a header
  | `isStatusCode()`   | Checks the response status code
  | `isRedirected()`   | Checks if the current response is a redirect
- | `isValid()`        | Checks if a response is well-formed XML (you also 
- |                    | validate the response again its document type be passing 
- |                    | `true` as an argument)
+ | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
 
 >**NOTE**
 >We will describe more [testers](http://www.symfony-project.org/api/1_4/test)
@@ -405,7 +407,6 @@ class|Testers~ for Jobeet:
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-
         $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();
@@ -498,7 +499,6 @@ category pages. Read the code carefully as you may learn some new neat tricks:
           ->from('JobeetJob j')
           ->leftJoin('j.JobeetCategory c')
           ->where('c.slug = ?', 'programming');
-
         $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->fetchOne();

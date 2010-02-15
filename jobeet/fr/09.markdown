@@ -1,10 +1,10 @@
 Jour 9 : Les tests fonctionnels
 ===============================
 
-Hier, nous avons vu comment faire des tests unitaires sur nos classes Jobeet en
+Dans le chapitre précédent, nous avons vu comment faire des tests unitaires sur nos classes Jobeet en
 utilisant la bibliothèque intégrée lime avec symfony.
 
-Aujourd'hui, nous allons écrire des tests fonctionnels pour les fonctionnalités que nous
+Dans ce capitre, nous allons écrire des tests fonctionnels pour les fonctionnalités que nous
 avons déjà mis en œuvre dans les modules `job` et `category`.
 
 Les tests fonctionnels
@@ -96,7 +96,7 @@ qui prend une instance `sfBrowser` dans son constructeur. La classe `sfTestFunct
 délègue les tests aux objets **~testeur|Testeurs~**. Plusieurs testeurs sont
 livrés avec symfony et vous pouvez également créer les vôtres.
 
-Comme nous l'avons vu hier, les tests fonctionnels sont stockés dans le répertoire
+Comme nous l'avons vu dans le chapitre 8, les tests fonctionnels sont stockés dans le répertoire
 `test/functional/`. Pour Jobeet, les tests se trouvent dans le sous-répertoire
 `test/functional/frontend/` car chaque application a son propre sous-répertoire.
 Ce répertoire contient déjà deux fichiers: `categoryActionsTest.php` et
@@ -123,7 +123,7 @@ automatiquement un fichier de test fonctionnel de base :
       end()
     ;
 
-Au début, le script ci-dessus peut vous sembler un peu étrange. C'est parce
+A première vue, le script ci-dessus peut vous sembler un peu étrange. C'est parce
 que les méthodes de `sfBrowser` et de `sfTestFunctional` implémente une
 [~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface)
 en retournant toujours `$this`. Cela vous permet d'enchaîner les appels de méthode pour
@@ -185,11 +185,9 @@ méthodes de testeur pour l'objet `sfWebResponse` :
 
  | Method             | Description
  | ------------------ | -----------------------------------------------------
- | `checkElement()`   | Vérifie si le sélecteur CSS d'une réponse correspond à 
- |                    | certains critères
+ | `checkElement()`   | Vérifie si le sélecteur CSS d'une réponse correspond à certains critères
  | `checkForm()`      | Vérifie un objet de formulaire `sfForm`
- | `debug()`          | Affiche le contenu de la réponse afin de faciliter le 
- |                    | débogage
+ | `debug()`          | Affiche le contenu de la réponse afin de faciliter le débogage
  | `matches()`        | Teste une réponse avec une expression régulière
  | `isHeader()`       | Vérifie la valeur de l'entête
  | `isStatusCode()`   | Vérifie le code du statut de la réponse
