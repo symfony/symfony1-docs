@@ -62,16 +62,16 @@ Este comando cria um projeto totalmente funcional com o esquema de banco de dado
 que havíamos introduzido na seção anterior.
 
 >**NOTE**
->Neste capítulo, os caminhos de arquivo são para um projeto symfony rodando com o
+>Neste capítulo, os caminhos de arquivo são para um projeto symfony executando com o
 >Doctrine, como gerado na tarefa anterior.
 
 Configuração Básica do Formulário
 ---------------------------------
 
 Como os requisitos envolvem mudanças em dois modelos diferentes (`Product`
-e `ProductPhoto`), a solução terá de incorporar dois formulários do symfony diferentes 
+e `ProductPhoto`), a solução terá que incorporar dois formulários do symfony diferentes 
 (`ProductForm` e `ProductPhotoForm`). Felizmente, o framework de 
-formulário pode facilmente combinar múltiplos formulários em um utilizando o ~`sfForm::embedForm()`~.
+formulário pode facilmente combinar múltiplos formulários em um único formulário utilizando o ~`sfForm::embedForm()`~.
 Primeiro, configure o `ProductPhotoForm` independentemente.  
 Neste exemplo, vamos usar o campo `filename` como um campo de upload de arquivo:
 
@@ -89,27 +89,27 @@ Neste exemplo, vamos usar o campo `filename` como um campo de upload de arquivo:
     }
 
 Para este formulário, tanto os campos `caption` quanto `filename` são automaticamente
-requeridos, mas por razões diferentes. O campo `caption` é necessária porque
-a coluna relacionada no esquema do banco de dados foi definida com um `não nulo`.
-O campo `filename` é requerido por padrão porque um objeto validador padrão pede.
+requeridos, mas por razões diferentes. O campo `caption` é obrigatório porque
+a coluna relacionada no esquema do banco de dados foi definida com `notnull`.
+O campo `filename` é obrigatório porque, por padrão, um objeto validador seta a opção `required` para `true`.
 
->**NOTA**
->~`sfForm::useFields()`~ é uma nova função no symfony 1.3 que permite que o
->desenvolvedor especifique exatamente quais os campos do formulário deve usar e em que
->ordem que deve ser exibido. Todos os outros campos não ocultos são removidos
+>**NOTE**
+>~`sfForm::useFields()`~ é uma nova função do symfony 1.3 que permite ao
+>desenvolvedor especificar exatamente quais os campos do formulário desejar usar e em que
+>ordem eles devem ser exibidos. Todos os outros campos não ocultos são removidos
 >do formulário.
 
-Até agora nós não fizemos nada mais do que a configuração de formulário simples. 
+Até agora, nós não fizemos nada mais do que a configuração simples de um formulário. 
 A seguir, vamos combinar os formulários em um.
 
 Embutindo Formulários
 ---------------------
 
-Ao utilizar ~`sfForm::embedForm()`~, o `ProductForm` e `ProductPhotoForms` 
+Ao utilizar o ~`sfForm::embedForm()`~, o `ProductForm` e `ProductPhotoForms` 
 podem ser combinados com um esforço muito pequeno. O trabalho é sempre feito
-na *formulário* principal, que neste caso é `ProductForm`. O requisito é a 
+no *formulário* principal, que, neste caso, é `ProductForm`. O requisito é a 
 capacidade de enviar até duas fotos do produto de uma vez.
-Para realizar isso, inserir dois objetos `ProductPhotoForm` no `ProductForm`:
+Para realizar isso, insira dois objetos `ProductPhotoForm` no `ProductForm`:
 
     [php]
     // lib/form/doctrine/ProductForm.class.php
@@ -128,35 +128,35 @@ Para realizar isso, inserir dois objetos `ProductPhotoForm` no `ProductForm`:
       $this->embedForm('newPhotos', $subForm);
     }
 
-Se você apontar seu navegador para o módulo `product`, agora você pode fazer de
-upload de dois `ProductPhoto`, bem como modificar o próprio objeto `Product`.
+Se você apontar seu navegador para o módulo `product`, agora você poderá fazer o
+upload de dois `ProductPhoto`, bem como, modificar o próprio objeto `Product`.
 
-O Symfony salva automaticamente os novos objetos `ProductPhoto` relacionaeles
+O symfony salva automaticamente os novos objetos `ProductPhoto` relacionados 
 ao objeto correspondente `Product`. Mesmo o upload do arquivo, definido em
-`ProductPhotoForm`, executa normalmente.
+`ProductPhotoForm`, é executado normalmente.
 
-Verifique se os registros são salvos corretamente no banco de dados:
+Verifique se os registros foram salvos corretamente no banco de dados:
 
     $ php symfony doctrine:dql --table "FROM Product"
     $ php symfony doctrine:dql --table "FROM ProductPhoto"
 
-Na tabela `ProductPhoto`, você vai notar os nomes das fotos.
-Tudo está funcionando como esperado se você pode encontrar arquivos com os mesmos nomes
+Na tabela `ProductPhoto`, você vai notar os nomes dod arquivos das fotos.
+Tudo está funcionando como esperado se você puder encontrar os arquivos com os mesmos nomes
 do banco de dados no diretório `web/upload/products/`.
 
-> ** NOTA **
-> Porque o nome do arquivo e campos da legenda são necessários `ProductPhotoForm»,
-> validação do formulário principal será sempre a não ser que o usuário está carregando
-> duas novas fotos. Continue lendo para saber como corrigir este problema.
+>**NOTE**
+>Devido aos campos `filename` e `caption` serem obrigatórios no `ProductPhotoForm`,
+>a validação do formulário principal irá sempre falhar a não ser que o usuário faça o
+>upload de duas novas fotos. Continue lendo para saber como corrigir este problema.
 
-Re-fatoração(Refactoring)
---------------------------
+Refatoração (*Refactoring*)
+---------------------------
 
 Mesmo o formulário anterior funcionando como esperado, seria interessante refatorar
-o código para facilitar os testes e para permitir que o código seja facilmente reutilizado.
+o código para facilitar os testes e permitir que o código seja facilmente reutilizado.
 
-Primeiro, vamos criar um novo formulário que representa uma coleção de
-`ProductPhotoForm`s, com base no código já foi escrito:
+Primeiro, vamos criar um novo formulário que representa uma coleção do
+`ProductPhotoForm`, com base no código já escrito:
 
     [php]
     // lib/form/doctrine/ProductPhotoCollectionForm.class.php
@@ -183,10 +183,9 @@ Primeiro, vamos criar um novo formulário que representa uma coleção de
 
 Este formulário tem duas opções:
 
- * `product`: O produto qual se cria uma coleção de
-   `ProductPhotoForm`s;
+ * `product`: O produto para o qual se cria uma coleção do `ProductPhotoForm`;
 
- * `size`: O número de `ProductPhotoForm`s a ser criado (duas por padrão).
+ * `size`: O número de `ProductPhotoForm` a ser criado (dois por padrão).
 
 Agora você pode alterar o método de configuração do `ProductForm` como a seguir:
 
@@ -203,34 +202,34 @@ Agora você pode alterar o método de configuração do `ProductForm` como a seg
     }
 
 Dissecando o objeto sfForm
-----------------------------
+--------------------------
 
-No sentido mais básico, um formulário da web é uma coleção de campos que são processados
-e enviados de volta para o servidor. No mesmo caminho, o objeto ~`sfForm`~  é
-essencialmente um array de *campos* de formulário. Enquanto ~`sfForm`~ gerencia o processo,
+No sentido mais básico, um formulário web é uma coleção de campos que são processados
+e enviados de volta para o servidor. No mesmo sentido, o objeto ~`sfForm`~  é
+essencialmente um array de *campos* de formulário. Enquanto o ~`sfForm`~ gerencia o processo,
 os campos individuais são responsáveis por definir o modo como cada um será processado
 e validado.
 
-No symfony, cada campo de formulário * * é definida por dois objetos diferentes:
+No symfony, cada *campo* do formulário é definido por dois objetos diferentes:
 
   * Um *widget* que controla a marcação XHTML do campo;
 
   * Um *validator* que limpa e valida os dados enviados
 
->**Dica**
->No symfony, um *widget* é definida como qualquer objeto cujo único trabalho é saída
->em marcação XHTML. Embora mais comumente usados com formulários, um objeto Widget
+>**TIP**
+>No symfony, um *widget* é definido como qualquer objeto cujo único trabalho é saída
+>de marcação XHTML. Embora mais comumente usado com formulários, um objeto Widget
 >poderia ser criado para mostrar qualquer marcação.
 
 ### Um formulário é um array
 
 Lembre-se que o objeto ~`sfForm`~ é "essencialmente um array de *campos* de formulário."
-Para ser mais preciso, `sfForm` guarda tanto um array de elementos como um array
+Para ser mais preciso, o `sfForm` guarda tanto um array de elementos como um array
 de validadores para todos os campos do formulário. Estes dois arrays, chamados
 `widgetSchema` e `validatorSchema` são propriedades da classe `sfForm`.
-A fim de adicionar um campo a um formulário, basta adicionar o campo do widget para o
-array `widgetSchema` e o validador do campo para a array `validatorSchema`.
-Por exemplo, o código a seguir adiciona um campo `email` para um formulário:
+Para adicionar um campo à um formulário, basta adicionar o widget do campo no
+array `widgetSchema` e o validador do campo no array `validatorSchema`.
+Por exemplo, o código a seguir adiciona um campo `email` em um formulário:
 
     [php]
     public function configure()
@@ -239,16 +238,16 @@ Por exemplo, o código a seguir adiciona um campo `email` para um formulário:
       $this->validatorSchema['email'] = new sfValidatorEmail();
     }
 
->**NOTA**
->Os arrays `widgetSchema` e `validatorSchema` são na verdade classes especiais
+>**NOTE**
+>Os arrays `widgetSchema` e `validatorSchema` são, na verdade, classes especiais
 >chamadas ~`sfWidgetFormSchema`~ e ~`sfValidatorSchema`~ que implementam a
 >interface `ArrayAccess`.
 
 ### Dissecando o `ProductForm`
 
-Como em ultima estância a classe `ProductForm` estende a `sfForm`, ela também abriga todos os
+Como a classe `ProductForm` estende a `sfForm`, ela também abriga todos os
 seus widgets e validadores nos arrays `widgetSchema` e `validatorSchema`.
-Vamos analisar como cada array é organizado no objeto final `ProductForm`.
+Vamos analisar como cada array é organizado no objeto `ProductForm` finalizado.
 
     [php]
     widgetSchema    => array
@@ -289,46 +288,45 @@ Vamos analisar como cada array é organizado no objeto final `ProductForm`.
       ),
     )
 
->**Dica**
->Assim como `widgetSchema` e `validatorSchema` são na verdade  objetos que se comportam
->como arrays, as arrays acima definidos pelas chaves `newPhotos`, `0` e `1`
->Também são objetos `sfWidgetSchema` e `sfValidatorSchema`.
+>**TIP**
+>Assim como o `widgetSchema` e `validatorSchema` são, na verdade, objetos que se comportam
+>como arrays, os arrays acima definidos pelas chaves `newPhotos`, `0` e `1`
+>também são objetos `sfWidgetSchema` e `sfValidatorSchema`.
 
-Como esperado, os campos básicos ( `id`, `name` e `price`) estão representados no primeiro
-nível de cada array. Em um formulário que não incorpora outros formulário, os arrays `widgetSchema` 
-e `validatorSchema` têm apenas um nível, que representa os campos básicos no formulário.
-Os widgets e validadores de qualquer formulário incorporados são representados como arrays filhos
-em `widgetSchema` e `validatorSchema` como visto acima. 
-O métodoque gere este processo é explicado a seguir.
+Como esperado, os campos básicos (`id`, `name` e `price`) estão representados no primeiro
+nível de cada array. Em um formulário que não incorpora outros formulários, os arrays `widgetSchema` 
+e `validatorSchema` têm apenas um nível, que representa os campos básicos do formulário.
+Os *widgets* e validadores de qualquer formulário incorporados são representados como arrays filhos
+no `widgetSchema` e `validatorSchema` como visto acima. 
+O método que gerencia este processo é explicado a seguir.
 
-### Por trás de ~`sfForm::embedForm()`~
+### Entendendo o método ~`sfForm::embedForm()`~
 
-Tenha em mente que um formulário é composto por uma variedade de widgets e um conjunto de
-validadores. Incorporação de um formulário em outro, essencialmente, significa que o 
-arrays de widget e validador de um formulário são adicionados aos array de widgets
-e validadores do formulário principal. Isto é inteiramente realizado via
+Tenha em mente que um formulário é composto por um array de *widgets* e um array de
+validadores. A incorporação de um formulário em outro, essencialmente, significa que os 
+arrays dos widgets e validadores de um formulário são adicionados aos arrays dos widgets
+e validadores do formulário principal. Isto é inteiramente realizado pelo 
 `sfForm::embedForm()`. O resultado é sempre uma adição multi-dimensional em `widgetSchema` 
 e `validatorSchema` como visto acima.
 
 A seguir, vamos discutir a configuração do `ProductPhotoCollectionForm`, que liga
-objetos `ProductPhotoForm` em si. Essa formulário meio age como um "wrapper" de formulário
+objetos `ProductPhotoForm` em si. Esse formulário intermediário age como um "wrapper" de formulário
 e contribui com a organização de forma global. Vamos começar com o seguinte código
-de `ProductPhotoCollectionForm::configure()`:
+do `ProductPhotoCollectionForm::configure()`:
 
     [php]
     $form = new ProductPhotoForm($productPhoto);
     $this->embedForm($i, $form);
 
 O próprio formulário `ProductPhotoCollectionForm` começa como um novo objeto `sfForm`.
-Como tal, seus arrays `widgetSchema` e `validatorSchema` estão vazias.
+Como tal, seus arrays `widgetSchema` e `validatorSchema` estão vazios.
 
     [php]
     widgetSchema    => array()
     validatorSchema => array()
 
-Cada `ProductPhotoForm`, no entanto, já está preparada com três campos (`id`, `filename`,
-e `caption`) e três itens correspondentes em seu `widgetSchema` e `validatorSchema`.
-
+Cada `ProductPhotoForm`, no entanto, já está preparado com três campos (`id`, `filename`,
+e `caption`) e três itens correspondentes em seus arrays `widgetSchema` e `validatorSchema`.
 
     [php]
     widgetSchema    => array
@@ -349,9 +347,9 @@ O método ~`sfForm::embedForm()`~ simplesmente adiciona os arrays `widgetSchema`
 de cada `ProductPhotoForm` aos arrays `widgetSchema` e `validatorSchema`
 do objeto `ProductPhotoCollectionForm` vazio.
 
-Quando terminar, os arrays `widgetSchema` e `validatorSchema` do formulário
-"wrapper" (`ProductPhotoCollectionForm`) serão arrays multi-nível que mantem os
-widgets e validadores de ambos os`ProductPhotoForm`.
+Quando finalizado, os arrays `widgetSchema` e `validatorSchema` do formulário
+"wrapper" (`ProductPhotoCollectionForm`) serão arrays multi-nível que mantêm os
+widgets e validadores de ambos os `ProductPhotoForm`.
 
     [php]
     widgetSchema    => array
@@ -386,8 +384,8 @@ widgets e validadores de ambos os`ProductPhotoForm`.
       ),
     )
 
-Na etapa final do nosso processo, a formulário "wrapper" resultante,
-`ProductPhotoCollectionForm`, é encaixado(`embedded`) diretamente no `ProductForm`.
+Na etapa final do nosso processo, o formulário "wrapper" resultante,
+`ProductPhotoCollectionForm`, é embutido (`embedded`) diretamente no `ProductForm`.
 Isso ocorre dentro de `ProductForm::configure()`, que tira proveito de
 todo o trabalho que foi feito dentro de `ProductPhotoCollectionForm`:
 
@@ -410,7 +408,7 @@ ato de combinar os arrays `widgetSchema` e `validatorSchema` manualmente:
 Renderizando formulários incorporados na Visão
 ----------------------------------------------
 
-O template atual `_form.php` do modelo do `produto` é parecido com o
+O template atual `_form.php` do módulo `product` é parecido com o
 seguinte:
 
     [php]
@@ -423,13 +421,13 @@ seguinte:
 
     <!-- ... -->
 
-A declaração `<?php echo $ form?>` é a maneira mais simples de mostrar um formulário,
+A declaração `<?php echo $ form?>` é a forma mais simples de exibir um formulário,
 mesmo os mais complexos. São de grande ajuda durante a prototipagem, mas logo
-que você desejar alterar o layout, sera necessário substituí-lo com sua própria
-lógica. Remova esta linha agora, ja que iremos substituí-la nesta seção.
+que você desejar alterar o layout, será necessário substituí-lo pela sua própria
+lógica. Remova esta linha agora, já que iremos substituí-la nesta seção.
 
-A coisa mais importante para compreender quando renderizando formulários incorporadas no
-ponto de vista é a organização do multi-nível do array `widgetSchema` como explicado
+A coisa mais importante para compreender quando estiver renderizando formulários incorporadas na
+visão é a organização do array multi-nível `widgetSchema` explicado
 nas seções anteriores. Para este exemplo, vamos começar renderizando os campos básicos
 `name` e `price` do ProductForm` na visão:
 
@@ -444,11 +442,11 @@ nas seções anteriores. Para este exemplo, vamos começar renderizando os campo
 Como o próprio nome indica, o `renderHiddenFields()` processa todos os campos ocultos
 do formulário.
 
->**NOTA**
->O código da actions não foi mostrado propositadamente aqui, porque não requer especial
+>**NOTE**
+>O código das ações não foi mostrado aqui propositalmente, porque não requer especial
 >atenção. Dê uma olhada no arquivo `apps/frontend/modules/product/actions/actions.class.php`.
->É como qualquer CRUD normal e pode ser gerado automaticamente via
->a tarefa(task) `doctrine:generate-module`.
+>É como qualquer CRUD normal e pode ser gerado automaticamente através
+>da tarefa `doctrine:generate-module`.
 
 Como já aprendemos, a classe `sfForm` guarda os arrays `widgetSchema` e 
 `validatorSchema` que definem os nossos campos. Além disso, a classe `sfForm`
@@ -456,28 +454,28 @@ implementa a interface `ArrayAccess`, nativa do PHP 5, o que significa que pode 
 campos do formulário usando a sintaxe chave array vista acima.
 
 Para a saída de campos, você pode simplesmente acessá-los diretamente e chamar o método
-`renderRow()`. Mas que tipo de objeto é `$form['name']`? Enquanto você pôde esperar
+`renderRow()`. Mas que tipo de objeto é o `$form['name']`? Enquanto você pode esperar
 que a resposta seja um `sfWidgetFormInputText` para o campo `name`,
-A resposta é realmente algo um pouco diferente.
+a resposta é realmente um pouco diferente.
 
-### Renderizando cada campo de formulário com ~`sfFormField`~
+### Renderizando cada campo de formulário com o ~`sfFormField`~
 
 Ao utilizar os arrays `widgetSchema` e `validatorSchema` definidos em cada 
-classe de formulário, `sfForm` gera automaticamente um terceiro array chamado
-`sfFormFieldSchema`. Esta array contém um objeto especial para cada campo
+classe de formulário, o `sfForm` gera automaticamente um terceiro array chamado
+`sfFormFieldSchema`. Este array contém um objeto especial para cada campo
 que atua como uma classe auxiliar responsável pela saída do campo. 
 O objeto, do tipo ~`sfFormField`~, é uma combinação de cada elemento de campo
-e de validação e é criado automaticamente.
+e da validação, e, é criado automaticamente.
 
     [php]
     <?php echo $form['name']->renderRow() ?>
 
 No trecho acima, `$form['name']` é um objeto `sfFormField`, que abriga
-o método `renderRow()` junto com diversas outras funções de processamento útil.
+o método `renderRow()` junto com diversas outras funções úteis de processamento.
 
 ### Métodos de renderização do sfFormField 
 
-Cada objeto `sfFormField pode ser usado para facilmente tornar cada aspecto do campo
+Cada objeto `sfFormField` pode ser usado para facilmente processar cada aspecto do campo
 que representa (por exemplo, o próprio campo, o rótulo, mensagens de erro, etc.)
 Alguns dos métodos úteis dentro sfFormField `` incluem o seguinte. Outro:
 podem ser encontrados através do [symfony 1,3 API] http://www.symfony-project.org/api/1_3/sfFormField ().
@@ -489,19 +487,19 @@ podem ser encontrados através do [symfony 1,3 API] http://www.symfony-project.o
    usando o objeto validador do campo.
 
  * `sfFormField->renderRow()`: Tudo-englobado: renderiza o rótulo, o formulário
-   o campo, o erro e a mensagem de ajuda dentro de um invólucro de marcação XHTML.
+   o campo, o erro e a mensagem de ajuda dentro de um *wrapper* de marcação XHTML.
 
->**NOTA**
+>**NOTE**
 >Na realidade, cada função de renderização da classe `sfFormField` também utiliza informação
->a partir da propriedade `widgetSchema` do formulário( o objeto `sfWidgetFormSchema` que
+>a partir da propriedade `widgetSchema` do formulário (o objeto `sfWidgetFormSchema` que
 >agrega todos os widgets para o formulário). Esta classe auxilia na geração
 >dos atributos de cada campo `name` e `id`, controla o rótulo para cada
->campo, e define a marcação XHTML usada com `renderRow()`.
+>campo, e define a marcação XHTML usada com o `renderRow()`.
 
 Uma coisa importante a notar é que o array `formFieldSchema` sempre
-espelha a estrutura do arrays `widgetSchema` e `validatorSchema` 
+espelha a estrutura dos arrays `widgetSchema` e `validatorSchema` 
 do formulário. Por exemplo, o array `formFieldSchema` do `ProductForm` 
-concluído teria a seguinte estrutura, que é a chave para renderizar cada
+concluído, teria a seguinte estrutura, que é a chave para renderizar cada
 campo na visão:
 
     [php]
@@ -524,10 +522,10 @@ campo na visão:
       ),
     )
 
-### Renderizando novo ProductForm
+### Renderizando o novo ProductForm
 
-Usando a tabela acima como o nosso mapa, podemos saída facilmente incorporadas `` ProductPhotoForm
-campos na vista por localizar e tornar o bom `` sfFormField objetos:
+Usando o array acima como o nosso mapa, podemos facilmente exibir os campos embutidos do `ProductPhotoForm` 
+na visão localizando e processando os objetos `sfFormField` apropriados:
 
     [php]
     // apps/frontend/module/product/templates/_form.php
@@ -536,465 +534,464 @@ campos na vista por localizar e tornar o bom `` sfFormField objetos:
       <?php echo $photo['filename']->renderRow() ?>
     <?php endforeach; ?>
 
-O bloco acima loops duas vezes: uma para o `0` array campo formulário e
-uma vez para o `1` array campo de formulário. Como visto no diagrama acima,
-os objetos subjacentes de cada array são `` sfFormField os objetos, que podemos
-saída como quaisquer outros campos.
+O bloco acima é executado duas vezes: uma para o array de campos de formulário `0` e
+outra para o array de campos de formulário `1`. Como visto no diagrama acima,
+os objetos subjacentes de cada array são objetos `sfFormField`, que podemos
+exibir como quaisquer outros campos.
 
-Saving Objeto Formulários
--------------------
+Salvando os Objetos de Formulários
+-------------------------
 
-Na maioria das circunstâncias, uma formulário que se relacionam diretamente a um ou mais banco de dados
-tabelas e provocar alterações de dados nas tabelas apresentadas com base no
-valores. Symfony gera automaticamente um objeto de formulário para um modelo de esquema,
-que se estende tanto sfFormDoctrine `` ou `` sfFormPropel dependendo da sua
-ORM. Cada classe de formulário semelhante e, finalmente, permite que os valores apresentados
-ser facilmente mantido no banco de dados.
+Na maioria das circunstâncias, um formulário estará relacionado diretamente a uma ou mais tabelas do banco de dados
+e provocar alterações aos dados nestes tabelas com base nos
+valores submetidos. O symfony gera automaticamente um objeto de formulário para cada modelo do esquema,
+que estende o `sfFormDoctrine` ou `sfFormPropel` dependendo do seu
+ORM. Cada classe de formulário é semelhante e, finalmente, permite que os valores submetidos
+sejam facilmente persistidos no banco de dados.
 
-> ** NOTA **
-> ~ `` ~ sfFormObject é uma nova classe adicionada no symfony 1,3 para tratar de todos os
-> tarefas comuns sfFormDoctrine do `` e `` sfFormPropel. Cada classe se estende
-> `sfFormObject», que agora administra parte do formulário de poupança processo descrito abaixo.
+>**NOTE**
+>O ~`sfFormObject`~  é uma nova classe adicionada no symfony 1.3 para manusear todos as
+>tarefas comuns do `sfFormDoctrine` e `sfFormPropel`. Cada classe estende o
+>`sfFormObject`, que agora administra parte do processo de salvar o formulário, como descrito abaixo.
 
-# # # O Formulário de processo de gravação
+### O Processo de salvar um Formulário
 
-No nosso exemplo, o symfony automaticamente salva tanto o «produto de informulárioção» e
-`novo` ProductPhoto objetos sem qualquer esforço adicional por parte do desenvolvedor.
-O método que dispara a magia, ~ `sfFormObject:: save ()`~, executa uma variedade
-de métodos nos bastidores. Entender este processo é fundamental para a prorrogação
+No nosso exemplo, o symfony automaticamente salva tanto as informações do `Product` quanto 
+quanto as dos novos objetos `ProductPhoto` sem qualquer esforço adicional por parte do desenvolvedor.
+O método que dispara a magia, ~`sfFormObject::save()`~, executa internamente
+uma variedade de métodos. Entender este processo é fundamental para a estender 
 o processo em situações mais avançadas.
 
-A formulário de poupança processo consiste em uma série de métodos internamente executado,
-tudo o que acontece depois de chamar ~ `sfFormObject:: save ()`~. A maioria
-do trabalho está envolto na ~ `sfFormObject:: UpdateObject ()` ~ método, que
-é chamado recursivamente em todas as suas formulários incorporado.
+O processo de salvar um formulário consiste em uma série de métodos internamente executados,
+tudo acontece após a chamada do ~`sfFormObject::save()`~. A maioria
+do trabalho acontece no método ~`sfFormObject::updateObject()`~, que
+é chamado recursivamente em todos os seus formulários incorporados.
 
-! [Forma processo de gravação] (http://www.symfony-project.org/images/more-with-symfony/advanced_forms_06.png "formulário pormenorizada processo de gravação")
+![Proceso de gravação do formulário](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_06.png "Detalhe do processo de salvar um formulário")
 
-> ** NOTA **
-> A maioria do processo de poupança ocorre dentro do ~ `sfFormObject:: DoSave ()` ~
-> método, que é chamado pelo `sfFormObject:: save ()` e envolto em um banco de dados
-> transação. Se você precisar modificar o processo de poupança própria, `sfFormObject:: DoSave ()`
-> geralmente é o melhor lugar para fazê-lo.
+>**NOTE**
+>A maioria do processo de salvar ocorre dentro do método ~`sfFormObject::doSave()`~,
+>que é chamado pelo `sfFormObject::save()` e dentro de uma transação do banco de dados.
+>Se você precisar modificar o processo de salvar, o melhor lugar para fazê-lo
+>é geralmente no `sfFormObject::doSave()`.
 
-Ignorando as Formas Embedded
------------------------
+Ignorando os Formulários Embutidos
+----------------------------
 
-O actual ProductForm `` implementação tem um grande déficit. Porque o
-`filename` e `` legenda campos são obrigatórios em `ProductPhotoForm», validação
-do formulário principal será sempre a não ser que o usuário enviar duas novas fotos.
-Em outras palavras, o usuário não pode simplesmente mudar o preço do produto »,« sem
-também estão sendo obrigados a carregar duas novas fotos.
+A implementação atual do `ProductForm` tem um grande déficit. Devido aos
+campos `filename` e `caption` serem obrigatórios no `ProductPhotoForm`, a validação
+do formulário principal irá sempre falhar a não ser que o usuário envie duas fotos novas.
+Em outras palavras, o usuário não pode simplesmente mudar o preço do `Product` sem
+também ser obrigado a carregar duas novas fotos.
 
-! [Tipo de produto não validação foto] (http://www.symfony-project.org/images/more-with-symfony/advanced_forms_04.png tipo de produto "falha de validação nas fotos")
+![Form dos produtos falha na validação das fotos](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_04.png "Form dos produtos falha na validação das fotos")
 
-Vamos redefinir os requisitos para incluir o seguinte. Se o usuário deixa
-todos os campos de um `` ProductPhotoForm em branco, que formulário deve ser ignorado
-completamente. No entanto, se pelo menos um campo tem dados (ou seja, legenda `` ou `filename`),
-o formulário deve validar e salvar normalmente. Para conseguir isso, vamos contratar
-uma técnica avançada que envolvam a utilização de um posto de validação personalizado.
+Vamos redefinir os requisitos para incluir o seguinte. Se o usuário deixar
+todos os campos do `ProductPhotoForm` em branco, o formulário deve ser ignorado
+completamente. No entanto, se pelo menos um campo possuir dados (por exemplo, `caption` ou `filename`),
+o formulário deve validar e salvar normalmente. Para obter isso, vamos empregar
+uma técnica avançada que envolve a utilização de um *post* de validação personalizado.
 
-O primeiro passo, no entanto, é modificar o `ProductPhotoForm« formulário de tornar o
-`legenda` e `filename` campos opcionais:
+O primeiro passo, no entanto, é modificar o formulário `ProductPhotoForm` para tornar os
+campos `caption` e `filename` opcionais:
 
     [php]
-    / / Lib / form / doutrina / ProductPhotoForm.class.php
-    public function configure ()
-    (
-      $ this-setValidator> ( 'sfValidatorFile filename', novo (array (
+    // lib/form/doctrine/ProductPhotoForm.class.php
+    public function configure()
+    {
+      $this->setValidator('filename', new sfValidatorFile(array(
         'mime_types' => 'web_images',
-        'path' => sfConfig:: get ( 'sf_upload_dir').'/ produtos,
+        'path' => sfConfig::get('sf_upload_dir').'/products',
         'required' => false,
       )));
 
-      $ this-> validatorSchema [ 'legenda'] - setOption> ( 'required', false);
-    )
+      $this->validatorSchema['caption']->setOption('required', false);
+    }
 
-No código acima, temos que definir a opção `` necessários para quando «falso»
-substituindo o validador padrão para o `campo` filename. Além disso,
-temos definir explicitamente a opção `` necessário `legenda do campo» a «falsa».
+No código acima, nos definimos a opção `required` como `false`
+quando sobrescrevemos o validador padrão para o campo `filename`. Além disso,
+temos que definir explicitamente a opção `required` do campo `caption` para `false`.
 
-Agora, vamos adicionar o validador após a ProductPhotoCollectionForm `:
-
-    [php]
-    / / Lib / form / doutrina / ProductPhotoCollectionForm.class.php
-    public function configure ()
-    (
-      / / ...
-
-      mergePostValidator $ this-> (ProductPhotoValidatorSchema novo ());
-    )
-
-Um validador post é um tipo especial de validação que valida em todas as
-os valores apresentados (em oposição ao validar o valor de um campo único).
-Um dos validadores post mais comum é o `que` sfValidatorSchemaCompare
-verifica, por exemplo, que uma área é inferior a outro campo.
-
-# # # Criando um validador personalizado
-
-Felizmente, criando um validador personalizado é realmente muito fácil. Crie uma
-novo arquivo, `ProductPhotoValidatorSchema.class.php» e colocá-lo no
-`validador / lib /` (você precisa criar este diretório):
+Agora, vamos adicionar um validador post para no formulário `ProductPhotoCollectionForm`:
 
     [php]
-    / Lib validador / ProductPhotoValidatorSchema.class.php
-    classe ProductPhotoValidatorSchema estende sfValidatorSchema
-    (
-      protected function configure ($ options = array (), $ messages = array ())
-      (
-        $ this-> addMessage ( 'caption', 'A legenda é necessária. ");
-        $ this-> addMessage ( 'filename', 'O nome é obrigatório. ");
-      )
+    // lib/form/doctrine/ProductPhotoCollectionForm.class.php
+    public function configure()
+    {
+      // ...
 
-      protegidos Doclean função ($ valores)
-      (
-        errorSchema $ = sfValidatorErrorSchema novo ($ this);
+      $this->mergePostValidator(new ProductPhotoValidatorSchema());
+    }
 
-        foreach ($ valores as $ chave => $ value)
-        (
-          $ errorSchemaLocal sfValidatorErrorSchema = new ($ this);
+Um validador post é um tipo especial de validador que valida todos 
+os valores submetidos (em oposição a validação do valor de um campo único).
+Um dos validadores post mais comum é o `sfValidatorSchemaCompare`
+que verifica, por exemplo, se o valor de um campo inferior ao de outro campo.
 
-          / / Nome do arquivo é preenchido, mas nenhuma legenda
-          if ($ valor [ 'filename'] & &!$ value [ 'legenda'])
-          (
-            $ errorSchemaLocal-> addError sfValidatorError (novo ($ this, 'required'), 'caput');
-          )
+### Criando um validador personalizado
 
-          / / Legenda é preenchido, mas nenhum nome de arquivo
-          if ($ valor [ 'caption'] & &!$ value [ 'filename'])
-          (
-            $ errorSchemaLocal-> addError sfValidatorError (novo ($ this, 'required'), 'filename');
-          )
-
-          / / Sem legenda e não nome do arquivo, remova os valores vazios
-          if (!$ value [ 'filename'] & &!$ value [ 'legenda'])
-          (
-            unset ($ values [$ key]);
-          )
-
-          / / Algum erro para este incorporado em formulário
-          if (count ($ errorSchemaLocal))
-          (
-            errorSchema $-> addError ($ errorSchemaLocal, (string) $ key);
-          )
-        )
-
-        / / Gera o erro para o formulário principal
-        if (count ($ errorSchema))
-        (
-          throw sfValidatorErrorSchema novo (errorSchema $ this, $);
-        )
-
-        return $ valores;
-      )
-    )
-
-> ** Dica **
-> Todos os validadores estender `sfValidatorBase» e exigem apenas o Doclean `()`
-> método. O configure () `método também pode ser utilizado para adicionar opções ou mensagem
-> validador. Neste caso, duas mensagens são adicionadas ao validador.
-> Da mesma formulário, opções adicionais podem ser adicionados através do addOption »()» método.
-
-O `Doclean ()» método é responsável pela limpeza e validação dos vinculados
-valores. A lógica do validador em si é bastante simples:
-
-* Se uma foto é apresentada apenas com o nome do arquivo ou uma legenda, jogamos um
-   erro ( `sfValidatorErrorSchema») com a mensagem adequada;
-
-* Se uma foto é apresentado com nenhum nome de arquivo e sem legenda, que remova o
-   valores completamente para evitar a salvar uma foto de vazio;
-
-* Se não ocorreram erros de validação, o método retorna a array de
-   valores limpos.
-
-> ** Dica **
-> Porque o validador personalizado nesta situação é para ser usado como um
-> validador post, o Doclean «()» método espera um array do limite
-> valores e retorna um array de valores limpos. Validadores personalizados, no entanto,
-> podem ser facilmente criados para campos individuais. Nesse caso, o
-> `Doclean ()» método irá esperar apenas um valor (o valor do apresentado
-> campo) e irá retornar apenas um valor.
-
-O último passo é substituir o saveEmbeddedForms »()» método de «ProductForm`
-para remover as formulários photo vazio de não salvar uma foto em branco no banco de dados (que
-caso contrário gera uma exceção como a legenda «coluna» é obrigatório):
+Felizmente, criar um validador personalizado é realmente muito fácil. Crie um
+novo arquivo `ProductPhotoValidatorSchema.class.php` e adicione-o no
+diretório `lib/validator/` (você precisa criar este diretório):
 
     [php]
-    saveEmbeddedForms função pública ($ con = null, $ formulário = null)
-    (
-      if (null === $ formulários)
-      (
-        fotos = $ this-> getValue ( 'newPhotos');
-        formulários = $ this-> embeddedForms;
-        foreach ($ this-> embeddedForms [ 'newPhotos'] as $ name => $ form)
-        (
-          if (!isset ($ fotos [$ name]))
-          (
-            unset ($ formulários [ 'newPhotos'] [$ name]);
-          )
-        )
-      )
+    // lib/validator/ProductPhotoValidatorSchema.class.php
+    class ProductPhotoValidatorSchema extends sfValidatorSchema
+    {
+      protected function configure($options = array(), $messages = array())
+      {
+        $this->addMessage('caption', 'The caption is required.');
+        $this->addMessage('filename', 'The filename is required.');
+      }
 
-      return parent:: saveEmbeddedForms ($ con, $ formulários);
-    )
+      protected function doClean($values)
+      {
+        $errorSchema = new sfValidatorErrorSchema($this);
 
-Facilmente Embedding Doutrina-Formas Conexas
----------------------------------------
+        foreach($values as $key => $value)
+        {
+          $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
-Novo no symfony 1,3 é a sfFormDoctrine ~ `:: embedRelation ()` ~ função que
-permite ao desenvolvedor incorporar n-para-muitos em um formulário
-automaticamente. Suponha, por exemplo, que além de permitir que o usuário
-upload dois novos `ProductPhotos», queremos também permitir ao usuário modificar o
-existente »ProductPhoto` objetos relacionados a este «produto».
+          // filename is filled but no caption
+          if ($value['filename'] && !$value['caption'])
+          {
+            $errorSchemaLocal->addError(new sfValidatorError($this, 'required'), 'caption');
+          }
 
-Em seguida, use o embedRelation »()» método para adicionar um adicional
-`` ProductPhotoForm objeto para cada existente »ProductPhoto» Objeto:
+          // caption is filled but no filename
+          if ($value['caption'] && !$value['filename'])
+          {
+            $errorSchemaLocal->addError(new sfValidatorError($this, 'required'), 'filename');
+          }
+
+          // no caption and no filename, remove the empty values
+          if (!$value['filename'] && !$value['caption'])
+          {
+            unset($values[$key]);
+          }
+
+          // some error for this embedded-form
+          if (count($errorSchemaLocal))
+          {
+            $errorSchema->addError($errorSchemaLocal, (string) $key);
+          }
+        }
+
+        // throws the error for the main form
+        if (count($errorSchema))
+        {
+          throw new sfValidatorErrorSchema($this, $errorSchema);
+        }
+
+        return $values;
+      }
+    }
+
+>**TIP**
+>Todos os validadores estendem o `sfValidatorBase` e exigem apenas o método `doClean()`.
+>O método `configure()` também pode ser utilizado para adicionar opções ou mensagem
+>para o validador. Neste caso, duas mensagens são adicionadas ao validador.
+>Da mesma forma, opções adicionais podem ser adicionadas através do método `addOption()`.
+
+O método `doClean()` é responsável pela limpeza e validação dos valores vinculados.
+A lógica do validador em si é bastante simples:
+
+* Se uma foto é submetida com apenas o nome do arquivo ou uma legenda, é apresentado um
+   erro (`sfValidatorErrorSchema`) com a mensagem adequada;
+
+* Se uma foto é submetida sem nome de arquivo e sem legenda, removemos os
+   valores completamente para evitar salvar uma foto vazia;
+
+* Se não ocorreram erros de validação, o método retorna um array com os
+   valores *limpos*.
+
+>**TIP**
+>Devido ao validador personalizado ser usado como um validador post
+>nesta situação, o método `doClean()` espera um array dos valores
+>e retorna um array de valores *limpos*. Validadores personalizados, no entanto,
+>podem ser facilmente criados para campos individuais. Nesse caso, o
+>método `doClean()` irá esperar apenas um valor (o valor do campo
+>submetido) e irá retornar apenas um valor.
+
+O último passo é sobrescrever o método `saveEmbeddedForms()` do `ProductForm`
+para remover os formulários de fotos vazios e evitar salvar uma foto vazia no banco de dados (que,
+caso contrário, gera uma exceção porque a coluna `caption` é obrigatória):
 
     [php]
-    / / Lib / form / doutrina / ProductForm.class.php
-    public function configure ()
-    (
-      / / ...
+    public function saveEmbeddedForms($con = null, $forms = null)
+    {
+      if (null === $forms)
+      {
+        $photos = $this->getValue('newPhotos');
+        $forms = $this->embeddedForms;
+        foreach ($this->embeddedForms['newPhotos'] as $name => $form)
+        {
+          if (!isset($photos[$name]))
+          {
+            unset($forms['newPhotos'][$name]);
+          }
+        }
+      }
 
-      $ this-embedRelation> ( 'Fotos');
-    )
+      return parent::saveEmbeddedForms($con, $forms);
+    }
 
-Internamente, sfFormDoctrine ~ `:: embedRelation ()` ~ é quase exatamente o que fizemos
-manualmente para inserir nossos dois novos `` ProductPhotoForm objetos. Se dois ProductPhoto ``
-relações já existem, então o resultado widgetSchema `` e `` validatorSchema
-de nossa formulário tomaria a seguinte forma:
+Embutindo facilmente formulários relacionados com o Doctrine
+------------------------------------------------------------
+
+Outra novidade no symfony 1.3 é a função ~`sfFormDoctrine::embedRelation()`~ que
+permite ao desenvolvedor incorporar relacionamentos n-para-muitos automaticamente 
+em um formulário. Suponha, por exemplo, que além de permitir que ao usuário o 
+upload de dois novos `ProductPhoto`, queremos também permitir ao usuário modificar o
+objetos `ProductPhoto` existentes relacionados a este produto.
+
+Em seguida, use o método `embedRelation()` para adicionar um objeto 
+`ProductPhotoForm` adicional para cada objeto `ProductPhoto` existente:
 
     [php]
-    widgetSchema => array
+    // lib/form/doctrine/ProductForm.class.php
+    public function configure()
+    {
+      // ...
+
+      $this->embedRelation('Photos');
+    }
+
+Internamente, o método ~`sfFormDoctrine::embedRelation()`~ faz exatamente o mesmo que fizemos
+manualmente para inserir nossos dois novos objetos `ProductPhotoForm`. Se já existirem duas 
+relações do `ProductPhoto`, então os arrays `widgetSchema` e `validatorSchema` resultantes
+do nosso formulário teriam o seguinte aspecto:
+
+    [php]
+    widgetSchema    => array
     (
-      [id] => sfWidgetFormInputHidden,
-      [nome] = sfWidgetFormInputText>,
-      [preço] = sfWidgetFormInputText>,
-      [newPhotos] => array (...)
-      [Fotos] => array (
-        [0] => array (
-          [id] => sfWidgetFormInputHidden,
-          [legenda] = sfWidgetFormInputText>,
+      [id]          => sfWidgetFormInputHidden,
+      [name]        => sfWidgetFormInputText,
+      [price]       => sfWidgetFormInputText,
+      [newPhotos]   => array(...)
+      [Photos]      => array(
+        [0]           => array(
+          [id]          => sfWidgetFormInputHidden,
+          [caption]     => sfWidgetFormInputText,
         ),
-        [1] => array (
-          [id] => sfWidgetFormInputHidden,
-          [legenda] = sfWidgetFormInputText>,
+        [1]           => array(
+          [id]          => sfWidgetFormInputHidden,
+          [caption]     => sfWidgetFormInputText,
         ),
       ),
     )
 
     validatorSchema => array
     (
-      [ID] => sfValidatorDoctrineChoice,
-      [nome] => sfValidatorString,
-      [preço] = sfValidatorNumber>,
-      [newPhotos] => array (...)
-      [Fotos] => array (
-        [0] => array (
-          [ID] => sfValidatorDoctrineChoice,
-          [legenda] => sfValidatorString,
+      [id]          => sfValidatorDoctrineChoice,
+      [name]        => sfValidatorString,
+      [price]       => sfValidatorNumber,
+      [newPhotos]   => array(...)
+      [Photos]      => array(
+        [0]           => array(
+          [id]          => sfValidatorDoctrineChoice,
+          [caption]     => sfValidatorString,
         ),
-        [1] => array (
-          [id] => sfValidatorDoctrineChoice,
-          [legenda] => sfValidatorString,
+        [1]           => array(
+          [id]          => sfValidatorDoctrineChoice,
+          [caption]     => sfValidatorString,
         ),
       ),
     )
 
-! [Produto formulário com 2 fotos existentes] (http://www.symfony-project.org/images/more-with-symfony/advanced_forms_03.png tipo de produto ", com 2 fotos existentes")
+![Formulário de produto com duas fotos existentes](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_03.png "Formulário de produto com duas fotos existentes")
 
-A próxima etapa é adicionar código para o ponto de vista que irá processar o novo incorporado
-* Foto formulários *:
-
-    [php]
-    / Apps / frontend / módulo / produto / templates / _form.php
-    <?php foreach ($ form [ 'Photos'] as $ foto):?>
-      <?php echo $ foto [ 'legenda'] - RenderRow> ()?>
-      <?php echo $ foto [ 'filename'] -> RenderRow (array ( 'width' => 100))?>
-    <?php endif;?>
-
-Este trecho é exatamente o que usamos anteriormente para inserir as formulários nova foto.
-
-O último passo é converter o arquivo de upload por um campo que permite ao usuário
-Para ver a foto atual e mudá-lo por um novo
-( `sfWidgetFormInputFileEditable»):
+A próxima etapa é adicionar código na visão que irá processar o novo formulário do tipo
+*Photo* incorporado:
 
     [php]
-    public function configure ()
-    (
-      $ this-> useFields (array ( 'filename', 'caption'));
+    // apps/frontend/module/product/templates/_form.php
+    <?php foreach ($form['Photos'] as $photo): ?>
+      <?php echo $photo['caption']->renderRow() ?>
+      <?php echo $photo['filename']->renderRow(array('width' => 100)) ?>
+    <?php endforeach; ?>
 
-      $ this-setValidator> ( 'sfValidatorFile arquivo', novo (array (
+O código anterior é exatamente o mesmo que usamos anteriormente para embutir os formulários novas fotos.
+
+O último passo é converter o campo de upload de arquivo por um campo que permite ao usuário
+visualizar a foto atual e alterá-la para uma nova (`sfWidgetFormInputFileEditable`):
+
+    [php]
+    public function configure()
+    {
+      $this->useFields(array('filename', 'caption'));
+
+      $this->setValidator('filename', new sfValidatorFile(array(
         'mime_types' => 'web_images',
-        'path' => sfConfig:: get ( 'sf_upload_dir').'/ produtos,
+        'path' => sfConfig::get('sf_upload_dir').'/products',
         'required' => false,
       )));
 
-      $ this-setWidget> ( 'filename', nova série (sfWidgetFormInputFileEditable (
-        'file_src' => '/ uploads / produtos / ". $ this-> GetObject () - filename>,
-        'edit_mode' =>!$ this-> isNew (),
-        'is_image' => true,
+      $this->setWidget('filename', new sfWidgetFormInputFileEditable(array(
+        'file_src'    => '/uploads/products/'.$this->getObject()->filename,
+        'edit_mode'   => !$this->isNew(),
+        'is_image'    => true,
         'with_delete' => false,
       )));
 
-      $ this-> validatorSchema [ 'legenda'] - setOption> ( 'required', false);
-    )
+      $this->validatorSchema['caption']->setOption('required', false);
+    }
 
-Formulário de Eventos
------------
+Eventos de Formulário
+---------------------
 
-Novo no symfony 1.3 são eventos de formulário que pode ser usado para estender qualquer formulário
-objeto de qualquer parte do projeto. Symfony expõe o seguinte formulário quatro
-Ocorrências:
+Os eventos de fomrulário são uma novidade no symfony 1.3. Eles podem ser usados para estender qualquer objeto de formulário
+de qualquer parte do projeto. Symfony expõe os quatro seguintes eventos de formulário:
 
-* `` Form.post_configure: Este evento é notificada após cada formulário está configurado
-* `` Form.filter_values: Este evento filtros da concentração, os parâmetros de arquivos contaminados e arrayes pouco antes da ligação
-* `` Form.validation_error: Este evento é notificado sempre que não validação do formulário
-* `` Form.method_not_found: Este evento é notificado sempre que um método desconhecido é chamado
+ * `form.post_configure`: este evento é notificado após cada formulário ser configurado
+ * `form.filter_values`: este evento é notificado quando se combinam os valores e os
+    arrays dos arquivos enviados pelos usuarios antes de associar os dados com o formulario
+ * `form.validation_error`: este evento é notificado sempre que a validação do formulário falha
+ * `form.method_not_found`: este evento é notificado sempre que um método desconhecido é chamado
 
-# # # Custom Logging via `` form.validation_error
+### Mensagens de log personalizadas com o `form.validation_error`
 
-Usando a eventos de formulário, é possível adicionar registo personalizado para validação
-erros de qualquer formulário em seu projeto. Isto pode ser útil se você deseja acompanhar
-quais as formulários e os campos estão causando confusão para os usuários.
+Usando eventos de formulário, é possível adicionar log de mensagens personalizado para erros 
+de validação de qualquer formulário em seu projeto. Isto pode ser útil se você deseja acompanhar
+quais formulários e campos estão causando confusão para os seus usuários.
 
-Comece por registar um ouvinte com o despachante de eventos para o
-`form.validation_error evento». Adicionar o seguinte à instalação »()» método
-de «ProjectConfiguration`, que está localizado dentro do diretório `` config:
+Inicie registando um *listener* com o disparador de eventos (*event dispatcher*) para o
+evento  `form.validation_error`. Adicionar o seguinte ao método `setup()` do
+`ProjectConfiguration`, que está localizado no diretório `config`:
 
     [php]
-    configuração da função pública ()
-    (
-      / / ...
+    public function setup()
+    {
+      // ...
 
-      $ this-getEventDispatcher> () -> connect (
+      $this->getEventDispatcher()->connect(
         'form.validation_error',
-        array ( 'BaseForm', 'listenToValidationError')
+        array('BaseForm', 'listenToValidationError')
       );
-    )
+    }
 
-`BaseForm», localizado em `lib / form`, é uma classe especial de formulário que todas as formas
-Aulas de estender. Essencialmente, o `BaseForm» é uma classe em que o código pode ser colocado
-e acessadas por todos os objetos de formulário através do projeto. Para activar o registo de
-erros de validação, basta adicionar o seguinte para o `BaseForm classe»:
+`BaseForm`, localizado em `lib/form`, é uma classe especial de formulário que todas as classes de formulário
+estendem. Essencialmente, o `BaseForm` é uma classe em que o código pode ser colocado
+e acessado por todos os objetos de formulário do projeto. Para ativar o log de mensagens de
+erros de validação, basta adicionar o seguinte para na classe `BaseForm`:
 
     [php]
-    listenToValidationError public static function ($ evento)
-    (
-      foreach ($ eventos [ 'error'] as $ key => $ erro)
-      (
-        self:: getEventDispatcher () -> notify (sfEvent novo (
-          $ event-> getSubject (),
+    public static function listenToValidationError($event)
+    {
+      foreach ($event['error'] as $key => $error)
+      {
+        self::getEventDispatcher()->notify(new sfEvent(
+          $event->getSubject(),
           'application.log',
           array (
-            «prioridade» sfLogger =>:: COMUNICAÇÃO,
-            sprintf ( 'Erro de validação:% s:% s', $ key, (string) $ erro)
+            'priority' => sfLogger::NOTICE,
+            sprintf('Validation Error: %s: %s', $key, (string) $error)
           )
         ));
-      )
-    )
+      }
+    }
 
-! [Registo de erros de validação] (http://www.symfony-project.org/images/more-with-symfony/advanced_forms_05.png "Web ferramentas de depuração de erros de validação")
+![Barra de debug web com erros de validação](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_05.png "Barra de debug web com erros de validação")
 
-Custom Styling, quando um elemento de formulário tem um erro
------------------------------------------------
+Estilos personalizados, quando um elemento de formulário possui erro
+------------------------------------------------------------
 
-Como exercício final, vamos voltar a um tema um pouco mais leve relacionados com a
-estilização de elementos de formulário. Suponha, por exemplo, que o projeto para o Produto `
-página inclui um estilo especial para campos que não conseguiram a validação.
+Como exercício final, vamos voltar a um tema um pouco mais leve relacionado com estilos dos
+elementos de formulário. Suponha, por exemplo, que o *design* para a página `Product`
+inclui um estilo especial para os campos que falharam na validação.
 
-! [Produto formulário com erros] (http://www.symfony-project.org/images/more-with-symfony/advanced_forms_02.png tipo de produto "com campos de erro denominado")
+![Formulário de produtos com erros](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_02.png "Formulário de produto com estilos aplicados aos campos com erro")
 
-Suponha que o designer já implementou o estilo que será aplicado o erro
-denominar a qualquer campo `input` `dentro de uma div com a classe` `` form_error_row.
-Como podemos facilmente adicionar o `` form_row_error classe para os campos com erros?
+Suponha que o designer já implementou o *stylesheet* que será aplicado como o estilo de erro
+para qualquer campo `input` dentro de um `div` com a classe `form_error_row`.
+Como podemos facilmente adicionar a classe `form_row_error` aos campos com erros?
 
-A resposta está em um objeto especial chamado * formuláriotador esquema forma *. Every
-formulário symfony usa um esquema de forma formatador * * para determinar a exata
-formuláriotação HTML para usar quando a saída de elementos do formulário. Por padrão o symfony,
-formuláriotador usa um formulário que utiliza tags HTML tabela.
+A resposta está em um objeto especial chamado formatador de esquema do formulário (*form schema formatter*). 
+Cada formulário do symfony usa um *formatador de esquema do formulário* para determinar a exata
+formatação HTML para usar quando na saída de elementos do formulário. Por padrão o symfony,
+formatador de formulário que utiliza tags HTML de tabelas.
 
-Primeiro, vamos criar uma nova formulário de classe formatador esquema que emprega pouco
-isqueiro marcação quando emitir o formulário. Criar um novo arquivo chamado
-`sfWidgetFormSchemaFormatterAc2009.class.php» e colocá-lo no
-`widget / lib /` (você precisa criar este diretório):
-
-    [php]
-    classe sfWidgetFormSchemaFormatterAc2009 estende sfWidgetFormSchemaFormatter
-    (
-      protegidos
-        $ rowFormat = "<div class=\"form_row\">
-                            %% marcador \ erro% n%%% <br/> campo
-                            ajuda%%%% hidden_fields \ n </ div> \ n ",
-        $ errorRowFormat = "<div>%% erros </ div>",
-        $ helpFormat = '<div class="form_help">%% de ajuda </ div>',
-        $ decoratorFormat = "<div> \% n% de conteúdo </ div>";
-    )
-
-Embora o formulárioto dessa classe é estranha, a idéia geral é que o RenderRow `()`
-método irá utilizar o `$` rowFormat marcação para organizar sua saída. Um esquema de formulário
-classe formuláriotador oferece muitas outras opções de formatação que não vou abordar aqui
-em detalhe. Forma mais informulárioções, consultar o
-[symfony 1,3 API] (http://www.symfony-project.org/api/1_3/sfWidgetFormSchemaFormatter).
-
-Para usar o formuláriotador novo esquema forma em todos os objetos de formulário no seu projeto,
-adicione o seguinte a `` ProjectConfiguration:
+Primeiro, vamos criar uma nova classe *formatadora de esquema do formulário* que emprega
+marcação mais leve para exibir o formulário. Crie um novo arquivo chamado
+`sfWidgetFormSchemaFormatterAc2009.class.php` e adicione-o no
+diretório `lib/widget/` (você precisa criar este diretório): 
 
     [php]
-    ProjectConfiguration classe estende sfProjectConfiguration
-    (
-      configuração da função pública ()
-      (
-        / / ...
+    class sfWidgetFormSchemaFormatterAc2009 extends sfWidgetFormSchemaFormatter
+    {
+      protected
+        $rowFormat       = "<div class=\"form_row\">
+                            %label% \n %error% <br/> %field%
+                            %help% %hidden_fields%\n</div>\n",
+        $errorRowFormat  = "<div>%errors%</div>",
+        $helpFormat      = '<div class="form_help">%help%</div>',
+        $decoratorFormat = "<div>\n  %content%</div>";
+    }
 
-        sfWidgetFormSchema:: setDefaultFormFormatterName ( 'ac2009');
-      )
-    )
+Embora o formato dessa classe é estranho, a idéia geral é que o método `renderRow()`
+irá utilizar a marcação `$rowFormat` para organizar sua saída. Uma classe formatadora 
+de esquema do formulário oferece muitas outras opções de formatação que não vou abordar aqui
+em detalhes. Para mais informações, consultar a
+[API do symfony 1.3](http://www.symfony-project.org/api/1_3/sfWidgetFormSchemaFormatter).
 
-O objetivo é adicionar uma classe form_row_error `` o `form_row` elemento div
-apenas se um campo não validação. Adicionar um `%% row_class` token para o
-`$ rowFormat propriedade» e substituir o sfWidgetFormSchemaFormatter ~ `:: formuláriotRow ()` ~
-método da seguinte formulário:
+Para usar o *formatador de esquema do formulário* em todos os objetos de formulário no seu projeto,
+adicione o seguinte no `ProjectConfiguration`:
 
     [php]
-    classe sfWidgetFormSchemaFormatterAc2009 estende sfWidgetFormSchemaFormatter
-    (
-      protegidos
-        $ rowFormat = "<div class=\"form_row%row_class%\">
-                            %% \ label erro% n% <br/>% campo%
-                            ajuda%%%% hidden_fields \ n </ div> \ n ",
-        / / ...
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        // ...
 
-      formuláriotRow função pública ($ label, field, $ erros = array (), $ help ='', $ = HiddenFields null)
-      (
-        $ row = parent:: formuláriotRow (
-          label
-          $ field,
-          $ errors,
-          Ajuda
-          HiddenFields $
+        sfWidgetFormSchema::setDefaultFormFormatterName('ac2009');
+      }
+    }
+
+O objetivo é adicionar uma classe `form_row_error` no elemento div `form_row` 
+apenas se um campo falhou na validação. Adicione um token %row_class% para a
+propriedade `$rowFormat` e sobrescreva o método ~`sfWidgetFormSchemaFormatter::formatRow()`~
+como a seguir:
+
+    [php]
+    class sfWidgetFormSchemaFormatterAc2009 extends sfWidgetFormSchemaFormatter
+    {
+      protected
+        $rowFormat       = "<div class=\"form_row%row_class%\">
+                            %label% \n %error% <br/> %field%
+                            %help% %hidden_fields%\n</div>\n",
+        // ...
+
+      public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
+      {
+        $row = parent::formatRow(
+          $label,
+          $field,
+          $errors,
+          $help,
+          $hiddenFields
         );
 
-        return strtr ($ row, array (
-          '%% row_class' => count (($ erros)> 0)? 'Form_row_error':'',
+        return strtr($row, array(
+          '%row_class%' => (count($errors) > 0) ? ' form_row_error' : '',
         ));
-      )
-    )
+      }
+    }
 
-Com esta adição, cada elemento que está de saída através da RenderRow () `método
-será automaticamente cercado por um `form_row_error` div `se o campo tem
-validação falha.
+Com esta adição, cada elemento que tem saída através do método `renderRow()`
+será automaticamente envolvido por um div `form_row_error` se o campo falhar na
+validação.
 
 Reflexões finais
 --------------
 
-O quadro é simultaneamente uma formulário de o mais poderoso e mais
-componentes complexos dentro symfony. O trade-off para a validação de formulário apertada,
-CSRF proteção, e as formulários de objeto é que o alargamento do quadro pode rapidamente
-tornar-se uma tarefa difícil. Gaining a deeper understanding of the form system,
-No entanto, é a chave para libertar todo o seu potencial. Espero que este capítulo tem
-exame de você um passo mais perto.
+O *framework* de formulários é simultaneamente um dos mais poderosos e mais
+complexos componentes dentro do symfony. O *trade-off* para validação de formulário,
+proteção CSRF, e objetos de formulários é que estender o *framework* pode rapidamente
+tornar-se uma tarefa difícil. Conhecer os detalhes do funcionamento do sistema de formulários,
+é a chave para libertar todo o seu potencial. Espero que este capítulo tenha 
+trazido você um passo mais perto.
 
-Evolução do quadro de formulário incidirá sobre a preservação do poder, enquanto
-diminuindo a complexidade e dando mais flexibilidade para o desenvolvedor. O
-quadro formulário só agora está em sua infância.
+O desenvolvimento futuro do *framework* de formulário será focado em preservar o poder, enquanto
+diminui a complexidade e fornece mais flexibilidade para o desenvolvedor. O
+*framework* de formulário está agora somente em sua infância.
