@@ -4,9 +4,14 @@ Sobre os Tradutores
 Andréia Bohner
 --------------
 
+Entusiasta do framework symfony, com o qual trabalha desenvolvendo desde 2005, na época com a versão 0.4.3. Iniciou a contribuir para sua divulgação aqui no Brasil com a publicação de cheat-sheets, tradução da documentação oficial e a criação do grupo de discussões symfony-pt. 
+
+Desenvolvedora web desde 2003. Possui graduação em Ciência da Computação pela Universidade do Vale do Itajaí. Apaixonada por tecnologias livres, open-source e web-standards com as quais trabalha e contribui.
+
 **Seu site** : *http://andreiabohner.wordpress.com*
 
 **No Twitter** : *http://twitter.com/andreiabohner*
+
 
 Gabriel Vaz
 -----------
@@ -23,6 +28,7 @@ Membro ativo do grupo symfony-pt.
 
 Lucas Stephanou
 ---------------
+
 
 Raphael A. Araújo
 -----------------
