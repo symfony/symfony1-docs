@@ -97,7 +97,7 @@ El caché de las plantillas de Symfony se puede configurar con el archivo de con
       with_layout: false
       lifetime:    86400
 
-De forma predeterminada, ya que todas las páginas pueden contener información  dinámica, la memoria caché es desactivada globalmente (`enabled: off`). No tenemos que cambiar esta configuración, porque permitiríamos pone en cache página por página.
+De forma predeterminada, ya que todas las páginas pueden contener información  dinámica, la memoria caché es desactivada globalmente (`enabled: false`). No tenemos que cambiar esta configuración, porque permitiríamos pone en cache página por página.
 
 El item `lifetime` define del lado del servidor el tiempo de vida de la memoria cache en segundos (`86400` segundos equivalen a un día).
 

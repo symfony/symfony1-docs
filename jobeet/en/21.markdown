@@ -123,7 +123,7 @@ found in `apps/frontend/config/cache.yml`:
       lifetime:    86400
 
 By default, as all pages can contain dynamic information, the cache is
-globally disabled (`enabled: off`). We don't need to change this setting,
+globally disabled (`enabled: false`). We don't need to change this setting,
 because we will enable the cache on a page by page basis.
 
 The `lifetime` setting defines the server side ~life time|Cache Life Time~ 
