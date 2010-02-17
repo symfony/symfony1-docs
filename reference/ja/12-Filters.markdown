@@ -5,7 +5,7 @@ filters.yml 設定ファイル
 
 アプリケーションのメインの `filters.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-第 3 章で説明したように、`filters.yml` ファイルは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)が有効で、[**定数**](#chapter_03)を収めることができます。
+第 3 章で説明したように、`filters.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
 `filters.yml` 設定ファイルは名前つきフィルター定義のリストを収めることができます:
 
@@ -51,7 +51,7 @@ filters.yml 設定ファイル
     FACTORY_NAME:
       enabled: false
 
-2 つの特別な名前のフィルター: `rendering` と `execution` があります。これらは両方とも必須で `type` パラメーターで特定されます。`rendering` フィルターはつねに最初に登録されフィルタリングされ `execution` フィルターは最後になります:
+2 つの特別な名前のフィルター: `rendering` と `execution` があります。これらは両方とも必須で `type` パラメーターで指定されます。`rendering` フィルターはつねに最初に登録されフィルタリングされ `execution` フィルターは最後になります:
 
     [yml]
     rendering:
@@ -106,12 +106,12 @@ filters.yml 設定ファイル
 
 `security` フィルターはアクションの `getCredential()` メソッドを呼び出すことでセキュリティをチェックします。いったんクレデンシャルが得られたら、ユーザーオブジェクトの `hasCredential()` メソッドを呼び出すことでユーザーが同じクレデンシャルを持つことを確認します。
 
-`security` フィルターは `security` 型を持たなければなりません。
+`security` フィルターのデータ型は `security` でなければなりません。
 
 `security` フィルターのきめ細かい設定は `security.yml` 設定[ファイル](#chapter_08)を通して行われます。
 
 >**TIP**
->必須のアクションが `security.yml` でセキュアなものとして設定されていない場合、`security` フィルターは実行されません。
+>`security.yml` で必須のアクションがセキュアなものとして設定されていない場合、`security` フィルターは実行されません。
 
 `cache`
 -------
@@ -135,7 +135,7 @@ filters.yml 設定ファイル
     common:
       class: sfCommonFilter
 
-`common` フィルターは JavaScript とスタイルシートがすでにインクルードされていない場合メインのレスポンスにこれらを追加します。
+`common` フィルターは JavaScript とスタイルシートがまだインクルードされていない場合、これらをメインのレスポンスに追加します。
 
 >**TIP**
 >レイアウトで `include_stylesheets()` と `include_javascripts()` ヘルパーを使う場合、このフィルターを安全に無効化することが可能で、小さなパフォーマンスの恩恵を受けます。

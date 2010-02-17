@@ -5,12 +5,12 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 アプリケーションのメインの `settings.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-第3章で説明したように、`settings.yml` ファイルは[**環境を認識し**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)が有効になります。
+第3章で説明したように、`settings.yml` ファイルでは[**環境が認識され**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらきます。
 
 それぞれの環境には 2 つのサブセクション: `.actions` と `.settings` があります。共通ページにレンダリングされるデフォルトのアクション以外、すべての設定ディレクティブは `.settings` サブセクションの下に入れます。
 
 >**NOTE**
->`settings.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; プロセスは ~`sfDefineEnvironmentConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
+>`settings.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfDefineEnvironmentConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
 
 <div class="pagebreak"></div>
 
@@ -71,7 +71,7 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
         module_disabled_module: default
         module_disabled_action: disabled
 
-`.actions` サブセクションは共通のページがレンダリングされるときに実行するアクションを定義します。それぞれの定義は 2 つのコンポーネント: 1 つはモジュール (サフィックスは `_module`)、もう 1 つはアクションです (サフィックスは`_action`) を収めます。
+`.actions` サブセクションは共通ページがレンダリングされるときに実行するアクションを定義します。それぞれの定義は 2 つのコンポーネント: 1 つはモジュール (サフィックスは `_module`)、もう 1 つはアクションです (サフィックスは`_action`) を収めます。
 
 ### ~`error_404`~
 

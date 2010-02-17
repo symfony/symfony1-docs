@@ -21,7 +21,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 `sfEvent` コンストラクターは 3 つの引数を受け取ります:
 
-  * イベントの"サブジェクト" (たいていの場合、これはイベントを通知するオブジェクトだが `null` にもなる)
+  * イベントの「サブジェクト」 (たいていの場合、これはイベントを通知するオブジェクトだが `null` にもなる)
   * イベントの名前
   * リスナーに渡すパラメーターの配列
 
@@ -49,7 +49,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
   * `getSubject()`: イベントに添付するサブジェクトオブジェクトを取得します。
   * `getParameters()`: イベントパラメーターを返します。
 
-イベントオブジェクトはパラメーターを取得するために配列としてもアクセスできます。
+イベントオブジェクトはパラメーターを得るために配列としてもアクセスできます。
 
 イベントの種類
 --------------
@@ -66,9 +66,9 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 ### `notifyUntil`
 
-`notifyUntil()` メソッドは `true` の値を返すことで 1 つのリスナーがチェーンを停止させるまですべてのリスナーを通知します。
+`notifyUntil()` メソッドは `true` の値を返すことで 1 つのリスナーが連鎖を止めるまですべてのリスナーを通知します。
 
-チェーンを停止させるリスナーは `setReturnValue()` メソッドを呼び出すこともできます。
+連鎖を止めるリスナーは `setReturnValue()` メソッドを呼び出すこともできます。
 
 通知元のオブジェクトはリスナーは `isProcessed()` メソッドを呼び出すことで処理されたイベントが保有されているかチェックできます:
 
@@ -82,7 +82,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 
 `filter()` メソッドはすべてのリスナーを通知します。これらは任意の値をフィルタリング可能で、通知元オブジェクトによって 2 番目の引数として渡され、3 番目の引数としてリスナーの callable によって読み取りされます。すべてのリスナーに値が渡され、これらはフィルタリングされた値を返さなければなりません。すべてのリスナーの実行は保証されます。
 
-通知元オブジェクトは `getReturnValue()` メソッドを呼び出すことでフィルタリングされた値を取得できます:
+通知元オブジェクトは `getReturnValue()` メソッドを呼び出すことでフィルタリングされた値を得ることができます:
 
     [php]
     $ret = $event->getReturnValue();
@@ -156,7 +156,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | ------------ | ----------------------------------------------------------------------------------
 | `priority`   | 優先順位 (`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`application.log` イベントは Web リクエストに対してロギングを行うために symfony によって利用されるメカニズムです (logger ファクトリを参照)。このイベントはたいていの symfony のコアコンポーネントによって通知されます。
+`application.log` イベントは Web リクエストに対してロギングするために symfony によって利用されるメカニズムです (logger ファクトリを参照)。このイベントはたいていの symfony のコアコンポーネントによって通知されます。
 
 ### ~`application.throw_exception`~
 
@@ -181,7 +181,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | ------------ | -----------------------------------------------------------------------------------
 | `priority`   | 優先順位(`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`command.log` イベントは symfony の CLI ユーティリティでロギングを行うために symfony によって利用されるメカニズムです。(`logger` ファクトリを参照)。
+`command.log` イベントは symfony の CLI ユーティリティでロギングするために symfony によって利用されるメカニズムです (`logger` ファクトリを参照)。
 
 ### ~`command.pre_command`~
 
@@ -230,7 +230,7 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | `method`     | 呼び出されるが見つからないメソッドの名前
 | `arguments`  | メソッドに渡される引数
 
-メソッドが `sfProjectConfiguration` クラスで定義されていない場合 `configuration.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにクラスにメソッドを追加できます。
+メソッドが `sfProjectConfiguration` クラスで定義されていない場合 `configuration.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
 
 `component`
 -----------
@@ -388,195 +388,4 @@ symfony のコアコンポーネントは `sfEventDispatcher` オブジェクト
 | `channel`    | プラグインのチャンネル
 | `plugin`     | プラグインの名前
 
-プラグインがアンインストールされる直前に `plugin.pre_uninstall` イベントが通知されます。
-
-### ~`plugin.post_uninstall`~
-
-*通知メソッド*: `notify`
-
-*デフォルトの通知元クラス*: `sfPluginManager`
-
-| パラメーター | 説明
-| ------------ | -----------------------
-| `channel`    | プラグインのチャンネル
-| `plugin`     | プラグインの名前
-
-プラグインがアンインストールされた直後に `plugin.post_uninstall` イベントが通知されます。
-
-`request`
----------
-
-### ~`request.filter_parameters`~
-
-*通知メソッド*: `filter`
-
-*デフォルトの通知元クラス*: `sfWebRequest`
-
-| パラメーター | 説明
-| ------------ | -----------------
-| `path_info`  | リクエストのパス
-
-リクエストパラメーターが初期化されるときに `request.filter_parameters` イベントが通知されます。
-
-### ~`request.method_not_found`~
-
-*通知メソッド*: `notifyUntil`
-
-*デフォルトの通知元クラス*: `sfRequest`
-
-| パラメーター | 説明
-| ------------ | -----------------------------------------
-| `method`     | 呼び出されたが見つからないメソッドの名前
-| `arguments`  | メソッドに渡される引数
-
-メソッドが `sfRequest` クラスで定義されていないときに `request.method_not_found` イベントは通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
-
-`response`
-----------
-
-### ~`response.method_not_found`~
-
-*通知メソッド*: `notifyUntil`
-
-*デフォルトの通知元クラス*: `sfResponse`
-
-| パラメーター | 説明
-| ------------ | -----------------------------------------
-| `method`     | 呼び出されたが見つからないメソッドの名前
-| `arguments`  | メソッドに渡される引数
-
-メソッドで `sfResponse` クラスが定義されていないとき `response.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずに、メソッドをクラスに追加できます。
-
-### ~`response.filter_content`~
-
-*通知メソッド*: `filter`
-
-*デフォルトの通知元クラス*: `sfResponse`
-
-レスポンスが送信される前に `response.filter_content` イベントが通知されます。このイベントをリスニングすることで、送信される前にレスポンスの内容を操作できます。
-
-`routing`
----------
-
-### ~`routing.load_configuration`~
-
-*通知メソッド*: `notify`
-
-*デフォルトの通知元クラス*: `sfRouting`
-
-ルーティングファクトリがルーティングコンフィギュレーションをロードするとき `routing.load_configuration` イベントが通知されます。
-
-`task`
-------
-
-### ~`task.cache.clear`~
-
-*通知メソッド*: `notifyUntil`
-
-*デフォルトの通知元クラス*: `sfCacheClearTask`
-
-| パラメーター  | 説明
-| ------------ | -------------------------------------------------------------------------------
-| `app`        | アプリケーションの名前
-| `type`       | キャッシュの種類 (`all`、`config`、`i18n`、`routing`、`module` と `template`)
-| `env`        | 環境
-
-ユーザーが `cache:clear` タスクで CLI からキャッシュをクリアするときに `task.cache.clear` イベントが通知されます。
-
-`template`
-----------
-
-### ~`template.filter_parameters`~
-
-*通知メソッド*: `filter`
-
-*デフォルトの通知元クラス*: `sfViewParameterHolder`
-
-ビューファイルがレンダリングされる前に `template.filter_parameters` イベントが通知されます。このイベントをリスニングすることでテンプレートに渡される変数にアクセスおよび操作できます。
-
-`user`
-------
-
-### ~`user.change_culture`~
-
-*通知メソッド*: `notify`
-
-*デフォルトの通知元クラス*: `sfUser`
-
-| パラメーター  | 説明
-| ------------ | ------------------
-| `culture`    | ユーザーのカルチャ
-
-リクエストのあいだにユーザーのカルチャが変更されるときに `user.change_culture` イベントが通知されます。
-
-### ~`user.method_not_found`~
-
-*通知メソッド*: `notifyUntil`
-
-*デフォルトの通知元クラス*: `sfUser`
-
-| パラメーター | 説明
-| ------------ | ------------------------------------------
-| `method`     | 呼び出されるが見つからないメソッドの名前
-| `arguments`  | メソッドに渡される引数
-
-メソッドが `sfUser` クラスで定義されていないときに、`user.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
-
-### ~`user.change_authentication`~
-
-*通知メソッド*: `notify`
-
-*デフォルトの通知元クラス*: `sfBasicSecurityUser`
-
-| パラメーター    | 説明
-| --------------- | ---------------------------------
-| `authenticated` | ユーザーが認証されているかどうか
-
-ユーザーの認証ステータスが変更されるときに `user.change_authentication` イベントが通知されます。
-
-`view`
-------
-
-### ~`view.configure_format`~
-
-*通知メソッド*: `notify`
-
-*デフォルトの通知元クラス*: `sfView`
-
-| パラメーター | 説明
-| ------------ | -----------------------
-| `format`     | リクエストフォーマット
-| `response`   | レスポンスオブジェクト
-| `request`    | リクエストオブジェクト
-
-リクエストが `sf_format` をセットするとき、ビューによって `view.configure_format` イベントが通知されます。レイアウトを設定するもしくは設定解除するといった単純作業を symfony が行った後でこのイベントが通知されます。このイベントによってリクエストされたフォーマットに従ってビューとレスポンスオブジェクトを変更できます。
-
-### ~`view.method_not_found`~
-
-*通知メソッド*: `notifyUntil`
-
-*デフォルトの通知元クラス*: `sfView`
-
-| パラメーター | 説明
-| ------------ | -------------------------------------
-| `method`     | 呼び出され見つからないメソッドの名前
-| `arguments`  | メソッドに渡される引数
-
-メソッドが `sfView` クラスで定義されるときに `view.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
-
-`view.cache`
-------------
-
-### ~`view.cache.filter_content`~
-
-*通知メソッド*: `filter`
-
-*デフォルトの通知元クラス*: `sfViewCacheManager`
-
-| パラメーター  | 説明
-| ------------ | ------------------------------------------------
-| `response`   | レスポンスオブジェクト
-| `uri`        | キャッシュされるコンテンツの URI
-| `new`        | コンテンツがキャッシュのなかで新しいものかどうか
-
-コンテンツがキャッシュから読み込まれるときに `view.cache.filter_content` イベントが通知されます。
+プラグインがアンインスト

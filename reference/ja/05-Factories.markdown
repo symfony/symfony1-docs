@@ -9,7 +9,7 @@ factories.yml 設定ファイル
 
 アプリケーションのメインの `factories.yml` 設定ファイルは `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-第3章で説明したように、`factories.yml` ファイルは[**環境を認識し**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)が有効になり、[**定数**](#chapter_03)を収めることができます。
+第3章で説明したように、`factories.yml` ファイルでは[**環境が認識され**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
 `factories.yml` 設定ファイルは名前つきのファクトリのリストを収めます:
 
@@ -22,7 +22,9 @@ factories.yml 設定ファイル
 
     # ...
 
-サポートされるファクトリの名前は次の通りです: `controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、`user`、`view_cache` と `view_cache_manager`
+サポートされるファクトリの名前は次の通りです: 
+`controller`、`logger`、`i18n`、`request`、`response`、`routing`、`storage`、
+`user`、`view_cache` と `view_cache_manager`
 
 `sfContext` がファクトリを初期化するとき、ファクトリオブジェクトを設定するために使われるファクトリ (`class`) とパラメーター (`param`) のクラス名の `factories.yml` ファイルを読み込みます:
 
@@ -33,7 +35,7 @@ factories.yml 設定ファイル
 
 ファクトリをカスタマイズできることは symfony のコアオブジェクトのデフォルトクラスの代わりにカスタムクラスを使うことができることを意味します。これらに送信するパラメーターをカスタマイズすることでこれらのクラスのデフォルトのふるまいを変更することもできます。
 
-ファクトリクラスがオートロードできないとき、`file` パスが定義されファクトリが作られる前に自動的にインクルードされます:
+ファクトリクラスをオートロードできないとき、`file` パスが定義されファクトリが作られる前に自動的にインクルードされます:
 
     [yml]
     FACTORY_NAME:
@@ -234,9 +236,9 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`transport`~
 
-`transport` オプションはEメールメッセージを実際に送信するために使うトランスポートを定義します。
+`transport` オプションはメールメッセージを実際に送信するために使うトランスポートを定義します。
 
-`class` 設定は `Swift_Transport` を実装する任意のクラスになります。デフォルトでは3つの設定が提供されます:
+`class` 設定は `Swift_Transport` を実装する任意のクラスになります。デフォルトでは 3 つの設定が提供されます:
 
   * ~`Swift_SmtpTransport`~: メッセージを送信するために SMTP サーバーを使います。
 
@@ -282,7 +284,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`formats`~
 
-`formats` オプションはファイルの拡張子と `Content-Type` の配列です。リクエスト URI の拡張子に基づいて、レスポンスの `Content-Type` を自動管理するために symfony によって使われます。
+`formats` オプションはファイルの拡張子と `Content-Type` の配列です。リクエスト URI の拡張子にもとづいて、レスポンスの `Content-Type` を自動管理するためにこのオプションは symfony によって使われます。
 
 ### ~`relative_url_root`~
 
@@ -344,7 +346,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`timeout`~
 
-`timeout` オプションはユーザー認証のタイムアウトを定義します。これはセッションのタイムアウトとは関係ありません。デフォルトの設定は30分間何もしていないユーザーの認証を自動的に解除します。
+`timeout` オプションはユーザー認証のタイムアウトを定義します。これはセッションのタイムアウトとは関係ありません。デフォルトの設定では 30 分間何もしていないユーザーの認証が自動的に解除されます。
 
 `sfBasicSecurityUser` 基底クラスを継承するユーザークラスのみがこの設定を使います。これは `myUser`クラス が生成される例に当てはまります。
 
@@ -353,7 +355,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`use_flash`~
 
-`use_flash` オプションは flash コンポーネントを有効もしくは無効にします。
+`use_flash` オプションはフラッシュコンポーネントを有効もしくは無効にします。
 
 ### ~`default_culture`~
 
@@ -391,7 +393,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`session_name`~
 
-`session_name` オプションはユーザーセッションを保存するために symfony によって使われる Cookie の名前を定義します。デフォルトの名前は `symfony` で、すべてのアプリケーションが同じ Cookie を共有することを意味します (そして対応する認証と認可も)。
+`session_name` オプションはユーザーセッションを保存するために symfony によって使われる Cookie の名前を定義します。デフォルトの名前は `symfony` で、すべてのアプリケーションが同じ Cookie (そして対応する認証と認可も) を共有することを意味します。
 
 ### `session_set_cookie_params()` パラメーター
 
@@ -399,7 +401,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
  * ~`session_cookie_lifetime`~: セッション Cookie の有効期間。秒単位で定義します。
  * ~`session_cookie_path`~:   Cookie が機能するドメイン上のパス。ドメインのすべてのパスに対して単独のスラッシュ (`/`) を使います。
- * ~`session_cookie_domain`~: Cookie のドメイン、たとえば `www.php.net`。すべてのサブドメインで Cookie を見えるようにするには `.php.net` のようにドメインのプレフィックスとしてドットをつけなければなりません。
+ * ~`session_cookie_domain`~: Cookie のドメイン、たとえば `www.php.net` です。すべてのサブドメインで Cookie を見えるようにするには `.php.net` のようにドメインのプレフィックスとしてドットをつけなければなりません。
  * ~`session_cookie_secure`~: `true` の場合 Cookie はセキュアなコネクションを通してのみ送信されます。
  * ~`session_cookie_httponly`~: `true` にセットされている場合、セッション Cookie を設定する際に PHP は `httponly` フラグを送信しようとします。
 
@@ -492,7 +494,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
             prefix:                    %SF_APP_DIR%/i18n
 
 >**CAUTION**
->[`i18n`](#chapter_04-Settings_sub_i18n) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
+>[`i18n`](#chapter_04_sub_i18n) 設定が `on` にセットされている場合のみこのファクトリが定義されます。
 
 ### ~`source`~
 
@@ -541,7 +543,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト値*: `:`
 
-`variable_prefixes` オプションはルートのパターンの変数名を始める文字のリストを定義します。
+`variable_prefixes` オプションはルートパターンのなかで変数名を始める文字のリストを定義します。
 
 ### ~`segment_separators`~
 
@@ -553,7 +555,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト値*: 新しいプロジェクトでは `true`、アップグレードしたプロジェクトでは `false`
 
-`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短ルートを生成するよう伝えます。symfony 1.0 と 1.1 との後方互換性のあるルートがほしい場合は、`false` にセットします。
+`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短ルートを生成するよう伝えます。symfony 1.0 と 1.1 と後方互換性のあるルートがほしい場合は、`false` にセットします。
 
 ### ~`extra_parameters_as_query_string`~
 
@@ -583,7 +585,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト値*: `false`
 
-`true` にセットする場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえており、マッチするルートが最初のものである場合この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスに悪い影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
+`true` にセットする場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえておりマッチするルートが最初のものである場合、この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスに悪い影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
 
 ### ~`lookup_cache_dedicated_keys`~
 
@@ -635,7 +637,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 `level` オプションはロガーのレベルを定義します。
 
-*可能な値*: `EMERG`、`ALERT`、`CRIT`、`ERR`、`WARNING`、`NOTICE`、`INFO`もしくは`DEBUG`
+*可能な値*: `EMERG`、`ALERT`、`CRIT`、`ERR`、`WARNING`、`NOTICE`、`INFO` もしくは `DEBUG`
 
 ### ~`loggers`~
 
@@ -662,4 +664,6 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 もっとも重要なのは `prefix` オプションで異なる環境／アプリケーション/プロジェクトのあいだでキャッシュを共有するもしくは分離できるようにします。
 
-*組み込みのキャッシュクラス*: `sfAPCCache`、`sfEAcceleratorCache`、`sfFileCache`、`sfMemcacheCache`、`sfNoCache`、`sfSQLiteCache` と `sfXCachCache`
+*組み込みのキャッシュクラス*: 
+`sfAPCCache`、`sfEAcceleratorCache`、`sfFileCache`、`sfMemcacheCache`、
+`sfNoCache`、`sfSQLiteCache` と `sfXCachCache`
