@@ -24,7 +24,7 @@ les fichiers qui doivent être accessibles par un navigateur web, comme les feui
 des images. Par défaut, nous vous recommandons de stocker ces fichiers sous le répertoire `web/`
 du projet symfony et ses sous-répertoires.
 
-Si vous jetez un oeil sur ce répertoire, vous trouverez plusiuers sous-répertoires pour
+Si vous jetez un oeil sur ce répertoire, vous trouverez plusieurs sous-répertoires pour
 les ressources web (`css/` et `images/`) et deux fichiers de contrôlleur frontal. Les
 contrôleurs frontaux sont seulement des fichiers PHP qui doivent être sous le répertoire
 racine web. Tous les autres fichiers PHP peuvent être cachés au navigateur, c'est une bonne
