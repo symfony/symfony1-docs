@@ -1,0 +1,498 @@
+Jour 21 : Le Cache
+==================
+
+Aujourd'hui, nous allons parler de la ~mise en cache|Cache~. Le framework symfony a beaucoup
+de stratégies intégrées du cache. Par exemple, les fichiers de ~configuration|Configuration~ ~YAML~
+sont d'abord converties en PHP et mis en cache sur le système de fichiers. Nous avons également vu
+que les modules générés par l'admin generator sont mis en cache pour une meilleure
+~performance|Performances~.
+
+Mais aujourd'hui, nous allons parler d'une autre cache : le cache HTML. Pour améliorer les performances
+de votre site, vous pouvez mettre en cache toutes les pages HTML ou juste une partie d'entre elles.
+
+La création d'un nouvel environnement
+-------------------------------------
+
+Par défaut, la fonctionnalité du ~cache de template|Templates (Mise en cache)~ de symfony est
+activée dans le fichier de configuration `settings.yml` pour l'~environnement|Environnement~ de
+`prod`, mais pas pour celui de `test` et `dev` :
+
+    [yml]
+    prod:
+      .settings:
+        cache: true
+
+    dev:
+      .settings:
+        cache: false
+
+    test:
+      .settings:
+        cache: false
+
+Comme nous avons besoin de tester la fonctionnalité du cache avant d'aller en
+production, nous pouvons activer le cache pour l'environnement de `dev` ou créer un
+nouvel environnement. Rappelons qu'un environnement est défini par son nom (une chaîne),
+un contrôleur frontal et éventuellement un ensemble de valeur de configuration spécifique.
+
+Pour jouer avec le système de cache sur Jobeet, nous allons créer un environnement
+`cache`, similaire à l'environnement `prod`, mais avec la journalisation et les informations de
+débogage disponibles dans l'environnement de `dev`.
+
+Créez le contrôleur frontal associé au nouvel environnement `cache` en
+copiant le contrôleur frontal de dev` `web/frontend_dev.php` vers
+`web/frontend_cache.php` :
+
+    [php]
+    // web/frontend_cache.php
+    if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
+    {
+      die('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+    }
+
+    require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
+
+    $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'cache', true);
+    sfContext::createInstance($configuration)->dispatch();
+
+C'est tout ce qu'il y a à faire. Le nouvel environnement `cache` est maintenant
+utilisable. La seule différence est que le deuxième argument de la méthode
+`getApplicationConfiguration()` est le nom de l'environnement : `cache`.
+
+Vous pouvez tester l'environnement `cache` dans votre navigateur en appelant
+son contrôleur frontal :
+
+    http://jobeet.localhost/frontend_cache.php/
+
+>**NOTE**
+>Le script du contrôleur frontal commence par un code qui assure que le contrôleur
+>frontal est seulement appelé à partir d'une adresse IP locale. Cette mesure de sécurité
+>permet d'éviter que le contrôleur frontal soit appelé sur les serveurs de production.
+>Nous en reparlerons plus en détail dans le tutoriel de demain.
+
+Pour l'instant, l'environnement `cache` hérite de la configuration par défaut. Modifiez
+le fichier de configuration `settings.yml` pour ajouter à l'environnement `cache` une
+configuration spécifique :
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    cache:
+      .settings:
+        error_reporting: <?php echo (E_ALL | E_STRICT)."\n" ?>
+        web_debug:       true
+        cache:           true
+        etag:            false
+
+Dans ces paramètres, la fonctionnalité du cache de template de symfony a été activée avec
+le paramètre `cache` et le ~web debug toolbar|Web Debug Toolbar~ a été activé avec le
+paramètre `web_debug`.
+
+<propel>
+Comme nous voulons aussi la ~journalisation|Journalisation~ des instructions SQL, nous avons
+besoin de changer la configuration de la base de données. Modifiez `databases.yml` et ajoutez
+la configuration suivante au début du fichier :
+
+    [yml]
+    # config/databases.yml
+    cache:
+      propel:
+        class: sfPropelDatabase
+        param:
+          classname: DebugPDO
+</propel>
+
+Comme la configuration par défaut met en cache tous les paramètres, vous avez
+besoin de le vider avant d'être en mesure de voir les changements dans votre navigateur :
+
+    $ php symfony cc
+
+Maintenant, si vous actualisez votre navigateur, le web debug toolbar devrait être présent
+dans le coin en haut à droite de la page, comme c'est le cas pour l'environnement `dev`.
+
+Configuration du cache
+----------------------
+
+Le cache du template de symfony peut être configuré avec le fichier de
+configuration ~`cache.yml`~. La configuration par défaut pour l'application
+se trouve dans `apps/frontend/config/cache.yml` :
+
+    [yml]
+    default:
+      enabled:     false
+      with_layout: false
+      lifetime:    86400
+
+Par défaut, comme toutes les pages peuvent contenir des informations dynamiques,
+le cache est désactivé totalement (`enabled: false`). Nous n'avons pas besoin de modifier
+ce paramètre, car nous allons activer le cache page par page.
+
+Le paramètre `lifetime` définit la ~durée de vie|Durée de vie du cache~ du cache
+du côté du serveur en secondes (`86400` secondes est égal à un jour).
+
+>**TIP**
+>Vous pouvez également travailler dans l'autre sens : activez le cache globalement,
+>puis, le désactivez sur des pages spécifiques qui ne peuvent être mises en cache. Cela
+>dépend du choix représentant le moins de travail pour votre application.
+
+Mise en cache d'une page
+------------------------
+
+Comme la page d'accueil Jobeet sera probablement la page la plus visitée du site web,
+au lieu de requêter les données dans la base de données chaque fois qu'un utilisateur
+accède à la page, elle peut être mis en cache.
+
+Créez un fichier `cache.yml` pour le module `sfJobeetJob` :
+
+    [yml]
+    # plugins/sfJobeetPlugin/modules/sfJobeetJob/config/cache.yml
+    index:
+      enabled:     true
+      with_layout: true
+
+>**TIP**
+>Le fichier de configuration `cache.yml` a les mêmes propriétés que tous les autres
+>fichiers de configuration de symfony comme `view.yml`. Cela signifie par exemple que
+>vous pouvez activer le cache pour toutes les actions d'un module en utilisant la clé
+>spéciale `all`.
+
+Si vous actualisez votre navigateur, vous pourrez voir que symfony a décoré la
+page avec une case indiquant que le contenut a été mise en cache :
+
+![Cache](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
+
+La boîte donne des informations précieuses sur la clé du cache pour le débogage,
+comme la durée de vie du cache, et l'âge de celui-ci.
+
+Si vous actualisez la page à nouveau, la couleur de la boîte passe du vert au
+jaune, indiquant que la page a été extraites de la mémoire cache :
+
+![Cache](http://www.symfony-project.org/images/jobeet/1_4/21/cache.png)
+
+Notez également qu'aucune demande de base de données a été faite dans le
+second cas, comme indiqué dans le web debug toolbar.
+
+>**TIP**
+>Même si la langue peut être changée selon l'utilisateur, le cache fonctionne
+>encore car la langue est incorporé dans l'URL.
+
+Quand une page est mis en cache, et si le cache n'existe pas encore, symfony stocke
+l'objet de la réponse dans le cache à la fin de la requête. Pour toutes les autres
+requêtes futures, symfony va envoyer la réponse mise en cache sans appeler le
+contrôleur :
+
+![Flux d'un cache d'une page](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
+
+Cela a un impact considérable sur la ~performance|Performances~ que vous pouvez mesurer par
+vous-même en utilisant des outils tels que [JMeter](http://jakarta.apache.org/jmeter/).
+
+>**NOTE**
+>Une requête entrante avec des paramètres `GET` ou soumis avec la méthode `POST`,
+>`PUT` ou `DELETE` ne sera jamais mis en cache par symfony, quelle que soit la
+>configuration.
+
+La page de création d'emplois peut aussi être mis en cache :
+
+    [yml]
+    # plugins/sfJobeetPlugin/modules/sfJobeetJob/config/cache.yml
+    new:
+      enabled:     true
+
+    index:
+      enabled:     true
+
+    all:
+      with_layout: true
+
+Comme les deux pages peuvent être mises en cache avec le layout, nous avons
+créé une section `all` qui définit la configuration par défaut pour l'ensemble
+des actions du module `sfJobeetJob`.
+
+Le vidage du cache
+------------------
+
+Si vous voulez vider le cache de la page, vous pouvez utiliser la tâche `cache:clear` :
+
+    $ php symfony cc
+
+La tâche `cache:clear` vide tous les caches stockés sous le répertoire principal
+`cache/`. Il prend également des options pour vider sélectivement certaines parties du
+cache. Pour vider uniquement le cache de template pour l'environnement de `cache`,
+utilisez les options `--type` et `--env` :
+
+    $ php symfony cc --type=template --env=cache
+
+Au lieu d'effacer le cache chaque fois que vous apportez une modification, vous
+pouvez également désactiver le cache en ajoutant toute chaîne de requête à l'URL,
+ou en utilisant le bouton "Ignore cache" depuis le web debug toolbar :
+
+![Web Debug Toolbar](http://www.symfony-project.org/images/jobeet/1_4/21/debug.png)
+
+Mise en cache d'une action
+--------------------------
+
+Parfois, vous ne pouvez pas mettre en cache la page entière dans le cache, mais seule
+l'~action|Action~ du template peut être mis en cache. Autrement dit, vous pouvez tout mettre
+en cache, sauf le layout.
+
+Pour l'application Jobeet, nous ne pouvons pas mettre en cache la page entière
+à cause de la barre "history job".
+
+Modifiez la configuration le cache pour le module `job` en conséquence :
+
+    [yml]
+    # plugins/sfJobeetPlugin/modules/sfJobeetJob/config/cache.yml
+    new:
+      enabled:     true
+
+    index:
+      enabled:     true
+
+    all:
+      with_layout: false
+
+En changeant le paramètre `with_layout` à `false`, vous avez désactivé
+la mise en cache du layout.
+
+Vider le cache:
+
+    $ php symfony cc
+
+Rafraîchissez votre navigateur pour voir la différence :
+
+![Mise ne cache de l'action](http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png)
+
+Même si le flux de la requête est assez similaire dans le diagramme simplifié,
+la mise en cache sans le layout est la plus intensive ressource.
+
+![Flux du cache de l'action](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png)
+
+Mise en cache du ~Partial|Partial Templates~ et du ~Component~
+--------------------------------------------------------------
+
+Pour les sites web très dynamique, il est parfois même impossible de mettre en
+cache toute l'action du template. Pour ces cas, il vous faut un moyen de configurer
+le cache au niveau le plus fin. Heureusement, les partials et les components peuvent
+également être mis en cache.
+
+![Mise en cache du Partial](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
+
+Mettons en cache le component `language` en créant un fichier `cache.yml` pour
+le module `sfJobeetLanguage` :
+
+    [yml]
+    # plugins/sfJobeetPlugin/modules/sfJobeetLanguage/config/cache.yml
+    _language:
+      enabled: true
+
+La configuration du cache d'un partial ou d'un component est aussi simple que
+l'ajout d'une entrée avec son nom. L'option `with_layout` n'est pas pris en compte
+pour ce type de cache car cela n'a pas de sens :
+
+![Flux du cache d'un Partial et d'un Component](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
+
+>**SIDEBAR**
+>~Contextuel|Mise en cache contextuel~ ou non ?
+>
+>La même component ou partial peut être utilisé dans beaucoup de templates différents.
+>Le partial d'emploi `_list.php`, par exemple, est utilisé dans les modules `sfJobeetJob` et `sfJobeetCategory`.
+>Comme le rendu est toujours le même, le partial ne dépend pas du contexte dans lequel
+>il est utilisé et le cache est le même pour tous les templates (le cache est
+>bien évidemment différent pour une autre série de paramètres).
+>
+>Mais parfois, l'affichage d'un partial ou d'un component est différent, selon
+>l'action dans laquel il est inclus (pensez à une barre latérale d'un blog par exemple,
+>qui est légèrement différente pour la page d'accueil et la page d'un message du blog). Dans
+>ces cas, le partial ou le component est contextuel, et le cache doit être configuré
+>en conséquence en mettant l'option `contextual` à `true` :
+>
+>     [yml]
+>     _sidebar:
+>       enabled:    true
+>       contextual: true
+
+Formulaires en cache
+--------------------
+
+Le stockage de la page de création d'emplois dans le cache est problématique, car il contient
+un formulaire. Pour mieux comprendre le problème, allez à la page "Post a Job" dans votre
+navigateur pour voir le cache. Ensuite, désactivez votre cookie de session, et essayer de soumettre
+un emploi. Vous devez voir un message d'erreur vous avertissant d'une "attaque ~CSRF~" :
+
+![CSRF et Cache](http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png)
+
+Pourquoi? Comme nous avons configuré un secret CSRF lorsque nous avons créé l'application 
+frontend, symfony intègre un jeton CSRF dans toutes ses formulaires. Afin de vous protéger
+contre les attaques CSRF, ce jeton est unique pour un utilisateur donné et pour un formulaire donné.
+
+La première fois que la page est affichée, le formulaire HTML généré est stocké dans
+le cache avec le jeton de l'utilisateur en cours. Si un autre utilisateur vient après,
+la page du cache sera affichée avec le jeton CSRF du premier utilisateur. En soumettant
+le formulaire, les jetons ne correspondent pas et une erreur est levée.
+
+Comment pouvons-nous résoudre le problème car il semble légitime de stocker le
+formulaire dans le cache ? Le formulaire de création d'emplois ne dépend pas de
+l'utilisateur, et cela ne change rien pour l'utilisateur actuel. Dans un tel cas
+ aucune protection CSRF est nécessaire, et nous pouvons éliminer le CSRF jeton :
+
+    [php]
+<propel>
+    // plugins/sfJobeetPlugin/lib/form/JobeetJobForm.class.php
+    class JobeetJobForm extends BaseJobeetJobForm
+</propel>
+<doctrine>
+    // plugins/sfJobeetPlugin/lib/form/doctrine/PluginJobeetJobForm.class.php
+    abstract PluginJobeetJobForm extends BaseJobeetJobForm
+</doctrine>
+    {
+      public function configure()
+      {
+        $this->disableLocalCSRFProtection();
+      }
+    }
+
+Après avoir fait ce changement, videz le cache et ré-essayez le même scénario que
+ci-dessus pour prouver qu'il fonctionne comme prévu maintenant.
+
+La même configuration doit être appliquée au formulaire de la langue qui est contenu
+dans le layout et qui sera stockées dans le cache. Comme le `sfLanguageForm` par défaut
+est utilisée, au lieu de créer une nouvelle classe, il suffit de supprimer le jeton CSRF,
+faisons-le depuis l'action et le component du module `sfJobeetLanguage` :
+
+    [php]
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/components.class.php
+    class sfJobeetLanguageComponents extends sfComponents
+    {
+      public function executeLanguage(sfWebRequest $request)
+      {
+        $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
+        unset($this->form[$this->form->getCSRFFieldName()]);
+      }
+    }
+
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/actions.class.php
+    class sfJobeetLanguageActions extends sfActions
+    {
+      public function executeChangeLanguage(sfWebRequest $request)
+      {
+        $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
+        unset($form[$form->getCSRFFieldName()]);
+
+        // ...
+      }
+    }
+
+Le `getCSRFFieldName()` retourne le nom du champ qui contient le jeton CSRF.
+Par désactivation de ce champ, le widget et le validateur associés sont
+supprimés.
+
+~Suppression du cache|Cache (Suppression)~
+------------------------------------------
+
+Chaque fois qu'un utilisateur poste et active un emploi, la page d'accueil doit être
+rafraîchie pour lister le nouvel emploi.
+
+Comme nous n'avons pas besoin que l'emploi apparaisse en temps réel sur la page d'accueil, la
+meilleure stratégie est de diminuer la durée de vie du cache vers quelque chose d'acceptable :
+
+    [yml]
+    # plugins/sfJobeetPlugin/modules/sfJobeetJob/config/cache.yml
+    index:
+      enabled:  true
+      lifetime: 600
+
+Au lieu que la configuration par défaut soit d'un jour, le cache de la page d'accueil
+sera supprimée automatiquement toutes les dix minutes.
+
+Mais si vous voulez mettre à jour la page d'accueil dès que l'utilisateur active un nouvel
+emploi, éditez la méthode `executePublish()` du module `sfJobeetJob` pour ajouter le vidage
+du cache manuellement :
+
+    [php]
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
+    public function executePublish(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+
+      $job = $this->getRoute()->getObject();
+      $job->publish();
+
+      if ($cache = $this->getContext()->getViewCacheManager())
+      {
+        $cache->remove('sfJobeetJob/index?sf_culture=*');
+        $cache->remove('sfJobeetCategory/show?id='.$job->getJobeetCategory()->getId());
+      }
+
+      $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
+
+      $this->redirect('job_show_user', $job);
+    }
+
+Le cache est géré par la classe `sfViewCacheManager`. La méthode `remove()`
+supprime le cache associé à une URI interne. Pour retirer le cache pour tous les
+paramètres possibles d'une variable, utilisez le `*` en tant que valeur. Le
+`sf_culture=*` que nous avons utilisé dans le code ci-dessus signifie que symfony
+va supprimer le cache pour les pages d'accueil anglaise et française.
+
+Come le gestionnaire de cache est `null` lorsque le cache est désactivé, nous avons
+enveloppé la suppression du cache dans un bloc `if`.
+
+~Test du cache|Test (Cache)~
+----------------------------
+
+Avant de commencer, nous devons changer la configuration de l'environnement
+`test` pour activer la couche du cache :
+
+    [yml]
+    # apps/frontend/config/settings.yml
+    test:
+      .settings:
+        error_reporting: <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+        cache:           true
+        web_debug:       false
+        etag:            false
+
+Testons la page de création d'emplois :
+
+    [php]
+    // test/functional/frontend/jobActionsTest.php
+    $browser->
+      info('  7 - Job creation page')->
+
+      get('/fr/')->
+      with('view_cache')->isCached(true, false)->
+
+<propel>
+      createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
+</propel>
+<doctrine>
+      createJob(array('category_id' => Doctrine::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
+</doctrine>
+
+      get('/fr/')->
+      with('view_cache')->isCached(true, false)->
+      with('response')->checkElement('.category_programming .more_jobs', '/23/')
+    ;
+
+Le testeur `view_cache` est utilisé pour tester le cache. La méthode `isCached()`
+accepte deux booléens :
+
+  * Savoir si la page doit être dans le cache ou pas
+  * Savoir si le cache est avec un layout ou non
+
+>**TIP**
+>Même avec tous les outils fournis par le framework de test fonctionnel, il est parfois
+>plus facile de diagnostiquer les problèmes au sein du navigateur. Il est assez facile à
+>accomplir. Il suffit de créer un contrôleur frontal pour l'environnement `test`. Les
+>~logs|Journalisation~ qui sont stockés dans `log/frontend_test.log` peuvent aussi être très utile.
+
+À demain
+--------
+
+Comme beaucoup d'autres fonctionnalités symfony, le sous-framework de cache
+de symfony est très souple et permet au développeur de configurer le cache à
+un niveau très fin.
+
+Demain, nous allons parler de la dernière étape du cycle de vie de l'application :
+le déploiement des serveurs de production.
+
+__ORM__
