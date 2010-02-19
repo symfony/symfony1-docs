@@ -6,7 +6,7 @@ Andréia Bohner
 
 Entusiasta do framework symfony, com o qual trabalha desenvolvendo desde 2005, na época com a versão 0.4.3. Iniciou a contribuir para sua divulgação aqui no Brasil com a publicação de cheat-sheets, tradução da documentação oficial e a criação do grupo de discussões symfony-pt. 
 
-Desenvolvedora web desde 2003. Possui graduação em Ciência da Computação pela Universidade do Vale do Itajaí. Apaixonada por tecnologias livres, open-source e web-standards com as quais trabalha e contribui.
+Desenvolvedora web desde 2003. Possui graduação em Ciência da Computação. Apaixonada por tecnologias livres, open-source e web-standards com as quais trabalha e contribui.
 
 **Seu site** : *http://andreiabohner.wordpress.com*
 
@@ -40,3 +40,13 @@ Membro proativo do grupo symfony-pt, busca compartilhar experiências com todos 
 **Seu site** : *http://sites.google.com/site/raphoxaraujo*
 
 **No Twitter** : *http://twitter.com/raphox*
+
+
+Rafael Goulart
+--------------
+
+Graduado em Administração, é desenvolvedor PHP há 8 anos e 2,5 anos desenvolvedor symfony, ZCE, especialista em sistemas CRM , leciona PHP e symfony. 
+
+Trabalha como consultor e desenvolvedor freelancer para vários clientes em todo Brasil.
+
+**Seu site** : *http://rgou.net*
