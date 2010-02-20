@@ -275,7 +275,7 @@ Poi usiamo `sfWidgetFormChoice` per il widget della colonna `type`:
       'choices'  => JobeetJobPeer::$types,
 </propel>
 <doctrine>
-      'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+      'choices'  => Doctrine_Core::getTable('JobeetJob')->getTypes(),
 </doctrine>
       'expanded' => true,
     ));
@@ -308,7 +308,7 @@ Cambiamo il validatore per restringere le possibilità di scelta:
 <doctrine>
     [php]
     $this->validatorSchema['type'] = new sfValidatorChoice(array(
-      'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+      'choices' => array_keys(Doctrine_Core::getTable('JobeetJob')->getTypes()),
     ));
 </doctrine>
 
@@ -400,7 +400,7 @@ La versione finale della classe `JobeetJobForm` sarà come la seguente:
           'choices' => JobeetJobPeer::$types,
 </propel>
 <doctrine>
-          'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+          'choices'  => Doctrine_Core::getTable('JobeetJob')->getTypes(),
 </doctrine>
           'expanded' => true,
         ));
@@ -409,7 +409,7 @@ La versione finale della classe `JobeetJobForm` sarà come la seguente:
           'choices' => array_keys(JobeetJobPeer::$types),
 </propel>
 <doctrine>
-          'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+          'choices' => array_keys(Doctrine_Core::getTable('JobeetJob')->getTypes()),
 </doctrine>
         ));
 
@@ -526,7 +526,7 @@ Infine, l'istruzione `<?php echo $form ?>` visualizza i widget del form.
 >     [php]
 >     <?php foreach ($form as $widget): ?>
 >       <?php echo $widget->renderRow() ?>
->     <?php endforeach; ?>
+>     <?php endforeach ?>
 
 ### L'azione del form
 
@@ -759,7 +759,7 @@ contenere la barra di amministrazione e rimuoviamo il link `edit` in fondo:
     <!-- apps/frontend/modules/job/templates/showSuccess.php -->
     <?php if ($sf_request->getParameter('token') == $job->getToken()): ?>
       <?php include_partial('job/admin', array('job' => $job)) ?>
-    <?php endif; ?>
+    <?php endif ?>
 
 Quindi, creiamo il partial `_admin`:
 
@@ -771,7 +771,7 @@ Quindi, creiamo il partial `_admin`:
         <?php if (!$job->getIsActivated()): ?>
           <li><?php echo link_to('Edit', 'job_edit', $job) ?></li>
           <li><?php echo link_to('Publish', 'job_edit', $job) ?></li>
-        <?php endif; ?>
+        <?php endif ?>
         <li><?php echo link_to('Delete', 'job_delete', $job, array('method' => 'delete', 'confirm' => 'Are you sure?')) ?></li>
         <?php if ($job->getIsActivated()): ?>
           <li<?php $job->expiresSoon() and print ' class=" expires_soon"' ?>>
@@ -779,17 +779,17 @@ Quindi, creiamo il partial `_admin`:
               Expired
             <?php else: ?>
               Expires in <strong><?php echo $job->getDaysBeforeExpires() ?></strong> days
-            <?php endif; ?>
+            <?php endif ?>
 
             <?php if ($job->expiresSoon()): ?>
              - <a href="">Extend</a> for another <?php echo sfConfig::get('app_active_days') ?> days
-            <?php endif; ?>
+            <?php endif ?>
           </li>
         <?php else: ?>
           <li>
             [Bookmark this <?php echo link_to('URL', 'job_show', $job, true) ?> to manage this job in the future.]
           </li>
-        <?php endif; ?>
+        <?php endif ?>
       </ul>
     </div>
 
@@ -811,7 +811,7 @@ scorciatoia alla classe `JobeetJob`:
       return $this->getType() ? JobeetJobPeer::$types[$this->getType()] : '';
 </propel>
 <doctrine>
-      $types = Doctrine::getTable('JobeetJob')->getTypes();
+      $types = Doctrine_Core::getTable('JobeetJob')->getTypes();
       return $this->getType() ? $types[$this->getType()] : '';
 </doctrine>
     }

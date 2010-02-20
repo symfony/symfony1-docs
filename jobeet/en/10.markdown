@@ -1,8 +1,9 @@
 Day 10: The Forms
 =================
 
-The second week of Jobeet got off to a flying start with the introduction of
-the symfony test framework. We will continue today with the form framework.
+Previous chapter of this Jobeet tutorial got off to a flying start with the 
+introduction of the symfony test framework. We will continue in this new chapter 
+with the form framework.
 
 The Form Framework
 ------------------
@@ -18,10 +19,12 @@ Of course, instead of reinventing the wheel over and over again, symfony
 provides a framework to ease form management. The form framework is made of
 three parts:
 
-  * **validation**: The ~validation|Validation~ sub-framework provides classes to validate
-                    inputs (integer, string, email address, ...)
-  * **widgets**:    The ~widget|Widgets~ sub-framework provides classes to output HTML
-                    fields (input, textarea, select, ...)
+  * **validation**: The ~validation|Validation~ sub-framework provides classes 
+                    to validate inputs (integer, string, email address, ...)
+
+  * **widgets**:    The ~widget|Widgets~ sub-framework provides classes to 
+                    output HTML fields (input, textarea, select, ...)
+
   * **forms**:      The ~form|Forms~ classes represent forms made of widgets and
                     validators and provide methods to help manage the form.
                     Each form field has its own validator and widget.
@@ -84,7 +87,7 @@ value for the `required` option is `true`. So, the validation definition for
 Most of the time, a form has to be serialized to the database. As symfony
 already knows everything about your database model, it can automatically
 generate forms based on this information. In fact, when you launched the
-`propel:build --all` task during day 3, symfony automatically called the
+`propel:build --all` task during chapter 3, symfony automatically called the
 `propel:build --forms` task:
 
     $ php symfony propel:build --forms
@@ -260,7 +263,7 @@ add the new validator to the existing ones by using the special
 
 The `sfValidatorAnd` validator takes an array of validators that must pass for
 the value to be valid. The trick here is to reference the current validator
-($this->validatorSchema['email']), and to add the new one.
+(`$this->validatorSchema['email']`), and to add the new one.
 
 >**NOTE**
 >You can also use the `sfValidatorOr` validator to force a value to
@@ -317,7 +320,7 @@ Then, use `sfWidgetFormChoice` for the `type` widget:
       'choices'  => JobeetJobPeer::$types,
 </propel>
 <doctrine>
-      'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+      'choices'  => Doctrine_Core::getTable('JobeetJob')->getTypes(),
 </doctrine>
       'expanded' => true,
     ));
@@ -349,7 +352,7 @@ Let's change the validator to restrict the possible choices:
 <doctrine>
     [php]
     $this->validatorSchema['type'] = new sfValidatorChoice(array(
-      'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+      'choices' => array_keys(Doctrine_Core::getTable('JobeetJob')->getTypes()),
     ));
 </doctrine>
 
@@ -405,7 +408,7 @@ used in the `showSuccess` template:
 >**TIP**
 >If a `generateLogoFilename()` method exists in the model, it will be called
 >by the validator and the result will override the default generated `logo`
->filename. The method is given the `sfValidatedFile` object as an argument.
+>filename. The method takes the `sfValidatedFile` object as an argument.
 
 Just as you can override the generated label of any field, you can also define a
 ~help message|Forms (Help)~. Let's add one for the `is_public` column to better 
@@ -442,7 +445,7 @@ The final `JobeetJobForm` class reads as follows:
           'choices' => JobeetJobPeer::$types,
 </propel>
 <doctrine>
-          'choices'  => Doctrine::getTable('JobeetJob')->getTypes(),
+          'choices'  => Doctrine_Core::getTable('JobeetJob')->getTypes(),
 </doctrine>
           'expanded' => true,
         ));
@@ -451,7 +454,7 @@ The final `JobeetJobForm` class reads as follows:
           'choices' => array_keys(JobeetJobPeer::$types),
 </propel>
 <doctrine>
-          'choices' => array_keys(Doctrine::getTable('JobeetJob')->getTypes()),
+          'choices' => array_keys(Doctrine_Core::getTable('JobeetJob')->getTypes()),
 </doctrine>
         ));
 
@@ -571,7 +574,7 @@ Eventually, the `<?php echo $form ?>` renders the form widgets.
 >     [php]
 >     <?php foreach ($form as $widget): ?>
 >       <?php echo $widget->renderRow() ?>
->     <?php endforeach; ?>
+>     <?php endforeach ?>
 
 ### The Form Action
 
@@ -646,8 +649,7 @@ we can simplify the code for the form management methods:
       }
     }
 
-When you browse to the `/job/new` page, a new ~form|Forms~ instance is created and
-passed to the template (`new` action).
+When you browse to the `/job/new` page, a new ~form|Forms~ instance is created and passed to the template (`new` action).
 
 When the user submits the form (`create` action), the form is bound (`bind()`
 method) with the user submitted values and the validation is triggered.
@@ -659,10 +661,10 @@ the job preview page; if not, the `newSuccess.php` template is displayed again
 with the user submitted values and the associated error messages.
 
 >**TIP**
->The `setTemplate()` method changes the ~template|Templates~ used for a given action. If
->the submitted form is not valid, the `create` and `update` methods use the
->same template as the `new` and `edit` action respectively to re-display the
->form with error messages.
+>The `setTemplate()` method changes the ~template|Templates~ used for a given 
+>action. If the submitted form is not valid, the `create` and `update` methods 
+>use the same template as the `new` and `edit` action respectively to re-display 
+>the form with error messages.
 
 The modification of an existing job is quite similar. The only difference
 between the `new` and the `edit` action is that the job object to be modified
@@ -796,7 +798,7 @@ admin bar and remove the `edit` link at the bottom:
     <!-- apps/frontend/modules/job/templates/showSuccess.php -->
     <?php if ($sf_request->getParameter('token') == $job->getToken()): ?>
       <?php include_partial('job/admin', array('job' => $job)) ?>
-    <?php endif; ?>
+    <?php endif ?>
 
 Then, create the `_admin` partial:
 
@@ -808,7 +810,7 @@ Then, create the `_admin` partial:
         <?php if (!$job->getIsActivated()): ?>
           <li><?php echo link_to('Edit', 'job_edit', $job) ?></li>
           <li><?php echo link_to('Publish', 'job_edit', $job) ?></li>
-        <?php endif; ?>
+        <?php endif ?>
         <li><?php echo link_to('Delete', 'job_delete', $job, array('method' => 'delete', 'confirm' => 'Are you sure?')) ?></li>
         <?php if ($job->getIsActivated()): ?>
           <li<?php $job->expiresSoon() and print ' class="expires_soon"' ?>>
@@ -816,17 +818,17 @@ Then, create the `_admin` partial:
               Expired
             <?php else: ?>
               Expires in <strong><?php echo $job->getDaysBeforeExpires() ?></strong> days
-            <?php endif; ?>
+            <?php endif ?>
 
             <?php if ($job->expiresSoon()): ?>
              - <a href="">Extend</a> for another <?php echo sfConfig::get('app_active_days') ?> days
-            <?php endif; ?>
+            <?php endif ?>
           </li>
         <?php else: ?>
           <li>
             [Bookmark this <?php echo link_to('URL', 'job_show', $job, true) ?> to manage this job in the future.]
           </li>
-        <?php endif; ?>
+        <?php endif ?>
       </ul>
     </div>
 
@@ -848,7 +850,7 @@ in the `JobeetJob` class:
       return $this->getType() ? JobeetJobPeer::$types[$this->getType()] : '';
 </propel>
 <doctrine>
-      $types = Doctrine::getTable('JobeetJob')->getTypes();
+      $types = Doctrine_Core::getTable('JobeetJob')->getTypes();
       return $this->getType() ? $types[$this->getType()] : '';
 </doctrine>
     }
@@ -1039,15 +1041,15 @@ add the new requirement.
 >       }
 </doctrine>
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-Today's tutorial was packed with a lot of new information, but hopefully you
+This chapter was packed with a lot of new information, but hopefully you
 now have a better understanding of symfony's form framework.
 
-I know that some of you noticed that we forgot something today... We have not
+We know that some of you noticed that we forgot something today... We have not
 implemented any test for the new features. Because writing tests is an
 important part of developing an application, this is the first thing we will
-do tomorrow.
+do in the next chapter.
 
 __ORM__
