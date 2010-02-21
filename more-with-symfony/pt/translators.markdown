@@ -13,6 +13,18 @@ Desenvolvedora web desde 2003. Possui graduação em Ciência da Computação. A
 **No Twitter** : *http://twitter.com/andreiabohner*
 
 
+Daniel Tiecher
+--------------
+
+Graduando em Análise e Desenvolvimento de Sistemas, Daniel atua como desenvolvedor há 4 anos e há um ano atrás desenvolve aplicações utilizando o symfony. Durante estes quatro anos ele já passou por diversas linguagens (PHP, Java, Python, C#) e frameworks (Django, Rails, cakePHP, symfony).
+
+Possui uma grande paixão por tecnologias livre, FOSS e web standards - promovendo-as, utilizando-se delas e contribuindo para a sua evolução sempre que possível.
+
+**Seu site** : *http://danieltiecher.com/*
+
+**No Twitter** : *http://twitter.com/datiecher*
+
+
 Gabriel Vaz
 -----------
 
@@ -28,6 +40,16 @@ Membro ativo do grupo symfony-pt.
 
 Lucas Stephanou
 ---------------
+
+
+Márcio Albuquerque
+------------------
+
+Desenvolvedor PHP há uns 10 anos, passou por várias versões do PHP. Já estuda as mudanças que estão chegando na nova versão, PHP 6. 
+
+Márcio Albuquerque estudou e usou vários frameworks em PHP. Se encontrou com o symfony desde a versão 0.7, produzindo e gerenciando novos sistemas com este framework. Hoje, usa e dissemina conhecimento com relação ao symfony 1.4 e já estuda a nova versão do framework, Symfony 2.0. Já fez alguns poucos plugins (versão 1.0) e participa da comunidade symfony-pt. 
+
+Tem grande interesse em desenvolvimento e gestão ágil com qualidade.
 
 
 Raphael A. Araújo
