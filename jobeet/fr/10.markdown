@@ -1,8 +1,9 @@
 Jour 10 : Les formulaires
 =========================
 
-La deuxième semaine de Jobeet a pris un bon départ avec l'introduction du framework
-de test de symfony. Nous allons continuer aujourd'hui avec le framework de formulaire
+Le chapitre précédent du tutoriel de Jobeet a pris un bon départ avec l'introduction du
+framework de test de symfony. Nous allons continuer, dans ce nouveau chapitre, avec le
+framework de formulaire
 
 Le framework de formulaire
 --------------------------
@@ -20,8 +21,10 @@ est composé de trois parties :
 
   * **validation**: Le sous-framework de ~validation|Validation~ fournit les classes pour valider
                     les saisies (entier, chaine, adresse email, ...)
+
   * **widgets**:    Le sous-framework de ~widget|Widgets~ fournit les classes pour la production
                     des champs HTML (input, textarea, select, ...)
+
   * **forms**:      Les classes ~formulaire|Formulaires~ représentent des formulaires faits de widgets et
                     de validateurs et fournit des méthodes pour aider la gestion du formulaire.
                     Chaque champs du formulaire a son propre validateur et son propre widget.
@@ -84,7 +87,7 @@ Les formulaires de ##ORM##
 La plupart du temps, un formulaire doit être sérialisé à la base de données. Comme
 symfony sait déjà tout sur le modèle de votre base de données, il peut générer automatiquement
 des formulaires basés sur ces informations. En fait, lorsque vous avez lancé la tâche
-`propel:build --all` au cours du jour 3, symfony a automatiquement appelé la tâche
+`propel:build --all` au cours du chapitre 3, symfony a automatiquement appelé la tâche
 `propel:build --forms` :
 
     $ php symfony propel:build --forms
@@ -405,7 +408,7 @@ chemin utilisé dans le template `showSuccess` :
 >**TIP**
 >Si une méthode `generateLogoFilename()` existe dans le modèle, il sera appelé
 >par le validateur et le résultat remplacera le nom de fichier `logo` généré par
->défaut. La méthode est donné à l'objet `sfValidatedFile` comme argument.
+>défaut. La méthode prend l'objet `sfValidatedFile` comme argument.
 
 Tout comme vous pouvez remplacer le label généré de n'importe quel champ, vous pouvez aussi
 définir un ~message d'aide|Formulaires (Aide)~. Ajoutons en un pour la colonne `is_public`
@@ -646,8 +649,7 @@ nous pouvons simplifier le code pour les méthodes de gestion de formulaire :
       }
     }
 
-Lorsque vous naviguez vers la page `/job/new`, une nouvelle instance du ~formulaire|Formulaires~
-est créé et transmise au Template (action `new`).
+Lorsque vous naviguez vers la page `/job/new`, une nouvelle instance du ~formulaire|Formulaires~ est créé et transmise au Template (action `new`).
 
 Lorsque l'utilisateur soumet le formulaire (action `create`), le formulaire est lié (méthode
 `bind()`) avec les valeurs soumises par l'utilisateur et la validation est déclenchée.
@@ -1039,15 +1041,15 @@ ajouter la nouvelle exigence.
 >       }
 </doctrine>
 
-À demain
---------
+Conclusion
+----------
 
-Le tutoriel d'aujourd'hui a été composé avec beaucoup de nouvelles informations, mais nous
+Ce chapitre a été composé avec beaucoup de nouvelles informations, mais nous
 espérons que vous avez maintenant une meilleure compréhension du framework de formulaire de symfony.
 
-Je sais que certains d'entre vous ont remarqué que nous avons oublié quelque chose aujourd'hui ...
+Nous savons que certains d'entre vous ont remarqué que nous avons oublié quelque chose aujourd'hui ...
 Nous n'avons pas mis en œuvre de test pour les nouvelles fonctionnalités. Parce que l'écriture de
 test est une partie importante du développement d'une application, c'est la première chose que nous
-ferons demain.
+ferons dans le prochain chapitre.
 
 __ORM__
