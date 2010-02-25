@@ -3,43 +3,45 @@
 
 *por Hugo Hamon*
 
-Como ~Doctrine~ tornou-se oficialmente a biblioteca padrão ORM no symfony 1.3
-ao passo que o desenvolvimento com uso do Propel teve queda nos últimos meses. O projeto ainda tem suporte com ~Propel~ e continua a ser melhorado graças aos esforços dos membros da comunidade symfony.
+No symfony 1.3, o ~Doctrine~ tornou-se, oficialmente, a biblioteca ORM padrão 
+enquanto o desenvolvimento utilizando o Propel teve queda nos últimos meses. 
+O suporte e melhorias ao projeto ~Propel~ ainda continua graças aos esforços dos membros da comunidade symfony.
 
 O projeto Doctrine 1.2 tornou-se a nova biblioteca ORM padrão symfony por
-ser mais fácil de usar que Propel e por possuir uma grade quantidade de recursos
-incluindo comportamentos (*behaviors*), facilidade nas consultas DQL, migrações (*migrations*) e de herança de tabelas.
+ser mais fácil de usar que Propel e por possuir uma grande quantidade de recursos
+incluindo comportamentos (*behaviors*), facilidade nas consultas DQL, migrações (*migrations*) e herança de tabelas.
 
 Este capítulo descreve o que é essa herança de tabelas e como agora ela está
 totalmente integrada no symfony 1.3. Graças a um exemplo do mundo real, esse capítulo
-irá ilustrar como a herança de tabelas do Doctrine acelera a programação e torna o código mais
+irá ilustrar como tirar vantagem da herança de tabelas do Doctrine para tornar o código mais
 flexível e organizado.
 
 Herança de tabelas do Doctrine
 --------------------------
 
-Apesar de não ser muito conhecido e usado por muitos desenvolvedores, herança da tabelas é
-provavelmente, uma das características mais interessantes do Doctrine. Herança de tabelas permite ao desenvolvedor criar tabelas filhas umas das outras, da mesma forma que as classes herdam de uma linguagem de programação orientada a objeto.
+Apesar de não ser muito conhecida e utilizada por muitos desenvolvedores, a herança da tabelas é, 
+provavelmente, uma das características mais interessantes do Doctrine. 
+A herança de tabelas permite ao desenvolvedor criar tabelas que herdam de outras, 
+da mesma forma que as classes herdam em uma linguagem de programação orientada à objeto.
 Herança de tabelas fornece uma maneira fácil de compartilhar dados entre duas ou mais tabelas
 em uma única super tabela. Olhe para o diagrama abaixo para entender melhor o princípio de herança de tabelas.
 
 ![Esquema de Herança de Tabelas do Doctrine](http://www.symfony-project.org/images/more-with-symfony/01_table_inheritance.png "Princípio de Herança de tabelas do Doctrine")
 
-Doctrine oferece três estratégias diferentes para se gerenciar herança
-dependendo das necessidades da aplicação (desempenho, atomicidade, simplicidade... ):
-__simple__, __column aggregation__ e herança de tabelas __concrete__. Embora todos as
+Doctrine oferece três estratégias diferentes para gerenciar herança de tabelas 
+dependendo das necessidades da aplicação (desempenho, atomicidade, simplicidade, ... ):
+__simple__, __column aggregation__ e herança de tabelas __concrete__. Embora todas estas
 estratégias estarem descritas no
-[Doctrine - a Bíblia](http://www.Doctrine-project.org/documentation/1_2/en), alguma
+[Livro do Doctrine](http://www.Doctrine-project.org/documentation/1_2/en), alguma
 explicação adicional ajudará a entender melhor as opções e em que
-circunstâncias são úteis.
+circunstâncias elas são úteis.
 
 ### A Estratégia Simples de Herança de tabelas
 
 A estratégia de herança simples é a mais elementar de todas, uma vez que armazena todas as
-colunas, incluindo colunas de tabelas filhas, na super tabela pai. Se o
-esquema do modelo for o seguinte código YAML, Doctrine irá gerar uma
+colunas, incluindo as colunas das tabelas filhas, na super tabela pai. Se o
+esquema do modelo for semelhante ao seguinte código YAML, o Doctrine irá gerar uma
 única tabela `Pessoa`, que inclui as colunas das tabelas `Professor` e `Aluno`.
-
 
     [yml]
     Pessoa:
@@ -73,25 +75,29 @@ esquema do modelo for o seguinte código YAML, Doctrine irá gerar uma
           notnull: true
 
 
-Com a estratégia de herança simples, as colunas extras `especialidade`, `graduacao` e `promocao` são automaticamente registradas no nível superior no modelo de `Pessoa`, mesmo que Doctrine gere uma classe de modelo para cada tabela `Aluno` e `Professor`.
+Com a estratégia de herança simples, as colunas extras `especialidade`, `graduacao` e `promocao` são automaticamente registradas no nível superior no modelo de `Pessoa`, mesmo que o Doctrine gere uma classe de modelo para cada tabela `Aluno` e `Professor`.
 
-![Esquema simples de herança de tabelas](http://www.symfony-project.org/images/more-with-symfony/02_simple_tables_inheritance.png "Princípio de herança simples Doctrine")
+![Esquema simples de herança de tabelas](http://www.symfony-project.org/images/more-with-symfony/02_simple_tables_inheritance.png "Princípio de herança simples do Doctrine")
 
 Esta estratégia tem uma importante desvantagem com a super tabela `Pessoa` 
-que não fornece qualquer coluna para identificar cada tipo de registro. Em outras palavras, não há nenhuma maneira para obter apenas objetos `Professor` ou `Aluno`. A seguinte instrução Doctrine 
-retorna um `Doctrine_Collection` de todos os registros da tabela (`Aluno` e
-`Professor`).
+que não fornece qualquer coluna para identificar cada tipo de registro. 
+Em outras palavras, não há nenhuma maneira de obter apenas os objetos `Professor` ou `Aluno`. 
+A seguinte instrução Doctrine retorna um `Doctrine_Collection` de todos os 
+registros da tabela (`Aluno` e `Professor`).
 
     [php]
     $professores = Doctrine::getTable('Professor')->findAll();
 
-A estratégia de herança simples tabela não é exemplo realmente útil no mundo real
+A estratégia de herança simples da tabela não é exemplo realmente útil no mundo real
 como normalmente precisamos selecionar e hidratar os objetos de
 um tipo específico. Conseqüentemente, não será abordado neste capítulo.
 
 ### A Estratégia Herança de Tabelas de Agregação de Coluna
 
-A estratégia de herança de tabelas de agregação é semelhante à estratégia de herança simples, exceto que inclui uma coluna `tipo`, para identificar os diferentes tipos de registros. Consequentemente, quando um registro é mantido no banco de dados, um tipo de valor é adicionado a ele a fim de armazenar a classe a que pertence.
+A estratégia de herança de tabelas de agregação de coluna é semelhante à estratégia 
+de herança simples, exceto que inclui uma coluna `tipo`, para identificar os diferentes 
+tipos de registros. Consequentemente, quando um registro é mantido no banco de dados, 
+um valor para o tipo é adicionado nele a fim de armazenar a classe a qual pertence.
 
     [yml]
     Pessoa:
@@ -133,13 +139,16 @@ No esquema YAML acima, o tipo de herança foi alterado para
 atributo, `keyField`, especifica a coluna que será criada para armazenar o
 tipo de informação para cada registro. O `keyField` é uma seqüência da coluna
 chamada `type`, que é o nome padrão da coluna, se nenhum `keyField` for especificado.
-O segundo atributo define o tipo de valor para cada registro que pertencem às classes 
+O segundo atributo define o valor do tipo para cada registro que pertencem às classes 
 `Professor` ou `Aluno`.
 
 ![Esquema de herança de tabelas Agregação de Coluna](http://www.symfony-project.org/images/more-with-symfony/03_columns_aggregation_tables_inheritance.png "Princípio da agregação de coluna do Doctrine")
 
 A estratégia de agregação de coluna é um bom método para herança de tabelas, uma vez que
-cria uma única tabela (`Pessoa`), contendo todos os campos definidos mais o `tipo` de campo. Por conseguinte, não há necessidade de fazer várias tabelas e juntá-los com uma consulta SQL. Abaixo estão alguns exemplos de como as tabelas de consulta e que tipo de resultados retornarão:
+cria uma única tabela (`Pessoa`), contendo todos os campos definidos mais o campo `tipo`. 
+Por conseguinte, não há necessidade de criar várias tabelas e fazer joins com uma 
+consulta SQL. Abaixo estão alguns exemplos de como realizar consultas nas tabelas 
+e que tipo de resultados serão retornados:
 
     [php]
     //Retorna um objeto Doctrine_Collection do Professor
@@ -157,24 +166,25 @@ cria uma única tabela (`Pessoa`), contendo todos os campos definidos mais o `ti
     //Retorna um objeto Aluno
     $aluno = Doctrine::getTable('Pessoa')->findOneByIdAndType(array(42, 2));
 
-Ao realizar a recuperação de dados a partir de uma subclasse (`Professor`, `Aluno`),
+Ao recuperar os dados de uma subclasse (`Professor`, `Aluno`), o 
 Doctrine anexará automaticamente a cláusula SQL `WHERE` para a consulta na
 coluna `tipo` com o valor correspondente.
 
-No entanto, existem algumas desvantagens de usar a estratégia de agregação de coluna em
-determinados casos. Primeiro, a agregação de coluna impede que cada sub-campos da tabela 
-seja definida como `obrigatória` (`required`). Dependendo de quantos campos existem, a tabela `Pessoa`
+No entanto, existem algumas desvantagens de usar a estratégia de agregação de coluna em 
+determinados casos. Primeiro, a agregação de coluna impede que cada sub-campo da tabela 
+seja definido como `obrigatório` (`required`). Dependendo de quantos campos existem, a tabela `Pessoa`
 pode conter vários registros com valores vazios.
 
-A segunda desvantagem se relaciona com o número de sub-tabelas e campos. Se o esquema declara um monte de sub-tabelas, que por sua vez, declaram um monte de campos, a
-super tabela final será composto por um número muito grande de colunas. Por conseqüência,
-a tabela pode ser mais difícil de manter.
+A segunda desvantagem está relaciona com o número de sub-tabelas e campos. 
+Se o esquema declara várias sub-tabelas, que por sua vez, declara vários campos, 
+a super tabela final será composta de um número muito grande de colunas. 
+Por conseqüência, a tabela pode ser mais difícil de manter.
 
 ### A Estratégia de Herança Concreta
 
-A estratégia de herança concreta de tabelas é um bom meio-termo entre a
-vantagens da estratégia de agregação de coluna, desempenho e durabilidade.
-Na verdade, esta estratégia cria tabelas independentes para cada subclasse contendo
+A estratégia de herança concreta de tabelas é um bom meio-termo entre as
+vantagens da estratégia de agregação de coluna, desempenho e manutenibilidade.
+Na verdade, esta estratégia cria tabelas independentes para cada subclasse contendo 
 todas as colunas: as próprias e as compartilhadas independente do modelo.
 
     [yml]
@@ -213,84 +223,91 @@ seguinte conjunto de campos: `id`, `nome`, `sobrenome` e `especialidade`.
 
 ![Esquema de herança concreta de tabelas](http://www.symfony-project.org/images/more-with-symfony/04_concrete_tables_inheritance.png "Princípio da herança concreta do Doctrine")
 
-Esta abordagem tem várias vantagens contra estratégias anteriores. O primeiro
-é que todas as tabelas são isoladas e permanecem independentes umas das outras. Além disso, não há mais campos em branco e a coluna extra `tipo` não é
-incluída. O resultado é que cada tabela é mais leve (*lighter*) e isolada uma das outras.
+Esta abordagem tem várias vantagens em relação as estratégias anteriores. A primeira
+é que todas as tabelas são isoladas e permanecem independentes umas das outras. 
+Além disso, não há mais campos em branco e a coluna extra `tipo` não é incluída. 
+O resultado é que cada tabela será mais leve e isolada uma das outras.
 
 >**NOTE**
 >O fato de que os campos comuns são duplicados em sub-tabelas é um ganho para o
->desempenho e a escalabilidade já que o Doctrine não precisa criar um SQL automático
+>desempenho e a escalabilidade já que o Doctrine não precisa criar um SQL automático 
 >juntando tudo em uma super tabela para recuperar registros compartilhados pertencentes a uma sub-tabela.
 
-
 As únicas duas desvantagens da estratégia de herança concreta de tabelas são a 
-duplicação de campos compartilhados (embora a duplicação geralmente seja a chave do desempenho) e o fato que a super tabela gerada estará sempre vazia. Na verdade, Doctrine gerou uma `Pessoa`, apesar que a tabela não será preenchida ou referenciada por qualquer consulta. Nenhuma consulta será realizada na tabela já que tudo é armazenado em sub-tabelas.
+duplicação de campos compartilhados (embora a duplicação geralmente seja a chave para o desempenho) 
+e o fato que a super tabela gerada estará sempre vazia. Na verdade, o Doctrine gerou 
+uma `Pessoa`, apesar que a tabela não será preenchida ou referenciada por qualquer consulta. 
+Nenhuma consulta será realizada na tabela já que tudo é armazenado nas sub-tabelas.
 
-Nós só tivemos tempo para introduzir as três estratégias de Herança de tabelas do Doctrine
-, mas nós ainda não exercitamos em um exemplo do mundo real com o symfony.
-A parte seguinte deste capítulo explica como tirar proveito da Herança de tabelas com Doctrine no symfony 1.3, especialmente no modelo e nos formulários.
+Nós só tivemos tempo para introduzir as três estratégias de Herança de tabelas do Doctrine, 
+mas nós ainda não exercitamos em um exemplo do mundo real com o symfony.
+A parte seguinte deste capítulo explica como tirar proveito da Herança de tabelas
+com o Doctrine no symfony 1.3, especialmente no modelo e nos formulários.
 
-Integração Symfony e Herança de tabelas
+Integração da Herança de tabelas no symfony
 -----------------------------------------
 
-Antes do symfony 1.3, a herança de tabelas não era totalmente suportado pela
-estrutura das classes de formulários e filtros que não herdaram corretamente a classe base. Consequentemente, os programadores que precisavam usar a herança de tabelas eram 
-forçados a ajustar os formulários e os filtros e foram obrigados a sobre-escrever os
-métodos para recuperar o comportamento de herança.
+Antes do symfony 1.3, a herança de tabelas não era totalmente suportada pela
+estrutura das classes de formulários e filtros que não herdavam corretamente da 
+classe base. Consequentemente, os programadores que precisavam usar a herança de 
+tabelas eram forçados a ajustar os formulários e os filtros e foram obrigados a 
+sobrescrever vários métodos para obter o comportamento de herança.
 
-Graças ao feedback da comunidade, a equipe do núcleo do symfony melhorou os formulários e os
-filtros para facilmente apoiar-se completamente na herança de tabelas
+Graças ao feedback da comunidade, a equipe do núcleo do symfony melhorou os 
+formulários e os filtros para suportar a herança de tabelas facilmente e completamente 
 no symfony 1.3.
 
 O restante deste capítulo irá explicar como usar herança de tabelas do Doctrine
-e como aproveitá-lo em várias situações, inclusive em modelos, formulários, filtros e geradores de admin. Exemplos de estudo de caso vão nos ajudar a entender melhor como a herança funciona com o symfony para que você 
-utilize facilmente em suas necessidades.
+e como aproveitá-la em várias situações, inclusive em modelos, formulários, filtros e 
+geradores de interface administrativa. Exemplos de estudo de caso vão nos ajudar a 
+entender melhor como a herança funciona com o symfony para que você utilize facilmente 
+em suas necessidades.
 
 ### Introdução ao Estudo de Caso Real
 
 Ao longo deste capítulo, vários estudos de caso do mundo real serão apresentados
-expondo as muitas vantagens da abordagem da herança de tabelas do Doctrine em diversos
-níveis: em `modelos`, `formulários`, `filtros` e o `geradores admin`.
+expondo as muitas vantagens da abordagem da herança de tabelas do Doctrine em diversos 
+níveis: em `modelos`, `formulários`, `filtros` e o `geradores de interface administrativa`.
 
 O primeiro exemplo vem de uma aplicação desenvolvida pelo Sensio
-para uma empresa francesa bem conhecida. Ele mostra como a herança de uma tabela com Doctrine é uma 
-boa solução para gerenciar uma dezena de conjuntos de dados referenciais idênticos, a fim de
+para uma empresa francesa bem conhecida. Ele mostra como a herança de uma tabela com o Doctrine é uma 
+boa solução para gerenciar dezenas de conjuntos de dados referenciais idênticos, a fim de
 compartilhar métodos e propriedades e evitar a reescrita de código.
 
-O segundo exemplo mostra como tirar proveito da estratégia de herança concreta de tabelas com formulários, criando um modelo simples para gerenciar inúmeros arquivos.
+O segundo exemplo mostra como tirar proveito da estratégia de herança concreta de tabelas com formulários, 
+criando um modelo simples para gerenciar inúmeros arquivos.
 
-Finalmente, o terceiro exemplo irá demonstrar como tirar vantagem da herança de tabelas
-com o Gerador de Admin, e como torná-lo mais flexível.
+Finalmente, o terceiro exemplo irá demonstrar como tirar vantagem da herança de 
+tabelas com o gerador de interface administrativa, e como torná-lo mais flexível.
 
-### Herança de tabelas na Camada Modelo
+### Herança de tabelas na Camada do Modelo
 
-Herança de tabelas é como o conceito de Programação Orientada a Objetos,
+Similar ao conceito de Programação Orientada à Objetos, a herança de tabelas
 encoraja o compartilhamento de dados. Conseqüentemente, permite o compartilhamento de atributos
-e métodos quando se trata dos modelos gerados. Herança de tabelas do Doctrine
-é uma boa maneira de compartilhar e substituir as ações que podem ser chamados em objetos herdados. Vamos
-explicar este conceito com um exemplo do mundo real.
+e métodos quando se trata dos modelos gerados. A herança de tabelas do Doctrine
+é uma boa maneira de compartilhar e substituir as ações que podem ser chamadas em objetos herdados. 
+Vamos explicar este conceito com um exemplo do mundo real.
 
 #### O Problema ####
 
-Muitas das aplicações web exigem "referencial" de dados para funcionar. Um
+Muitas das aplicações web exigem dados "referenciais" para funcionar. Um 
 referencial é geralmente um pequeno conjunto de dados representados por uma tabela simples
 contendo pelo menos dois campos (por exemplo, `id` e `label`). Em alguns casos, porém,
-o referencial contém dados adicionais, como um `is_active` ou tag `is_default`.
-Este foi o caso recentemente na Sensio com uma aplicação do cliente.
+o referencial contém dados adicionais, como um `is_active` ou uma tag `is_default`.
+Este foi o caso recentemente na Sensio com uma aplicação de cliente.
 
-O cliente queria administrar um grande conjunto de dados, levou os principais
-formulários e telas da aplicação. Todas estas tabelas referenciais foram construídas
+O cliente queria administrar um grande conjunto de dados, que levou os principais
+formulários e visões da aplicação. Todas estas tabelas referenciais foram construídas
 em torno do mesmo modelo básico: `id`, `label`, `position` e `is_default`. O
-`position` do campo ajuda para classificar os registros, graças a um arraste e solte do ajax
-. O campo `is_default` é um sinalizador que indica se
-um registro deve ou não estar "selected" por padrão, quando se seleciona um
-caixa suspensa HTML .
+campo `position` ajuda para classificar os registros, graças a uma função ajax *arraste e solte* (*drag and drop*). 
+O campo `is_default` é um sinalizador que indica se um registro deve ou não estar 
+"selecionado" por padrão, quando ele preenche uma elemente HTML de caixa para seleção *dropdown*.
 
 #### A Solução ####
 
-Gerenciando mais de duas tabelas iguais é um dos melhores problemas para resolver com
-herança de tabelas. No problema acima, a herança das tabelas
-foi selecionado para se adequar às necessidades e compartilhar métodos de cada objeto em uma
+Gerenciando mais de que duas tabelas iguais é um dos melhores problemas para resolver com
+herança de tabelas. No problema acima, a herança das tabelas concreta 
+foi selecionada para se adequar às necessidades e compartilhar os métodos de cada objeto em uma
 única classe. Vamos dar uma olhada no seguinte esquema simplificado, que
 ilustra o problema.
 
@@ -321,25 +338,21 @@ ilustra o problema.
         type: concrete
         extends: sfReferential
 
-Herança concreta de tabelas funciona perfeitamente aqui, pois disponibiliza as tabelas separadas e
+A herança concreta de tabelas funciona perfeitamente aqui, pois disponibiliza as tabelas separadas e
 isoladas, e porque o campo `position` deve ser gerenciado pelos registros
 que compartilham o mesmo tipo.
 
-Vamos construir o modelo e ver o que acontece. Doctrine e symfony geraram
+Vamos construir o modelo e ver o que acontece. O Doctrine e symfony geraram
 três tabelas SQL e seis classes de modelo no diretório `lib/model/doctrine`:
 
   * `SfReferential`: gerencia os registros `sf_referential`,
   * `SfReferentialTable`: gerencia a tabela `sf_referential`,
-  * `SfReferentialContractType`: gerencia os registros `sf_referential_contract_type`
-    
-  * `SfReferentialContractTypeTable`: gerencia a tabela `sf_referential_contract_type`
-    .
-  * `SfReferentialProductType: gerencia os registros `sf_referential_product_type`
-    
-  * `SfReferentialProductTypeTable: gerencia a tabela `sf_referential_product_type`
-    .
+  * `SfReferentialContractType`: gerencia os registros `sf_referential_contract_type`.    
+  * `SfReferentialContractTypeTable`: gerencia a tabela `sf_referential_contract_type`.
+  * `SfReferentialProductType: gerencia os registros `sf_referential_product_type`.
+  * `SfReferentialProductTypeTable: gerencia a tabela `sf_referential_product_type`.
 
-Explorando a mostra de herança gerada que ambas as classes base do
+Explorando a herança gerada vemos que ambas as classes base do
 `sfReferentialContractType` e modelo `sfReferentialProductType` herdaram
 da classe `sfReferential`. Assim, todos os métodos protegidos e públicos (incluindo
 propriedades) colocado na classe `sfReferential` serão compartilhado entre as duas
