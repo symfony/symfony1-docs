@@ -1,0 +1,347 @@
+Jour 23 : Un autre regard sur symfony
+=====================================
+
+Aujourd'hui est la dernière étape de notre voyage dans le merveilleux monde de symfony.
+Au cours de ces vingt-trois jours, vous avez appris symfony par exemple du modèle de design
+utilisés par le framework vers les puissantes fonctionnalités intégrées. Vous n'êtes pas encore
+un maître de symfony, mais vous avez toutes les connaissances nécessaires pour commencer à
+construire vos applications symfony avec confiance.
+
+Comme nous terminons le tutoriel Jobeet, nous allons avoir un autre regard sur le
+framework. Oubliez Jobeet pendant une heure, et rappelez vous de toutes les fonctionnalités
+que vous avez apprises au cours des trois dernières semaines.
+
+Qu'est-ce que symfony ?
+-----------------------
+
+Le ~framework|Framework~ symfony est un ensemble
+[cohérent mais découplé en sous-framework](#chapter_11_sidebar_utilisation_du_framework_de_formulaire_sans_symfony),
+qui forme un [Framework MVC](#chapter_04_l_architecture_mvc) full-stack
+(Modèle, Vue, Contrôleur).
+
+Avant de coder la tête la première, prenez le temps de lire
+l'[histoire de symfony et la philosophie](#chapter_01_introduction).
+Ensuite, vérifiez les [prérequis](#chapter_01_prerequis) du framework
+et utiliser le [script `check_configuration.php`](#chapter_01_installation_de_symfony)
+pour valider votre configuration.
+
+Finalement, [installer symfony](#chapter_01_installation_de_symfony). Après quelque temps,
+vous voulez aussi [mettre à jour](#chapter_22_sub_mise_a_jour_de_symfony) la dernière
+version du framework.
+
+Le framework offre également des outils pour faciliter son [déploiement](#chapter_22_deploiement).
+
+Le ~Modèle~
+-----------
+
+La partie du modèle de symfony peut être fait avec l'aide de
+<propel>
+[l'ORM Propel](http://propel.phpdb.org/). Selon la
+</propel>
+<doctrine>
+[l'ORM Doctrine](http://www.doctrine-project.org/). Selon la
+</doctrine>
+[description de la base de données](#chapter_03_le_schema), il génère des classes pour les
+[objets](#chapter_03_l_orm), les [formulairess](#chapter_10_les_formulaires_de_##ORM_LOWER##) et les
+[filtres](#chapter_12_configuration_des_filtres). ##ORM##
+[génère également les instructions SQL](#chapter_03_l_orm) utilisées pour créer les tables dans
+la base de données.
+
+La configuration de base de données peut être fait avec une [tâche](#chapter_03_la_base_de_donnees)
+ou en modifiant un [fichier de configuration](#chapter_03_la_base_de_donnees). A côté de sa
+configuration, il est également possible d'injecter des données initiales, grâce aux
+[fichiers fixture](#chapter_03_les_donnees_initiales). Vous pouvez même rendre ces fichiers
+[dynamiques](#chapter_06_jeux_de_test_dynamiques).
+
+<propel>
+Les objets Propel peuvent aussi facilement être [internationalisés](#chapter_19_sub_les_objets_de_propel).
+</propel>
+<doctrine>
+Les objets Doctrine peuvent aussi facilement être [internationalisés](#chapter_19_sub_les_objets_de_doctrine).
+</doctrine>
+
+La ~Vue~
+--------
+
+Par défaut, la couche de la vue de l'architecture MVC utilise de simples fichiers PHP
+comme Templates.
+
+Les Templates peuvent utiliser les [helpers](##chapter_04_les_feuilles_de_style_les_images_et_les_javascripts)
+pour les tâches récurrentes comme la création d'une [URL](#chapter_05_le_routage_dans_les_actions_et_les_templates)
+ou un [lien](#chapter_05_le_routage_dans_les_actions_et_les_templates).
+
+Un Template peut être décorée par un [layout](#chapter_04_the_layout) pour extraire
+l'entête et le pied des pages. Pour faire des vues encore plus réutilisables, vous pouvez
+définir des [slots](##chapter_04_les_slot_s), des
+[partials](#chapter_07_partials_partial_templates) et des
+[components](#chapter_19_changer_de_langue).
+
+Pour accélérer les choses, vous pouvez utiliser le
+[sous-framework de cache](#chapter_21_configuration_du_cache) pour mettre en cache une
+[page entière](#chapter_21_mise_en_cache_d_une_page), juste l'[action](#chapter_21_mise_en_cache_d_une_action),
+ou même juste [des partials ou des components](#chapter_21_mise_en_cache_du_partial_partial_templates_et_du_component).
+Vous pouvez également [supprimer le cache](#chapter_21_suppression_du_cache_cache_suppression) manuellement.
+
+Le ~Contrôleur~
+----------------
+
+La partie contrôleur est géré par les [contrôleurs frontaux](#chapter_01_les_environnements)
+et les [actions](#chapter_03_le_voir_en_action_dans_le_navigateur).
+
+Les tâches peuvent être utilisées pour créer des
+[modules simples](#chapter_07_creation_du_module_de_la_categorie_d_un_emploi), des
+[modules CRUD](#chapter_03_le_voir_en_action_dans_le_navigateur) ou même pour générer des
+[modules admin](#chapter_12_les_modules_du_backend) complétement fonctionnels pour les classes de modèle.
+
+Les modules admin vous permettent de construire une application entièrement
+fonctionnelle sans rien coder.
+
+Pour faire abstraction de la réalisation technique d'un site web, symfony utilise un
+sous-framework de [routage](#chapter_05_configuration_du_routage) qui génère des
+[jolies URL](#chapter_05_les_url_s). Pour faire l'implémentation encore plus facilement
+des services web, symfony prend en charge les [formats](#chapter_14_les_formats). Vous pouvez
+également créer vos propres [formats](#chapter_15_sub_le_format_yaml_formats_creation).
+
+Une action peut être [transmise](#chapter_04_l_action_de_la_page_job) à une
+autre ou [redirigée](#chapter_05_le_routage_dans_les_actions_et_les_templates).
+
+~Configuration~
+---------------
+
+Le framework symfony permet facilement d'avoir différents ~paramètres|Paramètres~ de configuration pour
+différents ~environnements|Environnements~. Un [environnement](#chapter_01_les_environnements) est un
+ensemble de paramètres qui permet des comportements différents sur le développement ou les serveurs de
+production. Vous pouvez également créer de nouveaux [environnements](#chapter_21_la_creation_d_un_nouvel_environnement).
+
+Les fichiers de configuration de symfony peuvent être définis à
+[différents niveaux](#chapter_04_les_feuilles_de_style_les_images_et_les_javascripts) et
+la plupart d'entre eux sont
+[sensibles à l'environnement](#chapter_08_sub_configuration_de_la_base_de_donnees) :
+
+ * [`app.yml`](#chapter_06_configuration_personnalisee)
+ * [`cache.yml`](#chapter_21_configuration_du_cache)
+ * [`databases.yml`](#chapter_03_la_base_de_donnees)
+ * [`factories.yml`](#chapter_16_sub_factories)
+ * [`generator.yml`](#chapter_12_le_cache_de_symfony)
+ * [`routing.yml`](#chapter_05_configuration_du_routage)
+ * [`schema.yml`](#chapter_03_le_schema)
+ * [`security.yml`](#chapter_13_sub_authentification)
+ * [`settings.yml`](#chapter_11_sub_fonctionnalites_de_securite_integrees)
+ * [`view.yml`](#chapter_04_les_feuilles_de_style_les_images_et_les_javascripts)
+
+Les fichiers de configuration pour la plupart utilisent le
+[format YAML](#chapter_03_le_schema).
+
+Au lieu d'utiliser la structure de répertoire par défaut et d'organiser vos fichier de l'application
+par couches, vous pouvez également les organiser par fonctionnalité et pouvoir les regrouper dans
+[un plugin](#chapter_20_sub_une_facon_differente_d_organiser_le_code_organisation_du_code). Comme
+nous parlons de la structure de répertoire par défaut, vous pouvez aussi
+[la personnaliser](#chapter_22_personnalisation_de_la_structure_de_repertoire)
+selon vos besoins.
+
+~Débogage|Débogage~
+-------------------
+
+<propel>
+De la [journalisation](#chapter_06_debogage_du_sql_genere_par_propel) au
+[web debug toolbar](#chapter_06_debogage_du_sql_genere_par_propel),
+</propel>
+<doctrine>
+De la [journalisation](#chapter_06_debogage_du_sql_genere_par_doctrine) au
+[web debug toolbar](#chapter_06_debogage_du_sql_genere_par_doctrine),
+</doctrine>
+en passant par les exceptions [significatives](#chapter_01_les_environnements), symfony
+dispose de nombreux outils utiles pour aider le développeur à déboguer les problèmes plus rapidement.
+
+Principaux objets de symfony
+----------------------------
+
+Le framework symfony fournit assez peu d'objets du noyau qui abstraitent les besoins
+récurrents dans les projets web : la [requête](#chapter_04_sub_la_requete),
+la [réponse](#chapter_04_sub_la_reponse),
+l'[utilisateur](#chapter_13_sub_la_classe_myuser), la [journalisation](#chapter_22_sub_journalisation),
+le [routage](#chapter_05_configuration_du_routage), l'[envoi de courrier](#chapter_16) et le
+[gestionnaire du cache de la vue](#chapter_16_sidebar_the_code_sfcontext_code_class).
+
+Ces objets du noyau sont gérées par
+l'[objet `sfContext`](chapter_16_sub_factories), et ils sont configurés
+via les[factories](#chapter_16_sub_factories).
+
+Le user gère l'[authentification](#chapter_13_sub_authentification) des utilisateurs,
+l'[autorisation](#chapter_13_sub_autorisation), les [flashes](#chapter_13_flashes_d_utilisateur),
+et les [attributs](#chapter_13_les_attributs_d_utilisateur) pour être sérialisés dans la session.
+
+~Sécurité~
+----------
+
+Le framework symfony intègre des protections contre les attaques
+[XSS](#chapter_01_sub_creation_de_l_application) et
+[CSRF](#chapter_01_sub_creation_de_l_application). Ces paramètres peuvent être configurés
+à partir de la [ligne de commande](#chapter_01_sub_creation_de_l_application),
+ou en modifiant un [fichier de configuration](#chapter_11_sub_protection_xss_et_csrf).
+
+Le framework de formulaire fournit également des
+[fonctionnalités intégrées de sécurité](#chapter_11_sub_fonctionnalites_de_securite_integrees).
+
+~Formulaires~
+-------------
+
+Comme la gestion des formulaires est l'une des tâches les plus fastidieuses pour un développeur web,
+symfony fournit un [sous-framework de formulaire](#chapter_10_le_framework_de_formulaire). Le framework de
+formulaire est livré avec un lot de [widgets](http://www.symfony-project.org/api/1_4/widget) et de
+[validateurs](http://www.symfony-project.org/api/1_4/validator). L'un des atouts du sous-framework
+de formulaire est que les Templates sont très facilement
+[personnalisables](#chapter_10_le_template_du_formulaire).
+
+Si vous utilisez ##ORM##, le framework de formulaire permet également de
+<propel>
+[générer des formulaires et des filtres basés](#chapter_10_les_formulaires_de_propel) depuis vos modèles.
+</propel>
+<doctrine>
+[générer des formulaires et des filtres basés](#chapter_10_les_formulaires_de_doctrine) depuis vos modèles.
+</doctrine>
+
+Internationalisation et régionalisation
+---------------------------------------
+
+L'[internationalisation](#chapter_19_internationalisation) et la
+[régionalisation](#chapter_19_regionalisation) sont supportés par symfony, grâce à la
+norme ICU. La [culture de l'utilisateur](#chapter_19_sub_la_culture_de_l_utilisateur) détermine la
+langue et le pays de l'utilisateur. Elle peut être définie par l'utilisateur lui-même, ou
+incorporée dans l'[URL](#chapter_19_la_culture_dans_l_url).
+
+Tests
+-----
+
+La bibliothèque lime, utilisée pour les **tests unitaires**, fournit un grand nombre de
+[méthodes de test](#chapter_08_le_framework_de_test_lime_framework_de_test_lime). Les
+<propel>
+[objets Propel peuvent aussi être testés](#chapter_08_tests_unitaires_de_propel) à partir
+</propel>
+<doctrine>
+[objets Doctrine peuvent aussi être testés](#chapter_08_tests_unitaires_de_doctrine) à partir
+</doctrine>
+d'une [base de données dédiée](#chapter_08_sub_configuration_de_la_base_de_donnees) et
+avec des [jeux de test](#chapter_08_sub_donnees_de_test) dédiés.
+
+Les tests unitaires peuvent être exécutés
+[un par un](#chapter_08_execution_des_tests_unitaires) ou
+[tous ensembles](#chapter_08_validation_des_tests_unitaires).
+
+Les **tests fonctionnels** sont écrit avec la classe
+[`sfFunctionalTest`](#chapter_09_la_classe_sftestfunctional), qui utilise un
+[simulateur de navigateur](#chapter_09_la_classe_sfbrowser) et permet
+l'introspection des objets du noyau de symfony grâce aux
+[testeurs](#chapter_09_la_classe_sftestfunctional). Les testeurs existent pour
+l'[objet de la requête](#chapter_09_sub_le_testeur_de_requete),
+l'[objet de la réponse](#chapter_09_sub_le_testeur_de_reponse),
+l'[objet utilisateur](#chapter_13_tester_l_utilisateur),
+l'[objet du formulaire actuel](#chapter_11_le_testeur_du_formulaire), la
+[couche du cache](#chapter_21_test_du_cache_test_cache) et les
+<propel>
+[objets Propel](#chapter_11_le_testeur_de_propel).
+</propel>
+<doctrine>
+[objets Doctrine](#chapter_11_le_testeur_de_doctrine).
+</doctrine>
+
+Vous pouvez également utiliser les outils de débogage pour la
+[réponse](#chapter_09_debogage_des_tests_fonctionnels)
+et les [formulaires](#chapter_11_le_testeur_du_formulaire).
+
+Comme pour les tests unitaires, les tests fonctionnels peuvent être exécutés
+[un par un](#chapter_09_execution_des_tests_fonctionnels) ou
+[tous ensembles](#chapter_09_validation_des_tests_fonctionnels).
+
+Vous pouvez également exécuter [tous les tests ensembles](#chapter_09_validation_des_tests).
+
+Plugins
+-------
+
+Le framework symfony fournit seulement la fondation de vos applications web et
+s'appuie sur des [plugins](#chapter_20_l_utilisation_du_plugin) pour ajouter plus de
+fonctionnalités. Dans ce tutoriel, nous avons parlé [`sfGuardPlugin`](#chapter_13_plugins),
+[`sfFormExtraPlugin`](#chapter_19_changer_de_langue) et
+[`sfTaskExtraPlugin`](#chapter_20_la_contribution_d_un_plugin).
+
+Un plugin doit être [activé](#chapter_20_sidebar_plugin_activation) après
+l'installation.
+
+Le plugin est le meilleur moyen de
+[contribuer en retour](#chapter_20_la_contribution_d_un_plugin) au projet symfony.
+
+~Tâches~
+--------
+
+Le CLI de symfony fournit une foule de tâches, et les plus utiles ont été
+expliquées dans ce tutoriel :
+
+ * [`app:routes`](#chapter_05_debogage_d_une_route)
+ * [`cache:clear`](#chapter_21_le_vidage_du_cache)
+ * [`configure:database`](#chapter_03_la_base_de_donnees)
+ * [`generate:project`](#chapter_01_sub_creation_du_projet)
+ * [`generate:app`](#chapter_01_sub_creation_de_l_application)
+ * [`generate:module`](#chapter_07_creation_du_module_de_la_categorie_d_un_emploi)
+ * [`help`](#chapter_03_l_orm)
+ * [`i18n:extract`](#chapter_19_sub_i18n_extract)
+ * [`list`](#chapter_13_securite_du_backend)
+ * [`plugin:install`](#chapter_13_plugins)
+ * [`plugin:publish-assets`](#chapter_20_sub_les_ressources)
+ * [`project:deploy`](#chapter_22_sub_strategies_de_deploiement)
+ * [`propel:build-all`](#chapter_03_l_orm)
+ * [`propel:build-all-load`](#chapter_07_mise_a_jour_de_la_base_de_donnee)
+<propel>
+ * [`propel:build-forms`](#chapter_10_les_formulaires_de_propel)
+</propel>
+<doctrine>
+ * [`doctrine:build --forms`](#chapter_10_les_formulaires_de_doctrine)
+</doctrine>
+ * [`propel:build-model`](#chapter_03_l_orm)
+ * [`propel:build-sql`](#chapter_03_l_orm)
+ * [`propel:data-load`](#chapter_03_les_donnees_initiales)
+ * [`propel:generate-admin`](#chapter_12_les_modules_du_backend)
+ * [`propel:generate-module`](#chapter_03_le_voir_en_action_dans_le_navigateur)
+ * [`propel:insert-sql`](#chapter_03_l_orm)
+ * [`test:all`](#chapter_09_validation_des_tests)
+ * [`test:coverage`](#chapter_08_tester_slugify)
+ * [`test:functional`](#chapter_09_execution_des_tests_fonctionnels)
+ * [`test:unit`](#chapter_08_execution_des_tests_unitaires)
+
+Vous pouvez également [créer vos propres tâches](#chapter_11_les_taches_de_maintenance).
+
+À bientôt
+---------
+
+### L'apprentissage par la pratique
+
+Le framework symfony, comme le fait n'importe quel morceau d'un logiciel, a une courbe
+d'apprentissage. Dans le processus d'apprentissage, la première étape est d'apprendre à
+partir d'exemples pratiques avec un livre comme celui-ci. La deuxième étape consiste à la
+**pratique**. Rien ne remplacera jamais la pratique.
+
+C'est ce que vous pouvez commencer à faire aujourd'hui. Pensez au plus simple des projets web
+qui fournit toujours une certaine valeur : un gestionnaire de liste de todo, un simple blog,
+un convertisseur de devise ou de temps, quel qu'il soit ... Choisissez en un et commencez par appliquer
+la connaissance que vous avez aujourd'hui. Utilisez les messages d'aide pour apprendre les
+différentes options, consultez le code généré par symfony, utilisez un éditeur de texte qui supporte
+l'auto-complémentation PHP comme [Eclipse](http://www.eclipse.org/) et consultez le
+[guide de référence](http://www.symfony-project.org/reference/1_4/) pour parcourir
+toutes les configurations prévues par le framework.
+
+Profitez de tous le matériel gratuit que vous avez à votre disposition pour en
+savoir plus sur symfony.
+
+### La communauté
+
+Avant de vous quitter, je voudrais parler d'une dernière chose à propos de symfony. Le
+framework a beaucoup de fonctionnalités intéressantes et beaucoup de documentation gratuite.
+Mais, l'un des actifs les plus précieux d'un Open-Source est d'avoir sa communauté. Et
+symfony a l'une des communautés la plus étonnante et active. Si vous commencez à utiliser
+symfony pour vos projets, envisager de rejoindre la communauté symfony :
+
+  * Abonnez-vous à la [mailing-list des utilisateurs](http://groups.google.com/group/symfony-users)
+  * Abonnez-vous au [flux du blog](http://feeds.feedburner.com/symfony/blog) officiel
+  * Abonnez-vous au [flux planète](http://feeds.feedburner.com/symfony/planet) de symfony
+  * Venez et chattez sur le canal [IRC #symfony](irc://irc.freenode.net/symfony) de freenode 
+
+__ORM__
