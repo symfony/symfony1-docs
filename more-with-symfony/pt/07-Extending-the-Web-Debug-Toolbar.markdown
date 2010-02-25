@@ -1,7 +1,7 @@
-﻿Estendendo a *Barra de Ferramenta para Debug Web*
-=================================================
+﻿Estendendo a Barra de Ferramenta para Debug Web
+===============================================
 
-* por Ryan Weaver*
+*por Ryan Weaver*
 
 Por padrão, a barra de ferramentas para debug web do symfony contém uma variedade de ferramentas que auxiliam
 na depuração, melhoria de desempenho e muito mais. A *Barra de Ferramenta para Debug Web*
@@ -170,7 +170,7 @@ a adição de conteúdo poderá ser realizada facilmente através do método `ge
 O symfony fornece vários métodos para ajudá-lo a tornar este conteúdo rico
 e utilizável.
 
-### ~`SfWebDebugPanel::setStatus ()`~
+### ~`SfWebDebugPanel::setStatus()`~
 
 Por padrão, cada painel é exibido na *Barra de Ferramentas para Debug Web* usando um 
 fundo padrão cinza. Mas você pode alterar para um fundo laranja ou vermelho quando se
@@ -289,7 +289,7 @@ Como exemplo, vamos exibir uma lista das mensagens de log relacionados à
 
 A possibilidade de clicar em arquivos na *Barra de Ferramentas para Debug Web* e
 abrir no seu editor de texto preferido é outra novidade no symfony 1.3. Para obter mais informações, consulte o
-artigo ["What's new"]http://www.symfony-project.org/tutorial/1_3/en/whats-new)
+artigo ["What's new"](http://www.symfony-project.org/tutorial/1_3/en/whats-new)
 para o symfony 1.3.
 
 Para ativar esse recurso para qualquer caminho de arquivo em particular, o `formatFileLink()` deve
