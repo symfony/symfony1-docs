@@ -1,21 +1,21 @@
-﻿Uso Avançado do Doctrine 
-========================
+﻿Uso Avançado do Doctrine
+=======================
 
-* Por Jonathan H. Wage *
+*Por Jonathan H. Wage*
 
-Criando um comportamento para Doctrine
---------------------------------------
+Criando um Comportamento no Doctrine
+---------------------------
 
-Nesta seção vamos demonstrar como você pode escrever um comportamento usando Doctrine 1.2.
+Nesta seção vamos demonstrar como você pode escrever um comportamento (*behavior*) usando Doctrine 1.2.
 Iremos criar um exemplo que lhe permitirá manter facilmente um contador em cache dos relacionamentos
-de modo que você não terá que consultar a contagem a todo momento.
+de modo que você não terá que consultar o contador a todo momento.
 
 A funcionalidade é bastante simples. Para todos os relacionamentos que você deseja manter
 um contador, o comportamento irá adicionar uma coluna ao modelo para armazenar a contagem atual.
 
-### O Schema
+### O Esquema
 
-Aqui está o Schema que você irá utilizar para começar. Mais tarde vamos modificá-lo e adicionar a
+Aqui está o esquema (*schema*) que você irá utilizar para começar. Mais tarde vamos modificá-lo e adicionar a
 definição do `actAs` para o comportamento que estamos prestes a escrever:
 
     [yml]
@@ -39,13 +39,13 @@ definição do `actAs` para o comportamento que estamos prestes a escrever:
           onDelete: CASCADE
           foreignAlias: Posts
 
-Agora podemos criar tudo para este schema:
+Agora podemos criar tudo para este esquema:
 
-    $ php symfony doctrine:build all
+    $ php symfony doctrine:build --all
 
 ### O Template
 
-Primeiro, precisamos escrever uma classe de template (modelo) `Doctrine_Template` filha que será
+Primeiro, precisamos escrever uma classe filha de `Doctrine_Template` que será
 responsável por adicionar as colunas ao modelo que irá armazenar a contagem.
 
 Você pode simplesmente colocá-lo em qualquer diretório `lib/` do projeto que o symfony
@@ -79,11 +79,11 @@ um pouco sobre o que acontece com ele.
 Quando a informação de mapeamento de um modelo é instanciada, quaisquer comportamentos ligados
 terão os métodos `setTableDefinition()` e `setUp()` invocados. Da mesma forma que você têm
 na classe `BasePost` em `lib/model/doctrine/base/BasePost.class.php`. Isto
-lhe permite adicionar coisas para qualquer modelo de modo plug n' play. Isto pode estar
-nas colunas, relacionamentos, ouvintes de eventos, etc
+lhe permite adicionar coisas para qualquer modelo de modo *plug n' play*. Isto pode ser
+nas colunas, relacionamentos, ouvintes de eventos (*event listeners*), etc.
 
 Agora que você entende um pouco sobre o que está acontecendo, vamos fazer o
-comportamento `CountCache` realmente fazer alguma coisa:
+comportamento `CountCache` fazer alguma coisa de fato:
 
     [php]
     class CountCache extends Doctrine_Template
@@ -105,16 +105,16 @@ comportamento `CountCache` realmente fazer alguma coisa:
           // Adiciona a coluna ao modelo relacionado
           $columnName = $this->_options['relations'][$relation]['columnName'];
           $relatedTable = $this->_table->getRelation($relation)->getTable();
-          $ this-> _OPTIONS [ 'Relações'] [$ relation] [ 'className'] = $ RelatedTable-> GetOption ( 'nome');
+          $this->_options['relations'][$relation]['className'] = $relatedTable->getOption('name');
           $relatedTable->setColumn($columnName, 'integer', null, array('default' => 0));
         }
       }
     
 
-O código acima irá agora adicionar colunas para manter a contagem do modelo relacionados.
+O código acima irá adicionar colunas para manter a contagem do modelo relacionado.
 Portanto, no nosso caso, estamos adicionando o comportamento ao modelo `Post` para o relacionamento 
-com `Thread` Nós queremos manter o número de posts qualquer instancia de `Thread`
-tem em uma coluna chamada `num_posts`. Então agora modifique o YAML schema para 
+com `Thread`. Nós queremos manter o número de posts que qualquer instância de `Thread`
+tem em uma coluna chamada `num_posts`. portanto modifique o esquema YAML para 
 definir as opções adicionais para o comportamento:
 
     [yml]
@@ -129,14 +129,14 @@ definir as opções adicionais para o comportamento:
               foreignAlias: Posts
       # ...
 
-Agora, o modelo `Thread` tem uma coluna `num_posts`que irá manter-se atualizada
+Agora o modelo `Thread` possui uma coluna `num_posts`que irá manter-se atualizada
 com o número de posts que cada thread tem.
 
-### O Ouvinte de Eventos
+### O Ouvinte de Eventos (*Event Listener*)
 
-O próximo passo para a construção do comportamento é escrever um ouvinte de evento registrador 
+O próximo passo para a construção do comportamento é escrever um registrador de ouvintes de evento (*record event listener*)
 que será responsável por manter a contagem atualizada quando inserirmos novos registros,
-excluir um registro ou executar DQL de exclusão de registros em lote:
+excluirmos um registro ou executarmos DQL de exclusão de registros em lote:
 
     [php]
     class CountCache extends Doctrine_Template
@@ -151,9 +151,9 @@ excluir um registro ou executar DQL de exclusão de registros em lote:
       }
     }
 
-Antes de prosseguirmos, precisamos definir a `classe` CountCacheListener que
-extende `Doctrine_Record_Listener`. Ele aceita uma variedade de opções que são simplesmente
-transmitidos ao ouvinte a partir do modelo:
+Antes de prosseguirmos, precisamos definir a classe `CountCacheListener` que
+extende `Doctrine_Record_Listener`. Ela aceita uma variedade de opções que são simplesmente
+repassadas ao ouvinte a partir do modelo:
 
     [php]
     // lib/model/count_cache/CountCacheListener.class.php 
@@ -195,7 +195,7 @@ Primeiro vamos definir o método `postInsert()`:
           $table
             ->createQuery()
             ->Update()
-            ->set($options['columnName'], $options['columnName'].' +1)
+            ->set($options['columnName'], $options['columnName'].' +1')
             ->where($relation['local'].' = ?', $invoker->$relation['foreign'])
             ->execute();
         }
@@ -203,15 +203,15 @@ Primeiro vamos definir o método `postInsert()`:
     }
 
 O código acima irá incrementar a contagem em um para todas os relacionamentos configurados
-mediante a emissão de uma instrução DQL UPDATE quando um novo objeto como é inserido abaixo:
+mediante a emissão de uma instrução DQL UPDATE quando um novo objeto como é inserido, conforme o exemplo abaixo:
 
     [php]
     $post = new Post();
-    $ post-> thread_id = 1;
+    $post->thread_id = 1;
     $post->body = 'corpo da mensagem';
     $post->save();
 
-O `Thread` com o `id` `1` terá a coluna `num_posts` coluna incrementado em `1`.
+O `Thread` com o `id` `1` terá a coluna `num_posts` incrementada em `1`.
 
 Agora que o contador está sendo incrementado quando novos objetos são inseridos, nós
 precisamos manipular quando objetos são excluídos e diminuir o contador. Faremos isso
@@ -241,7 +241,7 @@ implementando o método `postDelete()`:
     }
 
 O método `postDelete()` acima é quase idêntico ao `postInsert`. A
-única diferença é que nós diminuiremos a coluna `num_posts` em 1 ao invés de
+única diferença é que nós diminuiremos a coluna `num_posts` em `1` ao invés de
 incrementá-lo. Ele manipularia o seguinte código se fôssemos remover o registro `$post`
 salvo previamente:
 
@@ -282,12 +282,12 @@ de Update. Podemos resolver isso usando o método `preDqlDelete()`:
       }
     }
 
-O código acima clona a instrução `DQL DELETE` e transformá-lo em um `SELECT` que
+O código acima clona a instrução `DQL DELETE` e transformá-a em em um `SELECT` que
 nos permite recuperar os `ID`s que serão excluídos, para que possamos atualizar o contador
 desses registros que foram excluídos.
 
-Agora, temos o seguinte cenário cuidando de que o contador será decrementado
-se tivéssemos de fazer o seguinte:
+Agora, temos o seguinte cenário tratado e os contadores serão decrementados
+se fizéssemos o seguinte:
 
     [php]
     Doctrine::getTable('Post')
@@ -306,7 +306,7 @@ corretamente:
       ->where('body LIKE ?', '%cool%')
       ->execute();
 
->**NOTA**
+>**NOTE**
 >Para que o método `preDqlDelete()` seja invocado você deve habilitar
 >um atributo. Os retornos DQL estão desligados por padrão devido a eles terem um custo
 >um pouco maior. Então se você quiser usá-los, você deve habilitá-los.
@@ -340,7 +340,7 @@ Agora, dê um build para criar tudo de novo e carregar a massa de dados:
     $ php symfony doctrine:build --all --and-load
 
 Agora tudo está criado e a massa de dados está carregada, por isso vamos executar um teste para ver
-Se os contadores foram mantidas atualizados:
+se os contadores foram mantidas atualizados:
 
     $ php symfony doctrine:dql "FROM Thread t, t.Posts p"
     doctrine - executing: "FROM Thread t, t.Posts p" ()
@@ -396,7 +396,7 @@ Delete:
       ->where('body LIKE ?', '%legal%')
       ->execute();
 
-Agora nós excluimos todos as mensagens relatadas e o valor de `num_posts` deverá ser zero:
+Agora nós excluimos todas as mensagens relacionadas e o valor de `num_posts` deverá ser zero:
 
     $ php symfony doctrine:dql "FROM Thread t, t.Posts p"
     doctrine - executing: "FROM Thread t, t.Posts p" ()
@@ -405,22 +405,22 @@ Agora nós excluimos todos as mensagens relatadas e o valor de `num_posts` dever
     doctrine - num_posts: '0'
     doctrine - Posts: { }
 
-E é isso! Espero que este artigo seja útil tanto no sentido de que você aprenda
-algo sobre os comportamentos e os comportamentos em si também sejam úteis à você!
+E é isso! Espero que este artigo seja útil tanto no sentido de que você aprendeu
+algo sobre os comportamentos e que os comportamentos em si também sejam úteis à você!
 
 Usando o Cache de Resultados do Doctrine
 -----------------------------
 
 Em aplicações web de tráfego pesado é comum necessitar de um cache de informações
-para salvar recursos de CPU. Com a última versão do Doctrine 1.2 fizemos um monte de
+para poupar recursos de CPU. Com a última versão do Doctrine 1.2 fizemos um monte de
 melhorias no cache de conjunto de resultados que lhe dará muito mais controle sobre
-a remoção de entradas no cache a partir dos controladore de cache. Anteriormente não era possível
+a remoção de entradas no cache a partir dos controladores de cache. Anteriormente não era possível
 especificar a chave de cache usado para armazenar a entrada no cache, então você não podia realmente
-identificar a entrada de cache a fim de excluí-lo.
+identificar a entrada de cache a fim de excluí-la.
 
 Nesta seção, mostraremos um exemplo simples de como você pode utilizar o cacheamento de conjunto de resultados
 para cachear todas as consultas relacionadas a seu usuário, bem como o uso de eventos para se certificar
-de que eles sejam devidamente apurados quando alguns dado for alterado.
+de que eles sejam devidamente limpos quando alguns dadoa forem alterados.
 
 ### Nosso Schema
 
@@ -460,7 +460,7 @@ Uma ves que tenha feito, você deverá ter a seguinte classe `User` gerada:
     {
     }
 
-Mais tarde no artigo você vai precisar adicionar algum código para esta classe para fazer a anotação da mesma.
+Mais tarde, no artigo, você vai precisar adicionar algum código a esta classe para fazer a anotação da mesma.
 
 ### Configurando o Cache de Resultado
 
@@ -491,7 +491,7 @@ utilizar este controlador de cache para os conjuntos de resultados das consultas
 
 ### Consultas de exemplo
 
-Agora imagine que em sua aplicação você tem um grande número de consultas realcioniona ao usuário
+Agora imagine que em sua aplicação você tem um grande número de consultas relacionadas ao usuário
 e quer apurá-los sempre que algum dado do usuário for alterado.
 
 Aqui está uma consulta simples que podemos usar para processar uma lista de usuários ordenados
@@ -507,21 +507,21 @@ Agora, nós podemos ligar o cache para essa consulta usando o método `useResult
     [php]
     $q->useResultCache(true, 3600, 'users_index');
 
->**NOTA**
+>**NOTE**
 >Observe o terceiro argumento. Esta é a chave que será usada para armazenar a entrada
 > cacheada para os resultados no controlador de cache. Isso nos permite identificar facilmente
 >esta consulta e excluí-la do controlador de cache.
 
-Agora, quando executarmos a consulta quirá irá consultar o banco de dados para buscar os resultados e armazená-
+Agora, quando executarmos a consulta que irá consultar o banco de dados para buscar os resultados e armazená-
 los no controlador de cache na chave chamada `users_index` e todas as requisições posteriores
 obterão as informações do controlador de cache em vez de pedir ao banco de dados:
 
     [php]
     $users = $q->execute();
 
->**NOTA**
+>**NOTE**
 >Isso não somente economiza o processamento no servidor de banco de dados, ele também ignora
-> o processo inteiro de hidratação que é como o Doctrine armazena os dados hidratado. Isso significa
+> o processo inteiro de hidratação que é como o Doctrine armazena os dados hidratados. Isso significa
 > que irá também aliviar um pouco o processamento do seu servidor web.
 
 Agora, se verificar no controlador de cache, você vai ver que existe uma entrada chamada
@@ -548,7 +548,7 @@ alguns eventos para limpar automaticamente a entrada de cache quando um usuário
 Primeiro vamos apenas demonstrar a API crua do controlador de cache antes de implementá
 -lo em um evento.
 
->**Dica**
+>**TIP**
 > Para ter acesso à instância do controlador de cache de resultado você pode recuperá-lo a partir da
 > instância da classe `Doctrine_Manager`.
 >
@@ -581,7 +581,7 @@ metódo `deleteByPrefix()` não for suficiente para você:
 * `deleteBySuffix($suffix)`: Exclui as entradas de cache que combinem com o sufixo
    passado;
 
-* `deleteByRegex($regex)`: Exclui as entradas de cache que correspondam à
+* `deleteByRegularExpression($regex)`: Exclui as entradas de cache que correspondam à
    expressão regular passada;
 
 * `deleteAll()`: Exclui todas as entradas de cache.
@@ -610,11 +610,11 @@ portanto abra a classe no seu editor favorito e adicione o seguinte método `pos
     }
 
 Agora, se fôssemos atualizar um usuário ou inserir um novo ele iria limpar o cache para
-todas as consultas relarionadas ao usuário:
+todas as consultas relacionadas ao usuário:
 
     [php]
     $user = new User();
-    $user->username = 'jorge';
+    $user->username = 'jwage';
     user->password = 'mudeme';
     $user->save();
 
@@ -624,11 +624,11 @@ os novos dados do banco de dados para cacheá-los novamente para solicitações 
 Embora esse exemplo seja muito simples, ele demonstra muito bem como você pode
 usar esses recursos para implementar um cacheamento refinado em suas consultas Doctrine.
 
-Criando Hydratador Doctrine
+Criando Hidratador Doctrine
 ---------------------------
 
 Uma das principais características do Doctrine é a capacidade de transformar um objeto `Doctrine_Query`
-em várias estruturas de conjunto de resultado. Este é o trabalho dos hidratadores do
+em várias estruturas de conjunto de resultados. Este é o trabalho dos hidratadores do
 Doctrine e até a versão 1.2, o hidratadores eram todos codificados rigidamente e não
 eram abertos aos desenvolvedores para serem personalizados. Agora que isto mudou, é possível
 escrever um hidratador personalizado e criar qualquer estrutura de dados que for desejado
@@ -657,11 +657,11 @@ Precisaremos também de alguns dados para o teste, então copie a massa de dados
     # data/fixtures/data.yml
     User:
       user1:
-        username: jorge
+        username: jwage
         password: mudeme
         is_active: 1
       user2:
-        username: jorjao
+        username: jonwage
         password: mudeme
         is_active: 0
 
@@ -669,7 +669,7 @@ Agora crie tudo com o seguinte comando:
 
     $ php symfony doctrine:build --all --and-load
 
-### Escrevendo o Hydratador
+### Escrevendo o Hidratador
 
 Para escrever um hidratador tudo o que precisamos fazer é escrever uma nova classe que se estende `Doctrine_Hydrator_Abstract`
 e devemos implementar um método `hydrateResultSet($stmt)`. Ele recebe a instância do `PDOStatement`
@@ -751,9 +751,9 @@ no seguinte:
 
     Array
     (
-        [jorge] => 1
-        [jorjao] => 0
+        [jwage] => 1
+        [jonwage] => 0
     )
 
 Bem, é isso! Simplesmente lindo não? Espero que isso seja útil a você e como resultado
-a comunidade terá alguns novos e impressivos hidratadores contribuídos.
+a comunidade terá contribuições de alguns novos e expressivos hidratadores.

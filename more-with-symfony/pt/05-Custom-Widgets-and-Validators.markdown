@@ -1,11 +1,11 @@
-﻿Widgets e Validators Personalizados
-===================================
+﻿Widgets e Validadores Personalizados
+====================================
 
-* por Thomas Rabaix *
+*por Thomas Rabaix*
 
-Este capítulo explica como criar um widget e validadores personalizados para uso
+Este capítulo explica como criar *widgets* e validadores personalizados para uso
 no framework de formulário. Ele irá explicar os detalhes internos de `sfWidgetForm` e
-`sfValidator`, bem como a forma de construir tanto um widget simples quanto um complexo.
+`sfValidator`, bem como a forma de construir tanto um *widget* simples quanto um complexo.
 
 Por Dentro do Widget e Validator
 ------------------------------
@@ -28,15 +28,15 @@ Além disso, a classe `sfWidgetForm` implementa dois métodos importantes:
    Embora não seja uma boa prática para substituir o construtor, o método `configure()`
    pode ser facilmente substituído.
 
-* `render()`: saídas de HTML para o widget. O método tem uma primeiro argumento obrigatório,
+* `render()`: saídas de HTML para o widget. O método tem um primeiro argumento obrigatório,
    o nome do elemento HTML, e um segundo argumento opcional,
    o valor.
 
-> **NOTE**
-> Um objeto `sfWidgetForm` não sabe nada sobre o seu nome ou o seu valor.
-> O componente é responsável apenas pela prestação do widget. O nome e
-> o valor são geridos por um objeto `sfFormFieldSchema`, que é o link
-> entre os dados e os widgets.
+>**NOTE**
+>Um objeto `sfWidgetForm` não sabe nada sobre o seu nome ou o seu valor.
+>O componente é responsável apenas pela prestação do widget. O nome e
+>o valor são geridos por um objeto `sfFormFieldSchema`, que é o link
+>entre os dados e os widgets.
 
 ### Por Dentro do sfValidatorBase
 
@@ -44,15 +44,15 @@ A classe ~`sfValidatorBase`~ é a classe base de cada validador. O
 ~`sfValidatorBase::clean()`~ é o método mais importante desta classe
 pois ele verifica se o valor é válido, dependendo das opções fornecidas.
 
-Internamente, o método `clean()` realiza várias acções diferentes:
+Internamente, o método `clean()` realiza várias ações diferentes:
 
 * Retira os espaços no início e no final do valor de entrada para valores string (se especificado através da opção `trim`)
 * Verifica se o valor é vazio
-* Chama o método `doclean()` do validador.
+* Chama o método `doClean()` do validador.
 
 O método `doClean()` é o método que implementa a lógica principal de validação.
-Não é boa prática para sobrescrever o método `clean()`. Em vez disso,
-sempre execute qualquer lógica personalizada através do método `doClean()`.
+Não é uma boa prática sobrescrever o método `clean()`. Em vez disso,
+customize a lógica do método `doClean()`.
 
 O validador também pode ser usado como um componente independente para verificar a integridade de entrada.
 Por exemplo, a validador sfValidatorEmail irá verificar se o e-mail é válido:
@@ -69,29 +69,29 @@ Por exemplo, a validador sfValidatorEmail irá verificar se o e-mail é válido:
       $this->forward404();
     }
 
-> **NOTE**
-> Quando um formulário está vinculado aos valores de solicitação, o objeto `sfForm` mantém
-> referências aos valores originais (dirty, "sujos") e os valores validados (clean, "limpos").
-> Os valores originais são usados quando o formulário é redesenhado, enquanto 
-> os valores "cleaned" são utilizados pela aplicação (por exemplo, para salvar o objeto).
+>**NOTE**
+>Quando um formulário está vinculado aos valores de solicitação, o objeto `sfForm` mantém
+>referências aos valores originais (*dirty*, "sujos") e os valores validados (*clean*, "limpos").
+>Os valores originais são usados quando o formulário é redesenhado, enquanto 
+>os valores *cleaned* são utilizados pela aplicação (por exemplo, para salvar o objeto).
 
 ### O atributo `options`
 
-Tanto o `sfWidgetForm` e `sfValidatorBase` objetos têm uma variedade de opções:
-algumas são opcionais, enquanto outras são obrigatórias. Estas opções são definidas
+Tanto o objeto `sfWidgetForm` quanto o `sfValidatorBase` têm uma variedade de opções:
+algumas opcionais, outras obrigatórias. Estas opções são definidas
 dentro do método `configure()` de cada classe através de:
 
 * `AddOption($name, $value)`: define uma opção com um nome e um valor padrão
 * `AddRequiredOption($name)`: define uma opção obrigatória
 
 Estes dois métodos são muito convenientes pois garantem que os valores de dependência
-são corretamente passados para o validador ou o widget.
+são passados corretamente para o validador ou o widget.
 
-Construir um Widget e Validator Simples
+Construindo um Widget e Validator Simples
 --------------------------------------
 
 Esta seção irá explicar como criar um widget simples. Este elemento particular
-será chamado de "Trilean widget". O widget exibirá uma caixa de seleção com três opções:
+será chamado de "Trilean" widget. O widget exibirá uma caixa de seleção com três opções:
 `Não`, `Sim` e `Nulo`.
 
     [php]
@@ -120,14 +120,14 @@ será chamado de "Trilean widget". O widget exibirá uma caixa de seleção com 
             $attributes ['selected'] = 'selected';
           }
 
-          $options [] = $this->renderContentTag (
+          $options [] = $this->renderContentTag(
             'option',
             self::escapeOnce($option),
             $attributes
           );
         }
 
-        return $ this-> renderContentTag (
+        return $this->renderContentTag(
           'select',
           "\n". implode ("\n", $options). "\n",
           array_merge(array('name' => $name), $attributes
@@ -135,10 +135,10 @@ será chamado de "Trilean widget". O widget exibirá uma caixa de seleção com 
       }
     }
 
-O método `configure()` define a lista de valores de opção através da opção `choices`.
+O método `configure()` define a lista de valores da opção através da opção `choices`.
 Este array pode ser redefinido (ou seja, para alterar o rótulo associado a cada valor).
 Não há limite para o número de opções que um widget pode definir. 
-A classe Widget base, no entanto, declara algumas opções padrão, que funcionam de-facto
+A classe base widget, no entanto, declara algumas opções padrões, que funcionam *de-facto*
 como opções reservadas:
 
 * `id_format`: o formato de id, o padrão é '%s'
@@ -208,7 +208,7 @@ método é retornar `true` se `null` é fornecido. Como o widget atual permite
 `null` como um valor válido, o método deve voltar sempre `falso`.
 
 **NOTE**
-> Se `isEmpty()` retorna true, o método `doClean()` método nunca será chamado.
+>Se `isEmpty()` retorna true, o método `doClean()` método nunca será chamado.
 
 Embora este widget seja bastante simples, ele apresenta algumas características de base importantes
 que serão necessárias mais adiante. A próxima seção irá criar um widget mais
@@ -219,7 +219,7 @@ O Widget Google Address Map
 
 Nesta seção, vamos construir um widget complexo. Novos métodos serão
 introduzidos e o widget terá alguma interação JavaScript também.
-O widget será chamado de "GMAW": "Google Map Address Widget".
+O widget será chamado de "GMAW": "*Google Map Address Widget*".
 
 O que queremos alcançar? O widget deve fornecer uma maneira fácil para o
 usuário final para adicionar um endereço. Ao utilizar um campo de texto e com os 
@@ -354,7 +354,7 @@ Vamos pular para o código:
           $value['longitude'] = isset($value['longitude']) ? $value['longitude'] : ''; $ value [ 'longitude']:'';
           $value['latitude'] = isset($value['latitude']) ? $value['latitude'] : ''; $ value [ 'latitude']:'';
 
-          / / Define o widget address
+          // Define o widget address
           $address = new sfWidgetFormInputText(array(), $this->getOption('address.options'));
           $template_vars['{input.search}'] = $address->render($name.'[address]', $value['address']);
 
@@ -363,7 +363,7 @@ Vamos pular para o código:
           $template_vars['{input.longitude}'] = $hidden->render($name.'[longitude]', $value['longitude']);
           $template_vars['{input.latitude}'] = $hidden->render($name.'[latitude]', $value['latitude']);
 
-          / / Mesclarmodelos e variáveis
+          // Mescla modelos e variáveis
           return strtr(
             $this->getOption('template.html').$this->getOption('template.javascript'),
             $template_vars
@@ -387,7 +387,7 @@ Os atributos `id` diferentes para cada elemento são muito importantes, pois sã
 para o bloco de JavaScript (através da variável `template.js`), pelo qual o JavaScript pode
 tratar adequadamente os diferentes elementos.
 
-O método `rende ()` também instancia dois widgets internos: um widget `sfWidgetFormInputText`, 
+O método `render()` também instancia dois widgets internos: um widget `sfWidgetFormInputText`, 
 que é usado para processar o campo `address` e um widget `sfWidgetFormInputHidden`, 
 que é usado para processar os campos ocultos.
 
@@ -432,7 +432,7 @@ com a latitude e longitude fornecidas pelo serviço google geocoding.
 O objeto JavaScript tem alguns métodos interessantes:
 
 * `init()`: o método em que todas as variáveis são inicializadas e eventos
-   inputs
+   para diferentes inputs
 
 * `lookupCallback()`: um método *estático* usado pelo método de geocoder
    pesquisar o endereço fornecido pelo usuário
@@ -443,7 +443,7 @@ O objeto JavaScript tem alguns métodos interessantes:
 O código JavaScript final pode ser visto no Apêndice A.
 
 Por favor, consulte a documentação do Google map para obter mais detalhes sobre a funcionalidade
-do Google Maps [API](http://code.google.com/apis/maps/).
+do Google maps [API](http://code.google.com/apis/maps/).
 
 ### Validador `sfValidatorGMapAddress`
 
@@ -452,7 +452,7 @@ executa uma validação: especificamente, se o campo está definido como obrigat
 o valor não pode ser `null`. Assim, `sfValidatorGMapAddress` só precisa validar
 os diferentes valores: `latitude`, `longitude` e `address`. A variável `$value` 
 deve ser um array, mas como não se deve confiar na entrada do usuário, o validador 
-verifica a presença de todas as chaves para que os validadores internos passam valores válidos.
+verifica a presença de todas as chaves para que os validadores internos passam
 valores válidos.
 
     [php]
@@ -460,7 +460,7 @@ valores válidos.
     {
       protected function doClean($value)
       {
-        if (! if (!is_array($value))
+        if (! if(!is_array($value))
         {
           throw new sfValidatorError($this, 'invalid');
         }
@@ -488,14 +488,14 @@ valores válidos.
 >**NOTE**
 >Um validador sempre lança uma `excepção` `sfValidatorError` quando um valor não é
 >válido. Por isso, a validação é cercada por um bloco `try/catch`.
->Neste validador, o validador re-lança uma nova excepção `invalid`, que
+>Neste validador, a validação re-lança uma nova excepção `invalid`, que
 >equivale a um erro de validação `invalid` no validador 
 >`sfValidatorGMapAddress`.
 
 ### Testando
 
-Por que o teste é importante? O validador é a cola entre a entrada do usuário
-e a aplicação. Se o validador é falho, a aplicação é vulnerável.
+Por que o teste é importante? O validador é a ponte entre a entrada do usuário
+e a aplicação. Se o validador é falho, a aplicação esta vulnerável.
 Felizmente, o symfony vem com o `lime` que é uma biblioteca de testes 
 muito fácil de usar.
 
@@ -541,11 +541,11 @@ Quando o método `sfForm::bind()` é chamado, o formulário executa o método `c
 de cada validador. Este teste reproduz este comportamento instanciando
 o validador `sfValidatorGMapAddress` diretamente e testa diferentes valores.
 
-Reflexões Finais
+Considerações Finais
 --------------
 
-O erro mais comum durante a criação de um widget é ser focar excessivamente em
+O erro mais comum durante a criação de um *widget* é ser focar excessivamente em
 como as informações serão armazenadas no banco de dados. O framework formulário é
 simplesmente um contêiner de dados e um framework de validação. Portanto, um widget deve
 gerenciar somente a sua informação relacionada. Se os dados forem válidos, em seguida, os diferentes
-valores limpos poderão então ser utilizada pelo model ou no controller.
+valores limpos poderão então ser utilizados no modelo ou no controlador.
