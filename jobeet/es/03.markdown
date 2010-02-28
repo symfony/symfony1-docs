@@ -299,11 +299,7 @@ optimizado para el motor de base de datos que hemos configurado:
 
 Para realmente crear las tablas en la base de datos, necesitas ejecutar la tarea `propel:insert-sql`:
 
-    $ php symfony propel:insert-sql
-
-Como la tarea elimina las tablas existentes antes de re-crearlas, necesitas confirmar la operación. También puedes añadir la opción `--no-confirmation` para saltearte la pregunta, lo cual es útil si deseas ejecutar la tarea desde un proceso no interactivo:
-
-    $ php symfony propel:insert-sql --no-confirmation   
+    $ php symfony propel:insert-sql 
 
 >**TIP**
 >Como con cualquier herramienta de línea de comandos, las tareas symfony pueden tener argumentos y opciones.

@@ -320,13 +320,6 @@ tâche `propel:insert-sql` :
 
     $ php symfony propel:insert-sql
 
-Comme la tâche supprime les tables actuelles avant de les re-créer, vous avez l'obligation
-de confirmer l'opération. Vous pouvez également ajouter l'option `--no-confirmation`
-afin de contourner la question, qui est utile si vous souhaitez exécuter la tâche
-à partir d'un batch non-interactif :
-
-    $ php symfony propel:insert-sql --no-confirmation
-
 >**TIP**
 >Comme pour tout outil en ~ligne de commande|Ligne de commande~, les tâches de symfony peuvent 
 >prendre des arguments et des options.

@@ -320,13 +320,6 @@ To actually create the tables in the database, you need to run the
 
     $ php symfony propel:insert-sql
 
-As the task drops the current tables before re-creating them, you are
-required to confirm the operation. You can also add the `--no-confirmation`
-option to bypass the question, which is useful if you want to run the task
-from within a non-interactive batch:
-
-    $ php symfony propel:insert-sql --no-confirmation
-
 >**TIP**
 >As for any ~command line|Command Line~ tool, symfony tasks can take arguments
 >and options.

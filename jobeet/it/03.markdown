@@ -325,13 +325,6 @@ Per creare le tabelle nel database, si deve eseguire il task `propel:insert-sql`
 
     $ php symfony propel:insert-sql
 
-Dato che questo task elimina le tabelle correnti dal database prima di
-ricrearle, è richiesta una conferma dell'operazione. Si può comunque aggiungere
-il parametro --no-confirmation per saltare questa domanda, cosa che potrebbe
-essere utile durante l'esecuzione di un processo batch non interattivo.
-
-    $ php symfony propel:insert-sql --no-confirmation
-
 >**TIP**
 >Come ogni tool da ~riga di comando|Riga di comando~, symfony accetta parametri ed opzioni.
 >Ogni task ha un messaggio d'aiuto che può essere visualizzato utilizzando il
