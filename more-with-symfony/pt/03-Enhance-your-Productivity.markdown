@@ -1,13 +1,13 @@
 ﻿Aumente a sua produtividade
-===========================
+=========================
 
-*por Fabien Potencier*
+*por Fabien potencier*
 
 Usar o symfony já é uma grande maneira de aumentar sua produtividade 
-como desenvolvedor. Claro, todo mundo já sabe quão as exceções detalhadas 
-web debug toolbar pode aumentar sua produtividade. Este capítulo
+como desenvolvedor. Claro, todo mundo já sabe o quanto as exceções detalhadas e a 
+Barra de Ferramentas para Debug Web (*web debug toolbar*) podem aumentar sua produtividade. Este capítulo
 vai lhe ensinar algumas dicas para aumentar sua produtividade ainda mais 
-usando algumas novas ou não tão conhecidas features
+usando algumas funcionalidades novas ou não tão conhecidas.
 
 Comece Mais Rápido: Personalize o Processo de Criação de Projeto
 ----------------------------------------------------
@@ -17,9 +17,9 @@ simples:
 
     $ php /path/to/symfony generate:project foo --ORM=Doctrine
 
-A task `generate:project` gera a estrutura padrão de diretórios para seu 
+A tarefa `generate:project` gera a estrutura padrão de diretórios para seu 
 novo projeto e cria os arquivos de configuração com dados padrão Você pode
-então usar outras tasks do symfony para criar aplicações, instalar plugins,
+então usar outras tarefas do symfony para criar aplicações, instalar plugins,
 configurar seu modelo e muito mais.
 
 Mas os primeiros passos para se criar um novo projeto geralmente são os
@@ -29,20 +29,20 @@ algumas configurações padrão para seu gosto, e assim por diante.
 A partir do symfony 1.3, o processo de criação de projetos pode ser personalizado e
 automatizado.
 
-> **NOTE**
-> Como todas as tasks do symfony são classes, é muito fácil de personalizá-las e estendê-las, com algumas exceções.
-> A task `generate:project`, entretanto, não é facilmente customizável
-> porque não existe um projeto quando a task é executada.
+>**NOTE**
+>Como todas as tarefas do symfony são classes, é muito fácil de personalizá-las e estendê-las, com algumas exceções.
+>A tarefa `generate:project`, entretanto, não é facilmente customizável
+>porque não existe um projeto quando a tarefa é executada.
 
-A task `generate:project` tem a opção `--installer`, que é um script PHP que vai
-ser executado durante o processo de criação do projeto:
+A tarefa `generate:project` tem a opção `--installer`, que é um script PHP que
+será executado durante o processo de criação do projeto:
 
-    $ php /path/to/symfony generate:project --installer=/somewhere/my_installer.php
+    $ php /path/to/symfony generate:project --installer=/algumlugar/meu_instalador.php
 
-O `/algumlugar/meu_instalador.php` script vai ser executado no contexto da instância 
-de `sfGenerateProjectTask`, então ele tem acesso a todos os métodos da task usando o 
+O script `/algumlugar/meu_instalador.php` será executado no contexto da instância 
+de `sfGenerateProjecttarefa`, então ele tem acesso à todos os métodos da tarefa usando o 
 objeto `$this`. As próximas sessões descrevem todos os métodos disponíveis que você
-pode utilizar na personalização de seu processo de criação de projeto.
+pode utilizar na personalização de seu processo de criação de um projeto.
 
 >**TIP**
 >Se você habilitar uma URL de acesso para a função `include()` no seu
@@ -62,7 +62,7 @@ sub-diretórios e arquivos) no projeto recém-criado:
 
 ### `RunTask()`
 
-O método `runTask()` executa uma task. Leva o nome da task, e uma string
+O método `runTask()` executa uma tarefa. Leva o nome da tarefa, e uma string
 representando os argumentos e as opções que você deseja passar para ele como
 argumentos:
 
@@ -75,7 +75,7 @@ Argumentos e opções também podem ser passados como arrays:
     $this->runTask('configure:author', array('author' => 'Fabien Potencier'));
 
 >**TIP**
->Os nomes dos atalhos das tasks também funcionam como esperado:
+>Os nomes dos atalhos das tarefas também funcionam como esperado:
 >
 > [php]
 > $this->runTask('cc');
@@ -85,20 +85,20 @@ Este método pode, naturalmente, ser usado para instalar plugins:
     [php]
     $this->runTask('plugin:install', 'sfDoctrineGuardPlugin');
 
-Para instalar uma versão específica de um plugin, passe apenas as opções necessárias:
+Para instalar uma versão específica de um plugin, apenas passe as opções necessárias:
 
     [php]
-    $ this-> runTask plugin ( ': install', 'sfDoctrineGuardPlugin', array estabilidade ( 'libertação' => '10 .0.0 ',' => beta '));
+    $ this->runTask plugin ( ': install', 'sfDoctrineGuardPlugin', array estabilidade ( 'libertação' => '10 .0.0 ',' => beta '));
 
 >**TIP**
->Para executar uma task de um plugin instalado recentemente, as tasks precisam ser
+>Para executar uma tarefa de um plugin instalado recentemente, as tarefas precisam ser
 >recarregadas primeiro:
 >
 > [php]
-> $this->reloadTasks();
+> $this->reloadtarefas();
 
-Se você criar uma nova aplicação e quiser usar as tasks que dependem de uma
-aplicação específica, como `generate:module`, você deve alterar a configuração
+Se você criar uma nova aplicação e quiser usar as tarefas que dependem de uma
+aplicação específica, como `generate:module`, deve alterar a configuração
 contextual você mesmo
 
     [php]
@@ -111,7 +111,7 @@ gravar um log:
 
     [php]
     // um simples log
-    $this->log('alguma mensagem instalação');
+    $this->log('alguma mensagem de instalação');
 
     // log de um bloco
     $this->logBlock('Fabien\'s Crazy Installer', 'ERROR_LARGE');
@@ -138,13 +138,13 @@ Você também pode fazer qualquer pergunta e obter resposta do usuário como uma
 o método `ask()`:
 
     [php]
-    $secret = $this->venda('Dê uma string exclusiva para o segredo CSRF: ');
+    $secret = $this->venda('Dê uma string exclusiva para o segredo CSRF:');
 
 E se você quer validar a resposta, use o método `askAndValidate()`:
 
     [php]
     $validator = new sfValidatorEmail(array(), array('invalid' => 'hmmm, isso não se parece com um email!'));;
-    $email = $this->askAndValidate('Porfavor, me de seu email:', $validator);
+    $email = $this->askAndValidate('Por favor, me de seu email:', $validator);
 
 ### Operações no Filesystem
 
@@ -163,24 +163,24 @@ symfony:
 >
 >$ php symfony generate:project --installer=/caminho/do/symfony/data/bin/sandbox_installer.ph
 >
->Dê uma olhada no script `symfony/data/bin/sandbox_installer.php` script para ter um
+>Dê uma olhada no script `symfony/data/bin/sandbox_installer.php` para ter um
 > exemplo de um script instalador funcional.
 
 O script do instalador é apenas outro arquivo PHP. Assim, você pode fazer qualquer coisa
-que você queira. Em vez de executar as mesmas tarefas de novo e de novo cada vez que você
+que queira. Em vez de executar as mesmas tarefas de novo e de novo cada vez que
 criar um novo projeto do symfony, você pode criar seu próprio script de instalação e
-ajustar a sua instalação do projeto da maneira que quiser. Criar novo
-projeto com um instalador é muito mais rápido e previne esquecer
-etapas. Você pode mesmo compartilhar seu script de instalação com os outros!
+ajustar a sua instalação do projeto da maneira que quiser. Criar novos
+projetos com um instalador é muito mais rápido e previne que se esqueça
+etapas. Você pode compartilhar o seu script de instalação com os outros!
 
 >**TIP**
 >Em [Capítulo 06](#chapter_06), vamos usar um instalador personalizado. O código para ele
 > pode ser encontrada no [Apêndice B](#chapter_b).
 
-Desenvolver Mais Rapido
+Desenvolver Mais Rápido
 --------------
 
-De código PHP para tasks CLI, a programação significa um monte de digitação. Vamos ver como
+Do código PHP para tarefas CLI, a programação significa um monte de digitação. Vamos ver como
 reduzir isto ao mínimo.
 
 ### Escolhendo a sua IDE
@@ -232,8 +232,8 @@ O autocompletar do PHP em IDEs só funciona para os métodos que são explicitam
 no código PHP. Mas se o seu código usa os métodos "mágicos" `__call()` ou `__get()` 
 , as IDEs não tem como adivinhar os métodos disponíveis ou propriedades. A
 boa notícia é que você pode ajudar a maioria das IDEs, fornecendo os métodos e/ou
-propriedades em um bloco PHPDoc (usando as annotations `@method` e `@property` respectivamente)
-anotações, respectivamente).
+propriedades em um bloco PHPDoc (usando as anotações `@method` e `@property` 
+, respectivamente).
 
 Digamos que você tem uma classe de `Mensagem`, com uma propriedade dinâmica (`mensagem`) e um
 método dinâmico (`getMessage()`). O código a seguir mostra como uma IDE pode
@@ -259,11 +259,11 @@ conhecê-los, sem qualquer definição explícita no código PHP:
     )
 
 Mesmo se o método `getMessage()` não existir, ele será reconhecido pela
-IDE, graças a annotation `@method`. O mesmo vale para a propriedade `message`
-que nós adicionamos uma annotation `@property`.
+IDE, graças a anotação `@method`. O mesmo vale para a propriedade `message`
+que nós adicionamos a anotação `@property`.
 
-Esta técnica é utilizada pela task `doctrine:build-model`. Por exemplo, uma
-classe Doctrine `MailMessage' com duas colunas ( `mensagem` e `priority`) ficaria
+Esta técnica é utilizada pela tarefa `doctrine:build-model`. Por exemplo, uma
+classe Doctrine `MailMessage' com duas colunas (`mensagem` e `priority`) ficaria
 da seguinte forma;
 
     [php]
@@ -307,19 +307,19 @@ da seguinte forma;
         )
     )
 
-Encontrar a Documentação Mais Rápido
+Encontrar a Documentação Rapidamente 
 -------------------------
 
 Como o symfony é um grande framework, com muitos recursos, nem sempre é fácil
 lembrar todas as possibilidades de configuração, ou todas as classes e métodos
-à sua disposição. Como vimos antes, usando uma IDE pode facilitar
+à sua disposição. Como vimos antes, usar uma IDE pode facilitar
 proporcionando autocompletar. Vamos explorar como as ferramentas existentes podem ser aproveitados para
 encontrar respostas o mais rápido possível.
 
 ### API Online
 
 A forma mais rápida para encontrar documentação sobre uma classe ou um método é navegar
-pela [API] (http://www.symfony-project.org/api/1_3/).
+pela [API](http://www.symfony-project.org/api/1_3/).
 
 Ainda mais interessante é o mecanismo de busca embutido da API. A pesquisa permite
 encontrar rapidamente uma classe ou um método com apenas algumas tecladas. Após
@@ -338,12 +338,12 @@ ou um nome da classe seguido de `::` a lista de todos os métodos disponíveis:
 
 ![API de pesquisa](http://www.symfony-project.org/images/more-with-symfony/api_search_3.png "API de pesquisa")
 
-ou acessa o início de um nome de método para refinar ainda mais as possibilidades:
+ou acessar o início de um nome de método para refinar ainda mais as possibilidades:
 
 ![API de pesquisa](http://www.symfony-project.org/images/more-with-symfony/api_search_4.png "API de pesquisa")
 
 Se você quer listar todas as classes de um pacote, basta digitar o nome do pacote e
-fazer a busca
+fazer a busca.
 
 Você pode até mesmo integrar a busca da API do symfony ao seu navegador. Dessa forma, você
 nem sequer precisa navegar até o site do symfony para procurar algo. Isto é 
@@ -356,9 +356,9 @@ da seção de documentação da API para adicionar um deles a o campo de busca d
 navegador.
 
 >**NOTE**
-> Você pode dar uma olhada em um vídeo que mostra como o mecanismo de busca da API symfony
-> se integra bem com o Firefox no 
-> [blog](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api) do symfony.
+>Você pode dar uma olhada em um vídeo que mostra como o mecanismo de busca da API symfony
+>se integra bem com o Firefox no 
+>[blog](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api) do symfony.
 
 ### Cheat Sheets
 
@@ -376,14 +376,14 @@ estão disponíveis uma grande coleção de [Cheat Sheets](http://trac.symfony-p
 * [Doctrine](http://www.phpdoctrine.org/Doctrine-Cheat-Sheet.pdf)
 
 >**NOTE**
-> Algumas dessas cheat sheets ainda não foram atualizadas para o symfony 1.3.
+>Algumas dessas cheat sheets ainda não foram atualizadas para o symfony 1.3.
 
 ### Documentação Off-line
 
 Perguntas sobre a configuração são melhores respondidas pela guia de referência do
 symfony. Este é um livro que você deve ter a mão sempre que você desenvolver com
-symfony. O livro é o caminho mais rápido para encontrar todas as configurações disponíveis
-, graças a um índice remissívo detalhado, um índice de termos,
+symfony. O livro é o caminho mais rápido para encontrar todas as configurações disponíveis,
+graças a um índice remissivo detalhado, um índice de termos,
 referências cruzadas dentro dos capítulos, tabelas, e muito mais.
 
 Você pode navegar pelo livro
@@ -402,7 +402,7 @@ Para verificar se seu projeto está pronto para ser colocado em produção, voc�
 [checklist](http://symfony-check.org/) online de implantação. Este site abrange os
 principais pontos que são necessários verificar antes de ir para produção.
 
-Depurando Mais Rápido
+Depurando Rapidamente
 ------------
 
 Quando ocorre um erro no ambiente de desenvolvimento, symfony exibe uma bela
@@ -422,8 +422,8 @@ depurando um problema.
 Por padrão, `sf_file_link_format` está vazia e o symfony usa o
 valor da configuração do PHP
 [`xdebug.file_link_format`](http://xdebug.org/docs/all_settings#file_link_format)
-, se ele existe (atribuinr valor ao `xdebug.file_link_format` no 
-`php.ini` permite que versões mais recentas do XDebug adicionem links a todos os nomes de arquivos 
+, se ele existe (atribuir valor ao `xdebug.file_link_format` no 
+`php.ini` permite que versões mais recentes do XDebug adicionem links a todos os nomes de arquivos 
 no stack trace)
 
 O valor para `sf_file_link_format` depende do seu IDE e sistema operacional.
@@ -447,12 +447,12 @@ e [XDebug](http://www.koch.ro/blog/index.php?/archives/77-Firefox,-VIM,-Xdebug-J
 >procurar pela configuração do `sf_file_link_format` ou `xdebug.file_link_format`
 >que ambos funcionam da mesma maneira.
 
-Teste Mais Rápido
+Teste Rapidamente
 -----------
 
 ### Grave seus Testes Funcionais
 
-Testes funcionais simulam a interação do usuário para testar exaustivamente o
+Testes funcionais simulam a interação do usuário para testar exaustivamente a
 integração de todas as peças de sua aplicação. Escrever testes funcionais é
 fácil, mas demorado. Mas como cada arquivo de teste funcional é um cenário que
 simula um usuário navegando pelo seu site, e navegar por uma aplicação é
@@ -494,18 +494,18 @@ painel, você pode iniciar a gravação de uma sessão clicando no link "Activat
 e apagar a sessão atual, clicando em "Reset". Quando estiver pronto, copie
 e cole o código da textarea para um arquivo de teste e comece a personalizá-lo.
 
-### Executar sua Suite de Testes Mais Rápido
+### Executar sua Suite de Testes Rapidademnte
 
 Quando você tem um grande conjunto de testes, pode ser muito demorado para lançar
 todos os testes, cada vez que você fizer uma alteração, especialmente se alguns testes falharem. Cada 
-vez que corrigir um teste, você deve executar toda a suite de testes novamente para garantir
-que você não tenha quebrado os outros testes. Mas enquanto os testes não estejam corrigidos
+vez que corrigir um teste, você deve executar toda a suíte de testes novamente para garantir
+que você não tenha quebrado os outros testes. Mas enquanto os testes não estiverem corrigidos
 não há nenhum problema em re-executar todos os outros testes. Para acelerar este processo,
-a task `test:all` tem uma opção `--only-failed` (com o atalho `-f`) que força
-a task a apenas re-executar os testes que falharam durante a execução anterior:
+a tarefa `test:all` tem uma opção `--only-failed` (com o atalho `-f`) que força
+a tarefa a apenas re-executar os testes que falharam durante a execução anterior:
 
     $ php symfony test:all --only-failed
 
 Na primeira execução, todos os testes são executados como de costume. Mas, para as próximas execuções execuções, somente os testes que falharam serão executados. Conforme você corrige seu código, alguns testes
 vão passar, e serão removidos das execuções posteriores. Quando todos os testes passarem
-novamente, o pacote de teste completo é executado ... Você pode em seguida, re-fatorar e repetir.
+novamente, o pacote de teste completo é executado ... Você pode em seguida, refatorar e repetir.
