@@ -444,7 +444,7 @@ URL’ы:
 имя маршрута и объект в качестве аргументов для методов `redirect` и `forward`:
 
     [php]
-    $this->redirect('job_show_user', $job);
+    $this->generateUrl('job_show_user', $job)
 
 >**SIDEBAR**
 >Семейство `redirect`-методов.

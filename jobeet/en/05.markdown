@@ -448,7 +448,7 @@ If you want to generate a URL from an action, you can use the `generateUrl()`
 method:
 
     [php]
-    $this->redirect('job_show_user', $job);
+    $this->redirect($this->generateUrl('job_show_user', $job));
 
 >**SIDEBAR**
 >The "~redirect|Redirection~" Methods Family

@@ -448,7 +448,7 @@ Si vous voulez générer une URL depuis une action, vous pouvez utiliser la mét
 `generateUrl()` :
 
     [php]
-    $this->redirect('job_show_user', $job);
+    $this->generateUrl('job_show_user', $job)
 
 >**SIDEBAR**
 >Les méthodes de la famille "~redirect|Redirection~"
