@@ -1,11 +1,7 @@
 Day 11: Testing your Forms
 ==========================
 
-Yesterday we created our first form with symfony. People are now able to post
-a new job on Jobeet but we ran out of time before we could add some tests.
-
-That's what we will do today. Along the way, we will also learn more about the
-form framework.
+In chapter 10, we created our first form with symfony. People are now able to post a new job on Jobeet but we ran out of time before we could add some tests. That's what we will do along this chapter. Along the way, we will also learn more about the form framework.
 
 >**SIDEBAR**
 >Using the Form Framework without symfony
@@ -176,7 +172,7 @@ add it now:
 </doctrine>
 
 The ##ORM## tester provides the `check()` method to check that one or more
-objects in the database matches the criteria passed as an argument.
+objects in the database match the criteria passed as an argument.
 
     [php]
 <propel>
@@ -301,13 +297,13 @@ Testing the "Publish" link is now more simple:
       end()
     ;
 
-If you remember from day 10, the "Publish" link has been configured to be
+If you remember from chapter 10, the "Publish" link has been configured to be
 called with the HTTP `~PUT|PUT (HTTP Method)~` method. As browsers don't
 understand `PUT` requests, the `link_to()` helper converts the link to a form
 with some JavaScript. As the test browser does not execute JavaScript, we need
 to force the method to `PUT` by passing it as a third option of the `click()`
 method. Moreover, the `link_to()` helper also embeds a ~CSRF token~ as we have
-enabled CSRF protection during day 1; the `_with_csrf` option simulates this
+enabled CSRF protection during chapter 1; the `_with_csrf` option simulates this
 token.
 
 Testing the "Delete" link is quite similar:
@@ -464,7 +460,7 @@ Then, update the "Extend" link code in the `_admin` partial:
     <!-- apps/frontend/modules/job/templates/_admin.php -->
     <?php if ($job->expiresSoon()): ?>
      - <?php echo link_to('Extend', 'job_extend', $job, array('method' => 'put')) ?> for another <?php echo sfConfig::get('app_active_days') ?> days
-    <?php endif; ?>
+    <?php endif ?>
 
 Then, create the `extend` action:
 
@@ -672,8 +668,7 @@ really want the value, set the `filter_extra_fields` option to `false`:
 
 ### ~XSS~ and ~CSRF~ Protection
 
-During day 1, you learned the the `generate:app` task created a secured
-application by default.
+During chapter 1, you learned the `generate:app` task created a secured application by default.
 
 First, it enabled the protection against XSS. It means that all variables used
 in templates are escaped by default. If you try to submit a job description
@@ -762,7 +757,7 @@ have a unique name (`namespace`:`name`), and can have arguments and options.
 The `jobeet:cleanup` task defines two options: `--env` and `--days` with some
 sensible defaults.
 
-Running the task is similar to running any other symfony built-in task:
+Running the task is similar to run any other symfony built-in task:
 
     $ php symfony jobeet:cleanup --days=10 --env=dev
 
@@ -806,21 +801,16 @@ As always, the database cleanup code has been factored out in the
 >value according to the success of the task. You can force a return value
 >by returning an integer explicitly at the end of the task.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-Testing is at the heart of the symfony philosophy and tools. Today, we have
-learned again how to leverage symfony tools to make the development process
+Testing is at the heart of the symfony philosophy and tools. In this chapter, we have learned again how to leverage symfony tools to make the development process
 easier, faster, and more important, safer.
 
 The symfony form framework provides much more than just widgets and
 validators: it gives you a simple way to test your forms and ensure that your
 forms are secure by default.
 
-Our tour of great symfony features do not end today. Tomorrow, we will create
-the backend application for Jobeet. Creating a backend interface is a must for
-most web projects, and Jobeet is no different. But how will we be able to
-develop such an interface in just one hour? Simple, we will use the symfony
-admin generator framework. Until then, take care.
+Our tour of great symfony features do not end today. In the next chapter, we will create the backend application for Jobeet. Creating a backend interface is a must for most web projects, and Jobeet is no different. But how will we be able to develop such an interface in just one hour? Simple, we will use the symfony admin generator framework.
 
 __ORM__
