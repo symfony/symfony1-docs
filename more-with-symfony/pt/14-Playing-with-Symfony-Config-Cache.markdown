@@ -1,5 +1,5 @@
 ﻿Brincando com o Cache da Configuração do symfony
-================================================
+===================================
 
 *por Kris Wallsmith*
 
@@ -21,7 +21,7 @@ lógica complexa em uma classe única e estendê-la e reutilizá-la em vários
 lugares.
 
 No entanto, da perspectiva do desenvolvedor de *templates*, essa abstração de como um
-um formulário se renderiza pode ser problemática. Dê uma olhada na seguinte formulário:
+um formulário se renderiza pode ser problemática. Dê uma olhada no seguinte formulário:
 
 ![Formulário em seu estado padrão](http://www.symfony-project.org/images/more-with-symfony/config_cache_form_default.png)
 
@@ -161,7 +161,7 @@ núcleo do symfony pouco antes de renderizar um *template* ou um *template parti
     }
 
 >**NOTE**
->Perceba que este código verifica uma opção `is_enhanced` em cada objeto de formulário antes
+>Perceba que este código verifica a opção `is_enhanced` em cada objeto de formulário antes
 >de realçá-lo (método `enhance`). Isto é para prevenir que formulários passados de *templates* para *partials* sejam
 >realçados duas vezes.
 
@@ -231,7 +231,7 @@ Há uma série de problemas com essa implementação. Primeiro, o arquivo YAML
 é lido a partir do sistema de arquivos e carregados em `sfYaml` cada vez que um formulário é
 realçado. Leitura do sistema de arquivos desta forma deve ser evitada.
 Segundo, existem vários níveis de loops aninhados e uma série de condicionais
-que só vai atrasar a sua aplicação para baixo. A solução para ambos os
+que só vai atrasar a sua aplicação. A solução para ambos os
 problemas reside no cache de configuração do symfony.
 
 O Cache de Configuração
@@ -302,7 +302,7 @@ expõe esta leitura para as bênçãos do cache do op-code.
 >
 >Este método funciona de forma diferente quando está com o modo debug ligado. Como os arquivos de configuração
 >são editados durante o curso do desenvolvimento, `->checkConfig()` irá comparar
->quando os arquivos originais e os armazenados em cache foram modificados pela última vez para se certificar de que obtenha
+>quando os arquivos originais e os armazenados em cache foram modificados pela última vez para se certificar de obter a
 >versão mais recente. Isso adiciona mais alguns passos ao
 >funcionamento do modo de debug desligado:
 >
@@ -364,7 +364,7 @@ Manipuladores de Configuração Customizados
 No código do realçador (*enhancer*) acima, cada variável de formulário passada a um *template* irá passar
 por cada classe de formulário configurado em `forms.yml`. Isto realiza o trabalho,
 mas se você passar vários objetos de formulário a um *template*, ou tem uma longa lista de
-formulários configurados no YAML, você poderá começar a ver um impacto na performance.
+formulários configurados no YAML, você poderá ver um impacto na performance.
 Esta é uma boa oportunidade para escrever um manipulador de configuração customizado que otimiza
 este processo.
 
@@ -409,7 +409,7 @@ de arquivos de configuração YAML:
 * `::parseYaml($configFile)`
 * `::parseYaml($configFile)`
 
-Os dois primeiros métodos de implementam a
+Os dois primeiros métodos implementam a
 [configuração em cascata](http://www.symfony-project.org/reference/1_2/en/03-Configuration-Files-Principles#chapter_03_configuration_cascade) do symfony (*configuration cascade*).
 Os outros implementam a
 [questão do ambiente](http://www.symfony-project.org/reference/1_2/en/03-Configuration-Files-Principles#chapter_03_environment_awareness) do symfony (*environment-awareness*).
@@ -530,7 +530,7 @@ herança de classe.
 
 Podemos verificar que a nova mensagem para `required` está sendo aplicada no script
 de teste, e confirma que formulários filhos receberão as melhorias de seus pais,
-mesmo se não houver nenhum configuraçãl para a classe filha.
+mesmo se não houver nenhum configuração para a classe filha.
 
     [php]
     $t = new lime_test(5);
@@ -555,11 +555,11 @@ esperado.
 
 ![Testes passando](http://www.symfony-project.org/images/more-with-symfony/config_cache_tests_5_ok.png)
 
-Caprichando com Formulários Embarcados (*Embedded Forms*)
+Caprichando com Formulários Embutidos (*Embedded Forms*)
 ---------------------------------
 
 Existe uma característica importante do *framework* de formulário do symfony que ainda
-não consideramos: formulários embarcados. Se uma instância de `CommentForm` é embarcado em
+não consideramos: formulários embutidos. Se uma instância de `CommentForm` é embutido em
 outro formulário, os realces que fizemos em `forms.yml` não serão aplicados.
 Isso é fácil de demonstrar, em nosso script de teste:
 
@@ -574,15 +574,15 @@ Isso é fácil de demonstrar, em nosso script de teste:
     $enhancer->enhance($form);
     $t->like($form['comment']['body']->renderLabel(),
       '/Por favor, escreva seu comentário/',
-      '->enhance() realça formulários embarcados');
+      '->enhance() realça formulários embutidos');
 
-Esta nova asserção demonstra que formulários embarcados não estão sendo realçados:
+Esta nova declaração demonstra que formulários embutidos não estão sendo realçados:
 
 ![Testes falhando](http://www.symfony-project.org/images/more-with-symfony/config_cache_tests_6_not_ok.png)
 
 Consertar este teste envolverá um manipulador de configuração mais avançado. Temos de ser
 capazes de aplicar os realces configurados em `forms.yml` de uma forma modular para
-contar com os formulários embarcados, assim nós vamos gerar um método realçador
+contar com os formulários embutidos, assim nós vamos gerar um método realçador
 especialmente feito para cada classe de formulário configurada. Estes métodos serão gerados pelo nosso
 manipulador personalizado de configuração em uma nova classe "trabalhadora".
 
@@ -678,9 +678,9 @@ no diretório de cache.
 
 A classe `sfFormYamlEnhancer` vai agora submeter-se a classe trabalhadora gerada para
 lidar com a manipulação de objetos de formulários, mas agora deve levar em conta para a recursividade
-através de formulários embarcados. Para fazer isso devemos processar o esquema de campo do formulário
+através de formulários embutidos. Para fazer isso devemos processar o esquema de campo do formulário
 (que pode ser iterado recursivamente) e o objeto do formulário (que
-inclui os formulários embarcados) em paralelo.
+inclui os formulários embutidos) em paralelo.
 
     [php]
     class sfFormYamlEnhancer
@@ -724,11 +724,11 @@ inclui os formulários embarcados) em paralelo.
     }
 
 >**NOTE**
->Os campos em objetos de formulários embarcados não devem ser modificados depois de terem sido
->embarcados. Formulários embarcados são armazenados no formulário pai para efeitos de 
+>Os campos nos objetos de formulários embutidos não devem ser modificados depois de terem sido
+>embutidos. Formulários embutidos são armazenados no formulário pai para efeitos de 
 >processamento, mas não têm nenhum efeito sobre a forma como o formulário pai é renderizado.
 
-Com suporte para formulários embarcados pronto, nossos testes agora devem passar. Execute
+Com suporte para formulários embutidos pronto, nossos testes agora devem passar. Execute
 o script para descobrir:
 
 ![Testes passando](http://www.symfony-project.org/images/more-with-symfony/config_cache_tests_6_ok.png)
@@ -742,7 +742,7 @@ loop do PHP.
 
     [yml]
     # <?php for ($i = 0; $i < 100; $i++): ?> #
-    Forma <?php echo $i ?>: ~
+    Form<?php echo $i ?>: ~
     # <?php endfor; ?> #
 
 Crie todas estas classes, executando o seguinte trecho de código:
@@ -882,7 +882,7 @@ será capaz, a não ser que tenham os mesmos arquivos em seu projeto.
 
 Para corrigir isso, vamos precisar isolar o código na classe realçadora que chama
 o cache de configuração, de modo que podemos sobrecarregá-lo em nosso script de teste e usar uma *fixture* para o
-`forms,yml` no lugar.
+`forms.yml` no lugar.
 
     [php]
     lass sfFormYamlEnhancer
@@ -965,6 +965,6 @@ execute a tarefa `plugin:package` e um pacote será criado após alguns
 Reflexões finais
 --------------
 
-Como você pode ver pelos *benchmarks* feitos aqui, o cache de configuração do symfony torna
+Como você pode ver pelos *benchmarks* realizados aqui, o cache de configuração do symfony torna
 possível utilizar a simplicidade dos arquivos de configuração YAML com praticamente
 nenhum impacto no desempenho.
