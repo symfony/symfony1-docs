@@ -730,10 +730,10 @@ job に関連するすべてのルートは、`job_show_user` のものを除い
     public function getDaysBeforeExpires()
     {
 <propel>
-      return floor(($this->getExpiresAt('U') - time()) / 86400);
+      return ceil(($this->getExpiresAt('U') - time()) / 86400);
 </propel>
 <doctrine>
-     return floor($this->getDateTimeObject('expires_at')->format('U') / 86400);
+      return ceil(($this->getDateTimeObject('expires_at')->format('U') - time()) / 86400);
 </doctrine>
     }
 

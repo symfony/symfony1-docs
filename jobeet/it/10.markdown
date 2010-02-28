@@ -828,7 +828,12 @@ scorciatoia alla classe `JobeetJob`:
 
     public function getDaysBeforeExpires()
     {
-      return floor($this->getDateTimeObject('expires_at')->format('U') / 86400);
+<propel>
+      return ceil(($this->getExpiresAt('U') - time()) / 86400);
+</propel>
+<doctrine>
+      return ceil(($this->getDateTimeObject('expires_at')->format('U') - time()) / 86400);
+</doctrine>
     }
 
 La barra di amministrazione mostra le diverse azioni, a seconda
