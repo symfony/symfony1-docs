@@ -5,8 +5,7 @@ With the addition we made yesterday on Jobeet, the frontend application is now
 fully useable by job seekers and job posters. It's time to talk a bit about
 the backend application.
 
-Today, thanks to the ~admin generator|Admin Generator~ functionality of
-symfony, we will develop a complete backend interface for Jobeet in just one
+In this chapter, thanks to the ~admin generator|Admin Generator~ functionality of symfony, we will develop a complete backend interface for Jobeet in just one
 hour.
 
 Backend Creation
@@ -159,20 +158,10 @@ Replace the default `~layout|Layout~.php` file content with the code below:
           <div id="menu">
             <ul>
               <li>
-<propel>
                 <?php echo link_to('Jobs', '@jobeet_job') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Jobs', '@jobeet_job_job') ?>
-</doctrine>
               </li>
               <li>
-<propel>
                 <?php echo link_to('Categories', '@jobeet_category') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Categories', '@jobeet_category_category') ?>
-</doctrine>
               </li>
             </ul>
           </div>
@@ -191,7 +180,7 @@ Replace the default `~layout|Layout~.php` file content with the code below:
     </html>
 
 This layout uses an `admin.css` stylesheet. This file must already be present
-in `web/css/` as it was installed with the other stylesheets during day 4.
+in `web/css/` as it was installed with the other stylesheets during chapter 4.
 
 ![The admin generator look and feel](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
@@ -260,10 +249,10 @@ configured by editing the `config/generator.yml` file found in the module:
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -294,8 +283,8 @@ An admin module can be customized by editing the `config` key of the
                the forms
   * `fields`:  Default configuration for the fields
   * `list`:    Configuration for the list
-  * `filter`:  Configuration for the filters
-  * `form`:    Configuration for the new/edit form
+  * `filter`:  Configuration for filters
+  * `form`:    Configuration for new and edit forms
   * `edit`:    Specific configuration for the edit page
   * `new`:     Specific configuration for the new page
 
@@ -553,12 +542,7 @@ method:
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
     }
 
@@ -643,12 +627,7 @@ by the framework. We need to define the `listExtend()` action to make the
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
@@ -703,24 +682,17 @@ Create the `listDeleteNeverActivated` action in the `job` module:
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
     }
 
 <propel>
-We have reused the `JobeetJobPeer::cleanup()` method defined yesterday. That's
-another great example of the reusability provided by the MVC pattern.
+We have reused the `JobeetJobPeer::cleanup()` method defined in the previous chapter. That's another great example of the reusability provided by the MVC pattern.
 </propel>
 <doctrine>
-We have reused the `JobeetJobTable::cleanup()` method defined yesterday. That's
-another great example of the reusability provided by the MVC pattern.
+We have reused the `JobeetJobTable::cleanup()` method defined in the previous chapter. That's another great example of the reusability provided by the MVC pattern.
 </doctrine>
 
 >**NOTE**
@@ -926,11 +898,6 @@ a method that will be overridden in `BackendJobeetJobForm`:
 </doctrine>
     class BackendJobeetJobForm extends JobeetJobForm
     {
-      public function configure()
-      {
-        parent::configure();
-      }
-
       protected function removeFields()
       {
         unset(
@@ -1136,10 +1103,10 @@ The final configuration for the Jobeet admin is as follows:
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -1200,10 +1167,10 @@ The final configuration for the Jobeet admin is as follows:
         plural:                ~
         route_prefix:          jobeet_category
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -1238,15 +1205,13 @@ interface for Jobeet in a matter of minutes.
 >in
 >`cache/backend/dev/modules/autoJob/lib/BaseJobGeneratorConfiguration.class.php`.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 In just one hour, we have built a fully featured backend interface for the
 Jobeet project. And all in all, we have written less than 50 lines of PHP
 code. Not too bad for so many features!
 
-Tomorrow, we will see how to secure the backend application with a username
-and a password. This will also be the occasion to talk about the symfony user
-class.
+In the following chapter, we will see how to secure the backend application with a username and a password. This will also be the occasion to talk about the symfony user class.
 
 __ORM__

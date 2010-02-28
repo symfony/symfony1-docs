@@ -117,20 +117,10 @@ admin ジェネレーターはパッケージを設定するシンプルなバ�
           <div id="menu">
             <ul>
               <li>
-<propel>
                 <?php echo link_to('Jobs', '@jobeet_job') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Jobs', '@jobeet_job_job') ?>
-</doctrine>
               </li>
               <li>
-<propel>
                 <?php echo link_to('Categories', '@jobeet_category') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Categories', '@jobeet_category_category') ?>
-</doctrine>
               </li>
             </ul>
           </div>
@@ -206,10 +196,10 @@ admin ジェネレーターの動作は既知のふるまいを思い出させ�
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -532,12 +522,7 @@ list において、単独のオブジェクトで実行できるアクション
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
@@ -584,12 +569,7 @@ list において、単独のオブジェクトで実行できるアクション
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
@@ -960,10 +940,10 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -1024,10 +1004,10 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         plural:                ~
         route_prefix:          jobeet_category
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:

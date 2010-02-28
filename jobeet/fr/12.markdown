@@ -159,20 +159,10 @@ Remplacez le contenu du fichier `~layout|Layout~.php` par défaut avec le code c
           <div id="menu">
             <ul>
               <li>
-<propel>
                 <?php echo link_to('Jobs', '@jobeet_job') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Jobs', '@jobeet_job_job') ?>
-</doctrine>
               </li>
               <li>
-<propel>
                 <?php echo link_to('Categories', '@jobeet_category') ?>
-</propel>
-<doctrine>
-                <?php echo link_to('Categories', '@jobeet_category_category') ?>
-</doctrine>
               </li>
             </ul>
           </div>
@@ -260,10 +250,10 @@ configuré en éditant le fichier `config/generator.yml` trouvé dans le module 
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -553,12 +543,7 @@ supplémenaires, symfony va lever une exception en vous invitant à créer une m
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
     }
 
@@ -643,12 +628,7 @@ le lien `extend` :
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
@@ -703,12 +683,7 @@ Créez l'action `listDeleteNeverActivated` dans le module `job` :
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-<propel>
         $this->redirect('@jobeet_job');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_job_job');
-</doctrine>
       }
 
       // ...
@@ -1136,10 +1111,10 @@ La configuration finale pour l'admin de Jobeet admin se présente comme suit :
         plural:                ~
         route_prefix:          jobeet_job
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
@@ -1200,10 +1175,10 @@ La configuration finale pour l'admin de Jobeet admin se présente comme suit :
         plural:                ~
         route_prefix:          jobeet_category
 <propel>
-        with_propel_route:     1
+        with_propel_route:     true
 </propel>
 <doctrine>
-        with_doctrine_route:   1
+        with_doctrine_route:   true
 </doctrine>
 
         config:
