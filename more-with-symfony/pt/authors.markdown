@@ -42,7 +42,7 @@ projeto Doctrine.
 Geoffrey Bachelet
 -----------------
 
-Geoffrey é um desenvolvedor bem sucedido que constrói aplicações web desde o início dos anos
+Geoffrey é um desenvolvedor bem sucedido que constrói aplicações web desde o início do ano
 2000. Curioso sobre novas tecnologias e sempre tentando aprender coisas novas,
 ele estudou uma variedade de tecnologias relacionadas à web, incluindo (mas não limitado a)
 vários frameworks, como o Zend Framework, Ruby on Rails e merb. Ele finalmente
@@ -131,7 +131,7 @@ e soluções de código aberto, com uma forte preferência por symfony.
 
 Fabrice é fã do symfony e esta é sua filosofia desde o final de 2007. Ele contribui
 para a comunidade com o sfEasyGMap e plugins sfFacebookConnect e esta
-buscando contribuir ainda mais para o desenvolvimento da qualidade do nos projetos web
+buscando contribuir ainda mais para o desenvolvimento da qualidade nos projetos web
 de código aberto.
 
 **Seu Site**: *http://www.allomatch.com/*
@@ -141,7 +141,7 @@ de código aberto.
 Ryan Weaver
 -----------
 
-Ryan Weaver é o programador lider no [Iostudio, LLC](http://www.iostudio.com/)
+Ryan Weaver é o programador líder no [Iostudio, LLC](http://www.iostudio.com/)
 em Nashville, Tennessee e um entusiasta do symfony e outras tecnologias de
 código aberto. Ele é um membro do grupo OSS Nashville e co-organizador
 do grupo de usuários symfony em Nashville. Ryan adora correr, ler e viajar
@@ -167,14 +167,14 @@ Se juntou ao mundo do desenvolvimento em 1994 para encabeçar o programa Regiona
 onde ele recrutou integradores especializados para representar a Microsoft em
 seminários e conferências de desenvolvedores, e pulou para o bonde da internet no início de 1996
 como gerente de produtos do Visual Studio / Visual InterDev e Internet Explorer.
-. Em 1998, 1999, tornou-se o representante francês da Microsoft em
+. Em 1998 e 1999 foi o representante francês da Microsoft em
 AFNOR (orgão nacional francês da ISO), onde participou do
 processo de normalização do Java. Laurent mudou para uma posição internacional em 2000 para
-desenvolver infra-estruturas para o Microsoft Commercial Internet System, um eCommerce
-solução de portal altamente escalonavel co-desenvolvido com a CompuServe, visando Telcos
-e Hosters. Retornando a Microsoft França, em 2004, ele arriscou uma nova atividade
-dirigidas aos hosters e comunidades na web, e que ainda está em negociação 6 anos
-depois, ajudando os principais hosters da França a aproveitar soluções e produtos baseados em Windows
+desenvolver infra-estruturas para o Microsoft Commercial Internet System, uma solução eCommerce
+de portal altamente escalonavel co-desenvolvido com a CompuServe, visando Telcos
+e Hosters. Retornando a Microsoft Francesa, em 2004, ele arriscou uma nova atividade
+dirigida aos hosters e comunidades na web, e que ainda está em negociação há 6 anos
+, ajudando os principais hosters da França a aproveitar soluções e produtos baseados em Windows
 e, mais recentemente, aborda o segmento de baixo custo que é
 pioneiro mundial na França.
 
