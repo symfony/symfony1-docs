@@ -449,7 +449,7 @@ Sia `url_for()` che `link_to()` possono generare anche URL assolute:
 Se si vuole generare un URL da un'azione, si può usare il metodo `generateUrl()`:
 
     [php]
-    $this->generateUrl('job_show_user', $job)
+    $this->redirect($this->generateUrl('job_show_user', $job));
 
 >**SIDEBAR**
 >La famiglia dei metodi "~redirect|Rinvio~"
