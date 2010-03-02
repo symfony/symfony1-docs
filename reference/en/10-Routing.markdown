@@ -353,14 +353,28 @@ collection.
 *Default*: An empty array
 
 The `collection_actions` options defines an array of additional actions
-available for the collection routes.
+available for the collection routes. The keys are the action names and the
+values are the valid methods for that action:
+
+    [yml]
+    articles:
+      options:
+        collection_actions: { filter: post }
+        # ...
 
 ### ~`object_actions`~
 
 *Default*: An empty array
 
-The `object_actions` options defines an array of additional actions available
-for the object routes.
+The `object_actions` options defines an associative array of additional
+actions available for the object routes. The keys are the action names and the
+values are the valid methods for that action:
+
+    [yml]
+    articles:
+      options:
+        object_actions: { publish: put }
+        # ...
 
 ~`sfPropelRouteCollection`~
 ---------------------------
