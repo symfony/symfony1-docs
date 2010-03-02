@@ -29,7 +29,8 @@
   * `sfTesterResponse::contains()`: より強力な `matches()` メソッドを使うことができます
 
   * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、
-    `isRequestParameter()`、`isResponseHeader()`、`isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わりました。
+    `isRequestParameter()`、`isResponseHeader()`、
+    `isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わりました。
 
   * `sfTestFunctional` の次のメソッド: `isCached()`、 `isUriCached()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わりました。
 
@@ -44,7 +45,7 @@
 
   * `sfLoader::getHelperDirs()` と `sfLoader::loadHelpers()`: `sfApplicationConfiguration` オブジェクトから同じメソッドを使ってください。`sfLoader` クラスのすべてのメソッドは廃止予定になったので、symfony 1.4 で `sfLoader` は削除されます。
 
-  * `sfController::sendEmail()`: 代わりに symfony 1.3 の新しいメーラー昨日を使います。
+  * `sfController::sendEmail()`: 代わりに symfony 1.3 の新しいメーラー機能を使います。
 
   * `sfGeneratorManager::initialize()`: 何も行いません。
 
@@ -88,7 +89,10 @@
 
   * `sfDoctrineDataRetriever`、`sfPropelDataRetriever`: これらのクラスは `ObjectHelper` のみで使われていたので廃止予定です。
 
-  * `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry`: 対応する `Choice` ウィジェットを使います (対応するのは順に `sfWidgetFormI18nChoiceLanguage`、`sfWidgetFormI18nChoiceCurrency` と `sfWidgetFormI18nChoiceCountry`)。カスタマイズできることを除いて、これらはまったく同じように動きます。
+  * `sfWidgetFormI18nSelectLanguage`、
+    `sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry`:
+    対応する `Choice` ウィジェットを使います (対応するのは順に `sfWidgetFormI18nChoiceLanguage`、
+    `sfWidgetFormI18nChoiceCurrency` と `sfWidgetFormI18nChoiceCountry`)。カスタマイズできることを除いて、これらはまったく同じように動きます。
 
   * `SfExtensionObjectBuilder`、`SfExtensionPeerBuilder`、
     `SfMultiExtendObjectBuilder`、`SfNestedSetBuilder`、
