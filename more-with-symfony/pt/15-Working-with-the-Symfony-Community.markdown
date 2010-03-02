@@ -45,12 +45,12 @@ procurar primeiro a solução sozinho. Você pode, naturalmente, utilizar
 se você quiser pesquisar algo um pouco mais específico, os arquivos das diferentes
 mailing lists, especialmente o grupo
 [symfony-user](http://groups.google.com/group/symfony-users/topics),
-o qual é um bom lugar para se começar.
+são um bom lugar para se começar.
 
 #### Fazer uma pergunta
 
 É importante saber como fazer uma pergunta. Pode parecer simples, mas é
-realmente importante pensar primeiro no que está perguntando. Além disso, certifique
+realmente importante pensar primeiro sobre o que está perguntando. Além disso, certifique-se
 que verificou a documentação existente para ver se a sua dúvida já
 foi esclarecida. Existem algumas considerações gerais que irão
 ajudá-lo a obter uma resposta melhor:
@@ -59,7 +59,7 @@ ajudá-lo a obter uma resposta melhor:
    Diga o que você está fazendo (ou tentando fazer), o que você não é capaz de fazer, e
    certifique-se que menciona claramente os erros que está obtendo.
 
-* Diga, de forma curta, que soluções já experimentou. Refira a documentação que
+* Diga, de forma curta, que soluções já experimentou. Referencie a documentação que
    usou para tentar resolver o problema, as possíveis soluções que encontrou enquanto
    pesquisava na web ou nos arquivos das mailinglist, ou qualquer das coisas que
    tentou enquanto procurava a resolução do seu problema.
@@ -70,19 +70,19 @@ Há vários [Grupos Google](http://groups.google.com) em torno de symfony
 que satisfazem propósitos diferentes. Estas mailing lists são a forma principal de entrar em contato
 com os usuários e desenvolvedores do symfony. Se você estiver trabalhando com o symfony e
 procurando apoio para um problema que tem, então
-[usuários symfony] (http://groups.google.com/group/symfony-users) é o lugar para estar. Os
+[symfony users] (http://groups.google.com/group/symfony-users) é o lugar para estar. Os
 assinantes desta mailinglist são uma mistura de usuários regulares do symfony, principiantes do
-iniciantes e a maior parte da equipa-núcleo do symfony. Para qualquer pergunta, lá existirá
+iniciantes e a maior parte da equipe principal do symfony. Para qualquer pergunta, lá existirá
 alguém que será capaz de lhe responder. Existem muitas
 outras listas, para outros fins:
 
-* [Symfony-devs] (http://groups.google.com/group/symfony-devs): Para
+* [symfony-devs] (http://groups.google.com/group/symfony-devs): Para
    discussões sobre o desenvolvimento do núcleo do symfony (não para suporte!*)
 
-* [Symfony-docs] (http://groups.google.com/group/symfony-docs): Para
+* [symfony-docs] (http://groups.google.com/group/symfony-docs): Para
    discussões sobre a documentação do symfony
 
-* [Symfony-Comunidade] (http://groups.google.com/group/symfony-community): Para
+* [symfony-community] (http://groups.google.com/group/symfony-community): Para
    discussões sobre as iniciativas da comunidade
 
 Com qualquer uma destas mailinglists, não deve esquecer que são, por natureza, menos
@@ -91,27 +91,27 @@ passar horas ou mesmo até alguns dias até obter a resposta que está procurand
 É importante, no entanto, ser capaz de responder a quaisquer outras questões que as pessoas
 possam colocar e não ser demasiado impaciente.
 
-Ao contrário do IRC, com as mailinglists, deve dar tanta informação de fundo acerca
+Ao contrário do IRC, nas mailinglists você deve dar tanta informação acerca
 da sua questão quanto possível- informações sobre a configuração, que ORM está usando, que tipo de
-sistema operativo tem, que soluções possíveis é que tentou e
+sistema operacional tem, que soluções possíveis tentou e
 falharam. Pode incluir no e-mail quaisquer exemplos de código, para contextualizar o seu problema
 tanto quanto possível, o que pode levar à solução.
 
 # # # # IRC
 
-IRC é a forma mais directa de obter respostas, devido à sua natureza imediata.
+IRC é a forma mais direta de obter respostas, devido à sua natureza imediata.
 Symfony tem um canal dedicado chamado #symfony no
 [Freenode Network] (http://freenode.net/) onde, em qualquer momento do dia, muitas
 pessoas estão. Tenha noção de que mesmo que o canal possa ter cerca de
 100 usuários presentes, muitas vezes, muitas dessas pessoas estão no trabalho e não verificam
-constantemente o canal de IRC. Assim, apesar do IRC ser real-time por natureza, por vezes pode
+constantemente o canal de IRC. Assim, apesar do IRC ser em tempo real por natureza, por vezes pode
 demorar um pouco até obter uma resposta.
 
 A natureza do IRC não permite, realmente, a exibição de grandes blocos de
-código ou outros. Assim, descreva o seu problema no canal de IRC mas, se quiser
+código ou afins. Assim, descreva o seu problema no canal de IRC mas, se quiser
 mostrar blocos de código ou conteúdo de arquivos de configuração, use sites
 como pastebin.com e use o link no canal de IRC. As pessoas muitas vezes
-vêem o colar de blocos de código como alagamento do canal. Isto não é
+vêem o colar de blocos de código causando "floading" do canal. Isto não é
 apreciado e pode tornar mais difícil a obtenção de uma resposta.
 
 Quando faz uma pergunta no IRC, preste atenção à resposta que obtém. Seja
@@ -231,7 +231,7 @@ ser capaz de responder. Não há necessidade de manter uma vigilância constante
 a maioria das pessoas no canal #symfony não estão no canal o tempo todo.
 Em vez disso, quando precisam de um curto intervalo no seu trabalho, ligam
 o seu cliente de IRC, verificam que discussões estão acontecendo, e tentam dar o
-seu contributo, esforçando-se por esclarecer quaisquer questões, ajudar as pessoas ou simplesmentediscutindo
+sua contribuição, esforçando-se por esclarecer quaisquer questões, ajudar as pessoas ou simplesmente discutir
 uma funcionalidade específica. Estar presente no IRC, mesmo que não verifique diretamente
 o canal a cada minuto, também permite que as pessoas o "destaquem", ao mencionar
 o seu nickname. A maioria dos clientes de IRC irão notificá-lo sobre o destaque, e você
@@ -242,7 +242,7 @@ mesmo quando não fazer nada, você está fazendo algo de útil: estar disponív
 # # # Contribuindo com Código
 
 Provavelmente, a maneira mais fácil de contribuir para as pessoas que trabalham com o symfony
-é contribuir com algum código. Como todos os usuários do symfony são também colaboradores, este é
+é contribuir com algum código. Como todos os usuários do symfony são também desenvolvedores, este é
 o método mais divertido de dar algo à comunidade em retorno. Existem várias
 formas de contribuir com código. Abaixo está uma lista deformas de o fazer.
 
@@ -256,7 +256,7 @@ a versão. Além disso, você pode esquecer o patch e vir a ter problemas
 mais tarde. Especialmente quando encontra um bug, é uma boa prática avisar
 os desenvolvedores da framework acerca da questão. Então, como pode você fazer isso?
 
-Antes de mais, as mudanças têm de ser feitas no código do symfony. Os ficheiros
+Antes de mais, as mudanças têm de ser feitas no código do symfony. Os arquivos
 da framework devem ser alterados para corrigir o bug ou adicionar o comportamento. Então, assumindo
 que as alterações são feitas em um Subversion checkout do do código symfony, pode comparar-se ficheiros com base nas
 alterações feitas ao código base do symfony. Com a Subversion, para tal,
@@ -265,12 +265,12 @@ pode executar o seguinte comando:
     $svn diff> my_feature_or_bug_fix.patch
 
 Este comando deve ser executado na raíz do checkout do symfony, para assegurar
-que todas as alterações que foram feitas no código do symfony ficam registadas no ficheiro de patch.
+que todas as alterações que foram feitas no código do symfony ficam registadas no arquivo de patch.
 
 O próximo passo seria ir a
 [bugtracker do symfony] (http://trac.symfony-project.org). Após o login, surge
 uma nova opção para criar um novo Ticket. Ao criar um novo Ticket, tente preencher
-o maior número de campos possível, para tornar mais fácil para a equipa-núcleo
+o maior número de campos possível, para tornar mais fácil para a equipe principal
 reproduzir bugs e / ou saber que partes do symfony estão afetadas.
 
 Na área "Ticket Properties", certifique-se de que seleciona a versão correta do
@@ -279,14 +279,14 @@ componente do symfony que é afetado pelo patch. Quando existem vários
 componentes afetados, selecione o mais afectado e certifique-se
 de que menciona em "Full Description" quais as partes do symfony que são afetadas.
 
-É mportante salientar que o campo "Short Summary" deve conter o prefixo
+É importante salientar que o campo "Short Summary" deve conter o prefixo
 [PATCH] quando é anexada uma correção. Na parte inferior do formulário, certifique-se de
-que assinala a opção que indica se há um ficheiro de patch para anexar ao novo
+que assinala a opção que indica se há um arquivo de patch para anexar ao novo
 Ticket.
 
 # # # # Contribuindo com Plugins
 
-Hacking no núcleo da framework não é para todos. Mas os usuários do symfony trabalham em
+Alterar o núcleo da framework não é para todos. Mas os usuários do symfony trabalham em
 projetos que contêm funcionalidades personalizadas. Algumas funcionalidades são muito
 específicas de um projeto e, por isso, não será muito útil torná-las acessíveis para outros usarem,
 mas muitas vezes um projeto contém código muito genérico que pode ser útil para outras pessoas.
@@ -312,10 +312,10 @@ instalar plugins.
 
 # # # Documentação
 
-Uma das partes fortes do symfony é sua documentação. A equipa-núcleo
+Uma das partes fortes do symfony é sua documentação. A equipe principal
 escreveu muita documentação sobre como usar o symfony, mas uma grande parte da
 documentação também está lá graças à comunidade. Há também
-esforços conjuntos da equipa-núcleo e da comunidade, de que é exemplo o trabalho no
+esforços conjuntos da equipe principal e da comunidade, de que é exemplo o trabalho no
 tutorial do Jobeet. A documentação ajuda as pessoas novas a aprender symfony e também ajuda
 como uma referência para desenvolvedores experientes, por isso é muito importante ter
 boa documentação. Existem várias maneiras de contribuir com documentação para
@@ -345,7 +345,7 @@ weblogs (nada de twitter feeds, por exemplo).
 
 # # # # Escrever artigos
 
-As pessoas que estão mais confortáveis com a sua escrita podem levar a escrita um passo
+As pessoas que estão mais confortáveis com a sua escrita podem levá-la a um passo
 mais à frente. Existem várias revistas PHP em todo o mundo, assim como muitas revistas
 de informática que permitem às pessoas propor artigos. Os artigos para essas
 publicações são geralmente mais avançados, mais estruturados e de qualidade superior à
@@ -384,22 +384,22 @@ uma [wiki] (http://trac.symfony-project.org/wiki) onde as pessoas podem adiciona
 documentação. É sempre bom cacrescentar novo conteúdo à wiki. Contudo,
 também é possível contribuir olhando para os artigos existentes na
 wiki e corrigindo e / ou atualizando-os. Além de artigos novos, também existem
-artigos antigos que têm exemplos desactualizados ou podem mesmo estar ccompletamente desatualizados.
+artigos antigos que têm exemplos desatualizados ou podem mesmo estar ccompletamente desatualizados.
 Ajudar a limpar o conteúdo existente na wiki é uma ótima maneira de tornar
 mais fácil para as pessoas pesquisar na wiki e encontrar o conteúdo certo.
 
 Se quer ter uma idéia de que tipo de conteúdo está na wiki ou ir buscar alguma
-inspiração para o conteúdo que deseja acrescentar, basta dar uma olhadela para a
+inspiração para o conteúdo que deseja acrescentar, basta dar uma olhadela para na
 [página principal da wiki] (http://trac.symfony-project.org/wiki) para ver o que já está
 lá.
 
 # # # Apresentações
 
 Escrever é uma boa maneira de partilhar conhecimentos e experiências. O conteúdo está
-disponível para um grande número de pessoas e é suscept. No entanto, existem mais maneiras
+disponível para um grande número de pessoas e é pesquisável. No entanto, existem mais maneiras
 de espalhar a sua experiência e conhecimento. Uma boa maneira, que muitas pessoas
-apreciam é fazendo apresentações. Você pode fazer apresentações sobre
-configurações diferentes e para muitos públicos diferentes. Por exemplo:
+apreciam, é fazendo apresentações. Você pode fazer apresentações de várias maneiras 
+diferentes e para muitos públicos diferentes. Por exemplo:
 
 * Conferências PHP / symfony
 * em reuniões dos grupos de usuários (PHP) locais
@@ -420,7 +420,7 @@ em [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-c
 onde palestrantes experientes, bem como visitantes regulares de conferências serão capazes de o ajudar
 com dicas, truques e experiências. Além disso, se não sabe de uma conferência ou
 grupo de usuários, onde poderia fazer a sua apresentação, pode se inscrever na
-mailinglist para receber atualizações sobre Convocatórias de conferências ou contactos com
+mailinglist para receber atualizações sobre Chamadas de Conferências ou contatos com
 Grupos de usuários.
 
 # # # Organizar um evento / encontro
@@ -437,7 +437,7 @@ seria o symfony 1.2 . Eventualmente, foi organizada uma sala graças à
 organização e durante um dos intervalos entre as sessões, um grupo de
 cerca de 10 pessoas se reuniram para receber informação acerca do que seria o
 o symfony 1,2. Foi pequeno e simples, mas muito eficaz uma vez que os presentes tiveram
-uma idéia sobre o que esperar da (na altura) nova versão do symfony.
+uma idéia sobre o que esperar da (naquele momento) nova versão do symfony.
 
 Outro bom exemplo é a organização de conferências da comunidade, tais como
 [SymfonyCamp] (http://www.symfonycamp.com/) e
@@ -457,8 +457,8 @@ e a maioria tem organizado, até agora, vários encontros para pessoas interessa
 no symfony ou que trabalham com a framework. A maioria destes eventos são muito
 informais, livres e são totalmente orientados pela comunidade.
 
-O mencionado anteriormente
-[mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community) é um ótimo
+O [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community) 
+mencionado anteriormente é um ótimo
 lugar para procurar um grupo de usuários existentes em sua área, bem como o lugar para
 iniciar um novo grupo de usuários do symfony. Há membros e organizadores dos grupos
 de usuários do symfony na lista que podem oferecer a sua ajuda no início de um novo

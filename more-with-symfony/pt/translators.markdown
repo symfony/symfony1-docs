@@ -38,6 +38,17 @@ Membro ativo do grupo symfony-pt.
 **No Twitter** : *http://www.twitter.com/gabriel_vaz*
 
 
+Henrique Boaventura
+-------------------
+
+Desenvolvedor PHP a mais de 8 anos, iniciou a usar o framework symfony na versão 1.0 e vem acompanhando o crescimento dele deste então.
+Entusiasta em desenvolvimento WEB, especializado em marcação semântica (web standards), CSS/xHTML e em bibliotecas JavaScript como jQuery e Prototype.
+
+**Seu site** : *http://www.hboaventura.com*
+
+**No Twitter** : *http://twitter.com/kidh0*
+
+
 Lucas Stephanou
 ---------------
 
