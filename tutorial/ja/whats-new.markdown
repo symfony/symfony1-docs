@@ -13,12 +13,12 @@ symfony 1.3/1.4 の新しい機能
 
 symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラーが用意されました。
 
-メールの送信はシンプルでアクションから `composeAndSend()` メソッドを使うだけです:
+メール送信にはシンプルでアクションから `composeAndSend()` メソッドを使うだけです:
 
     [php]
     $this->getMailer()->composeAndSend('from@example.com', 'to@example.com', 'Subject', 'Body');
 
-より柔軟性を持たせる必要があれば、`compose()` メソッドを使って後で送信することもできます。添付ファイルをメッセージに追加する方法は次の通りです:
+より柔軟性をもたせる必要があれば、`compose()` メソッドを使って後で送信することもできます。添付ファイルをメッセージに追加する方法は次の通りです:
 
     [php]
     $message = $this->getMailer()->
@@ -36,7 +36,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
   * `escaping_strategy`: デフォルトではこの値は `true` です (`--escaping-strategy` オプションで無効にできます)。
 
-  * `csrf_secret`: デフォルトでランダムなパスワードが生成されます。CSRF 防止機能は標準で有効です (`--csrf-secret` オプションで無効にできます)。`settings.yml` 設定ファイルを編集するか、`--csrf-secret` オプションを使うことで、初期パスワードを変更することを強くおすすめします。
+  * `csrf_secret`: デフォルトでランダムなパスワードが生成されます。CSRF 防止機能は標準で有効です (`--csrf-secret` オプションで無効にできます)。`settings.yml` 設定ファイルを編集するか、`--csrf-secret` オプションを指定することで、初期パスワードを変更することを強くおすすめします。
 
 ウィジット
 ---------
@@ -61,7 +61,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
   * `sfWidgetFormI18nChoiceCountry`
   * `sfWidgetFormI18nChoiceTimezone`
 
-これらの最初の 3 つは廃止予定の `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry` ウィジェットの置き換えです。
+これらの最初の 3つは廃止予定の `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry` ウィジェットの置き換えです。
 
 ### 流れるようなインターフェイス
 
@@ -69,11 +69,15 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
   * `sfWidgetForm`: `setDefault()`、`setLabel()`、`setIdFormat()`、`setHidden()`
 
-  * `sfWidget`: `addRequiredOption()`、`addOption()`、`setOption()`、`setOptions()`、`setAttribute()`、`setAttributes()`
+  * `sfWidget`: `addRequiredOption()`、`addOption()`、`setOption()`、
+    `setOptions()`、`setAttribute()`、`setAttributes()`
 
-  * `sfWidgetFormSchema`: `setDefault()`、`setDefaults()`、`addFormFormatter()`、`setFormFormatterName()`、 `setNameFormat()`、`setLabels()`、`setLabel()`、`setHelps()`、`setHelp()`、`setParent()`
+  * `sfWidgetFormSchema`: `setDefault()`、`setDefaults()`、`addFormFormatter()`、
+    `setFormFormatterName()`、 `setNameFormat()`、`setLabels()`、`setLabel()`、
+    `setHelps()`、`setHelp()`、`setParent()`
 
-  * `sfWidgetFormSchemaDecorator`: `addFormFormatter()`、`setFormFormatterName()`、`setNameFormat()`、`setLabels()`、`setHelps()`、`setHelp()`、`setParent()`、`setPositions()`
+  * `sfWidgetFormSchemaDecorator`: `addFormFormatter()`、`setFormFormatterName()`、`setNameFormat()`、
+    `setLabels()`、`setHelps()`、`setHelp()`、`setParent()`、`setPositions()`
 
 バリデーター
 ------------
@@ -82,7 +86,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 `sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされる場合、正規表現は渡すバリデーターにマッチしません。
 
-`sfValidatorRegex` の `pattern` オプションは呼び出し時に正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
+`sfValidatorRegex` の `pattern` オプションは呼び出すときに正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
 
 ### `sfValidatorUrl`
 
@@ -100,14 +104,14 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### `sfValidatorSchemaCompare`
 
-`sfValidatorSchemaCompare` クラスに 2 つの新しいコンパレーターが用意されました:
+`sfValidatorSchemaCompare` クラスに 2つの新しいコンパレーターが用意されました:
 
  * `IDENTICAL` は `===` と同等です;
  * `NOT_IDENTICAL` は `!==` と同等です;
 
-### `sfValidatorChoice`、`sfValidatorPropelChoice`、`sfValidatorDoctrineChoice`
+### `sfValidatorChoice`、`sfValidator(Propel|Doctrine)Choice`
 
-`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターには `multiple` オプションが `true` の場合のみ有効になる 2 つの新しいオプションがあります:
+`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターには `multiple` オプションが `true` の場合のみ有効になる 2つの新しいオプションがあります:
 
  * `min` 選択する必要がある最小の数
  * `max` 選択する必要がある最大の数
@@ -132,7 +136,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 symfony がエラーを表示するとき、使われるエラーメッセージは次のように決定されます:
 
-  * symfony はバリデーターが作られたときに渡されたメッセージを探します (バリデーターのコンストラクターの第 2 引数経由);
+  * symfony はバリデーターが作られたときに渡されたメッセージを探します (バリデーターのコンストラクターの第 2引数経由);
 
   * 定義されていなければ、`setDefaultMessage()` メソッドで定義される初期メッセージを探します;
 
@@ -146,7 +150,8 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
   * `sfValidatorErrorSchema`: `addError()`、`addErrors()`
 
-  * `sfValidatorBase`: `addMessage()`、`setMessage()`、`setMessages()`、`addOption()`、`setOption()`、`setOptions()`、`addRequiredOption()`
+  * `sfValidatorBase`: `addMessage()`、`setMessage()`、`setMessages()`、
+    `addOption()`、`setOption()`、`setOptions()`、`addRequiredOption()`
 
 ### `sfValidatorFile`
 
@@ -168,7 +173,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
       }
     }
 
-デフォルトでは、フィールドの配列はフィールドの順序を変更するのにも使われます。自動的な順序づけを無効にするには、`useFields()` に 2 番目の引数として `false` を 渡します。
+デフォルトでは、フィールドの配列はフィールドの順序を変更するのにも使われます。自動的な並べ替えを無効にするには、`useFields()` に 2番目の引数として `false` を 渡します。
 
 ### `sfForm::getEmbeddedForm($name)`
 
@@ -176,7 +181,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfForm::renderHiddenFields()`
 
-`->renderHiddenFields()` メソッドは組み込みフォームから隠しフィールドをレンダリングします。再帰を無効にする引数が追加されました。これはフォーマッターを使って組み込みフォームをレンダリングする場合に便利です。
+`->renderHiddenFields()` メソッドは組み込みフォームから隠しフィールドをレンダリングします。再帰処理を無効にする引数が追加されました。これはフォーマッターを使って組み込みフォームをレンダリングする場合に便利です。
 
     [php]
     // 組み込みフォームからのフィールドを含めて、すべての隠しフィールドをレンダリングする
@@ -197,15 +202,15 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `BaseForm`
 
-Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使うことができる `BaseForm` クラスがsymfony 1.3/1.4 のすべての新しいプロジェクトに入りました。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームは自動的にこのクラスを継承します。追加のフォームクラスを作るのであれば `sfForm` よりも `BaseForm` を継承すべきです。
+Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使うことができる `BaseForm` クラスが symfony 1.3/1.4 のすべての新しいプロジェクトに入りました。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームはこのクラスを自動的に継承します。追加のフォームクラスを作るのであれば `sfForm` よりも `BaseForm` を継承すべきです。
 
 ### `sfForm::doBind()`
 
-汚染されたパラメーターのクリーニングは開発者にわかりやすい `->doBind()` メソッドに隔離されました。このメソッドは `->bind()` からのパラメーターとファイルのマージされる配列を受け取ります。
+汚染されたパラメーターのクリーニングは開発者にわかりやすい `->doBind()` メソッドに隔離されました。このメソッドは `->bind()` からのパラメーターとファイルのマージされる配列を受けとります。
 
 ### `sfForm(Doctrine|Propel)::doUpdateObject()`
 
-Doctrine と Propel のフォームクラスに開発者が扱いやすい `->doUpdateObject()` メソッドが加えられました。このメソッドは すでに `->processValues()` によって処理された `->updateObject()` から値の配列を受け取ります。
+Doctrine と Propel のフォームクラスに開発者が扱いやすい `->doUpdateObject()` メソッドが加えられました。このメソッドは すでに `->processValues()` によって処理された `->updateObject()` から値の配列を受けとります。
 
 ### `sfForm::enableLocalCSRFProtection()` と `sfForm::disableLocalCSRFProtection()`
 
@@ -220,7 +225,9 @@ CSRF 防止機能を無効にするには、次のような行を `configure()` 
 
 ### 流れるようなインターフェイス
 
-`sfForm` メソッドは次のような流れるインターフェイスを実装するようになりました: `addCSRFProtection()`、`setValidators()`、`setValidator()`、`setValidatorSchema()`、`setWidgets()`、`setWidget()`、`setWidgetSchema()`、`setOption()`、`setDefault()`、そして `setDefaults()`
+`sfForm` メソッドは次のような流れるインターフェイスを実装するようになりました: `addCSRFProtection()`、`setValidators()`、`setValidator()`、
+`setValidatorSchema()`、`setWidgets()`、`setWidget()`、
+`setWidgetSchema()`、`setOption()`、`setDefault()`、そして `setDefaults()`
 
 オートローダー
 --------------
@@ -342,7 +349,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
 タスク
 ------
 
-symfony の CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの 78 カラムに合わせようとします。
+symfony の CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの 78カラムに合わせようとします。
 
 ### `sfTask::askAndValidate()`
 
@@ -380,11 +387,14 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
     $ php /path/to/symfony generate:project foo --orm=none
 
-新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります: `installDir()`、`runTask()`、`ask()`、`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、 `enablePlugin()` そして `disablePlugin()`
+新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります:
+`installDir()`、`runTask()`、`ask()`、
+`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、
+`enablePlugin()` そして `disablePlugin()`
 
 より詳しい情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
 
-プロジェクトを生成するとき、2 番目の引数として著者の名前を渡すことができます。これは symfony が新しいクラスを生成するときに PHPDoc の `@author` タグに使う値を指定します。
+プロジェクトを生成するとき、2番目の引数として著者の名前を渡すことができます。これは symfony が新しいクラスを生成するときに PHPDoc の `@author` タグに使う値を指定します。
 
     $ php /path/to/symfony generate:project foo "Joe Schmo"
 
@@ -519,7 +529,7 @@ Propel モデルネイティブなビヘイビアを Propel モデルに追加�
         propel_behaviors:
           timestampable: ~
 
-もしくは、古い `schema.yml` 構文を使う場合次のようになります:
+もしくは古い `schema.yml` 構文を使う場合、次のようになります:
 
     propel:
       article:
@@ -585,7 +595,7 @@ symfony 1.3/1.4 では、グローバルオプションの `--color` を渡す�
 
 ### データの更新
 
-国際化オペレーションに使われるすべてのデータは `ICU` プロジェクトから更新されました。symfony には約 330 個のロケールファイルが付属しており、symfony 1.2 と比べると約 70 個増えています。ですのでたとえば、言語リストの 10 番目の項目をチェックするテストケースが通らない可能性があることにご注意をお願いします。
+国際化オペレーションに使われるすべてのデータは `ICU` プロジェクトから更新されました。symfony には約 330個のロケールファイルが付属しており、symfony 1.2 と比べると約 70個増えています。ですのでたとえば、言語リストの 10番目の項目をチェックするテストケースが通らない可能性があることにご注意をお願いします。
 
 ### ユーザーロケールを基準にソートする
 
@@ -679,7 +689,7 @@ Doctrine の YAML スキーマファイルのなかで ymfony の追加オプシ
 
 ### フォームクラスの継承
 
-モデルクラスからフォームを生成するとき、モデルクラスは継承を含んでいます。生成された子クラスは継承を尊重し、同じ継承構造に続くフォームを生成します。
+モデルクラスからフォームを生成するとき、モデルクラスは継承を含んでいます。生成された子クラスは継承を尊重し、同じ継承構造にしたがうフォームを生成します。
 
 ### 新しいタスク
 
@@ -711,7 +721,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 新しい `doctrine:build` タスクによって symfony や Doctrine にまさにビルドしてほしいものを明確に指定できます。このより柔軟性のある解決方法に合わせて廃止予定になった既存の多くのタスクを組み合わせることで得られる機能をこのタスクを複製します。
 
-`doctrine:build` の使い方は次の通りです:
+`doctrine:build` の使い方は次のとおりです:
 
     $ php symfony doctrine:build --db --and-load
 
@@ -759,7 +769,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 ### 日付のセッターとゲッター
 
-Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジェクトインスタンスとして取得するための 2 つの新しいメソッドが追加されました。
+Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジェクトインスタンスとして取得するための 2つの新しいメソッドが追加されました。
 
     [php]
     echo $article->getDateTimeObject('created_at')
@@ -772,7 +782,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
 
 ### `doctrine:migrate --down`
 
-`doctrine:migrate` はスキーマをリクエストされる方向に 1 回でマイグレートする `up` と `down` オプションを受け入れます。
+`doctrine:migrate` はスキーマをリクエストされる方向に 1回でマイグレートする `up` と `down` オプションを受け入れます。
 
     $ php symfony doctrine:migrate --down
 
@@ -919,7 +929,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 ### スロットの改善
 
-スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルトの内容を指定するための 2 番目のパラメーターを受け取ります:
+スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルトの内容を指定するための 2番目のパラメーターを受けとります:
 
     [php]
     <?php echo get_slot('foo', 'bar') // もし `foo` スロットが定義されていなければ  'bar' が出力される ?>
@@ -943,9 +953,9 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 ビューキャッシュ
 ---------------
 
-ビューキャッシュマネージャーは `factories.yml` でパラメーターを受け取ります。ビューのキャッシュキーの生成はクラスを簡単に拡張できるように異なる方法でリファクタリングされました。
+ビューキャッシュマネージャーは `factories.yml` でパラメーターを受けとります。ビューのキャッシュキーの生成はクラスを簡単に拡張できるように異なる方法でリファクタリングされました。
 
-`factories.yml` で 2 つのパラメーターが利用できます:
+`factories.yml` で 2つのパラメーターが利用できます:
 
   * `cache_key_use_vary_headers` (デフォルト: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメーターで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
 
