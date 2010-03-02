@@ -153,7 +153,7 @@ The following parameters can be customized under the `param` section:
  | `dsn`        | The PDO DSN (required)                   | -             |
  | `username`   | The database username                    | -             |
  | `password`   | The database password                    | -             |
- | `encoding`   | The default charset                      | `UTF8`       |
+ | `encoding`   | The default charset                      | `UTF8`        |
  | `attributes` | A set of Doctrine attributes             | -             |
 
 The following attributes can be customized under the `attributes` section:
@@ -162,7 +162,7 @@ The following attributes can be customized under the `attributes` section:
  | ------------------- | ---------------------------------------- | ------------- |
  | `quote_identifier`  | Whether to wrap identifiers with quotes  | `false`       |
  | `use_native_enum`   | Whether to use native enums              | `false`       |
- | `validate`          | Whether to enable data validation        | `true`        |
+ | `validate`          | Whether to enable data validation        | `false`       |
  | `idxname_format`    | Format for index names                   | `%s_idx`      |
  | `seqname_format`    | Format for sequence names                | `%s_seq`      |
  | `tblname_format`    | Format for table names                   | `%s`          |
