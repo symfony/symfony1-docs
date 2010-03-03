@@ -308,6 +308,9 @@ instance):
           delivery_strategy: single_address
           delivery_address:  foo@example.com
 
+>**CAUTION**
+>If your project uses an older version of Swiftmailer, you must remove it.
+
 YAML
 ----
 
