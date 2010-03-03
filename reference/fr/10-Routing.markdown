@@ -353,14 +353,28 @@ collection.
 *Par défaut* : Un tableau vide
 
 L'option `collection_actions` définit un tableau d'actions supplémentaires
-disponibles pour les routes de collection.
+disponibles pour les routes de collection. Les clés sont les noms de l'action et les
+valeurs sont les méthodes valide pour l'action :
+
+    [yml] 
+    articles: 
+      options: 
+        collection_actions: { filter: post } 
+        # ...
 
 ### ~`object_actions`~
 
 *Par défaut* : Un tableau vide
 
 L'option `object_actions` définit un tableau d'actions supplémentaires disponibles
-pour les routes d'objet.
+pour les routes d'objet. Les clés sont les noms de l'action et les
+valeurs sont les méthodes valide pour l'action :
+
+    [yml] 
+    articles: 
+      options: 
+        object_actions: { publish: put } 
+        # ...
 
 ~`sfPropelRouteCollection`~
 ---------------------------
