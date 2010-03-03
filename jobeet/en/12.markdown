@@ -5,7 +5,8 @@ With the addition we made yesterday on Jobeet, the frontend application is now
 fully useable by job seekers and job posters. It's time to talk a bit about
 the backend application.
 
-In this chapter, thanks to the ~admin generator|Admin Generator~ functionality of symfony, we will develop a complete backend interface for Jobeet in just one
+In this chapter, thanks to the ~admin generator|Admin Generator~ functionality of
+symfony, we will develop a complete backend interface for Jobeet in just one
 hour.
 
 Backend Creation
@@ -689,10 +690,12 @@ Create the `listDeleteNeverActivated` action in the `job` module:
     }
 
 <propel>
-We have reused the `JobeetJobPeer::cleanup()` method defined in the previous chapter. That's another great example of the reusability provided by the MVC pattern.
+We have reused the `JobeetJobPeer::cleanup()` method defined in the previous chapter.
+That's another great example of the reusability provided by the MVC pattern.
 </propel>
 <doctrine>
-We have reused the `JobeetJobTable::cleanup()` method defined in the previous chapter. That's another great example of the reusability provided by the MVC pattern.
+We have reused the `JobeetJobTable::cleanup()` method defined in the previous chapter.
+That's another great example of the reusability provided by the MVC pattern.
 </doctrine>
 
 >**NOTE**
@@ -1212,6 +1215,8 @@ In just one hour, we have built a fully featured backend interface for the
 Jobeet project. And all in all, we have written less than 50 lines of PHP
 code. Not too bad for so many features!
 
-In the following chapter, we will see how to secure the backend application with a username and a password. This will also be the occasion to talk about the symfony user class.
+In the following chapter, we will see how to secure the backend application
+with a username and a password. This will also be the occasion to talk about
+the symfony user class.
 
 __ORM__

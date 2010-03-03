@@ -1,7 +1,11 @@
 Day 11: Testing your Forms
 ==========================
 
-In chapter 10, we created our first form with symfony. People are now able to post a new job on Jobeet but we ran out of time before we could add some tests. That's what we will do along this chapter. Along the way, we will also learn more about the form framework.
+In chapter 10, we created our first form with symfony. People are now able to
+post a new job on Jobeet but we ran out of time before we could add some tests.
+
+That's what we will do along this chapter. Along the way, we will also learn more
+about the form framework.
 
 >**SIDEBAR**
 >Using the Form Framework without symfony
@@ -668,7 +672,8 @@ really want the value, set the `filter_extra_fields` option to `false`:
 
 ### ~XSS~ and ~CSRF~ Protection
 
-During chapter 1, you learned the `generate:app` task created a secured application by default.
+During chapter 1, you learned the `generate:app` task created a secured
+application by default.
 
 First, it enabled the protection against XSS. It means that all variables used
 in templates are escaped by default. If you try to submit a job description
@@ -804,13 +809,18 @@ As always, the database cleanup code has been factored out in the
 Final Thoughts
 --------------
 
-Testing is at the heart of the symfony philosophy and tools. In this chapter, we have learned again how to leverage symfony tools to make the development process
+Testing is at the heart of the symfony philosophy and tools. In this chapter,
+we have learned again how to leverage symfony tools to make the development process
 easier, faster, and more important, safer.
 
 The symfony form framework provides much more than just widgets and
 validators: it gives you a simple way to test your forms and ensure that your
 forms are secure by default.
 
-Our tour of great symfony features do not end today. In the next chapter, we will create the backend application for Jobeet. Creating a backend interface is a must for most web projects, and Jobeet is no different. But how will we be able to develop such an interface in just one hour? Simple, we will use the symfony admin generator framework.
+Our tour of great symfony features do not end today. In the next chapter, we
+will create the backend application for Jobeet. Creating a backend interface is
+a must for most web projects, and Jobeet is no different. But how will we be
+able to develop such an interface in just one hour? Simple, we will use the
+symfony admin generator framework.
 
 __ORM__
