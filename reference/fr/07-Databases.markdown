@@ -96,7 +96,7 @@ Les paramètres suivants peuvent être personnalisés dans la section `param` :
  | `username`   | L'utilisateur de la base                 | -                 |
  | `password`   | Le mot de passe de la base               | -                 |
  | `pooling`    | Pour activer le pooling                  | `true`            |
- | `encoding`   | Le jeu de caractères par défaut          | `utf8`           |
+ | `encoding`   | Le jeu de caractères par défaut          | `UTF8`            |
  | `persistent` | Pour créer des connexions persistantes   | `false`           |
  | `options`    | Une série d'options Propel               | -                 |
  | `debug`      | Options pour la classe `DebugPDO`        | n/a               |
@@ -153,7 +153,7 @@ Les paramètres suivants peuvent être personnalisés dans la section `param` :
  | `dsn`        | Le DSN du PDO (obligatoire)              | -                 |
  | `username`   | L'utilisateur de la base                 | -                 |
  | `password`   | Le mot de passe de la base               | -                 |
- | `encoding`   | Le jeu de caractères par défaut          | `utf8`           |
+ | `encoding`   | Le jeu de caractères par défaut          | `UTF8`            |
  | `attributes` | Une série d'attributs Doctrine           | -                 |
 
 Les paramètres suivants peuvent être personnalisés dans la section `attributes` :
@@ -162,7 +162,7 @@ Les paramètres suivants peuvent être personnalisés dans la section `attribute
  | ------------------- | ------------------------------------------------- | ----------------- |
  | `quote_identifier`  | Pour envelopper les identifiants avec des quotes  | `false`           |
  | `use_native_enum`   | Pour utiliser les énumérations native             | `false`           |
- | `validate`          | Pour activer la validation des données            | `true`            |
+ | `validate`          | Pour activer la validation des données            | `false`           |
  | `idxname_format`    | Format pour les noms d'index                      | `%s_idx`          |
  | `seqname_format`    | Format pour les noms de séquence                  | `%s_seq`          |
  | `tblname_format`    | Format pour les noms de table                     | `%s`              |
