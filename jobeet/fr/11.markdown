@@ -1,10 +1,10 @@
 Jour 11 : Testez votre formulaire
 =================================
 
-Hier, nous avons créé notre premier formulaire avec symfony. Les gens sont maintenant en mesure de
-publier un nouvel emploi dans Jobeet mais nous avons manqué de temps pour ajouter quelques tests.
+Dans le chapitre 10, nous avons créé notre premier formulaire avec symfony. Les gens sont maintenant en mesure
+de publier un nouvel emploi dans Jobeet mais nous avons manqué de temps pour ajouter quelques tests.
 
-C'est ce que nous ferons aujourd'hui. En chemin, nous en apprendrons également plus sur le
+C'est ce que nous ferons dans ce chapitre. En chemin, nous en apprendrons également plus sur le
 framework de formulaire.
 
 >**SIDEBAR**
@@ -301,13 +301,13 @@ Le test du lien "Publish" est maintenant plus simple :
       end()
     ;
 
-Si vous vous souvenez du jour 10, le lien "Publish" a été configuré pour être
+Si vous vous souvenez du chapitre 10, le lien "Publish" a été configuré pour être
 appelé avec la méthode HTTP `~PUT|PUT (Méthode HTTP)~`. Comme les navigateurs
 ne comprennent pas les requêtes `PUT`, le helper `link_to()` convertit le lien
 vers un formulaire avec quelques JavaScript. Comme le navigateur de test n'exécute
 pas le code JavaScript, nous avons besoin de forcer la méthode à `PUT` en passant une
 troisième option à la méthode `click()`. En outre, le helper `link_to()` intégre aussi
-un ~jeton CSRF~ que nous avons activé par la protection CSRF durant le jour 1. L'option
+un ~jeton CSRF~ que nous avons activé par la protection CSRF durant le chapitre 1. L'option
 `_with_csrf` simule ce jeton.
 
 Tester le lien "Delete" est assez similaire :
@@ -464,7 +464,7 @@ Puis, mettez à jour le lien "Extend" codé dans le partial `_admin` :
     <!-- apps/frontend/modules/job/templates/_admin.php -->
     <?php if ($job->expiresSoon()): ?>
      - <?php echo link_to('Extend', 'job_extend', $job, array('method' => 'put')) ?> for another <?php echo sfConfig::get('app_active_days') ?> days
-    <?php endif; ?>
+    <?php endif ?>
 
 Puis, créez l'action `extend` :
 
@@ -672,7 +672,7 @@ vous voulez vraiment la valeur, définissez l'option `filter_extra_fields` à `f
 
 ### Protection ~XSS~ et ~CSRF~
 
-Durant le jour 1, vous avez appris que la tâche `generate:app` crée une
+Durant le chapitre 1, vous avez appris que la tâche `generate:app` crée une
 application sécurisée par défaut.
 
 Premièrement, elle a activé la protection contre les attaques XSS. Cela signifie que toutes
@@ -806,21 +806,21 @@ dans la classe `JobeetJobTable` :
 >une valeur en fonction du succès de la tâche. Vous pouvez forcer une valeur de retour
 >en retournant un entier de manière explicite à la fin de la tâche.
 
-À demain
---------
+Conclusion
+----------
 
-Les tests sont au cœur de la philosophie et des outils de symfony . Aujourd'hui, nous
-avons encore appris comment exploiter les outils symfony pour rendre le processus de
-développement plus facile, plus rapide et plus important, plus sûr.
+Les tests sont au cœur de la philosophie et des outils de symfony . Dans ce chapitre,
+nous avons encore appris comment exploiter les outils symfony pour rendre le processus
+de développement plus facile, plus rapide et plus important, plus sûr.
 
 Le framework de formulaire symfony offre beaucoup plus que de simples widgets
 et validateurs : il vous donne un moyen simple de tester vos formulaires et assurer
 que vos formulaires sont sécurisés par défaut.
 
-Notre tour des fonctionnalités de symfony ne s'achève pas aujourd'hui. Demain, nous allons
-créer l'application backend pour Jobeet. La création d'une interface backend est un must pour
-la plupart des projets web et Jobeet n'est pas différent. Mais comment allons-nous pouvoir
-développer une telle interface en seulement une heure ? Simple, nous allons utiliser le framework
-admin generator de symfony. Jusque-là, prenez garde.
+Notre tour des fonctionnalités de symfony ne s'achève pas aujourd'hui. Dans le prochain chapitre,
+nous allons créer l'application backend pour Jobeet. La création d'une interface backend est un
+must pour la plupart des projets web et Jobeet n'est pas différent. Mais comment allons-nous
+pouvoir développer une telle interface en seulement une heure ? Simple, nous allons utiliser le
+framework admin generator de symfony. Jusque-là, prenez garde.
 
 __ORM__

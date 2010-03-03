@@ -5,7 +5,7 @@ Avec les ajouts que nous avons faits hier sur Jobeet, l'application frontend est
 pleinement utilisable par les chercheurs d'emploi et les posteurs d'emplois. Il est temps de
 parler un peu de l'application backend.
 
-Aujourd'hui, grâce à la fonctionnalité de l'~admin generator|Admin Generator~ de
+Dans ce chapitre, grâce à la fonctionnalité de l'~admin generator|Admin Generator~ de
 symfony, nous allons développer une interface backend complète pour Jobeet en
 seulement une heure.
 
@@ -181,7 +181,7 @@ Remplacez le contenu du fichier `~layout|Layout~.php` par défaut avec le code c
     </html>
 
 Cette mise en page utilise une feuille de style `admin.css`. Ce fichier doit être déjà présent
-dans `web/css/` car il a été installé avec les autres feuilles de style au cours de jour 4.
+dans `web/css/` car il a été installé avec les autres feuilles de style au cours du chapitre 4.
 
 ![L'aspect de l'admin generator](http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png)
 
@@ -690,12 +690,12 @@ Créez l'action `listDeleteNeverActivated` dans le module `job` :
     }
 
 <propel>
-Nous avons réutilisé la méthode `JobeetJobPeer::cleanup()` définie hier. C'est
-un autre excellent exemple de la réutilisation fournie par le modèle MVC.
+Nous avons réutilisé la méthode `JobeetJobPeer::cleanup()` définie dans le précédent
+chapitre. C'est un autre excellent exemple de la réutilisation fournie par le modèle MVC.
 </propel>
 <doctrine>
-Nous avons réutilisé la méthode `JobeetJobTable::cleanup()` définie hier. C'est
-un autre excellent exemple de la réutilisation fournies par le modèle MVC.
+Nous avons réutilisé la méthode `JobeetJobTable::cleanup()` définie dans le précédent
+chapitre. C'est un autre excellent exemple de la réutilisation fournies par le modèle MVC.
 </doctrine>
 
 >**NOTE**
@@ -901,11 +901,6 @@ une méthode qui substituera dans `BackendJobeetJobForm` :
 </doctrine>
     class BackendJobeetJobForm extends JobeetJobForm
     {
-      public function configure()
-      {
-        parent::configure();
-      }
-
       protected function removeFields()
       {
         unset(
@@ -1213,8 +1208,8 @@ backend idéal pour Jobeet en quelques minutes.
 >en
 >`cache/backend/dev/modules/autoJob/lib/BaseJobGeneratorConfiguration.class.php`.
 
-À demain
---------
+Conclusion
+----------
 
 En une heure seulement, nous avons construit entièrement une interface backend pour
 le projet Jobeet. Et dans l'ensemble, nous avons écrit au plus 50 lignes de code PHP.
