@@ -308,6 +308,9 @@ emails (pour l`environnements `dev` par exemple):
           delivery_strategy: single_address
           delivery_address:  foo@example.com
 
+>**CAUTION**
+>Si votre projet utilise une ancienne version de Swiftmailer, vous devez l'enlever.
+
 YAML
 ----
 
