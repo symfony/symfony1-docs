@@ -1,0 +1,397 @@
+Chapitre 8 - L'Internationalisation et la Localisation
+======================================================
+
+La plupart des applications web populaires sont consultables dans différentes langues et sont même parfois localisées en fonction du pays de l'internaute. Symfony apporte une solution efficace pour gérer ces problématiques à travers un sous-framework dédié (voir le chapitre ["I18n And L10n"](http://www.symfony-project.org/book/1_2/13-I18n-and-L10n) du livre symfony).
+
+Le framework de formulaires permet également la gestion native de la traduction des interfaces et des objets internationalisés.
+
+L'Internationalisation des Formulaires
+--------------------------------------
+
+Dans un projet symfony, les formulaires sont internationalisables par défaut. On peut donc traduire les **labels** des champs de formulaire, les **textes d'aide** et les **messages d'erreurs**, en éditant les fichiers de traduction au format `XLIFF`, `gettext` ou tout autre format supporté par symfony.
+
+Le Listing 8-1 reprend le code du formulaire de contact que nous avons développé dans les premiers chapitres.
+
+Listing 8-1 - Formulaire de Contact
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'  => new sfWidgetFormInputText(), // le label sera "Name" par défaut
+          'email' => new sfWidgetFormInputText(), // le label sera "Email" par défaut
+          'body'  => new sfWidgetFormTextarea(),  // le label sera "Body" par défaut
+        ));
+
+        // Changeons par exemple le label du champ email
+        $this->widgetSchema->setLabel('email', 'Email address');
+      }
+    }
+
+Nous pouvons définir directement la traduction des noms de champs dans le fichier `XLIFF` correspondant. Le Listing 8-2 montre le fichier de traduction pour le français.
+
+Listing 8-2 - Fichier de traduction XLIFF
+
+    [xml]
+    // apps/frontend/i18n/messages.fr.xml
+    <?xml version="1.0" ?>
+    <xliff version="1.0">
+      <file original="global" source-language="en" datatype="plaintext">
+        <body>
+          <trans-unit>
+            <source>Name</source>
+            <target>Nom</target>
+          </trans-unit>
+          <trans-unit>
+            <source>Email address</source>
+            <target>Adresse email</target>
+          </trans-unit>
+          <trans-unit>
+            <source>Body</source>
+            <target>Message</target>
+          </trans-unit>
+        </body>
+      </file>
+    </xliff>
+
+### Spécifier le fichier dictionnaire à utiliser pour stocker les traductions
+
+Si vous utilisez les dictionnaires de stockage des chaînes de traduction de symfony (`http://www.symfony-project.org/book/1_2/13-I18n-and-L10n#chapter_13_sub_managing_dictionaries`), vous pouvez spécifier à quel dictionnaire les éléments textuels de l'interface du formulaire courant vont être associés. Dans le Listing 8-3, les éléments textuels de l'interface du formulaire `ContactForm` traduits en français seront stockés dans le fichier `contact_form.fr.xml`.
+
+Listing 8-3 - Personnalisation du Dictionnaire de Traduction
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('contact_form');
+      }
+    }
+
+>**Note**
+>L'utilisation de dictionnaires dédiés aux formulaires est très pratique pour spécialiser et identifier rapidement les fichiers contenant les traductions.
+
+### Internationaliser les messages d'erreur
+
+Il peut s'avérer intéressant de générer des messages d'erreurs reprenant la valeur soumise par l'utilisateur dans la description de l'erreur (par exemple, "L'adresse email user@domain n'est pas valide."). Cela peut se faire depuis la classe de définition du formulaire en définissant des messages d'erreur personnalisés utilisant des références aux noms des paramètres de configuration du validateur associé, sous la forme `%paramètre%` comme nous l'avons déjà vu.
+
+Le Listing 8-4 applique ce principe au champ `name` du formulaire de contact.
+
+Listing 8-4 - Internationalisation des Messages d'Erreurs
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+        
+        $this->validatorSchema['name'] = new sfValidatorEmail(
+          array('min_length' => 2, 'max_length' => 45),
+          array('min_length' => 'Name "%value%" must be at least %min_length% characters.',
+                'max_length' => 'Name "%value%" must not exceed %max_length% characters.',
+          ),
+        );
+      }
+    }
+
+Nous pouvons maintenant référencer ces messages directement dans le fichier de traduction XLIFF francophone comme dans le Listing 8-5.
+
+Listing 8-5 - Fichier XLIFF de traduction des Messages d'Erreurs
+
+    [xml]
+    <trans-unit>
+      <source>Name "%value%" must be at least %min_length% characters</source>
+      <target>Le nom "%value%" doit comporter un minimum de %min_length% caractères</target>
+    </trans-unit>
+    <trans-unit>
+      <source>Name "%value%" must not exceed %max_length% characters</source>
+      <target>Le nom "%value%" ne peut comporter plus de %max_length% caractères</target>
+    </trans-unit>
+
+Définition d'un Objet de Traduction Personnalisé
+------------------------------------------------
+
+Il se peut cependant que vous désiriez utiliser un autre mécanisme de traduction de l'interface que celui proposé par symfony, par exemple dans le cas d'une utilisation avec un autre framework. Dans ce cas, vous devez définir un *objet de traduction* personnalisé.
+
+Un objet de traduction se présente sous la forme d'un *callable PHP*. Plus spécifiquement, ces références peuvent être de trois types :
+
+  * une chaîne de caractères comportant le nom d'une fonction comme par example `ma_fonction`
+
+  * un tableau contenant une référence à une instance de classe et le nom de l'une de ses méthodes, par exemple `array($unObjet, 'uneDeSesMethodes')`
+
+  * une instance d'objet de type `sfCallable`, classe permettant d'encapsuler facilement un callable dans un objet en PHP
+
+>**Note**
+>En PHP, un callable est une référence à une fonction ou méthode de classe existante pouvant être appelés par le langage. On peut aussi définir un *callable* comme étant tout objet PHP renvoyant `true` si passé à la fonction `is_callable()`.
+
+Par exemple, imaginons une classe d'internationalisation (typiquement le genre de chose dont on hérite en récupérant un projet existant), volontairement simple comme le montre le Listing 8-6.
+
+Listing 8-6 - Classe I18N
+
+    [php]
+    class myI18n
+    {
+      static protected $default_culture = 'en';
+      static protected $messages = array('fr' => array(
+        'Name'    => 'Nom',
+        'Email'   => 'Courrier électronique',
+        'Subject' => 'Sujet',
+        'Body'    => 'Message',
+      )); 
+
+      static public function translateText($text)
+      {
+        $culture = isset($_SESSION['culture']) ? $_SESSION['culture'] : self::$default_culture; 
+        if (array_key_exists($culture, self::$messages)
+            && array_key_exists($text, self::$messages[$culture]))
+        {
+          return self::$messages[$_SESSION['culture']][$text];
+        }
+        return $text;
+      }
+    }
+
+    // Utilisation type de la classe exemple
+    $myI18n = new myI18n();
+
+    $_SESSION['culture'] = 'en';
+    echo $myI18n->translateText('Subject'); // => affiche "Subject"
+
+    $_SESSION['culture'] = 'fr';
+    echo $myI18n->translateText('Subject'); // => affiche "Sujet"
+
+Chaque formulaire peut définir son propre callable de gestion de l'internationalisation comme montré dans le Listing 8-7.
+
+Listing 8-7 - Définition d'un Filtre d'Internationalisation de Formulaire
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+        $this->widgetSchema->getFormFormatter()->setTranslationCallable(array(new myI18n(), 'translateText'));
+      }
+    }
+
+### Paramètres Supplémentaires acceptés par l'Objet de Traduction
+
+La fonction de traduction de formulaires peut prendre jusqu'à trois arguments :
+
+  * Le **texte à traduire** ;
+
+  * un **tableau associatif** d'arguments à remplacer dans le texte original, typiquement les paramètres dynamiques évoqués un peu plus haut dans ce chapitre ;
+
+  * un **nom de dictionnaire** sous la forme d'une chaîne de caractères, permettant de préciser un espace de nom associé au texte à traduire.
+
+Pour y voir plus clair, regardons de plus près la valeur retournée par la méthode `sfFormWidgetSchemaFormatter::translate()` :
+
+    [php]
+    return call_user_func(self::$translationCallable, $subject, $parameters, $catalogue);
+
+La propriété `self::$translationCallable` étant une référence au callable PHP, ce dernier sera donc appelé de la manière suivante :
+
+    [php]
+    $myI18n->translateText($subject, $parameters, $catalogue);
+
+Si nous devions réécrire la classe `MyI18n` afin de tirer parti de ces paramètres supplémentaires reçus en arguments, elle pourrait devenir :
+
+    [php]
+    class myI18n
+    {
+      static protected $default_culture = 'en';
+      static protected $messages = array('fr' => array(
+        'messages' => array(
+          'Name'    => 'Nom',
+          'Email'   => 'Courrier électronique',
+          'Subject' => 'Sujet',
+          'Body'    => 'Message',
+        ),
+      ));
+
+      static public function translateText($text, $arguments = array(), $catalogue = 'messages')
+      {
+        $culture = isset($_SESSION['culture']) ? $_SESSION['culture'] : self::$default_culture; 
+        if (array_key_exists($culture, self::$messages) &&
+            array_key_exists($messages, self::$messages[$culture] &&
+            array_key_exists($text, self::$messages[$culture][$messages]))
+        {   
+          $text = self::$messages[$_SESSION['culture']][$messages][$text];
+          $text = strtr($text, $arguments);
+        }   
+        return $text;
+      }
+    }
+
+>**SIDEBAR**
+>Pourquoi les Méthodes de Définition du Traducteur et du Catalogue appartiennent-elles à la Classe `sfWidgetFormSchemaFormatter` ?
+>
+>Comme nous l'avons vu précédemment, le framework de formulaire est lui-même basé sur une architecture MVC. La classe `sfWidgetFormSchemaFormatter` appartient à la couche Vue, elle est donc la plus à même d'intercepter tous les éléments textuels, puisque chargée du rendu de l'interface, et d'appliquer un éventuel traitement spécifique à ces derniers.
+
+Intégration des Objets Propel Internationalisés
+-----------------------------------------------
+
+Si vous utilisez des objets Propel internationalisés, le framework de formulaires les prend en charge nativement. Prenons un exemple très simple de modèle de données internationalisé :
+
+    propel:
+      article:
+        id:
+        author:     varchar(255)
+        created_at:
+      article_i18n:
+        title:      varchar(255)
+        content:    longvarchar
+
+Générons les classes Propel et les classes de formulaires correspondantes :
+
+    $ php symfony build:model
+    $ php symfony build:forms
+
+Vous noterez que les fichiers suivants ont été générés dans votre projet symfony :
+
+    lib/
+      form/
+        ArticleForm.class.php
+        ArticleI18nForm.class.php
+        BaseFormPropel.class.php
+      model/
+        Article.php
+        ArticlePeer.php
+        ArticleI18n.php
+        ArticleI18nPeer.php
+
+Éditons la classe `ArticleForm` afin de configurer les langues que nous proposerons à la saisie (par défaut, le formulaire de base n'en inclut aucune). Ici, proposons le français et l'anglais au sein du même formulaire comme montré dans le Listing 8-8.
+
+Listing 8-8 - Formulaires I18n pour un objet Propel internationalisé
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $this->embedI18n(array('en', 'fr'));
+      }
+    }
+
+Si vous désirez personnaliser les labels de langues dans le formulaire, vous pouvez le faire dans la méthode `configure()` de la classe de formulaire comme décrit dans le Listing 8-9 :
+
+Listing 8-9 - Personnalisation des Labels de langue
+
+    [php]
+    $this->widgetSchema->setLabel('en', 'English');
+    $this->widgetSchema->setLabel('fr', 'French');
+
+Figure 8-1 - Formulaire Propel Internationalisé
+
+![Formulaire Propel Internationalisé](/images/forms_book/fr/08_01.png "Formulaire Propel Internationalisé")
+
+L'immense intérêt du framework de formulaire est ici qu'un appel à la méthode `save()` de l'objet de formulaire sauvera non seulement notre article mais la ou les traductions que nous lui aurons associées depuis le formulaire.
+
+>**SIDEBAR**
+>Comment passer la Culture de l'Utilisateur à un Formulaire ?
+>
+>Si vous désirez proposer la saisie des données du formulaire dans la langue courante de l'utilisateur, il suffit de passer la culture en option du formulaire :
+>
+>     [php]
+>     class articleActions extends sfActions
+>     {
+>       public function executeCreate($request)
+>       {
+>         $this->form = new ArticleForm(null, array('culture' => $this->getUser()->getCulture()));
+>
+>         if ($request->isMethod('post') && $this->form->bindAndSave($request->getParameter('article')))
+>         {
+>           $this->redirect('article/created');
+>         }
+>       }
+>     }
+>
+>Dans la classe `ArticleForm`, il suffit de récupérer la valeur de la culture passée en option :
+>
+>     [php]
+>     class ArticleForm extends BaseArticleForm
+>     {
+>       public function configure()
+>       {
+>         $this->embedI18n(array($this->getCurrentCulture()));
+>       }
+>
+>       public function getCurrentCulture()
+>       {
+>         return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+>       }
+>     }
+
+Widgets localisés
+-----------------
+
+Pour proposer des champs de saisie localisés, c'est à dire formattés en fonction d'une certaine localisation géographique de l'utilisateur, au sein de formulaire, vous pouvez utiliser des widgets dédiés :
+
+### Sélecteurs de dates
+
+Pour proposer un champ de saisie de date et heure localisé dans le format lié aux usages de la langue courante de l'utilisateur, ces différents widgets sont disponibles :
+
+  * Le widget `sfWidgetFormI18nDate` permet la saisie d'une date (jour, mois et année) :
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nDate(array('culture' => 'fr'));
+
+    Il est possible de préciser le format d'affichage du mois au moyen de l'option `month_format` qui peut prendre trois valeurs :
+
+     * `name` permet d'afficher le nom du mois (c'est la valeur par défaut pour ce widget)
+     * `short_name` affichera le nom du mois sous une forme abrégée
+     * `number` affichera le numéro du mois dans l'année (de 1 à 12)
+
+  * Le widget `sfWidgetFormI18nTime` permet la saisie d'une heure (heures, minutes et secondes) :
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nTime(array('culture' => 'fr'));
+
+  * Le widget `sfWidgetFormI18nDateTime` permet la saisie d'une date et d'un couple heures/minutes :
+
+        [php]
+        $this->widgetSchema['published_on'] = new sfWidgetFormI18nDateTime(array('culture' => 'fr'));
+
+### Sélecteur de pays
+
+Le widget `sfWidgetFormI18nChoiceCountry` permet de présenter à l'utilisateur une liste déroulante
+contenant les noms de pays traduits dans une langue donnée :
+
+    [php]
+    $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
+
+Vous pouvez au besoin restreindre les noms de pays listés au moyen de l'option `countries` :
+
+    [php]
+    $countries = array('fr', 'en', 'es', 'de', 'nl');
+    $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture'   => 'fr',
+                                                                             'countries' => $countries));
+
+### Sélecteur de langue
+
+Le widget `sfWidgetFormI18nChoiceLanguage` permet de présenter à l'utilisateur une liste déroulante contenant
+les noms des langues traduites dans une langue donnée. Exemple en français :
+
+    [php]
+    $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'fr'));
+
+Vous pouvez au besoin restreindre les noms de langues listées au moyen de l'option `languages` :
+
+    [php]
+    $languages = array('fr', 'en', 'es', 'de', 'nl');
+    $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture'   => 'fr',
+                                                                               'languages' => $languages));
+
+### Sélecteur de fuseau horaire
+
+Le widget `sfWidgetFormI18nChoiceTimezone` permet de présenter à 'lutilisateur une liste déroulante widget contenant une liste de fuseau d'horaire.
+
+    [php]
+    $this->widgetSchema['timezone'] = new sfWidgetFormI18nChoiceTimzione();
+
