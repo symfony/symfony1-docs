@@ -18,7 +18,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
     [php]
     $this->getMailer()->composeAndSend('from@example.com', 'to@example.com', 'Subject', 'Body');
 
-より柔軟性をもたせる必要があれば、`compose()` メソッドを使って後で送信することもできます。添付ファイルをメッセージに追加する方法は次の通りです:
+より柔軟性をもたせる必要があれば、`compose()` メソッドを使って後で送信することもできます。添付ファイルをメッセージに追加する方法は次のとおりです:
 
     [php]
     $message = $this->getMailer()->
@@ -61,7 +61,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
   * `sfWidgetFormI18nChoiceCountry`
   * `sfWidgetFormI18nChoiceTimezone`
 
-これらの最初の 3つは廃止予定の `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry` ウィジェットの置き換えです。
+これらの最初の3つは廃止予定の `sfWidgetFormI18nSelectLanguage`、`sfWidgetFormI18nSelectCurrency` と `sfWidgetFormI18nSelectCountry` ウィジェットの置き換えです。
 
 ### 流れるようなインターフェイス
 
@@ -86,7 +86,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 `sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされる場合、正規表現は渡すバリデーターにマッチしません。
 
-`sfValidatorRegex` の `pattern` オプションは呼び出すときに正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
+`sfValidatorRegex` の `pattern` オプションは呼び出されるときに正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
 
 ### `sfValidatorUrl`
 
@@ -104,14 +104,14 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### `sfValidatorSchemaCompare`
 
-`sfValidatorSchemaCompare` クラスに 2つの新しいコンパレーターが用意されました:
+`sfValidatorSchemaCompare` クラスに2つの新しいコンパレーターが用意されました:
 
  * `IDENTICAL` は `===` と同等です;
  * `NOT_IDENTICAL` は `!==` と同等です;
 
 ### `sfValidatorChoice`、`sfValidator(Propel|Doctrine)Choice`
 
-`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターには `multiple` オプションが `true` の場合のみ有効になる 2つの新しいオプションがあります:
+`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションがあります:
 
  * `min` 選択する必要がある最小の数
  * `max` 選択する必要がある最大の数
@@ -122,25 +122,25 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
  * `sfValidatorI18nChoiceTimezone`
 
-### 標準のエラーメッセージ
+### デフォルトのエラーメッセージ
 
-次のように `sfForm::setDefaultMessage()` メソッドを使うことでグローバル領域で標準のエラーメッセージを定義できるようになりました:
+次のように `sfForm::setDefaultMessage()` メソッドを使うことでデフォルトのエラーメッセージをグローバルに定義できるようになりました:
 
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
 
-上記のコードはすべてのバリデーターのデフォルトメッセージである 'Required.' をオーバーライドします。標準メッセージはバリデーターが作られる前に定義しておかなければならないことに注意してください (コンフィグレーションクラスがよい場所です)。
+上記のコードはすべてのバリデーターのデフォルトメッセージである 'Required.' をオーバーライドします。デフォルトメッセージはバリデーターが作られる前に定義しておかなければならないことにご注意ください (コンフィグレーションクラスがよい場所です)。
 
 >**NOTE**
 >`setRequiredMessage()` と `setInvalidMessage()` メソッドは廃止予定なので、新しい `setDefaultMessage()` メソッドを呼び出します。
 
 symfony がエラーを表示するとき、使われるエラーメッセージは次のように決定されます:
 
-  * symfony はバリデーターが作られたときに渡されたメッセージを探します (バリデーターのコンストラクターの第 2引数経由);
+  * symfony はバリデーターが作られたときに渡されたメッセージを探します (バリデーターのコンストラクターの第2引数経由);
 
   * 定義されていなければ、`setDefaultMessage()` メソッドで定義される初期メッセージを探します;
 
-  * もし、定義されていなければ、(メッセージが `addMessage()` メソッドで追加されているとき) バリデーター自身で定義された初期メッセージへ戻ります。
+  * もし、定義されていなければ、(メッセージが `addMessage()` メソッドで追加されているとき) バリデーター自身で定義される初期メッセージへ戻ります。
 
 ### 流れるようなインターフェイス
 
@@ -155,14 +155,14 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfValidatorFile`
 
-`php.ini` で `file_uploads` が無効な場合 `sfValidatorFile` のインスタンスを作成するときに例外が投げられます。
+`php.ini` で `file_uploads` が無効な場合 `sfValidatorFile` のインスタンスを作るときに例外が投げられます。
 
 フォーム
 --------
 
 ### `sfForm::useFields()`
 
-新しい `sfForm::useFields()` メソッドはフォームから引数として提供されるもの以外、隠しフィールドではないフィールドすべてを削除します。状況によって不要なフィールドの割り当てを解除する代わりにフォームで維持したいフィールドを明示的に指示するのが簡単になります。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームに自動表示されなくなります (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
+新しい `sfForm::useFields()` メソッドはフォームから引数として提供されるもの以外、隠しフィールドではないフィールドすべてを削除します。ときには不要なフィールドの割り当てを解除する代わりにフォームで維持したいフィールドを明示的に指示するのが簡単になります。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームに自動表示されることはありません (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
 
     [php]
     class ArticleForm extends BaseArticleForm
@@ -173,7 +173,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
       }
     }
 
-デフォルトでは、フィールドの配列はフィールドの順序を変更するのにも使われます。自動的な並べ替えを無効にするには、`useFields()` に 2番目の引数として `false` を 渡します。
+デフォルトでは、フィールドの配列はフィールドの順序を変更するのにも使われます。自動的な並べ替えを無効にするには、`useFields()` に2番目の引数として `false` を 渡します。
 
 ### `sfForm::getEmbeddedForm($name)`
 
@@ -181,28 +181,28 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfForm::renderHiddenFields()`
 
-`->renderHiddenFields()` メソッドは組み込みフォームから隠しフィールドをレンダリングします。再帰処理を無効にする引数が追加されました。これはフォーマッターを使って組み込みフォームをレンダリングする場合に便利です。
+`->renderHiddenFields()` メソッドは組み込みフォームからの隠しフィールドをレンダリングします。再帰処理を無効にする引数が追加されました。これはフォーマッターを使って組み込みフォームをレンダリングする場合に便利です。
 
     [php]
     // 組み込みフォームからのフィールドを含めて、すべての隠しフィールドをレンダリングする
     echo $form->renderHiddenFields();
 
-    // 再帰なしで隠しフィールドをレンダリングする
+    // 再帰処理なしで隠しフィールドをレンダリングする
     echo $form->renderHiddenFields(false);
 
 ### `sfFormSymfony`
 
-新しい `sfFormSymfony` クラスはイベントディスパッチャーを symfony フォームに導入します。`self::$dispatcher` を通してフォームクラス内部のディスパッチャーにアクセスできます。次のフォームイベントは symfony によって通知されます:
+新しい `sfFormSymfony` クラスはイベントディスパッチャーを symfony フォームに導入します。`self::$dispatcher` を通してフォームクラス内部のディスパッチャーにアクセスできます。次のフォームイベントが symfony によって通知されます:
 
   * `form.post_configure`:   このイベントはフォームが設定された後で通知される
   * `form.filter_values`:    このイベントは、マージされ汚染されたパラメーターと、バインドする直前のファイルの配列をフィルタリングする
   * `form.validation_error`: フォームバリデーションが通らないときこのイベントが通知される
-  * `form.method_not_found`: 不明なメソッドが呼び出されるときにこのイベントが通知される
+  * `form.method_not_found`: 身元不明のメソッドが呼び出されるときにこのイベントが通知される
 
 
 ### `BaseForm`
 
-Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使うことができる `BaseForm` クラスが symfony 1.3/1.4 のすべての新しいプロジェクトに入りました。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームはこのクラスを自動的に継承します。追加のフォームクラスを作るのであれば `sfForm` よりも `BaseForm` を継承すべきです。
+Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使うことのできる `BaseForm` クラスが symfony 1.3/1.4 のすべての新しいプロジェクトに入ります。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームはこのクラスを自動的に継承します。追加のフォームクラスを作るのであれば `sfForm` ではなく `BaseForm` を継承させるべきです。
 
 ### `sfForm::doBind()`
 
@@ -221,7 +221,7 @@ CSRF 防止機能を無効にするには、次のような行を `configure()` 
     [php]
     $this->disableLocalCSRFProtection();
 
-`disableLocalCSRFProtection()` を呼び出すことによって、フォームインスタンスを作るときに CSRF 対策の秘密の文字列を渡したとしても CSRF 防止機能は無効になります。
+`disableLocalCSRFProtection()` を呼び出すことによって、フォームインスタンスを作るときに CSRF 対策の秘密の文字列を渡していたとしても CSRF 防止機能は無効になります。
 
 ### 流れるようなインターフェイス
 
@@ -247,7 +247,7 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
     $ php symfony test:all --only-failed
 
-どのように動くのかを説明します: まず最初に、すべてのテストはいつも通りに実行されます。しかし引き続きテストを実行しても、最後のテストで通らなかったものだけが実行されます。コードを修正したら、テストが通り次回以降の実行から除外されます。再びすべてのテストが通ったら、あなたは完全なテストスイートを実行し、繰り返すことができます。
+どのように動くのかを説明します: まず最初に、すべてのテストはいつもどおりに実行されます。しかし引き続きテストを実行しても、最後のテストで通らなかったものだけが実行されます。コードを修正したら、一部のテストが通り次回以降の実行から除外されます。再びすべてのテストが通ったら、あなたは完全なテストスイートを実行し、徹底的に繰り返すことができます。
 
 ### 機能テスト
 
@@ -264,7 +264,7 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
 ### JUnit と互換性のある XML 出力
 
-`--xml` オプションを使うことでテストタスクは JUnit と互換性のある XML ファイルも出力できるようになりました:
+`--xml` オプションをつけることでテストタスクは JUnit と互換性のある XML ファイルも出力できるようになりました:
 
     $ php symfony test:all --xml=log.xml
 
@@ -276,7 +276,7 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
 ### lime によるカラー出力
 
-symfony 1.3/1.4 では、lime はカラー出力を正しく行うようになりました。これが意味することは、ほとんどの場合において `lime_test` の lime コンストラクターの第 2 引数を省略できるということです:
+symfony 1.3/1.4 では、lime はカラー出力を正しく行うようになりました。これが意味することは、ほとんどの場合において `lime_test` の lime コンストラクターの第2引数を省略できるということです:
 
     [php]
     $t = new lime_test(1);
@@ -298,7 +298,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
       checkForm($browser->getArticleForm())->
     end();
 
-レスポンスに複数のフォームが含まれる場合は、どの DOM 部分をテストするかをピンポイントで指定する CSS セレクターを提供するオプションがあります:
+レスポンスに複数のフォームが含まれる場合は、どの DOM 部分をテストするかをきめ細かく指定する CSS セレクターを提供するオプションがあります:
 
     [php]
     $browser->with('response')->begin()->
@@ -349,20 +349,20 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
 タスク
 ------
 
-symfony の CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの 78カラムに合わせようとします。
+symfony の CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの78カラムに合わせようとします。
 
 ### `sfTask::askAndValidate()`
 
-ユーザーに質問をして得られた入力内容をバリデートする `sfTask::askAndValidate()` メソッドが新しく用意されました:
+ユーザーに質問をして得られる入力内容をバリデートする `sfTask::askAndValidate()` メソッドが新しく用意されました:
 
     [php]
     $anwser = $this->askAndValidate('What is you email?', new sfValidatorEmail());
 
-このメソッドはオプションの配列を受けることもできます (より詳しい情報は API ドキュメントを参照してください)。
+このメソッドはオプションの配列を受けることもできます (より詳しい情報は API ドキュメントを参照)。
 
 ### `symfony:test`
 
-ときには、開発者は特定のプラットフォームで symfony が正しく動くのかをチェックするために symfony のテストスイートを実行する必要があります。従来は、symfony に附属している `prove.php` スクリプトを実行し確認しなければなりませんでした。symfony 1.3/1.4 では組み込みのタスク、コマンドラインから symfony のコアテストスイートを起動できる `symfony:test` タスクが用意され、ほかのタスクと同じように使うことができます:
+ときに開発者は特定のプラットフォームで symfony が正しく動くのかをチェックするために symfony のテストスイートを実行する必要があります。従来であれば、この確認作業を行うために symfony に附属する `prove.php` スクリプトの存在を知らなければなりませんでした。symfony 1.3/1.4 では組み込みのタスク、コマンドラインから symfony のコアテストスイートを起動できる `symfony:test` タスクが用意され、ほかのタスクと同じように使うことができます:
 
     $ php symfony symfony:test
 
@@ -371,7 +371,7 @@ symfony の CLI はターミナルウィンドウの幅を検出することを�
 
 ### `project:deploy`
 
-`project:deply` タスクは少し改良されました。リアルタイムでファイルの転送状況を表示するようになりました。ただし、`-t` オプションが渡されたときだけです。もしオプションが指定されていなければタスクは何も表示しません、もちろんエラーは除きます。エラーのときには、簡単に問題を認識できるように赤色の背景にエラー情報を出力します。
+`project:deply` タスクは少し改良されました。リアルタイムでファイルの転送状況を表示するようになりました。ただし、`-t` オプションが渡されたときだけです。もしオプションが指定されていなければタスクは何も表示しません、もちろんエラーの場合は除きます。エラーのときには、簡単に問題を認識できるように赤色の背景にエラー情報が出力されます。
 
 ### `generate:project`
 
@@ -387,7 +387,7 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
     $ php /path/to/symfony generate:project foo --orm=none
 
-新しい `--installer` オプションのおかげで新しく生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります:
+新しい `--installer` オプションのおかげで新たに生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります:
 `installDir()`、`runTask()`、`ask()`、
 `askConfirmation()`、`askAndValidate()`、`reloadTasks()`、
 `enablePlugin()` そして `disablePlugin()`
@@ -400,15 +400,15 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
 ### `sfFileSystem::execute()`
 
-`sfFileSystem::execute()` メソッドは `sfFileSystem::sh()` メソッドをより強力な機能に置き換えます。このメソッドは `stdout` と `stderr` 出力のリアルタイム処理のコールバックをとります。また両方の出力を配列として返すこともできます。`sfProjectDeployTask` クラスで使い方の例を見つけることができます。
+`sfFileSystem::sh()` メソッドはより強力な機能をもつ `sfFileSystem::execute()` メソッドに置き換わります。このメソッドは `stdout` と `stderr` 出力のリアルタイム処理のコールバックをとります。また両方の出力を配列として返すこともできます。使い方の例は `sfProjectDeployTask` クラスで見つけることができます。
 
 ### `task.test.filter_test_files`
 
-`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメーターがあります。
+`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメーターが用意されています。
 
 ### `sfTask::run()` の強化
 
-`sfTask:run()` に次のような引数とオプションの連想配列を渡すことができるようになりました:
+`sfTask:run()` に次のような引数とオプションの連想配列を渡せるようになりました:
 
     [php]
     $task = new sfDoctrineConfigureDatabaseTask($this->dispatcher, $this->formatter);
@@ -418,7 +418,7 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
       'name' => 'master',
     ));
 
-これまでのバージョンでは、次のようにすればまだ動きます:
+以前のバージョンでは、次のように書けばまだ動きます:
 
     [php]
     $task->run(
@@ -435,7 +435,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
     $task->setConfiguration($this->configuration);
     $task->run();
 
-これまでのバージョンでは、次のようにすればまだ動きます:
+以前のバージョンでは、次のように書けばまだ動きます:
 
     [php]
     $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
@@ -446,7 +446,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### `project:disable` と `project:enable`
 
-`project:disable` と `project:enable`タスクを使うことで、環境全体を無効、または有効にすることができるようになりました:
+`project:disable` と `project:enable`タスクを使うことで、環境全体を無効、または有効にできるようになりました:
 
     $ php symfony project:disable prod
     $ php symfony project:enable prod
@@ -463,7 +463,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### `help` と `list`
 
-`help` と `list` タスクは情報を XML 形式で表示することができるようになりました:
+`help` と `list` タスクは情報を XML 形式で表示できるようになりました:
 
     $ php symfony list --xml
     $ php symfony help test:all --xml
@@ -474,7 +474,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### `project:optimize`
 
-このタスクを実行すればアプリケーションのテンプレートファイルの位置をキャッシュすることで実行時におけるディスクの読み込み回数を減らします。このタスクは運用サーバーでのみ使われます。プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
+このタスクを実行すればアプリケーションのテンプレートファイルの位置をキャッシュすることで実行時におけるディスクの読み込み回数を減らします。このタスクは運用サーバーでのみ使うべきです。プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
 
     $ php symfony project:optimize frontend
 
@@ -484,11 +484,11 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### タスクからメールを送信する
 
-`getMailer()` メソッドを使うことでタスクからメールを簡単に送信することができます。
+`getMailer()` メソッドを使うことでタスクからメールを簡単に送信することができるようになりました。
 
 ### タスクでルーティングを使う
 
-`getRouting()` メソッドを使うことでタスクからルーティングオブジェクトを簡単に得ることができます。
+`getRouting()` メソッドを使うことでタスクからルーティングオブジェクトを簡単に得られるようになりました。
 
 例外
 ----
@@ -499,7 +499,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### Web デバッグツールバー
 
-可能であれば、開発環境の例外ページで Web デバッグツールバーが表示されます。
+可能であれば、開発環境の例外ページでも Web デバッグツールバーが表示されるようになりました。
 
 Propel との統合
 ---------------
@@ -547,7 +547,7 @@ Propel の `symfony` ビヘイビアにパラメーターを渡すことで特�
             form: false
             filter: false
 
-この設定が考慮される前にモデルをリビルドしなければならないことに注意してください。これはふるまいがモデルに添付されこれをリビルドした後でのみ存在するからです。
+この設定が考慮される前にモデルをリビルドしなければならないことにご注意ください。これはふるまいがモデルに添付されこれをリビルドした後でのみ存在するからです。
 
 ### 異なるバージョンの Propel を使う
 
@@ -595,11 +595,11 @@ symfony 1.3/1.4 では、グローバルオプションの `--color` を渡す�
 
 ### データの更新
 
-国際化オペレーションに使われるすべてのデータは `ICU` プロジェクトから更新されました。symfony には約 330個のロケールファイルが付属しており、symfony 1.2 と比べると約 70個増えています。ですのでたとえば、言語リストの 10番目の項目をチェックするテストケースが通らない可能性があることにご注意をお願いします。
+国際化オペレーションに使われるすべてのデータは `ICU` プロジェクトから更新されました。symfony には約330個のロケールファイルが付属しており、symfony 1.2 と比べると約70個増えています。ですのでたとえば、言語リストの10番目の項目をチェックするテストケースが通らない可能性があることにご注意をお願いします。
 
 ### ユーザーロケールを基準にソートする
 
-このロケールに依存するデータにおけるすべてのソートもロケールに依存して実行されます。この目的のために `sfCultureInfo->sortArray()` を使うことができます。
+ユーザーロケールに依存するデータのソートもすべてロケールに依存して実行されます。この目的のために `sfCultureInfo->sortArray()` を使うことができます。
 
 プラグイン
 ----------
@@ -636,7 +636,7 @@ symfony 1.3/1.4 では、新しく作られたプロジェクトでプラグイ�
 
 ### `sfPluginConfiguration::connectTests()`
 
-新しい `setupPlugins()` メソッドのなかでプラグインコンフィギュレーションの `->connectTests()` メソッドを呼び出すことでプラグインのテストを `test:*` タスクに結びつけることができます。
+新しい `setupPlugins()` メソッドのなかでプラグインコンフィギュレーションの `->connectTests()` メソッドを呼び出すことでプラグインのテストを `test:*` タスクにつなげることができます。
 
     [php]
     class ProjectConfiguration extends sfProjectConfiguration
@@ -654,7 +654,7 @@ symfony 1.3/1.4 では、新しく作られたプロジェクトでプラグイ�
 
 symfony 1.3/1.4 は可能であればファイルパスをクリック可能なリンク (すなわちデバッグ例外のテンプレート) にフォーマットします。`sf_file_link_format` がセットされている場合、この目的に使われ、そうでなければ、symfony は PHP コンフィギュレーションの `xdebug.file_link_format` の値を探します。
 
-たとえば、TextMate でファイルを開きたい場合、次のコードを `settings.yml` に追加します:
+たとえば、ファイルを TextMate で開きたい場合、次のコードを `settings.yml` に追加します:
 
     [yml]
     all:
@@ -670,7 +670,7 @@ Doctrine は 1.2 にアップグレードされました。アップグレード
 
 ### フォームクラスを生成する
 
-Doctrine の YAML スキーマファイルのなかで ymfony の追加オプションを指定できるようになりました。そしてフォームとフィルタークラスの生成を無効にするオプションもいくつか追加されました。
+Doctrine の YAML スキーマファイルのなかで symfony の追加オプションを指定できるようになりました。そしてフォームとフィルタークラスの生成を無効にするオプションもいくつか追加されました。
 
 たとえば、 典型的な多対多のリファレンスモデルでは、フォームもしくはフィルターフォームクラスを生成させる必要はありません。ですので次のようなことができます:
 
@@ -695,7 +695,7 @@ Doctrine の YAML スキーマファイルのなかで ymfony の追加オプシ
 
 Doctrine で開発するときに手助けしてくれる新しいタスクが導入されました。
 
-#### モデルテーブルを作成する
+#### モデルテーブルを作る
 
 指定モデルの配列のためにテーブルを個別に作ることができるようになりました。テーブルを削除するときあなたに代わってテーブルを再作成してくれます。既存のプロジェクト/データベースで新しいモデルを開発するとき、データベース全体を一掃したくなく単にテーブル群を再構築したいときに役立ちます。
 
@@ -703,7 +703,7 @@ Doctrine で開発するときに手助けしてくれる新しいタスクが�
 
 #### モデルファイルを削除する
 
-YAML スキーマファイルのなかでモデルや名前を変更したり、使わなくなったモデルを削除したりすることがよくあるでしょう。このような作業を行ったとき、孤児となったモデル、フォームそしてフィルタークラスが現れます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で掃除することができるようになりました。
+YAML スキーマファイルのなかでモデルや名前を変更したり、使われなくなったモデルを削除することがよくあるでしょう。このような作業を行うと、孤児となったモデル、フォームそしてフィルタークラスが出てきます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で掃除できるようになりました。
 
     $ php symfony doctrine:delete-model-files ModelName
 
@@ -715,7 +715,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
     $ php symfony doctrine:clean-model-files
 
-上記コマンドは YAML スキーマファイルと生成モデルやファイルと比較し、どれを削除すべきかを決定します。これらのモデルは `doctrine:delete-model-files` タスクに伝えられます。タスクは自動的に削除する前にどのファイルが削除されるのか確認を求めます。
+上記コマンドは YAML スキーマファイルと生成モデルやファイルと比較し、どれを削除するのかを決定します。これらのモデルは `doctrine:delete-model-files` タスクに渡されます。タスクは自動的に削除する前にどのファイルが削除されるのか確認を求めます。
 
 #### 何でもビルドする
 
@@ -735,7 +735,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 これはモデルを生成 (`:build-model`) し、データベースのマイグレーション (`:migrate`) を行い、そしてカテゴリのフィクスチャデータ (`:data-load --append --dir=/data/fixtures/categories.yml`)をつけ加えます。
 
-より多くの情報は `doctrine:build` タスクのヘルプページを参照してください。
+詳しい情報は `doctrine:build` タスクのヘルプページを参照してください。
 
 #### 新しいオプション: `--migrate`
 
@@ -750,7 +750,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 #### `doctrine:generate-migration --editor-cmd`
 
-`doctrine:generate-migration` タスクは `--editor-cmd` オプションを受け入れるようになりました。このオプションは編集を楽にするためにマイグレーションクラスが作られると実行されます。
+`doctrine:generate-migration` タスクは `--editor-cmd` オプションを受け入れるようになりました。このオプションは編集を楽にするためにありマイグレーションクラスが作られるときに実行されます。
 
 
     $ php symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate
@@ -769,20 +769,20 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 ### 日付のセッターとゲッター
 
-Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジェクトインスタンスとして取得するための 2つの新しいメソッドが追加されました。
+Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジェクトインスタンスとして取得するための2つの新しいメソッドが追加されました。
 
     [php]
     echo $article->getDateTimeObject('created_at')
       ->format('m/d/Y');
 
-`setDateTimeObject` メソッドを呼び出し有効な `DateTime` インスタンスを渡すだけで日付の値もセットできます。
+`setDateTimeObject` メソッドを呼び出し、有効な `DateTime` インスタンスを渡すだけで日付の値もセットできます。
 
     [php]
     $article->setDateTimeObject('created_at', new DateTime('09/01/1985'));
 
 ### `doctrine:migrate --down`
 
-`doctrine:migrate` はスキーマをリクエストされる方向に 1回でマイグレートする `up` と `down` オプションを受け入れます。
+`doctrine:migrate` はスキーマをリクエストされる方向に1回でマイグレートする `up` と `down` オプションを受け入れます。
 
     $ php symfony doctrine:migrate --down
 
@@ -815,7 +815,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
 
 ### 機能テストでクエリをデバッグする
 
-`sfTesterDoctrine` クラスに `->debug()` メソッドが収録されました。このメソッドは現在のコンテクストで実行されたクエリの情報を出力します。
+`sfTesterDoctrine` クラスに `->debug()` メソッドが用意されました。このメソッドは現在のコンテクストで実行されたクエリの情報を出力します。
 
     [php]
     $browser->
@@ -823,7 +823,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
       with('doctrine')->debug()
     ;
 
-メソッドに数値を渡すことで直近の実行されたクエリの履歴を見ることができ、文字列を渡すことで文字列の一部にマッチするものや正規表現にマッチするクエリだけを表示することができます。
+メソッドに数値を渡すことで直近の実行されたクエリの履歴を見ることができる、もしくは文字列を渡すことで文字列の一部にマッチするものや正規表現にマッチするクエリだけを表示することができます。
 
     [php]
     $browser->
@@ -840,28 +840,28 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
       'query' => $table->createQuery()->select('title, body'),
     ));
 
-`->setTableMethod()` (または `table_method` オプション) を通して指定されたテーブルメソッドはクエリオブジェクトを返す必要がありません。次はどれも有効な `sfFormFilterDoctrine` テーブルメソッドです:
+`->setTableMethod()` (もしくは `table_method` オプション) を通して指定されたテーブルメソッドはクエリオブジェクトを返す必要がありません。次はどれも有効な `sfFormFilterDoctrine` テーブルメソッドです:
 
     [php]
-    // symfony >= 1.2 で動作する
+    // symfony >= 1.2 で動く
     public function getQuery()
     {
       return $this->createQuery()->select('title, body');
     }
 
-    // symfony >= 1.2　で動作する
+    // symfony >= 1.2 で動く
     public function filterQuery(Doctrine_Query $query)
     {
       return $query->select('title, body');
     }
 
-    // symfony >= 1.3　で動作する
+    // symfony >= 1.3 で動く
     public function modifyQuery(Doctrine_Query $query)
     {
       $query->select('title, body');
     }
 
-フォームフィルターのカスタマイズが簡単になりました。フィルタリングをフィールドに追加するには、必要なのはウィジェットとそれを処理するメソッドを追加することだけです。
+フォームフィルターのカスタマイズが簡単になりました。フィルタリングをフィールドに追加するのに必要なのはウィジェットとそれを処理するメソッドを追加することだけです。
 
     [php]
     class UserFormFilter extends BaseUserFormFilter
@@ -893,7 +893,7 @@ Doctrine を設定するために `doctrine.configure` と `doctrine.configure_c
 
 ### マジックメソッドの PHPDoc タグ
 
-symfony が Doctrine モデルに追加するゲッターとセッターのマジックメソッドはそれぞれの生成基底クラスの PHPDoc ヘッダーに現れます。IDE がコード入力補完をサポートする場合、これらの `getFooBar()` と `setFooBar()` メソッドがモデルオブジェクトに現れることがわかります。`FooBar` はラクダ記法のフィールド名です。
+symfony が Doctrine モデルに追加するゲッターとセッターのマジックメソッドはそれぞれの生成基底クラスの PHPDoc ヘッダーに現れます。IDE がコード入力補完をサポートする場合、これらの `getFooBar()` と `setFooBar()` メソッドはモデルオブジェクトで見ることになります。`FooBar` はラクダ記法のフィールド名です。
 
 ### 異なるバージョンの Doctrine を使う
 
@@ -938,7 +938,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 ページャー
 ----------
 
-`sfDoctrinePager` と `sfPropelPager` メソッドは `Iterator` と `Countable` インターフェイスを実装しています。
+`sfDoctrinePager` と `sfPropelPager` メソッドは `Iterator` と `Countable` インターフェイスを実装するようになりました。
 
     <?php if (count($pager)): ?>
       <ul>
@@ -955,15 +955,15 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 ビューキャッシュマネージャーは `factories.yml` でパラメーターを受けとります。ビューのキャッシュキーの生成はクラスを簡単に拡張できるように異なる方法でリファクタリングされました。
 
-`factories.yml` で 2つのパラメーターが利用できます:
+`factories.yml` で2つのパラメーターが利用できます:
 
   * `cache_key_use_vary_headers` (デフォルト: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメーターで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
 
   * `cache_key_use_host_name` (デフォルト: true): キャッシュキーがホスト名の部分を含むか指定します。実際には、これはページキャッシュがホスト名に依存するかどうかを伝えます。
 
-### さらにキャッシュ
+### キャッシュの強化
 
-ビューキャッシュマネージャーは配列の `$_GET` もしくは `$_POST` に値が存在するのかによってキャッシュを拒否することはありません。ロジックは現在のリクエストが `cache.yml` をチェックする前の GET リクエストメソッドであることを確認するだけです。このことは次のページがキャッシュ可能であることを意味します:
+ビューキャッシュマネージャーは配列の `$_GET` もしくは `$_POST` に値が存在するのかによってキャッシュを拒否しなくなりました。ロジックは現在のリクエストが `cache.yml` をチェックする前の GET リクエストメソッドであることを確認するだけです。このことは次のページがキャッシュ可能であることを意味します:
 
   * `/js/my_compiled_javascript.js?cachebuster123`
   * `/users?page=3`
@@ -977,14 +977,14 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 ### `PUT` と `DELETE` パラメーター
 
-Content-Type が `application/x-www-form-urlencoded` にセットされた `PUT`、`DELETE` HTTP リクエストメソッドが来た場合、symfony は生のボディを解析し、通常の `POST` パラメーターのようにアクセスできるパラメーターを作ります。
+Content-Type が `application/x-www-form-urlencoded` にセットされている `PUT`、`DELETE` HTTP リクエストメソッドが来る場合、symfony は生のボディを解析し、通常の `POST` パラメーターのようにアクセスできるパラメーターを作ります。
 
 アクション
 ----------
 
 ### `redirect()`
 
-`sfAction:redirect()` メソッドは symfony 1.2 で導入された `url_for()` の機能と互換性を持つようになりました。
+`sfAction:redirect()` メソッドは symfony 1.2 で導入された `url_for()` の機能と互換性をもつようになりました。
 
     [php]
     // symfony 1.2
@@ -1000,7 +1000,7 @@ Content-Type が `application/x-www-form-urlencoded` にセットされた `PUT`
 
 ### `link_to_if()`、`link_to_unless()`
 
-`link_to_if()` と `link_to_unless()` ヘルパーは symfony 1.2 で導入された `link_to()` メソッドと互換性を持つようになりました:
+`link_to_if()` と `link_to_unless()` ヘルパーは symfony 1.2 で導入された `link_to()` メソッドのシグネチャと互換性をもつようになりました:
 
     [php]
     // symfony 1.2
@@ -1012,7 +1012,7 @@ Content-Type が `application/x-www-form-urlencoded` にセットされた `PUT`
 コンテキスト
 -----------
 
-`sfContext` にメソッドを動的に追加するために `context.method_not_found` をリスニングできます。プラグインから遅延ロードファクトリを追加する場合に役立つでしょう。
+`sfContext` にメソッドを動的に追加するために `context.method_not_found` をリスニングできます。プラグインから遅延ロードファクトリを追加する場合に役立ちます。
 
     [php]
     class myContextListener
