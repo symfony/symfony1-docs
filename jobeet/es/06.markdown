@@ -142,7 +142,7 @@ Pero ya que el código anterior solo se basa en el valor de `created_at`, y porq
 
 Pero si recuerdas el esquema de la base de datos que describimos durante el día 3, también tenemos definido una columna `expires_at`. Actualmente este valor esta siempre vacío ya que este no se establece en el archivo de datos. Pero cuando un puesto de trabajo es creado, puede ser automáticamente establecido a 30 días del día actual.
 
-Cuando necesitas hacer algo automáticamente antes que un objeto ##ORM## sea guardado en la base de datos, peudes sobreescribir el método `save()` de la clase del modelo:
+Cuando necesitas hacer algo automáticamente antes que un objeto ##ORM## sea guardado en la base de datos, puedes sobreescribir el método `save()` de la clase del modelo:
 
 <propel>
     [php]
