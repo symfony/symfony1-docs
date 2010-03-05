@@ -39,7 +39,7 @@ out of the box, and of course uses the latest Web 2.0 technologies to enhance
 user experience. It also provides feeds and an API to interact with it
 programatically.
 
-Does it already exist? As as user, you will find a lot of job boards like
+Does it already exist? As a user, you will find a lot of job boards like
 Jobeet on the Internet. But try to find one which is Open-Source, and as
 feature-rich as what we propose here.
 
@@ -130,7 +130,7 @@ specific URL (protected by a token given to the user when the job is created).
 
 Each job post is online for 30 days (this is configurable by the admin - see
 *Story B2*). A user can come back to re-activate or extend the validity of the
-job ad for an extra 30 days but only when the job expires in less than 5 days.
+job for an extra 30 days but only when the job expires in less than 5 days.
 
 ![The Job Creation Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
 
