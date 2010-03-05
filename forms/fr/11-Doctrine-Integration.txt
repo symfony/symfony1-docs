@@ -1,0 +1,1143 @@
+Chapitre 11 - Intégration avec Doctrine
+=======================================
+
+Dans un projet web, la plupart des formulaires sont utilisés pour créer ou modifier des
+objets du modèle. Ces objets sont généralement sérialisés dans une base de données grâce
+à un ORM. Le système de formulaires de Symfony offre une couche supplémentaire pour
+l'interfaçage avec Doctrine, l'ORM intégré à symfony, rendant l'implémentation de formulaires
+basés sur ces objets modèles plus aisée.
+
+Ce chapitre détaille comment intégrer des formulaires avec les modèles objet Doctrine.
+Il est hautement recommandé d'être déjà familier avec Doctrine et son intégration dans
+symfony. Si ce n'est pas le cas, référez-vous au
+livre "[The symfony and Doctrine book](http://www.symfony-project.org/doctrine/1_2/)".
+
+Avant de commencer :
+--------------------
+
+Dans ce chapitre, nous allons créer un système de gestion d'articles. Commençons avec le schéma de base de données. Il est composé de cinq tables : `article`, `author`, `category`, `tag`, et `article_tag`, comme le montre le Listing 4-1 :
+
+Listing 4-1 - Schéma de base de données
+
+    [yml]
+    // config/doctrine/schema.yml
+    Article:
+      actAs: [Sluggable, Timestampable]
+      columns:
+        title:
+          type: string(255)
+          notnull: true
+        content:
+          type: clob
+        status: string(255)
+        author_id: integer
+        category_id: integer
+        published_at: timestamp
+      relations:
+        Author:
+          foreignAlias: Articles
+        Category:
+          foreignAlias: Articles
+        Tags:
+          class: Tag
+          refClass: ArticleTag
+          foreignAlias: Articles
+    Author:
+      columns:
+        first_name: string(20)
+        last_name: string(20)
+        email: string(255)
+        active: boolean
+    Category:
+      columns:
+        name: string(255)
+    Tag:
+      columns:
+        name: string(255)
+    ArticleTag:
+      columns:
+        article_id:
+          type: integer
+          primary: true
+        tag_id:
+          type: integer
+          primary: true
+      relations:
+        Article:
+          onDelete: CASCADE
+        Tag:
+          onDelete: CASCADE
+
+Voici les relations entre les tables :
+
+  * relation 1-n entre les tables `article` et `author` : un article est écrit par un et un seul auteur
+  * relation 1-n entre les tables `article` et `category` : un article appartient à zéro ou plusieurs catégories
+  * relation n-n entre les tables `article` et `tag`
+
+Générer les classes de formulaires
+----------------------------------
+
+Nous voulons éditer les informations des tables `article`, `author`, `category`, et `tag`. Pour cela, nous devons créer des formulaires liés à chacune de ces tables et configurer les widgets et les validateurs en relation avec le schéma de base de données. Même s'il est possible de créer ces formulaires manuellement, c'est une tâche longue et ennuyeuse, et de plus, cela force à répéter le même genre d'informations dans plusieurs fichiers (nom de colonne et de champ, taille maximale, ...). De plus, chaque fois que nous changerons le modèle, nous devrons également changer les formulaires adéquats. Heureusement, le plugin Doctrine a une tâche intégrée, `doctrine:build-forms`, qui automatise le processus de génération des formulaires liés au modèle :
+
+    $ ./symfony doctrine:build-forms
+
+Durant la génération des formulaires, la tâche crée une classe par table avec des validateurs et des widgets pour chaque colonne en utilisant l'introspection du modèle, et en prenant en compte les relations entre les tables.
+
+>**Note**
+>Les tâches `doctrine:build-all` et `doctrine:build-all-load` mettent également à jour les classes des formulaires, en exécutant automatiquement la tâche `doctrine:build-forms`.
+
+Après l'exécution de ces tâches, une arborescence de fichiers est créée dans le répertoire `lib/form/`. Voici les fichiers créés pour notre modèle d'exemple :
+
+    lib/
+      form/
+        doctrine/
+          ArticleForm.class.php
+          ArticleTagForm.class.php
+          AuthorForm.class.php
+          CategoryForm.class.php
+          TagForm.class.php
+          base/
+            BaseArticleForm.class.php
+            BaseArticleTagForm.class.php
+            BaseAuthorForm.class.php
+            BaseCategoryForm.class.php
+            BaseFormDoctrine.class.php
+            BaseTagForm.class.php
+
+La tâche `doctrine:build-forms` génère deux classes pour chaque table du schéma, une classe de base dans le répertoire `lib/form/base` et une autre dans `lib/form/`. Par exemple, pour la table `author`, deux classes `BaseAuthorForm` et `AuthorForm` ont été créées dans les fichiers `lib/form/base/BaseAuthorForm.class.php` et `lib/form/AuthorForm.class.php`.
+
+La table ci-dessous résume la hiérarchie entre les différentes classes impliquées dans la définition du formulaire `AuthorForm`.
+
+  | **Classe**       | **Package**     | **Pour**       | **Description**
+  | ---------------- | --------------- | -------------- | ---------------
+  | AuthorForm       | projet          | developpeur    | Redéfinit le formulaire généré
+  | BaseAuthorForm   | projet          | symfony        | Basée sur le schéma et réécrite à chaque exécution de `doctrine:build-forms`
+  | BaseFormDoctrine | projet          | developpeur    | Permet la personnalisation globale des formulaires Doctrine
+  | sfFormDoctrine   | plugin Doctrine | symfony        | Base des formulaires Doctrine
+  | sfForm           | symfony         | symfony        | Base des formulaires symfony
+
+Afin de créer ou d'éditer un objet de la classe `Author`, nous allons utiliser la classe `AuthorForm`, décrite dans le Listing 4-2. Comme vous pouvez le constater, cette classe ne contient aucune méthode, car elle hérite de `BaseAuthorForm` qui est générée d'après la configuration. La classe `AuthorForm` est celle que nous allons utiliser pour personnaliser et surcharger la configuration du formulaire.
+
+Listing 4-2 - La classe `AuthorForm`
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+      }
+    }
+
+Le Listing 4-3 montre la classe `BaseAuthorForm` avec les validateurs et les widgets générés par introspection du modèle pour la table `author`.
+
+Listing 4-3 - La classe `BaseAuthorForm` représentant le formulaire de la table `author`
+
+    [php]
+    class BaseAuthorForm extends BaseFormDoctrine
+    {
+      public function setup()
+      {
+        $this->setWidgets(array(
+          'id'         => new sfWidgetFormInputHidden(),
+          'first_name' => new sfWidgetFormInputText(),
+          'last_name'  => new sfWidgetFormInputText(),
+          'email'      => new sfWidgetFormInputText(),
+        ));
+
+        $this->setValidators(array(
+          'id'         => new sfValidatorDoctrineChoice(array('model' => 'Author', 'column' => 'id', 'required' => false)),
+          'first_name' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'last_name'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'email'      => new sfValidatorString(array('max_length' => 255)),
+        ));
+
+        $this->widgetSchema->setNameFormat('author[%s]');
+
+        $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+        parent::setup();
+      }
+
+      public function getModelName()
+      {
+        return 'Author';
+      }
+    }
+
+La classe générée ressemble beaucoup aux formulaires que nous avons déjà créés dans les précédents chapitres, hormis le fait que :
+
+  * La classe de base est `BaseFormDoctrine` au lieu de `sfForm`
+  * La configuration des validateurs et des widgets se fait dans la méthode `setup()` plutôt que dans `configure()`
+  * La méthode `getModelName()` retourne la classe Doctrine associée à ce formulaire
+
+>**SIDEBAR**
+>Personnalisation globale des formulaires Doctrine
+>
+>En plus des classes générées pour chaque table, `doctrine:build-forms` génère également une classe `BaseFormDoctrine`. Cette classe vide est la classe de base de toutes les autres classes générées dans le répertoire `lib/form/base/`, elle permet de configurer globalement le comportement de chaque formulaire Doctrine. Par exemple, il est possible de changer facilement le formateur par défaut pour tous les formulaires Doctrine :
+>
+>     [php]
+>     abstract class BaseFormDoctrine extends sfFormDoctrine
+>     {
+>       public function setup()
+>       {
+>         sfWidgetFormSchema::setDefaultFormFormatterName('div');
+>       }
+>     }
+>
+>Notez que la classe `BaseFormDoctrine` hérite de `sfFormDoctrine`.
+>Cette classe contient des fonctionnalités spécifiques à Doctrine, entre autres choses elle s'occupe de la sérialisation des objets dans la base de données à partir des valeurs soumises dans le formulaire.
+
+>**TIP**
+>Les classes de base utilisent la méthode `setup()` pour la configuration, au lieu de `configure()`. Cela permet au développeur de surcharger la configuration des classes vides générées sans avoir à appeler `parent::configure()` à chaque fois.
+
+Le nom des champs du formulaire sont identiques aux noms de colonnes spécifiés dans le schéma : `id`, `first_name`, `last_name`, et `email`.
+
+Pour chaque colonne de la tableau `author`, la tâche `doctrine:build-forms` génère un widget et un validateur en accord avec la définition du schéma. La tâche génère toujours le validateur le plus sécurisé possible. Prenons par exemple le champ `id`. Nous pourrions simplement vérifier que sa valeur est un entier valide. Au lieu de ça, le validateur généré ici nous permet de valider aussi le fait que l'identifiant existe bel et bien (pour éditer un objet existant), ou bien qu'il soit vide (pour pouvoir créer un nouvel objet). C'est une validation plus forte.
+
+Les formulaires générés peuvent être utilisés immédiatement. Ajoutez une déclaration `<?php echo $form ?>` dans votre template, et vous obtiendrez un formulaire fonctionnel avec validation **sans avoir écrit une seule ligne de code**.
+
+Outre la possibilité de créer rapidement des prototypes, les formulaires générés sont faciles à étendre sans avoir à modifier les classes générées. Ceci est possible grâce au mécanisme d'héritage des classes de base et de formulaires.
+
+Enfin, à chaque évolution du schéma de base de données, la tâche permet de générer à nouveau les formulaires pour prendre en compte les modifications du schéma, sans surcharger les personnalisations que vous auriez pu faire.
+
+Le générateur CRUD
+------------------
+
+Maintenant qu'il y a des classes de formulaires générées, voyons comment il est facilement possible de créer un module symfony pour gérer les objets depuis un navigateur. Nous souhaitons créer, modifier et supprimer des objets des classes `Article`, `Author`, `Category`, et `Tag`.
+Commençons par la création pour la classe `Author`. Même si nous pouvons créer manuellement un module, le plugin Doctrine fournit la tâche `doctrine:generate-crud` qui génère un module CRUD basé sur une classe du modèle objet Doctrine, utilisant le formulaire généré dans la section précédente :
+
+    $ ./symfony doctrine:generate-crud frontend author Author
+
+`doctrine:generate-crud` prend trois arguments :
+
+  * `frontend` : nom de l'application où vous voulez créer un module
+  * `author`  : nom du module à créer
+  * `Author`  : nom de la classe du modèle pour laquelle vous voulez créer un module
+
+>**Note**
+>CRUD signifie Creation / Retrieval / Update / Deletion (Création / Récupération / Mise à jour / Suppression) et résume les quatre opérations basiques que l'on peut effectuer sur les données du modèle.
+
+Dans le Listing 4-4, nous voyons que la tâche a généré cinq actions nous permettant
+de lister (`index`), créer (`create`), modifier (`edit`), enregistrer (`update`) et
+supprimer (`delete`) les objets de la classe `Author`.
+
+Listing 4-4 - La classe `authorActions` générée par la tâche
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->author_list = Doctrine::getTable('Author')
+          ->createQuery('a')
+          ->execute();
+      }
+
+      public function executeNew(sfWebRequest $request)
+      {
+        $this->form = new AuthorForm();
+      }
+
+      public function executeCreate(sfWebRequest $request)
+      {
+        $this->forward404Unless($request->isMethod('post'));
+
+        $this->form = new AuthorForm();
+
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('new');
+      }
+
+      public function executeEdit(sfWebRequest $request)
+      {
+        $this->forward404Unless($author = Doctrine::getTable('Author')->find($request->getParameter('id')), sprintf('Object author does not exist (%s).', $request->getParameter('id')));
+        $this->form = new AuthorForm($author);
+      }
+
+      public function executeUpdate(sfWebRequest $request)
+      {
+        $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
+        $this->forward404Unless($author = Doctrine::getTable('Author')->find($request->getParameter('id')), sprintf('Object author does not exist (%s).', $request->getParameter('id')));
+        $this->form = new AuthorForm($author);
+
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('edit');
+      }
+
+      public function executeDelete(sfWebRequest $request)
+      {
+        $request->checkCSRFProtection();
+
+        $this->forward404Unless($author = Doctrine::getTable('Author')->find($request->getParameter('id')), sprintf('Object author does not exist (%s).', $request->getParameter('id')));
+        $author->delete();
+
+        $this->redirect('author/index');
+      }
+
+      protected function processForm(sfWebRequest $request, sfForm $form)
+      {
+        $form->bind($request->getParameter($form->getName()));
+        if ($form->isValid())
+        {
+          $author = $form->save();
+
+          $this->redirect('author/edit?id='.$author->getId());
+        }
+      }
+    }
+
+Dans ce module, le cycle de vie du formulaire est géré par trois méthodes : `create`,
+`edit`, `update` et `processForm`. Il est aussi possible de faire cela d'une manière
+moins longue en déplaçant ces 4 tâches dans une seule méthode, le listing 4-5 montre
+un exemple simplifié de ceci.
+
+Listing 4-5 - Le cycle de vie du formulaire de la classe `authorActions` après quelques
+refactorisation
+
+    [php]
+    // In authorActions, replacing the create, edit, update and processForm methods
+    public function executeEdit($request)
+    {
+      $this->form = new AuthorForm(Doctrine::getTable('Author')->find($request->getParameter('id')));
+
+      if ($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('author'));
+        if ($this->form->isValid())
+        {
+          $author = $this->form->save();
+          $this->redirect('author/edit?id='.$author->getId());
+        }
+      }
+    }
+
+>**NOTE**
+>Les exemples qui suivent utilisent la valeur par défaut, le style plus verbeux donc vous aurez
+>besoin de faire des ajustements en conséquence si vous souhaitez suivre l'approche dans le Listing
+>4-5. Par exemple, dans votre modèle de formulaire, vous n'aurez besoin que de faire pointer le
+>formulaire sur l'action edit indépendamment du fait que l'objet est nouveau ou ancien.
+
+La tâche génère également trois templates et un partial, `indexSuccess`,
+`editSuccess`, `newSuccess` et `_form`. Le template `_form` a été généré
+sans la déclaration `<?php echo $form ?>`. Nous pouvons modifier ce comportement,
+en utilisant `--non-verbose-templates` :
+
+    $ ./symfony doctrine:generate-crud frontend author Author --non-verbose-templates
+
+Cette option est utile lors de la phase de prototypage, comme le montre le Listing 4-6.
+
+Listing 4-6 - Le template `_form`
+
+    [php]
+    // apps/frontend/modules/author/templates/_form.php
+    <?php include_stylesheets_for_form($form) ?>
+    <?php include_javascripts_for_form($form) ?>
+
+    <form action="<?php echo url_for('author/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+    <?php if (!$form->getObject()->isNew()): ?>
+    <input type="hidden" name="sf_method" value="put" />
+    <?php endif; ?>
+      <table>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              &nbsp;<a href="<?php echo url_for('author/index') ?>">Cancel</a>
+              <?php if (!$form->getObject()->isNew()): ?>
+                &nbsp;<?php echo link_to('Delete', 'author/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => 'Are you sure?')) ?>
+              <?php endif; ?>
+              <input type="submit" value="Save" />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <?php echo $form ?>
+        </tbody>
+      </table>
+      </form>
+
+>**TIP**
+>L'option `--with-show` nous permet de générer une action et un template utilisables pour
+>voir un objet (en lecture seule). 
+
+Vous pouvez maintenant ouvrir l'URL `/frontend_dev.php/author` dans un navigateur pour voir le
+module généré (Figure 4-1 et Figure 4-2). Prenez le temps de jouer avec l'interface. Grâce au
+module généré, vous pouvez lister les auteurs, en ajouter un nouveau, éditer, modifier et
+éventuellement supprimer. Vous remarquerez également que les règles de validation sont
+opérationnelles. Notez que dans les figures suivantes, nous avons choisi de supprimer
+le champ "actif".
+
+Figure 4-1 - Liste d'auteurs
+
+![Authors List](/images/forms_book/en/04_01.png "Authors List")
+
+Figure 4-2 - Édition d'un auteur avec erreurs de validation
+
+![Editing an Author with Validation Errors](/images/forms_book/en/04_02.png "Editing an Author with Validation Errors")
+
+Nous pouvons maintenant répéter l'opération avec la classe `Article` :
+
+    $ ./symfony doctrine:generate-crud frontend article Article --non-verbose-templates
+
+Le formulaire `ArticleForm` utilise le widget `sfWidgetFormDoctrineSelect` pour représenter
+la relation entre l'objet `Article` et l'objet `Author`. Ce widget crée une liste déroulante
+avec les auteurs. Durant l'affichage, les objets auteur sont convertis en chaîne de caractères
+grâce à la méthode magique `__toString()`, qui doit être définie dans la classe `Author`,
+comme montré en Listing 4-7.
+
+Listing 4-7 - Implementation de `__toString()` pour la classe `Author`
+
+    [php]
+    class Author extends BaseAuthor
+    {
+      public function __toString()
+      {
+        return $this->getFirstName().' '.$this->getLastName();
+      }
+    }
+
+Tout comme pour la classe `Author`, vous pouvez créer la méthode `__toString()` pour les autres
+classes du modèle : `Article`, `Category`, et `Tag`.
+
+>**Note**
+>sfDoctrineRecord va essayer de deviner la valeur de __toString() si vous ne la
+>spécifiez pas vous-même. Elle regarde les colonnes nommées 'name', 'title', 'description',
+>'subject', 'keywords' et enfin 'id' pour les utiliser comme représentation de chaîne. Si
+>l'un de ces champs n'est pas trouvé, Doctrine retournera une chaîne d'alerte par défaut.
+
+-
+
+>**Tip**
+>L'option `method` du widget `sfWidgetFormDoctrineSelect` change la méthode
+>utilisée pour représenter un objet au format texte.
+
+La Figure 4-4 montre comment créer un article après avoir implémenté la méthode
+`__toString()`.
+
+Figure 4-4 - Création d'un article
+
+![Creating an Article](/images/forms_book/en/04_04.png "Creating an Article")
+
+>**NOTE**
+>Dans la figure 4-4, vous remarquerez que certains champs ne figurent pas sur le formulaire,
+>par exemple `created_at` et `updated_at`. C'est parce que nous avons personnalisé la classe du
+>formulaire. Vous allez apprendre à faire cela dans la section suivante.
+
+Personnalisation des formulaires générés
+----------------------------------------
+
+Les tâches `doctrine:build-forms` et `doctrine:generate-crud` permettent de créer des modules symfony fonctionnels pour lister, créer, éditer et supprimer des objets modèle. Ces modules prennent en compte non seulement les règles de validation du modèle, mais également les relations entre les tables. Tout ceci se produit sans écrire la moindre ligne de code !
+
+Le temps est maintenant venu de personnaliser le code généré. Si les classes de formulaires prennent déjà en considération beaucoup d'éléments, certains aspects devront être personnalisés.
+
+### Configuration des validateurs et des widgets
+
+Commençons par configurer les validateurs et les widgets générés par défaut.
+
+Le formulaire `ArticleForm` a un champ `slug`. Le slug est une chaine de caractères qui représente de manière unique l'article dans l'URL. Par exemple, le slug d'un article dont le titre est "Optimiser le développement avec symfony" est `12-optimiser-le-developpement-avec-symfony`, `12` étant l'`id` de l'article. Ce champ est généralement calculé automatiquement lorsque l'objet est enregistré, en fonction de `title`, mais il a le potentiel d'être explicitement redéfini par l'utilisateur. Même si ce champ est requis dans le schéma, il ne peut pas être obligatoire dans le formulaire. C'est pourquoi nous modifions le validateur et le rendons optionnel, comme dans le Listing 4-8. Nous allons aussi modifier le champ `content` en augmentant sa taille et en forçant l'utilisateur à entrer au moins cinq caractères.
+
+Listing 4-8 - Personnalisation des validateurs et des widgets
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+      }
+    }
+
+Nous utilisons ici les objets `validatorSchema` et `widgetSchema` comme des tableaux PHP. Ces tableaux prennent un nom de champ en clé et retournent respectivement les objets validateur et widget asociés. Nous pouvons alors personnaliser individuellement les champs et les widgets.
+
+>**Note**
+>Afin de permettre l'utilisation d'objets en tant que tableaux PHP, les classes `sfValidatorSchema` et `sfWidgetFormSchema` implémentent l'interface `ArrayAccess`, disponible depuis la version 5 de PHP.
+
+Pour être sûr que deux articles ne peuvent avoir le même `slug`, une contrainte d'unicité a été ajoutée dans la définition du schéma. La contrainte au niveau de la base de données est utilisée dans le formulaire `ArticleForm` en utilisant le validateur `sfValidatorDoctrineUnique`. Ce validateur peut vérifier l'unicité de n'importe quel champ du formulaire. Il est utile entre autres choses pour vérifier l'unicité d'une adresse courriel ou d'un login par exemple. Le Listing 4-9 montre comment l'utiliser dans `ArticleForm`.
+
+Listing 4-9 - Utilisation du validateur `sfValidatorDoctrineUnique` pour vérifier l'unicité d'un champ
+
+    [php]
+    class BaseArticleForm extends BaseFormDoctrine
+    {
+      public function setup()
+      {
+        // ...
+
+        $this->validatorSchema->setPostValidator(
+          new sfValidatorDoctrineUnique(array('model' => 'Article', 'column' => array('slug')))
+        );
+      }
+    }
+
+Le validateur `sfValidatorDoctrineUnique` est un `postValidator` s'exécutant sur toutes
+les données après les validations individuelles des champs. Afin de valider l'unicité de
+`slug`, le validateur doit être capable d'accéder non seulement à la valeur de `slug`, mais
+également à la valeur de(s) clé(s) primaire(s). Les règles de validation sont ainsi
+différentes entre la création et l'édition, puisque le slug peut rester le même lors
+de la mise à jour d'un article.
+
+Personnalisons maintenant le champ `active` de la table `author`, utilisé pour savoir
+si un auteur est actif. Le Listing 4-10 montre comment exclure les auteurs inactifs
+du formulaire `ArticleForm`, en modifiant l'option `query` du widget `FormDoctrineSelect`
+connecté au champ `author_id`. L'option `query` accepte un objet Doctrine Query,
+permettant de réduire les options disponibles dans la
+liste déroulante.
+
+Listing 4-10 - Personnalisation du widget `sfWidgetFormDoctrineSelect`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+        $this->widgetSchema['author_id']->setOption('query', $query);
+      }
+    }
+
+Même si la personnalisation du widget peut nous permettre de réduire la liste des options disponibles, nous ne devons pas oublier de reporter cette réduction au niveau du validateur, comme montré dans le Listing 4-11. Comme le widget `sfWidgetProperSelect`, le validateur `sfValidatorDoctrineChoice` accepte une option `query` pour cibler les options valides pour un champ.
+
+Listing 4-11 - Personnalisation du validateur `sfValidatorDoctrineChoice`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+
+        $this->widgetSchema['author_id']->setOption('query', $query);
+        $this->validatorSchema['author_id']->setOption('query', $query);
+      }
+    }
+
+Dans le précédent exemple, nous avons défini un objet `Query` directement dans la méthode `configure()`. Dans notre projet, cette requête sera certainement utile en d'autres circonstances, il est donc préférable de créer une méthode `getActiveAuthorsQuery()` dans la classe `AuthorTable` et d'appeler cette méthode depuis `ArticleForm` comme le montre le Listing 4-12.
+
+Listing 4-12 - Refactorisation de `Query` dans le modèle
+
+    [php]
+    class AuthorTable extends Doctrine_Table
+    {
+      public function getActiveAuthorsQuery()
+      {
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+
+        return $query;
+      }
+    }
+
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+      
+        $authorQuery = Doctrine::getTable('Author')->getActiveAuthorsQuery();
+        $this->widgetSchema['author_id']->setOption('query', $authorQuery);
+        $this->validatorSchema['author_id']->setOption('query', $authorQuery);
+      }
+    }
+
+### Changer les validateurs
+
+L'`email` étant défini comme un `string(255)` dans le schéma, symfony a créé
+un validateur `sfValidatorString()` restreignant la longueur maximale à 255
+caractères. Ce champ est aussi supposé contenir des adresses email valides, le Listing
+4-13 remplace le validateur généré par un validateur `sfValidatorEmail`.
+
+Listing 4-13 - Changement du validateur du champ `email` de la classe `AuthorForm`
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorEmail();
+      }
+    }
+
+### Ajouter un validateur
+
+Nous avons vu dans la précédente partie comment modifier le validateur généré. Mais
+dans le cas du champ `email`, il serait utile de garder la validation de longueur maximale.
+Dans le Listing 4-14, nous utilisons le validateur `sfValidatorAnd` pour garantir la
+validité de l'email et vérifier la taille maximale possible pour le champ.
+
+Listing 4-14 - Utilisation d'un validateur multiple
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          new sfValidatorString(array('max_length' => 255)),
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+L'exemple précédent n'est pas parfait, car si nous décidons de modifier par la suite la longueur
+du champ `email` dans le schéma de base de données, nous devrons penser à le faire
+également dans le formulaire. Au lieu de remplacer le validateur généré, il est
+préférable d'en ajouter un, comme le montre le Listing 4-15.
+
+Listing 4-15 - Ajout d'un validateur
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+### Changer un widget
+
+Dans le schéma de base de données, le champ `status` de la table `article` stocke les
+statuts d'articles dans une chaine de caractères. Les valeurs possibles ont été définies
+dans la classe `ArticleTable`, comme montré dans le Listing 4-16.
+
+Listing 4-16 - Définition des statuts possibles dans la classe `ArticleTable`
+
+    [php]
+    class ArticleTable extends Doctrine_Table
+    {
+      static protected $statuses = array('draft', 'online', 'offline');
+
+      static public function getStatuses()
+      {
+        return self::$statuses;
+      }
+
+      // ...
+    }
+
+Lors de l'édition d'un article, le champ `status` doit être représenté comme une liste déroulante
+au lieu d'un champ texte. Pour ce faire, changeons le widget utilisé, comme
+le montre le Listing 4-17.
+
+Listing 4-17 - Changement du widget pour le champ `status`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+        
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticleTable::getStatuses()));
+      }
+    }
+
+Pour être exhaustifs, nous devons également changer le validateur pour être sûrs que le statut
+choisi est bien présent dans la liste des options possibles (Listing 4-18).
+
+Listing 4-18 - Modification du validateur du champ `status`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+        
+        $statuses = ArticleTable::getStatuses();
+        
+        $this->widgetSchema['status']    = new sfWidgetFormSelect(array('choices' => $statuses));
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys($statuses)));
+      }
+    }
+
+### Supprimer un champ
+
+La table `article` a trois colonnes spéciales, `created_at`, `updated_at`
+et `published_at`. Les deux premiers sont automatiquement gérée par Doctrine comme
+un comportement `timestampable`, le troisième que nous traiterons plus tard dans notre
+propre code. Nous devons donc les supprimer du formulaire comme le montre le Listing 4-19,
+pour éviter que les utilisateurs les modifient.
+
+Listing 4-19 - Suppression d'un champ
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+      
+        unset($this->validatorSchema['created_at']);
+        unset($this->widgetSchema['created_at']);
+
+        unset($this->validatorSchema['updated_at']);
+        unset($this->widgetSchema['updated_at']);
+
+        unset($this->validatorSchema['published_at']);
+        unset($this->widgetSchema['published_at']);
+      }
+    }
+
+Afin de supprimer un champ, il est nécessaire de supprimer son validateur et son
+widget. Le Listing 4-20 montre comment il est possible de les supprimer tous les
+deux en une action, en utilisant le formulaire comme un tableau PHP.
+
+Listing 4-20 - Suppression d'un champ en utilisant le formulaire comme un tableau PHP
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+      
+        unset($this['created_at'], $this['updated_at'], $this['published_at']);
+      }
+    }
+
+### Résumé
+
+Pour résumer, le Listing 4-21 et le Listing 4-22 montrent les formulaires `ArticleForm` et
+`AuthorForm` personnalisés.
+
+Listing 4-21 - Formulaire `ArticleForm`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $authorQuery = Doctrine::getTable('Author')->getActiveAuthorsQuery();
+
+        // widgets
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticleTable::getStatuses()));
+        $this->widgetSchema['author_id']->setOption('query', $authorQuery);
+
+        // validators
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys(ArticleTable::getStatuses())));
+        $this->validatorSchema['author_id']->setOption('query', $authorQuery);
+
+        unset($this['created_at'], $this['updated_at'], $this['published_at']);
+      }
+    }
+
+Listing 4-22 - Formulaire `AuthorForm`
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+Utiliser la tâche `doctrine:build-forms` permet de générer la plupart
+des éléments en introspectant le modèle objet. Cette automatisation
+est utile pour plusieurs raisons :
+
+  * Cela rend la vie plus facile au développeur, lui épargnant un travail répétitif et
+    redondant. Il peut alors se concentrer sur la personnalisation des validateurs et des
+    widgets en fonction des règles métier spécifiques au projet.
+
+  * De plus, lorsque le schéma de base de données est mis à jour, les formulaires
+    générés seront automatiquement mis à jour. Le développeur aura juste à adapter
+    ses personnalisations.
+
+La prochaine section décrira la personnalisation des actions et des templates
+générés par la tâche `doctrine:generate-crud`.
+
+Sérialisation des formulaires
+-----------------------------
+
+La précédente section nous montre comment personnaliser les formulaires générés par la tâche
+`doctrine:build-forms`. Dans la section courante, nous allons personnaliser le cycle
+de vie des formulaires, en commençant par le code généré par
+`doctrine:generate-crud`.
+
+### Valeurs par défaut
+
+**Une instance de formulaire Doctrine est toujours reliée à un objet Doctrine**.
+L'objet Doctrine lié appartient toujours à la classe retournée par la méthode
+`getModelName()`. Par exemple, le formulaire `AuthorForm` peut seulement être
+lié à des objets appartenant à la classe `Author`. Ces objets sont soit
+des objets vides (une instance vide de la classe `Author`), soit les objets passés
+en premier argument au constructeur. Alors que le constructeur d'un formulaire
+« normal » prend un tableau de valeurs en premier argument, le constructeur
+d'un formulaire Doctrine prend un objet Doctrine. Cet objet est utilisé pour définir
+la valeur par défaut de chaque champ du fomulaire. La méthode `getObject()` retourne
+l'objet relié à l'instance courante, et la méthode `isNew()` permet de savoir si
+l'objet a été créé par le constructeur :
+
+    [php]
+    // création d'un nouvel objet
+    $authorForm = new AuthorForm();
+
+    print $authorForm->getObject()->getId(); // affiche null
+    print $authorForm->isNew();              // affiche true
+
+    // modification d'un objet existant
+    $author = Doctrine::getTable('Author')->find(1);
+    $authorForm = new AuthorForm($author);
+
+    print $authorForm->getObject()->getId(); // affiche 1
+    print $authorForm->isNew();              // affiche false
+
+### Gestion du cycle de vie
+
+Comme nous l'avons observé au début de ce chapitre, les actions `new`, `edit` et
+`create`, montrée dans le listing 4-23, gèrent le cycle de vie du formulaire.
+
+Listing 4-23 - Les méthodes `executeNew`, `executeEdit`, `executeCreate` et
+`processForm` du module `author`
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      // ...
+      public function executeNew(sfWebRequest $request)
+      {
+        $this->form = new AuthorForm();
+      }
+
+      public function executeCreate(sfWebRequest $request)
+      {
+        $this->forward404Unless($request->isMethod('post'));
+
+        $this->form = new AuthorForm();
+
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('new');
+      }
+
+      public function executeEdit(sfWebRequest $request)
+      {
+        $this->forward404Unless($author = Doctrine::getTable('Author')->find($request->getParameter('id')), sprintf('Object author does not exist (%s).', $request->getParameter('id')));
+        $this->form = new AuthorForm($author);
+      }
+      
+      protected function processForm(sfWebRequest $request, sfForm $form)
+      {
+        $form->bind($request->getParameter($form->getName()));
+        if ($form->isValid())
+        {
+          $author = $form->save();
+
+          $this->redirect('author/edit?id='.$author->getId());
+        }
+      }
+    }
+
+Même si l'action `edit` ressemble aux actions que nous avons pu décrire dans
+les chapitres précédents, nous pouvons remarquer quelques différences :
+
+  * Un objet Doctrine de la classe `Author` est passé en premier paramètre du constructeur du formulaire :
+
+        [php]
+        $author = Doctrine::getTable('Author')->find($request->getParameter('id'));
+        $this->form = new AuthorForm($author);
+
+  * Le format des attributs `name` des widgets est automatiquement défini de manière à
+    récupérer les données soumises dans un tableau PHP nommé d'après la table liée (`author`) :
+
+        [php]
+        $form->bind($request->getParameter($form->getName()));
+
+  * Lorsque le formulaire est valide, un appel à la méthode `save()` crée ou met à jour
+    les objets Doctrine reliés au formulaire :
+
+        [php]
+        $author = $form->save();
+
+### Créer et modifier un objet Doctrine
+
+Le code du Listing 4-23 gère en une seule méthode la création et la modification d'objets de la
+classe `Author` :
+
+  * Création d'un nouvel objet `Author` :
+
+      * L'action `create` est appelée
+
+      * L'objet `form` est alors lié à un objet Doctrine `Author` vide
+
+      * L'appel à `$form->save()` crée un nouvel objet `Author` en conséquence
+        quand un formulaire valide est soumis
+
+  * Modification d'un objet Author` existant :
+
+      * L'action `update` est appelée avec un paramètre `id`
+        (`$request->getParameter('id')` représentant la clé primaire de
+        l'objet `Author` à modifier)
+
+      * L'appel à la méthode `find()` retourne l'objet `Author` associé à
+        la clé primaire
+
+      * L'objet `form` est donc lié à l'objet précédemment trouvé
+
+      * L'appel à `$form->save()` met à jour l'objet `Author` quand un formulaire valide
+        est soumis
+
+### La méthode `save()`
+
+Quand un formulaire Doctrine est valide, la méthode `save()` met à jour l'objet associé et l'enregistre dans la base de données. Cette méthode enregistre en fait non seulement l'objet principal, mais aussi les objets potentiellement reliés. Par exemple, le formulaire `ArticleForm` met à jour les tags connectés à un article. La relation entre les tables `article` et `tag` étant n-n, les tags reliés à un article sont stockés dans la table `article_tag` (en utilisant la méthode `saveArticleTagList()` générée).
+
+Afin de certifier une sérialisation consistante, la méthode `save()` inclut toutes les mises à jour dans une transaction.
+
+>**Note**
+>Nous verrons dans le chapitre 9 que la méthode `save()` met aussi automatiquement à jour les tables internationalisées.
+
+-
+
+>**SIDEBAR**
+>Utiliser la méthode `bindAndSave()`
+>
+>La méthode `bindAndSave()` lie les données soumises en entrée par l'utilisateur avec le formulaire, le valide et met à jour l'objet associé dans la base de données, le tout en une opération :
+>
+>     [php]
+>     class articleActions extends sfActions
+>     {
+>       public function executeCreate(sfWebRequest $request)
+>       {
+>         $this->form = new ArticleForm();
+>
+>         if ($request->isMethod('post') && $this->form->bindAndSave($request->getParameter('article')))
+>         {
+>           $this->redirect('article/created');
+>         }
+>       }
+>     }
+
+### Gestion des envois de fichiers
+
+La méthode `save()` met automatiquement à jour les objets Doctrine, mais ne peut pas
+gérer les autres éléments tels que les envois de fichiers.
+
+Voyons comment attacher un fichier à chaque article. Les fichiers sont enregistrés dans
+le répertoire `web/uploads` et une référence vers le fichier est gardée dans le champ
+`file` de la table `article`, comme le montre le Listing 4-24.
+
+Listing 4-24 - Schéma pour la table `article` avec le fichier associé
+
+    [yml]
+    // config/doctrine/schema.yml
+    Article:
+      // ...
+      file: string(255)
+
+Après chaque mise à jour du schéma, vous devez mettre à jour le modèle objet, la base de données et les formulaires associés :
+
+    $ ./symfony doctrine:build-all
+
+>**Caution**
+>Soyez conscients que la tâche `doctrine:build-all` supprime toutes les tables du schéma
+>et les recrée. Les données dans les tables sont donc réécrites. C'est pourquoi il est
+>important de créer des données de test (`fixtures`) qui pourront être rechargées à
+>chaque modification du modèle.
+
+Le Listing 4-25 montre comment modifier la classe `ArticleForm` afin de relier un widget et un validateur au champ `file`.
+
+Listing 4-25 - Modification du champ `file` du formulaire `ArticleForm`
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->widgetSchema['file'] = new sfWidgetFormInputFile();
+        $this->validatorSchema['file'] = new sfValidatorFile();
+      }
+    }
+
+Comme pour chaque formulaire permettant l'envoi d'un fichier, n'oubliez pas d'ajouter
+l'attribut `enctype` à la balise `form` dans le template (voyez le Chapitre 2 pour
+plus d'informations concernant la gestion d'envois de fichiers).
+
+>**TIP**
+>Lorsque vous créez votre modèle de formulaire, vous pouvez vérifier si le formulaire
+>contient des champs de fichier, et ajouter l'attribut `enctype` automatiquement :
+>
+>     [PHP]
+>     <?php if ($form->isMultipart() echo 'enctype="multipart/form-data" '; ?>
+>
+>Ce code est automatiquement ajoutée lorsque votre formulaire est créé par la tâche generate-crud.
+
+Le Listing 4-26 montre les modifications à appliquer lors de l'enregistrement du formulaire pour enregistrer le fichier sur le serveur et stocker son chemin dans l'objet `article`.
+
+Listing 4-26 - Enregistrement de l'objet `article` et du fichier envoyé dans une action
+
+    [php]
+    public function executeEdit($request)
+    {
+      $author = Doctrine::getTable('Author')->find($request->getParameter('id'));
+      $this->form = new ArticleForm($author);
+
+      if ($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('article'), $request->getFiles('article'));
+        if ($this->form->isValid())
+        {
+          $file = $this->form->getValue('file');
+          $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+          $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+          $article = $this->form->save();
+
+          $this->redirect('article/edit?id='.$article->getId());
+        }
+      }
+    }
+
+Enregistrer le fichier envoyé sur le système de fichiers permet à l'objet `sfValidatedFile` de connaître le chemin absolu du fichier. Pendant l'appel à `save()`, les valeurs des champs sont utilisées pour mettre à jour l'objet associé et, comme pour le champ `file`, l'objet `sfValidatedFile` est converti en chaine de caractères grâce à la méthode `__toString()`, renvoyant le chemin absolu du fichier. La colonne `file` de la table `article` stocke ce chemin absolu.
+
+>**TIP**
+>Si vous désirez stocker le chemin relatif au répertoire `sfConfig::get('sf_upload_dir')`, vous devez créer une classe héritant de `sfValidatedFile` et utiliser l'option `validated_file_class` pour passer au validateur `sfValidatorFile` le nom de la nouvelle classe. Le validateur retournera alors une instance de votre classe. Nous verrons dans le reste de ce chapitre une autre approche, consistant à modifier la valeur de la colonne `file` avant d'enregistrer l'objet dans la base de données.
+
+### Personnalisation de la méthode `save()`
+
+Nous avons vu dans la section précédente comment enregistrer le fichier envoyé dans l'action `edit`. Un des principes de la programmation orientée objet est la réutilisabilité du code, grâce à son encapsulation dans des classes. Au lieu de dupliquer le code utilisé pour enregistrer le fichier dans chaque action utilisant le formulaire `ArticleForm`, il est préférable de le déplacer dans la classe `ArticleForm`. Le Listing 4-27 montre comment surcharger la méthode `save()` afin d'enregistrer aussi le fichier et éventuellement de supprimer un fichier existant.
+
+Listing 4-27 - Surcharge de la méthode `save()` de la classe `ArticleForm`
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+     
+      public function save($con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+   
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+   
+        return parent::save($con);
+      }
+    }
+
+Après avoir déplacé le code dans le formulaire, l'action `edit` est identique au code généré par `doctrine:generate-crud`.
+
+>**SIDEBAR**
+>Refactoriser le code dans le modèle ou dans le formulaire
+>
+>Les actions générées par la tâche `doctrine:generate-crud` ne devraient généralement pas être modifiées.
+>
+>La logique que vous pourriez ajouter dans l'action `edit`, particulièrement durant la sérialisation du
+>formulaire, doit souvent être déplacée dans les classes du modèle ou dans les classes du formulaire.
+>
+>Nous avons juste vu un exemple de refactorisation dans la classe formulaire afin
+>d'effectuer un stockage de fichier. Prenons un autre exemple lié au modèle. Le
+>formulaire `ArticleForm` a un champ `slug`. Nous avons vu que ce champ devrait
+>être calculé automatiquement à partir du champ `title`, et qu'il pourrait
+>éventuellement être spécifié par l'utilisateur. Cette logique ne dépend pas du
+>formulaire. Elle appartient donc au modèle, comme le montre le code suivant :
+>
+>     [php]
+>     class Article extends BaseArticle
+>     {
+>       public function save($con = null)
+>       {
+>         if (!$this->getSlug())
+>         {
+>           $this->setSlugFromTitle();
+>         }
+>
+>         return parent::save($con);
+>       }
+>
+>       protected function setSlugFromTitle()
+>       {
+>         // ...
+>       }
+>     }
+>
+>Le but principal de ces refactorisations est de respecter la séparation dans les couches applicatives,
+>particulièrement la réutilisation du code.
+
+### Personnalisation de la méthode `doSave()`
+
+Nous avons vu que l'enregistrement d'un objet était fait dans une transaction afin de garantir que chaque opération liée à l'enregistrement soit exécutée correctement. Lorsque la méthode `save()` est surchargée comme nous l'avons fait dans la section précédente pour enregistrer le fichier envoyé, le code exécuté est indépendant de cette transaction.
+
+Le Listing 4-28 nous montre comment utiliser la méthode `doSave()` pour insérer dans la transaction globale le code enregistrant le fichier envoyé.
+
+Listing 4-28 - Surcharge de la méthode `doSave()` dans le formulaire `ArticleForm`
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+     
+      protected function doSave($con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+        return parent::doSave($con);
+      }
+    }
+
+La méthode `doSave()` étant appelée dans la transaction créé par la méthode `save()`, si l'appel à la méthode `save()` de l'objet `file()` lance une exception, l'objet ne sera pas enregistré.
+
+### Personnalisation de la méthode `updateObject()`
+
+Il est parfois nécessaire de modifier l'objet connecté au formulaire entre la mise à jour et l'enregistrement en base de données.
+
+Dans l'exemple d'envoi de fichier, au lieu de stocker le chemin absolu du fichier envoyé dans la colonne `file`, nous voulons enregistrer le chemin relatif au répertoire `sfConfig::get('sf_upload_dir')`.
+
+Le Listing 4-29 montre comment redéfinir la méthode `updateObject()` du formulaire `ArticleForm` afin de changer la valeur de la colonne `file` après la mise à jour automatique, mais avant qu'elle soit enregistrée.
+
+Listing 4-29 - Redéfinition de la méthode `updateObject()` de la classe `ArticleForm`
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+
+      public function updateObject($values = null)
+      {
+        $object = parent::updateObject($values);
+
+        $object->setFile(str_replace(sfConfig::get('sf_upload_dir').'/', '', $object->getFile()));
+
+        return $object;
+      }
+    }
+
+La méthode `updateObject()` est appelée par la méthode `doSave()` avant d'enregistrer l'objet dans la base de données.
