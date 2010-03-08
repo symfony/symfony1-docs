@@ -1,0 +1,1239 @@
+Annexe A - Widgets
+==================
+
+Introduction
+------------
+
+Le framework de formulaire de symfony est livré avec un lot de widgets utiles. Ces
+widgets couvrent les besoins communs de la plupart des projets. Ce chapitre décrit les
+widgets de formulaire par défaut fourni avec symfony. Nous avons également inclus quelques
+uns des widgets de formulaire à partir des plugins `sfFormExtraPlugin`, `sfPropelPlugin` et
+`sfDoctrinePlugin`. Ces plugins sont pris en charge par l'équipe de base et contiennent
+des widgets très utiles.
+
+>**TIP**
+>Même si vous n'utilisez pas le framework MVC de symfony , vous pouvez utiliser
+>les widgets définis dans les plugins
+>[`sfFormExtraPlugin`](http://svn.symfony-project.com/plugins/sfFormExtraPlugin),
+>`sfPropelPlugin` et `sfDoctrinePlugin` en mettant le répertoire `widget/`
+>quelque part dans votre projet.
+
+Avant de plonger dans les détails de chaque widget, voyons ce que les
+widgets ont en commun.
+
+### La classe de base `sfWidget`
+
+Tous les widgets symfony héritent de la classe de base `sfWidget` de base, qui
+fournit des fonctionnalités disponibles par défaut à tous les widgets.
+
+Par défaut, tous les widgets sont rendus en XHTML. Vous pouvez basculer vers
+un fichier HTML en appelant la méthode `setXhtml()` :
+
+    [php]
+    sfWidget::setXhtml(false);
+
+Le système de widget aussi prend automatiquement en charge l'échappement des attributs HTML
+et le contenu sensible. Pour être efficace, il doit connaître le jeu de caractères utilisé par
+votre projet. Par défaut le jeu de caractères est `UTF-8`, mais il peut être configuré en
+appelant la méthode `setCharset()` :
+
+    [php]
+    sfWidget::setCharset('ISO-8859-1');
+
+>**NOTE**
+>Si vous utilisez les widgets symfony avec le framework MVC de symfony, le jeu de
+>caractères est automatiquement réglé en fonction du jeu de caractères de `settings.yml`.
+
+Si un widget repose sur certains fichiers JavaScript et/ou feuilles de style, vous
+pouvez remplacer respectivement par les méthodes `getJavaScripts()` et `getStylesheets()` :
+
+    [php]
+    class Widget extends sfWidget
+    {
+      public function getStylesheets()
+      {
+        // the array keys are files and values are the media names
+        // separated by a colon (,)
+        return array(
+          '/path/to/file.css' => 'all',
+          '/another/file.css' => 'screen,print',
+        );
+      }
+
+      public function getJavaScripts()
+      {
+        return array('/path/to/file.js', '/another/file.js');
+      }
+    }
+
+### La classe de base `sfWidgetForm`
+
+Dans cette section, nous ne parlerons que de widgets de formulaire. Tous héritent de la
+classe de base `sfWidgetForm`, qui étend la classe `sfWidget` pour fournir des
+fonctionnalités supplémentaires par défaut.
+
+Lors de la création d'un widget, vous pouvez éventuellement passer des options et
+des attributs HTML en arguments :
+
+    [php]
+    $w = new sfWidgetFormInputText(
+      array('default' => 'Fabien'),
+      array('class' => 'foo')
+    );
+
+Les options et les attributs HTML peuvent également être définis en utilisant
+les méthodes `setOptions()` et `setAttributes()` :
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    $w->setOptions(array('default' => 'Fabien'));
+    $w->setAttributes(array('class' => 'foo'));
+
+Les méthodes `setOptions()` et `setAttributes()` permettent individuellement de
+fixer une option ou un attribut HTML :
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    $w->setOption('default', 'Fabien');
+    $w->setAttribute('class', 'foo');
+
+Un widget peut être rendu en appelant la méthode `render()` :
+
+    [php]
+    $w->render('name', 'value', array('class' => 'foo'));
+
+La méthode `render()` prend les arguments suivants :
+
+  * Le nom du widget
+  * La valeur du widget
+  * Certains attributs HTML facultatifs (ils sont fusionnés avec ceux définis
+    par défaut au moment de la construction)
+
+>**NOTE**
+>Les widgets sont apatrides, ce qui signifie qu'une seule instance de widget
+>peut être rendue autant de fois que vous le voulez avec des arguments différents.
+
+Le wigdet ci-dessus rend comme suit :
+
+    [php]
+    <input class="foo" type="text" name="bar" id="bar" value="value"/>
+
+Les options par défaut définies par `sfWidgetForm` sont les suivantes:
+
+| Option            | Description
+| ----------------- | -----------
+| `is_hidden`       | `true` si le widget de formulaire doit être caché, sinon `false` (`false` par défaut)
+| `needs_multipart` | `true` si le widget a besoin d'un formulaire multipart, sinon `false` (`false` par défaut)
+| `default`         | La valeur par défaut à utiliser lors du rendu des widgets
+| `label`           | Le label à utiliser lorsque le widget est rendue par un widget de schéma
+| `id_format`       | Le format pour les attributs id HTML généré (`%s` par défaut)
+
+>**NOTE**
+>L'option `is_hidden` est utilisée par des classes de schéma du formulaire de widget pour
+>rendre les widgets masqués sans décoration. L'option `needs_multipart` est utilisée par les
+>classes de formulaire pour ajouter un attribut `enctype="multipart/form-data"` lors du rendu
+>d'une balise `form`.
+
+La classe `sfWidgetForm` fournit également des méthodes d'accès pour toutes les options :
+
+  * `is_hidden`:       `isHidden()`, `setHidden()`
+  * `needs_multipart`: `needsMultipartForm()`
+  * `default`:         `getValue()`, `setValue()`
+  * `label`:           `getLabel()`, `setLabel()`
+  * `id_format`:       `getIdFormat()`, `setIdFormat()`
+
+### Widget Schema
+
+Un schéma de widget de formulaire est un widget qui englobe un ou plusieurs autres widgets.
+
+Dans les sections suivantes, les widgets ont été regroupés en catégories.
+
+<div class="pagebreak"></div>
+
+Widgets
+-------
+
+ * [`sfWidgetFormChoice`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormDate`](A-Widgets#chapter_a_sub_sfwidgetformdate)
+ * [`sfWidgetFormDateRange`](A-Widgets#chapter_a_sub_sfwidgetformdaterange)
+ * [`sfWidgetFormDateTime`](A-Widgets#chapter_a_sub_sfwidgetformdatetime)
+ * [`sfWidgetFormDoctrineChoice`](A-Widgets#chapter_a_sub_choice_bound_to_a_doctrine_model)
+ * [`sfWidgetFormFilterInput`](A-Widgets#chapter_a_sub_sfwidgetformfilterinput)
+ * [`sfWidgetFormFilterDate`](A-Widgets#chapter_a_sub_sfwidgetformfilterdate)
+ * [`sfWidgetFormI18nChoiceCountry`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicecountry)
+ * [`sfWidgetFormI18nChoiceLanguage`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicelanguage)
+ * [`sfWidgetFormI18nChoiceCurrency`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicecurrency)
+ * [`sfWidgetFormI18nChoiceTimezone`](A-Widgets#chapter_a_sub_sfwidgetformI18nchoicetimezone)
+ * [`sfWidgetFormI18nDate`](A-Widgets#chapter_a_sub_sfwidgetformi18ndate)
+ * [`sfWidgetFormI18nDateTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ndatetime)
+ * [`sfWidgetFormI18nTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ntime)
+ * [`sfWidgetFormInput`](A-Widgets#chapter_a_sub_sfwidgetforminput)
+ * [`sfWidgetFormInputCheckbox`](A-Widgets#chapter_a_sub_sfwidgetforminputcheckbox)
+ * [`sfWidgetFormInputFile`](A-Widgets#chapter_a_sub_sfwidgetforminputfile)
+ * [`sfWidgetFormInputFileEditable`](A-Widgets#chapter_a_sub_sfwidgetforminputfileeditable)
+ * [`sfWidgetFormInputHidden`](A-Widgets#chapter_a_sub_sfwidgetforminputhidden)
+ * [`sfWidgetFormInputPassword`](A-Widgets#chapter_a_sub_sfwidgetforminputpassword)
+ * [`sfWidgetFormJQueryAutocompleter`](A-Widgets#chapter_a_sub_autocomplete)
+ * [`sfWidgetFormJQueryDate`](A-Widgets#chapter_a_sub_sfwidgetformjquerydate)
+ * [`sfWidgetFormPropelChoice`](A-Widgets#chapter_a_sub_choice_bound_to_a_propel_model)
+ * [`sfWidgetFormReCaptcha`](A-Widgets#chapter_a_captcha_widget)
+ * [`sfWidgetFormSchema`](A-Widgets#chapter_a_sfwidgetformschema)
+ * [`sfWidgetFormSchemaDecorator`](A-Widgets#chapter_a_sub_sfwidgetformschemadecorator)
+ * [`sfWidgetFormSelect`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectDoubleList`](A-Widgets#chapter_a_sub_double_list_representation)
+ * [`sfWidgetFormSelectMany`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectCheckbox`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectRadio`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormTextarea`](A-Widgets#chapter_a_sub_sfwidgetformtextarea)
+ * [`sfWidgetFormTextareaTinyMCE`](A-Widgets#chapter_a_sub_sfwidgetformtextareatinymce)
+ * [`sfWidgetFormTime`](A-Widgets#chapter_a_sub_sfwidgetformtime)
+
+<div class="pagebreak"></div>
+
+Widgets de saisie
+-----------------
+
+### ~`sfWidgetFormInput`~
+
+La balise `input` est probablement la plus simple des balises de formulaire que vous
+utiliserez et elle est représentée par la classe `sfWidgetFormInput`.
+
+| Option  | Description
+| ------- | -----------
+| `type`  | La valeur de l'attribut HTML `type` (`text` par défaut)
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    echo $w->render('foo');
+
+    # <input type="text" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputCheckbox`~
+
+Le `sfWidgetFormInputCheckbox` est un widget de saisie avec `type` à
+`checkbox`.
+
+    [php]
+    $w = new sfWidgetFormInputCheckbox();
+    echo $w->render('foo');
+
+    # <input type="checkbox" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputHidden`~
+
+Le `sfWidgetFormInputHidden` est un widget de saisie avec `type` à `hidden`.
+L'option `is_hidden` est également mise à `true`.
+
+    [php]
+    $w = new sfWidgetFormInputHidden();
+    echo $w->render('foo');
+
+    # <input type="hidden" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputPassword`~
+
+Le `sfWidgetFormInputPassword` est un widget de saisie avec `type` à
+`password`.
+
+    [php]
+    $w = new sfWidgetFormInputPassword();
+    echo $w->render('foo');
+
+    # <input type="password" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputFile`~
+
+Le `sfWidgetFormInputFile` est un widget de saisie avec `type` à `file`. L'option
+`needs_multipart` est automatiquement mise à `true`.
+
+    [php]
+    $w = new sfWidgetFormInputFile();
+    echo $w->render('foo');
+
+    # <input type="file" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputFileEditable`~
+
+Le `sfWidgetFormInputFileEditable` est un widget de saisie de fichier, étendant le
+widget `sfWidgetFormInputFile` pour ajouter la possibilité d'afficher ou supprimer
+un fichier précédement téléchargé.
+
+| Option         | Description
+| -------------- | -----------
+| `file_src`     | Le chemin actuel source des images web (obligatoire)
+| `edit_mode`    | Un booléen : `true` pour activer le mode d'édition, sinon `false`
+| `is_image`     | Le fichier est une image affichable
+| `with_delete`  | Pour ajouter une case à cocher de suppression ou pas
+| `delete_label` | Le label de suppression utilisé par le Template
+| `template`     | Le Template HTML à utiliser pour faire le rendu de ce widget
+|                | Les mots-clefs disponibles sont :
+|                |   * `input` (le widget de téléchargement d'image)
+|                |   * `delete` (la case àcocher de suppression)
+|                |   * `delete_label` (le texte du label de suppression)
+|                |   * `file` (la balise du fichier)
+
+>**CAUTION**
+>Dans le mode `edit`, ce widget rend un widget supplémentaire nommée après le
+>widget de téléchargement de fichier avec le suffixe "_delete". Ainsi, lorsque vous
+>créez un formulaire, n'oubliez pas d'ajouter un validateur pour ce champ supplémentaire.
+
+### ~`sfWidgetFormTextarea`~
+
+Le widget `sfWidgetFormTextarea` définit automatiquement des valeurs par défaut
+pour les attributs HTML `rows` et `cols` car ils sont obligatoires.
+
+    [php]
+    $w = new sfWidgetFormTextarea();
+    echo $w->render('foo');
+
+    # <textarea rows="4" cols="30" name="foo" id="foo"></textarea>
+
+### ~`sfWidgetFormTextareaTinyMCE`~
+
+Si vous voulez avoir un widget d'un éditeur WYSIWYG, vous pouvez
+utiliser `sfWidgetFormTextareaTinyMCE` :
+
+    [php]
+    $w = new sfWidgetFormTextareaTinyMCE(
+      array(),
+      array('class' => 'foo')
+    );
+
+>**CAUTION**
+>Ce widget est une partie du plugin de symfony `sfFormExtraPlugin`.
+
+Comme les fichiers JavaScript de TinyMCE ne sont pas fournis avec le plugin,
+vous devez les installer et les inclure vous-même.
+
+| Option   | Description
+| -------- | -----------
+| `theme`  | Le thème de TinyMCE (`advanced` par défaut)
+| `width`  | Largeur
+| `height` | Hauteur
+| `config` | Un tableau de configuration spécifique de JavaScript
+
+Widgets de choix
+----------------
+
+### Représentations des choix
+
+Lorsque vous voulez que l'utilisateur fasse un choix parmi une liste de possibilités,
+HTML offre plusieurs façons de représenter le choix :
+
+ * Une balise `select` :
+
+   ![Liste déroulante](/images/forms_book/en/A_01.png)
+
+ * Une balise `select` avec l'attribut `multiple` :
+
+   ![Boite déroulante](/images/forms_book/en/A_02.png)
+
+ * Une liste de balise `input` avec un `type` à `radio` :
+
+   ![Liste de radio bouton](/images/forms_book/en/A_03.png)
+
+ * Une liste de balise `input` avec un `type` à `checkbox` :
+
+   ![Liste de case à cocher](/images/forms_book/en/A_04.png)
+
+Mais finalement, ils permettent tous à l'utilisateur de faire un seul ou plusieurs choix
+dans un nombre fini de possibilités.
+
+Le widget ~`sfWidgetFormChoice`~ standardise toutes ces possibilités au sein d'un
+widget. Le widget est en mesure de rendre le choix de l'une des quatre représentations
+HTML que nous avons vu ci-dessus. Il vous permet également de définir votre propre
+représentation comme vous le verrez plus tard.
+
+`sfWidgetFormChoice` est un widget spécial dans le sens où il délègue le rendu
+à un autre widget. Le rendu est contrôlée par deux options :
+`expanded` et `multiple` :
+
+ |                          | `expanded` est `false`   | `expanded` est `true`
+ | ------------------------ | ------------------------ | ----------------------------
+ | `multiple` est `false`   | `sfWidgetFormSelect`     | `sfWidgetFormSelectRadio`
+ | `multiple` est `true`    | `sfWidgetFormSelectMany` | `sfWidgetFormSelectCheckbox`
+
+>**NOTE**
+>Les widgets ~`sfWidgetFormSelect`~, ~`sfWidgetFormSelectMany`~,
+>~`sfWidgetFormSelectCheckbox`~ et ~`sfWidgetFormSelectRadio`~,
+>utilisés par ~`sfWidgetFormChoice`~ pour rendre les widgets comme
+>les autres, peuvent être utilisée directement. Ils ne sont pas documentées dans cette
+>section car la plupart du temps, il est préférable d'utiliser le widget
+>`sfWidgetFormChoice`sfWidgetFormChoice qui est plus souple.
+
+Et voici la représentation HTML pour chaque possibilité :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices' => array('Fabien Potencier', 'Fabian Lange'),
+    ));
+
+![Liste déroulante](/images/forms_book/en/A_01.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'multiple' => true,
+      'choices'  => array('PHP', 'symfony', 'Doctrine', 'Propel', 'model'),
+    ));
+
+![Boite déroulante](/images/forms_book/en/A_02.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'expanded' => true,
+      'choices'  => array('published', 'draft', 'deleted'),
+    ));
+
+![Liste de radio bouton](/images/forms_book/en/A_03.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'expanded' => true,
+      'multiple' => true,
+      'choices'  => array('A week of symfony', 'Call the expert', 'Community'),
+    ));
+
+![Liste de case à cocher](/images/forms_book/en/A_04.png)
+
+### Groupement des choix
+
+Le widget `sfWidgetFormChoice` a un support intégré pour des groupes de choix en
+passant un tableau de tableaux pour les options `choices` :
+
+    [php]
+    $choices = array(
+      'Europe'  => array('France' => 'France', 'Spain' => 'Spain', 'Italy' => 'Italy'),
+      'America' => array('USA' => 'USA', 'Canada' => 'Canada', 'Brazil' => 'Brazil'),
+    );
+
+    $w = new sfWidgetFormChoice(array('choices' => $choices));
+
+![Groupes de choix](/images/forms_book/en/A_choice_group.png)
+
+Les options `expanded` et `multiple` fonctionnent également comme prévu :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'expanded' => true,
+    ));
+
+![Groupes de choix avec expanded](/images/forms_book/en/A_choice_group_expanded.png)
+
+Le layout utilisé par le widget de rendu peut également être personnalisé :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'expanded' => true,
+      'renderer_options' => array('template' => '<strong>%group%</strong> %options%'),
+    ));
+
+![Groupes de choix avec expanded et template personnalisé](/images/forms_book/en/A_choice_group_expanded_template.png)
+
+Voici quelques exemples de plus de combinaisons d'options :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'multiple' => true,
+    ));
+
+![Groupes de choix avec multiple](/images/forms_book/en/A_choice_group_multiple.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'multiple' => true,
+      'expanded' => true,
+      'renderer_options' => array('template' => '<strong>%group%</strong> %options%'),
+    ));
+
+![Groupes de choix avec expanded et multiple](/images/forms_book/en/A_choice_group_multiple_expanded.png)
+
+>**NOTE**
+>Lorsque le widget est rendu avec une balise `select`, il utilise la
+>balise standard `optgroup`.
+
+### Options supportées
+
+Voici une liste de toutes les options prises en charge pour le widget :
+
+| Option             | Description
+| ------------------ | -----------
+| `choices`          | Un tableau de choix possibles (obligatoire)
+| `multiple`         | `true` si la balise select doit autoriser les sélections multiples
+| `expanded`         | `true` pour afficher un widget expanded
+| `renderer_class`   | La classe à utiliser à la place de celle par défaut
+| `renderer_options` | Les options à passer au constructeur de rendu
+| `renderer`         | Un widget de rendu (surchargent les options `expanded` et `renderer_options`)
+|                    | L'option `choices` sera : `new sfCallable($thisWidgetInstance, 'getChoices')`
+
+Les widgets `sfWidgetFormSelectCheckbox` et `sfWidgetFormSelectRadio` supportent
+les options suivantes :
+
+| Option             | Description
+| ------------------ | -----------
+| `label_separator`  | Le séparateur à utiliser entre la zone de saisie et le label
+| `class`            | La classe à utiliser pour la balise `<ul>`
+| `separator`        | Le séparateur à utiliser entre chaque case à cocher/radio bouton
+| `formatter`        | Le callable à appeler pour formatter les choix des cases à cocher
+|                    | Le formatteur callable reçoit le widget et le tableau de saisie comme arguments
+| `template`         | Le template à utiliser pour les options de regroupement dans les groupes (`%group% %options%`)
+
+### Représentation d'une double liste
+
+Lorsque l'utilisateur peut sélectionner plusieurs options, il est parfois préférable
+d'afficher la liste des options sélectionnées dans une autre boîte.
+
+Le widget ~`sfWidgetFormSelectDoubleList`~ peut être utilisé pour rendre un
+widget de choix comme une double liste :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'        => array('PHP', 'symfony', 'Doctrine', 'Propel', 'model'),
+      'renderer_class' => 'sfWidgetFormSelectDoubleList',
+    ));
+
+![Double liste](/images/forms_book/en/A_double_list.png)
+
+>**CAUTION**
+>Ce widget est une partie du plugin de symfony `sfFormExtraPlugin`.
+
+-
+
+>**NOTE**
+>Ce widget utilise des JavaScripts personnalisés pour fonctionner. Vous pouvez
+>récupérer leurs chemins en appelant la méthode de widget `getJavaScripts()` :
+>
+>     [php]
+>     $files = $w->getJavascripts();
+
+| Option               | Description
+| -------------------- | -----------
+| `choices`            | Un tableau de choix possibles (obligatoire)
+| `class`              | La classe principale du widget
+| `class_select`       | La classe pour les deux balises select
+| `label_unassociated` | Le label pour dissocier
+| `label_associated`   | Le label pour associé
+| `unassociate`        | Le HTML pour le lien de dissociation
+| `associate`          | Le HTML pour le lien d'association
+| `template`           | Le Template HTML à utiliser pour rendre ce widget
+|                      | Les espaces réservés disponibles sont : `%label_associated%`, `%label_unassociated%`, `%associate%`, `%unassociate%`, `%associated%`, `%unassociated%`, `%class%`
+
+### Autocomplétion
+
+Lorsque vous voulez que l'utilisateur fasse une sélection parmi un grand nombre d'éléments et
+de les énumérer toutes dans une zone de sélection devient impraticable. Le
+~`sfWidgetFormJQueryAutocompleter`~ résout ce problème en convertissant une simple balise
+`input` en une boîte de sélection d'autocomplétion.
+
+>**CAUTION**
+>Ce widget est une partie du plugin de symfony `sfFormExtraPlugin`. Comme
+>JQuery et JQuery UI ne sont pas fournis avec `sfFormExtraPlugin`, vous avez
+>besoin de les installer et de les inclure à la main.
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'          => array(),
+      'renderer_class'   => 'sfWidgetFormJQueryAutocompleter',
+      'renderer_options' => array('url' => '/autocomplete_script'),
+    ));
+
+>**NOTE**
+>Ce widget utilise des JavaScripts et des feuilles de style personnalisées pour fonctionner
+>correctement. Vous pouvez récupérer leurs chemins en appelant les méthodes de widget
+>`getJavaScripts()` et `getStylesheets()`.
+
+L'option `url` est l'URL que le widget appellera pour fournir les choix basés sur la
+saisie de l'utilisateur. L'URL reçoit deux paramètres :
+
+ * `q`:     La chaine saisie par l'utilisateur
+ * `limit`: Le nombre maximum de choix à retourner
+
+Le script doit retourner une représentation JSON valide du tableau de choix (utilisez
+la fonction intégrée de PHP `json_encode()` pour convertir un tableau en JSON).
+
+| Option           | Description
+| ---------------- | -----------
+| `url`            | L'URL à appeler pour récupérer les choix à utiliser (obligatoire)
+| `config`         | Un tableau de JavaScript qui configure le widget JQuery d'autocomplétion
+| `value_callback` | Un callback qui convertit la valeur avant de l'afficher
+
+Si les choix sont liés à un modèle Propel, le widget
+`sfWidgetFormPropelJQueryAutocompleter` est optimisé pour la recherche de
+clé étrangère :
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'renderer_class'   => 'sfWidgetFormPropelJQueryAutocompleter',
+      'renderer_options' => array(
+        'model' => 'Article',
+        'url'   => '/autocomplete_script',
+      ),
+    ));
+
+| Option           | Description
+| ---------------- | -----------
+| `model`          | La classe du modèle (obligatoire)
+| `method`         | La méthode à utiliser pour convertir un objet en une chaine (`__toString()` par défaut)
+
+### Choix lié à un modèle Propel
+
+Si les choix sont liés à un modèle Propel (généralement lorsque vous voulez permettre à
+l'utilisateur de modifier une clé étrangère), vous pouvez utiliser le widget
+~`sfWidgetFormPropelChoice`~ :
+
+    [php]
+    $w = new sfWidgetFormPropelChoice(array(
+      'model'     => 'Article',
+      'add_empty' => false,
+    ));
+
+Le `choices` est automatiquement récupéré par le widget en fonction de la
+classe `model` que vous avez passée. Le widget est hautement configurable via un
+ensemble d'options dédiées :
+
+| Option        | Description
+| ------------- | -----------
+| `model`       | La classe modèle Propel (obligatoire)
+| `add_empty`   | Pour ajouter une valeur vide en premier ou non (`false` par défaut)
+|               | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme une valeur de texte
+| `method`      | La méthode à utiliser pour afficher des valeurs d'objet (`__toString` par défaut)
+| `key_method`  | La méthode à utiliser pour afficher les clés de l'objet (`getPrimaryKey` par défaut)
+| `order_by`    | Un tableau composé de deux champs :
+|               |  * La colonne à trier dans les résultats (doit être dans le format `PhpName`)
+|               |  * `asc` ou `desc`
+| `criteria`    | Un critère à utiliser pour récupérer des objets
+| `connection`  | Le nom de la connexion Propel à utiliser (`null` par défaut)
+| `multiple`    | `true` si la balise select doit autoriser les sélections multiples
+| `peer_method` | La méthode peer à utiliser pour aller chercher des objets
+
+### Choix lié à un modèle Doctrine
+
+Si les choix sont liés à un modèle Doctrine (généralement lorsque vous voulez permettre à
+l'utilisateur de modifier une clé étrangère), vous pouvez utiliser le widget
+~`sfWidgetFormDoctrineChoice`~ :
+
+    [php]
+    $w = new sfWidgetFormDoctrineChoice(array(
+      'model'     => 'Article',
+      'add_empty' => false,
+    ));
+
+Le `choices` est automatiquement récupéré par le widget en fonction de la
+classe `model` que vous avez passée. Le widget est hautement configurable via un
+ensemble d'options dédiées :
+
+| Option         | Description
+| -------------- | -----------
+| `model`        | La classe modèle (obligatoire)
+| `add_empty`    | Pour ajouter une valeur vide en premier ou non (`false` par défaut)
+|                | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme une valeur de texte
+| `method`       | La méthode à utiliser pour afficher des valeurs d'objet (`__toString` par défaut)
+| `key_method`   | La méthode à utiliser pour afficher les clés de l'objet (`getPrimaryKey` par défaut)
+| `order_by`     | Un tableau composé de deux champs :
+|                |  * La colonne à trier dans les résultats (doit être dans le format `PhpName`)
+|                |  * `asc` ou `desc`
+| `query`        | La query à utiliser pour récupérer des objets
+| `connection`   | Le nom de la connexion Doctrine à utiliser (`null` par défaut)
+| `multiple`     | `true` si la balise select doit autoriser les sélections multiples
+| `table_method` | La méthode à utiliser pour aller chercher des objets
+
+Widgets de date
+---------------
+
+Les widgets de date peuvent être utilisés pour faciliter la saisie de date en proposant
+plusieurs cases pour sélectionner une date, une heure ou une date et heure. Tous les widgets
+de date de symfony sont représentés par plusieurs balises HTML. Ils peuvent également être
+personnalisés en fonction de la culture de l'internaute.
+
+>**NOTE**
+>Certaines personnes préfèrent utiliser une simple balise `input` pour les dates car
+>les utilisateurs peuvent entrer des dates plus rapidement en évitant toutes les listes
+>de sélection. Bien sûr, le format de date est appliquée côté serveur par un validateur.
+>Heureusement, le validateur de date de symfony propose un validateur puissant qui est très
+>libéral dans ce genre de format de date, il est capable de comprendre et analyser.
+
+### ~`sfWidgetFormDate`~
+
+Lz `sfWidgetFormDate` représente un widget de date :
+
+![Date Widget](/images/forms_book/en/A_date.png)
+
+Les valeurs soumises par l'utilisateur sont stockées dans un tableau du nom du
+widget :
+
+    [php]
+    $w = new sfWidgetFormDate();
+    $w->render('date');
+
+    # submitted values will be in a `date` array:
+    # array(
+    #   'date' => array(
+    #     'day'   => 15,
+    #     'month' => 10,
+    #     'year'  => 2005,
+    #   ),
+    # );
+
+Le comportement du widget peut être personnalisé avec une foule d'options :
+
+| Option         | Description
+| -------------- | -----------
+| `format`       | La chaine de format de la date (`%month%/%day%/%year%` par défaut)
+| `years`        | Un tableau d'années pour la balise select de l'année (facultatif)
+| `months`       | Un tableau de mois pour la balise select du mois (facultatif)
+| `days`         | Un tableau de jours pour la balise select du jour (facultatif)
+| `can_be_empty` | Indique que le widget accepte une valeur vide (`true` par défaut)
+| `empty_values` | Un tableau de valeurs à utiliser pour la valeur vide (une chaine
+|                | vide pour `year`, `month` et `day` par défaut)
+
+L'utilisation de l'option `format` permet la personnalisation de la disposition par défaut
+des balises (les espaces réservés `%year%`, `%month%` et `%day%` sont remplacés par la balise
+`select` correspondante lorsque la méthode `render()` est appelée) :
+
+    [php]
+    $w = new sfWidgetFormDate(
+      array('format' => '%year% - %month% - %day%')
+    );
+
+![Widget de date avec un format personnalisé](/images/forms_book/en/A_date_format.png)
+
+Par défaut, la balise select `year` est peuplé avec les 10 ans autour de l'année
+en cours. Ceci peut être changé en utilisant l'option `years` :
+
+    [php]
+    $years = range(2009, 2020);
+    $w = new sfWidgetFormDate(
+      array('years' => array_combine($years, $years))
+    );
+
+Les options `years`, `months` et `days` prennent un tableau dont les clés sont les
+valeurs des balises `option` et les valeurs sont les chaînes affichées à
+l'utilisateur.
+
+### ~`sfWidgetFormTime`~
+
+Le `sfWidgetFormTime` représente une widget d'heure :
+
+![Widget d'heure](/images/forms_book/en/A_time.png)
+
+Les valeurs soumises par l'utilisateur sont stockées dans un tableau du nom
+du widget :
+
+    [php]
+    $w = new sfWidgetFormTime();
+    $w->render('time');
+
+    # les valeurs soumises seront dans un tableau `time` :
+    # array(
+    #   'time' => array(
+    #     'hour'    => 12,
+    #     'minute'  => 13,
+    #     'second'  => 14,
+    #   ),
+    # );
+
+Le comportement du widget peut être personnalisé avec une foule d'options :
+
+| Option                   | Description
+| ------------------------ | -----------
+| `format`                 | La chaine du format de l'heure (`%hour%:%minute%:%second%`)
+| `format_without_seconds` | La chaine du format de l'heure sans les secondes (`%hour%:%minute%`)
+| `with_seconds`           | Prise en compte d'un select pour les secondes (`false` par défaut)
+| `hours`                  | Un tableau d'heures pour la balise select heure (facultatif)
+| `minutes`                | Un tableau de minutes pour la balise select minute (facultatif)
+| `seconds`                | Un tableau de secondes pour la balise select seconde (facultatif)
+| `can_be_empty`           | Indique que le widget accepte une valeur vide (`true` par défaut)
+| `empty_values`           | Un tableau de valeurs à utiliser pour la valeur vide
+|                          | (une chaine vide pour `hours`, `minutes` et `seconds` par défaut)
+
+Par défaut, le widget ne permet pas pour le choix des secondes. Ceci peut être changé
+en définissant l'option `with_seconds` à `true` :
+
+    [php]
+    $w = new sfWidgetFormTime(array('with_seconds' => true));
+
+L'utilisation des options `format` et `format_without_seconds` permettent
+la personnalisation de la disposition par défaut des tags (les espaces réservés
+`%hour%`, `%minute%` et `%second%` sont remplacés par la balise `select` correspondante
+lorsque la méthode `render()` est appelée) :
+
+    [php]
+    $w = new sfWidgetFormTime(array(
+      'with_seconds' => true,
+      'format'       => '%hour% : %minute% : %second%',
+    ));
+
+![Widget d'heure avec un format personnalisé](/images/forms_book/en/A_time_format.png)
+
+Si vous ne souhaitez pas proposer toutes les minutes ou secondes, vous pouvez
+fournir vos propres valeurs pour chacune des trois balises :
+
+    [php]
+    $seconds = array(0, 15, 30, 45);
+    $w = new sfWidgetFormTime(array(
+      'with_seconds' => true,
+      'seconds'      => array_combine($seconds, $seconds),
+    ));
+
+![Widget d'heure avec des valeurs personnalisés pour les secondes](/images/forms_book/en/A_time_seconds.png)
+
+Les options `hours`, `minutes` et `seconds` prennent un tableau dont les clés sont
+les valeurs des balises `option` et les valeurs sont les chaînes de caractères affichée
+à l'utilisateur.
+
+### ~`sfWidgetFormDateTime`~
+
+Le widget `sfWidgetFormDateTime` est un widget qui rend deux sous-widgets : un
+widget `sfWidgetFormDate` et un widget `sfWidgetFormTime` :
+
+    [php]
+    $w = new sfWidgetFormDateTime();
+
+![Widget de date et heure](/images/forms_book/en/A_date_time.png)
+
+| Option      | Description
+| ----------- | -----------
+| `date`      | Option pour le widget de date (voir `sfWidgetFormDate`)
+| `time`      | Option pour le widget d'heure (voir `sfWidgetFormTime`)
+| `with_time` | Prise en compte de l'heure (`true` par défaut)
+| `format`    | La chaîne du format pour la date et l'heure du widget
+|             | (par défaut à `%date% %time%`)
+
+>**TIP**
+>Par défaut, le widget crée des instances de `sfWidgetFormDate` et
+>`sfWidgetFormTime`  respectivement pour les widgets de date et d'heure.
+>Vous pouvez modifier les classes utilisées par le widget en substituant les
+>méthodes `getDateWidget()` et `getTimeWidget()`.
+
+### ~`sfWidgetFormI18nDate`~
+
+Le `sfWidgetFormI18nDate` étend le widget standard `sfWidgetFormDate`. Mais tandis
+que le widget standard affiche les mois comme des numéros, l'i18n les affiche sous
+forme de chaînes, localisées en fonction de la culture :
+
+    [php]
+    $w = new sfWidgetFormI18nDate(array('culture' => 'fr'));
+
+![Widget de date I18n](/images/forms_book/en/A_date_i18n.png)
+
+Le formatage de chaîne du mois peut être modifié avec l'option `month_format`. Il
+accepte trois valeurs: `name` (par défaut), `short_name` ou `number`.
+
+    [php]
+    $w = new sfWidgetFormI18nDate(array(
+      'culture'      => 'fr',
+      'month_format' => 'short_name',
+    ));
+
+![Widget de date I18n avec nom des mois courts](/images/forms_book/en/A_date_i18n_short.png)
+
+Selon la culture, le widget connaît aussi l'ordre des trois différentes boîtes
+et sélectionne le séparateur à utiliser entre eux.
+
+>**CAUTION**
+>Ce widget dépend du sous-framework i18n de symfony.
+
+### ~`sfWidgetFormI18nTime`~
+
+Le `sfWidgetFormI18nTime` étend le widget standard `sfWidgetFormTime`.
+
+Selon la `culture` passée en option, le widget connaît aussi l'ordre des trois
+différentes boîtes et sélectionne le séparateur à utiliser entre eux.
+
+    [php]
+    $w = new sfWidgetFormI18nTime(array('culture' => 'ar'));
+
+![Widget d'heure I18n](/images/forms_book/en/A_time_i18n.png)
+
+>**CAUTION**
+>Ce widget dépend du sous-framework i18n de symfony.
+
+### ~`sfWidgetFormI18nDateTime`~
+
+Le widget `sfWidgetFormI18nDateTime` est un widget qui rend deux sous-widgets :
+un widget `sfWidgetFormI18nDate` et un widget `sfWidgetFormI18nTime`.
+
+>**CAUTION**
+>Ce widget dépend du sous-framework i18n de symfony.
+
+### ~`sfWidgetFormDateRange`~
+
+Le widget `sfWidgetFormDateRange` représente le choix d'une plage de dates :
+
+    [php]
+    $w = new sfWidgetFormDateRange(array(
+      'from_date' => new sfWidgetFormDate(),
+      'to_date'   => new sfWidgetFormDate(),
+    ));
+
+![Widget d'une plage de date](/images/forms_book/en/A_date_range.png)
+
+| Option      | Description
+| ----------- | -----------
+| `from_date` | Le widget de la date de début (obligatoire)
+| `to_date`   | Le widget de la date de fin (obligatoire)
+| `template`  | Le Template à utiliser pour rendre le widget
+|             | (espaces réservés disponibless : `%from_date%`, `%to_date%`)
+
+Le Template utilisé pour rendre le widget peut être personnalisé avec l'option
+`template` :
+
+    [php]
+    $w = new sfWidgetFormDateRange(array(
+      'from_date' => new sfWidgetFormDate(),
+      'to_date'   => new sfWidgetFormDate(),
+      'template'  => 'Begin at: %from_date%<br />End at: %to_date%',
+    ));
+
+![Widget personnalisé d'une plage de date](/images/forms_book/en/A_date_range_customized.png)
+
+>**NOTE**
+>Ce widget est la classe de base pour le widget plus sophistiqué
+>`sfWidgetFormFilterDate`.
+
+### ~`sfWidgetFormJQueryDate`~
+
+Le widget `sfWidgetFormJQueryDate` représente un widget de date qui est rendu par
+JQuery UI :
+
+    [php]
+    $w = new sfWidgetFormJQueryDate(array(
+      'culture' => 'en',
+    ));
+
+>**CAUTION**
+>Ce widget est une partie du plugin `sfFormExtraPlugin` de symfony. Comme
+>JQuery et JQuery UI ne sont pas fournis avec `sfFormExtraPlugin`, vous avez
+>besoin de les installer et de les inclure à la main.
+
+| Option      | Description
+| ----------- | -----------
+| `image`     | Le chemin de l'image qui représente le widget (`false` par défaut)
+| `config`    | Un tableau de JavaScript qui configure le widget de date de JQuery
+| `culture`   | La culture de l'utilisateur
+
+Widgets I18n
+------------
+
+>**CAUTION**
+>Les widgets dans cette section dépendend du sous-framework
+>i18n de symfony.
+
+### ~`sfWidgetFormI18nChoiceCountry`~
+
+Le `sfWidgetFormI18nChoiceCountry` représente un choix de pays :
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
+
+![Pays I18n](/images/forms_book/en/A_i18n_countries.png)
+
+| Option      | Description
+| ----------- | -----------
+| `culture`   | La culture à utiliser pour internationaliser les chaines (par défaut : `en`)
+| `countries` | Un tableau de codes de pays à utiliser (ISO 3166)
+| `add_empty` | Pour ajouter une valeur vide en premier (`false` par défaut)
+|             | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme la valeur du texte.
+
+### ~`sfWidgetFormI18nChoiceLanguage`~
+
+Le `sfWidgetFormI18nChoiceLanguage` représente un choix de langues :
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'fr'));
+
+![Langue I18n](/images/forms_book/en/A_i18n_languages.png)
+
+| Option      | Description
+| ----------- | -----------
+| `culture`   | La culture à utiliser pour internationaliser les chaines (par défaut : `en`)
+| `languages` | Un tableau de code de pays à utiliser
+| `add_empty` | Pour ajouter une valeur vide en premier (`false` par défaut)
+|             | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme la valeur du texte.
+
+### ~`sfWidgetFormI18nChoiceCurrency`~
+
+Le `sfWidgetFormI18nChoiceCurrency` représente un choix de devise :
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceCurrency(array('culture' => 'fr'));
+
+![Devise I18n](/images/forms_book/en/A_i18n_currencies.png)
+
+| Option       | Description
+| ------------ | -----------
+| `culture`    | La culture à utiliser pour internationaliser les chaines (par défaut : `en`)
+| `currencies` | Un tableau de codes de devise à utiliser
+| `add_empty`  | Pour ajouter une valeur vide en premier (`false` par défaut)
+|              | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme la valeur du texte.
+
+### ~`sfWidgetFormI18nChoiceTimezone`~
+
+Le `sfWidgetFormI18nChoiceTimezone` représente un choix de fuseau horaire :
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceTimezone(array('culture' => 'fr'));
+
+| Option       | Description
+| ------------ | -----------
+| `culture`    | La culture à utiliser pour internationaliser les chaines (par défaut : `en`)
+| `add_empty`  | Pour ajouter une valeur vide en premier (`false` par défaut)
+|              | Si l'option n'est pas une valeur booléenne, la valeur sera utilisée comme la valeur du texte.
+
+Widget captcha
+--------------
+
+Le plugin `sfFormExtraPlugin` livré avec un widget captcha,
+`sfWidgetFormReCaptcha`, basé sur le
+[projet ReCaptcha](http://recaptcha.net/) :
+
+    [php]
+    $w = new sfWidgetFormReCaptcha(array(
+      'public_key' => 'RECAPTCHA_PUBLIC_KEY'
+    ));
+
+| Option           | Description
+| ---------------- | -----------
+| `public_key`     | La clé publique ReCaptcha
+| `use_ssl`        | Pour utiliser SSL ou non (`false` par défaut)
+| `server_url`     | L'URL de l'API HTTP
+| `server_url_ssl` | L'URL de l'API HTTPS (seulement utilisé quand `use_ssl` est à `true`)
+
+Le `public_key` est la clé publique ReCaptcha. Vous pouvez en obtenir une gratuitement
+en inscrivant une [clé API](http://recaptcha.net/api/getkey).
+
+>**TIP**
+>Plus d'informations sur
+>l'[API ReCaptcha](http://recaptcha.net/apidocs/captcha/) se trouve en ligne.
+
+Comme il n'est pas possible de changer le nom des champs ReCaptcha, vous devrez
+les ajouter manuellement lors de la liaison d'un formulaire à partir d'une requête HTTP.
+
+Par exemple, si votre formulaire a un format de nom `contact[%s]`, voici le code
+nécessaire pour assurer que l'information du captcha sera fusionnée avec le reste
+des valeurs soumises du formulaire :
+
+    [php]
+    $captcha = array(
+      'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+      'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+    );
+    $submittedValues = array_merge(
+      $request->getParameter('contact'),
+      array('captcha' => $captcha)
+    );
+
+Ce widget est à utiliser avec le validateur `sfValidatorReCatpcha`.
+
+Widgets de filtre
+-----------------
+
+Les widgets de filtre sont des widgets spéciaux qui peuvent être utilisés pour rendre un
+formulaire qui agit comme un filtre.
+
+### ~`sfWidgetFormFilterInput`~
+
+`sfWidgetFormFilterInput` représente un filtre pour le texte. Par défaut, il
+comporte une case à cocher pour permettre aux utilisateurs de rechercher un texte vide.
+
+| Option        | Description
+| ------------- | -----------
+| `with_empty`  | Pour ajouter la case à cocher vide (`true` par défaut)
+| `empty_label` | Le label à utiliser quand on utilise la case à cocher vide
+| `template`    | Le Template à utiliser pour rendre le widget
+|               | Espaces réservés disponibles : `%input%`, `%empty_checkbox%`, `%empty_label%`
+
+### ~`sfWidgetFormFilterDate`~
+
+`sfWidgetFormFilterDate` représente un widget pour filtrer une plage de date. Par défaut,
+il comporte une case à cocher pour permettre aux utilisateurs de rechercher des dates vides.
+
+| Option        | Description
+| ------------- | -----------
+| `with_empty`  | Pour ajouter la case à cocher vide (`true` par défaut)
+| `empty_label` | Le label à utiliser quand on utilise la case à cocher vide
+| `template`    | Le Template à utiliser pour rendre le widget
+|               | Espaces réservés disponibles : `%date_range%`, `%empty_checkbox%`, `%empty_label%`
+
+~`sfWidgetFormSchema`~
+----------------------
+
+The `sfWidgetFormSchema` représente un widget qui est composé de
+plusieurs champs. Un champ est simplement un widget nommé :
+
+    [php]
+    $w = new sfWidgetFormSchema(array(
+      'name'    => new sfWidgetFormInputText(),
+      'country' => new sfWidgetFormI18nChoiceCountry(),
+    ));
+
+>**NOTE**
+>Un formulaire est défini par un schéma de widget de la classe `sfWidgetFormSchema`.
+
+Le constructeur de `sfWidgetFormSchema` prend cinq arguments facultatifs :
+
+ * Un tableau de champs
+ * Un tableau d'options
+ * Un tableau d'attributs HTML
+ * Un tableau de labels pour les widgets intégrés
+ * Un tableau de messages d'aide pour les widgets intégrés
+
+Les options disponibles sont :
+
+| Option           | Description
+| ---------------- | -----------
+| `name_format`    | Le modèle `sprintf` à utiliser pour les noms saisis (`%s` par défaut)
+| `form_formatter` | Le nom du formatteur de formulaire (`table` et `list` sont groupés, `table` est celui par défaut)
+
+Si vous voulez changer le formateur par défaut pour tous les formulaires, vous pouvez
+définir la méthode `setDefaultFormFormatterName()` :
+
+    [php]
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
+
+Comme le `sfWidgetFormSchema` étend la classe `sfWidgetForm`, il hérite de toutes
+ses méthodes et ses comportements.
+
+>**CAUTION**
+>Un objet `sfWidgetFormSchema` rend seulement les «lignes» des widgets, pas
+>la balise contenante (`table` pour un formateur `table` ou `ul` pour celui
+>d'une `list`) :
+>
+>     [php]
+>     <Table>
+>       <?php echo $ws->render('') ?>
+>     </table>
+
+Le `sfWidgetFormSchema` peut utilisé un tableau pour accéder aux
+widgets intégrés :
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $nameWidget = $ws['name'];
+
+    unset($ws['name']);
+
+>**CAUTION**
+>Quand un schéma de formulaire de widget est intégré dans un formulaire, le formulaire
+>vous donne accès à un champ lié dans les Templates, pas au widget lui-même. Voir
+>le chapitre référence de formulaire pour plus d'information.
+
+Comme un schéma de widget est un widget comme les autres, les schémas de widget peuvent être imbriqués :
+
+    [php]
+    $ws = new sfWidgetFormSchema(array(
+      'title'  => new sfWidgetFormInputText(),
+      'author' => new sfWidgetFormSchema(array(
+        'first_name' => new sfWidgetFormInputText(),
+        'last_name'  => new sfWidgetFormInputText(),
+      )),
+    ));
+
+Vous pouvez accéder aux widgets du schéma de widget intégré en utilisant la notation de tableau :
+
+    [php]
+    $ws['author']['first_name']->setLabel('First Name');
+
+Ci-dessous, les principales méthodes de classes de schéma de widget sont décrites. Pour une
+liste complète des méthodes, reportez-vous à la documentation en ligne de l'API.
+
+### `setLabel()`, `getLabel()`, `setLabels()`, `getLabels()`
+
+Les méthodes `setLabel()`, `getLabel()`, `setLabels()` et `getLabels()`
+gérent les labels pour les widgets intégrés. Ce sont des méthodes proxy pour
+les méthodes de widget `getLabel()` et `setLabel()`.
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setLabel('name', 'Fabien');
+
+    // qui est équivalent à
+
+    $ws['name']->setLabel('Fabien');
+
+    // ou
+
+    $ws->setLabels(array('name' => 'Fabien'));
+
+La méthode `setLabels()` fusionne les valeurs avec celles déjà existantes.
+
+### `setDefault()`, `getDefault()`, `setDefaults()`, `getDefaults()`
+
+Les méthodes `setDefault()`, `getDefault()`, `setDefaults()` et `getDefaults()`
+gérent les valeurs par défaut pour les widgets intégrés. Ce sont des méthodes proxy pour
+les méthodes de widget `getDefault()` et `setDefault()`.
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setDefault('name', 'Fabien');
+
+    // qui est équivalent à
+
+    $ws['name']->setDefault('Fabien');
+
+    // ou
+
+    $ws->setDefaults(array('name' => 'Fabien'));
+
+La méthode `setDefaults()` fusionne les valeurs avec celles déjà existantes.
+
+### `setHelp()`, `setHelps()`, `getHelps()`, `getHelp()`
+
+Les méthodes `setHelp()`, `setHelps()`, `getHelps()` et `getHelp()` gérent
+le message d'aide associé aux widgets intégrés :
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setHelp('name', 'Fabien');
+
+    // qui est équivalent à
+
+    $ws->setHelps(array('name' => 'Fabien'));
+
+La méthode `setHelps()` fusionne les valeurs avec celles déjà existantes.
+
+### `getPositions()`, `setPositions()`, `moveField()`
+
+Les champs contenus dans un schéma de widget sont triés. L'ordre peut être modifié
+avec la méthode `moveField()` :
+
+    [php]
+    $ws = new sfWidgetFormSchema(array(
+      'first_name' => new sfWidgetFormInputText(),
+      'last_name' => new sfWidgetFormInputText()
+    ));
+
+    $ws->moveField('first_name', sfWidgetFormSchema::AFTER, 'last_name');
+
+Les constantes sont les suivantes :
+
+ * `sfWidgetFormSchema::FIRST`
+ * `sfWidgetFormSchema::LAST`
+ * `sfWidgetFormSchema::BEFORE`
+ * `sfWidgetFormSchema::AFTER`
+
+Il est également possible de changer tous les postes avec la méthode `setPositions()` :
+
+    [php]
+    $ws->setPositions(array('last_name', 'first_name'));
+
+### ~`sfWidgetFormSchemaDecorator`~
+
+Le widget `sfWidgetFormSchemaDecorator` est un schéma de widget proxy qui encapsule
+un widget de schéma de formulaire dans un code HTML donné :
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $wd = new sfWidgetFormSchemaDecorator($ws, '<table>%content%</table>');
+
+>**NOTE**
+>Ce widget est utilisé en interne par symfony lorsqu'un formulaire est intégré
+>dans un autre.
