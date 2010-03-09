@@ -8,7 +8,7 @@
 
 次のコアプラグインは symfony 1.3 で廃止予定になり symfony 1.4 で削除されます:
 
-  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0 のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される1.0 アドミンジェネレータのデフォルトテーマも含まれています。
+  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される1.0アドミンジェネレータのデフォルトテーマも含まれています。
 
   * `sfProtoculousPlugin`: このプラグインによって提供されるヘルパーは控えめな JavaScript をサポートしないので、今後は使うべきではありません。
 
@@ -43,7 +43,7 @@
 
   * `sfApplicationConfiguration::loadPluginConfig()`: 代わりに `initializePlugins()` を使います。
 
-  * `sfLoader::getHelperDirs()` と `sfLoader::loadHelpers()`: `sfApplicationConfiguration` オブジェクトから同じメソッドを使ってください。`sfLoader` クラスのすべてのメソッドは廃止予定になったので、`sfLoader` は symfony 1.4 で削除されます。
+  * `sfLoader::getHelperDirs()` と `sfLoader::loadHelpers()`: `sfApplicationConfiguration` オブジェクトから同じメソッドを使ってください。`sfLoader` クラスのすべてのメソッドは廃止予定なので、`sfLoader` は symfony 1.4 で削除されます。
 
   * `sfController::sendEmail()`: 代わりに symfony 1.3 の新しいメーラー機能を使います。
 
@@ -119,13 +119,13 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3�
 
 次の設定 (`settings.yml` 設定で管理されます) は symfony 1.3 から削除されます:
 
-  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動クリーニングを可能にするために数年前に導入されました。これはおもにすべての顧客のあいだで同じバージョンの symfony が共有される共用ホスティングのコンフィギュレーションに便利でした。symfony 1.1 以降ではバッドプラクティスですので (プロジェクトごとに symfony のバージョンを組み込む必要があるため)、設定は無意味です。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、それぞれのリクエストに小さなオーバーヘッドが追加されてしまいます。
+  * `check_symfony_version`: この設定は symfony のバージョンが変更される場合にキャッシュの自動消去を可能にするために数年前に導入されました。これはおもにすべての顧客のあいだで同じバージョンの symfony が共有される共用ホスティングのコンフィギュレーションに役立っていました。symfony 1.1 以降ではバッドプラクティスですので (プロジェクトごとに symfony のバージョンを組み込む必要があるため)、設定は無意味です。さらに、この設定が `on` にセットされている場合、ファイルのコンテンツを得る必要があるときに、小さなオーバーヘッドがそれぞれのリクエストに追加されてしまいます。
 
   * `max_forwards`: この設定は symfony が例外を投げる前に許容される転送の最大回数をコントロールします。これを設定可能にする値はありません。5回よりも多くの転送が必要な場合、問題の認識とパフォーマンスの両方で問題があります。
 
-  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善のために導入され、この設定はビューキャッシュのために遅延キャッシュキー生成を有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも呼び出される `sfViewCacheManager::isCacheable()` に頼るひともいました。symfony 1.3 に関して、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
+  * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善のために導入され、この設定はビューキャッシュのために遅延キャッシュキー生成を有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも `sfViewCacheManager::isCacheable()` の呼び出しに頼るひともいました。symfony 1.3 に関して、ふるまいは `sf_lazy_cache_key` が `true` にセットされる場合と同じになります。
 
-  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザーのバグが原因のコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。最初の問題は PHP の最小バージョンが5.2になり無関係になっており2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
+  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザが原因でバグのあるコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。最初の問題は PHP の最小バージョンが5.2になり無関係になっており2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
 
   * `lazy_routes_deserialize`: このオプションはもう必要ありません。
 
@@ -136,7 +136,7 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3�
   * `validation_error_prefix`、`validation_error_suffix`、
     `validation_error_class`、`validation_error_id_prefix`: これらの設定は Validation ヘルパーグループによって使われ、symfony 1.3 で廃止予定です。
 
-  * `is_internal` (`module.yml`): `is_internal` フラグはブラウザーからアクションが呼び出されるのを防ぐために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートにこのトリックが必要なくなったので、このフラグは削除され symfony コアではチェックされません。
+  * `is_internal` (`module.yml`): `is_internal` フラグはブラウザからアクションが呼び出されるのを防ぐために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートにこのトリックが必要なくなったので、このフラグは削除され symfony コアではチェックされません。
 
 タスク
 ------
@@ -166,7 +166,8 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3�
 次のふるまいは symfony 1.3 で廃止予定で、symfony 1.4 で削除されます:
 
   * `sfParameterHolder::get()`、`sfParameterHolder::has()`、
-    `sfParameterHolder::remove()`、`sfNamespacedParameterHolder::get()`、
+    `sfParameterHolder::remove()`、
+    `sfNamespacedParameterHolder::get()`、
     `sfNamespacedParameterHolder::has()` と `sfNamespacedParameterHolder::remove()` メソッドの配列表記 (`[]`) のサポートは廃止予定になり symfony 1.4 では利用できません (パフォーマンスの向上)。
 
 symfony CLI はグローバルな `--dry-run` オプションを受け取ることはありません。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクの 1つがこのオプションに依存する場合、これをタスククラスのローカルオプションとして追加できます。
@@ -181,4 +182,4 @@ symfony 1.3 に関して、サイトが利用不可能なときに表示され�
 
 `sfDoctrinePlugin_doctrine_lib_path` 設定は、以前 Doctrine のカスタム lib ディレクトリを指定するのに使われていましたが、1.3で廃止予定になり1.4で削除されます。代わりに `sf_doctrine_dir` 設定を使ってください。
 
-symfony のすべての `Base*` クラスの可視性は `abstract` ではありません。
+symfony のすべての `Base*` クラスは抽象クラスではありません。
