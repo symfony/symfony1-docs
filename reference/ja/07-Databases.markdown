@@ -10,7 +10,7 @@ databases.yml 設定ファイル
 
 第3章で説明したように、`databases.yml` ファイルでは[**環境が認識され**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
-`databases.yml` で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメーター (`param`) の設定を収めなければなりません:
+`databases.yml` で説明されるそれぞれの接続はデータベースオブジェクトを設定するために使う名前、データベースハンドラクラスの名前、パラメータ (`param`) の設定を収めなければなりません:
 
     [yml]
     CONNECTION_NAME:
@@ -19,7 +19,7 @@ databases.yml 設定ファイル
 
 `class` クラスは `sfDatabase` 基底クラスを継承します。
 
-データベースハンドラークラスをオートロードできない場合、ファクトリが作られる前に `file` パスが定義され自動的に含められます:
+データベースハンドラクラスをオートロードできない場合、ファクトリが作られる前に `file` パスが定義され自動的に含められます:
 
     [yml]
     CONNECTION_NAME:
@@ -70,11 +70,11 @@ Propel
           persistent: true
           pooling:    true
 
-次のパラメーターは `param` セクションの下で定義できます:
+次のパラメータは `param` セクションの下で定義できます:
 
  | キー         | 説明                        | デフォルト値    |
  | ------------ | ----------------------------| -------------- |
- | `classname`  | Propel のアダプタークラス    | `PropelPDO`    |
+ | `classname`  | Propel のアダプタクラス    | `PropelPDO`    |
  | `dsn`        | PDO の DSN (必須)            | -              |
  | `username`   | データベースのユーザー名     | -              |
  | `password`   | データベースのパスワード     | -              |
@@ -83,6 +83,28 @@ Propel
  | `persistent` | 永続的接続を作成するか       | `false`        |
  | `options`    | Propel オプションのセット    | -              |
  | `debug`      | `DebugPDO` クラスのオプション| n/a            |
+
+`debug` エントリは Propel の [ドキュメント](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details) で説明されるすべてのオプションを定義します。次の YAML は利用可能なオプションを示します:
+
+    [yml]
+    debug:
+      realmemoryusage: true
+      details:
+        time:
+          enabled: true
+        slow:
+          enabled: true
+          threshold: 0.001
+        memdelta:
+          enabled: true
+        mempeak:
+          enabled: true
+        method:
+          enabled: true
+        mem:
+          enabled: true
+        querycount:
+          enabled: true
 
 Doctrine
 --------
@@ -105,7 +127,7 @@ Doctrine
             seqname_format: %s_seq
             tblname_format: %s
 
-次のパラメーターは`param`セクションの下でカスタマイズできます:
+次のパラメータは`param`セクションの下でカスタマイズできます:
 
  | キー         | 説明                        | デフォルト値 |
  | ------------ | --------------------------- | ------------ |

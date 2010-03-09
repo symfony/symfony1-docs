@@ -43,7 +43,6 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
     * [`file_link_format`](#chapter_04_sub_file_link_format)
     * [`logging_enabled`](#chapter_04_sub_logging_enabled)
     * [`no_script_name`](#chapter_04_sub_no_script_name)
-    * [`max_forwards`](#chapter_04_sub_max_forwards)
     * [`standard_helpers`](#chapter_04_sub_standard_helpers)
     * [`use_database`](#chapter_04_sub_use_database)
     * [`web_debug`](#chapter_04_sub_web_debug)
@@ -71,11 +70,11 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
         module_disabled_module: default
         module_disabled_action: disabled
 
-`.actions` サブセクションは共通ページがレンダリングされるときに実行するアクションを定義します。それぞれの定義は 2 つのコンポーネント: 1 つはモジュール (サフィックスは `_module`)、もう 1 つはアクションです (サフィックスは`_action`) を収めます。
+`.actions` サブセクションは共通ページがレンダリングされるときに実行するアクションを定義します。それぞれの定義は2つのコンポーネント: 1つはモジュール (接尾辞は `_module`)、もう1つはアクションです (接尾辞は`_action`) を収めます。
 
 ### ~`error_404`~
 
-`error_404` アクションは 404 ページがレンダリングされるときに実行されます。
+`error_404` アクションは404ページがレンダリングされるときに実行されます。
 
 ### ~`login`~
 
@@ -94,14 +93,14 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 `.settings` サブセクションはフレームワークの設定が行われるところです。下記のパラグラフはすべての利用可能な設定項目を説明し、これらを重要度順におおまかに並べてあります。
 
-`.settings` セクションで定義されるすべての設定項目は `sfConfig` オブジェクトを使いプレフィックスの `sf_` をつけることでコードの任意の場所で利用可能です。たとえば、`charset` 設定の値を得るには、次のコードを使います:
+`.settings` セクションで定義されるすべての設定項目は `sfConfig` オブジェクトを使い接頭辞の `sf_` をつけることでコードの任意の場所で利用可能です。たとえば、`charset` 設定の値を得るには、次のコードを使います:
 
     [php]
     sfConfig::get('sf_charset');
 
 ### ~`escaping_strategy`~
 
-*デフォルト値*: `on`
+*デフォルト値*: `true`
 
 `escaping_strategy` 設定は出力エスケーパーサブフレームワークが有効であるかどうかを決定するブール値の設定です。有効なとき、テンプレートのなかで利用可能なすべての変数は `escaping_method` 設定で定義されるヘルパー関数を呼び出すことで自動的にエスケープされます (下記を参照)。
 
@@ -121,7 +120,7 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 `escaping_method` 設定はテンプレートでエスケープするために使うデフォルト関数を定義します (上記の `escaping_strategy` 設定を参照)。
 
-組み込み関数のひとつ: ~`ESC_SPECIALCHARS`~、~`ESC_RAW`~、~`ESC_ENTITIES`~、~`ESC_JS`~、~`ESC_JS_NO_ENTITIES`~ と~`ESC_SPECIALCHARS`~ を選ぶ、もしくは独自関数を作ることができます。
+組み込み関数の1つ: ~`ESC_SPECIALCHARS`~、~`ESC_RAW`~、~`ESC_ENTITIES`~、~`ESC_JS`~、~`ESC_JS_NO_ENTITIES`~ と~`ESC_SPECIALCHARS`~ を選ぶ、もしくは独自関数を作ることができます。
 
 たいていの場合、デフォルトの値で十分です。英語もしくはヨーロッパの言語のみ扱う場合のみ `ESC_ENTITIES` ヘルパーも使うことができます。
 
@@ -172,7 +171,7 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 ### ~`cache`~
 
-*デフォルト値*: `off`
+*デフォルト値*: `false`
 
 `cache` 設定はテンプレートキャッシュを有効もしくは無効にする。
 
@@ -187,9 +186,9 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 ### ~`i18n`~
 
-*デフォルト値*: `off`
+*デフォルト値*: `false`
 
-`i18n` 設定は国際化サブフレームワークを有効もしくは無効にするブール値です。アプリケーションを国際化する場合、`on` にセットします。
+`i18n` 設定は国際化サブフレームワークを有効もしくは無効にするブール値です。アプリケーションを国際化する場合、`true` にセットします。
 
 >**TIP**
 >国際化システムの一般設定は `factories.yml` 設定ファイルの [`i18n`](#chapter_05-Factories_sub_i18n) セクションで行われます。
@@ -198,25 +197,25 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 *デフォルト値*: `en`
 
-`default_culture` 設定は国際化サブフレームワークで使われるデフォルトの culture を定義します。これは任意の有効な culture になります。
+`default_culture` 設定は国際化サブフレームワークで使われるデフォルトのカルチャを定義します。これは任意の有効なカルチャになります。
 
 ### ~`standard_helpers`~
 
 *デフォルト値*: `[Partial, Cache]`
 
-`standard_helpers` 設定はすべてのテンプレート用にロードされるヘルパーグループの配列です (サフィックスの `Helper` を持たないヘルパーグループの名前)。
+`standard_helpers` 設定はすべてのテンプレート用にロードされるヘルパーグループの配列です (接尾辞の `Helper` を持たないヘルパーグループの名前)。
 
 ### ~`no_script_name`~
 
-*デフォルト値*: `on` は最初に作成されるアプリケーションの `prod` 環境用に、`off` はその他すべて
+*デフォルト値*: `true` は最初に作成されるアプリケーションの `prod` 環境用に、`false` はその他すべて
 
-`no_script_name` 設定はフロントコントローラースクリプトの名前が生成 URL に追加されるかどうかを決定します。デフォルトでは、最初に作成されるアプリケーションの `prod` 環境ではこの設定は`generate:app` タスクによって `on` にセットされます。
+`no_script_name` 設定はフロントコントローラスクリプトの名前が生成 URL に追加されるかどうかを決定します。デフォルトでは、最初に作成されるアプリケーションの `prod` 環境ではこの設定は`generate:app` タスクによって `true` にセットされます。
 
-すべてのフロントコントローラーが同じディレクトリ (`web/`) にある場合、あきらかに、ひとつのアプリケーションと環境のみがこの設定を `on` にセットできます。`no_script_name` を `on` にセットされたアプリケーションが複数ほしいのであれば、対応するフロントコントローラーを Web 公開ディレクトリのサブディレクトリのなかに移動させます。
+すべてのフロントコントローラが同じディレクトリ (`web/`) にある場合、あきらかに、1つのアプリケーションと環境のみがこの設定を `true` にセットできます。`no_script_name` を `true` にセットされたアプリケーションが複数ほしいのであれば、対応するフロントコントローラを Web 公開ディレクトリのサブディレクトリのなかに移動させます。
 
 ### ~`lazy_cache_key`~
 
-*デフォルト値*: 新しいプロジェクトでは `on`、アップグレードしたプロジェクトでは `off`
+*デフォルト値*: 新しいプロジェクトでは `true`、アップグレードしたプロジェクトでは `false`
 
 これが有効なとき、`lazy_cache_key` 設定はアクションもしくはパーシャルがキャッシュ可能になるまでキャッシュキーの作成を遅延させます。テンプレートパーシャルの使い方によって、これは大きなパフォーマンスの改善になります。
 
@@ -229,11 +228,11 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
     [yml]
     txmt://open?url=file://%f&line=%l
 
-`%f` プレースホルダーはファイルの絶対パスに置き換わり `%l` プレースホルダーは行番号に置き換わります。
+`%f` プレースホルダはファイルの絶対パスに置き換わり `%l` プレースホルダは行番号に置き換わります。
 
 ### ~`logging_enabled`~
 
-*デフォルト値*: `prod` 以外のすべての環境では `on`
+*デフォルト値*: `prod` 以外のすべての環境では `true`
 
 `logging_enabled` 設定はロギングサブフレームワークを有効にします。これを `false` に設定することでロギングメカニズムが回避され少しパフォーマンスが向上します。
 
@@ -242,9 +241,9 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 ### ~`web_debug`~
 
-*デフォルト値*: `dev` 以外のすべての環境では `off`
+*デフォルト値*: `dev` 以外のすべての環境では `false`
 
-`web_debug` 設定は Web デバッグツールバーを有効にします。レスポンスの Content-Type が HTML であるときに Web デバッグツールバーがページに注入されます。
+`web_debug` 設定はウェブデバッグツールバーを有効にします。レスポンスの Content-Type が HTML であるときに Web デバッグツールバーがページに注入されます。
 
 ### ~`error_reporting`~
 
@@ -255,7 +254,7 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
   * `test`:  (E_ALL | E_STRICT) ^ E_NOTICE
   * デフォルト: E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR
 
-`error_reporting` 設定は (ブラウザーに表示されログに書き込まれる) PHP のエラーレポートのレベルをコントロールします。
+`error_reporting` 設定は (ブラウザに表示されログに書き込まれる) PHP のエラーレポートのレベルをコントロールします。
 
 >**TIP**
 >[ビット演算子](http://www.php.net/language.operators.bitwise)の使い方に関する情報は PHP の公式サイトにあります。
@@ -263,29 +262,29 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 デフォルト設定はもっとも利にかなったものであり、変えるべきではありません。
 
 >**NOTE**
->`prod` 環境のフロントコントローラーは `debug` を無効にしておりブラウザーのエラー表示は自動的に無効になります。
+>`prod` 環境のフロントコントローラは `debug` を無効にしておりブラウザのエラー表示は自動的に無効になります。
 
 ### ~`compressed`~
 
-*デフォルト値*: `off`
+*デフォルト値*: `false`
 
-`compressed` 設定は PHP ネイティブなレスポンス圧縮を有効にします。`on` にセットされている場合、symfony は `ob_start()` のコールバック関数として [`ob_gzhandler`](http://www.php.net/ob_gzhandler) を使います。
+`compressed` 設定は PHP ネイティブなレスポンス圧縮を有効にします。`true` にセットされている場合、symfony は `ob_start()` のコールバック関数として [`ob_gzhandler`](http://www.php.net/ob_gzhandler) を使います。
 
-これは `off` のままにしておいて、代わりに Web サーバーのネイティブな圧縮メカニズムを使うことをおすすめします。
+これは `false` のままにしておいて、代わりウェブサーバーのネイティブな圧縮メカニズムを使うことをおすすめします。
 
 ### ~`use_database`~
 
-*デフォルト値*: `on`
+*デフォルト値*: `true`
 
 `use_database` はアプリケーションがデータベースを使うかどうかを決定します。
 
 ### ~`check_lock`~
 
-*デフォルト値*: `off`
+*デフォルト値*: `false`
 
 `check_lock` 設定は `cache:clear` と `project:disable` のようなタスクによって実行されるアプリケーションのロックシステムを有効もしくは無効にします。
 
-`on` に設定される場合、無効なアプリケーションへのすべてのリクエストは自動的に symfony コアの `lib/exception/data/unavailable.php` ページにリダイレクトされます。
+`true` に設定される場合、無効なアプリケーションへのすべてのリクエストは自動的に symfony コアの `lib/exception/data/unavailable.php` ページにリダイレクトされます。
 
 >**TIP**
 >`config/unavailable.php` ファイルをプロジェクトもしくはアプリケーションに追加することでアプリケーションが無効なときに表示されるページのデフォルトテンプレートをオーバーライドできます。
@@ -294,4 +293,4 @@ symfony のほとんどは YAML もしくはプレーンな PHP で書かれた�
 
 *デフォルト値*: `/sf/sf_web_debug`
 
-`web_debug_web_dir` は Web デバッグツールバーのアセットへの Web パスをセット
+`web_debug_web_dir` はウェブデバッグツールバーのアセットへのウェブパスをセット

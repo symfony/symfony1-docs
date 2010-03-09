@@ -69,7 +69,7 @@
 ~`config_handlers.yml`~
 -----------------------
 
-`config_handlers.yml` 設定ファイルはほかのすべての YAML 設定ファイルを解釈するために使われるコンフィギュレーションハンドラークラスを記述します。`settings.yml` 設定ファイルをロードするために使われるデフォルトコンフィギュレーションは次の通りです:
+`config_handlers.yml` 設定ファイルはほかのすべての YAML 設定ファイルを解釈するために使われるコンフィギュレーションハンドラクラスを記述します。`settings.yml` 設定ファイルをロードするために使われるデフォルトコンフィギュレーションは次の通りです:
 
     [yml]
     config/settings.yml:
@@ -77,11 +77,11 @@
       param:
         prefix: sf_
 
-それぞれの設定ファイルはクラス (`class` エントリ) によって定義し `param` セクションの下でパラメーターを定義することでさらにカスタマイズできます。
+それぞれの設定ファイルはクラス (`class` エントリ) によって定義し `param` セクションの下でパラメータを定義することでさらにカスタマイズできます。
 
 デフォルトの `config_handlers.yml` ファイルは次のようなパーサークラスを定義します:
 
- | 設定ファイル       | コンフィギュレーションハンドラークラス |
+ | 設定ファイル       | コンフィギュレーションハンドラクラス |
  | ------------------ | ------------------------------------ |
  | `autoload.yml`     | `sfAutoloadConfigHandler`            |
  | `databases.yml`    | `sfDatabaseConfigHandler`            |
@@ -108,7 +108,7 @@
     - %SF_SYMFONY_LIB_DIR%/action/sfAction.class.php
     - %SF_SYMFONY_LIB_DIR%/action/sfActions.class.php
 
-第 3 章で説明したように、`core_compile.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
+第3章で説明したように、`core_compile.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
 >**NOTE**
 >`core_compile.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfCompileConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
@@ -126,8 +126,8 @@
       view_class:         sfPHP
       partial_view_class: sf
 
-`enabled` パラメーターが `false` にセットされる場合、モジュールのすべてのアクションは無効になります。これらは ([`settings.yml`](#chapter_04) で定義される) ~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~ アクションにリダイレクトされます。
+`enabled` パラメータが `false` にセットされる場合、モジュールのすべてのアクションは無効になります。これらは ([`settings.yml`](#chapter_04) で定義される) ~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~ アクションにリダイレクトされます。
 
-`view_class` パラメーターはモジュールのすべてのアクションによって使われる (サフィックスなしの `View` の) ビュークラスを定義します。これは `sfView` を継承しなければなりません。
+`view_class` パラメータはモジュールのすべてのアクションによって使われる (接尾辞なしの `View` の) ビュークラスを定義します。これは `sfView` を継承しなければなりません。
 
-`partial_view_class` パラメーターは (サフィックスの `PartialView` なしの) このモジュールのパーシャルに使われるビュークラスを定義し、`sfPartialView` を継承しなければなりません。
+`partial_view_class` パラメータは (接尾辞の `PartialView` なしの) このモジュールのパーシャルに使われるビュークラスを定義し、`sfPartialView` を継承しなければなりません。

@@ -49,9 +49,9 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
 `stylesheets` エントリは現在のビューで使うスタイルシートの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義されるスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動もしくは [common フィルター](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義されるスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動もしくは [common フィルタ](#chapter_12_common)で自動的に行われます。
 
-複数のフィルターが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
+複数のフィルタが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
     [yml]
     stylesheets: [main.css, foo.css, bar.css]
@@ -67,8 +67,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
     <?php use_stylesheet('main.css') ?>
 
 >**NOTE**
->デフォルトの `view.yml` 設定ファイルでは、参照されるファイルは `main.css` であり `/css/main.css` ではありません。
->当然のことながら、symfony は相対パスの前に `/css/` をつけるので、両方の定義は同等です。
+>デフォルトの `view.yml` 設定ファイルでは、参照されるファイルは `main.css` であり `/css/main.css` ではありません。当然のことながら、symfony は相対パスの前に `/css/` をつけるので、両方の定義は同等です。
 
 `javascripts`
 -------------
@@ -82,7 +81,7 @@ View レイヤーは `view.yml` 設定ファイルを編集することで設定
 `javascripts` エントリは現在のビューに使う JavaScript ファイルの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーで手動、もしくは  [common フィルター](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーで手動、もしくは  [common フィルタ](#chapter_12_common)で自動的に行われます。
 
 複数のファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 

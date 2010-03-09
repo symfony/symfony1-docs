@@ -4,7 +4,7 @@ security.yml 設定ファイル
 ~`security.yml`~ 設定ファイルでは symfony アプリケーションの認証と認可を記述します。
 
 >**TIP**
->`security.yml` ファイルからのコンフィギュレーション情報は [`user`](#chapter_05_user) ファクトリクラス (デフォルトは `sfBasicSecurityUser`) によって使われます。認証と認可の実施は `security` [フィルター](#chapter_12_security)によって行われます。
+>`security.yml` ファイルからのコンフィギュレーション情報は [`user`](#chapter_05_user) ファクトリクラス (デフォルトは `sfBasicSecurityUser`) によって使われます。認証と認可の実施は `security` [フィルタ](#chapter_12_security)によって行われます。
 
 アプリケーションが作られるとき、symfony はアプリケーションの `config/` ディレクトリにデフォルトの `security.yml` ファイルを生成します。ここにはアプリケーション全体のセキュリティを記述します (`default` キーの下):
 
@@ -14,7 +14,7 @@ security.yml 設定ファイル
 
 第3章で説明したように、`security.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
-アプリケーションのデフォルトコンフィギュレーションはモジュールの `config/` ディレクトリで `security.yml` ファイルを作ることでオーバーライドできます。メインキーはプレフィックスの `execute` がつかないアクションの名前です (たとえば `index` キーは `executeIndex` メソッドの設定)。
+アプリケーションのデフォルトコンフィギュレーションはモジュールの `config/` ディレクトリで `security.yml` ファイルを作ることでオーバーライドできます。メインキーは接頭辞の `execute` がつかないアクションの名前です (たとえば `index` キーは `executeIndex` メソッドの設定)。
 
 アクションがセキュアかどうかを判断するために、symfony は次の順序で情報を探します:
 
@@ -36,9 +36,9 @@ security.yml 設定ファイル
 
     [yml]
     default:
-      is_secure: off
+      is_secure: false
 
-アプリケーションの ~`security.yml`~ ファイルで `is_secure` キーを `on` にセットすれば、アプリケーション全体ですべてのユーザーの認証が必須になります。
+アプリケーションの ~`security.yml`~ ファイルで `is_secure` キーを `true` にセットすれば、アプリケーション全体ですべてのユーザーの認証が必須になります。
 
 >**NOTE**
 >認証されていないユーザーがセキュアなアクションにアクセスしようとすると、symfony はリクエストを `settings.yml` で設定された `login` アクションに転送します。
@@ -47,13 +47,13 @@ security.yml 設定ファイル
 
     [yml]
     all:
-      is_secure: on
+      is_secure: true
 
 モジュールの単独のアクションの認証要件を修正するには、モジュールの `config/` ディレクトリで `security.yml` ファイルを作り、アクションの名前の後でキーを定義します:
 
     [yml]
     index:
-      is_secure: off
+      is_secure: false
 
 >**TIP**
 >login アクションをセキュアにすることはできません。これは無限ループを避けるためです。
@@ -65,7 +65,7 @@ security.yml 設定ファイル
 
     [yml]
     all:
-      is_secure:   on
+      is_secure:  true
       credentials: admin
 
 symfony のクレデンシャルのシステムはシンプルで強力です。クレデンシャルはアプリケーションのセキュリティモデルを記述するために必要なものを表現できる文字列です (グループもしくはパーミッションのようなもの)。

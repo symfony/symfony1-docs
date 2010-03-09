@@ -248,7 +248,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony configure:author "Fabien Potencier <fabien.potencier@symfony-project.com>"
 
-それぞれの生成ファイルで PHPDoc ヘッダーをあらかじめ設定するためにジェネレーターは著者の名前を使います。
+それぞれの生成ファイルで PHPDoc ヘッダーをあらかじめ設定するためにジェネレータは著者の名前を使います。
 
 値は `config/properties.ini` に保存されます。
 
@@ -309,7 +309,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--all-classes`     | `-`  | すべてのクラスをビルドする
 | `--model`           | `-`  | モデルクラスをビルドする
 | `--forms`           | `-`  | フォームクラスをビルドする
-| `--filters`         | `-`  | フィルタークラスをビルドする
+| `--filters`         | `-`  | フィルタクラスをビルドする
 | `--sql`             | `-`  | SQL をビルドする
 | `--db`              | `-`  | SQL を削除、作成もしくは挿入する、もしくはデータベースをマイグレートする
 | `--and-migrate`     | `-`  | データベースをマイグレートする
@@ -350,7 +350,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:build --db --and-migrate --and-load
 
-ロードするフィクスチャを指定するには、パラメーターを `--and-load` オプションに加えます:
+ロードするフィクスチャを指定するには、パラメータを `--and-load` オプションに加えます:
 
     ./symfony doctrine:build --all --and-load="data/fixtures/dev/"
 
@@ -385,7 +385,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 ### ~`doctrine::build-filters`~
 
-`doctrine::build-filters` タスクは現在のモデルのフォームクラスからフィルターを作る:
+`doctrine::build-filters` タスクは現在のモデルのフォームクラスからフィルタを作る:
 
     $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--generator-class="..."]
 
@@ -395,15 +395,15 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--application`     | `1`      | アプリケーションの名前
 | `--env`             | `dev`    | 環境
 | `--model-dir-name`  | `model`  | モデルのディレクトリ名
-| `--filter-dir-name` | `filter` | フィルターフォームのディレクトリ名
-| `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータークラス
+| `--filter-dir-name` | `filter` | フィルタフォームのディレクトリ名
+| `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータクラス
 
 
-`doctrine:build-filters` タスクはスキーマからフォームフィルタークラスを作ります:
+`doctrine:build-filters` タスクはスキーマからフォームフィルタクラスを作ります:
 
     ./symfony doctrine:build-filters
 
-このタスクはモデルをもとにフォームフィルタークラスを作ります。クラスは `lib/doctrine/filter` に作ります。
+このタスクはモデルをもとにフォームフィルタクラスを作ります。クラスは `lib/doctrine/filter` に作ります。
 
 このタスクが `lib/doctrine/filter` のカスタムクラスを上書きすることはありません。これは `lib/doctrine/filter/base` に生成される基底クラスを置き換えるだけです。
 
@@ -418,8 +418,8 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--application`     | `1`      | アプリケーションの名前
 | `--env`             | `dev`    | 環境
 | `--model-dir-name`  | `model`  | モデルのディレクトリ名
-| `--filter-dir-name` | `filter` | フィルターフォームのディレクトリ名
-| `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータークラス
+| `--filter-dir-name` | `filter` | フィルタフォームのディレクトリ名
+| `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータクラス
 
 `doctrine:build-forms` タスクはスキーマからフォームクラスを作ります:
 
@@ -626,7 +626,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:dql --show-sql "FROM User"
 
-追加の引数としてクエリパラメーターを渡すことができます:
+追加の引数としてクエリパラメータを渡すことができます:
 
     ./symfony doctrine:dql "FROM User WHERE email LIKE ?" "%symfony-project.com"
 
@@ -660,7 +660,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 ### ~`doctrine::generate-admin`~
 
-`doctrine::generate-admin` タスクは Doctrine のアドミンモジュールを生成する:
+`doctrine::generate-admin` タスクは Doctrine アドミンモジュールを生成する:
 
     $ php symfony doctrine:generate-admin [--module="..."] [--theme="..."] [--singular="..."] [--plural="..."] [--env="..."] [--actions-base-class="..."] application route_or_model
 
@@ -681,7 +681,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--env`                    | `dev`      | 環境
 | `--actions-base-class`     | `sfActions`| アクションの基底クラス 
 
-`doctrine:generate-admin` タスクは Doctrine のアドミンモジュールを生成します:
+`doctrine:generate-admin` タスクは Doctrine アドミンモジュールを生成します:
 
     ./symfony doctrine:generate-admin frontend Article
 
@@ -689,13 +689,13 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 このタスクはアプリケーションの `routing.yml` でルートを作ります。
 
-ルートの名前を渡すことで Doctrine のアドミンモジュールを生成することもできます:
+ルートの名前を渡すことで Doctrine アドミンモジュールを生成することもできます:
 
     ./symfony doctrine:generate-admin frontend article
 
 このタスクは `routing.yml` で見つかる `%article%` ルートの `%frontend%` アプリケーションのモジュールを作ります。
 
-フィルターとバッチアクションを適切に動かすには、`wildcard` オプションをルートに追加する必要があります:
+フィルタとバッチアクションを適切に動かすには、`wildcard` オプションをルートに追加する必要があります:
 
     article:
     class: sfDoctrineRouteCollection
@@ -726,7 +726,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:generate-migration AddUserEmailColumn
 
-新しいマイグレーションクラスをエディターの作成メニューで開くには `--editor-cmd` オプションをつけます:
+新しいマイグレーションクラスをエディタの作成メニューで開くには `--editor-cmd` オプションをつけます:
 
     ./symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate
 
@@ -798,7 +798,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--with-show`              | `-`        | show メソッドを生成する
 | `--singular`               | `-`        | 単数形の名前
 | `--plural`                 | `-`        | 複数形の名前
-| `--route-prefix`           | `-`        | ルートのプレフィックス
+| `--route-prefix`           | `-`        | ルートの接頭辞
 | `--with-doctrine-route`    | `-`        | Doctrine のルートを使うかどうか
 | `--env`                    | `dev`      | 環境
 | `--actions-base-class`| `sfActions` | アクションの基底クラス
@@ -813,11 +813,11 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:generate-module --generate-in-cache frontend article Article
 
-`--theme` オプションをつけることでジェネレーターはカスタマイズされたテーマを使うことができます:
+`--theme` オプションをつけることでジェネレータはカスタマイズされたテーマを使うことができます:
 
     ./symfony doctrine:generate-module --theme="custom" frontend article Article
 
-この方法では、独自仕様に合わせてモジュールジェネレーターを作ることができます。
+この方法では、独自仕様に合わせてモジュールジェネレータを作ることができます。
 
 生成モジュールのアクションの基底クラス (デフォルトは `sfActions`) を変更することもできます:
 
@@ -927,7 +927,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony generate:app frontend
 
-このタスクは2つのフロントコントローラーも `web/` ディレクトリに作ります:
+このタスクは2つのフロントコントローラも `web/` ディレクトリに作ります:
 
     web/%application%.php     運用環境
     web/%application%_dev.php 開発環境
@@ -1344,7 +1344,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
 ### ~`project::clear-controllers`~
 
-`project::clear-controllers` タスクは運用環境ではないすべての環境のコントローラーを消去する:
+`project::clear-controllers` タスクは運用環境ではないすべての環境のコントローラを消去する:
 
     $ php symfony project:clear-controllers
 
@@ -1354,25 +1354,25 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
 
 
-`project:clear-controllers` タスクは運用環境ではないすべての環境のコントローラーを消去します:
+`project:clear-controllers` タスクは運用環境ではないすべての環境のコントローラを消去します:
 
     ./symfony project:clear-controllers
 
-運用サーバーで運用コントローラースクリプト以外のすべてのフロントコントローラーを削除するためにこのタスクを使うことができます。
+運用サーバーで運用コントローラスクリプト以外のすべてのフロントコントローラを削除するためにこのタスクを使うことができます。
 
-`frontend` と `backend` という名前の2つのアプリケーションがある場合、`web/` に4つのデフォルトコントローラーがあります:
+`frontend` と `backend` という名前の2つのアプリケーションがある場合、`web/` に4つのデフォルトコントローラがあります:
 
     index.php
     frontend_dev.php
     backend.php
     backend_dev.php
 
-`project:clear-controllers` タスクを実行した後で、`web/` に2つのコントローラースクリプトが残されています:
+`project:clear-controllers` タスクを実行した後で、`web/` に2つのコントローラスクリプトが残されています:
 
     index.php
     backend.php
 
-これらの2つのコントローラーはデバッグモードとウェブデバッグツールバーが無効なので安全です。
+これらの2つのコントローラはデバッグモードとウェブデバッグツールバーが無効なので安全です。
 
 ### ~`project::deploy`~
 
@@ -1566,7 +1566,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 | `--all-classes`     | `-`   | すべてのクラスをビルドする
 | `--model`           | `-`   | モデルクラスをビルドする
 | `--forms`           | `-`   | フォームクラスをビルドする
-| `--filters`         | `-`   | フィルタークラスをビルドする
+| `--filters`         | `-`   | フィルタクラスをビルドする
 | `--sql`             | `-`   | SQL をビルドする
 | `--db`              | `-`   | SQL を削除、作成、および挿入する
 | `--and-load`        | `-`   | フィクスチャデータをロードする (複数の値が可能)
@@ -1600,7 +1600,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
     ./symfony propel:build --db --and-load
 
-どのフィクスチャがロードされるのか指定するには、パラメーターを `--and-load` オプションに追加します:
+どのフィクスチャがロードされるのか指定するには、パラメータを `--and-load` オプションに追加します:
 
     ./symfony propel:build --all --and-load="data/fixtures/dev/"
 
@@ -1681,7 +1681,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
 ### ~`propel::build-filters`~
 
-`propel::build-filters` タスクは現在のモデルのフィルターフォームクラスを作る:
+`propel::build-filters` タスクは現在のモデルのフィルタフォームクラスを作る:
 
     $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] [--generator-class="..."]
 
@@ -1689,11 +1689,11 @@ Web サイトでホストされている PEAR パッケージをインストー�
 | --------------------------- | ---------- | ------------------------------------
 | `--connection`      | `propel`   | 接続名
 | `--model-dir-name`  | `model`    | モデルディレクトリ名
-| `--filter-dir-name` | `filter`   | フィルターフォームのディレクトリ名
+| `--filter-dir-name` | `filter`   | フィルタフォームのディレクトリ名
 | `--application`     | `1`        | アプリケーション名
-| `--generator-class` | `sfPropelFormFilterGenerator` | ジェネレータークラス
+| `--generator-class` | `sfPropelFormFilterGenerator` | ジェネレータクラス
 
-`propel:build-filters` タスクはスキーマからフィルターフォームクラスを作ります:
+`propel:build-filters` タスクはスキーマからフィルタフォームクラスを作ります:
 
     ./symfony propel:build-filters
 
@@ -1703,7 +1703,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
     ./symfony propel:build-filters --connection="name"
 
-モデルのフィルターフォームクラスは `lib/filter` に作られます。
+モデルのフィルタフォームクラスは `lib/filter` に作られます。
 
 このタスクは `lib/filter` のなかのカスタムクラスを上書きすることはありません。これは `lib/filter/base` で生成された既定クラスを置き換えます。
 
@@ -1720,7 +1720,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 | `--model-dir-name`  | `model`    | モデルディレクトリの名前
 | `--form-dir-name`   | `form`     | フォームディレクトリの名前
 | `--application`     | `1`        | アプリケーションの名前
-| `--generator-class` | `sfPropelFormGenerator` | ジェネレータークラス
+| `--generator-class` | `sfPropelFormGenerator` | ジェネレータクラス
 
 
 `propel:build-forms` タスクはスキーマからフォームクラスを作ります:
@@ -1926,7 +1926,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 このタスクは `routing.yml` で見つかる `%article%` のために `%frontend%` アプリケーションでモジュールを作ります。
 
-フィルターとバッチアクションが適切に動くようにするには、`with_wildcard_routes` オプションをルートに追加する必要があります:
+フィルタとバッチアクションが適切に動くようにするには、`with_wildcard_routes` オプションをルートに追加する必要があります:
 
     article:
     class: sfPropelRouteCollection
@@ -1957,7 +1957,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | `--with-show` | `-` | show メソッドを生成する
 | `--singular` | `-` | 単数形の名前
 | `--plural` | `-` | 複数形の名前
-| `--route-prefix` | `-` | ルートのプレフィックス
+| `--route-prefix` | `-` | ルートの接頭辞
 | `--with-propel-route` | `-` | Propel ルートを使うかどうか
 | `--env` | `dev` | 環境
 | `--actions-base-class` | `sfActions` | アクションの既定クラス
@@ -1973,11 +1973,11 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:generate-module --generate-in-cache frontend article Article
 
-`--theme` オプションをつけることでジェネレーターはカスタマイズ済みのテーマを使うことができます:
+`--theme` オプションをつけることでジェネレータはカスタマイズ済みのテーマを使うことができます:
 
     ./symfony propel:generate-module --theme="custom" frontend article Article
 
-この方法では、独自の慣習に合わせてモジュールジェネレーターを作ることができます。
+この方法では、独自の慣習に合わせてモジュールジェネレータを作ることができます。
 
 生成モジュールのデフォルトの基底クラス (sfActions) を変更することもできます:
 
@@ -2188,7 +2188,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | 引数          | デフォルト | 説明
 | ------------- | ---------- | -----------------------
 | `application` | `-`        | アプリケーションの名前
-| `controller`  | `-`        | コントローラーの名前
+| `controller`  | `-`        | コントローラの名前
 
 | オプション (ショートカット) | デフォルト  | 説明
 | -------------------------- | ---------- | ---------------
@@ -2204,11 +2204,11 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony test:functional frontend -t
 
-コントローラーの名前を渡すことで特定のコントローラーのすべての機能テストを立ち上げることができます:
+コントローラの名前を渡すことで特定のコントローラのすべての機能テストを立ち上げることができます:
 
     ./symfony test:functional frontend article
 
-複数のコントローラーの機能テストをすべて立ち上げることもできます:
+複数のコントローラの機能テストをすべて立ち上げることもできます:
 
     ./symfony test:functional frontend article comment
 
