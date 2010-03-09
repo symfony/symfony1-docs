@@ -5,7 +5,7 @@ symfony 1.3/1.4 の新しい機能
 
 最初に、symfony 1.3/1.4 は PHP 5.2.4 およびそれ以降のバージョンと互換性があることにご注意ください。
 
-1.2 からアップグレードしたいのであれば、[「プロジェクトを 1.2 から 1.3/1.4 にアップグレードする」](http://www.symfony-project.org/tutorial/1_4/ja/upgrade)のページをご覧ください。プロジェクトを symfony 1.3/1.4 に安全にアップグレードするために必要なすべての情報が手に入ります。
+1.2 からアップグレードしたいのであれば、[「プロジェクトを1.2から1.3/1.4にアップグレードする」](http://www.symfony-project.org/tutorial/1_4/ja/upgrade)のページをご覧ください。プロジェクトを symfony 1.3/1.4 に安全にアップグレードするために必要なすべての情報が手に入ります。
 
 
 メーラー
@@ -43,7 +43,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### 標準のラベル
 
-ラベルがフィールド名で自動生成される場合、サフィックスの `_id` は削除されます:
+ラベルがフィールド名で自動生成される場合、接尾辞の `_id` は削除されます:
 
   * `first_name` => First name (以前と同じ)
   * `author_id` => Author (以前は "Author id" )
@@ -79,12 +79,12 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
   * `sfWidgetFormSchemaDecorator`: `addFormFormatter()`、`setFormFormatterName()`、`setNameFormat()`、
     `setLabels()`、`setHelps()`、`setHelp()`、`setParent()`、`setPositions()`
 
-バリデーター
+バリデータ
 ------------
 
 ### `sfValidatorRegex`
 
-`sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされる場合、正規表現は渡すバリデーターにマッチしません。
+`sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされる場合、正規表現は渡すバリデータにマッチしません。
 
 `sfValidatorRegex` の `pattern` オプションは呼び出されるときに正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
 
@@ -104,21 +104,21 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### `sfValidatorSchemaCompare`
 
-`sfValidatorSchemaCompare` クラスに2つの新しいコンパレーターが用意されました:
+`sfValidatorSchemaCompare` クラスに2つの新しいコンパレータが用意されました:
 
  * `IDENTICAL` は `===` と同等です;
  * `NOT_IDENTICAL` は `!==` と同等です;
 
 ### `sfValidatorChoice`、`sfValidator(Propel|Doctrine)Choice`
 
-`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデーターには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションがあります:
+`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデータには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションがあります:
 
  * `min` 選択する必要がある最小の数
  * `max` 選択する必要がある最大の数
 
-### 国際化バリデーター
+### 国際化バリデータ
 
-次のバリデーターが追加されました:
+次のバリデータが追加されました:
 
  * `sfValidatorI18nChoiceTimezone`
 
@@ -129,22 +129,22 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
 
-上記のコードはすべてのバリデーターのデフォルトメッセージである 'Required.' をオーバーライドします。デフォルトメッセージはバリデーターが作られる前に定義しておかなければならないことにご注意ください (コンフィグレーションクラスがよい場所です)。
+上記のコードはすべてのバリデータのデフォルトメッセージである 'Required.' をオーバーライドします。デフォルトメッセージはバリデータが作られる前に定義しておかなければならないことにご注意ください (コンフィグレーションクラスがよい場所です)。
 
 >**NOTE**
 >`setRequiredMessage()` と `setInvalidMessage()` メソッドは廃止予定なので、新しい `setDefaultMessage()` メソッドを呼び出します。
 
 symfony がエラーを表示するとき、使われるエラーメッセージは次のように決定されます:
 
-  * symfony はバリデーターが作られたときに渡されたメッセージを探します (バリデーターのコンストラクターの第2引数経由);
+  * symfony はバリデータが作られたときに渡されたメッセージを探します (バリデータのコンストラクタの第2引数経由);
 
   * 定義されていなければ、`setDefaultMessage()` メソッドで定義される初期メッセージを探します;
 
-  * もし、定義されていなければ、(メッセージが `addMessage()` メソッドで追加されているとき) バリデーター自身で定義される初期メッセージへ戻ります。
+  * もし、定義されていなければ、(メッセージが `addMessage()` メソッドで追加されているとき) バリデータ自身で定義される初期メッセージへ戻ります。
 
 ### 流れるようなインターフェイス
 
-バリデーターは次のような流れるようなインターフェイスを実装するようになりました:
+バリデータは次のような流れるようなインターフェイスを実装するようになりました:
 
   * `sfValidatorSchema`: `setPreValidator()`、`setPostValidator()`
 
@@ -181,7 +181,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfForm::renderHiddenFields()`
 
-`->renderHiddenFields()` メソッドは組み込みフォームからの隠しフィールドをレンダリングします。再帰処理を無効にする引数が追加されました。これはフォーマッターを使って組み込みフォームをレンダリングする場合に便利です。
+`->renderHiddenFields()` メソッドは組み込みフォームからの隠しフィールドをレンダリングします。再帰処理を無効にする引数が追加されました。これはフォーマッタを使って組み込みフォームをレンダリングする場合に便利です。
 
     [php]
     // 組み込みフォームからのフィールドを含めて、すべての隠しフィールドをレンダリングする
@@ -192,10 +192,10 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfFormSymfony`
 
-新しい `sfFormSymfony` クラスはイベントディスパッチャーを symfony フォームに導入します。`self::$dispatcher` を通してフォームクラス内部のディスパッチャーにアクセスできます。次のフォームイベントが symfony によって通知されます:
+新しい `sfFormSymfony` クラスはイベントディスパッチャを symfony フォームに導入します。`self::$dispatcher` を通してフォームクラス内部のディスパッチャにアクセスできます。次のフォームイベントが symfony によって通知されます:
 
   * `form.post_configure`:   このイベントはフォームが設定された後で通知される
-  * `form.filter_values`:    このイベントは、マージされ汚染されたパラメーターと、バインドする直前のファイルの配列をフィルタリングする
+  * `form.filter_values`:    このイベントは、マージされ汚染されたパラメータと、バインドする直前のファイルの配列をフィルタリングする
   * `form.validation_error`: フォームバリデーションが通らないときこのイベントが通知される
   * `form.method_not_found`: 身元不明のメソッドが呼び出されるときにこのイベントが通知される
 
@@ -206,7 +206,7 @@ Form コンポーネントを拡張するもしくはプロジェクト固有の
 
 ### `sfForm::doBind()`
 
-汚染されたパラメーターのクリーニングは開発者にわかりやすい `->doBind()` メソッドに隔離されました。このメソッドは `->bind()` からのパラメーターとファイルのマージされる配列を受けとります。
+汚染されたパラメータのクリーニングは開発者にわかりやすい `->doBind()` メソッドに隔離されました。このメソッドは `->bind()` からのパラメータとファイルのマージされる配列を受けとります。
 
 ### `sfForm(Doctrine|Propel)::doUpdateObject()`
 
@@ -229,14 +229,14 @@ CSRF 防止機能を無効にするには、次のような行を `configure()` 
 `setValidatorSchema()`、`setWidgets()`、`setWidget()`、
 `setWidgetSchema()`、`setOption()`、`setDefault()`、そして `setDefaults()`
 
-オートローダー
+オートローダ
 --------------
 
-symfony のすべてのオートローダーは大文字と小文字を区別しないようになりました。PHP が大文字と小文字を区別をしないので、symfony もそれに合わせることにしたからです。
+symfony のすべてのオートローダは大文字と小文字を区別しないようになりました。PHP が大文字と小文字を区別をしないので、symfony もそれに合わせることにしたからです。
 
 ### `sfAutoloadAgain` (実験的な機能)
 
-デバッグモードでの用途を目的とする特殊なオートローダーが追加されました。新しい `sfAutoloadAgain` クラスは symfony の標準オートローダーをリロードし該当するクラスを求めてファイルシステムを検索します。純粋な効果は新しいクラスをプロジェクトに追加した後に `symfony cc` を実行する必要がなくなることです。
+デバッグモードでの用途を目的とする特殊なオートローダが追加されました。新しい `sfAutoloadAgain` クラスは symfony の標準オートローダをリロードし該当するクラスを求めてファイルシステムを検索します。純粋な効果は新しいクラスをプロジェクトに追加した後に `symfony cc` を実行する必要がなくなることです。
 
 テスト
 -----
@@ -276,7 +276,7 @@ symfony のすべてのオートローダーは大文字と小文字を区別し
 
 ### lime によるカラー出力
 
-symfony 1.3/1.4 では、lime はカラー出力を正しく行うようになりました。これが意味することは、ほとんどの場合において `lime_test` の lime コンストラクターの第2引数を省略できるということです:
+symfony 1.3/1.4 では、lime はカラー出力を正しく行うようになりました。これが意味することは、ほとんどの場合において `lime_test` の lime コンストラクタの第2引数を省略できるということです:
 
     [php]
     $t = new lime_test(1);
@@ -298,7 +298,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
       checkForm($browser->getArticleForm())->
     end();
 
-レスポンスに複数のフォームが含まれる場合は、どの DOM 部分をテストするかをきめ細かく指定する CSS セレクターを提供するオプションがあります:
+レスポンスに複数のフォームが含まれる場合は、どの DOM 部分をテストするかをきめ細かく指定する CSS セレクタを提供するオプションがあります:
 
     [php]
     $browser->with('response')->begin()->
@@ -338,7 +338,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
 
 ### 改良された `->click()`
 
-`->click()` メソッドに CSS セレクターを渡すことが可能で、セマンティックにしたい要素をターゲットにするのがはるかに楽になりました。
+`->click()` メソッドに CSS セレクタを渡すことが可能で、セマンティックにしたい要素をターゲットにするのがはるかに楽になりました。
 
     [php]
     $browser
@@ -404,7 +404,7 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
 ### `task.test.filter_test_files`
 
-`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメーターが用意されています。
+`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメータが用意されています。
 
 ### `sfTask::run()` の強化
 
@@ -504,7 +504,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 Propel との統合
 ---------------
 
-Propel のバージョンは 1.4 にアップグレードされました。Propel のアップグレードに関する詳しい情報は[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
+Propel のバージョンは1.4にアップグレードされました。Propel のアップグレードに関する詳しい情報は[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
 
 ### Propel のビヘイビア
 
@@ -538,7 +538,7 @@ Propel モデルネイティブなビヘイビアを Propel モデルに追加�
 
 ### フォーム生成を無効にする
 
-Propel の `symfony` ビヘイビアにパラメーターを渡すことで特定のモデルでのフォーム生成を無効にできます:
+Propel の `symfony` ビヘイビアにパラメータを渡すことで特定のモデルでのフォーム生成を無効にできます:
 
     classes:
       UserGroup:
@@ -572,7 +572,7 @@ Propel の `symfony` ビヘイビアにパラメーターを渡すことで特�
 
 ### `sfObjectRouteCollection` オプション
 
-新しい `default_params` オプションが `sfObjectRouteCollection` に追加されました。これはそれぞれの生成ルートにデフォルトパラメーターを登録することを可能にします:
+新しい `default_params` オプションが `sfObjectRouteCollection` に追加されました。これはそれぞれの生成ルートにデフォルトパラメータを登録することを可能にします:
 
     [yml]
     forum_topic:
@@ -632,7 +632,7 @@ symfony 1.3/1.4 では、新しく作られたプロジェクトでプラグイ�
 `sfProtoculousPlugin` もしくは `sfCompat10Plugin` のようなコアプラグインを使いたい場合、必要なのは対応する `enablePlugins()` ステートメントを `ProjectConfiguration` クラスに追加することだけです。
 
 >**NOTE**
->1.2 からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。このふるまいの変更は symfony 1.3/1.4 の新規プロジェクトのみです。
+>1.2からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。このふるまいの変更は symfony 1.3/1.4 の新規プロジェクトのみです。
 
 ### `sfPluginConfiguration::connectTests()`
 
@@ -661,7 +661,7 @@ symfony 1.3/1.4 は可能であればファイルパスをクリック可能な�
       .settings:
         file_link_format: txmt://open?url=file://%f&line=%l
 
-`%f` プレースホルダーはファイルの絶対パスに、`%l` プレースホルダーは行数に置き換わります。
+`%f` プレースホルダはファイルの絶対パスに、`%l` プレースホルダは行数に置き換わります。
 
 Doctrine との統合
 -----------------
@@ -670,9 +670,9 @@ Doctrine は 1.2 にアップグレードされました。アップグレード
 
 ### フォームクラスを生成する
 
-Doctrine の YAML スキーマファイルのなかで symfony の追加オプションを指定できるようになりました。そしてフォームとフィルタークラスの生成を無効にするオプションもいくつか追加されました。
+Doctrine の YAML スキーマファイルのなかで symfony の追加オプションを指定できるようになりました。そしてフォームとフィルタクラスの生成を無効にするオプションもいくつか追加されました。
 
-たとえば、 典型的な多対多のリファレンスモデルでは、フォームもしくはフィルターフォームクラスを生成させる必要はありません。ですので次のようなことができます:
+たとえば、 典型的な多対多のリファレンスモデルでは、フォームもしくはフィルタフォームクラスを生成させる必要はありません。ですので次のようなことができます:
 
     UserGroup:
       options:
@@ -703,7 +703,7 @@ Doctrine で開発するときに手助けしてくれる新しいタスクが�
 
 #### モデルファイルを削除する
 
-YAML スキーマファイルのなかでモデルや名前を変更したり、使われなくなったモデルを削除することがよくあるでしょう。このような作業を行うと、孤児となったモデル、フォームそしてフィルタークラスが出てきます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で掃除できるようになりました。
+YAML スキーマファイルのなかでモデルや名前を変更したり、使われなくなったモデルを削除することがよくあるでしょう。このような作業を行うと、孤児となったモデル、フォームそしてフィルタクラスが出てきます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で掃除できるようになりました。
 
     $ php symfony doctrine:delete-model-files ModelName
 
@@ -729,7 +729,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
     $ php symfony doctrine:build --all-classes --and-migrate
 
-これはモデル (`:build-model`)、フォーム (`:build-forms`)、フォームフィルター (`:build-filters`) を生成し、保留されているマイグレーション (`:migrate`) を実行します。
+これはモデル (`:build-model`)、フォーム (`:build-forms`)、フォームフィルタ (`:build-filters`) を生成し、保留されているマイグレーション (`:migrate`) を実行します。
 
     $ php symfony doctrine:build --model --and-migrate --and-append=data/fixtures/categories.yml
 
@@ -807,9 +807,9 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
     +----+-----------+----------------+---------------------+---------------------+
     (2 results)
 
-### クエリパラメーターを `doctrine:dql` に渡す
+### クエリパラメータを `doctrine:dql` に渡す
 
-`doctrine:dql` タスクもクエリパラメーターを引数として受け取れるよう強化されました:
+`doctrine:dql` タスクもクエリパラメータを引数として受け取れるよう強化されました:
 
     $ php symfony doctrine:dql "FROM Article a WHERE name LIKE ?" John%
 
@@ -861,7 +861,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
       $query->select('title, body');
     }
 
-フォームフィルターのカスタマイズが簡単になりました。フィルタリングをフィールドに追加するのに必要なのはウィジェットとそれを処理するメソッドを追加することだけです。
+フォームフィルタのカスタマイズが簡単になりました。フィルタリングをフィールドに追加するのに必要なのはウィジェットとそれを処理するメソッドを追加することだけです。
 
     [php]
     class UserFormFilter extends BaseUserFormFilter
@@ -908,18 +908,18 @@ symfony が Doctrine モデルに追加するゲッターとセッターのマ�
       sfConfig::set('sf_doctrine_dir', '/path/to/doctrine/lib');
     }
 
-Web デバッグツールバー
-----------------------
+ウェブデバッグツールバー
+--------------------------
 
 ### `sfWebDebugPanel::setStatus()`
 
-Web デバッグツールバーのそれぞれのパネルはタイトルの背景色に影響を及ぼすステータスを指定できるようになりました。たとえば、`sfLogger::INFO` よりも優先順位が高いメッセージがロギングされる場合、log パネルのタイトルの背景色は変わります。
+ウェブデバッグツールバーのそれぞれのパネルはタイトルの背景色に影響を及ぼすステータスを指定できるようになりました。たとえば、`sfLogger::INFO` よりも優先順位が高いメッセージがロギングされる場合、log パネルのタイトルの背景色は変わります。
 
-### `sfWebDebugPanel` リクエストパラメーター
+### `sfWebDebugPanel` リクエストパラメータ
 
-`sfWebDebugPanel` パラメーターを URL につけ加えることでページロードで開くパネルを指定できるようになりました。たとえば、`?sfWebDebugPanel=config` を追加すれば config パネルを開くように Web デバッグツールバーはレンダリングされます。
+`sfWebDebugPanel` パラメータを URL につけ加えることでページロードで開くパネルを指定できるようになりました。たとえば、`?sfWebDebugPanel=config` を追加すれば config パネルを開くように ウェブデバッグツールバーはレンダリングされます。
 
-パネルは Web デバッグツールバーの `request_parameters` オプションにアクセスすることでリクエストパラメーターをインスペクトします:
+パネルは Web デバッグツールバーの `request_parameters` オプションにアクセスすることでリクエストパラメータをインスペクトします:
 
     [php]
     $requestParameters = $this->webDebug->getOption('request_parameters');
@@ -929,7 +929,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 ### スロットの改善
 
-スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルトの内容を指定するための 2番目のパラメーターを受けとります:
+スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルトの内容を指定するための2番目のパラメータを受けとります:
 
     [php]
     <?php echo get_slot('foo', 'bar') // もし `foo` スロットが定義されていなければ  'bar' が出力される ?>
@@ -951,19 +951,19 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
     <?php endif; ?>
 
 ビューキャッシュ
----------------
+-----------------
 
-ビューキャッシュマネージャーは `factories.yml` でパラメーターを受けとります。ビューのキャッシュキーの生成はクラスを簡単に拡張できるように異なる方法でリファクタリングされました。
+ビューキャッシュマネージャは `factories.yml` でパラメータを受けとります。ビューのキャッシュキーの生成はクラスを簡単に拡張できるように異なる方法でリファクタリングされました。
 
-`factories.yml` で2つのパラメーターが利用できます:
+`factories.yml` で2つのパラメータが利用できます:
 
-  * `cache_key_use_vary_headers` (デフォルト: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメーターで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
+  * `cache_key_use_vary_headers` (デフォルト: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメータで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
 
   * `cache_key_use_host_name` (デフォルト: true): キャッシュキーがホスト名の部分を含むか指定します。実際には、これはページキャッシュがホスト名に依存するかどうかを伝えます。
 
 ### キャッシュの強化
 
-ビューキャッシュマネージャーは配列の `$_GET` もしくは `$_POST` に値が存在するのかによってキャッシュを拒否しなくなりました。ロジックは現在のリクエストが `cache.yml` をチェックする前の GET リクエストメソッドであることを確認するだけです。このことは次のページがキャッシュ可能であることを意味します:
+ビューキャッシュマネージャは配列の `$_GET` もしくは `$_POST` に値が存在するのかによってキャッシュを拒否しなくなりました。ロジックは現在のリクエストが `cache.yml` をチェックする前の GET リクエストメソッドであることを確認するだけです。このことは次のページがキャッシュ可能であることを意味します:
 
   * `/js/my_compiled_javascript.js?cachebuster123`
   * `/users?page=3`
@@ -975,9 +975,9 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 リクエストの内容は `getContent()` メソッドを通してアクセスできるようになりました。
 
-### `PUT` と `DELETE` パラメーター
+### `PUT` と `DELETE` パラメータ
 
-Content-Type が `application/x-www-form-urlencoded` にセットされている `PUT`、`DELETE` HTTP リクエストメソッドが来る場合、symfony は生のボディを解析し、通常の `POST` パラメーターのようにアクセスできるパラメーターを作ります。
+Content-Type が `application/x-www-form-urlencoded` にセットされている `PUT`、`DELETE` HTTP リクエストメソッドが来る場合、symfony は生のボディを解析し、通常の `POST` パラメータのようにアクセスできるパラメータを作ります。
 
 アクション
 ----------
