@@ -168,7 +168,7 @@ factories.yml 設定ファイル
 
 ### ~`charset`~
 
-`charset` オプションはメールメッセージに使う文字セットを定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。
+`charset` オプションはメールメッセージに使う文字集合を定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。
 
 ### ~`delivery_strategy`~
 
@@ -184,11 +184,11 @@ factories.yml 設定ファイル
 
 ### ~`delivery_address`~
 
-`delivery_address` オプションは `delivery_strategy` が `single_address` にセットされるときにすべてのメッセージの受信者を定義します。
+`delivery_address` オプションは `delivery_strategy` が `single_address` にセットされているときにすべてのメッセージの受信者を定義します。
 
 ### ~`spool_class`~
 
-`spool_class` オプションは `delivery_strategy` が `spool` にセットされるときに使うスプールクラスを定義します:
+`spool_class` オプションは `delivery_strategy` が `spool` にセットされているときに使うスプールクラスを定義します:
 
   * ~`Swift_FileSpool`~: メッセージはファイルシステムに保存されます。
 
@@ -197,11 +197,11 @@ factories.yml 設定ファイル
   * ~`Swift_PropelSpool`~: メッセージは Propel モデルに保存されます。
 
 >**NOTE**
->スプールがインスタンス化されるとき、~`spool_arguments`~ オプションがコンストラクタの引数として使われます。
+>スプールがインスタンス化されるとき、~`spool_arguments`~ オプションがコンストラクタの引数に使われます。
 
 ### ~`spool_arguments`~
 
-`spool_arguments` オプションはスプールのコンストラクタの引数を定義します。組み込みのキュークラスに利用できるオプションは次の通りです:
+`spool_arguments` オプションはスプールのコンストラクタの引数を定義します。組み込みのキュークラスで利用できるオプションは次のとおりです:
 
  * `Swift_FileSpool`:
 
@@ -209,11 +209,11 @@ factories.yml 設定ファイル
 
  * `Swift_DoctrineSpool`:
 
-    * メッセージを保存する Doctrine モデル (デフォルトでは `MailMessage`)
+    * メッセージを保存する Doctrine モデル (デフォルトは `MailMessage`)
 
-    * メッセージ保存に使われるカラムの名前 (デフォルトでは `message`)
+    * メッセージ保存に使われるカラムの名前 (デフォルトは `message`)
 
-    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これは引数としてキューオプションを受け取ります。
+    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これはキューオプションを引数にとります。
 
  * `Swift_PropelSpool`:
 
@@ -221,12 +221,12 @@ factories.yml 設定ファイル
 
     * メッセージ保存に使うカラム名 (デフォルトでは `message`)
 
-    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これは引数としてキューオプションを受け取ります。
+    * 送信するメッセージを読み出すために呼び出すメソッド (オプション)。これはキューオプションを引数にとります。
 
 Doctrine スプールの典型的なコンフィギュレーションは次のとおりです:
 
     [yml]
-    # configuration in factories.yml
+    # factories.yml のコンフィギュレーション
     mailer:
       class: sfMailer
       param:
@@ -246,7 +246,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
   * ~`Swift_MailTransport`~: メッセージを送信するために PHP ネイティブの `mail()` 関数を使います。
 
-`param` 設定をセットすることでトランスポートを細かく設定できます。Swift Mailer の公式ドキュメントの ["Transport Types"](http://swiftmailer.org/docs/transport-types) のセクションで組み込みの転送クラスと異なるパラメータに関して知る必要のあるすべての知識が説明されています。
+`param` 設定をセットすることでトランスポートを細かく設定できます。Swift Mailer の公式ドキュメントの [「Transport Types」](http://swiftmailer.org/docs/transport-types) のセクションで組み込みの転送クラスと異なるパラメータに関して知る必要のあるすべての知識が説明されています。
 
 `request`
 ---------
@@ -288,7 +288,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`relative_url_root`~
 
-`relative_url_root` オプションはフロントコントローラの前の URL の部分を定義します。たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
+`relative_url_root` オプションはフロントコントローラの URL の先頭部分を定義します。たいていの場合、これはフレームワークによって自動的に検出されるので変更する必要はありません。
 
 `response`
 ----------
@@ -319,7 +319,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`charset`~
 
-`charset` オプションはレスポンスに使う文字セットを定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。 
+`charset` オプションはレスポンスに使う文字集合を定義します。デフォルトでは、`settings.yml` の `charset` 設定が使われます。 
 
 ### ~`http_protocol`~
 
@@ -359,7 +359,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`default_culture`~
 
-`default_culture` オプションはサイトに初めて訪問したユーザーのためにデフォルトの culture を定義します。デフォルトでは、`settings.yml` の `default_culture` が使われ、たいていの場合これで十分です。
+`default_culture` オプションはサイトに初めて訪問したユーザーのためにデフォルトのカルチャを定義します。デフォルトでは、`settings.yml` の `default_culture` が使われ、たいていの場合これで十分です。
 
 >**CAUTION**
 >`factories.yml` もしくは `settings.yml` の ~`default_culture`~ 設定を変更する場合、結果を確認するためにブラウザのクッキーをクリアする必要があります。
@@ -367,7 +367,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 `storage`
 ---------
 
-ストレージファクトリは HTTP リクエストのあいだのユーザーデータを一貫させるためにユーザーファクトリによって使われます。
+ストレージファクトリは HTTP リクエストのあいだのユーザーデータの一貫性を保つためにユーザーファクトリによって使われます。
 
 *sfContext アクセサ*: `$context->getStorage()`
 
@@ -439,7 +439,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 >**CAUTION**
 >[`cache`](#chapter_04-Settings_sub_cache) 設定が `true` にセットされている場合にのみこのファクトリが作られます。
 
-このファクトリのコンフィギュレーションの大半は `view_cache` ファクトリ経由で行われます。`view_cache` ファクトリはビューキャッシュマネージャによって使われる内部のキャッシュオブジェクトを定義します。
+このファクトリのコンフィギュレーションの大半は `view_cache` ファクトリ経由で変更されます。`view_cache` ファクトリはビューキャッシュマネージャによって使われる内部のキャッシュオブジェクトを定義します。
 
 ### ~`cache_key_use_vary_headers`~
 
@@ -466,7 +466,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
         prefix:                    %SF_APP_DIR%/template
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache) 設定が `true` にセットされている場合のみこのファクトリが定義されます。
+>[`cache`](#chapter_04_sub_cache) 設定が `true` にセットされている場合のみこのファクトリが定義されます。
 
 `view_cache` ファクトリは `sfCache` を継承するキャッシュクラスを定義します (詳細な情報はキャッシュのセクションを参照)。
 
@@ -504,7 +504,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 ### ~`debug`~
 
-`debug` オプションはデバッグモードをセットします。`true` にセットされる場合、未翻訳のメッセージは接頭辞と接尾辞によってデコレートされます (下記を参照)。
+`debug` オプションはデバッグモードをセットします。`true` にセットされている場合、未翻訳のメッセージは接頭辞と接尾辞によってデコレートされます (下記を参照)。
 
 ### ~`untranslated_prefix`~
 
@@ -555,7 +555,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト値*: 新しいプロジェクトでは `true`、アップグレードしたプロジェクトでは `false`
 
-`true` にセットされる場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短ルートを生成するよう伝えます。symfony 1.0 と 1.1 と後方互換性のあるルートがほしい場合は、`false` にセットします。
+`true` にセットされている場合、`generate_shortest_url` オプションはルーティングシステムに実現可能な最短ルートを生成するよう伝えます。symfony 1.0 と 1.1 と後方互換性のあるルートがほしい場合は、`false` にセットします。
 
 ### ~`extra_parameters_as_query_string`~
 
@@ -585,13 +585,13 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
 
 *デフォルト値*: `false`
 
-`true` にセットする場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえておりマッチするルートが最初のものである場合、この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスに悪い影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
+`true` にセットされている場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえておりマッチするルートが最初のものである場合、この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスにわるい影響を与える可能性があるので運用サーバーにデプロイする前に設定をテストすることを強くおすすめします。
 
 ### ~`lookup_cache_dedicated_keys`~
 
 *デフォルト値*: `false`
 
-`lookup_cache_dedicated_keys` 設定はルーティングキャッシュが構築される方法を決定します。`false` にセットされている場合、キャッシュは 1 つの大きな値として保存されます; `true` にセットされている場合それぞれのルートは独自のキャッシュストアを持ちます。この設定はパフォーマンス最適化設定です。
+`lookup_cache_dedicated_keys` 設定はルーティングキャッシュが構築される方法を決定します。`false` にセットされている場合、キャッシュは1つの大きな値として保存されます; `true` にセットされている場合それぞれのルートは独自のキャッシュストアをもちます。この設定はパフォーマンス最適化設定です。
 
 経験則として、ファイルベースのキャッシュクラス (たとえば `sfFileCache`) を使う際にはこの設定を `false` に、メモリベースのキャッシュクラス (たとえば `sfAPCCache`) を使う際には `true` にするとよいです。
 
@@ -630,8 +630,7 @@ Doctrine スプールの典型的なコンフィギュレーションは次の�
         level:   err
         loggers: ~
 
-If you don't use the `sfAggregateLogger`, don't forget to specify a `null`
-value for the `loggers` parameter.
+`sfAggregateLogger` を使いたくなければ、`loggers` パラメータに `null` を指定することをお忘れなく。
 
 >**CAUTION**
 >このファクトリはつねに定義されますが、`logging_enabled` 設定が `true` にセットされている場合のみロギングが行われます。

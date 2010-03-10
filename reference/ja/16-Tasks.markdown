@@ -11,7 +11,7 @@ symfony フレームワークはコマンドラインインターフェイスツ
 
     $ php symfony -V
 
-CLI ツールは最初の引数としてタスクの名前を受け取ります:
+CLI ツールはタスクの名前を最初の引数にとります:
 
     $ php symfony list
 
@@ -893,7 +893,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:migrate
 
-特定のバージョンにマイグレートするには引数としてバージョンを提供します:
+特定のバージョンにマイグレートするには引数としてバージョンを渡します:
 
     ./symfony doctrine:migrate 10
 
@@ -1305,7 +1305,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
     ./symfony plugin:uninstall mypearchannel/sfGuardPlugin
 
-`plugin:list` タスクを立ち上げることでプラグインの PEAR チャンネル名を得られます。
+`plugin:list` タスクを実行することでプラグインの PEAR チャンネル名を得られます。
 
 ウェブコンテンツ (画像、スタイルシートもしくは JavaScript) がプラグインに収められている場合、タスクは `web/%name%` シンボリックリンク (Unix 系) もしくはディレクトリ (Windows) も削除します。
 
@@ -2105,7 +2105,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`symfony::test`~
 
-`symfony::test`タスクは symfony テストスイートを立ち上げる:
+`symfony::test`タスクは symfony テストスイートを実行する:
 
     $ php symfony symfony:test [-u|--update-autoloader] [-f|--only-failed] [--xml="..."] [--rebuild-all]
 
@@ -2116,7 +2116,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | `--xml`                           | `-`       | JUnit と互換性のある XML ログファイルの名前
 | `--rebuild-all`                   | `-`       | すべての生成フィクスチャファイルをリビルドする
 
-`test:all` タスクは symfony テストスイートを立ち上げます:
+`test:all` タスクは symfony テストスイートを実行します:
 
     ./symfony symfony:test
 
@@ -2125,7 +2125,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`test::all`~
 
-`test::all` タスクはすべてのテストを立ち上げる:
+`test::all` タスクはすべてのテストを実行する:
 
     $ php symfony test:all [-f|--only-failed] [--xml="..."]
 
@@ -2134,17 +2134,17 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | `--only-failed`<br />`(-f)` | `-`        | 最後に通らなかったテストのみを実行する
 | `--xml`                     | `-`        | JUnit と互換性のある XML ログファイルの名前
 
-`test:all` タスクはすべてのユニットテストと機能テストを立ち上げます:
+`test:all` タスクはすべてのユニットテストと機能テストを実行します:
 
     ./symfony test:all
 
-このタスクは `test/` で見つかるすべてのテストを立ち上げます。
+このタスクは `test/` で見つかるすべてのテストを実行します。
 
 テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけます:
 
     ./symfony test:all -t
 
-もしくは `test:unit` と `test:functional` タスクでこれらのテストスイートを立ち上げることで問題の修正にとりかかることもできます。
+もしくは `test:unit` と `test:functional` タスクでこれらのテストスイートを実行することで問題の修正にとりかかることもできます。
 
 以前の実行のときに通らなかったテストのみの実行を強制するには `--only-failed` オプションをつけます:
 
@@ -2181,7 +2181,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`test::functional`~
 
-`test::functional` タスクは機能テストを立ち上げる:
+`test::functional` タスクは機能テストを実行する:
 
     $ php symfony test:functional [--xml="..."] application [controller1] ... [controllerN]
 
@@ -2194,21 +2194,21 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | -------------------------- | ---------- | ---------------
 | `--xml` | `-` | JUnit と互換性のある XML ログファイルの名前
 
-`test:functional` タスクは任意のアプリケーションの機能テストを立ち上げます:
+`test:functional` タスクは任意のアプリケーションの機能テストを実行します:
 
     ./symfony test:functional frontend
 
-このタスクは `test/functional/%application%` で見つかるすべてのテストを立ち上げます。
+このタスクは `test/functional/%application%` で見つかるすべてのテストを実行します。
 
 テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけることができます:
 
     ./symfony test:functional frontend -t
 
-コントローラの名前を渡すことで特定のコントローラのすべての機能テストを立ち上げることができます:
+コントローラの名前を渡すことで特定のコントローラのすべての機能テストを実行することができます:
 
     ./symfony test:functional frontend article
 
-複数のコントローラの機能テストをすべて立ち上げることもできます:
+複数のコントローラの機能テストをすべて実行することもできます:
 
     ./symfony test:functional frontend article comment
 
@@ -2218,7 +2218,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`test::unit`~
 
-`test::unit` タスクはユニットテストを立ち上げる:
+`test::unit` タスクはユニットテストを実行する:
 
     $ php symfony test:unit [--xml="..."] [name1] ... [nameN]
 
@@ -2230,21 +2230,21 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | -------------------------- | --------- | ----------------------------
 | `--xml`       | `-`        | JUnit と互換性のある XML ログファイルの名前
 
-`test:unit` タスクはユニットテストを立ち上げます:
+`test:unit` タスクはユニットテストを実行します:
 
     ./symfony test:unit
 
-このタスクは `test/unit` で見つかるすべてのテストを立ち上げます。
+このタスクは `test/unit` で見つかるすべてのテストを実行します。
 
 テストの一部が通らないのであれば、通らないことに関する詳しい情報を表示するために `--trace` オプションをつけます:
 
     ./symfony test:unit -t
 
-特定の名前のユニットテストを立ち上げることができます:
+特定の名前のユニットテストを実行することができます:
 
     ./symfony test:unit strtolower
 
-複数の名前のユニットテストを立ち上げることもできます:
+複数の名前のユニットテストを実行することもできます:
 
     ./symfony test:unit strtolower strtoupper
 
