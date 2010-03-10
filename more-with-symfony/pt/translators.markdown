@@ -83,3 +83,13 @@ Graduado em Administração, é desenvolvedor PHP há 8 anos e 2,5 anos desenvol
 Trabalha como consultor e desenvolvedor freelancer para vários clientes em todo Brasil.
 
 **Seu site** : *http://rgou.net*
+
+
+Rimenes Ribeiro
+---------------
+
+Desenvolvedor web há mais de 10 anos. Amante de TI, emprega o tempo que é possível para a busca de aprendizado na área. Trabalha com tecnologias open source. Desde 2006 utiliza o symfony para desenvolvimento web em PHP. Tenta contribuir com o desenvolvimento dessas tecnologias na assertiva de que o conhecimento é fundamental para a evolução.
+
+**Seu site** : *http://rimenes.net*
+
+**No Twitter** : *http://twitter.com/rimenes*
