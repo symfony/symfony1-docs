@@ -85,7 +85,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### `sfValidatorRegex`
 
-`sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされる場合、正規表現は渡すバリデータにマッチしません。
+`sfValidatorRegex` に新しい `must_match` オプションが用意されました。このオプションが `false` にセットされている場合、正規表現は渡すバリデータにマッチしません。
 
 `sfValidatorRegex` の `pattern` オプションは呼び出されるときに正規表現を返す `sfCallable` のインスタンスにしなければならなくなりました。
 
