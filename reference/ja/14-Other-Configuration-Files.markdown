@@ -8,7 +8,7 @@
 
 `autoload.yml` 設定は symfony によってオートロードされる必要のあるディレクトリを決定します。PHP クラスとインターフェイスを見つけるためにそれぞれのディレクトリがスキャンされます。
 
-第3章で説明したように、`autoload.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
+[第3章](#chapter_03)で説明したように、`autoload.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**が収められます。
 
 >**NOTE**
 >`autoload.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 
@@ -17,7 +17,7 @@
 
     [yml]
     autoload:
-      # project
+      # プロジェクト
       project:
         name:           project
         path:           %SF_LIB_DIR%
@@ -29,17 +29,17 @@
         path:           %SF_LIB_DIR%/model
         recursive:      on
 
-      # application
+      # アプリケーション
       application:
         name:           application
         path:           %SF_APP_LIB_DIR%
-        recursive:      on
+        recursive:      true
 
       modules:
         name:           module
         path:           %SF_APP_DIR%/modules/*/lib
         prefix:         1
-        recursive:      on
+        recursive:      true
 
 それぞれのコンフィギュレーションは名前をもち、その名前をもつキーの下でセットしなければなりません。このことによってデフォルトのコンフィギュレーションをオーバーライドすることが可能になります。
 
@@ -52,18 +52,18 @@
  * `path`: オートロードするパス
  * `recursive`: サブディレクトリで PHP クラスを探すか
  * `exclude`: 検索から除外するディレクトリの名前の配列
- * `prefix`: パスで見つかるクラスが指定モジュールのみをオートロードする場合 `true` にセットする (デフォルトでは `false`)
+ * `prefix`: 指定モジュールのためにパスで見つかるクラスがのみをオートロードさせる場合 `true` にセットする (デフォルトでは `false`)
  * `files`: PHP クラスのために明示的に解析するファイルの配列
  * `ext`: PHP クラスの拡張子 (デフォルトは `.php`)
 
-たとえば、`lib/` ディレクトリの下でプロジェクト内部で大きなライブラリを組み込み、オートロード機能がすでにサポートされている場合、パフォーマンスを向上させるために `project` のオートロードコンフィギュレーションを修正することで symfony のデフォルトのオートロードシステムからそのライブラリを除外できます:
+たとえば、オートロードをサポートする大きなライブラリをプロジェクトに `lib/` ディレクトリの下に組み込む場合、パフォーマンスを向上させるために `project` のオートロードコンフィギュレーションを修正することで symfony のデフォルトのオートロードシステムからこのライブラリを除外できます:
 
     [yml]
     autoload:
       project:
         name:           project
         path:           %SF_LIB_DIR%
-        recursive:      on
+        recursive:      true
         exclude:        [model, symfony, vendor/large_lib]
 
 ~`config_handlers.yml`~
@@ -81,7 +81,7 @@
 
 デフォルトの `config_handlers.yml` ファイルは次のようなパーサークラスを定義します:
 
- | 設定ファイル       | コンフィギュレーションハンドラクラス |
+ | 設定ファイル       | コンフィグハンドラクラス |
  | ------------------ | ------------------------------------ |
  | `autoload.yml`     | `sfAutoloadConfigHandler`            |
  | `databases.yml`    | `sfDatabaseConfigHandler`            |
@@ -116,7 +116,7 @@
 ~`module.yml`~
 --------------
 
-`module.yml` 設定ファイルはモジュールのコンフィギュレーションを可能にします。この設定ファイルはほとんど使われることはなく、下記の定義済みのエントリのみを収めます。
+`module.yml` 設定ファイルはモジュールのコンフィギュレーションの変更を可能にします。この設定ファイルはほとんど使われることはなく、下記の定義済みのエントリのみを収めます。
 
 `module.yml` ファイルは symfony によってロードされるモジュールの `config/` サブディレクトリに保存されます。次のコードはすべての設定のデフォルト値をもつ `module.yml` の典型的な内容を示しています:
 

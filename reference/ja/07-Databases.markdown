@@ -6,7 +6,7 @@ databases.yml 設定ファイル
 プロジェクトのメインの `databases.yml` 設定ファイルは `config/` ディレクトリで見つかります。
 
 >**NOTE**
->たいていの場合、プロジェクトのすべてのアプリケーションは同じデータベースを共有します。これがメインデータベース設定ファイルがプロジェクトの `config/` ディレクトリにある理由です。もちろんアプリケーションの `config` ディレクトリで `databases.yml` 設定ファイルを定義することでデフォルトコンフィギュレーションをオーバーライドできます。
+>たいていの場合、プロジェクトのすべてのアプリケーションは同じデータベースを共有します。これがデータベースのメイン設定ファイルがプロジェクトの `config/` ディレクトリにある理由です。もちろんアプリケーションの `config` ディレクトリで `databases.yml` 設定ファイルを定義することでデフォルトコンフィギュレーションをオーバーライドできます。
 
 第3章で説明したように、`databases.yml` ファイルでは[**環境が認識され**](#chapter_03)、[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
 
@@ -70,7 +70,7 @@ Propel
           persistent: true
           pooling:    true
 
-次のパラメータは `param` セクションの下で定義できます:
+次のパラメータは `param` セクションの下でカスタマイズできます:
 
  | キー         | 説明                        | デフォルト値    |
  | ------------ | ----------------------------| -------------- |
@@ -84,7 +84,7 @@ Propel
  | `options`    | Propel オプションのセット    | -              |
  | `debug`      | `DebugPDO` クラスのオプション| n/a            |
 
-`debug` エントリは Propel の [ドキュメント](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details) で説明されるすべてのオプションを定義します。次の YAML は利用可能なオプションを示します:
+`debug` エントリは Propel の[ドキュメント](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)で説明されるすべてのオプションを定義します。次の YAML は利用可能なオプションを示します:
 
     [yml]
     debug:
