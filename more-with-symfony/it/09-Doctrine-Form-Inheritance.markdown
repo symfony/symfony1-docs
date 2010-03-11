@@ -148,7 +148,7 @@ chiamata `type`, che è il nome predefinito della colonna se non è stato specif
 Il secondo attributo definisce per ciascun record il valore del tipo, che appartiene alle classi
 `Professor` o `Student`.
 
-![Schema dell'elereditarità di tabelle con aggregazione delle colonne](http://www.symfony-project.org/images/more-with-symfony/03_columns_aggregation_tables_inheritance.png "Doctrine column aggregation inheritance principle")
+![Schema dell'elereditarietà di tabelle con aggregazione delle colonne](http://www.symfony-project.org/images/more-with-symfony/03_columns_aggregation_tables_inheritance.png "Doctrine column aggregation inheritance principle")
 
 La strategia di aggregazione delle colonne, è un buon metodo per l'ereditarietà delle tabelle, perché 
 crea una singola tabella (`Person`) contente tutti i campi definiti, più il campo `type`. 
@@ -320,7 +320,7 @@ impostato come "selezionato" per impostazione predefinita.
 #### La soluzione ####
 
 La gestione di più di due tabelle uguali è uno dei migliori problemi che si possono risolvere con
-l'~ereditarità delle tabelle~. Nel problema di cui sopra, si è deciso di utilizzare
+l'~ereditarietà delle tabelle~. Nel problema di cui sopra, si è deciso di utilizzare
 l'~ereditarietà concreta delle tabelle~ per soddisfare le esigenze e per condividere
 metodi di oggetti in una singola classe. Vediamo il seguente schema semplificato, che
 illustra il problema.

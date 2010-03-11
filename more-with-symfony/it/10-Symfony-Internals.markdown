@@ -415,8 +415,8 @@ In ultimo, l'istanza del controllore è aggiunta all'`action stack`.
 
 >**NOTE**
 >La pila dell'azione è del tipo FIFO (First In First Out, il primo ad entrare è
->il primo ad uscire), la quale detiene tutte le azioni eseguite durante la richiesta.
->Ogni oggetto nella pila è avvolto in un
+>il primo ad uscire) e detiene tutte le azioni eseguite durante la richiesta.
+>Ogni oggetto passa per un
 >oggetto `sfActionStackEntry`. È sempre possibile accedere alla pila con
 >`sfContext::getInstance()->getActionStack()` o
 >`$this->getController()->getActionStack()` dall'interno di una azione.
@@ -432,8 +432,8 @@ richiesta fallisca, dato che un modulo interno non può essere chiamato
 pubblicamente.
 
 >**NOTE**
->I moduli interni, sono stati già utilizzati per generare il contenuto delle email
->(tramite `getPresentationFor()`, ad esempio). Qua si dovrebbero utilizzare altre
+>I moduli interni sono stati già utilizzati per generare il contenuto delle email
+>(tramite `getPresentationFor()`, ad esempio). Qui si dovrebbero utilizzare altre
 >tecniche, come ad esempio un partial (`$this->renderPartial()`).
 
 Ora che `module.yml` è caricato, è il momento di verificare per la seconda volta
@@ -448,7 +448,7 @@ a `false`, se a questo punto si desidera disattivare il modulo.
 >[`sfConfigurationException`](http://trac.symfony-project.org/browser/branches/1.3/lib/exception/sfConfigurationException.class.php)
 >Questo dovrebbe essere usato quando si vuole disabilitare un modulo in modo permanente.
 >Nel secondo caso, attraverso l'impostazione `mod_$moduleName_enabled`, un modulo
->disabilitato comporterà all'applicazione l'inoltro al modulo disabilitato (vedere
+>disabilitato comporterà per l'applicazione l'inoltro al modulo disabilitato (vedere
 >le impostazioni di [`sf_module_disabled_module` e
 >`sf_module_disabled_action`](http://www.symfony-project.org/reference/1_4/it/04-Settings#chapter_04_sub_module_disabled)
 >). Si dovrebbero utilizzare quando si vuole disattivare temporaneamente un modulo.
