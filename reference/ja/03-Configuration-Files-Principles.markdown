@@ -63,27 +63,27 @@ symfony が設定ファイルをコンパイルするとき、既存のすべて
 
  | 定数             | デフォルト値          |
  | ---------------- | -------------------- |
- | `SF_APPS_DIR`    | `SF_ROOT_DIR/apps`   |
- | `SF_CONFIG_DIR`  | `SF_ROOT_DIR/config` |
- | `SF_CACHE_DIR`   | `SF_ROOT_DIR/cache`  |
- | `SF_DATA_DIR`    | `SF_ROOT_DIR/data`   |
- | `SF_DOC_DIR`     | `SF_ROOT_DIR/doc`    |
- | `SF_LIB_DIR`     | `SF_ROOT_DIR/lib`    |
- | `SF_LOG_DIR`     | `SF_ROOT_DIR/log`    |
- | `SF_PLUGINS_DIR` | `SF_ROOT_DIR/plugins`|
- | `SF_TEST_DIR`    | `SF_ROOT_DIR/test`   |
- | `SF_WEB_DIR`     | `SF_ROOT_DIR/web`    |
- | `SF_UPLOAD_DIR`  | `SF_WEB_DIR/uploads` |
+ | ~`SF_APPS_DIR`~    | `SF_ROOT_DIR/apps`   |
+ | ~`SF_CONFIG_DIR`~  | `SF_ROOT_DIR/config` |
+ | ~`SF_CACHE_DIR`~   | `SF_ROOT_DIR/cache`  |
+ | ~`SF_DATA_DIR`~    | `SF_ROOT_DIR/data`   |
+ | ~`SF_DOC_DIR`~     | `SF_ROOT_DIR/doc`    |
+ | ~`SF_LIB_DIR`~     | `SF_ROOT_DIR/lib`    |
+ | ~`SF_LOG_DIR`~     | `SF_ROOT_DIR/log`    |
+ | ~`SF_PLUGINS_DIR`~ | `SF_ROOT_DIR/plugins`|
+ | ~`SF_TEST_DIR`~    | `SF_ROOT_DIR/test`   |
+ | ~`SF_WEB_DIR`~     | `SF_ROOT_DIR/web`    |
+ | ~`SF_UPLOAD_DIR`~  | `SF_WEB_DIR/uploads` |
 
 アプリケーションのディレクトリ構造は `SF_APPS_DIR/APP_NAME` ディレクトリの下で定義されます:
 
  | 定数                  | デフォルト値           |
  | --------------------- | ---------------------- |
- | `SF_APP_CONFIG_DIR`   | `SF_APP_DIR/config`    |
- | `SF_APP_LIB_DIR`      | `SF_APP_DIR/lib`       |
- | `SF_APP_MODULE_DIR`   | `SF_APP_DIR/modules`   |
- | `SF_APP_TEMPLATE_DIR` | `SF_APP_DIR/templates` |
- | `SF_APP_I18N_DIR`     | `SF_APP_DIR/i18n`      |
+ | ~`SF_APP_CONFIG_DIR`~   | `SF_APP_DIR/config`    |
+ | ~`SF_APP_LIB_DIR`~      | `SF_APP_DIR/lib`       |
+ | ~`SF_APP_MODULE_DIR`~   | `SF_APP_DIR/modules`   |
+ | ~`SF_APP_TEMPLATE_DIR`~ | `SF_APP_DIR/templates` |
+ | ~`SF_APP_I18N_DIR`~     | `SF_APP_DIR/i18n`      |
 
 最後に、アプリケーションキャッシュのディレクトリ構造は次のように定義されます:
 

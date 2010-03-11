@@ -83,19 +83,19 @@
 
  | 設定ファイル       | コンフィグハンドラクラス |
  | ------------------ | ------------------------------------ |
- | `autoload.yml`     | `sfAutoloadConfigHandler`            |
- | `databases.yml`    | `sfDatabaseConfigHandler`            |
- | `settings.yml`     | `sfDefineEnvironmentConfigHandler`   |
- | `app.yml`          | `sfDefineEnvironmentConfigHandler`   |
- | `factories.yml`    | `sfFactoryConfigHandler`             |
- | `core_compile.yml` | `sfCompileConfigHandler`             |
- | `filters.yml`      | `sfFilterConfigHandler`              |
- | `routing.yml`      | `sfRoutingConfigHandler`             |
- | `generator.yml`    | `sfGeneratorConfigHandler`           |
- | `view.yml`         | `sfViewConfigHandler`                |
- | `security.yml`     | `sfSecurityConfigHandler`            |
- | `cache.yml`        | `sfCacheConfigHandler`               |
- | `module.yml`       | `sfDefineEnvironmentConfigHandler`   |
+ | `autoload.yml`     | `sfAutoloadConfigHandler`          |
+ | `databases.yml`    | `sfDatabaseConfigHandler`          |
+ | `settings.yml`     | `sfDefineEnvironmentConfigHandler` |
+ | `app.yml`          | `sfDefineEnvironmentConfigHandler` |
+ | `factories.yml`    | `sfFactoryConfigHandler`           |
+ | `core_compile.yml` | `sfCompileConfigHandler`           |
+ | `filters.yml`      | `sfFilterConfigHandler`            |
+ | `routing.yml`      | `sfRoutingConfigHandler`           |
+ | `generator.yml`    | `sfGeneratorConfigHandler`         |
+ | `view.yml`         | `sfViewConfigHandler`              |
+ | `security.yml`     | `sfSecurityConfigHandler`          |
+ | `cache.yml`        | `sfCacheConfigHandler`             |
+ | `module.yml`       | `sfDefineEnvironmentConfigHandler` |
 
 ~`core_compile.yml`~
 --------------------

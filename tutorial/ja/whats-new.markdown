@@ -358,7 +358,7 @@ symfony の CLI はターミナルウィンドウの幅を検出することを�
 ユーザーに質問をして得られる入力内容をバリデートする `sfTask::askAndValidate()` メソッドが新しく用意されました:
 
     [php]
-    $anwser = $this->askAndValidate('What is you email?', new sfValidatorEmail());
+    $answer = $this->askAndValidate('What is you email?', new sfValidatorEmail());
 
 このメソッドはオプションの配列を受け取ることもできます (より詳しい情報は API ドキュメントを参照)。
 
@@ -415,10 +415,9 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
     [php]
     $task = new sfDoctrineConfigureDatabaseTask($this->dispatcher, $this->formatter);
     $task->run(
-      array('dsn' => 'mysql:dbname=mydb;host=localhost',
-    ), array(
-      'name' => 'master',
-    ));
+      array('dsn' => 'mysql:dbname=mydb;host=localhost'),
+      array('name' => 'master')
+    );
 
 以前のバージョンでは、次のように書けばまだ動きます:
 

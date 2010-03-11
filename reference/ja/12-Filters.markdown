@@ -42,7 +42,6 @@ filters.yml 設定ファイル
     rendering: ~
     security:  ~
     cache:     ~
-    common:    ~
     execution: ~
 
 フィルタを除外するには、`enabled` キーを `false` にセットしてこれを無効にする必要があります:

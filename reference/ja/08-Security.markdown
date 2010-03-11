@@ -65,7 +65,7 @@ security.yml 設定ファイル
 
     [yml]
     all:
-      is_secure:  true
+      is_secure:   true
       credentials: admin
 
 symfony のクレデンシャルのシステムはシンプルで強力です。クレデンシャルはアプリケーションのセキュリティモデルを記述するために必要なものを表現できる文字列です (グループもしくはパーミッションのようなもの)。

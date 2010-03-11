@@ -167,7 +167,7 @@ symfony のアドミンジェネレータはモデルクラスのバックエン
  | `_list_td_tabular.php`       | list の単独フィールドを表示する
  | `_list_th_stacked.php`       | ヘッダーの単独のカラム名を表示する
  | `_list_th_tabular.php`       | ヘッダーの単独のカラム名を表示する
- | `_pagination.php`            | list パジネーションを表示する
+  | `_pagination.php`            | list パジネーションを表示する
  | `editSuccess.php`            | `edit` ビューを表示する
  | `indexSuccess.php`           | `list` ビューを表示する
  | `newSuccess.php`             | `new` ビューを表示する

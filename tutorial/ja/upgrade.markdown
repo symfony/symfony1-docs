@@ -217,6 +217,9 @@ symfony 1.3 は新しいメーラーファクトリを備えています。ア�
           delivery_strategy: single_address
           delivery_address:  foo@example.com
 
+>**CAUTION**
+>プロジェクトが古いバージョンの Swiftmailer を使っている場合、それを削除しなければなりません。
+
 YAML
 ----
 
