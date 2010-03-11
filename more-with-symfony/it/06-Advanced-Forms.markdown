@@ -7,7 +7,7 @@ Il framework dei form di symfony viene in aiuto allo sviluppatore con strumenti
 necessari a visualizzare e validare i form in modo semplice e orientato agli oggetti.
 Grazie alle classi ~`sfFormDoctrine`~ e ~`sfFormPropel`~ disponibili per ciascun ORM,
 il framework dei form può facilmente visualizzare e salvare form che fanno
-riferimento allo strato dei dati.
+riferimento al livello dei dati.
 
 Le situazioni del mondo reale, tuttavia, spesso richiedono agli sviluppatori di
 personalizzare ed estendere i form. In questo capitolo vengono presentati e risolti

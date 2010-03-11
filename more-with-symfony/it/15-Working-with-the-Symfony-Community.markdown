@@ -405,7 +405,7 @@ Se si è interessati ad aiutare nella traduzione della documentazione nella prop
 lingua madre, questo è il primo posto da visitare. È possibile che vi siano
 molti traduttori per una lingua, in questo caso è molto importante coordinare
 gli sforzi per non duplicare il lavoro svolto. La mailinglist di symfony dedicata
-alla documentazione, è il luogo perfetto dove dare il via alle traduzioni.
+alla documentazione è il luogo perfetto dove dare il via alle traduzioni.
 
 #### Aggiungere contenuti al wiki
 
@@ -415,7 +415,7 @@ documentazione. È sempre buona cosa avere nuovi contenuti sul wiki. Comunque
 è possibile contribuire leggendo gli articoli esistenti, apportando correzioni, o
 aggiornandoli. Oltre ai nuovi articoli ne esistono di vecchi che contengono
 esempi datati, o che sono totalmente non aggiornati. Aiutare a mantenere puliti
-i contenuti esistenti sul wiki, è un ottimo modo per rendere più semplice la ricerca
+i contenuti esistenti sul wiki è un ottimo modo per rendere più semplice la ricerca
 da parte degli utenti che cercano i contenuti che fanno al caso loro.
 
 Per farsi un'idea del tipo di contenuti presenti sul wiki, o trarre un po' di 

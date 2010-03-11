@@ -149,7 +149,7 @@ Prima, però, bisogna chiarire alcuni retroscena sul funzionamento del sistema d
 Come funziona il sistema delle rotte
 ------------------------------------
 
-Una "rotta" in symfony, è un oggetto di tipo ~`sfRoute`~ che fa due importanti
+Una "rotta" in symfony è un oggetto di tipo ~`sfRoute`~, che fa due importanti
 lavori:
 
  * Generare un URL. Per esempio, se si passa al metodo `page_show` un parametro
@@ -725,7 +725,7 @@ sviluppatore sarà in grado di riutilizzare le rotte personalizzate per altri
 moduli dell'area di backend (ad esempio in modo che ogni `Client` possa gestire
 le proprie gallerie di foto).
 
-Un altro motivo comune per creare una collezione personalizzata di rotte, è quello
+Un altro motivo comune per creare una collezione personalizzata di rotte è quello
 di aggiungere rotte usate di frequente. Per esempio, supponiamo che un progetto
 impieghi molti modelli, ciascuno con una colonna `is_active`. Nell'area
 di amministrazione, ci deve essere un modo facile per attivare/disattivare il

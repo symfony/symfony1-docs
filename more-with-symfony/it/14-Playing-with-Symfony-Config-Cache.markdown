@@ -3,7 +3,7 @@ Lavorare con la cache della configurazione di symfony
 
 *di Kris Wallsmith*
 
-Uno dei miei obiettivi personali come sviluppatore di symfony, è quello di
+Uno dei miei obiettivi personali, come sviluppatore di symfony, è quello di
 snellire il più possibile il flusso di lavoro su un determinato progetto.
 Anche se io posso conoscere sia dentro che fuori la base del nostro codice,
 questa non è una aspettativa ragionevole per tutto il team. Fortunatamente
@@ -14,7 +14,7 @@ con il minimo della fatica.
 Le stringhe nei form
 --------------------
 
-Un eccellente esempio di questo, è il framework dei form di symfony. Il framework
+Un eccellente esempio di questo è il framework dei form di symfony. Il framework
 dei form è un componente potente di symfony, che dà un grande controllo sui form,
 spostando la loro visualizzazione e convalida, in oggetti PHP. Questa è una manna
 per gli sviluppatori di applicazioni, perché significa che si possono incapsulare
@@ -194,7 +194,7 @@ nello YAML.
 Utilizzare lo YAML
 ------------------
 
-Il modo più semplice per utilizzare questa configurazione YAML in ogni form, è
+Il modo più semplice per utilizzare questa configurazione YAML in ogni form è
 caricarla in un array e ciclare attraverso ciascuna configurazione:
 
     [php]
@@ -770,7 +770,7 @@ Creare tutte le classi, eseguendo il seguente frammento di codice:
         '<?php class Form'.$i.' extends BaseForm { }');
     }
 
-Ora si è pronti per lanciare alcuni benchmarks. Per i risultati che trovate cui
+Ora si è pronti per lanciare alcuni benchmarks. Per i risultati che trovate qui
 sotto, è stato più volte eseguito il seguente comando [Apache](http://httpd.apache.org/docs/2.0/programs/ab.html)
 su un MacBook, finché non si è avuta una deviazione standard inferiore a 2ms.
 

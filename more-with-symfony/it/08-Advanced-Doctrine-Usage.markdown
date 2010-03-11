@@ -8,7 +8,7 @@ Scrivere un comportamento per Doctrine
 
 In questa sezione verrà mostrato come è possibile scrivere un comportamento
 utilizzando Doctrine 1.2. Verrà creato un esempio che consenta di mantenere
-facilmente in cache un contatore di relazioni in modo tale che non sia
+facilmente in cache un contatore di relazioni, in modo tale che non sia
 necessario tutte le volte fare la query per ottenere il conteggio.
 
 La funzionalità è molto semplice. Si vuole gestire un contatore per tutte le
@@ -17,8 +17,8 @@ dove memorizzare il conteggio corrente.
 
 ### Lo schema
 
-Questo è lo schema che si userà per iniziare. Successivamente verrà modificato
-aggiungendo la definizione actAs per il comportamento che si sta per scrivere:
+Questo è lo schema che si userà per iniziare. Successivamente verrà modificato,
+aggiungendo la definizione `actAs` per il comportamento che si sta per scrivere:
 
     [yml]
     # config/doctrine/schema.yml
@@ -47,9 +47,8 @@ Ora si può creare tutto il necessario per tale schema:
 
 ### Il template
 
-In primo luogo è necessario scrivere una classe figlia Doctrine_Template che sarà
+In primo luogo, è necessario scrivere una classe figlia Doctrine_Template, che sarà
 responsabile di aggiungere le colonne al modello che memorizzerà i conteggi.
-
 
 Si può inserire questo codice in una delle cartelle `lib/` del progetto e symfony
 sarà in grado di caricarlo automaticamente
@@ -67,7 +66,7 @@ sarà in grado di caricarlo automaticamente
       }
     }
 
-Modificare il modello `Post` aggiungendo ActAs, con il comportamento `CountCache`:
+Modificare il modello `Post` aggiungendo `ActAs`, con il comportamento `CountCache`:
 
     [yml]
     # config/doctrine/schema.yml
@@ -76,13 +75,13 @@ Modificare il modello `Post` aggiungendo ActAs, con il comportamento `CountCache
         CountCache: ~
       # ...
 
-Ora che il modello Post utilizza il comportamento CountCache, cerchiamo di
+Ora che il modello `Post` utilizza il comportamento `CountCache`, cerchiamo di
 capire che cosa succede con il suo utilizzo.
 
 Quando le informazioni di mapping per un modello sono istanziate, eventuali
 comportamenti collegati ottengono l'invocazione dei metodi `setTableDefinition()`
-e `setUp()`. Proprio come si ha nella classe `BasePost` in `lib/model/doctrine/base/BasePost.class.php`.
-Questo permette di aggiungere cose a qualsiasi modello in uno stile plug n'play.
+e `setUp()`, proprio come si ha nella classe `BasePost` in `lib/model/doctrine/base/BasePost.class.php`.
+Questo permette di aggiungere cose a qualsiasi modello in uno stile plug'n'play.
 Queste "cose" possono essere colonne, relazioni, ascoltatori di eventi, ecc.
 
 Ora che si è compreso un po' di più su quello che sta succedendo, bisogna fare
@@ -132,12 +131,12 @@ modificare lo schema YAML per definire le opzioni extra del comportamento:
               foreignAlias: Posts
       # ...
 
-Ora il modello `Thread` ha una colonna `num_posts` che verrà tenuta aggiornata
+Ora il modello `Thread` ha una colonna `num_posts`, che verrà tenuta aggiornata
 con il numero di post che ha ogni thread.
 
 ### L'ascoltatore di eventi
 
-Il passo successivo per costruire il comportamento, è quello di scrivere un
+Il passo successivo per costruire il comportamento è quello di scrivere un
 ascoltatore per registrare gli eventi, che sarà incaricato di tenere il
 conteggio aggiornato quando si inserisce un nuovo record, si cancella un record
 o si cancellano record con dei batch DQL:
@@ -155,8 +154,8 @@ o si cancellano record con dei batch DQL:
       }
     }
 
-Prima di andare avanti bisogna definire la classe `CountCacheListener` che
-estende `Doctrine_Record_Listener`. Essa accetta un array di opzioni che sono
+Prima di andare avanti, bisogna definire la classe `CountCacheListener`, che
+estende `Doctrine_Record_Listener`. Essa accetta un array di opzioni, che sono
 semplicemente inoltrate all'ascoltatore dal template:
 
     [php]
@@ -182,7 +181,7 @@ aggiornato:
  * **postDqlUpdate()**:  Decrementa il conteggio quando i record sono cancellati per mezzo di
    una delete DQL.
 
-In primo luogo definire il metodo `postInsert()`:
+In primo luogo, definire il metodo `postInsert()`:
 
     [php]
     class CountCacheListener extends Doctrine_Record_Listener
@@ -208,7 +207,7 @@ In primo luogo definire il metodo `postInsert()`:
     }
 
 Il codice sopra incrementerà di uno i conteggi per tutte le relazioni configurate
-mediante una query DQL UPDATE quando un nuovo oggetto come il seguente è inserito:
+mediante una query DQL UPDATE, quando un nuovo oggetto come il seguente è inserito:
 
     [php]
     $post = new Post();
@@ -246,7 +245,7 @@ i contatori. Verrà implementato con il metodo `postDelete()`:
       }
     }
 
-Il metodo `postDelete()` di cui sopra, è quasi identico a `postInsert()`,
+Il metodo `postDelete()` di cui sopra è quasi identico a `postInsert()`,
 l'unica differenza è che viene decrementata la colonna `num_posts` di `1`
 invece di incrementarla. Gestisce il seguente codice, nel caso si volesse
 cancellare il record `$post` che è stato salvato in precedenza:
@@ -254,7 +253,7 @@ cancellare il record `$post` che è stato salvato in precedenza:
     [php]
     $post->delete();
 
-L'ultimo pezzo del puzzle, è quello di gestire il caso in cui i record vengono
+L'ultimo pezzo del puzzle è quello di gestire il caso in cui i record vengono
 cancellati usando un update DQL. Si può risolverlo utilizzando il metodo
 `preDqlDelete()`:
 
@@ -289,7 +288,7 @@ cancellati usando un update DQL. Si può risolverlo utilizzando il metodo
       }
     }
 
-Il codice sopra clona la query `DQL DELETE` e la trasforma in una `SELECT` che
+Il codice sopra clona la query `DQL DELETE` e la trasforma in una `SELECT`, che
 permette di recuperare gli `ID` che verranno cancellati, in modo che sia
 possibile aggiornare i contatori dei record che sono stati cancellati.
 
@@ -637,18 +636,18 @@ Anche se questo esempio è molto semplice, dovrebbe dimostrare bene come si può
 usare queste funzionalità per implementare una cache tarata finemente sulle
 query di Doctrine.
 
-Scrivere un idratatore per Doctrine
+Scrivere un idratante per Doctrine
 -----------------------------------
 
 Una delle caratteristiche chiave di Doctrine è la capacità di trasformare un
 oggetto `Doctrine_Query` in vari tipi di strutture di risultati. Questo è il
-lavoro dell'idratatore di Doctrine, ma fino a Doctrine 1.2, gli idratatori erano
+lavoro dell'idratante di Doctrine, ma, fino a Doctrine 1.2, gli idratatori erano
 tutti cablati nel codice e non utilizzabili dagli sviluppatori per personalizzarli.
-Ora che questo è cambiato è possibile scrivere un idratatore personalizzato e
+Ora che questo è cambiatoi, è possibile scrivere un idratante personalizzato e
 creare qualunque struttura dati che si desidera, in base ai dati del database
 che si vogliono ottenere, quando si esegue una istanza di `Doctrine_Query`.
 
-In questo esempio verrà costruito un idratatore estremamente semplice e facile da
+In questo esempio verrà costruito un idratante estremamente semplice e facile da
 capire, nonché molto utile. Esso consente di selezionare due colonne e idratare
 i dati in un array dove la prima colonna selezionata è la chiave e la seconda colonna
 selezionata è il valore.
@@ -683,9 +682,9 @@ Ora verrà creato tutto il necessario con il comando seguente:
 
     $ php symfony doctrine:build --all --and-load
 
-### Scrivere un idratatore
+### Scrivere un idratante
 
-Per scrivere un idratatore tutto quello che bisogna fare è scrivere una nuova
+Per scrivere un idratante tutto quello che bisogna fare è scrivere una nuova
 classe che estende `Doctrine_Hydrator_Abstract` e implementa un metodo
 `hydrateResultSet($stmt)`. Questo riceve l'istanza `PDOStatement` usata per
 eseguire la query. Si può utilizzare questa dichiarazione per ottenere i
@@ -727,14 +726,14 @@ modificare il metodo `hydrateResultSet()` per fargli fare quello di cui si ha bi
       }
     }
 
-Bene è stato facile! Il codice dell'idratatore è finito e fa esattamente quello che
+Bene è stato facile! Il codice dell'idratante è finito e fa esattamente quello che
 si voleva, ora non resta che usarlo!
 
-### Utilizzare un idratatore
+### Utilizzare un idratante
 
-Per utilizzare e testare l'idratatore, prima è necessario registrarlo su Doctrine
+Per utilizzare e testare l'idratante, prima è necessario registrarlo su Doctrine
 in modo che quando vengono eseguite delle query, Doctrine sia a conoscenza della
-classe idratatore che è stata scritta.
+classe idratante che è stata scritta.
 
 Per farlo, bisogna registrarlo nell'istanza `Doctrine_Manager` di `ProjectConfiguration`:
 
@@ -752,7 +751,7 @@ Per farlo, bisogna registrarlo nell'istanza `Doctrine_Manager` di `ProjectConfig
       }
     }
 
-Ora che l'idratatore è registrato, si è in grado di utilizzarlo con le
+Ora che l'idratante è registrato, si è in grado di utilizzarlo con le
 istranze di `Doctrine_Query`. Ecco un esempio:
 
     [php]

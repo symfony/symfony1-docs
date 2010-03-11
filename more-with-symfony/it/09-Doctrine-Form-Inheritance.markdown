@@ -270,14 +270,14 @@ l'ereditarietà delle tabelle di Doctrine.
 
 Il resto del capitolo spiegherà come usare l'ereditarietà delle tabelle di Doctrine
 e come trarne vantaggio in diverse situazioni in modelli, form, filtri e generatori
-di amministrativo. Esempi di studi reali aiuteranno a capire meglio come l'ereditarietà
+di amministrazione. Esempi di studi reali aiuteranno a capire meglio come l'ereditarietà
 funziona con symfony, in modo che sia possibile usarla per le proprie esigenze.
 
 ### Introduzione allo studio di un caso reale
 
 In questo capitolo saranno presentati diversi studi di casi reali per
 mostrare i vantaggi dell'approccio dell'ereditarietà delle tabelle di Doctrine
-nei diversi livelli: `modelli`, `form`, `filtri` e `generatore di amministrativo`.
+nei diversi livelli: `modelli`, `form`, `filtri` e `generatore di amministrazione`.
 
 Il primo esempio viene da un'applicazione intranet sviluppata da Sensio
 per una ben nota società francese. Essa mostra come l'ereditarietà delle tabelle di
@@ -289,11 +289,11 @@ concreta delle tabelle~ con i form, attravero la creazione di un semplice modell
 per gestire file binari.
 
 Infine il terzo esempio mostrerà come utilizzare l'ereditarietà delle tabelle
-con il generatore di amministrativo e come renderlo più flessibile. Lo studio del caso
+con il generatore di amministrazione e come renderlo più flessibile. Lo studio del caso
 mostrato, sarà basato sul primo esempio.
 
 
-### Ereditarietà delle tabelle nello strato modello
+### Ereditarietà delle tabelle nel livello del modello
 
 Similmente al concetto di programmazione orientata agli oggetti, ~l'ereditarietà delle tabelle~ 
 incoraggia la condivisione dei dati. Di conseguenza, essa consente la condivisione di proprietà
@@ -303,18 +303,18 @@ Spieghiamo questo concetto con un esempio del mondo reale.
 
 #### Il problema ####
 
-Molte applicazioni web sono vincolate da dati  "~referenziali~" su cui lavorare. 
-Generalmente un referenziale è un piccolo insieme di dati rappresentati da una semplice
-tabella contenente almeno due campi (ad esempio `id` e `label`). In alcuni casi
-il referenziale contiene dati aggiuntivi come un flag `is_active` o `is_default`.
-Recentemente in Sensio questo è stato il caso di una applicazione per un cliente.
+Molte applicazioni web sono vincolate da dati "referenziali" su cui lavorare. 
+Generalmente, un referenziale è un piccolo insieme di dati rappresentati da una semplice
+tabella contenente almeno due campi (ad esempio `id` e `label`). In alcuni casi,
+il referenziale contiene dati aggiuntivi, come un flag `is_active` o `is_default`.
+Recentemente, in Sensio, questo è stato il caso di una applicazione per un cliente.
 
 Il cliente voleva gestire una grossa quantità di dati da utilizzare per le
 principali form e viste dell'applicazione. Tutte queste tabelle referenziali
 sono state costruite intorno allo stesso modello di base: `id`, `label`, `position`
 e `is_default`. Il campo `position` consente di classificare i record grazie a
 una funzionalità ajax drag and drop. Il campo `is_default` rappresenta un flag
-che indica se un record, quando è utilizzato con un box select html, deve essere
+che indica se un record, quando è utilizzato con un select html, deve essere
 impostato come "selezionato" per impostazione predefinita.
 
 #### La soluzione ####
@@ -370,11 +370,11 @@ tre tabelle SQL e sei classi di modelli nella cartella `lib/model/doctrine`:
   * `sfReferentialProductTypeTable`: gestisce la tabella
     `sf_referential_product_type`.
 
-L'eplorazione del codice generato, mostra che entrambe le classi base delle
+L'eplorazione del codice generato mostra che entrambe le classi base delle
 classi dei modelli `sfReferentialContractType` e `sfReferentialProductType`
 ereditano dalla classe `sfReferential`. Così, tutti i metodi protetti e pubblici
-(includendo le proprietà) inseriti nella classe `sfReferential`, saranno condivisi
-tra le due sottoclassi e se necessario potranno essere sovrascritti.
+(includendo le proprietà) inseriti nella classe `sfReferential` saranno condivisi
+tra le due sottoclassi e, se necessario, potranno essere sovrascritti.
 
 Questo è esattamente l'obiettivo previsto. Ora la classe `sfReferential` può
 contenere metodi per gestire tutti i dati referenziali, per esempio:
@@ -460,7 +460,7 @@ Che cosa accadrebbe se lo schema non utilizzasse l'ereditarietà di tabelle? Il 
 essere duplicato in ogni sottoclasse referenziale. Questo approccio non sarebbe DRY,
 specialmente con una applicazione avente una dozzina di tabelle referenziali.
 
-### Ereditarietà delle tabelle nello strato dei form ###
+### Ereditarietà delle tabelle nel livello dei form ###
 
 Continuiamo la visita guidata dei vantaggi dell'ereditarietà delle tabelle di Doctrine.
 La sezione precedente ha dimostrato come questa caratteristica può essere molto utile per
@@ -645,11 +645,11 @@ il metodo ~`setupInheritance()`~.
 Allo stesso modo, sia `VideoFormFilter` che `PDFFormFilter` possono condividere
 gli stessi metodi personalizzati nella classe `FileFormFilter`.
 
-### Ereditarietà di tabelle a livello di generatore di amministrativo ###
+### Ereditarietà di tabelle a livello di generatore di amministrazione ###
 
 É giunto il momento di scoprire come sfruttare l'ereditarietà delle tabelle di Doctrine
-e una delle nuove funzionalità del generatore di amministrativo: la definizione della
-__classe base delle azioni__. Il generatore di amministrativo è una delle funzionalità più
+e una delle nuove funzionalità del generatore di amministrazione: la definizione della
+__classe base delle azioni__. Il generatore di amministrazione è una delle funzionalità più
 apprezzate di symfony a partire dalla versione 1.0.
 
 Nel novembre 2008, symfony ha introdotto il nuovo sistema di generatore dell'amministrazione
@@ -787,7 +787,7 @@ devono essere copiate sotto la cartella `web/`:
     $ php symfony plugin:publish-assets
 
 La parte seguente spiega come costruire tutti i moduli di backend, grazie agli
-strumenti del generatore di amministrativo e come beneficiare di una nuova funzionalità
+strumenti del generatore di amministrazione e come beneficiare di una nuova funzionalità
 integrata.
 
 #### Configurare il backend
@@ -801,7 +801,7 @@ che possa contenere i moduli che creeremo:
 
     $ php symfony generate:app backend
 
-Anche se il generatore di amministrativo è un buon strumento, lo sviluppatore è
+Anche se il generatore di amministrazione è un buon strumento, lo sviluppatore è
 sempre stato costretto a duplicare il codice in comune tra i due moduli generati.
 Grazie a symfony 1.3 il task ~`doctrine:generate-admin`~ ora introduce una nuova opzione
 ~`--actions-base-class`~ che permette di definire la classe del modulo base delle azioni.
@@ -825,7 +825,7 @@ due moduli possono essere generati nell'applicazione backend:
     $ php symfony doctrine:generate-admin --module=shopping --actions-base-class=sfSortableModuleActions backend sfShoppingItem
     $ php symfony doctrine:generate-admin --module=todo --actions-base-class=sfSortableModuleActions backend sfTodoItem
 
-Il generatore di amministrativo genera i moduli in due cartelle separate. La prima
+Il generatore di amministrazione genera i moduli in due cartelle separate. La prima
 è ovviamente `apps/backend/modules`, ma la maggioranza dei file dei moduli generati
 sono posizionati nella cartella `cache/backend/dev/modules`. I file posizionati
 in questo posto sono rigenerati ogni volta che la cache viene cancellata o quando
@@ -833,7 +833,7 @@ cambia la configurazione del modulo.
 
 >**Note**
 >L'esplorazione dei file memorizzati nella cache è una buona pratica per capire come
->symfony e il generatore di amministrativo lavorano sotto il cofano. Di conseguenza, 
+>symfony e il generatore di amministrazione lavorano sotto il cofano. Di conseguenza, 
 >la nuova classe ereditata `sfSortableModuleActions` può essere trovata nei file
 >`cache/backend/dev/modules/autoShopping/actions/actions.class.php`
 >e `cache/backend/dev/modules/autoTodo/actions/actions.class.php`. Per
@@ -856,7 +856,7 @@ Questo è abbastanza facile visto che il plugin installato fornisce una API per 
 su una classe del modello.
 
 Il primo passo è quello di due nuove rotte in grado di spostare un record in alto o in basso
-nell'elenco. Dal momento che il generatore di amministrativo usa ~`sfDoctrineRouteCollection`~,
+nell'elenco. Dal momento che il generatore di amministrazione usa ~`sfDoctrineRouteCollection`~,
 le nuove rotte possono facilmente essere dichiarate e attaccate ad esso nel file `config/generator.yml`
 di entrambi i moduli:
 
@@ -1003,7 +1003,7 @@ repository di [Google Code](http://code.google.com/p/tablednd/).
 
 Per lavorare, il visualizzatore dell'elenco di ogni modulo deve includere il frammento
 JavaScript ed entrambe le tabelle hanno bisogno di un attributo `id`. Come tutti i
-template del generatore di amministrativo. Siccome nel generatore di amministrativo
+template del generatore di amministrazione. Siccome nel generatore di amministrazione
 i template e i partial possono essere sovrascritti, il file `_list.php`, presente
 nella cache per impostazione predefinita, deve essere copiato in entrambi i moduli.
 
@@ -1099,7 +1099,7 @@ Sostituire quindi il suo contenuto attuale con il seguente codice:
         /* ]]> */
       </script>
 
-Infine, creare i file `_list.php` sotto la cartella `templates/` di ciascun modulo,
+Infine, creare nella cartella `templates/` di ciascun modulo i file `_list.php` ,
 che contengano entrambi il seguente codice:
 
     [php]
@@ -1148,7 +1148,7 @@ nuova azione condivisa `executeMove()` sarà inserita nella classe delle azioni
 
 L'azione `executeMove()` richiede un metodo `getModel()` nella configurazione
 dell'oggetto. Implementare questo nuovo metodo in entrambe le classi 
-`todoGeneratorConfiguration` e `shoppingGeneratorConfiguration` come mostrato sotto:
+`todoGeneratorConfiguration` e `shoppingGeneratorConfiguration`, come mostrato sotto:
 
     [php]
     <?php
@@ -1176,7 +1176,7 @@ tabelle non sono trascinabili e inoltre non è eseguita nessuna chiamata ajax qu
 riga spostata viene rilasciata. Per realizzare questo, entrambi i moduli hanno bisogno
 di una rotta specifica per accedere alle loro corrispondenti azioni `move`. Di
 conseguenza, il file `apps/backend/config/routing.yml` può accogliere le due nuove
-rotte come mostrato sotto:
+rotte, come mostrato sotto:
 
     [php]
     <?php foreach (array('shopping', 'todo') as $module) : ?>
@@ -1230,7 +1230,7 @@ ajax:
 La tabella HTML è ora pienamente funzionante. Le righe implementano il drag & drop
 e la nuova posizione di una riga è automaticamente salvata grazie ad una chiamata ajax.
 Con pochi pezzi di codice, l'usabilità del backend è stata ampiamente migliorata per
-offrire all'utente finale una migliore esperienza. Il generatore di amministrativo è
+offrire all'utente finale una migliore esperienza. Il generatore di amministrazione è
 abbastanza flessibile per essere esteso e personalizzato e inoltre lavora perfettamente
 con l'ereditarietà delle tabelle di Doctrine.
 

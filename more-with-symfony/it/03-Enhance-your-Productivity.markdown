@@ -311,7 +311,7 @@ gli strumenti esistenti per trovare le risposte il più velocemente possibile.
 
 ### API online
 
-Il modo più veloce per trovare la documentazione di una classe o di un metodo, è
+Il modo più veloce per trovare la documentazione di una classe o di un metodo è
 quello di navigare online nelle [API](http://www.symfony-project.org/api/1_3/).
 
 Di maggiore interesse è il motore di ricerca integrato nelle API. Esso consente

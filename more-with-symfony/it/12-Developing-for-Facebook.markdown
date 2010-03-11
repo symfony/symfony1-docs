@@ -376,7 +376,7 @@ Per passare da un layout all'altro, basta aggiungere al file `actions.class.php`
 
 Naturalmente, per fare ciò l'applicazione deve essere configurata anche per
 Facebook Connect nelle impostazioni dello sviluppatore, anche se è
-destinata esclusivamente ad usare FBML. Ma l'enorme vantaggio di fare questo, è
+destinata esclusivamente ad usare FBML. Ma l'enorme vantaggio di fare questo è
 la possibilità di provare l'applicazione anche a livello locale. Se si sta creando una
 applicazione Facebook e si è pianificato l'utilizzo dei tag FBML, che è quasi inevitabile,
 l'unica soluzione per vedere il risultato è quello di mettere online il codice e vedere il
