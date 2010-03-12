@@ -216,7 +216,7 @@ messaggi al file dei test `slugify`:
 ![test slugify() con messaggi](http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png)
 
 La stringa di descrizione del test è anche uno strumento prezioso quando
-si prova ad immaginare cosa testare. Si può vedere uno schema nelle stringhe
+si prova a immaginare cosa testare. Si può vedere uno schema nelle stringhe
 dei test: sono frasi che descrivono come il metodo si deve comportare ed
 iniziano sempre col nome del metodo da testare.
 
@@ -294,7 +294,7 @@ Aggiungere test a causa di un bug
 ---------------------------------
 
 Ipotizziamo che sia passato del tempo e che un utente abbia
-segnalato uno strano ~bug~: alcuni link di lavori puntano ad una pagina di
+segnalato uno strano ~bug~: alcuni link di lavori puntano a una pagina di
 errore 404. Dopo alcune investigazioni, si scopre che per qualche ragione questi
 lavori mancano dello slug della compagnia, della posizione o del posto.
 
@@ -485,7 +485,7 @@ Ora che abbiamo configurato il database, possiamo inizializzarlo usando il task
 
 Ora che abbiamo un database dedicato per i nostri test, ci serve un modo
 per caricare alcuni dati per i test. Durante il giorno 3, avete imparato
-ad usare il ~task~ `propel:data-load`, ma per i test occorre ricaricare i dati
+a usare il ~task~ `propel:data-load`, ma per i test occorre ricaricare i dati
 ogni volta che sono eseguiti, per porre il database in uno stato conosciuto.
 
 <propel>

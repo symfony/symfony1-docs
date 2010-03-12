@@ -339,7 +339,7 @@ nel layout in questo modo:
       </div>
     </div>
 
-Riuscite ad intravedere il problema? Giusto, la creazione dell'oggetto form
+Riuscite a intravedere il problema? Giusto, la creazione dell'oggetto form
 non appartiene al livello della Vista. Deve essere creato da un'~azione|Azione~.
 Ma siccome il codice è nel layout, il form andrebbe creato in ogni
 azione, che non è affatto pratico. In questi casi, si dovrebbe usare
@@ -384,7 +384,7 @@ Creiamo ora questo file:
       }
     }
 
-Come si può vedere, una classe components è molto simile ad una classe
+Come si può vedere, una classe components è molto simile a una classe
 actions.
 
 Il template per un component usa la stessa convenzione dei nomi di

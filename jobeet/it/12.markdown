@@ -94,7 +94,7 @@ visto prima:
                    esempio la pagina dell'edit sarà qualcosa come
                    `/job/1/edit`).
   * `column`: Definisce la colonna della tabella da utilizzare negli URL per i link
-              che fanno riferimento ad un oggetto.
+              che fanno riferimento a un oggetto.
   * `with_wildcard_routes`: Dato che l'interfaccia principale avrà più che le classiche
                             operazioni di CRUD, questa opzione permette di definire
                             ulteriori azioni senza modificare la rotta.
@@ -434,7 +434,7 @@ chiave primaria della categoria. Ma sarebbe molto più significativo visualizzar
 il nome della categoria.
 
 Utilizzando la notazione `%%`, la variabile non deve necessariamente corrispondere
-ad una colonna dello schema del database. L'admin generator ha semplicemente bisogno
+a una colonna dello schema del database. L'admin generator ha semplicemente bisogno
 di trovare il relativo getter nella classe modello.
 
 Per visualizzare il nome della categoria, possiamo definire il metodo `getCategoryName()`
@@ -624,7 +624,7 @@ il link `extend`:
 
 ### `actions`
 
-Abbiamo già visto come collegare un'azione ad una lista di oggetti o ad
+Abbiamo già visto come collegare un'azione a una lista di oggetti o a
 un singolo oggetto. L'opzione `actions` definisce delle azioni che non
 interessano nessun oggetto, come la creazione di un oggetto nuovo. Rimuoviamo
 l'azione `new` ed aggiungiamo una nuova azione che cancelli tutti i lavori
@@ -722,7 +722,7 @@ usato per recuperare i lavori, usando l'opzione
         peer_method: doSelectJoinJobeetCategory
 
 Il metodo `doSelectJoinJobeetCategory()` aggiunge una ~join~ tra le tabelle
-`job` e `category` e crea automaticamente l'oggetto categoria associato ad
+`job` e `category` e crea automaticamente l'oggetto categoria associato a
 ogni lavoro.
 </propel>
 <doctrine>
@@ -746,7 +746,7 @@ che si trova in `lib/model/doctrine/JobeetJobTable.class.php`.
 
 Il metodo `retrieveBackendJobList()` aggiunge una ~join~ tra le tabelle
 `job` e `category` e crea automaticamente l'oggetto categoria associato
-ad ogni lavoro.
+a ogni lavoro.
 </doctrine>
 
 Il numero di richieste ora è ridotto a quattro:
@@ -764,7 +764,7 @@ esiste solo come ripiego per le sezioni `edit` e `new`.
 
 Come per la lista, si può cambiare l'ordine dei campi mostrati, con l'opzione
 `display`. Ma siccome il form mostrato è definito da una classe, non provate
-a rimuovere un campo, perché potrebbe portare ad errori di validazione inattesi.
+a rimuovere un campo, perché potrebbe portare a errori di validazione inattesi.
 
 L'opzione `display` per le viste del form può anche essere usata per raggruppare
 i campi:
@@ -908,7 +908,7 @@ settando l'opzione `class`:
 Il form `edit` ha ancora qualche piccola seccatura. Il logo caricato non appare da 
 nessuna parte e non è possibile rimuoverlo.
 Il widget `sfWidgetFormInputFileEditable` aggiunge la possibilità di editare un 
-semplice widget per l'upload di file:
+semplice widget per il caricamento di file:
 
     [php]
 <propel>
@@ -974,7 +974,7 @@ classi sono state generate dal task `propel:build --all`.
 I filtri possono essere rigenerati con il task `propel:build --filters`.
 
 Le ~classi dei filtri|Form (classi dei filtri)~ per i form sono posizionate nella cartella `lib/filter` e
-ad ogni classe del modello è associata una classe filtro per il form 
+a ogni classe del modello è associata una classe filtro per il form 
 (`JobeetJobFormFilter` per `JobeetJobForm`).
 
 Rimuoviamole completamente per il modulo `category`:

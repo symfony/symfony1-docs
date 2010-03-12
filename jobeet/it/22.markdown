@@ -96,7 +96,7 @@ all'autoloader principale di symfony:
 ### ~Aggiornare|Aggiornamento~ symfony
 
 Anche se tutto è auto-contenuto in una singola cartella, aggiornare symfony
-ad una nuova versione è ugualmente facilissimo.
+a una nuova versione è ugualmente facilissimo.
 
 Si potrebbe voler aggiornare ogni volta symfony all'ultima versione,
 perché si risolvono continuamente bug ed eventuali questioni
@@ -104,7 +104,7 @@ di sicurezza. La buona notizia è che tutte le versioni di
 symfony sono mantenute per almeno un anno e che durante il periodo
 di manutenzione non vengono mai aggiunte nuove feature, nemmeno le
 più piccole. Quindi è sempre rapido e sicuro aggiornare da una
-versione minore ad un'altra.
+versione minore a un'altra.
 
 Aggiornare symfony è semplice come cambiare il contenuto della
 cartella `lib/vendor/symfony/`. Se symfony è già stato installato
@@ -128,7 +128,7 @@ tempo reale:
 Ora, ogni volta che si fa un `svn up`, si avrà l'ultima versione di
 symfony 1.4.
 
-Quando si aggiorna ad una nuova versione, si consiglia di pulire sempre
+Quando si aggiorna a una nuova versione, si consiglia di pulire sempre
 la cache, specialmente nell'ambiente di produzione:
 
     $ php symfony cc
@@ -345,7 +345,7 @@ classe in `sfFileLogger`:
 >Quindi, `%SF_APP%` in un file di configurazione è equivalente a
 >`sfConfig::get('sf_app')` nel codice PHP. Questa notazione può anche
 >essere usata nei file di configurazione `app.yml`. È molto utile quando
->ci si deve riferire ad un percorso in un file di configurazione senza
+>ci si deve riferire a un percorso in un file di configurazione senza
 >usare il nome del percorso (`SF_ROOT_DIR`, `SF_WEB_DIR`, ...).
 
 ~Rilascio~
@@ -370,11 +370,11 @@ front controller che non siano di produzione, come gli script
 In questa sezione ipotizzeremo che si abbia un pieno controllo sui
 server di produzione. Se si dispone solamente di un accesso FTP,
 l'unica possibile soluzione è il trasferimento di
-tutti i file ad ogni rilascio.
+tutti i file a ogni rilascio.
 
 Il modo più semplice di rilasciare il sito è quello di usare il
 ~task|Task~ `project:deploy`. Esso utilizza `SSH` e `rsync` per collegarsi
-e trasferire i file da un computer ad un altro.
+e trasferire i file da un computer a un altro.
 
 I server per il task `project:deploy` possono essere configurati nel
 file di configurazione `config/properties.ini`:
@@ -440,7 +440,7 @@ Per Jobeet, occorre aggiungere il file `frontend_cache.php`:
 Anche se il task `project:deploy` è molto flessibile, si potrebbe
 volerlo personalizzare ulteriormente. Siccome il rilascio varia molto
 a seconda della configurazione e della topologia dei server, non
-esitate ad estendere il task predefinito.
+esitate a estendere il task predefinito.
 
 Ogni volta che si rilascia un sito in produzione, non dimenticare di
 pulire la cache, almeno quella di configurazione, sul server di

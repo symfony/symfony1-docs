@@ -96,10 +96,10 @@ dell'utente e salvato nella sessione:
         // fetch jobs already stored in the job history
         $jobs = $this->getUser()->getAttribute('job_history', array());
 
-        // add the current job at the beginning of the array
+        // aggiunge il lavoro corrente all'inizio dell'array
         array_unshift($jobs, $this->job->getId());
 
-        // store the new job history back into the session
+        // memorizza nuovamente in sessione la cronologia dei lavori
         $this->getUser()->setAttribute('job_history', $jobs);
       }
 
@@ -291,12 +291,12 @@ richiederà l'autenticazione dell'utente.
 >`false`.
 
 Se si dà un'occhiata ai log nella web debug toolbar, si noterà che il metodo
-`executeLogin()` della classe `defaultActions` è richiamato ad ogni pagina
+`executeLogin()` della classe `defaultActions` è richiamato a ogni pagina
 in cui si tenta di accedere.
 
 ![Web debug](http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png)
 
-Quando un utente non autenticato prova ad accedere ad una
+Quando un utente non autenticato prova ad accedere a una
 ~azione messa in sicurezza|Sicurezza~, symfony rimanda la richiesta all'azione
 `login` configurata in `settings.yml`:
 
@@ -659,7 +659,7 @@ A domani
 --------
 
 Le classi utente di symfony sono un bel modo per astrarre la gestione
-delle sessioni di PHP. Insieme ad un grande sistema di plugin
+delle sessioni di PHP. Insieme a un grande sistema di plugin
 di symfony ed al plugin `sfGuardPlugin`, possiamo mettere in
 sicurezza il backend di Jobeet in pochi minuti. Ed abbiamo anche
 aggiunto un'interfaccia pulita per gestire gli utenti amministratori,

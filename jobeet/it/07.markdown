@@ -26,7 +26,7 @@ Aggiungete questo all'inizio del file che si occupa del routing:
       options:  { model: JobeetCategory, type: object }
 
 >**TIP**
->Ogni volta che si parte ad implementare una nuova feature, è buona norma
+>Ogni volta che si parte a implementare una nuova feature, è buona norma
 >pensare prima all'argomento ~URL~, creando la rotta associata. Ed è
 >obbligatorio, se avete rimosso le regole predefinite di ~routing~.
 
@@ -616,7 +616,7 @@ A domani
 
 Se ieri avete lavorato sulla vostra implementazione e pensate di non aver
 imparato molto oggi, vuol dire che vi state abituando alla filosofia di
-symfony. Il processo di aggiungere una nuove feature ad un sito symfony è
+symfony. Il processo di aggiungere una nuove feature a un sito symfony è
 sempre lo stesso: pensa agli URL, crea alcune azioni, aggiorna il modello,
 e scrivi qualche template. E se si riescono ad applicare alcune buone pratiche
 di sviluppo, si padroneggerà symfony in poco tempo.

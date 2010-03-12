@@ -2,7 +2,7 @@ Giorno 23: Un altro sguardo a symfony
 =====================================
 
 Oggi è l'ultima fermata del nostro viaggio nel meraviglioso mondo di symfony.
-Durante questi ventitré giorni, avete imparato ad usare symfony per esempi:
+Durante questi ventitré giorni, avete imparato a usare symfony per esempi:
 dai design pattern usati dal framework, alle potenti feature incluse. Non
 siete ancora degli esperti di symfony, ma avete tutta la conoscenza
 necessaria per costruire la vostra applicazione symfony con fiducia.
@@ -105,7 +105,7 @@ l'implementazione dei web service, symfony supporta i
 i propri [formati](#chapter_15_sub_il_formato_yaml_formati_creazione).
 
 Un'azione può essere [rimandata](#chapter_04_sidebar_la_famiglia_dei_metodi_forward_)
-ad un'altra, oppure [rinviata](#chapter_05_sidebar_la_famiglia_dei_metodi_redirect_rinvio_).
+a un'altra, oppure [rinviata](#chapter_05_sidebar_la_famiglia_dei_metodi_redirect_rinvio_).
 
 ~Configurazione~
 ----------------
@@ -341,7 +341,7 @@ Prima di lasciarci, vorrei dire un'ultima cosa su symfony. Il framework ha
 un sacco di grandi feature e molta documentazione libera. Ma una delle
 più grandi risorse preziose che un progetto Open Source può avere è la
 sua community. E symfony ha una delle più incredibili ed attive community
-del mondo. Se iniziate ad usare symfony per i vostri progetti, considerate
+del mondo. Se iniziate a usare symfony per i vostri progetti, considerate
 di unirvi alla community di symfony:
 
   * Iscrivendovi alla [mailing list degli utenti](http://groups.google.com/group/symfony-users)

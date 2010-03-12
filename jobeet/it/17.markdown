@@ -28,7 +28,7 @@ Nella pagina di documentazione di Zend Lucene, la libreria è descritta così:
 
 >... un motore di ricerca general purpose scritto interamente in PHP 5. Dato che
 >conserva i suoi indici nel filesystem e non necessita di un database, può aggiungere
->capacità di ricerca praticamente ad ogni sito scritto in PHP.
+>capacità di ricerca praticamente a ogni sito scritto in PHP.
 >Zend_Search_Lucene supporta le seguenti opzioni:
 >
 >  * Ricerca posizionata - i migliori risultati per primi

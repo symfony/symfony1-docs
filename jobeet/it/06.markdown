@@ -5,7 +5,7 @@ Ieri è stato un grande giorno. Abbiamo imparato come creare URL carini e come u
 il framework symfony per automatizzare parecchie cose.
 
 Oggi miglioreremo il sito web di Jobeet, ottimizzando il codice qua e là. Facendolo,
-si imparerà ulteriormente ad utilizzare tutte le feature introdotte
+si imparerà ulteriormente a utilizzare tutte le feature introdotte
 nei primi cinque giorni di questo tutorial.
 
 <propel>
@@ -329,7 +329,7 @@ globale `~sfConfig~`:
     sfConfig::get('app_active_days')
 
 Le impostazioni hanno come prefisso `app_`, perché la classe `sfConfig` dà
-accesso ad impostazioni di symfony, come vedremo più avanti.
+accesso a impostazioni di symfony, come vedremo più avanti.
 
 Aggiorniamo il codice per tenere in considerazione queste nuove impostazioni:
 
@@ -371,7 +371,7 @@ Rifattorizzare
 --------------
 
 Sebbene il codice che abbiamo scritto funzioni, non va ancora del tutto bene.
-Riuscite ad intravedere il problema?
+Riuscite a intravedere il problema?
 
 <propel>
 Il codice dei `Criteria` non appartiene all'azione (livello del Controllore),
@@ -729,7 +729,7 @@ ed aggiungiamo una nuova impostazione in `app.yml`:
 Fixture dinamiche
 -----------------
 
-A meno che non si abbassi l'impostazione `max_jobs_on_homepage` ad uno, non si
+A meno che non si abbassi l'impostazione `max_jobs_on_homepage` a uno, non si
 vedrà nessuna differenza. Abbiamo bisogno di aggiungere un sacco di lavori alle
 ~fixture~. Si potrebbe copiare e incollare un lavoro esistente per dieci o venti
 volte a mano... ma c'è un modo migliore.
@@ -765,7 +765,7 @@ che viene valutato appena prima di leggere il file. Modifichiamo il file fixture
 
 State attenti, il parser YAML si arrabbierà se si fa confusione con
 l'~indentazione~. Tenete a mente i seguenti semplici consigli, quando
-aggiungete codice PHP ad un file YAML:
+aggiungete codice PHP a un file YAML:
 
  * Le istruzioni `<?php ?>` devono sempre iniziare la riga od essere compresi in
    un valore.
@@ -791,7 +791,7 @@ vero valore di `id` contenuto nel proprio database) -
 
     /frontend_dev.php/job/sensio-labs/paris-france/ID/web-developer-expired
 
-Invece di mostrare il lavoro, dobbiamo rimandare l'utente ad una pagina 404.
+Invece di mostrare il lavoro, dobbiamo rimandare l'utente a una pagina 404.
 Ma come possiamo farlo, visto che il lavoro è recuperato automaticamente
 dalla rotta?
 
@@ -855,7 +855,7 @@ Il metodo `retrieveActiveJob()` riceverà l'oggetto `Doctrine_Query` costruito d
     }
 </doctrine>
 
-Se ora si prova ad ottenere un lavoro scaduto, si verrà rimandati ad una pagina 404.
+Se ora si prova a ottenere un lavoro scaduto, si verrà rimandati a una pagina 404.
 
 ![404 per un lavoro scaduto](http://www.symfony-project.org/images/jobeet/1_4/06/exception.png)
 
@@ -873,7 +873,7 @@ soli! Rendiamolo un'esercitazione. Tornate domani a controllare l'implementazion
 A domani
 --------
 
-Lavorate ad un'implementazione del vostro progetto Jobeet in locale. Abusate pure
+Lavorate a un'implementazione del vostro progetto Jobeet in locale. Abusate pure
 della [documentazione ~API~](http://www.symfony-project.org/api/1_4/) online e di
 tutta la [~documentazione~](http://www.symfony-project.org/doc/1_4/) liberamente
 disponibile sul sito di symfony per aiutarvi. Ci vediamo domani con la nostra

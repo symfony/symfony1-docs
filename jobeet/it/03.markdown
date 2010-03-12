@@ -35,7 +35,7 @@ Dato che symfony è un framework orientato agli oggetti, ci farebbe piacere mani
 ~oggetti|OOP~ il più possibile. Per esempio, invece che scrivere query SQL per ottenere
 record dal database, preferiamo utilizzare gli oggetti.
 
-Le informazioni del database relazionale devono essere mappate da un modello ad
+Le informazioni del database relazionale devono essere mappate da un modello a
 oggetti. Questo può essere fatto con un [ORM](http://it.wikipedia.org/wiki/Object-relational_mapping)
 e fortunatamente symfony viene distribuito con due soluzioni di questo tipo:
 [Propel](http://propel.phpdb.org/) e [Doctrine](http://www.doctrine-project.org/).
@@ -164,7 +164,7 @@ di esso (come realizzarlo), creeremo lo schema a mano modificando un file vuoto
 >
 >Questo task richiede di avere un database configurato in `databases.yml`.
 >Mostreremo come configurare il database in un passo successivo. Se si
->prova ad eseguire questo task ora, non funzionerà, perché non sa per
+>prova a eseguire questo task ora, non funzionerà, perché non sa per
 >quale database costruire lo schema.
 
 Lo schema è la traduzione diretta del diagramma entità-relazioni nel 
@@ -185,7 +185,7 @@ formato YAML.
 >YAML ha anche una sintassi ridotta per descrivere la stessa struttura con meno
 >linee, dove gli array sono espressi con `[]` e gli hash con `{}`.
 >
->Se non avete familiarità con YAML, è il momento di iniziare ad usarlo, visto
+>Se non avete familiarità con YAML, è il momento di iniziare a usarlo, visto
 >che il framework symfony lo utilizza ampiamente per i suoi file di configurazione.
 > Un buon punto di inizio è il componente YAML di symfony
 >[documentazione](http://components.symfony-project.org/yaml/documentation).

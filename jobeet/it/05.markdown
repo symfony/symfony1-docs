@@ -15,7 +15,7 @@ Oggi ci addentreremo nel magnifico mondo del framework del routing di symfony.
 
 Se cliccate su un'offerta di lavoro sulla homepage di Jobeet, l'URL apparirà
 come il seguente: `/job/show/id/1`. Se avete già sviluppato altri siti in PHP,
-sarete abituati ad URL del tipo `/job.php?id=1`. Come fa symfony a farli funzionare?
+sarete abituati a URL del tipo `/job.php?id=1`. Come fa symfony a farli funzionare?
 Come fa symfony a decidere l'azione da chiamare basandosi su quest'URL?
 Perché l'`id` dell'offerta di lavoro viene recuperata con  
 `$request->getParameter('id')`? Oggi risponderemo a tutte queste domande.
@@ -96,7 +96,7 @@ anche un parametro `action` con `index` come valore.
 
 Se si richiede la pagina `/job/show/id/1`, symfony identificherà la corrispondenza
 dell'ultimo schema: `/:module/:action/*`. In uno schema, l'asterisco (`*`) corrisponde
-ad un insieme di coppie variabile/valore separate da slash (`/`):
+a un insieme di coppie variabile/valore separate da slash (`/`):
 
   | Parametro richiesto | Valore |
   | ------------------- | ------ |
@@ -219,7 +219,7 @@ essere validato da un'espressione regolare definita usando la voce
       requirements:
         id: \d+
 
-La voce `requirements` forza `id` ad essere un valore numerico. Altrimenti,
+La voce `requirements` forza `id` a essere un valore numerico. Altrimenti,
 la rotta non corrisponderà.
 
 Classi di rotte
@@ -247,8 +247,8 @@ aggiungere un requisito per la variabile virtuale `sf_method`:
         sf_method: [get]
 
 >**NOTE**
->Richiedere ad una rotta di corrispondere solo ad alcuni ~metodi HTTP~ non
->è esattamente equivalente ad usare `sfWebRequest::isMethod()` nell'azione.
+>Richiedere a una rotta di corrispondere solo ad alcuni ~metodi HTTP~ non
+>è esattamente equivalente a usare `sfWebRequest::isMethod()` nell'azione.
 >Questo perché il routing continuerà a cercare una rotta corrispondente
 >se il metodo non corrisponde a quello atteso.
 
@@ -275,7 +275,7 @@ o insiemi di oggetti ##ORM##:
 
 La voce `options` personalizza il comportamento della rotta. Qui, l'opzione
 `model` definisce la classe del modello di ##ORM## (`JobeetJob`) relativa
-alla rotta e l'opzione `type` impone che questa rotta sia legata ad un
+alla rotta e l'opzione `type` impone che questa rotta sia legata a un
 oggetto (si può anche usare `list`, se una rotta rappresenta un insieme
 di oggetti).
 
@@ -375,7 +375,7 @@ Ora abbiamo gli URL che ci aspettavamo:
     http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 Ma siamo solo a metà strada. La rotta può generare un URL basato su un
-oggetto, ma può anche trovare l'oggetto relativo ad un URL dato. L'oggetto
+oggetto, ma può anche trovare l'oggetto relativo a un URL dato. L'oggetto
 relativo può essere recuperato col metodo `getObject()` dell'oggetto rotta.
 Quando una richiesta in arrivo viene esaminata, il routing memorizza
 la rotta corrispondente in modo che possa essere usata nelle azioni.
@@ -421,7 +421,7 @@ Questo perché l'~errore 404|Errore 404~ è stato lanciato automaticamente dal m
 -
 
 >**NOTE**
->L'oggetto collegato ad una rotta è caricato in modo pigro. Viene
+>L'oggetto collegato a una rotta è caricato in modo pigro. Viene
 >recuperato dal database solo se si richiama il metodo `getRoute()`.
 
 Il routing nelle azioni e nei template
@@ -455,9 +455,9 @@ Se si vuole generare un URL da un'azione, si può usare il metodo `generateUrl()
 >La famiglia dei metodi "~redirect|Rinvio~"
 >
 >Ieri abbiamo parlato dei metodi "forward". Tali metodi redirigono la richiesta
->corrente ad un'altra azione senza passare dal browser.
+>corrente a un'altra azione senza passare dal browser.
 >
->I metodi "redirect" redirigono l'utente ad un altro URL. Come per i "forward", si
+>I metodi "redirect" redirigono l'utente a un altro URL. Come per i "forward", si
 >può usare il metodo `redirect()`, o i metodi scorciatoia `redirectIf()` e
 >`redirectUnless()`.
 

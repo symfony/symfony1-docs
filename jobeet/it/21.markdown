@@ -130,7 +130,7 @@ cache è disabilitata in modo globale (`enabled: false`). Non abbiamo bisogno di
 cambiare questa impostazione, dato che abiliteremo la cache pagina per pagina.
 
 L'impostazione `lifetime` definisce la ~durata della cache|Durata della cache~
-lato server in secondi (`86400` secondi equivalgono ad un giorno).
+lato server in secondi (`86400` secondi equivalgono a un giorno).
 
 >**TIP**
 >Si può anche lavorare in modo contrario: abilitare la cache in modo globale e 
@@ -175,7 +175,7 @@ Notate inoltre che nessuna richiesta a database è stata effettuate nel secondo
 caso come mostrato nella web debug toolbar.
 
 >**TIP**
->Anche se il linguaggio può cambiare da utente ad utente la cache continuerà a 
+>Anche se il linguaggio può cambiare da utente a utente la cache continuerà a 
 >funzionare visto che la lingua è integrata nell'URL.
 
 Quando una pagina è memorizzabile in cache e se la cache non esiste ancora, symfony salva
@@ -273,7 +273,7 @@ Cache di ~Partial~ e ~Component~
 --------------------------------
 
 Per i siti web altamente dinamici a volte è impossibile inserire in cache l'intero
-template dell'azione. Per questi casi avete bisogno di configurare la cache ad un
+template dell'azione. Per questi casi avete bisogno di configurare la cache a un
 livello di granularità maggiore. Fortunatamente anche partial e component possono
 essere inseriti in cache.
 
@@ -321,7 +321,7 @@ Form in cache
 Memorizzare la pagina di creazione del lavoro in cache è problematico,
 perché essa contiene un form. Per capire meglio il problema, si apra
 la pagina "Post a Job" nel browser, in modo da metterla in cache.
-Quindi si cancelli il cookie di sessione e si provi di nuovo ad inviare
+Quindi si cancelli il cookie di sessione e si provi di nuovo a inviare
 il form. Dovrebbe apparire un messaggio di errore, che avverte di
 un attacco ~CSRF~:
 
@@ -400,7 +400,7 @@ essere aggiornata per elencare il nuovo lavoro.
 
 Siccome non abbiamo bisogno che il lavoro appaia in tempo reale nella
 homepage, la strategia migliore è quella di abbassare il tempo di
-scadenza della cache ad un valore accettabile:
+scadenza della cache a un valore accettabile:
 
     [yml]
     # plugins/sfJobeetJob/modules/sfJobeetJob/config/cache.yml
@@ -496,7 +496,7 @@ A domani
 
 Come molte altre caratteristiche di symfony, il sotto-framework della cache
 è molto flessibile e consente allo sviluppatore di configurare la cache
-ad un livello di granularità molto fine.
+a un livello di granularità molto fine.
 
 Domani parleremo dell'ultimo passo del ciclo di vita di un'applicazione:
 il rilascio su server di produzione.

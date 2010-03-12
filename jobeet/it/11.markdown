@@ -411,7 +411,7 @@ abbiamo dimenticato di implementare questa misura di ~sicurezza~.
 Scrivere i test è anche un bel modo di scoprire bug, perché occorre
 pensare a tutti i casi limite.
 
-Risolvere il bug è molto semplice, basta rimandare ad una pagina 404
+Risolvere il bug è molto semplice, basta rimandare a una pagina 404
 se il lavoro è attivato:
 
     [php]
@@ -444,7 +444,7 @@ data è impostata automaticamente, quando il lavoro è creato, a
 lavoro, il link per estendere il lavoro non è presente. Certo,
 si può modificare a mano la data di scadenza nel database, o
 modificare il template per mostrare sempre il link, ma è
-noioso ed esposto ad errori. Come forse avete indovinato,
+noioso ed esposto a errori. Come forse avete indovinato,
 scrivere qualche test ci aiuterà ancora una volta.
 
 Come sempre, prima dobbiamo aggiungere una nuova rotta per il
@@ -624,7 +624,7 @@ Ma come funziona? Di base, il metodo `save()` esegue i seguenti passi:
 
 Il metodo `fromArray()` accetta un array di valori ed aggiorna i valori delle
 colonne corrispondenti. Questo rappresenta un problema di ~sicurezza~? Che succede
-se qualcuno prova ad inviare un valore per una colonna per cui non ha
+se qualcuno prova a inviare un valore per una colonna per cui non ha
 l'autorizzazione? Per esempio, si può forzare la colonna `token`?
 
 Scriviamo un test per simulare l'inserimento di un lavoro con un campo `token`:
@@ -686,7 +686,7 @@ applicazione sicura per impostazione predefinita.
 
 In primo luogo abilita la protezione da XSS. Vuol dire
 che tutte le variabili usate nel template subiscono un escaping per impostazione
-predefinita. Se si prova ad inviare la descrizione di un lavoro con alcuni tag
+predefinita. Se si prova a inviare la descrizione di un lavoro con alcuni tag
 HTML dentro, si noterà che quando symfony mostra la pagina del lavoro,
 i tag HTML della descrizione non sono interpretati, ma mostrati come
 testo semplice. 
@@ -773,7 +773,7 @@ parametri ed opzioni.
 Il task `jobeet:cleanup` definisce due opzioni: `--env` e `--days`, con
 alcuni default sensibili.
 
-Eseguire il task è simile ad eseguire ogni altro task predefinito di symfony:
+Eseguire il task è simile a eseguire ogni altro task predefinito di symfony:
 
     $ php symfony jobeet:cleanup --days=10 --env=dev
 

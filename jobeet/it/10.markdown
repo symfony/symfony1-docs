@@ -227,7 +227,7 @@ un'email. Cambiamo quindi `sfValidatorString` con un `sfValidatorEmail`:
     }
 
 Anche se la colonna `type` è di tipo `varchar` nello schema, vogliamo che il suo
-valore sia limitato ad una lista di opzioni: full time, part time, o freelance.
+valore sia limitato a una lista di opzioni: full time, part time, o freelance.
 
 <propel>
 Per prima cosa definiamo i possibili valori in `JobeetJobPeer`:
@@ -850,7 +850,7 @@ Attivazione e pubblicazione di un lavoro
 ----------------------------------------
 
 Nella sezione precedente, c'è un link per pubblicare il lavoro. Il link
-deve essere cambiato per puntare ad una nuova azione `publish`.
+deve essere cambiato per puntare a una nuova azione `publish`.
 Invece di creare una nuova ~rotta|Rotta~, possiamo semplicemente configurare la
 rotta `job` esistente:
 

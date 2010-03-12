@@ -41,7 +41,7 @@ La classe `sfBrowser`
 In symfony i test funzionali vengono eseguiti attraverso un ~browser|Browser~ speciale
 implementato dalla classe [`sfBrowser`](http://www.symfony-project.org/api/1_4/sfBrowser).
 Esso si comporta come un browser realizzato per la propria applicazione e direttamente
-connesso ad essa, senza il bisogno di un server web. Vi dà l'accesso a tutti gli
+connesso a essa, senza il bisogno di un server web. Vi dà l'accesso a tutti gli
 oggetti di symfony prima e dopo ogni richiesta, dandovi l'opportunità di analizzarli
 e fare i controlli di cui avete bisogno.
 
@@ -188,7 +188,7 @@ per analizzare e testare gli oggetti `sfWebResponse`:
 
  | Metodo             | Descrizione
  | ------------------ | -----------------------------------------------------
- | `checkElement()`   | Verifica se un selettore CSS di risposta corrisponda ad un criterio
+ | `checkElement()`   | Verifica se un selettore CSS di risposta corrisponda a un criterio
  | `checkForm()`      | Checks an `sfForm` form object
  | `debug()`          | Prints the response output to ease debug
  | `matches()`        | Tests a response against a regexp
@@ -234,7 +234,7 @@ codice scritto ieri:
     Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
-Caricare dati in un test funzionale è più facile rispetto ad un test unitario,
+Caricare dati in un test funzionale è più facile rispetto a un test unitario,
 in quanto il database è già stato inizializzato dallo script di bootstrap.
 
 Come per i test unitari, non copieremo questo pezzo di codice in ogni file di

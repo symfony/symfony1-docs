@@ -28,7 +28,7 @@ Includere jQuery
 ----------------
 
 Poiché jQuery è necessario in tutte le pagine, aggiorniamo il layout per
-includerlo in `<head>`. Fate attenzione ad inserire la funzione
+includerlo in `<head>`. Fate attenzione a inserire la funzione
 ~`use_javascript()`~ prima della chiamata a `include_javascripts()`:
 
     [php]
@@ -303,7 +303,7 @@ Ieri abbiamo usato la libreria Zend Lucene per implementare un motore di
 ricerca. Oggi abbiamo usato jQuery per renderlo più responsivo. Il framework
 symfony fornisce tutti gli strumenti fondamentali per costruire un'applicazione
 MVC con facilità e si comporta bene anche con gli altri componenti. Come
-sempre, provate ad usare lo strumento migliore per le esigenze.
+sempre, provate a usare lo strumento migliore per le esigenze.
 
 Domani vedremo come internazionalizzare il sito di Jobeet.
 

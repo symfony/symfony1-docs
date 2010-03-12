@@ -127,7 +127,7 @@ il secondo è rappresentato dal controllo dei dati inseriti nell'anteprima della
 pagina finale.
 
 Anche se l'utente non ha un account, un'offerta può essere modificata in seguito grazie
-ad un URL specifico (protetto da un token dato all'utente quando l'inserzione viene creata).
+a un URL specifico (protetto da un token dato all'utente quando l'inserzione viene creata).
 
 Ogni annuncio di lavoro rimane online per 30 giorni (questo parametro è configurabile
 dagli amministratori - vedi *storia B2*). Un utente può tornare per riattivare o estendere la 

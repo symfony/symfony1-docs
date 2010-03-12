@@ -421,7 +421,7 @@ Questo codice renderà le variabili `$foo` e `$bar` accessibili dal template.
 
 ### Il Template
 
-Di default, il ~template~ associato ad un'azione è dedotto da symfony grazie ad
+Di default, il ~template~ associato a un'azione è dedotto da symfony grazie a
 una convenzione (il nome dell'azione seguito dal suffisso `Success`).
 
 Il template `indexSuccess.php` genera una tabella HTML per tutti i lavori.
@@ -714,7 +714,7 @@ primaria del lavoro.
 >in queste classi.
 </propel>
 
-Se il lavoro non esiste nel database, vogliamo rimandare l'utente ad una pagina ~404~,
+Se il lavoro non esiste nel database, vogliamo rimandare l'utente a una pagina ~404~,
 che è esattamente ciò che fa il metodo `forward404Unless()`. Questo accetta un
 booleano come primo parametro e, a meno che non sia vero, ferma il flusso corrente
 dell'esecuzione. Poiché i metodi "forward" fermano l'esecuzione dell'azione
@@ -755,7 +755,7 @@ Come per le eccezioni, la pagina mostrata all'utente è diversa negli ~ambienti~
 >     [php]
 >     $this->forward('default', '404');
 >
->Il metodo `forward()` rimanda ad un'altra azione della stessa applicazione;
+>Il metodo `forward()` rimanda a un'altra azione della stessa applicazione;
 >negli esempi precedenti, all'azione `404` del modulo `default`. Il modulo
 >`default` è distribuito con symfony e fornisce delle azioni di default per le
 > pagine 404, secure e login.
@@ -764,7 +764,7 @@ La richiesta e la risposta
 --------------------------
 
 Quando si visitano le pagine `/job` o `/job/show/id/1` nel proprio browser, si
-dà inizio ad un viaggio nel server web. Il browser invia una **~richiesta~** ed il
+dà inizio a un viaggio nel server web. Il browser invia una **~richiesta~** ed il
 server rimanda indietro una **~risposta~**.
 
 Abbiamo già visto che symfony incapsula la richiesta in un oggetto `sfWebRequest`
