@@ -77,8 +77,8 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
     `setHelps()`、`setHelp()`、`setParent()`
 
   * `sfWidgetFormSchemaDecorator`: `addFormFormatter()`、`setFormFormatterName()`、
-    `setNameFormat()`、`setLabels()`、`setHelps()`、`setHelp()`、`setParent()`、
-    `setPositions()`
+    `setNameFormat()`、`setLabels()`、`setHelps()`、
+    `setHelp()`、`setParent()`、`setPositions()`
 
 バリデータ
 ------------
@@ -112,7 +112,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### `sfValidatorChoice`、`sfValidator(Propel|Doctrine)Choice`
 
-`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデータには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションがあります:
+`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデータには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションが用意されています:
 
  * `min` 選択する必要がある最小の数
  * `max` 選択する必要がある最大の数
@@ -133,7 +133,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 上記のコードはすべてのバリデータのデフォルトメッセージである 'Required.' をオーバーライドします。デフォルトメッセージはバリデータが作られる前に定義しておかなければならないことにご注意ください (コンフィグレーションクラスがよい場所です)。
 
 >**NOTE**
->`setRequiredMessage()` と `setInvalidMessage()` メソッドは廃止予定なので、新しい `setDefaultMessage()` メソッドを呼び出します。
+>`setRequiredMessage()` と `setInvalidMessage()` メソッドは廃止予定なので、代わりに新しい `setDefaultMessage()` メソッドを呼び出します。
 
 symfony がエラーを表示するとき、使われるエラーメッセージは次のように決定されます:
 
@@ -164,7 +164,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfForm::useFields()`
 
-新しい `sfForm::useFields()` メソッドはフォームから引数として提供されるもの以外、隠しフィールドではないフィールドすべてを削除します。ときには不要なフィールドの割り当てを解除するよりもフォームで維持したいフィールドを明示的に指示するほうが簡単です。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームに自動表示されることはありません (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
+新しい `sfForm::useFields()` メソッドはフォームから提供される引数以外、隠しフィールドではないフィールドすべてを削除します。ときには不要なフィールドの割り当てを解除するよりもフォームで維持したいフィールドを明示的に指示するほうが簡単です。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームに自動表示されることはありません (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
 
     [php]
     class ArticleForm extends BaseArticleForm
@@ -255,7 +255,7 @@ symfony のすべてのオートローダは大文字と小文字を区別しな
 
 リクエストが例外を生成するとき、レスポンステスターの `debug()` メソッドは HTML 標準出力の代わりに、人間が読める例外の説明をテキスト形式で出力するようになり、より簡単にデバッグできるようになりました。
 
-レスポンスの内容全体に対して正規表現で検索を行える新しい `matches()` メソッドが `sfTesterResponse` に用意されました。これは `checkElement()` が使えない XML のようなものではないレスポンスにとても役立ちます。力不足の `contains()` メソッドの代わりとして使うこともできます:
+レスポンスの内容全体に対して正規表現で検索できる新しい `matches()` メソッドが `sfTesterResponse` に用意されました。これは `checkElement()` が使えない XML のようなものではないレスポンスにとても役立ちます。力不足の `contains()` メソッドの代わりとして使うこともできます:
 
     [php]
     $browser->with('response')->begin()->
@@ -272,7 +272,7 @@ symfony のすべてのオートローダは大文字と小文字を区別しな
 
 ### 簡単なデバッグ
 
-テストが通らないことをテストハーネスが報告するときにデバッグを簡単にするために、通らないものについて詳細な出力ができる `--trace` オプションを渡すことができるようになりました:
+テストが通らないことをテストハーネスが報告するときにデバッグを簡単にするために、通らないテストについて詳細な出力を指示する `--trace` オプションを渡すことができるようになりました:
 
     $ php symfony test:all -t
 
@@ -300,7 +300,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
       checkForm($browser->getArticleForm())->
     end();
 
-複数のフォームがレスポンスに含まれる場合は、どの DOM 部分をテストするかをきめ細かく指定する CSS セレクタを提供するオプションがあります:
+複数のフォームがレスポンスに含まれる場合にどの DOM 部分をテストするかをきめ細かく指定するために CSS セレクタを提供するオプションが用意されています:
 
     [php]
     $browser->with('response')->begin()->
@@ -373,7 +373,7 @@ symfony の CLI はターミナルウィンドウの幅を検出することを�
 
 ### `project:deploy`
 
-`project:deply` タスクは少し改良されました。リアルタイムでファイルの転送状況を表示するようになりました。ただし、`-t` オプションが渡されたときだけです。もしオプションが指定されていなければタスクは何も表示しません、もちろんエラーの場合は除きます。エラーのときには、簡単に問題を認識できるように赤色の背景にエラー情報が出力されます。
+`project:deply` タスクは少し改良されました。ファイルの転送状況をリアルタイムで表示するようになりました。ただし、`-t` オプションが渡されたときだけです。もしオプションが指定されていなければタスクは何も表示しません、もちろんエラーの場合は除きます。エラーのときには、簡単に問題を認識できるように赤色を背景にエラー情報が出力されます。
 
 ### `generate:project`
 
@@ -391,8 +391,8 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
 新しい `--installer` オプションのおかげで新たに生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなより便利なメソッドがあります:
 `installDir()`、`runTask()`、`ask()`、
-`askConfirmation()`、`askAndValidate()`、`reloadTasks()`、
-`enablePlugin()` そして `disablePlugin()`
+`askConfirmation()`、`askAndValidate()`、
+`reloadTasks()`、`enablePlugin()` そして `disablePlugin()`
 
 より詳しい情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
 
@@ -406,7 +406,7 @@ Propel もしくは Doctrine のどちらも使いたくない場合は、`--orm
 
 ### `task.test.filter_test_files`
 
-`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通過するようになりました。このイベントには `arguments` と `options` パラメータが用意されています。
+`test:*` タスクはこれらのタスクが実行される前に `task.test.filter_test_files` イベントを通るようになりました。このイベントには `arguments` と `options` パラメータが用意されています。
 
 ### `sfTask::run()` の強化
 
@@ -469,7 +469,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
     $ php symfony list --xml
     $ php symfony help test:all --xml
 
-この出力は新しい `sfTask::asXml()` メソッドにもとづいており、これはタスクオブジェクトの XML 表現を返します。
+この出力はこのタスクオブジェクトの XML 表現を返す新しい `sfTask::asXml()` メソッドにもとづいています。
 
 たいていの場合において XML 出力は IDE のようなサードパーティにとても役立つでしょう。
 
@@ -481,7 +481,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### `generate:app`
 
-`generate:app` タスクはコアに搭載されるデフォルトのスケルトンディレクトリの代わりにプロジェクトの `data/skeleton/app` ディレクトリのスケルトンディレクトリをチェックします。
+`generate:app` タスクがスケルトンディレクトリをチェックする場所はコアではなくプロジェクトの `data/skeleton/app` ディレクトリになりました。
 
 ### タスクからメールを送信する
 
@@ -505,7 +505,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 Propel との統合
 ---------------
 
-Propel のバージョンは1.4にアップグレードされました。Propel のアップグレードに関する詳しい情報は[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
+Propel のバージョンは 1.4 にアップグレードされました。Propel のアップグレードに関する詳しい情報は[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
 
 ### Propel のビヘイビア
 
@@ -517,7 +517,7 @@ Propel を拡張するために symfony が依存するカスタムのビルダ�
 
 ### `propel:generate-module`、`propel:generate-admin`、`propel:generate-admin-for-route`
 
-`propel:generate-module`、`propel:generate-admin` と `propel:generate-admin-for-route` タスクは生成モジュールのアクション基底クラスのコンフィギュレーションを可能にする `--actions-base-class` オプションをとります。
+`propel:generate-module`、`propel:generate-admin` と `propel:generate-admin-for-route` タスクは生成モジュールのアクション基底クラスのコンフィギュレーションの変更を可能にする `--actions-base-class` オプションをとります。
 
 ### Propel のビヘイビア
 
@@ -637,7 +637,7 @@ symfony 1.3/1.4 では、新しく作られたプロジェクトでプラグイ�
 
 ### `sfPluginConfiguration::connectTests()`
 
-新しい `setupPlugins()` メソッドのなかでプラグインコンフィギュレーションの `->connectTests()` メソッドを呼び出すことでプラグインのテストを `test:*` タスクにつなげることができます。
+新しい `setupPlugins()` メソッドのなかでプラグインコンフィギュレーションの `->connectTests()` メソッドを呼び出すことでプラグインのテストを `test:*` タスクに結びつけることができます。
 
     [php]
     class ProjectConfiguration extends sfProjectConfiguration
@@ -690,7 +690,7 @@ Doctrine の YAML スキーマファイルのなかで symfony の追加オプ�
 
 ### フォームクラスの継承
 
-モデルクラスからフォームを生成するとき、モデルクラスは継承を含んでいます。生成された子クラスは継承を尊重し、同じ継承構造に従うフォームを生成します。
+モデルクラスからフォームを生成するとき、モデルクラスは継承を含んでいます。生成された子クラスは継承を尊重し、同じ継承構造にしたがうフォームを生成します。
 
 ### 新しいタスク
 
@@ -704,11 +704,11 @@ Doctrine で開発するときに手助けしてくれる新しいタスクが�
 
 #### モデルファイルを削除する
 
-YAML スキーマファイルのなかでモデルや名前を変更したり、使われなくなったモデルを削除することがよくあるでしょう。このような作業を行うと、孤児となったモデル、フォームそしてフィルタクラスが出てきます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で掃除できるようになりました。
+YAML スキーマファイルのなかでモデルや名前を変更したり、使われなくなったモデルを削除することがよくあるでしょう。このような作業を行うと、孤児となったモデル、フォームそしてフィルタクラスが出てきます。`doctrine:delete-model-files` タスクを使うことで、モデルに関連する生成ファイルを手作業で削除できるようになりました。
 
     $ php symfony doctrine:delete-model-files ModelName
 
-上記タスクは関連する生成ファイルを見つけ、そのファイルを削除したいかどうかあなたに確認する前にあなたに報告してくれます。
+上記タスクは関連する生成ファイルを見つけ、そのファイルを削除したいかどうかあなたに報告してくれます。
 
 #### モデルファイルをきれいにする
 
@@ -720,7 +720,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
 #### 何でもビルドする
 
-新しい `doctrine:build` タスクによって symfony や Doctrine にまさにビルドしてほしいものを明確に指定できます。このより柔軟性のある解決方法に合わせて廃止予定になった既存の多くのタスクを組み合わせることで得られる機能をこのタスクを複製します。
+新しい `doctrine:build` タスクによって symfony や Doctrine にビルドしてほしいものを明確に指定できます。このより柔軟性のある解決方法に合わせて廃止予定になった既存の多くのタスクを組み合わせることで得られる機能をこのタスクを複製します。
 
 `doctrine:build` の使い方は次のとおりです:
 
@@ -841,7 +841,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
       'query' => $table->createQuery()->select('title, body'),
     ));
 
-`->setTableMethod()` (もしくは `table_method` オプション) を通して指定されたテーブルメソッドはクエリオブジェクトを返す必要がありません。次はどれも有効な `sfFormFilterDoctrine` テーブルメソッドです:
+`->setTableMethod()` (もしくは `table_method` オプション) を通して指定されるテーブルメソッドはクエリオブジェクトを返す必要がありません。次はどれも有効な `sfFormFilterDoctrine` テーブルメソッドです:
 
     [php]
     // symfony >= 1.2 で動く
@@ -933,8 +933,8 @@ symfony が Doctrine モデルに追加するゲッターとセッターのマ�
 スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルトの内容を指定するための2番目のパラメータを受け取ります:
 
     [php]
-    <?php echo get_slot('foo', 'bar') // もし `foo` スロットが定義されていなければ  'bar' が出力される ?>
-    <?php include_slot('foo', 'bar') // もし `foo` スロットが定義されていなければ  'bar' が出力される ?>
+    <?php echo get_slot('foo', 'bar') // foo スロットが定義されていなければ  bar が出力される ?>
+    <?php include_slot('foo', 'bar') // foo スロットが定義されていなければ  bar が出力される ?>
 
 ページャ
 ---------
