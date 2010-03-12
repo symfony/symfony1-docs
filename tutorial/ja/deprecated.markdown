@@ -1,5 +1,5 @@
-1.3での廃止予定および削除される機能
-=====================================
+1.3 での廃止予定および削除される機能
+======================================
 
 このドキュメントでは symfony 1.3 で廃止予定もしくは削除されるすべての設定、クラス、メソッド、関数とタスクの一覧を示します。 
 
@@ -9,7 +9,7 @@
 
 次のコアプラグインは symfony 1.3 で廃止予定になり symfony 1.4 で削除されます:
 
-  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される1.0アドミンジェネレータのデフォルトテーマも含まれています。
+  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0 のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される 1.0 アドミンジェネレータのデフォルトテーマも含まれています。
 
   * `sfProtoculousPlugin`: このプラグインによって提供されるヘルパーは控えめな JavaScript をサポートしないので、今後は使うべきではありません。
 
@@ -32,9 +32,9 @@
 
   * `sfTestFunctionalBase` の次のメソッド: `isRedirected()`、`isStatusCode()`、`responseContains()`、
     `isRequestParameter()`、`isResponseHeader()`、
-    `isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは1.2以降で廃止予定になり、テスタークラスに置き換わります。
+    `isUserCulture()`、`isRequestFormat()` と `checkResponseElement()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わります。
 
-  * `sfTestFunctional` の次のメソッド: `isCached()`、 `isUriCached()`: これらのメソッドは1.2以降で廃止予定になり、テスタークラスに置き換わります。
+  * `sfTestFunctional` の次のメソッド: `isCached()`、 `isUriCached()`: これらのメソッドは 1.2 以降で廃止予定になり、テスタークラスに置き換わります。
 
   * `sfFilesystem::sh()`: このメソッド呼び出しはすべて新しい `sfFilesystem::execute()` メソッド呼び出しに置き換わります。このメソッドの戻り値は `stdout` 出力と `stderr` 出力で構成される配列であることに注意してください。
 
@@ -82,9 +82,9 @@
   * `sfRichTextEditor`、`sfRichTextEditorFCK` と `sfRichTextEditorTinyMCE`: これらはウィジェットシステムに置き換わりました (下記の「ヘルパー」のセクションを参照)。
 
   * `sfCrudGenerator`、`sfAdminGenerator`、`sfPropelCrudGenerator`、
-    `sfPropelAdminGenerator`: これらのクラスは1.0のアドミンジェネレータで使われていました。
+    `sfPropelAdminGenerator`: これらのクラスは 1.0 のアドミンジェネレータで使われていました。
 
-  * `sfPropelUniqueValidator`、`sfDoctrineUniqueValidator`: これらのクラスは1.0のフォームシステムで使われていました。
+  * `sfPropelUniqueValidator`、`sfDoctrineUniqueValidator`: これらのクラスは 1.0 のフォームシステムで使われていました。
 
   * `sfLoader`: 「メソッドと関数」のセクションを参照してください。
 
@@ -104,7 +104,7 @@
 
 次のクラスは symfony 1.3 で削除されます:
 
-  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は「プロジェクトを1.2から1.3/1.4にアップグレードする」の「共通フィルタの削除」を参照してください。
+  * `sfCommonFilter`: 結果とコードをマイグレートする方法に関する情報は「プロジェクトを 1.2 から 1.3/1.4 にアップグレードする」の「共通フィルタの削除」を参照してください。
 
 
 ヘルパー
@@ -129,7 +129,7 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3�
 
   * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善のために導入され、この設定はビューキャッシュのために遅延キャッシュキー生成を有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも `sfViewCacheManager::isCacheable()` の呼び出しに頼るひともいました。symfony 1.3 に関して、ふるまいは `sf_lazy_cache_key` が `true` にセットされている場合と同じになります。
 
-  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザが原因でバグのあるコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。最初の問題は PHP の最小バージョンが5.2になり無関係になっており2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
+  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザが原因でバグのあるコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。最初の問題は PHP の最小バージョンが 5.2 になり無関係になっており2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
 
   * `lazy_routes_deserialize`: このオプションはもう必要ありません。
 
@@ -174,9 +174,9 @@ PHP のインクルードパスからヘルパーをロードする機能は1.3�
     `sfNamespacedParameterHolder::get()`、
     `sfNamespacedParameterHolder::has()` と `sfNamespacedParameterHolder::remove()` メソッドの配列表記 (`[]`) のサポートは廃止予定になり symfony 1.4 では利用できません (パフォーマンスの向上)。
 
-symfony CLI はグローバルな `--dry-run` オプションを受け取ることはありません。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクの 1つがこのオプションに依存する場合、これをタスククラスのローカルオプションとして追加できます。
+symfony CLI はグローバルな `--dry-run` オプションを受け取ることはありません。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクの1つがこのオプションに依存する場合、これをタスククラスのローカルオプションとして追加できます。
 
-1.0のアドミンジェネレータの Propel テンプレートと 1.0 の CRUD は symfony 1.4 で削除されます (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`)。
+1.0 のアドミンジェネレータの Propel テンプレートと 1.0 の CRUD は symfony 1.4 で削除されます (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`)。
 
 「Dynarch Calendar」 (`data/web/calendar/` で見つかります) は symfony 1.4 は削除されます。これは symfony 1.4 で削除される Form ヘルパーグループだけにしか使われていなかったからです。
 
@@ -184,6 +184,6 @@ symfony 1.3 に関して、サイトが利用不可能なときに表示され�
 
 プロジェクトのルートで `doc/` ディレクトリが生成されなくなりました。これは symfony 自身でも使われていないからです。そして関連する `sf_doc_dir` も削除されました。
 
-`sfDoctrinePlugin_doctrine_lib_path` 設定は、以前 Doctrine のカスタム lib ディレクトリを指定するのに使われていましたが、1.3で廃止予定になり1.4で削除されます。代わりに `sf_doctrine_dir` 設定を使ってください。
+`sfDoctrinePlugin_doctrine_lib_path` 設定は、以前 Doctrine のカスタム lib ディレクトリを指定するのに使われていましたが、1.3 で廃止予定になり 1.4 で削除されます。代わりに `sf_doctrine_dir` 設定を使ってください。
 
 symfony のすべての `Base*` クラスは抽象クラスではありません。
