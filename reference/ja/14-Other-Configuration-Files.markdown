@@ -8,7 +8,7 @@
 
 `autoload.yml` 設定は symfony によってオートロードされる必要のあるディレクトリを決定します。PHP クラスとインターフェイスを見つけるためにそれぞれのディレクトリがスキャンされます。
 
-[第3章](#chapter_03)で説明したように、`autoload.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**が収められます。
+[第3章](#chapter_03)で説明したように、`autoload.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
 >**NOTE**
 >`autoload.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 
@@ -21,13 +21,13 @@
       project:
         name:           project
         path:           %SF_LIB_DIR%
-        recursive:      on
+        recursive:      true
         exclude:        [model, symfony]
 
       project_model:
         name:           project model
         path:           %SF_LIB_DIR%/model
-        recursive:      on
+        recursive:      true
 
       # アプリケーション
       application:
@@ -52,7 +52,7 @@
  * `path`: オートロードするパス
  * `recursive`: サブディレクトリで PHP クラスを探すか
  * `exclude`: 検索から除外するディレクトリの名前の配列
- * `prefix`: 指定モジュールのためにパスで見つかるクラスがのみをオートロードさせる場合 `true` にセットする (デフォルトでは `false`)
+ * `prefix`: 指定モジュールのためにパスで見つかるクラスのみをオートロードさせる場合 `true` にセットします (デフォルトでは `false`)
  * `files`: PHP クラスのために明示的に解析するファイルの配列
  * `ext`: PHP クラスの拡張子 (デフォルトは `.php`)
 
@@ -108,7 +108,7 @@
     - %SF_SYMFONY_LIB_DIR%/action/sfAction.class.php
     - %SF_SYMFONY_LIB_DIR%/action/sfActions.class.php
 
-第3章で説明したように、`core_compile.yml` ファイルでは[**コンフィギュレーションカスケードのメカニズム**](#chapter_03)がはたらき、[**定数**](#chapter_03)が収められます。
+[第3章](#chapter_03)で説明したように、`core_compile.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
 >**NOTE**
 >`core_compile.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfCompileConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。

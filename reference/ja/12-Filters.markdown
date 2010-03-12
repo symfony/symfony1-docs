@@ -36,7 +36,7 @@ filters.yml 設定ファイル
       class: CLASS_NAME
       file:  ABSOLUTE_PATH_TO_FILE
 
-`filters.yml` ファイルをオーバーライドするとき、継承する設定ファイルからのすべてのフィルタを維持しなければなりません:
+`filters.yml` ファイルをオーバーライドするとき、継承されるファイルからすべてのフィルタを守らなければなりません:
 
     [yml]
     rendering: ~
