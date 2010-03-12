@@ -29,7 +29,7 @@ della cartella `web/`.
 
 All'interno di questa cartella sono presenti alcune sottocartelle delle varie 
 risorse web (`css/` e `images/`) e i due file front controller.
-Quest'ultimi sono gli unici file PHP che devono essere posizionati all'interno 
+Questi ultimi sono gli unici file PHP che devono essere posizionati all'interno 
 della cartella web. Tutti gli altri file PHP devono essere nascosti, non raggiungibili
 dal browser web, che è una buona soluzione per la sicurezza dell'applicativo.
 
@@ -64,7 +64,7 @@ righe alla fine dello stesso:
 
 
 >**NOTE**
->L'alias `/sf` permette l'accesso alle immagini e file javascript necessari
+>L'alias `/sf` permette l'accesso alle immagini e file JavaScript necessari
 >alla visualizzazione delle pagine predefinite di symfony e alla web debug toolbar.
 >
 >Su Windows, bisogna rimpiazzare la riga che definisce l'`Alias` con
@@ -87,7 +87,7 @@ numeri superiori a `1024`, in quanto non richiedono privilegi di amministratore.
 >Configurazione di un dominio dedicato
 >
 >Nel caso in cui si fosse amministratori del server stesso, è meglio 
->creare e configurare dei virtual host, piuttosto che aggiungere una nuova porta 
+>creare e configurare degli host virtuali, piuttosto che aggiungere una nuova porta 
 >ogniqualvolta si voglia iniziare un progetto. Invece di scegliere una porta e
 >aggiungere la direttiva `Listen`, scegliere un dominio e aggiungere la direttiva
 >`ServerName`:
@@ -127,7 +127,7 @@ seguente URL:
     http://sfproject.localhost/frontend_dev.php/
 
 Dovrebbe essere visibile nell'angolo in alto a destra la web debug toolbar, con 
-delle piccole, se tutto è stato configurato correttamente,
+delle piccole icone, se tutto è stato configurato correttamente,
 grazie all' `sf/` alias.
 
 ![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_2/01/web_debug_toolbar.png)

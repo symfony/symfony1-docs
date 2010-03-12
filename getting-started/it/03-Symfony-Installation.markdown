@@ -93,7 +93,7 @@ per poter configurare i sorgenti esterni di Subversion.
 >Su Windows, si possono usare strumenti come [TortoiseSVN](http://tortoisesvn.net/)
 >per poter fare tutto senza usare la riga di comando.
 
-Per un approccio conservativo, legare il progetto ad un rilascio specifico
+Per un approccio conservativo, legare il progetto a un rilascio specifico
 (un tag di Subversion):
 
     svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0

@@ -18,7 +18,7 @@ Su Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project PROJECT_NAME
 
 Il task `generate:project` genera la struttura predefinita di cartella e di
-file necessaria ad un progetto symfony:
+file necessaria a un progetto symfony:
 
  | Cartella    | Descrizione
  | ----------- | ----------------------------------

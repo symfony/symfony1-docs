@@ -1,14 +1,14 @@
 Gli ambienti
 ============
 
-Guardando nella directory `web/`, ci saranno due file PHP:
+Guardando nella cartella `web/`, ci saranno due file PHP:
 `index.php` e `frontend_dev.php`. Questi file sono chiamati **front controller**
 e vengono utilizzati per gestire tutte le richieste fatte all'applicazione. 
 Ma perché avere due front controller per ogni applicazione?
 
 Entrambi i file puntano alla stessa applicazione, ma per **ambienti** differenti.
-Quando viene sviluppata un'applicazione, ad eccezione di quelle sviluppate
-direttamente sul server di produzione, diversi ambienti sono necessari:
+Quando viene sviluppata un'applicazione, a eccezione di quelle sviluppate
+direttamente sul server di produzione, sono necessari diversi ambienti:
 
   * L'**ambiente di sviluppo**: Questo ambiente è utilizzato dagli
     **sviluppatori web** quando devono lavorare sull'applicazione per
@@ -21,14 +21,14 @@ direttamente sul server di produzione, diversi ambienti sono necessari:
   * L'**ambiente di produzione**: Quest'ultimo ambiente è quello che
     verrà usato dagli **utenti finali**.
 
-Cosa rende ogni ambiente differente? Ad esempio nell'ambiente di sviluppo, 
+Cosa rende ogni ambiente differente? Ad esempio, nell'ambiente di sviluppo, 
 l'applicazione deve registrare tutti dettagli delle richieste per rendere 
 più facile il debug del codice, contemporaneamente deve avere la cache 
 disabilitata per permettere di vedere subito i risultati del proprio lavoro. 
 In sostanza l'ambiente di sviluppo deve essere ottimizzato per gli sviluppatori.
 Il miglior esempio che si può dare è quello delle eccezioni del framework. Per 
 aiutare lo sviluppatore a controllare il proprio codice velocemente, symfony 
-mostra l'eccezione per la richiesta fatta, con tutte le informazioni ad essa 
+mostra l'eccezione per la richiesta fatta, con tutte le informazioni a essa 
 correlate, direttamente all'interno del browser:
 
 ![Una eccezione nell'ambiente di sviluppo](http://www.symfony-project.org/images/jobeet/1_2/01/exception_dev.png)
@@ -42,7 +42,7 @@ ottimizzato per le prestazioni e per la user experience.
 
 >**NOTE**
 >Se vengono aperti i file di front controller, si potrà notare che il contenuto 
->degli stessi è uguale ad eccezione dei parametri che definiscono l'ambiente:
+>degli stessi è uguale a eccezione dei parametri che definiscono l'ambiente:
 >
 >     [php]
 >     // web/index.php

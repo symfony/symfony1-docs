@@ -3,7 +3,7 @@ E ora?
 
 Dopo aver seguito le istruzioni dei capitoli precedenti, si dovrebbe avere
 a disposizione un progetto symfony pienamente operativo. Si è così pronti
-ad utilizzare symfony.
+a utilizzare symfony.
 
 Ulteriore documentazione è disponibile nella pagina principale della
 [documentazione](http://www.symfony-project.org/doc/1_4/).
@@ -25,7 +25,7 @@ Il framework symfony ha molte grandi caratteristiche e molta
 documentazione liberamente disponibile. Ma uno dei più grandi
 valori che un progetto Open Source può avere è la sua comunità
 e symfony ha una delle comunità più attive e amichevoli che si
-possono trovare. Iniziando ad usare symfony per i propri progetti,
+possono trovare. Iniziando a usare symfony per i propri progetti,
 si consideri l'ipotesi di unirsi alla comunità di symfony:
 
   * Iscrivendosi alla [mailing-list degli utenti](http://groups.google.com/group/symfony-users)
