@@ -14,7 +14,7 @@ PHP da alcune classi apposite. Quando l'impostazione `is_debug` è
 impostata a `false` (per esempio per l'ambiente `prod`), i file YAML vengono letti
 solo per la prima richiesta; la cache PHP viene invece utilizzata per tutte
 le richieste successive. Questo significa che il lavoro "duro" viene fatto una
-sola volta, quando il file YAML viene processato ed interpretato per la prima
+sola volta, quando il file YAML viene processato e interpretato per la prima
 volta.
 
 >**TIP**

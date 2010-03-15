@@ -433,7 +433,7 @@ per rendere sicura l'applicazione di backend:
 </doctrine>
 
 Il task `plugin:install` installa un plugin in base al nome. Tutti i plugin sono
-memorizzati sotto la cartella `plugins/` ed ognuno ha la sua cartella, che prende
+memorizzati sotto la cartella `plugins/` e ognuno ha la sua cartella, che prende
 il nome dal plugin stesso.
 
 >**NOTE**
@@ -495,7 +495,7 @@ necessario ricostruire il modello:
 
 >**TIP**
 >Ricordate che il task `propel:build --all --and-load` rimuove tutte le tabelle esistenti
->prima di ricrearle. Per evitarlo, si può costruire il modello, i form ed i
+>prima di ricrearle. Per evitarlo, si può costruire il modello, i form e i
 >filtri, e poi creare le nuove tabelle eseguendo le istruzioni SQL generate
 >e memorizzate in `data/sql/`.
 
@@ -553,7 +553,7 @@ L'ultimo passo è creare un utente amministratore:
     $ php symfony guard:promote fabien
 
 >**TIP**
->`sfGuardPlugin` fornisce dei task per gestire gli utenti, i gruppi ed i permessi
+>`sfGuardPlugin` fornisce dei task per gestire gli utenti, i gruppi e i permessi
 >dalla ~linea di comando|Linea di comando~. Si può usare il task `list` per elencare tutti i task
 >che appartengono al namespace `guard`:
 >
@@ -660,7 +660,7 @@ A domani
 
 Le classi utente di symfony sono un bel modo per astrarre la gestione
 delle sessioni di PHP. Insieme a un grande sistema di plugin
-di symfony ed al plugin `sfGuardPlugin`, possiamo mettere in
+di symfony e al plugin `sfGuardPlugin`, possiamo mettere in
 sicurezza il backend di Jobeet in pochi minuti. Ed abbiamo anche
 aggiunto un'interfaccia pulita per gestire gli utenti amministratori,
 grazie ai moduli forniti dal plugin.

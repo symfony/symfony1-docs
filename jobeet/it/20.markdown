@@ -28,12 +28,12 @@ modulo, spostateli in un plugin. Dal momento che un plugin è solo una cartella,
 lavorarci abbastanza agevolmente mediante la creazione di un repository SVN e utilizzando
 `svn:externals` o, semplicemente copiando i file da un progetto all'altro.
 
-Chiamiamo questi plugin "plugin privati", perché il loro uso è limitato ad un unico
+Chiamiamo questi plugin "plugin privati", perché il loro uso è limitato a un unico
 sviluppatore o società. Essi non sono accessibili pubblicamente.
 
 >**TIP**
 >È anche possibile creare un ~pacchetto|Pacchettizzazione~ plugin privato, creare il proprio
->canale symfony plugin, ed installarlo attraverso il task `plugin:install`.
+>canale symfony plugin, e installarlo attraverso il task `plugin:install`.
 
 ### Plugin pubblici
 
@@ -52,7 +52,7 @@ riusabilità e condivisione. I plugin possono essere usati come un modo diverso 
 ~organizzare il codice|Organizzare il codice~. Invece di organizzare i file a strati: tutti i modelli nella
 cartella `lib/model/`, i template nella cartella `templates/`, ...; i
 file possono essere organizzati per funzionalità: tutti i file relativi ai posti di lavoro assieme (il modello,
-i form ed i template), tutti i file CMS assieme e così via.
+i form e i template), tutti i file CMS assieme e così via.
 
 La Struttura in File del Plugin
 -------------------------------
@@ -79,7 +79,7 @@ verrà utilizzata è la seguente:
           actions/
           config/
           templates/
-      web/                                    // Asset come JS, CSS, ed immagini
+      web/                                    // Asset come JS, CSS e immagini
 
 Il Plugin Jobeet
 ----------------
@@ -192,7 +192,7 @@ dallo schema. Per esempio il modello `JobeetJob` ora ha questa struttura di clas
      `plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetJob.class.php`:
      questa classe contiene tutte le funzionalità specifiche
      del plugin. Si possono ridefinire le funzionalità in questa
-     classe ed in quella base modificando la classe `JobeetJob`.
+     classe e in quella base modificando la classe `JobeetJob`.
      
   * `BaseJobeetJob` (estende `sfDoctrineRecord`) in
      `lib/model/doctrine/sfJobeetPlugin/base/BaseJobeetJob.class.php`:
@@ -213,7 +213,7 @@ dallo schema. Per esempio il modello `JobeetJob` ora ha questa struttura di clas
 
 Con questa struttura generata, si ha la possibilità di personalizzare i
 modelli di un plugin modificando la classe `JobeetJob` di primo livello.
-Si può personalizzare lo schema ed aggiungere colonne, aggiungere relazioni
+Si può personalizzare lo schema e aggiungere colonne, aggiungere relazioni
 sovrascrivendo i metodi `setTableDefinition()` e `setUp()`.
 
 >**NOTE**
@@ -477,7 +477,7 @@ facciamo riferimento al nome del modulo
 >classe `ProjectConfiguration`.
 >
 >Questo passo non è necessario con la configurazione predefinita, perché symfony ha
->un approccio in stile "black-list", che abilita tutti i plugin ad eccezione di alcuni di essi:
+>un approccio in stile "black-list", che abilita tutti i plugin a eccezione di alcuni di essi:
 >
 >     [php]
 >     // config/ProjectConfiguration.class.php

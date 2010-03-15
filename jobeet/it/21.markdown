@@ -389,13 +389,13 @@ del modulo `sfJobeetLanguage`:
     }
 
 `getCSRFFieldName()` restituisce il nome del campo che contiene il token
-CSRF. Togliendo questo campo, il widget ed il validatore associato vengono
+CSRF. Togliendo questo campo, il widget e il validatore associato vengono
 rimossi.
 
 ~Rimuovere la cache~
 --------------------
 
-Ogni volta che un utente inserisce ed attiva un lavoro, la homepage deve
+Ogni volta che un utente inserisce e attiva un lavoro, la homepage deve
 essere aggiornata per elencare il nuovo lavoro.
 
 Siccome non abbiamo bisogno che il lavoro appaia in tempo reale nella

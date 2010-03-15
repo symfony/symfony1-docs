@@ -359,7 +359,7 @@ ulteriori informazioni.
 Integrare una libreria di template di terze parti è semplice. Per esempio si
 potrebbe utilizzare il nuovissimo templating component rilasciato come parte
 del progetto Symfony Components. Basta copiare il codice del component da qualche
-parte nel progetto (`lib/vendor/templating/` potrebbe essere un buon posto) ed
+parte nel progetto (`lib/vendor/templating/` potrebbe essere un buon posto) e
 aggiungere il seguente codice nel task:
 
     [php]

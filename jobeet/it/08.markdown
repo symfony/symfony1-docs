@@ -14,16 +14,16 @@ I test in symfony
 -----------------
 
 Ci sono due tipi diversi di ~test~ automatici in symfony: i
-**~test unitari~** ed i **~test funzionali~**.
+**~test unitari~** e i **~test funzionali~**.
 
-I test unitari verificano che ogni metodo ed ogni funzione funzionino correttamente.
+I test unitari verificano che ogni metodo e ogni funzione funzionino correttamente.
 Ogni test deve essere più indipendente possibile dagli altri.
 
 D'altro canto, i test funzionali verificano che l'applicazione risultante si
 comporti correttamente nel suo insieme.
 
 Tutti i test in symfony sono collocati sotto la cartella `test/` del progetto.
-Essa contiene due sotto-cartelle, una per i test unitari (`test/unit/`) ed una
+Essa contiene due sotto-cartelle, una per i test unitari (`test/unit/`) e una
 per i test funzionali (`test/functional/`).
 
 I test unitari saranno coperti dal tutorial di oggi, mentre quello di domani
@@ -116,11 +116,11 @@ Eseguire i test unitari
 -----------------------
 
 Tutti i test unitari sono memorizzati nella cartella `test/unit/`. Per convenzione,
-i test hanno un nome che deriva dalla classe che testano ed un suffisso `Test`.
+i test hanno un nome che deriva dalla classe che testano e un suffisso `Test`.
 Sebbene sia possibile organizzare i test nella cartella `test/unit/` in qualsiasi
 modo, raccomandiamo di replicare la struttura della cartella `lib/`.
 
-Creiamo un file `test/unit/JobeetTest.php` ed inseriamoci il seguente codice:
+Creiamo un file `test/unit/JobeetTest.php` e inseriamoci il seguente codice:
 
     [php]
     // test/unit/JobeetTest.php
@@ -217,7 +217,7 @@ messaggi al file dei test `slugify`:
 
 La stringa di descrizione del test è anche uno strumento prezioso quando
 si prova a immaginare cosa testare. Si può vedere uno schema nelle stringhe
-dei test: sono frasi che descrivono come il metodo si deve comportare ed
+dei test: sono frasi che descrivono come il metodo si deve comportare e
 iniziano sempre col nome del metodo da testare.
 
 >**SIDEBAR**
@@ -227,7 +227,7 @@ iniziano sempre col nome del metodo da testare.
 >
 >Come aiuto per verificare che tutto il codice sia ben testato, symfony fornisce
 >il task `test:coverage`. Passando come parametri un file o una cartella di test
->ed un file o una cartella di lib, il task dirà la percentuale di copertura del
+>e un file o una cartella di lib, il task dirà la percentuale di copertura del
 >codice:
 >
 >     $ php symfony test:coverage test/unit/JobeetTest.php lib/Jobeet.class.php
@@ -242,7 +242,7 @@ iniziano sempre col nome del metodo da testare.
 >i casi limite sono stati testati.
 >
 >Poiché `test:coverage` si appoggia a `~XDebug~` per raccogliere le sue informazioni,
->si deve installarlo ed abilitarlo in anticipo.
+>si deve installarlo e abilitarlo in anticipo.
 
 Aggiungere test per nuove feature
 ---------------------------------
@@ -268,7 +268,7 @@ Se ora si lanciano i test, si dovrebbe avere una barra rossa, Se no, vuol dire
 che la feature è già implementata o che i test non testano quello che dovrebbero
 testare.
 
-Ora, modifichiamo la classe `Jobeet` ed aggiungiamo la condizione seguente
+Ora, modifichiamo la classe `Jobeet` e aggiungiamo la condizione seguente
 all'inizio:
 
     [php]

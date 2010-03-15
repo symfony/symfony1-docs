@@ -127,7 +127,7 @@ il **form tester**:
 Il form tester ha diversi metodi per testare lo stato corrente di un form, come
 per gli errori.
 
-Se fate un errore nel test ed il test non passa, potete usare l'istruzione
+Se fate un errore nel test e il test non passa, potete usare l'istruzione
 `with('response')->~debug~()` vista durante il giorno 9. Ma dovrete analizzare l'HTML
 generato per verificare i messaggi d'errore. Non è molto conveniente. Il 
 form tester mette a disposizione un metodo `debug()`, che mostra lo stato del
@@ -151,7 +151,7 @@ alla pagina `show`:
       isParameter('action', 'show')->
     end()
 
-`isRedirected()` verifica se la pagina è stata rinviata ed il metodo
+`isRedirected()` verifica se la pagina è stata rinviata e il metodo
 `followRedirect()` segue il rinvio.
 
 >**NOTE**
@@ -425,7 +425,7 @@ se il lavoro è attivato:
     }
 
 La soluzione è banale, ma siamo sicuri che tutto il resto funzioni
-ancora come ci aspettiamo? Si può aprire il browser ed iniziare
+ancora come ci aspettiamo? Si può aprire il browser e iniziare
 a testare tutte le possibili combinazioni di accesso alla pagina
 di modifica. Ma c'è un modo più semplice: eseguire tutti i
 test; se è stata introdotta una ~regressione~, symfony lo
@@ -622,7 +622,7 @@ Ma come funziona? Di base, il metodo `save()` esegue i seguenti passi:
 
 ### Feature di sicurezza incluse
 
-Il metodo `fromArray()` accetta un array di valori ed aggiorna i valori delle
+Il metodo `fromArray()` accetta un array di valori e aggiorna i valori delle
 colonne corrispondenti. Questo rappresenta un problema di ~sicurezza~? Che succede
 se qualcuno prova a inviare un valore per una colonna per cui non ha
 l'autorizzazione? Per esempio, si può forzare la colonna `token`?
@@ -695,7 +695,7 @@ Dopo abilita la protezione da CSRF. Quando si fornisce
 questa opzione, tutti i form includono un campo nascosto `_csrf_token`.
 
 >**TIP**
->La strategia di escaping ed il segreto CSRF possono essere cambiati in
+>La strategia di escaping e il segreto CSRF possono essere cambiati in
 >qualsiasi momento modificando il file di configurazione
 >`apps/frontend/config/~settings.yml~`. Come per il file `databases.yml`,
 >le impostazioni sono configurabili per ambiente:
@@ -764,7 +764,7 @@ regolarmente in un cron job.
 
 La configurazione del task viene fatta nel metodo `configure()`. Ogni task
 deve avere un nome univoco (`namespace`:`name`) e può avere
-parametri ed opzioni.
+parametri e opzioni.
 
 >**TIP**
 >Consultate i task predefiniti di symfony (`lib/task/`) per ulteriori
@@ -826,7 +826,7 @@ rendere il processo di sviluppo più facile, più veloce e soprattutto
 più sicuro.
 
 Il framework dei form di symfony fornisce molto più che semplici
-widget e validatori: dà un modo semplice per testare i form ed
+widget e validatori: dà un modo semplice per testare i form e
 assicura che i form siano sicuri di default.
 
 Il nostro tour delle grandi feature di symfony non finisce oggi. Domani

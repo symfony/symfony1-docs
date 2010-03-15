@@ -22,7 +22,7 @@ che formano un completo [framework MVC](#chapter_04_l_architettura_mvc)
 Prima di pensare al codice, meglio spendere un po' di tempo per leggere
 la [storia e la filosofia di symfony](#chapter_01_introduzione).
 Quindi, verificare i [prerequisiti](#chapter_01_prerequisiti) del framework,
-ed usare lo [script `check_configuration.php`](#chapter_01_installazione_di_symfony)
+e usare lo [script `check_configuration.php`](#chapter_01_installazione_di_symfony)
 per validare la propria configurazione.
 
 Infine, [installare symfony](#chapter_01_installazione_di_symfony). Dopo un po'
@@ -135,7 +135,7 @@ la maggior parte di essi sono
 I file di configurazione usano per lo più il
 [formato YAML](#chapter_03_sidebar_il_formato_yaml_).
 
-Invece di usare la struttura predefinita di cartelle ed organizzare i file
+Invece di usare la struttura predefinita di cartelle e organizzare i file
 della propria applicazione per livelli, si può anche organizzarli per feature,
 e distribuirli in un [plugin](#chapter_20_sub_un_modo_diverso_di_organizzare_il_codice).
 Parlando di struttura predefinita delle cartelle, si può anche
@@ -162,7 +162,7 @@ Oggetti principali di symfony
 Il framework symfony fornisce pochi oggetti che astraggono le
 esigenze frequenti nei progetti web: la [richiesta](#chapter_04_sub_la_richiesta),
 la [risposta](#chapter_04_sub_la_risposta), l'[utente](#chapter_13_sub_la_classe_myuser),
-i [log](#chapter_22_sub_log), il [routing](#chapter_05_configurazione_del_routing), ed il
+i [log](#chapter_22_sub_log), il [routing](#chapter_05_configurazione_del_routing), e il
 [gestore della cache della vista](#chapter_21_rimuovere_la_cache).
 
 Questi oggetti principali sono gestiti dall'oggetto
@@ -211,7 +211,7 @@ Internazionalizzazione e localizzazione
 [Internazionalizzazione](#chapter_19_internazionalizzazione) e
 [localizzazione](#chapter_19_localizzazione) sono supportate da symfony,
 grazie allo standard ICU. La [cultura dell'utente](#chapter_19_sub_la_cultura_dell_utente)
-determina la lingua ed il paese dell'utente. Può essere definita dall'utente
+determina la lingua e il paese dell'utente. Può essere definita dall'utente
 stesso, oppure inclusa nell'[URL](#chapter_19_cultura_nell_url).
 
 Test
@@ -277,7 +277,7 @@ al progetto symfony.
 ~Task~
 ------
 
-La CLI di symfony fornisce molti task, ed i più utili sono stati discussi
+La CLI di symfony fornisce molti task, e i più utili sono stati discussi
 in questo tutorial:
 
  * [`app:routes`](#chapter_05_debug_delle_rotte)
@@ -340,7 +340,7 @@ su symfony.
 Prima di lasciarci, vorrei dire un'ultima cosa su symfony. Il framework ha
 un sacco di grandi feature e molta documentazione libera. Ma una delle
 più grandi risorse preziose che un progetto Open Source può avere è la
-sua community. E symfony ha una delle più incredibili ed attive community
+sua community. E symfony ha una delle più incredibili e attive community
 del mondo. Se iniziate a usare symfony per i vostri progetti, considerate
 di unirvi alla community di symfony:
 

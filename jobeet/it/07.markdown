@@ -445,7 +445,7 @@ template, si passa un paginatore:
 >secondo parametro. Nell'azione vista sopra, il parametro della
 >richiesta `page` non esiste, quindi `getParameter()` restituirà `1`.
 
-Il costruttore di `sfPropelPager` prende una classe di modello ed il numero
+Il costruttore di `sfPropelPager` prende una classe di modello e il numero
 massimo di unità da restituire per ogni pagina. Aggiungiamo il secondo valore
 al file di configurazione:
 

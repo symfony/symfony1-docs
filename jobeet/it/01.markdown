@@ -5,7 +5,7 @@ Introduzione
 ------------
 
 Il framework symfony è un progetto Open Source da più di quattro anni ed è diventato
-uno dei framework PHP più popolari grazie alle molte feature offerte ed all'ottima
+uno dei framework PHP più popolari grazie alle molte feature offerte e all'ottima
 documentazione. Questa tradizione è iniziata molto presto.
 
 Questo libro descrive la creazione di una applicazione web passo-passo con il framework
@@ -24,7 +24,7 @@ che abbiamo abbastanza cose da fare oggi. Tuttavia diamogli un nome: **Jobeet**.
 Ogni capitolo/giorno è pensato per durare circa un'ora e rappresenta
 l'occasione per imparare a utilizzare symfony realizzando un sito web reale
 dall'inizio alla fine. Ogni giorno verranno aggiunte nuove feature all'applicazione, e
-sfrutteremo queste novità per introdurvi alle nuove funzionalità di symfony ed alle
+sfrutteremo queste novità per introdurvi alle nuove funzionalità di symfony e alle
 good practice dello sviluppo web con symfony.
 
 Questo tutorial è differente
@@ -32,7 +32,7 @@ Questo tutorial è differente
 
 Ripensate agli albori del PHP4.
 Ah, la [Belle Epoque](http://it.wikipedia.org/wiki/Belle_Époque)! PHP era uno dei primi
-linguaggi dedicati al web ed uno dei più semplici.
+linguaggi dedicati al web e uno dei più semplici.
 
 Ma con la veloce evoluzione delle tecnologie web gli sviluppatori devono tenersi al passo
 con le ultime best practice e con gli strumenti più aggiornati. La via migliore per 
@@ -42,7 +42,7 @@ finale quando l'autore inizia a dare porzioni di codice come esempio.
 
 Probabilmente siete abituati a leggere avvisi come questi:
 
-  "Per un'applicazione reale non dimenticare di aggiungere la validazione ed una corretta gestione degli errori."
+  "Per un'applicazione reale non dimenticare di aggiungere la validazione e una corretta gestione degli errori."
 
 oppure
 
@@ -290,7 +290,7 @@ Inizializzazione del progetto
 
 In symfony, **~applicazioni~** che condividono lo stesso modello di dati sono raggruppate
 in **progetti**. Per il progetto Jobeet avremo due diverse applicazioni:
-il ~frontend~ ed il ~backend~.
+il ~frontend~ e il ~backend~.
 
 ### Creazione del progetto
 
@@ -308,7 +308,7 @@ Su Windows:
 
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
 
-Il task `generate:project` genera la ~struttura~ di default delle cartelle ed i file
+Il task `generate:project` genera la ~struttura~ di default delle cartelle e i file
 necessari per il progetto stesso:
 
  | Cartella  | Descrizione
@@ -348,7 +348,7 @@ Ora create l'applicazione frontend usando il task `generate:app`:
 >Visto che il file symfony è eseguibile, gli utenti Unix possono sostituire tutte le 
 >occorrenze di '`php symfony`' con '`./symfony`' da qui in avanti.
 >
->Su Windows si può copiare il file 'symfony.bat' nel progetto ed utilizzare
+>Su Windows si può copiare il file 'symfony.bat' nel progetto e utilizzare
 >'`symfony`' invece che '`php symfony`':
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
@@ -466,7 +466,7 @@ configurazioni alla fine:
       </Directory>
     </VirtualHost>
 
->**NOTE**: L'~alias~ `/sf` permette l'accesso alle immagini ed ai javascript
+>**NOTE**: L'~alias~ `/sf` permette l'accesso alle immagini e ai javascript
 >necessari per la corretta visualizzazione delle ~pagine di default di symfony~
 >e della web debug toolbar.
 >
@@ -491,8 +491,8 @@ di `1024`, visto che non richiedono privilegi amministrativi.
 >
 >Se avete i privilegi amministrativi sulla macchina su cui lavorate, è meglio
 >impostare dei ~virtual host~ piuttosto che aggiungere una nuova porta ogni volta
->che iniziate un nuovo progetto. Invece che selezionare una porta ed aggiungere
->una direttiva di tipo `Listen`, scegliete un nome a dominio ed aggiungete
+>che iniziate un nuovo progetto. Invece che selezionare una porta e aggiungere
+>una direttiva di tipo `Listen`, scegliete un nome a dominio e aggiungete
 >una direttiva di tipo `ServerName`:
 >
 >     # Questa è la configurazione per Jobeet

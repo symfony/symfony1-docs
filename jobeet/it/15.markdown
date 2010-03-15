@@ -255,7 +255,7 @@ restituisce la lista dei lavori attualmente attivi:
     }
 </doctrine>
 
-L'ultimo passo è quello di creare l'azione `api` ed i template.
+L'ultimo passo è quello di creare l'azione `api` e i template.
 Inizializziamo il modulo con il task `generate:module`:
 
     $ php symfony generate:module frontend api
@@ -351,7 +351,7 @@ Per i formati built-in, symfony fornisce una configurazione nel background, come
 cambiare il content type, o disabilitare il layout.
 
 Dato che il formato YAML non è nella lista del formati built-in di richiesta, il
-content type della risposta può venir cambiato ed il layout disabilitato nell'azione:
+content type della risposta può venir cambiato e il layout disabilitato nell'azione:
 
     [php]
     class apiActions extends sfActions
@@ -517,7 +517,7 @@ Il classico secondo passo è generare un modulo:
 
 ### Template
 
-Il task `propel:generate-module` genera le classiche sette azioni ed i loro
+Il task `propel:generate-module` genera le classiche sette azioni e i loro
 ~template|Template~ corrispondenti. Nella cartella `templates/`, cancelliamo tutti i
 file tranne `_form.php` e `newSuccess.php`. E per i file che manteniamo,
 sostituiamo il contenuto con il seguente:
@@ -630,7 +630,7 @@ Il framework dei form supporta le ~relazioni molti-a-molti|Relazioni molti-a-mol
 come ogni altra colonna. Per default, una relazione del genere è visualizzata come un menù
 a tendina, grazie al widget `sfWidgetFormChoice`. Come abbiamo visto nel giorno
 10, abbiamo modificato la visualizzazione usando l'opzione `expanded`.
-Le email e gli URL tendono ad essere un po' più lunghi della dimensione
+Le email e gli URL tendono a essere un po' più lunghi della dimensione
 predefinita di un tag input, ma gli attributi HTML possono essere impostati
 usando il metodo `setAttribute()`.
 
@@ -772,7 +772,7 @@ col numero di affiliati che devono essere attivati:
 
 Poiché l'unica azione necessaria nel backend è l'attivazione o la
 disattivazione degli account, cambiamo la sezione `config` del
-generatore, per semplificare un po' l'interfaccia, ed aggiungiamo
+generatore, per semplificare un po' l'interfaccia, e aggiungiamo
 un link per attivare gli account direttamente dalla lista:
 
     [yml]

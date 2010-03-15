@@ -13,7 +13,7 @@ Test funzionali
 I ~test funzionali|Test Funzionali~ sono un ottimo strumento per testare la propria applicazione
 in modo completo: dalla richiesta fatta da un browser alla risposta inviata
 dal server. Permettono di testare tutti i livelli di un'applicazione: il routing,
-il modello, le azioni ed i template. Molto probabilmente sono molto simili a
+il modello, le azioni e i template. Molto probabilmente sono molto simili a
 ciò che fate già manualmente: ogni volta che aggiungete o modificate un'azione,
 c'è bisogno di andare sul browser e verificare che tutto funzioni a dovere,
 cliccando sui link e controllando gli elementi nella pagina visualizzata. In
@@ -32,7 +32,7 @@ scrivere codice in tranquillità.
 >Il framework dei test funzionali non sostituisce strumenti come
 >"[~Selenium~](http://selenium.seleniumhq.org/)". Selenium gira
 >direttamente nel browser, per automatizzare i test tra le
->varie piattaforme ed i vari browser, quindi è in grado di
+>varie piattaforme e i vari browser, quindi è in grado di
 >testare i JavaScript della propria applicazione.
 
 La classe `sfBrowser`
@@ -89,7 +89,7 @@ La classe `sfTestFunctional`
 ----------------------------
 
 Abbiamo un browser, ma abbiamo anche bisogno di un modo per analizzare gli oggetti
-di symfony per eseguire i test attuali. Potremmo farlo con lime ed alcuni metodi
+di symfony per eseguire i test attuali. Potremmo farlo con lime e alcuni metodi
 di `sfBrowser` come `getResponse()` e `getRequest()`, ma symfony mette a
 disposizione una via migliore.
 
@@ -649,7 +649,7 @@ Debug dei test funzionali
 A volte un test funzionale fallisce. Siccome symfony simula un browser senza
 interfaccia grafica, può essere difficile diagnosticare il problema.
 Fortunatamente, symfony fornisce il metodo `~debug()|Debug~` per mostrare gli header
-ed i contenuti della risposta:
+e i contenuti della risposta:
 
     [php]
     $browser->with('response')->debug();

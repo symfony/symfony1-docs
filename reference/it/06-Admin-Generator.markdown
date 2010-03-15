@@ -91,7 +91,7 @@ e il campo `content` dal componente `content`.
 
 Il generatore di admin passa alcuni parametri ai partial e ai componenti:
 
-  * Per le pagine `new` ed `edit`:
+  * Per le pagine `new` e `edit`:
 
     * `form`:       Il form associato al corrente oggetto del modello
     * `attributes`: Un array di attributi HTML da applicare ai widget

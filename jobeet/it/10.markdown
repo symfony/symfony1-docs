@@ -22,15 +22,15 @@ tre parti:
   * **widget**:  Il sub-framework dei ~widget|Widget~ offre le classi per l'output
                  dell'HTML dei campi (input, textarea, select, ...)
   * **form**:   Le classi dei ~form|Form~ rappresentano i form costituiti da
-                widget e validatori ed offrono i metodi per aiutare nella
+                widget e validatori e offrono i metodi per aiutare nella
                 gestione dei form. Ogni campo di un form ha il suo validatore
-                ed il suo widget.
+                e il suo widget.
 
 Form
 ----
 
 Un form in symfony è una classe costituita da campi. Ogni campo ha un nome, un
-~validatore|Validatori~ ed un ~widget|Widget~. Un semplice `ContactForm` può essere
+~validatore|Validatori~ e un ~widget|Widget~. Un semplice `ContactForm` può essere
 definito con la seguente classe:
 
     [php]
@@ -123,8 +123,14 @@ classe base dei form:
 -
 
 >**TIP**
+<propel>
 >Si può disabilitare la generazione del form su certi modelli passando i parametri al
->comportamento di `symfony`:
+>comportamento `symfony` di Propel:
+</propel>
+<doctrine>
+>Si può disabilitare la generazione del form su certi modelli passando i parametri al
+>comportamento `symfony` di Doctrine:
+</doctrine>
 >
 <propel>
 >     [yml]
@@ -149,7 +155,7 @@ classe base dei form:
 Il form per il lavoro è un esempio perfetto per imparare a
 ~personalizzare i form|Form (Personalizzazione)~. Vediamo come personalizzarlo passo passo.
 
-Come prima cosa cambiamo il link "Post a Job" nel layout, per avere la possibilità
+Come prima cosa, cambiamo il link "Post a Job" nel layout, per avere la possibilità
 di verificare i cambiamenti direttamente nel browser:
 
     [php]
@@ -363,7 +369,7 @@ cambiamo il percorso utilizzato nel template `showSuccess`:
 
 >**TIP**
 >Se in un form esiste il metodo `generateLogoFilename()`, verrà chiamato dal 
->validatore ed il risultato sovrascriverà il nome file di default del `logo`.
+>validatore e il risultato sovrascriverà il nome file di default del `logo`.
 >Al metodo viene passato l'oggetto `sfValidatedFile` come parametro.
 
 Come già potete sovrascrivere l'etichetta generata per ogni campo, potete anche
@@ -531,7 +537,7 @@ Infine, l'istruzione `<?php echo $form ?>` visualizza i widget del form.
 
 ### L'azione del form
 
-Abbiamo ora una classe per il form ed un template che lo visualizza. Ora è tempo
+Abbiamo ora una classe per il form e un template che lo visualizza. Ora è tempo
 di farlo funzionare con delle ~azioni|Azione~.
 
 Il form del lavoro è gestito da cinque metodi del modulo `job`:
@@ -611,7 +617,7 @@ Dopo che il form è stato riempito, è possibile controllare la sua validità
 utilizzando il metodo `isValid()`: se il form è valido (restituisce `true`),
 il lavoro è salvato nel database (`$form->save()`) e l'utente è ~rinviato|Rinvio~
 alla pagina di anteprima; se non è validato, il template `newSuccess.php` è
-visualizzato di nuovo, con i dati inseriti ed i messaggi d'errore associati.
+visualizzato di nuovo, con i dati inseriti e i messaggi d'errore associati.
 
 >**TIP**
 >Il metodo `setTemplate()` cambia il ~template|Template~ utilizzato per una data azione.
@@ -923,7 +929,7 @@ essere accessibili, il che vuol dire che non devono essere mostrati
 nella homepage di Jobeet e che non devono essere accessibili dai
 loro URL. Poiché abbiamo creato un metodo `addActiveJobsCriteria()`
 per restringere un `Criteria` ai lavori attivi, dobbiamo solo
-modificarlo ed aggiungere i nuovi requisiti alla fine:
+modificarlo e aggiungere i nuovi requisiti alla fine:
 </propel>
 <doctrine>
 Ma c'è ancora qualcosa da sistemare. I lavori non attivati non devono
@@ -931,7 +937,7 @@ essere accessibili, il che vuol dire che non devono essere mostrati
 nella homepage di Jobeet e che non devono essere accessibili dai
 loro URL. Poiché abbiamo creato un metodo `addActiveJobsQuery()`
 per restringere un `Doctrine_Query` ai lavori attivi, dobbiamo solo
-modificarlo ed aggiungere i nuovi requisiti alla fine:
+modificarlo e aggiungere i nuovi requisiti alla fine:
 </doctrine>
 
 <propel>
@@ -973,12 +979,12 @@ piccolo cambiamento nel metodo per aggiungere il nuovo requisito.
 <propel>
 >Quando abbiamo creato il metodo `getWithJobs()`, abbiamo scordato di
 >usare il metodo `addActiveJobsCriteria()`. Quindi, dobbiamo modificarlo
->ed aggiungere il nuovo requisito:
+>e aggiungere il nuovo requisito:
 </propel>
 <doctrine>
 >Quando abbiamo creato il metodo `getWithJobs()`, abbiamo scordato di
 >usare il metodo `addActiveJobsQuery()`. Quindi, dobbiamo modificarlo
->ed aggiungere il nuovo requisito:
+>e aggiungere il nuovo requisito:
 </doctrine>
 >
 <propel>

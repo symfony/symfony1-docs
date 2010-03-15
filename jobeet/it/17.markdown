@@ -238,7 +238,7 @@ Cosa succederebbe se ci fosse un problema durante l'indicizzazione di un lavoro,
 non venisse salvato nel database? Sia ##ORM## che Zend Lucene genereranno un'eccezione.
 Ma, in alcune circostanze, potremmo avere un lavoro salvato nel database ma senza
 il corrispondente indice. Per prevenirlo, possiamo inserire i due aggiornamenti
-all'interno di una transazione ed annullarli in caso di errore:
+all'interno di una transazione e annullarli in caso di errore:
 
 <propel>
     [php]
@@ -535,7 +535,7 @@ Processi
 --------
 
 Come ultima cosa, dobbiamo creare un processo per pulire l'indice dagli elementi
-non più validi (quando un lavoro scade, per esempio) ed ottimizzare l'indice
+non più validi (quando un lavoro scade, per esempio) e ottimizzare l'indice
 di volta in volta. Dato che abbiamo già un processo per la pulizia, aggiorniamolo
 con queste nuove caratteristiche:
 

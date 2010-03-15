@@ -29,7 +29,7 @@ a novembre 2012).
 
 Ovviamente, si possono migrare i propri progetti a symfony 1.3 e poi
 aggiornare gradualmente il codice, rimuovendo le caratteristiche deprecate
-ed infine spostarsi su symfony 1.4, per beneficiare del supporto a lungo
+e infine spostarsi su symfony 1.4, per beneficiare del supporto a lungo
 termine. Il tempo a disposizione è molto, perché symfony 1.3 sarà
 supportato per un anno (fino a novembre 2010).
 

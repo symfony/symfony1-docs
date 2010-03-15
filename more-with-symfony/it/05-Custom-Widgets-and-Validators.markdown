@@ -268,7 +268,7 @@ Siccome un widget è la rappresentazione visiva dei dati, il metodo `configure()
 del widget deve avere diverse opzioni per modificare la mappa di Google o
 modificare gli stili di ogni elemento. Una delle opzioni più importanti è quella
 di `template.html`, che definisce il modo in cui tutti gli elementi vengono ordinati.
-Quando si costruisce un widget, è molto importante pensare alla riusabilità ed
+Quando si costruisce un widget, è molto importante pensare alla riusabilità e
 all'estensibilità.
 
 Un'altra cosa importante è la definizione delle risorse esterne. Una classe

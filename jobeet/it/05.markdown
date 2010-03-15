@@ -78,7 +78,7 @@ configurazione ~`routing.yml`~:
       url:   /:module/:action/*
 
 Il file `routing.yml` descrive le rotte. Una rotta ha un nome (`homepage`), uno
-schema (`/:module/:action/*`) ed alcuni parametri (sotto la chiave `param`).
+schema (`/:module/:action/*`) e alcuni parametri (sotto la chiave `param`).
 
 Quando arriva una richiesta, il routing cerca uno schema corrispondente per l'URL
 passato. La prima rotta corrispondente vince, perciò l'ordine nel file `routing.yml`

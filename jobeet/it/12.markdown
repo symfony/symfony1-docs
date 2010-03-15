@@ -45,7 +45,7 @@ trova, che attualmente è quella di backend`.
 Ma abbiamo visto nel giorno 8 che le impostazioni possono essere configurate
 a diversi livelli. Spostando il contenuto del file `apps/frontend/config/app.yml`
 in `config/app.yml`, le impostazioni saranno condivise da tutte le applicazioni
-ed il problema sarà risolto. Fate questo cambiamento ora, visto che useremo 
+e il problema sarà risolto. Fate questo cambiamento ora, visto che useremo 
 le classi del modello molto spesso nell'admin generator, quindi avremo bisogno 
 delle variabili definite in `app.yml` nell'applicazione backend.
 
@@ -67,7 +67,7 @@ completamente funzionante per il modello di una classe:
     $ php symfony propel:generate-admin backend JobeetJob --module=job
     $ php symfony propel:generate-admin backend JobeetCategory --module=category
 
-Questi due comandi creano un ~modulo|Modulo~ `job` ed un modulo `category` per
+Questi due comandi creano un ~modulo|Modulo~ `job` e un modulo `category` per
 i modelli `JobeetJob` e `JobeetCategory`.
 
 Dietro le quinte il task ha creato anche una rotta personalizzata per ogni modulo:
@@ -202,7 +202,7 @@ La Cache di symfony
 
 Se siete abbastanza curiosi, avrete probabilmente già aperto i file generati
 dai task che trovate nella cartella `apps/backend/modules/`. Se non l'avete
-fatto, apriteli ora. Sorpresa! Le cartelle dei `templates` sono vuote ed i 
+fatto, apriteli ora. Sorpresa! Le cartelle dei `templates` sono vuote e i 
 file `actions.class.php` sono anch'essi quasi vuoti:
 
     [php]
@@ -463,7 +463,7 @@ lavori inseriti. Si può configurare l'ordinamento di default con l'opzione `sor
 
 ### `max_per_page`
 
-Di default, la lista è ~paginata|Paginazione~ ed ogni pagina contiene 20 oggetti. Questo
+Di default, la lista è ~paginata|Paginazione~ e ogni pagina contiene 20 oggetti. Questo
 può essere modificato con l'opzione `~max_per_page~`:
 
     [yml]
@@ -587,7 +587,7 @@ ci serve cancellarne una direttamente dalla lista:
       list:
         object_actions: {}
 
-Per il modulo `job`, teniamo le azioni esistenti ed aggiungiamo una nuova
+Per il modulo `job`, teniamo le azioni esistenti e aggiungiamo una nuova
 azione `extend`, simile a quella che abbiamo aggiunto come azione di batch:
 
     [yml]
@@ -627,7 +627,7 @@ il link `extend`:
 Abbiamo già visto come collegare un'azione a una lista di oggetti o a
 un singolo oggetto. L'opzione `actions` definisce delle azioni che non
 interessano nessun oggetto, come la creazione di un oggetto nuovo. Rimuoviamo
-l'azione `new` ed aggiungiamo una nuova azione che cancelli tutti i lavori
+l'azione `new` e aggiungiamo una nuova azione che cancelli tutti i lavori
 che non sono stati attivati dal relativo utente per oltre 60 giorni:
 
     [yml]
@@ -783,7 +783,7 @@ dei quali contiene un sottoinsieme dei campi del form.
 ![Gruppi di campi](http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png)
 
 L'admin generator ha un supporto incluso per le relazioni molti a molti. Nel form
-della categoria, si ha un input per il nome, uno per lo slug, ed un menù a
+della categoria, si ha un input per il nome, uno per lo slug e un menù a
 tendina per gli affiliati correlati. Siccome non ha senso modificare tale
 relazione in questa pagina, rimuoviamolo:
 
@@ -823,7 +823,7 @@ Creiamo questo partial con il seguente contenuto:
       <?php echo $form->getObject()->getToken() ?>
     </div>
 
-Nel partial si ha accesso al form corrente (`$form`) ed agli oggetti relativi,
+Nel partial si ha accesso al form corrente (`$form`) e agli oggetti relativi,
 tramite il metodo `getObject()`.
 
 >**NOTE**
@@ -1177,7 +1177,7 @@ Jobeet perfettamente funzionante. E per di più abbiamo scritto meno di 50
 linee di codice PHP. Non male per così tante feature!
 
 Domani, vedremo come mettere in sicurezza il backend, proteggendolo con
-un'username ed una password. Sarà anche l'occasione per parlare della
+uno username e una password. Sarà anche l'occasione per parlare della
 classe user di symfony.
 
 __ORM__

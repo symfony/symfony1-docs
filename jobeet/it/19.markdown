@@ -18,7 +18,7 @@ Da [Wikipedia](http://it.wikipedia.org/wiki/Internazionalizzazione_e_localizzazi
 >per una specifica regione o lingua, con l'aggiunta di componenti
 >e testi locali.
 
-Come sempre, il framework symfony non ha reinventato la ruota ed il suo
+Come sempre, il framework symfony non ha reinventato la ruota e il suo
 supporto a i18n e l10n è basato sullo [~standard ICU~](http://www.icu-project.org/).
 
 Utente
@@ -98,7 +98,7 @@ Cultura nell'URL
 
 Il sito Jobeet sarà disponibile in Inglese e Francese. Siccome un URL può
 rappresentare solo una singola risorsa, la cultura deve essere inserita
-nell'URL. Per poterlo fare, apriamo il file ~`routing.yml`~ ed aggiungiamo
+nell'URL. Per poterlo fare, apriamo il file ~`routing.yml`~ e aggiungiamo
 la variabile speciale `:sf_culture` per tutte le rotte, tranne che per
 `api_jobs` e `homepage`. Per le rotte semplici, aggiungiamo `/:sf_culture`
 all'inizio di `url`. Per le rotte di insieme, aggiungiamo un'opzione
@@ -257,7 +257,7 @@ assicurarci che abbiamo aggiustato tutto:
     $ php symfony test:functional frontend
 
 Il tester dell'utente fornisce un metodo `isCulture()`, che testa la
-cultura corrente dell'utente. Apriamo il file `jobActionsTest` ed
+cultura corrente dell'utente. Apriamo il file `jobActionsTest` e
 aggiungiamo i seguenti test:
 
     [php]
@@ -451,7 +451,7 @@ essere rappresentato con fino a 21 bit. Quindi, per il web, usiamo
 variabile. In UTF-8, le lingue più usate hanno i loro caratteri
 codificati con meno di 3 bit.
 
-UTF-8 è la codifica di default usata da symfony, ed è definita nel file
+UTF-8 è la codifica di default usata da symfony ed è definita nel file
 di configurazione `settings.yml`:
 
     [yml]
@@ -589,7 +589,7 @@ Nel nostro caso, il task popola il file che abbiamo creato:
     </xliff>
 
 Ogni traduzione è gestita da un tag `trans-unit`, che ha un attributo `id`
-univoco. Si può ora modificare il file ed aggiungere le traduzioni
+univoco. Si può ora modificare il file e aggiungere le traduzioni
 per la lingua Francese:
 
     [xml]
@@ -635,7 +635,7 @@ per la lingua Francese:
 >Essendo XLIFF un formato basato su file, le stesse regole di
 >precedenza e mescolanza che esistono per gli altri file di
 >configurazione sono applicabili. I file i18n possono esistere in
->un progetto, in un'applicazione, o in un modulo, ed il file più
+>un progetto, in un'applicazione, o in un modulo, e il file più
 >specifico sovrascrive le traduzioni trovate in quelli più
 >globali.
 
@@ -660,7 +660,7 @@ un segnaposto per la traduzione:
       <?php echo __('and %count% more...', array('%count%' => link_to($count, 'category', $category))) ?>
     </div>
 
-La stringa da tradurre è ora "and %count% more...", ed il segnaposto `%count%`
+La stringa da tradurre è ora "and %count% more...", e il segnaposto `%count%`
 sarà sostituito dal vero valore in tempo reale, grazie al valore fornito
 dal secondo parametro dell'helper `__()`.
 
@@ -742,7 +742,7 @@ internazionalizzeremo l'applicazione di backend.
 ### ~Form|Form (I18n)~
 
 Le classi dei form contengono molte stringhe che hanno bisogno di essere
-tradotte, come le label, i messaggi di errore, ed i messaggi di aiuto.
+tradotte, come le label, i messaggi di errore e i messaggi di aiuto.
 Tutte queste stringhe sono internazionalizzate automaticamente da
 symfony, quindi è sufficiente fornire le traduzioni nei file XLIFF.
 
@@ -1069,7 +1069,7 @@ include lo slug tradotto della categoria:
 ### Admin Generator
 
 
-Per il backend, vogliamo che le traduzioni Francese ed Inglese siano
+Per il backend, vogliamo che le traduzioni Francese e Inglese siano
 modificate nello stesso form:
 
 ![categorie nel backend](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
@@ -1096,8 +1096,8 @@ Si può inserire un ~form i18n|Form (Traduzione)~ usando il metodo `embedI18N()`
     }
 
 L'interfaccia dell'admin generator supporta nativamente l'internazionalizzazione.
-È disponibile con traduzioni in oltre 20 lingue, ed è piuttosto facile
-aggiungerne di nuove, o personalizzare quelle esistenti. Basta copiare il
+È disponibile con traduzioni in oltre 20 lingue ed è piuttosto facile
+aggiungerne di nuove o personalizzare quelle esistenti. Basta copiare il
 file della lingua che si vuole personalizzare da symfony (le
 traduzioni si possono trovare in
 <propel>
@@ -1161,13 +1161,13 @@ differenze, a seconda della cultura dell'utente:
 
 Nel gruppo di helper [`Date`](http://www.symfony-project.org/api/1_4/DateHelper):
 
- | Helper                         | Descrizione                                              |
- | ------------------------------ | -------------------------------------------------------- |
- | `format_date()`                | Formatta una data                                        |
- | `format_datetime()`            | Formatta una data con un orario (ore, minuti, secondi)   |
- | `time_ago_in_words_()`         | Mostra il tempo trascorso tra una data ed ora, a parole  |
- | `distance_of_time_in_words()`  | Mostra il tempo trascorso tra due date, a parole         |
- | `format_daterange()`           | Formatta un intervallo di date                           |
+ | Helper                        | Descrizione                                            |
+ | ----------------------------- | -------------------------------------------------------|
+ | `format_date()`               | Formatta una data                                      |
+ | `format_datetime()`           | Formatta una data con un orario (ore, minuti, secondi) |
+ | `time_ago_in_words_()`        | Mostra il tempo trascorso tra una data e ora, a parole |
+ | `distance_of_time_in_words()` | Mostra il tempo trascorso tra due date, a parole       |
+ | `format_daterange()`          | Formatta un intervallo di date                         |
 
 Nel gruppo di helper [`Number`](http://www.symfony-project.org/api/1_4/NumberHelper):
 

@@ -211,7 +211,7 @@ Uno sguardo all'interno dell'oggetto sfForm
 -------------------------------------------
 
 Al livello più elementare, un form web è un insieme di campi che sono visualizzati
-ed inviati al server. Sotto questa luce, l'oggetto ~`sfForm`~ è
+e inviati al server. Sotto questa luce, l'oggetto ~`sfForm`~ è
 essenzialmente un array di *campi* di form. Mentre ~`sfForm`~ gestisce il processo,
 i singoli campi sono responsabili nel definire come ciascuno verrà visualizzato
 e validato.

@@ -57,13 +57,13 @@ versione/~iterazione~ del progetto con alcune semplici storie.
 
 Il sito Jobeet ha quattro tipi di utenti:
 
- * **admin**: Gestisce il sito ed ha tutti i poteri
+ * **admin**: Gestisce il sito e ha tutti i poteri
  * **user**: Visita il sito per cercare un lavoro
  * **poster**: Visita il sito per inserire un annuncio di lavoro
  * **affiliate**: Ri-pubblica alcuni lavori sul suo sito web
 
-Il progetto ha due applicazioni: il **frontend** (storie da F1 a F7, di seguito)
-dove l'utente interagisce con il sito, ed il **backend** (storie da B1 a B3) dove
+Il progetto ha due applicazioni: il **frontend** (storie da F1 a F7, di seguito),
+dove l'utente interagisce con il sito, e il **backend** (storie da B1 a B3), dove
 gli amministratori possono gestire il sito stesso.
 
 Il backend è riservato e richiede delle credenziali per l'accesso.
@@ -74,7 +74,7 @@ Quando un utente arriva sul sito di Jobeet vede una lista di lavori disponibili.
 I lavori sono ordinati per categoria e per data di pubblicazione (i più recenti prima).
 Per ogni lavoro solo il luogo, la posizione aperta e la società sono visualizzate.
 
-Per ogni categoria, la lista mostra solamente i primi 10 lavori ed un link permette
+Per ogni categoria, la lista mostra solamente i primi 10 lavori e un link permette
 di visualizzare tutti i lavori per una data categoria (*storia F3*).
 
 Sulla homepage l'utente può restringere la lista dei lavori (*storia F3*) o inserire una

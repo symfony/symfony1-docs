@@ -106,7 +106,7 @@ il giorno 3. Alcune volte però è molto utile verificare il codice SQL
 generato da ##ORM##; per esempio per fare il ~debug~ di una query che
 non funziona come ci si aspetta. Nell'~ambiente~ di sviluppo (`dev`),
 symfony salva queste query (assieme a molto altro) nella cartella `log/`.
-Esiste un file di log per ogni combinazione di applicazione ed ambiente. Il file 
+Esiste un file di log per ogni combinazione di applicazione e ambiente. Il file 
 che stiamo cercando si chiama `frontend_dev.log`:
 
     # log/frontend_dev.log
@@ -156,7 +156,7 @@ Si può vedere che Doctrine ha una clausola where per la colonna `created_at`
 >l'esposizione al problema dell'[~SQL injection~](http://it.wikipedia.org/wiki/Sql_injection).
 </doctrine>
 
-Questo è bene, ma è un po' scomodo dover passare dal browser all'IDE ed al file 
+Questo è bene, ma è un po' scomodo dover passare dal browser all'IDE e al file 
 di log ogni volta che si ha bisogno di testare un cambiamento. Grazie alla
 barra di debug di symfony, tutte le informazioni necessarie sono comodamente
 disponibili all'interno del browser:
@@ -303,7 +303,7 @@ per aggiungere un lavoro che sia già scaduto.
 >~fixture~, per non alterare l'indentazione. `expired_job` deve
 >avere solo due spazi davanti.
 
-Ricarichiamo le fixture ed aggiorniamo il browser, per
+Ricarichiamo le fixture e aggiorniamo il browser, per
 assicurarci che il vecchio lavoro non si veda più:
 
     $ php symfony propel:data-load
@@ -376,15 +376,15 @@ Riuscite a intravedere il problema?
 <propel>
 Il codice dei `Criteria` non appartiene all'azione (livello del Controllore),
 ma al livello del Modello. Nel pattern ~MVC~, il Modello definisce
-tutta la ~business logic~, ed il Controllore si limita a richiamare il
-Modello per recuperare da esso i dati. Siccome il codice restituisce
+tutta la ~business logic~ e il Controllore si limita a richiamare il
+Modello, per recuperare da esso i dati. Siccome il codice restituisce
 un insieme di lavori, creiamo un metodo `getActiveJobs()`:
 </propel>
 <doctrine>
 Il codice di `Doctrine_Query` non appartiene all'azione (livello del
 Controllore), ma al livello del Modello. Nel pattern ~MVC~, il Modello
-definisce tutta la ~business logic~, ed il Controllore si limita a
-richiamare il Modello per recuperare da esso i dati. Siccome il
+definisce tutta la ~business logic~ e il Controllore si limita a
+richiamare il Modello, per recuperare da esso i dati. Siccome il
 codice restituisce un insieme di lavori, spostiamo il codice
 nella classe `JobeetJobTable`  e creiamo un metodo `getActiveJobs()`:
 `JobeetJobTable`:
@@ -486,10 +486,10 @@ richieste, la homepage deve mostrare i lavori per categoria. Innanzitutto,
 dobbiamo prendere tutte le categorie che abbiano almeno un lavoro attivo.
 
 <propel>
-Aprire la classe `JobeetCategoryPeer` ed aggiungere un metodo `getWithJobs()`:
+Aprire la classe `JobeetCategoryPeer` e aggiungere un metodo `getWithJobs()`:
 </propel>
 <doctrine>
-Aprire la classe `JobeetCategoryTable` ed aggiungere un metodo `getWithJobs()`:
+Aprire la classe `JobeetCategoryTable` e aggiungere un metodo `getWithJobs()`:
 </doctrine>
 
 <propel>
@@ -678,7 +678,7 @@ Limitare i risultati
 
 C'è ancora una richiesta da implementare per la lista dei lavori sulla homepage:
 
-  "Per ogni categoria, la lista mostra solo i primi 10 lavori ed un link
+  "Per ogni categoria, la lista mostra solo i primi 10 lavori e un link
   consente di elencare tutti i lavori per una data categoria."
 
 Questo è semplice quanto aggiungere il metodo `getActiveJobs()`:
@@ -717,7 +717,7 @@ massimo di lavori, impostato in `app.yml`:
     <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
     <?php foreach ($category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')) as $i => $job): ?>
 
-ed aggiungiamo una nuova impostazione in `app.yml`:
+e aggiungiamo una nuova impostazione in `app.yml`:
 
     [yml]
     all:
@@ -737,7 +737,7 @@ La duplicazione è male, anche nei file fixture.
 
 symfony al salvataggio! I file ~YAML~ in symfony possono contenere codice PHP,
 che viene valutato appena prima di leggere il file. Modifichiamo il file fixture
-`020_jobs.yml` ed aggiungiamo alla fine il seguente codice:
+`020_jobs.yml` e aggiungiamo alla fine il seguente codice:
 
     [php]
     JobeetJob:
@@ -867,7 +867,7 @@ Aggiungiamo ora un link alla pagina della categoria sulla homepage e creiamo la
 pagina della categoria.
 
 Ma aspettate un minuto. C'è ancora tempo e non abbiamo lavorato molto. Avete un
-sacco di tempo libero ed abbastanza conoscenze per implementare tutto questo da
+sacco di tempo libero e abbastanza conoscenze per implementare tutto questo da
 soli! Rendiamolo un'esercitazione. Tornate domani a controllare l'implementazione.
 
 A domani

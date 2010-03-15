@@ -293,7 +293,7 @@ file dello schema.
 
     $ php symfony doctrine:build --model
 
-Ora che i modelli sono presenti, si può generare ed inserire l'SQL.
+Ora che i modelli sono presenti, si può generare e inserire l'SQL.
 </doctrine>
 
     $ php symfony propel:build --sql
@@ -326,13 +326,13 @@ Per creare le tabelle nel database, si deve eseguire il task `propel:insert-sql`
     $ php symfony propel:insert-sql
 
 >**TIP**
->Come ogni tool da ~riga di comando|Riga di comando~, symfony accetta parametri ed opzioni.
+>Come ogni tool da ~riga di comando|Riga di comando~, symfony accetta parametri e opzioni.
 >Ogni task ha un messaggio d'aiuto che può essere visualizzato utilizzando il
 >task `help`:
 >
 >     $ php symfony help propel:insert-sql
 >
->Il messaggio d'aiuto elenca tutti i possibili parametri ed opzioni, mostra i
+>Il messaggio d'aiuto elenca tutti i possibili parametri e opzioni, mostra i
 >valori di default per ognuno di essi e fornisce degli utili esempi.
 
 L'ORM genera anche le classi PHP per mappare i record delle tabelle all'interno
@@ -437,7 +437,7 @@ Per ogni applicazione web, ci sono tre tipi da dati:
   * **Dati per i test**:  I ~dati per i test|Dati per i test~ sono necessari alle applicazioni
                           per essere testate. Come sviluppatore, si scriveranno dei
                           test per assicurarsi che Jobeet si comporti come
-                          descritto nelle previsioni ed il modo migliore è
+                          descritto nelle previsioni e il modo migliore è
                           scrivere dei test automatizzati. Così, ogni volta che
                           eseguiremo un test, avremo bisogno di un database pulito
                           con dei dati da testare.
@@ -449,7 +449,7 @@ Ogni volta che symfony crea le tabelle nel database, tutti i dati saranno
 eliminati. Per popolare un database con i dati iniziali, dovrebbe create uno
 script PHP o eseguire delle query con il programma `mysql`. Ma dato che questo
 è un bisogno abbastanza comune, in symfony c'è un modo migliore per farlo:
-creare dei file YAML nella cartella `data/fixtures/` ed usare il task
+creare dei file YAML nella cartella `data/fixtures/` e usare il task
 `propel:data-load` per caricarli nel database.
 
 Prima, creiamo i seguenti file di ~fixture|Fixture~:
@@ -581,7 +581,7 @@ Prima, creiamo i seguenti file di ~fixture|Fixture~:
 >Il file fixture contiene riferimenti a due immagini. Possono essere
 >scaricate
 >(`http://www.symfony-project.org/get/jobeet/sensio-labs.gif`,
->`http://www.symfony-project.org/get/jobeet/extreme-sensio.gif`) ed
+>`http://www.symfony-project.org/get/jobeet/extreme-sensio.gif`) e
 >inserite nella cartella `web/uploads/jobs/`.
 
 Un file fixture è scritto in YAML e definisce gli oggetti del modello,
@@ -622,7 +622,7 @@ In un file fixture, non si ha bisogno di definire tutti i valori delle colonne.
 Se non lo si fa, symfony userà i valori di default definiti nello schema del
 database. E siccome symfony usa ##ORM## per caricare i dati nel database,
 tutti i ~comportamenti|Comportamenti (ORM)~ predefiniti (come impostare automaticamente le
-colonne `created_at` o `updated_at`), ed i comportamenti personalizzati che
+colonne `created_at` o `updated_at`) e i comportamenti personalizzati che
 potreste aver aggiunto alle classi del modello saranno attivati.
 
 Caricare i dati iniziali nel database è facile come eseguire il task:
@@ -676,9 +676,9 @@ Il file `actions/actions.class.php` definisce tutte le **~azioni|Azione~**
 disponibili per il modulo `job`:
 
  | Nome azione  | Descrizione
- | ------------ | -------------------------------------------------------
+ | ------------ | ---------------------------------------------------
  | index        | Mostra le righe della tabella
- | show         | Mostra i campi ed i loro valori per una data riga
+ | show         | Mostra i campi e i loro valori per una data riga
  | new          | Mostra una form per creare una nuova riga
  | create       | Crea una nuova riga
  | edit         | Mostra una form per modificare una riga esistente

@@ -25,7 +25,7 @@ Se siete abituati a sviluppare siti web con PHP senza utilizzare un framework,
 probabilmente utilizzate il paradigma del singolo file PHP per singola pagina
 HTML. Questi file PHP probabilmente contengono lo stesso tipo di struttura:
 inizializzazione e configurazioni globali, business logic relativa alla pagina
-richiesta, recupero dei record dal database ed infine il codice HTML che 
+richiesta, recupero dei record dal database e infine il codice HTML che 
 costruisce la pagina.
 
 Potreste usare un motore per i template per separare la logica dall'HTML.
@@ -44,7 +44,7 @@ codice secondo la sua natura. Questo pattern separa il codice in **tre strati**:
 
   * Il **~Modello~** è lo strato che definisce la business logic (il database
     appartiene a questo strato). Probabilmente siete al corrente del fatto che symfony
-    memorizza tutte le classi ed i file relativi al Modello nella cartella `lib/model/`.
+    memorizza tutte le classi e i file relativi al Modello nella cartella `lib/model/`.
 
   * La **~Vista~** rappresenta ciò con cui l'utente interagisce (un motore di template è
     parte di questo strato). In symfony lo strato della Vista è principalmente costituito
@@ -262,7 +262,7 @@ definizione:
     [yml]
     stylesheets:    [main.css, jobs.css, job.css]
 
-Si può anche cambiare l'attributo `media` ed omettere il suffisso `.css`:
+Si può anche cambiare l'attributo `media` e omettere il suffisso `.css`:
 
     [yml]
     stylesheets:    [main.css, jobs.css, job.css, print: { media: print }]
@@ -282,7 +282,7 @@ Questo file di configurazione sarà tradotto in:
 >tutte, impostando la proprietà `~has_layout~` a `false`.
 
 Funziona già così com'è, ma il file `jobs.css` è necessario solo per l'homepage,
-ed il file `job.css` è necessario solo per la pagina del lavoro. Il file `view.yml`
+e il file `job.css` è necessario solo per la pagina del lavoro. Il file `view.yml`
 può essere personalizzato in ogni modulo. Cambiamo la chiave `stylesheets`
 del file `view.yml` dell'applicazione in modo che contenga solo il file `main.css`:
 
@@ -337,7 +337,7 @@ Scegliere tra un metodo è l'altro è solo un questione di gusti. Il file `view.
 fornisce un modo per definire impostazioni per tutte le azioni di un modulo,
 che non è possibile in un template, ma la configurazione è statica. D'altro canto,
 usare l'~helper~ `use_stylehseet()` è più flessibile e, soprattutto, è tutto nello
-stesso posto: la definizione dello stile ed il codice HTMl. Per Jobeet useremo
+stesso posto: la definizione dello stile e il codice HTMl. Per Jobeet useremo
 l'helper `use_stylesheet()`, per cui potete eliminare il file `view.yml` che
 abbiamo appena creato e modificare i template `job` con le chiamate a `use_stylesheet()`:
 
@@ -357,7 +357,7 @@ L'Homepage di Jobeet
 --------------------
 
 Come visto nel giorno 3, la pagina dei lavori è generata dall'azione `index` del
-modulo `job`. L'azione `index` è la parte Controller della pagina, ed il template
+modulo `job`. L'azione `index` è la parte Controller della pagina e il template
 associato, `indexSuccess.php`, è la View:
 
     apps/
@@ -658,7 +658,7 @@ il titolo di default.
 
 >**TIP**
 >Abbiamo già visto alcuni helper che iniziano con `include_`. Questi helper
->visualizzano l'HTML ed in molti casi hanno una controparte `get_` per restituire
+>visualizzano l'HTML e in molti casi hanno una controparte `get_`, per restituire
 >solamente il contenuto:
 >
 >     [php]
@@ -764,7 +764,7 @@ La richiesta e la risposta
 --------------------------
 
 Quando si visitano le pagine `/job` o `/job/show/id/1` nel proprio browser, si
-dà inizio a un viaggio nel server web. Il browser invia una **~richiesta~** ed il
+dà inizio a un viaggio nel server web. Il browser invia una **~richiesta~** e il
 server rimanda indietro una **~risposta~**.
 
 Abbiamo già visto che symfony incapsula la richiesta in un oggetto `sfWebRequest`
@@ -833,11 +833,11 @@ e `setraw~cookie~()`:
  `addCacheControlHttpHeader()` | `header()`
 
 Ovviamente, la classe `sfWebResponse` fornisce anche un modo per impostare il
-contenuto della risposta (`setContent()`) ed inviare la  risposta al browser
+contenuto della risposta (`setContent()`) e inviare la  risposta al browser
 (`send()`).
 
-In questo giorno abbiamo visto come gestire i fogli di stile ed i JavaScript
-sia nel file `view.yml`  che nei template. Alla fine, entrambe le tecniche
+In questo giorno abbiamo visto come gestire i fogli di stile e i JavaScript
+sia nel file `view.yml` che nei template. Alla fine, entrambe le tecniche
 usano i metodi dell'oggetto risposta `addStylesheet()` e `addJavascript()`.
 
 >**TIP**
@@ -851,7 +851,7 @@ A domani
 
 Oggi abbiamo descritto alcuni design pattern usati da symfony. Speriamo che ora
 la struttura delle cartelle abbia più senso. Abbiamo giocato coi template,
-manipolando il layout ed i file dei template. Li abbiamo anche resi un po' più
+manipolando il layout e i file dei template. Li abbiamo anche resi un po' più
 dinamici, grazie agli slot e alle azioni.
 
 Domani impareremo di più sull'helper `url_for()` che abbiamo usato oggi,

@@ -33,12 +33,12 @@ i weekend, per leggere e correggere ogni capitolo.
 
 **Stefan Koopmanschap**, uno dei più attivi evangelisti di symfony, si è
 assunto la responsabilità di gestire i repository Subversion di questo
-libro. Grazie al suo lavoro, potete fare il checkout del codice ed
+libro. Grazie al suo lavoro, potete fare il checkout del codice e
 iniziare a leggere il libro da qualsiasi capitolo.
 
 **Fabian Lange**, il release manager di symfony 1.2 e l'"utente Windows"
 di symfony, ha letto il libro con una diversa prospettiva e cercato di
-impersonificare il lettore inesperto. Come nota a margine ha da poco
+impersonificare il lettore inesperto. Come nota a margine, ha da poco
 comprato un Mac, così ora necessitiamo di nuovo di qualcuno che prenda la
 responsabilità di essere l'"utente Windows" di riferimento.
 
@@ -56,8 +56,8 @@ scrivere il libro dall'inizio alla fine.
 Come CEO di Sensio, ho molte responsabilità. E senza il supporto di tutto
 il **team di Sensio**, non sarebbe stato possibile scrivere questo libro.
 Un ringraziamento speciale va a **Grégory Pascal**, partner da 10 anni,
-che all'inizio era abbastanza scettico riguardo al business model
-dell'Open-Source e che ora lo abbraccia. Voglio anche ringraziare
+che all'inizio era abbastanza scettico riguardo al modello di business
+dell'Open Source e che ora lo abbraccia. Voglio anche ringraziare
 **Laurent Vaquette**, il mio "aide de camp", che semplifica la mia vita
 ogni giorno e accetta di venire con me di tanto in tanto a mangiare
 un *döner kebab*.
