@@ -125,21 +125,22 @@
 >Вы можете отменить генерацию формы для конкретной модели, указав соответствующие параметры 
 >в опции `symfony`:
 >
->      [yml]
 <propel>
->      classes:
->        SomeModel:
->          propel_behaviors:
->            symfony:
->              form: false
->              filter: false
+>     [yml]
+>     classes:
+>       SomeModel:
+>         propel_behaviors:
+>           symfony:
+>             form: false
+>             filter: false
 </propel>
 <doctrine>
->      SomeModel:
->        options:
->          symfony:
->            form: false
->            filter: false
+>     [yml]
+>     SomeModel:
+>       options:
+>         symfony:
+>           form: false
+>           filter: false
 </doctrine>
 
 ### Изменение формы вакансии

@@ -94,21 +94,22 @@ symfony のフォームは1つ以上のフィールドから構成されるク�
 >Propel の `symfony` ビヘイビアにパラメーターを渡すことで特定のモデルでのフォーム生成を無効にできます
 </propel>
 >
->      [yml]
 <propel>
->      classes:
->        SomeModel:
->          propel_behaviors:
->            symfony:
->              form: false
->              filter: false
+>     [yml]
+>     classes:
+>       SomeModel:
+>         propel_behaviors:
+>           symfony:
+>             form: false
+>             filter: false
 </propel>
 <doctrine>
->      SomeModel:
->        options:
->          symfony:
->            form: false
->            filter: false
+>     [yml]
+>     SomeModel:
+>       options:
+>         symfony:
+>           form: false
+>           filter: false
 </doctrine>
 
 ### 求人フォームをカスタマイズする

@@ -126,21 +126,22 @@ classe base dei form:
 >Si può disabilitare la generazione del form su certi modelli passando i parametri al
 >comportamento di `symfony`:
 >
->      [yml]
 <propel>
->      classes:
->        SomeModel:
->          propel_behaviors:
->            symfony:
->              form: false
->              filter: false
+>     [yml]
+>     classes:
+>       SomeModel:
+>         propel_behaviors:
+>           symfony:
+>             form: false
+>             filter: false
 </propel>
 <doctrine>
->      SomeModel:
->        options:
->          symfony:
->            form: false
->            filter: false
+>     [yml]
+>     SomeModel:
+>       options:
+>         symfony:
+>           form: false
+>           filter: false
 </doctrine>
 
 ### Personalizzare il Form per il lavoro
