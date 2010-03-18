@@ -9,7 +9,7 @@
 
 次のコアプラグインは symfony 1.3 で廃止予定になり symfony 1.4 で削除されます:
 
-  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0 のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置される 1.0 アドミンジェネレータのデフォルトテーマも含まれています。
+  * `sfCompat10Plugin`: このプラグインが廃止予定になることで、動くためにこのプラグインに依存するほかのすべての要素も廃止予定になります (1.0 のアドミンジェネレータとフォームシステム)。これらのなかには `lib/plugins/sfPropelPlugin/data/generator/sfPropelAdmin` に設置されている 1.0 アドミンジェネレータのデフォルトテーマも含まれています。
 
   * `sfProtoculousPlugin`: このプラグインによって提供されるヘルパーは控えめな JavaScript をサポートしないので、今後は使うべきではありません。
 
@@ -22,7 +22,7 @@
   * `sfToolkit::getTmpDir()`: このメソッド呼び出しはすべて `sys_get_temp_dir()` に置き換わります。
 
  * `sfToolkit::removeArrayValueForPath()`、
-    `sfToolkit::hasArrayValueForPath()`、と `getArrayValueForPathByRef()`
+    `sfToolkit::hasArrayValueForPath()` と `getArrayValueForPathByRef()`
 
   * `sfValidatorBase::setInvalidMessage()`: 新しい `sfValidatorBase::setDefaultMessage()` メソッド呼び出しに置き換わります。
 
@@ -114,7 +114,7 @@
 
   * `sfCompat10Plugin` によって提供される 1.0 のフォームシステムに関連するすべてのヘルパー: `DateForm`、`Form`、`ObjectAdmin`、`Object` と `Validation`
 
-`form_tag()` ヘルパーの所属は `Form` ヘルパーグループから `Url` ヘルパーグループに移動したので、 symfony 1.4 でも利用可能です。
+`form_tag()` ヘルパーの所属グループが `Form` ヘルパーグループから `Url` ヘルパーグループに移動したので、 symfony 1.4 でも利用可能です。
 
 PHP のインクルードパスからヘルパーをロードする機能は 1.3 で廃止予定になり1.4で削除されます。ヘルパーはプロジェクト、アプリケーションもしくはモジュールの `lib/helper/` ディレクトリのどれか1つに設置しなければなりません。
 
@@ -129,25 +129,25 @@ PHP のインクルードパスからヘルパーをロードする機能は 1.3
 
   * `sf_lazy_cache_key`: symfony 1.2.6 で大きなパフォーマンス改善のために導入され、この設定はビューキャッシュのために遅延キャッシュキー生成を有効にすることを許可しました。コア開発者は遅延がベストなアイデアと考える一方で、なかにはアクション自身がキャッシュ可能ではないときでも `sfViewCacheManager::isCacheable()` の呼び出しに頼るひともいました。symfony 1.3 に関して、ふるまいは `sf_lazy_cache_key` が `true` にセットされている場合と同じになります。
 
-  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザが原因でバグのあるコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。最初の問題は PHP の最小バージョンが 5.2 になり無関係になっており2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
+  * `strip_comments`: `strip_comments` は PHP 5.0.x のトークナイザが原因でバグのあるコメント除外機能を無効にできるように導入されました。Tokenizer エクステンションが PHP によってコンパイルされていなかったとき、メモリの大量消費を避けるためにも使われていました。PHP の最小バージョンが 5.2 になることで最初の問題は 無関係になり、2番目の問題はコメント除外機能をシミュレートした正規表現を削除することですでに修正されています。
 
   * `lazy_routes_deserialize`: このオプションはもう必要ありません。
 
 次の設定は symfony 1.3 で廃止予定で symfony 1.4 で削除されます:
 
-  * `calendar_web_dir`、`rich_text_js_dir`: これらの設定は Form ヘルパーグループのみが使い、symfony 1.3 で廃止予定です。
+  * `calendar_web_dir`、`rich_text_js_dir`: これらの設定を使っていたのは Form ヘルパーグループだけなので、symfony 1.3 で廃止予定です。
 
   * `validation_error_prefix`、`validation_error_suffix`、
     `validation_error_class`、`validation_error_id_prefix`: これらの設定は Validation ヘルパーグループによって使われ、symfony 1.3 で廃止予定です。
 
-  * `is_internal` (`module.yml`): `is_internal` フラグはブラウザからアクションが呼び出されるのを防ぐために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートにこのトリックが必要なくなったので、このフラグは削除され symfony コアではチェックされません。
+  * `is_internal` (`module.yml`): `is_internal` フラグはアクションがブラウザから呼び出されるのを防ぐために使われました。これは symfony 1.0 でメール送信を保護するために追加されました。メールのサポートにこのトリックが必要なくなったので、このフラグは削除され symfony コアではチェックされません。
 
 タスク
 ------
 
 次のタスクが symfony 1.3 で削除されます:
 
-  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に組み込むために使われました。これらはもはや必要ありません。長期間に渡って symfony をプロジェクトに組み込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。symfony を手作業で組み込むやり方もとても単純で symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけ必要です (`lib/vendor/symfony/` が推奨されます)。
+  * `project:freeze` と `project:unfreeze`: これらのタスクはプロジェクトによって使われる symfony のバージョンをプロジェクト自身の内部に組み込むために使われました。これらはもはや必要ありません。長期間に渡って symfony をプロジェクトに組み込むのがベストプラクティスになったからです。さらに、あるバージョンの symfony を別のバージョンに切り替える作業は本当に単純で必要なのは `ProjectConfiguration` クラスへのパスを変更することだけです。symfony を手作業で組み込むやり方も単純で必要なのは symfony のディレクトリ全体をプロジェクトのどこかにコピーすることだけです (`lib/vendor/symfony/` が推奨されます)。
 
 次のタスクは symfony 1.3 で廃止予定で、symfony 1.4 で削除されます:
 
