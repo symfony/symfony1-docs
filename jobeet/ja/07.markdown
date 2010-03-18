@@ -485,7 +485,7 @@ job の `indexSuccess.php` テンプレートから求人リストを作成す�
     <?php if ($pager->haveToPaginate()): ?>
       <div class="pagination">
         <a href="<?php echo url_for('category', $category) ?>?page=1">
-          <img src="/images/first.png" alt="First page" />
+          <img src="/images/first.png" alt="First page" title="First page" />
         </a>
 
         <a href="<?php echo url_for('category', $category) ?>?page=<?php echo $pager->getPreviousPage() ?>">
