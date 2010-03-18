@@ -1,0 +1,781 @@
+Annexe B - Validateurs
+======================
+
+Introduction
+------------
+
+Le framework de formulaire de symfony est livré avec un lot de validateurs utiles.
+Ces validateurs couvrent les besoins communs de la plupart des projets. Ce chapitre
+décrit les validateurs de formulaire par défaut fournis avec symfony. Nous avons également
+inclus les validateurs des plugins `sfPropelPlugin` et `sfDoctrinePlugin`, ces plugins
+sont pris en charge par l'équipe de base et contiennent quelques uns des validateurs
+les plus utiles.
+
+>**TIP**
+>Même si vous n'utilisez pas le framework MVC de symfony, vous pouvez utiliser les
+>validateurs définis dans les plugins
+>[`sfFormExtraPlugin`](http://svn.symfony-project.com/plugins/sfFormExtraPlugin),
+>`sfPropelPlugin` et `sfDoctrinePlugin` en mettant le répertoire `validator/`
+>quelquepart dans votre projet.
+
+Avant de plonger dans les détails de chaque validateur, voyons ce que les validateurs
+ont en commun.
+
+### La classe de base `sfValidatorBase`
+
+Tous les validateurs symfony héritent de la classe de base `sfValidator`, qui
+fournit des fonctionnalités disponibles par défaut à tous les validateurs.
+
+Les validateurs ont deux objectifs : le nettoyage et la validation d'une valeur saisie.
+
+Lors de la création d'un validateur, vous pouvez éventuellement passer des options et
+des messages d'erreur comme arguments :
+
+    [php]
+    $v = new sfValidatorString(
+      array('required' => true),
+      array('required' => 'This value is required.')
+    );
+
+Les options et les messages d'erreur peuvent également être configurés en utilisant
+les méthodes `setOptions()` et `setMessages()` :
+
+    [php]
+    $v = new sfValidatorString();
+    $v->setOptions(array('required' => true));
+    $v->setMessages(array('required' => 'This value is required.'));
+
+Les méthodes `setOption()` et `setMessage()` permettent d'attribuer une option
+ou un message d'erreur individuellement :
+
+    [php]
+    $v = new sfValidatorString();
+    $v->setOption('required', true);
+    $v->setMessage('required', 'This value is required.');
+
+Une valeur saisie peut être validée en appelant la méthode `clean()`  :
+
+    [php]
+    $cleaned = $v->clean('name', 'value', array('class' => 'foo'));
+
+La méthode `clean()` prend une valeur saisie comme argument et retourne la
+valeur nettoyée. Si une erreur de validation se produit, une exception
+`sfValidatorError` est levée.
+
+>**NOTE**
+>Les validateurs sont apatrides, ce qui signifie qu'une seule instance de
+>validateur peut valider plusieurs valeurs saisies comme vous le voulez.
+
+Les options par défaut définies par `sfValidatorBase` sont les suivantes :
+
+| Option        | Erreur     | Description
+| ------------- | ---------- | -----------
+| `required`    | `required` | `true` si la valeur est obligatoire, `false` autrement (`true` par défaut)
+| `trim`        | n/a        | `true` si la valeur doit être débarrassée des caractères invisibles en début et fin de chaîne, `false` autrement (`false` par défaut)
+| `empty_value` | n/a        | une valeur vide à retourner lorsque la valeur n'est pas obligatoire
+
+Les messages d'erreur par défaut définis par `sfValidatorBase` sont les suivants :
+
+| Erreur     | Description
+| ---------- | -----------
+| `required` | Le message d'erreur utilisé lorsque la valeur saisie est vide et obligatoire (`Required.` par défaut).
+| `invalid`  | Un message d'erreur générique lorsqu'une erreur se produit (`Invalid.` par défaut).
+
+Vous pouvez changer la chaîne par défaut utilisée pour les messages d'erreur `required` et
+`invalid` en appelant la méthode `setDefaultMessage()`. Celle-ci doit être définie avant que
+les validateurs de base soient chargés, par exemple en utilisant la méthode `setup()` :
+
+    [php]
+    public function setup()
+    {
+      sfValidatorBase::setDefaultMessage('required', 'This value is required.');
+      sfValidatorBase::setDefaultMessage('invalid', 'This value is invalid.');
+      parent::setup();
+    }
+
+Les messages d'erreur peuvent contenir des espaces réservés. Un espace réservé est une
+chaîne entre `%`. L'espace réservé est remplacé à l'exécution. Tous les messages d'erreur
+ont accès à la valeur saisie avec l'espace réservé `%value%`. Chaque message d'erreur
+peut également définir des espaces réservés spécifiques.
+
+>**NOTE**
+>Dans la section suivante, l'espace réservé par défaut `%value%` n'est
+>pas mentionnée, car elle est toujours disponible.
+
+Quelques validateurs ont besoin de connaître le jeu de caractères utilisé par la valeur
+saisie. Par défaut le jeu de caractères est `UTF-8`, mais il peut être configuré en
+appelant la méthode `setCharset()` :
+
+    [php]
+    sfValidatorBase::setCharset('ISO-8859-1');
+
+>**NOTE**
+>Si vous utilisez les validateurs de symfony avec le framework MVC de symfony,
+>le jeu de caractères est automatiquement réglé en fonction du jeu de caractères
+>de `settings.yml`.
+
+### Schéma de validateur
+
+Un schéma de validateur est un validateur qui enveloppe un ou plusieurs autres validateurs.
+
+Quand une erreur survient, un schéma de validateur lève une exception 
+`sfValidatorErrorSchema`.
+
+
+Dans les sections suivantes, les validateurs ont été regroupés en catégories.
+
+<div class="pagebreak"></div>
+
+Validators
+----------
+
+ * [`sfValidatorString`](B-Validators#chapter_b_sub_sfvalidatorstring)
+ * [`sfValidatorRegex`](B-Validators#chapter_b_sub_sfvalidatorregex)
+ * [`sfValidatorEmail`](B-Validators#chapter_b_sub_sfvalidatoremail)
+ * [`sfValidatorUrl`](B-Validators#chapter_b_sub_sfvalidatorurl)
+ * [`sfValidatorInteger`](B-Validators#chapter_b_sub_sfvalidatorinteger)
+ * [`sfValidatorNumber`](B-Validators#chapter_b_sub_sfvalidatornumber)
+ * [`sfValidatorBoolean`](B-Validators#chapter_b_sub_sfvalidatorboolean)
+ * [`sfValidatorChoice`](B-Validators#chapter_b_sub_sfvalidatorchoice)
+ * [`sfValidatorPass`](B-Validators#chapter_b_sub_sfvalidatorpass)
+ * [`sfValidatorCallback`](B-Validators#chapter_b_sub_sfvalidatorcallback)
+ * [`sfValidatorDate`](B-Validators#chapter_b_sub_sfvalidatordate)
+ * [`sfValidatorTime`](B-Validators#chapter_b_sub_sfvalidatortime)
+ * [`sfValidatorDateTime`](B-Validators#chapter_b_sub_sfvalidatordatetime)
+ * [`sfValidatorDateRange`](B-Validators#chapter_b_sub_sfvalidatordaterange)
+ * [`sfValidatorFile`](B-Validators#chapter_b_sub_sfvalidatorfile)
+ * [`sfValidatorAnd`](B-Validators#chapter_b_sub_sfvalidatorand)
+ * [`sfValidatorOr`](B-Validators#chapter_b_sub_sfvalidatoror)
+ * [`sfValidatorSchema`](B-Validators#chapter_b_sub_sfvalidatorschema)
+ * [`sfValidatorSchemaCompare`](B-Validators#chapter_b_sub_sfvalidatorschemacompare)
+ * [`sfValidatorSchemaFilter`](B-Validators#chapter_b_sub_sfvalidatorschemafilter)
+ * [`sfValidatorI18nChoiceCountry`](B-Validators#chapter_b_sub_sfvalidatori18nchoicecountry)
+ * [`sfValidatorI18nChoiceLanguage`](B-Validators#chapter_b_sub_sfvalidatori18nchoicelanguage)
+ * [`sfValidatorI18nTimezone`](B-Validators#chapter_b_sub_sfvalidatori18nchoicetimezone)
+ * [`sfValidatorPropelChoice`](B-Validators#chapter_b_sub_sfvalidatorpropelchoice)
+ * [`sfValidatorPropelUnique`](B-Validators#chapter_b_sub_sfvalidatorpropelunique)
+ * [`sfValidatorDoctrineChoice`](B-Validators#chapter_b_sub_sfvalidatordoctrinechoice)
+ * [`sfValidatorDoctrineUnique`](B-Validators#chapter_b_sub_sfvalidatordoctrineunique)
+
+<div class="pagebreak"></div>
+
+Validateurs simples
+-------------------
+
+### `sfValidatorString`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorString` valide une chaine et convertie la valeur
+saisie en une chaine.
+
+| Option       | Erreur       | Description
+| ------------ | ------------ | -----------
+| `max_length` | `max_length` | La longueur maximum de la chaine
+| `min_length` | `min_length` | La longueur minimum de la chaine
+
+| Erreur       | Espace réservé | Valeur par défaut
+| ------------ | -------------- | -----------------
+| `max_length` | `max_length`   | "%value%" is too long (%max_length% characters max).
+| `min_length` | `min_length`   | "%value%" is too short (%min_length% characters min).
+
+>**CAUTION**
+>Ce validateur nécessite l'installation de l'extension `mb_string` pour
+>fonctionner correctement. Si elle est installée, la longueur de chaîne est
+>calculée avec la fonction `mb_strlen()`; sinon, il utilise la fonction `strlen()`,
+>qui ne renvoie pas la longueur de chaîne réelle si des caractères non-ASCII
+>sont présents dans la chaîne.
+
+### `sfValidatorRegex`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorRegex` valide une chaîne par rapport à une
+expression régulière.
+
+| Option       | Erreur    | Description
+| ------------ | --------- | -----------
+| `pattern`    | `invalid` | Un modèle de regex PCRE ou une instance de `sfCallable` qui retourne un regex
+| `must_match` | `invalid` | Si mis à `false`, l'expression régulière ne doit pas correspondre pour que le validateur passe
+
+### `sfValidatorEmail`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorEmail` peut valider les emails. Il hérite de
+`sfValidatorRegex`.
+
+### `sfValidatorUrl`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorUrl` peut valider les URL HTTP et FTP. Il hérite de
+`sfValidatorRegex`.
+
+| Option      | Erreur    | Description
+| ----------- | --------- | -----------
+| `protocols` | `invalid` | Protocoles autorisés. Par défaut : `array('http', 'https', 'ftp', 'ftps')`
+
+
+### `sfValidatorInteger`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorInteger` valide un entier et convertit la
+valeur saisie en un entier.
+
+| Option | Erreur | Description
+| -----  | ------ | -----------
+| `max`  | `max`  | Un nombre entier maximum pour accepter
+| `min`  | `min`  | Un nombre entier minimum pour accepter
+
+| Erreur | Espace réservé | Valeur par défaut
+| ------ | -------------- | -----------------
+| `max`  | `max`          | "%value%" must be less than %max%.
+| `min`  | `min`          | "%value%" must be greater than %min%.
+
+Le message d'erreur par défaut `invalid` est `"%value%" is not an integer.`.
+
+### `sfValidatorNumber`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorNumber` valide un nombre (une chaîne que PHP est
+capable de comprendre avec la fonction [`floatval()`](www.php.net/floatval)) et
+convertit la valeur saisie en un type float.
+
+| Option | Erreur | Description
+| -----  | ------ | -----------
+| `max`  | `max`  | Un nombre maximum pour accepter
+| `min`  | `min`  | Un nombre minimum pour accepter
+
+| Erreur | Espace réservé | Valeur par défaut
+| ------ | -------------- | -----------------
+| `max`  | `max`          | "%value%" must be less than %max%.
+| `min`  | `min`          | "%value%" must be greater than %min%.
+
+Le message d'erreur par défaut `invalid` est `"%value%" is not a number.`.
+
+### `sfValidatorBoolean`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorBoolean` valide et renvoie une valeur booléenne
+`true` ou `false`.
+
+| Option         | Erreur | Description
+| -------------  | ------ | -----------
+| `true_values`  | n/a    | La liste des valeurs vrais (par défaut : `true`, `t`, `yes`, `y`, `on`, `1`)
+| `false_values` | n/a    | La liste des valeurs fausses (par défaut : `false`, `f`, `no`, `n`, `off`, `0`)
+
+### `sfValidatorChoice`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorChoice` valide si la valeur saisie fait partie d'une
+liste des valeurs attendues.
+
+| Option     | Erreur | Description
+| ---------- | ------ | -----------
+| `choices`  | n/a    | Un tableau des valeurs attendues (obligatoire)
+| `multiple` | n/a    | `true` si la balise doit permettre de sélectionner des valeurs multiples
+| `min`      | n/a    | Le nombre minimal de valeurs qui doivent être sélectionnées (si `multiple` à `true`)
+| `max`      | n/a    | Le nombre maximal de valeurs qui doivent être sélectionnées (si `multiple` à `true`)
+
+>**NOTE**
+>La comparaison est faite après que la valeur saisie a été envoyée
+>vers une chaine.
+
+### `sfValidatorPass`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorPass` est un validateur fictif et retourne la valeur
+saisie telle quelle.
+
+### `sfValidatorCallback`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorCallback` délègue la validation actuelle à un callback
+PHP.
+
+Le callback est passé à l'instance du validateur actuel, la valeur saisie et un
+tableau d'arguments (à partir de l'option `arguments`) comme arguments :
+
+    [php]
+    function constant_validator_callback($validator, $value, $arguments)
+    {
+      if ($value != $arguments['constant'])
+      {
+        throw new sfValidatorError($validator, 'invalid');
+      }
+
+      return $value;
+    }
+
+    $v = new sfValidatorCallback(array(
+      'callback'  => 'constant_validator_callback',
+      'arguments' => array('constant' => 'foo'),
+    ));
+
+| Option      | Erreur | Description
+| ----------- | ------ | -----------
+| `callback`  | n/a    | Un callback PHP valide (onligatoire)
+| `arguments` | n/a    | Un tableau d'argument à passer au callback
+
+Validateurs de date
+-------------------
+
+### `sfValidatorDate`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorDate` valide les dates et les dates/heures (dates/heures sont supportés
+par l'application de l'option `with_time`). Outre la validation du format d'une date, il
+peut appliquer une date  valide minimum et maximum.
+
+Le validateur accepte plusieurs types d'entrées :
+
+ * un tableau composé des clés suivantes : `year`, `month`, `day`, `hour`,
+   `minute` et `second`
+ * une chaîne correspondante à l'expression régulière `date_format` si fournie
+ * une chaîne qui peut être analysée par la fonction PHP `strtotime()`
+ * un entier, représentant un timestamp
+ 
+La valeur saisie est convertie en une date en appliquant les formats
+`date_output` ou `datetime_output`.
+
+| Option                    | Erreur       | Description
+| ------------------------- | ------------ | -----------
+| `date_format`             | `bad_format` | Une expression régulière dont la date doit correspondre
+| `with_time`               | n/a          | `true` si le validateur doit retourner l'heure, `false` autrement
+| `date_output`             | n/a          | Le format à utiliser pour retourner une date (par défaut à `Y-m-d`)
+| `datetime_output`         | n/a          | Le format à utiliser pour retourner une date avec l'heure (par défaut à `Y-m-d H:i:s`)
+| `date_format_error`       | n/a          | Le format de la date à utiliser lors de l'affichage d'une erreur pour une erreur `bad_format` (utilise `date_format` s'il n'est pas fourni)
+| `max`                     | `max`        | La date maximale autorisée (comme un timestamp)
+| `min`                     | `min`        | La date minimale autorisée (comme un timestamp)
+| `date_format_range_error` | n/a          | Le format de date à utiliser lors de l'affichage d'une erreur pour min/max (par défaut à `d/m/Y H:i:s`)
+
+>**NOTE**
+>Les options `date_output` et `datetime_output` peuvent utiliser n'importe quel
+>format compris par la fonction PHP `date()`.
+
+| Erreur       | Espace réservé  | Valeur par défaut
+| ------------ | --------------- | -----------------
+| `bad_format` | `date_format`   | "%value%" does not match the date format (%date_format%).
+| `min`        | `min`           | The date must be after %min%.
+| `max`        | `max`           | The date must be before %max%.
+
+### `sfValidatorTime`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorTime` valide une heure.
+
+Le validateur accepte plusieurs types d'entrée :
+
+ * un tableau composé des clés suivantes : `hour`, `minute` et `second`
+ * une chaîne correspondante à l'expression régulière `time_format` si fournie
+ * une chaîne qui peut être analysée par la fonction PHP `strtotime()`
+ * un entier, représentant un timestamp
+
+La valeur saisie est convertie en une heure en appliquant le format `time_output`.
+
+| Option              | Erreur       | Description
+| ------------------- | ------------ | -----------
+| `time_format`       | `bad_format` | Une expression régulière dont l'heure doit correspondre
+| `time_output`       | n/a          | Le format à utiliser pour retourner une heure (par défaut à `H:i:s`)
+| `time_format_error` | n/a          | Le format de la date à utiliser lors de l'affichage d'une erreur pour une erreur `bad_format`(utilise `date_format` s'il n'est pas fourni)
+
+>**NOTE**
+>L'option `time_output` peut utiliser n'importe quel format compris par
+>la fonction PHP `date()`.
+
+| Erreur       | Espace réservé | Valeur par défaut
+| ------------ | -------------- | -----------------
+| `bad_format` | `time_format`  | "%value%" does not match the time format (%time_format%).
+
+### `sfValidatorDateTime`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorDateTime` valide les dates avec l'heure.
+
+C'est un raccourci de :
+
+    [php]
+    $v = new sfValidatorDate(array('with_time' => true));
+
+### `sfValidatorDateRange`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorDateTime` valide une fourchette de dates.
+
+| Option      | Erreur    | Description
+| ----------- | --------- | -----------
+| `from_date` | `invalid` | Le validateur de date début (obligatoire)
+| `to_date`   | `invalid` | Le validateur de date fin (obligatoire)
+
+Les validateurs `from_date` et `to_date` doivent être une instance de la
+classe `sfValidatorDate`.
+
+Le message d'erreur `invalid` est `"%value%" does not match the time format
+(%time_format%).`.
+
+Validateur de fichier
+---------------------
+
+### `sfValidatorFile`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorFile` valide un fichier téléchargé.
+
+Le validateur convertit le fichier téléchargé en une instance de la
+classe `sfValidatedFile` ou de l'option `validated_file_class` si elle est définie.
+
+| Option                 | Erreur       | Description
+| ---------------------- | ------------ | -----------
+| `max_size`             | `max_size`   | La taille maximum du fichier
+| `mime_types`           | `mime_types` | Autorise un tableau de mime-types ou une catégorie (catégories disponibles : `web_images`)
+| `mime_type_guessers`   | n/a          | Un tableau de callables PHP devinant le mime-type (doit retourner le mime-type ou `null`)
+| `mime_categories`      | n/a          | Un tableau de catégories de mime-type (`web_images` est défini par défaut)
+| `path`                 | n/a          | Le chemin dans lequel il faut enregistrer le fichier - tel qu'il est utilisé par la classe `sfValidatedFile` (facultatif)
+| `validated_file_class` | n/a          | Nom de la classe qui gère le fichier téléchargé nettoyé (facultatif)
+
+La catégorie mime-type `web_images` contient les mime-types suivants :
+
+ * `image/jpeg`
+ * `image/pjpeg`
+ * `image/png`
+ * `image/x-png`
+ * `image/gif`
+
+Si l'option `mime_types` est définie, le validateur a besoin d'un moyen pour
+tester le mime-type du fichier téléchargé. Le validateur est livré avec trois
+d'entre eux:
+
+ * `guessFromFileinfo`:        Utilise la fonction `finfo_open()` (depuis l'extension PECL `Fileinfo`)
+ * `guessFromMimeContentType`: Utilise la fonction `mime_content_type()` (dépréciée)
+ * `guessFromFileBinary`:      Utilise le fichier binaire (fonctionne seulement sur les systèmes *nix)
+
+| Erreur       | Espaces réservés              | Valeur par défaut
+| ------------ | ----------------------------- | -----------------
+| `max_size`   | `%size%`, `%max_size%`        | File is too large (maximum is %max_size% bytes).
+| `mime_types` | `%mime_types%`, `%mime_type%` | Invalid mime type (%mime_type%).
+| `partial`    |                               | The uploaded file was only partially uploaded.
+| `no_tmp_dir` |                               | Missing a temporary folder.
+| `cant_write` |                               | Failed to write file to disk.
+| `extension`  |                               | File upload stopped by extension.
+
+Le validateur fait correspondre les erreurs PHP comme suit :
+
+  * `UPLOAD_ERR_INI_SIZE`:   `max_size`
+  * `UPLOAD_ERR_FORM_SIZE`:  `max_size`
+  * `UPLOAD_ERR_PARTIAL`:    `partial`
+  * `UPLOAD_ERR_NO_TMP_DIR`: `no_tmp_dir`
+  * `UPLOAD_ERR_CANT_WRITE`: `cant_write`
+  * `UPLOAD_ERR_EXTENSION`:  `extension`
+
+Validateurs de logique
+----------------------
+
+### `sfValidatorAnd`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorAnd` valide une valeur saisie si elle passe une liste
+de validateurs.
+
+Le constructeur de `sfValidatorAnd` prend une liste de validateurs comme
+premier argument :
+
+    [php]
+    $v = new sfValidatorAnd(
+      array(
+        new sfValidatorString(array('max_length' => 255)),
+        new sfValidatorEmail(),
+      ),
+      array('halt_on_error' => true),
+      array('invalid' => 'The input value must be an email with less than 255 characters.')
+    );
+
+Par défaut, le validateur lève un tableau de messages d'erreur émis par tous les
+validateurs intégrés. Il peut aussi lancer un message d'erreur unique si le message
+d'erreur `invalid` est défini comme une chaîne non vide, comme le montre l'exemple ci-dessus.
+
+| Option          | Erreur | Description
+| --------------- | ------ | -----------
+| `halt_on_error` | `n/a`  | Qu'il s'agisse de s'arrêter sur la première erreur ou non (`false` par défaut)
+
+L'ordre des validateurs est significatif si l'option `halt_on_error` est définie
+sur `true`.
+
+La liste des validateurs intégrés peut aussi être gérées à l'aide des
+méthodes `getValidators()` et `addValidator()`.
+
+### `sfValidatorOr`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorOr` valide une valeur saisie si elle passe au moins un
+validateur dans une liste.
+
+Le constructeur de `sfValidatorOr` prend une liste de validateurs comme
+premier argument :
+
+    [php]
+    $v = new sfValidatorOr(
+      array(
+        new sfValidatorRegex(array('pattern' => '/\.com$/')),
+        new sfValidatorEmail(),
+      ),
+      array(),
+      array('invalid' => 'The input value a .com domain or a valid email address.')
+    );
+
+Par défaut, le validateur lève un tableau de messages d'erreur émis par tous les
+validateurs intégrés. Il peut aussi lancer un message d'erreur unique si le message
+d'erreur `invalid` est défini comme une chaîne non vide, comme le montre l'exemple ci-dessus.
+
+La liste des validateurs intégrés peut aussi être gérées à l'aide des
+méthodes `getValidators()` et `addValidator()`.
+
+
+
+
+
+### `sfValidatorSchema`
+
+*Schéma de validateur* : Oui
+
+Le validateur `sfValidatorSchema` représente un validateur qui est composé de
+plusieurs champs. Un champ est tout simplement un validateur nommé :
+
+    [php]
+    $v = new sfValidatorSchema(array(
+      'name'    => new sfValidatorString(),
+      'country' => new sfValidatorI18nChoiceCountry(),
+    ));
+
+>**NOTE**
+>Un formulaire est défini par un schéma de validateur de la classe `sfValidatorSchema`.
+
+Ce validateur accepte seulement un tableau comme valeur d'entrée et lève une
+`InvalidArgumentException` si ce n'est pas le cas.
+
+Le validateur peut avoir un pré-validateur, qui est exécuté avant tous les autres
+validateurs, et un post-validateur, qui est exécuté sur le nettoyage des valeurs
+après tous les autres validateurs.
+
+Le pré-validateur et le post-validateur sont eux-mêmes des schémas de validateur qui
+reçoivent toutes les valeurs. Ils peuvent être définis avec les méthodes
+`setPreValidator()` et `setPostValidator()` :
+
+    [php]
+    $v->setPostValidator(
+      new sfValidatorSchemaCompare('password', '==', 'password_again')
+    );
+
+| Option                | Erreur         | Description
+| --------------------- | -------------- | -----------
+| `allow_extra_fields`  | `extra_fields` | Si `false`, le validateur ajoute une erreur si des champs supplémentaires sont données dans le tableau d'entrée de valeurs (par défaut à `false`)
+| `filter_extra_fields` | n/a            | Si `true`, le validateur filtres les champs supplémentaires depuis le tableau retourné des valeurs nettoyées (par défaut à `true`)
+
+| Erreur          | Espace réservé | Valeur par défaut
+| --------------- | -------------- | -----------------
+| `extra_fields`  | `%field%`      | Unexpected extra form field named "%field%".
+| `post_max_size` |                | The form submission cannot be processed. It probably means that you have uploaded a file that is too big.
+
+Le `sfValidatorSchema` peut être utilisé comme un tableau pour accéder aux validateurs
+intégrés :
+
+    [php]
+    $vs = new sfValidatorSchema(array('name' => new sfValidatorString()));
+
+    $nameValidator = $vs['name'];
+
+    unset($vs['name']);
+
+Vous pouvez accéder à des validateurs intégrés du schéma de validateur en
+utilisant la notation de tableau :
+
+    [php]
+    $vs['author']['first_name']->setMessage('invalid', 'The first name is invalid.');
+
+L'erreur `post_max_size` est levée si la quantité de données soumises à un formulaire
+excède la valeur `post_max_size` du fichier `php.ini`.
+
+### `sfValidatorSchemaCompare`
+
+*Schéma de validateur* : Oui
+
+Le validateur `sfValidatorSchemaCompare` compare plusieurs valeurs à partir
+du tableau donné des valeurs saisies :
+
+    [php]
+    $v = new sfValidatorSchemaCompare('password', '==', 'password_again');
+
+| Option               | Erreur | Description
+| -------------------- | ------ | -----------
+| `left_field`         | n/a    | Le nom du champ de gauche
+| `operator`           | n/a    | L'opérateur de comparaison
+| `right_field`        | n/a    | Le nom du champ de droite
+| `throw_global_error` | n/a    | Pour lever une erreur globale (`false` par défaut) ou une erreur liée au champ de gauche
+
+Les opérateurs disponibles sont les suivants :
+
+ * `sfValidatorSchemaCompare::EQUAL` ou `==`
+ * `sfValidatorSchemaCompare::IDENTICAL` ou `===`
+ * `sfValidatorSchemaCompare::NOT_EQUAL` ou `!=`
+ * `sfValidatorSchemaCompare::NOT_IDENTICAL` ou `!==`
+ * `sfValidatorSchemaCompare::LESS_THAN` ou `<`
+ * `sfValidatorSchemaCompare::LESS_THAN_EQUAL` ou `<=`
+ * `sfValidatorSchemaCompare::GREATER_THAN` ou `>`
+ * `sfValidatorSchemaCompare::GREATER_THAN_EQUAL` ou `>=`
+
+Par défaut, le validateur génère une erreur globale. Si le `throw_global_error`
+est à `true`, une erreur pour le champ gauche est levée.
+
+Les messages d'erreur `invalid` accepte les valeurs suivantes : `%left_field%`,
+`%right_field%`, et `%operator%`.
+
+### `sfValidatorSchemaFilter`
+
+*Schéma de validateur* : Oui
+
+Le validateur `sfValidatorSchemaFilter` convertit un non-validateur de schéma en
+un validateur de schéma. Il est parfois utile dans un contexte de post-validateur :
+
+    [php]
+    $v = new sfValidatorSchema();
+    $v->setPostValidator(
+      new sfValidatorSchemaFilter('email', new sfValidatorEmail())
+    );
+
+Validateurs I18n
+----------------
+
+### `sfValidatorI18nChoiceCountry`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorI18nChoiceCountry` valide la valeur saisie si le code ISO 3166
+du pays est valide.
+
+| Option      | Erreur    | Description
+| ----------- | --------- | -----------
+| `countries` | `invalid` | Un tableau de codes de pays à utiliser (ISO 3166)
+
+### `sfValidatorI18nChoiceLanguage`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorI18nChoiceLanguage` valide la valeur saisie si la
+langue est valide.
+
+| Option      | Erreur    | Description
+| ----------- | --------- | -----------
+| `languages` | `invalid` | Un tableau de langues à utiliser
+
+### `sfValidatorI18nChoiceTimezone`
+
+*Schéma de validateur* : Non
+
+Le `sfValidatorI18nChoiceTimezone` valide la valeur saisie si le fuseau
+horaire est valide.
+
+| Option      | Erreur    | Description
+| ----------- | --------- | -----------
+| `languages` | `invalid` | Un tableau de langues à utiliser
+
+Validateurs Propel
+------------------
+
+### `sfValidatorPropelChoice`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorPropelChoice` valide la valeur saisie si elle est
+parmi la liste des enregistrements d'un modèle de Propel donné.
+
+La liste des enregistrements peut être restreint en utilisant l'option `criteria`.
+
+La valeur saisie doit être la clé primaire des enregistrements. Ceci peut être
+changé en passant l'option `column`.
+
+| Option       | Erreur | Description
+| ------------ | ------ | -----------
+| `model`      | n/a    | La classe du modèle (obligatoire)
+| `criteria`   | n/a    | Un critère à utiliser pour récupérer des objets
+| `column`     | n/a    | Le nom de la colonne (`null` par défaut ce qui signifie que la clé primaire est utilisée) - doit être dans le format du nom du champ
+| `connection` | n/a    | La connexion Propel à utiliser (`null` par défaut)
+| `multiple`   | n/a    | `true` si la balise select doit permettre une sélection multiple
+
+>**NOTE**
+>Ce validateur ne fonctionne pas pour le modèle avec une clé primaire composite.
+
+### `sfValidatorPropelUnique`
+
+*Schéma de validateur* : Oui
+
+Le validateur `sfValidatorPropelUnique` valide l'unicité d'une colonne ou
+d'un groupe de colonnes (option `column`) pour un modèle Propel.
+
+Si l'unicité est sur plusieurs colonnes, l'erreur peut être lancée au niveau global
+en mettant l'option `throw_global_error`.
+
+| Option               | Erreur | Description
+| -------------------- | ------ | -----------
+| `model`              | n/a    | La classe du modèle (obligatoire)
+| `column`             | n/a    | Le nom de la colonne unique dans le format du nom du champ Propel (obligatoire). Si l'unicité est pour plusieurs colonnes, vous pouvez passer un tableau de noms de champs
+| `field`              | n/a    | Nom du champ utiliser par le formulaire, autre que le nom de la colonne
+| `primary_key`        | n/a    | Le nom de la colonne de la clé primaire dans le format du nom du champ Propel (facultatif, sera introspecté s'il n'est pas fourni). Vous pouvez aussi passer un tableau si la table a plusieurs clés primaires
+| `connection`         | n/a    | La connexion Propel à utiliser (`null` par défaut)
+| `throw_global_error` | n/a    | Que ce soit pour lever une erreur globale (`false` par défaut) ou une erreur liée au premier champ concerné par le tableau d'option de colonne
+
+Doctrine Validators
+-------------------
+
+### `sfValidatorDoctrineChoice`
+
+*Schéma de validateur* : Non
+
+Le validateur `sfValidatorDoctrineChoice` valide la valeur saisie si elle est
+parmi la liste des enregistrements d'un modèle de Doctrine donné.
+
+La liste des enregistrements peut être restreint en utilisant l'option `query`.
+
+La valeur saisie doit être la clé primaire des enregistrements. Ceci peut être
+changé en passant l'option `column`.
+
+| Option       | Erreur | Description
+| ------------ | ------ | -----------
+| `model`      | n/a    | La classe du modèle (obligatoire)
+| `alias`      | n/a    | L'alias de l'élément racine utilisé dans la requête
+| `query`      | n/a    | Une requête à utiliser pour récupérer des objets
+| `column`     | n/a    | Le nom de la colonne (`null` par défaut ce qui signifie que la clé primaire est utilisée) - doit être dans le format du nom du champ
+| `connection` | n/a    | La connexion Doctrine à utiliser (`null` par défaut)
+
+>**NOTE**
+>Ce validateur ne fonctionne pas pour le modèle avec une clé primaire composite.
+
+### `sfValidatorDoctrineUnique`
+
+*Schéma de validateur* : Oui
+
+Le validateur `sfValidatorDoctrineUnique` valide l'unicité d'une colonne ou
+d'un groupe de colonnes (option `column`) pour un modèle Doctrine.
+
+Si l'unicité est sur plusieurs colonnes, l'erreur peut être lancée au niveau global
+en mettant l'option `throw_global_error`.
+
+| Option               | Erreur | Description
+| -------------------- | ------ | -----------
+| `model`              | n/a    | La classe du modèle (obligatoire)
+| `column`             | n/a    | Le nom de la colonne unique dans le format du nom du champ Doctrine (obligatoire). Si l'unicité est pour plusieurs colonnes, vous pouvez passer un tableau de noms de champs
+| `primary_key`        | n/a    | Le nom de la colonne de la clé primaire dans le format du nom du champ Doctrine (facultatif, sera introspecté s'il n'est pas fourni). Vous pouvez aussi passer un tableau si la table a plusieurs clés primaires
+| `connection`         | n/a    | La connexion Doctrine à utiliser (`null` par défaut)
+| `throw_global_error` | n/a    | Que ce soit pour lever une erreur globale (`false` par défaut) ou une erreur liée au premier champ concerné par le tableau d'option de colonne
