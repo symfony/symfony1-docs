@@ -1,12 +1,12 @@
 view.yml 設定ファイル
 ====================
 
-View レイヤーのコンフィギュレーションは `view.yml` 設定ファイルを編集することで変更できます。
+ビューレイヤーのコンフィギュレーションは `view.yml` 設定ファイルを編集することで変更できます。
 
 [第3章](#chapter_03)で説明したように、`view.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
 >**CAUTION**
->ほとんどの場合アクションから呼び出されるテンプレートもしくはメソッドで直接使われるヘルパーのためにこの設定ファイルは非推奨です。
+>ほとんどの場合アクションから呼び出されるテンプレートもしくはメソッドで直接使われるヘルパーのためにこの設定ファイルの変更は非推奨です。
 
 `view.yml` 設定ファイルはビュー設定のリストを収めることができます:
 
@@ -32,7 +32,7 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
       has_layout: on
       layout:     layout
 
-`view.yml` 設定ファイルはアプリケーションによって使われるデフォルトの ~`layout`~ を定義します。デフォルトでは、名前は `layout` で、symfony はアプリケーションの `templates/` ディレクトリで `layout.php` ファイルですべてのページをデコレートします。~`has_layout`~ エントリを `false` にセットすることでデコレーション処理を一緒に無効にすることもできます。
+`view.yml` 設定ファイルはアプリケーションによって使われるデフォルトの ~`layout`~ を定義します。デフォルトでは、名前は `layout` で、symfony はアプリケーションの `templates/` ディレクトリにある `layout.php` ファイルですべてのページをデコレートします。~`has_layout`~ エントリを `false` にセットすることでデコレーション処理を一緒に無効にすることもできます。
 
 >**TIP**
 >`view` に対して明示的にセットされていないかぎり、`layout` は XML、HTTP リクエストと非 HTML の Content-Type に対して自動的に無効になります。
@@ -49,7 +49,7 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
 `stylesheets` エントリは現在のビューで使うスタイルシートの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義されるスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動もしくは [common フィルタ](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義されているスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動で行うかもしくは [common フィルタ](#chapter_12_common)で自動的に行われます。
 
 複数のファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
@@ -61,7 +61,7 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
     [yml]
     stylesheets: [main, foo.css, bar.css, print.css: { media: print }]
 
-`use_stylesheet()` ヘルパーに対してこの設定は*非推奨*です:
+`use_stylesheet()` ヘルパーのためにこの設定は*非推奨*です:
 
     [php]
     <?php use_stylesheet('main.css') ?>
@@ -81,7 +81,7 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
 `javascripts` エントリは現在のビューに使う JavaScript ファイルの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーで手動、もしくは  [common フィルタ](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義されている JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーによる手動で行う、もしくは  [common フィルタ](#chapter_12_common)で自動的に行われます。
 
 複数のファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
@@ -99,7 +99,7 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
     <?php use_javascript('foo.js') ?>
 
 >**NOTE**
->`foo.js` のように相対パスを使うとき、symfony はこれらの前に `/js/` をつけます。
+>`foo.js` のような相対パスを使うとき、symfony はこれらの前に `/js/` をつけます。
 
 `metas` と `http_metas`
 -----------------------
@@ -118,12 +118,12 @@ View レイヤーのコンフィギュレーションは `view.yml` 設定ファ
         #language:     en
         #robots:       index, follow
 
-`http_metas` と `metas` 設定はレイアウトにインクルードするメタタグの定義を可能にします。
+`http_metas` と `metas` 設定でレイアウトでインクルードするメタタグの定義を可能にします。
 
 >**NOTE**
->`view.yml` で定義されるメタタグのインクルードは `include_metas()` と `include_http_metas()` ヘルパーで手動で行うことができます。
+>`view.yml` で定義されているメタタグのインクルードは `include_metas()` と `include_http_metas()` ヘルパーで手動で行うことができます。
 
-静的なメタ情報 (Content-Type など) に対するレイアウトの HTML を純粋に保つ、もしくは動的なメタ情報 (タイトルや説明) のスロットのためにこれらの設定は*非推奨*です。
+静的なメタ情報 (Content-Type など) のためのレイアウトの HTML を純粋に保つ、もしくは動的なメタ情報 (タイトルや説明) のスロットのためにこれらの設定は*非推奨*です。
 
 >**TIP**
->効果があるとき、[`settings.yml` 設定ファイル](#chapter_04_charset)で定義される文字集合をインクルードするために HTTP の `Content-Type` のメタ情報は自動的に修正されます。
+>効果があるとき、[`settings.yml` 設定ファイル](#chapter_04_charset)で定義されている文字集合をインクルードするために HTTP の `Content-Type` のメタ情報は自動的に修正されます。

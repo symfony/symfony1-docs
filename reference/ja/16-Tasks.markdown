@@ -144,7 +144,7 @@ CLI ツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony help test:all
 
-`--xml` オプションをつけることでヘルプメッセージを XML として出力することもできます:
+`--xml` オプションをつけることでヘルプメッセージを XML 形式で出力することもできます:
 
     ./symfony help test:all --xml
 
@@ -161,9 +161,9 @@ CLI ツールは値の有無とオプションの長短バージョンの表記�
 | `namespace` | `-`       | 名前空間の名前
 
 
-| オプション (ショートカット)| デフォルト | 説明
-| ------------------------- | ---------- | ----------------------
-| `--xml`      | `-`        | ヘルプメッセージを XML として出力する
+| オプション (ショートカット) | デフォルト | 説明
+| ----------------------------- | ---------- | ------------------
+| `--xml`  | `-`        | ヘルプメッセージを XML 形式で出力する
 
 
 `list` タスクはすべてのタスクの一覧を表示します:
@@ -174,7 +174,7 @@ CLI ツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony list test
 
-`--xml` オプションをつけることで情報を XML として出力することもできます:
+`--xml` オプションをつけることで情報を XML 形式で出力することもできます:
 
     ./symfony list --xml
 
@@ -243,7 +243,7 @@ CLI ツールは値の有無とオプションの長短バージョンの表記�
 
     ./symfony cache:clear --type=config --env=prod
 
-type オプションの組み込みの引数は次のとおりです: `config`、`i18n`、`routing`、`module` と `template`
+type オプションに組み込まれている引数は次のとおりです: `config`、`i18n`、`routing`、`module` と `template`
 
 
 `configure`
@@ -251,20 +251,20 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 ### ~`configure::author`~
 
-`configure::author` タスクはプロジェクトの著者を設定する:
+`configure::author` タスクはプロジェクトのコードの著者を設定する:
 
     $ php symfony configure:author  author
 
 
 
 | 引数     | デフォルト| 説明
-| -------- | --------- | ------------------
-| `author` | `-`       | プロジェクトの著者
+| -------- | --------- | ----------------------------
+| `author` | `-`       | プロジェクトのコードの著者
 
 
 
 
-`configure:author` タスクはプロジェクトの著者を設定します:
+`configure:author` タスクはプロジェクトのコードの著者を設定します:
 
     ./symfony configure:author "Fabien Potencier <fabien.potencier@symfony-project.com>"
 
@@ -287,12 +287,12 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `password` | `-`       | データベースのパスワード
 
 
-| オプション (ショートカット)   | デフォルト        | 説明
-| ---------------------------- | ------------------ | ------------------------
-| `--env`                      | `all`              | 環境
-| `--name`                     | `propel`           | 接続名
-| `--class`                    | `sfPropelDatabase` | データベースクラスの名前
-| `--app`                      | `-`                | アプリケーションの名前
+| オプション (ショートカット) | デフォルト        | 説明
+| ---------------------------- | -------------------- | ------------------------
+| `--env`                      | `all`                | 環境
+| `--name`                     | `doctrine`           | 接続名
+| `--class`                    | `sfDoctrineDatabase` | データベースクラスの名前
+| `--app`                      | `-`                  | アプリケーションの名前
 
 
 `configure:database` タスクはプロジェクトのデータベースの DSN を設定します:
@@ -307,7 +307,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony configure:database --app=frontend mysql:host=localhost;dbname=example root mYsEcret
 
-接続名とデータベースのクラス名を指定することもできます:
+データベースの接続名とクラス名を指定することもできます:
 
     ./symfony configure:database --name=main --class=ProjectDatabase mysql:host=localhost;dbname=example root mYsEcret
 
@@ -351,7 +351,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:build --model --forms
 
-すべてのクラスと SQL を生成させてデータベースをリビルドしたければ `--all` ショートカットオプションをつけます:
+すべてのクラスと SQL を生成させてデータベースをリビルドしたければショートカットの `--all` オプションをつけます:
 
     ./symfony doctrine:build --all
 
@@ -365,7 +365,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
     ./symfony doctrine:build-sql
     ./symfony doctrine:insert-sql
 
-`--all-classes` ショートカットオプションをつけることでクラスファイルのみを生成することもできます。このオプションが単独で使われるとき、データベースは修正されません。
+ショートカットの `--all-classes` オプションをつけることでクラスファイルのみを生成することもできます。このオプションが単独で使われるとき、データベースは修正されません。
 
     ./symfony doctrine:build --all-classes
 
@@ -422,7 +422,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 
 
-| オプション (ショートカット)    | デフォルト | 説明
+| オプション (ショートカット)   | デフォルト | 説明
 | ------------------- | -------- | -------------------------------------------
 | `--application`     | `1`      | アプリケーションの名前
 | `--env`             | `dev`    | 環境
@@ -435,9 +435,9 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:build-filters
 
-このタスクはモデルをもとにフォームフィルタクラスを作ります。クラスは `lib/doctrine/filter` に作ります。
+このタスクはモデルをもとにフォームフィルタクラスを `lib/doctrine/filter` に作ります。
 
-このタスクが `lib/doctrine/filter` のカスタムクラスを上書きすることはありません。これは `lib/doctrine/filter/base` に生成される基底クラスを置き換えるだけです。
+このタスクが `lib/doctrine/filter` のカスタムクラスを上書きすることはけっしてありません。このタスクは `lib/doctrine/filter/base` に生成される基底クラスを置き換えるだけです。
 
 ### ~`doctrine::build-forms`~
 
@@ -464,7 +464,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 このタスクはモデルをもとにフォームクラスを作ります。クラスは `lib/doctrine/form` に作られます。
 
-このタスクは `lib/doctrine/form` のカスタムクラスを上書きすることはありません。これは `lib/doctrine/form/base` に生成された基底クラスのみを置き換えるだけです。
+このタスクは `lib/doctrine/form` のカスタムクラスを上書きすることはけっしてありません。このタスクは `lib/doctrine/form/base` に生成された基底クラスのみを置き換えるだけです。
 
 ### ~`doctrine::build-model`~
 
@@ -490,7 +490,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 モデルクラスファイルは `lib/model/doctrine` に作られます。
 
-このタスクは `lib/model/doctrine` のなかのカスタムタスクを上書きすることはありません。これは `lib/model/doctrine/base` のファイルのみを置き換えます。
+このタスクは `lib/model/doctrine` のなかのカスタムタスクを上書きすることはけっしてありません。このタスクは `lib/model/doctrine/base` のファイルのみを置き換えます。
 
 ### ~`doctrine::build-schema`~
 
@@ -638,7 +638,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:data-load data/fixtures/dev data/fixtures/users.yml
 
-このタスクにデータベースの既存のデータを削除させたくない場合、`--append` オプションを指定します:
+このタスクでデータベースの既存のデータを削除したくない場合、`--append` オプションを指定します:
 
     ./symfony doctrine:data-load --append
 
@@ -678,7 +678,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `parameter` | `-`        | クエリパラメータ
 
 
-| オプション (ショートカット) | デフォルト  | 説明
+| オプション (ショートカット) | デフォルト | 説明
 | -------------------------- | ---------- | ------------------------
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
@@ -722,7 +722,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:drop-db
 
-`--no-confirmation` オプションを提供しないかぎりデータベースが削除される前に確認を促されます:
+`--no-confirmation` オプションを提供しないかぎりデータベースが削除される前に確認が催促されます:
 
     ./symfony doctrine:drop-db --no-confirmation
 
@@ -744,7 +744,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `route_or_model` | `-`        | ルートの名前もしくはモデルクラス
 
 
-| オプション (ショートカット) | デフォルト  | 説明
+| オプション (ショートカット) | デフォルト | 説明
 | -------------------------- | ---------- | -----------------
 | `--module`                 | `-`        | モジュールの名前
 | `--theme`                  | `admin`    | テーマの名前
@@ -758,7 +758,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:generate-admin frontend Article
 
-このタスクは `%Article%` モデルの `%frontend%` アプリケーションのモジュールを作ります。
+このタスクは `%Article%` モデルの `%frontend%` アプリケーションでモジュールを作ります。
 
 このタスクはアプリケーションの `routing.yml` でルートを作ります。
 
@@ -766,7 +766,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:generate-admin frontend article
 
-このタスクは `routing.yml` で見つかる `%article%` ルートの `%frontend%` アプリケーションのモジュールを作ります。
+このタスクは `routing.yml` で見つかる `%article%` ルートの `%frontend%` アプリケーションでモジュールを作ります。
 
 フィルタとバッチアクションを適切に動かすには、`wildcard` オプションをルートに追加する必要があります:
 
@@ -903,7 +903,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
     ./symfony doctrine:generate-module --generate-in-cache frontend article Article
 
-`--theme` オプションをつけることでジェネレータはカスタマイズされたテーマを使うことができます:
+`--theme` オプションをつけることでジェネレータはカスタマイズ済みのテーマを使うことができます:
 
     ./symfony doctrine:generate-module --theme="custom" frontend article Article
 
@@ -932,7 +932,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 | `--theme`                     | `default`  | テーマの名前
 | `--non-verbose-templates`     | `-`        | 冗長ではないテンプレートを生成する
 | `--singular`                  | `-`        | 単数形の名前
-| `--plural`                    | `-`        | 複数形の複数形の名前
+| `--plural`                    | `-`        | 複数形の名前
 | `--env`                       | `dev`      | 環境
 | `--actions-base-class`        | `sfActions`| アクションの基底クラス
 
@@ -1078,7 +1078,7 @@ type オプションの組み込みの引数は次のとおりです: `config`�
 
 `%sf_data_dir%/skeleton/module` ディレクトリを作ることでタスクに使われるデフォルトのスケルトンをカスタマイズできます。
 
-`%sf_test_dir%/functional/%application%/%module%ActionsTest.class.php` という名前の機能テストのスタブも作ります。デフォルトではこのスタブはテストに通りません。
+`%sf_test_dir%/functional/%application%/%module%ActionsTest.class.php` という名前の機能テストのスタブも作られます。デフォルトではこのスタブはテストに通りません。
 
 すでにアプリケーションに同じ名前のモジュールがある場合、`sfCommandException` が投げられます。
 
@@ -1151,7 +1151,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 `namespaceNameTask.class.php` スケルトンタスクは `lib/task/` ディレクトリの下で作られます。名前空間はオプションであることに留意してください。
 
-別のディレクトリ (プロジェクトのルートフォルダに相対的な位置) でファイルを作りたい場合、`--dir` オプションにこれを渡します。このディレクトリはまだ存在しなければ作られます。
+別のディレクトリ (プロジェクトのルートフォルダに相対的な位置) でファイルを作りたい場合、`--dir` オプションで指定します。このディレクトリがまだ存在しなければ作られます。
 
     ./symfony generate:task namespace:name --dir=plugins/myPlugin/lib/task
 
@@ -1172,7 +1172,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 ### ~`i18n::extract`~
 
-`i18n::extract` タスクは PHP ファイルから国際化された文字列を抽出する:
+`i18n::extract` タスクは PHP ファイルから国際化対応の文字列を抽出する:
 
     $ php symfony i18n:extract [--display-new] [--display-old] [--auto-save] [--auto-delete] application culture
 
@@ -1192,7 +1192,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 | `--auto-delete` | `-`      | 古い文字列を削除する
 
 
-`i18n:extract` タスクはアプリケーションとターゲットのカルチャのプロジェクトファイルから国際化文字列を抽出します:
+`i18n:extract` タスクはアプリケーションとターゲットのカルチャのプロジェクトファイルから国際化対応の文字列を抽出します:
 
     ./symfony i18n:extract frontend fr
 
@@ -1202,11 +1202,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony i18n:extract --display-new frontend fr
 
-これらを国際化メッセージカタログに保存するには、`--auto-save` オプションを指定します:
+これらを国際化対応のメッセージカタログに保存するには、`--auto-save` オプションを指定します:
 
     ./symfony i18n:extract --auto-save frontend fr
 
-国際化メッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したい場合、`--display-old` オプションを指定します:
+国際化対応のメッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したい場合、`--display-old` オプションを指定します:
 
     ./symfony i18n:extract --display-old frontend fr
 
@@ -1216,7 +1216,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 ### ~`i18n::find`~
 
-`i18n::find` タスクはアプリケーションの「国際化に対応していない」文字列を見つける:
+`i18n::find` タスクはアプリケーションの「国際化に未対応の」文字列を見つける:
 
     $ php symfony i18n:find [--env="..."] application
 
@@ -1232,11 +1232,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 | `--env`                    | `dev`      | 環境
 
 
-`i18n:find` タスクはテンプレートに埋め込まれる非国際化文字列を見つけます:
+`i18n:find` タスクはテンプレートに埋め込まれる国際化未対応の文字列を見つけます:
 
     ./symfony i18n:find frontend
 
-このタスクは純粋な HTML と PHP コードで非国際化文字列を見つけることができます:
+このタスクは純粋な HTML と PHP コードで国際化未対応の文字列を見つけることができます:
 
     <p>Non i18n text</p>
     <p><?php echo 'Test' ?></p>
@@ -1370,11 +1370,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony plugin:install /home/fabien/plugins/sfGuardPlugin-1.0.0.tgz
 
-プラグインにウェブコンテンツ(画像、スタイルシートもしくは JavaScript) が収められている場合、このタスクはこれらのアセットのために `web/` の下で `%name%` シンボリックリンクを作ります。Windows では、このタスクはこれらすべてのファイルを `web/%name%` ディレクトリにコピーします。
+プラグインにウェブコンテンツ (画像、スタイルシートもしくは JavaScript) が収められている場合、このタスクはこれらのアセットのために `web/` の下で `%name%` シンボリックリンクを作ります。Windows では、このタスクはこれらすべてのファイルを `web/%name%` ディレクトリにコピーします。
 
 ### ~`plugin::list`~
 
-`plugin::list` タスクはインストールされたプラグインの一覧を表示する:
+`plugin::list` タスクはインストール済みのプラグインの一覧を表示する:
 
     $ php symfony plugin:list
 
@@ -1384,11 +1384,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 
 
-`plugin:list` タスクはインストールされたプラグインの一覧を表示します:
+`plugin:list` タスクはインストール済みのプラグインの一覧を表示します:
 
     ./symfony plugin:list
 
-これはそれぞれのプラグインのチャンネルとバージョンも表示します。
+このタスクはそれぞれのプラグインのチャンネルとバージョンも表示します。
 
 ### ~`plugin::publish-assets`~
 
@@ -1405,14 +1405,14 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 | オプション (ショートカット) | デフォルト | 説明
 | -------------------------- | --------- | -------------------------------------------------------------
-| `--core-only`              | `-`       | セットされている場合コアプラグインのみがアセットを公開する
+| `--core-only`              | `-`       | セットされている場合、コアプラグインのみがアセットを公開する
 
 
 `plugin:publish-assets` タスクはすべてのプラグインからウェブアセットを公開します。
 
     ./symfony plugin:publish-assets
 
-実際これはそれぞれのプラグインに `plugin.post_install` イベントを送信します。
+実際このタスクはそれぞれのプラグインに `plugin.post_install` イベントを送信します。
 
 引数としてこれらのプラグインの名前を渡すことで1つもしくは複数のプラグインがアセットをインストールするか指定できます:
 
@@ -1556,7 +1556,7 @@ symfony が新しいクラスを生成するときにオプションとして著
     dir=/var/www/sfblog/
     type=rsync
 
-デプロイを自動化するために、タスクは SSH を通して rsync を使います。SSH アクセス権限をキーもしくは `config/properties.ini` でパスワードを設定しなければなりません。
+デプロイを自動化するために、タスクは SSH を通して rsync を使います。SSH アクセスをキーで設定するもしくは パスワードを `config/properties.ini` で設定しなければなりません。
 
 デフォルトでは、タスクはドライモードです。本当にデプロイを実行するには、`--go` オプションを渡さなければなりません:
 
@@ -1581,7 +1581,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 ### ~`project::disable`~
 
-`project::disable` タスクを任意の環境のアプリケーションを無効にする:
+`project::disable` タスクを任意は環境のアプリケーションを無効にする:
 
     $ php symfony project:disable  env [app1] ... [appN]
 
@@ -1746,11 +1746,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony propel:build
 
-ビルドしたいものを指定しなければなりません。たとえば、モデルとフォームをビルドしたいのであれば `--model` と `--forms` オプションをつけます:
+ビルドしたいものを指定しなければなりません。たとえば、モデルとフォームをビルドしたければ `--model` と `--forms` オプションをつけます:
 
     ./symfony propel:build --model --forms
 
-すべてのクラスと SQL ファイルを生成してデータベースをリビルドしたい場合、`--all` ショートカットオプションをつけることができます:
+すべてのクラスと SQL ファイルを生成してデータベースをリビルドしたい場合、ショートカットの `--all` オプションをつけることができます:
 
     ./symfony propel:build --all
 
@@ -1770,7 +1770,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony propel:build --db --and-load
 
-どのフィクスチャがロードされるのか指定するには、`--and-load` オプションにパラメータを渡します:
+どのフィクスチャをロードするのか指定するには、`--and-load` オプションにパラメータを渡します:
 
     ./symfony propel:build --all --and-load="data/fixtures/dev/"
 
@@ -1881,15 +1881,15 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony propel:build-filters
 
-このタスクはプロジェクトとすべてのインストールされたプラグインから `config/*schema.xml` かつ `/` もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
+このタスクはプロジェクトとすべてのインストールされたプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続が使えます:
+このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:build-filters --connection="name"
 
 モデルのフィルタフォームクラスは `lib/filter` に作られます。
 
-このタスクは `lib/filter` のなかのカスタムクラスを上書きすることはありません。これは `lib/filter/base` で生成された既定クラスを置き換えます。
+このタスクは `lib/filter` のなかのカスタムクラスを上書きすることはありません。これは `lib/filter/base` に生成された既定クラスを置き換えます。
 
 ### ~`propel::build-forms`~
 
@@ -1916,7 +1916,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 このタスクはプロジェクトとインストールしたすべてのプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
+このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:build-forms --connection="name"
 
@@ -1943,9 +1943,9 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony propel:build-model
 
-このタスクはプロジェクトとインストールされたすべてのプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
+このタスクはプロジェクトとインストール済みのすべてのプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-YAML と XML スキーマファイルを混ぜることができます。このタスクは Propel タスクを呼び出す前に YAML を XML に変換します。
+YAML と XML スキーマファイルを混ぜ合わせることができます。このタスクは Propel タスクを呼び出す前に YAML を XML に変換します。
 
 モデルクラスのファイルは `lib/model` に作られます。
 
@@ -1999,7 +1999,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:build-sql
 
-生成される SQL は `config/propel.ini`で 設定されるデータベースに合わせて最適化されます:
+生成される SQL は `config/propel.ini`で 設定されているデータベースに合わせて最適化されます:
 
     propel.database = mysql
 
@@ -2028,7 +2028,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:data-dump > data/fixtures/dump.yml
 
-デフォルトでは、タスクはデータを標準出力しますが、2 番目の引数としてファイルの名前を渡すこともできます:
+デフォルトでは、タスクはデータを標準出力しますが、2番目の引数としてファイルの名前を渡すこともできます:
 
     ./symfony propel:data-dump dump.yml
 
@@ -2036,7 +2036,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 `propel:data-load` タスクを使うことでダンプファイルを YAML フォーマットで再インポートできます。
 
-デフォルトでは、`config/databases.yml` で定義される `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
+デフォルトでは、`config/databases.yml` で定義されている `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:data-dump --connection="name"
 
@@ -2079,7 +2079,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:data-load data/fixtures/dev data/fixtures/users.yml
 
-このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションを指定することで別の接続を使うことができます:
+このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションを指定することで別の接続を使うことができます:
 
     ./symfony propel:data-load --connection="name"
 
@@ -2121,7 +2121,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 このタスクは `%Article%` モデルの `%frontend%` アプリケーションでモジュールを作ります。
 
-このタスクはアプリケーションの `routing.yml` であなたに代わってルートを作ります。
+このタスクはあなたに代わってアプリケーションの `routing.yml` でルートを作ります。
 
 ルートの名前を渡すことで Propel アドミンモジュールを生成することもできます:
 
@@ -2260,7 +2260,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 タスクはデータベースに接続して `config/sql/*schema.sql` ファイルで見つかるすべての SQL 文を実行します。
 
-実行の前に、データベースのすべてのデータを削除するので本当に実行するかどうかをタスクはあなたに尋ねます。
+実行前に、データベースのすべてのデータを削除するので本当に実行するかどうかをタスクはあなたに尋ねます。
 
 確認作業を避けるには、`--no-confirmation` オプションを渡すことができます:
 
@@ -2268,7 +2268,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 タスクは `databases.yml` からデータベースコンフィギュレーションを読み込みます。`--application` もしくは `--env` オプションを渡すことで特定のアプリケーション/環境を使うことができます。
 
-任意の接続で SQL 文のみをロードしたい場合、`--connection` オプションを指定することもできます。
+任意の接続で SQL 文だけをロードしたい場合、`--connection` オプションを指定することもできます。
 
 ### ~`propel::schema-to-xml`~
 
