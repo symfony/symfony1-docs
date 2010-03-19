@@ -51,7 +51,15 @@ Entusiasta em desenvolvimento WEB, especializado em marcação semântica (web s
 
 Lucas Stephanou
 ---------------
+Apaixonado por lógica, achou no symfony uma maneira produtiva e divertida de desenvolver. Atua como desenvolvedor desde 2000e hoje é lider de desenvolvimento de equipes web,  desenvolvendo com symfony a maior parte dos projetos.
 
+Além de symfony, curte open source, e soluções inteligentes para sites com carga anormal de requisições; Adora a forma direta do jQuery, e não vive sem conhecer novas tecnologias e formas de desenvolver.
+
+**Seu site** : *http://www.lucas-ts.com*
+
+**No Twitter** : *http://twitter.com/lucasts*
+
+** Github**: *http://github.con/lucasts*
 
 Márcio Albuquerque
 ------------------
