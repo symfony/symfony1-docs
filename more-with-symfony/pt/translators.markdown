@@ -29,6 +29,7 @@ Gabriel Vaz
 -----------
 
 Atuando na área de TI desde 2004, Gabriel Vaz é amante da cultura software livre e certificado em ITIL Fundation desde maio de 2009. Serviu ao Exército Brasileiro de 2001 a 2008, onde teve vivência de liderança, superação, disciplina, analise e outros. Analista do Sistema entregou seu primeiro projeto Symfony com Oracle em outubro de 2009.
+
 Caminha para desenvolver projetos sociais envolvendo softwares livres como Symfony, Joomla, Moodle - levando o estudo e acesso a tecnologia à comunidades carentes.
 
 Membro ativo do grupo symfony-pt.
@@ -42,6 +43,7 @@ Henrique Boaventura
 -------------------
 
 Desenvolvedor PHP a mais de 8 anos, iniciou a usar o framework symfony na versão 1.0 e vem acompanhando o crescimento dele deste então.
+
 Entusiasta em desenvolvimento WEB, especializado em marcação semântica (web standards), CSS/xHTML e em bibliotecas JavaScript como jQuery e Prototype.
 
 **Seu site** : *http://www.hboaventura.com*
@@ -51,7 +53,8 @@ Entusiasta em desenvolvimento WEB, especializado em marcação semântica (web s
 
 Lucas Stephanou
 ---------------
-Apaixonado por lógica, achou no symfony uma maneira produtiva e divertida de desenvolver. Atua como desenvolvedor desde 2000e hoje é lider de desenvolvimento de equipes web,  desenvolvendo com symfony a maior parte dos projetos.
+
+Apaixonado por lógica, achou no symfony uma maneira produtiva e divertida de desenvolver. Atua como desenvolvedor desde 2000 e hoje é lider de desenvolvimento de equipes web,  desenvolvendo com symfony a maior parte dos projetos.
 
 Além de symfony, curte open source, e soluções inteligentes para sites com carga anormal de requisições; Adora a forma direta do jQuery, e não vive sem conhecer novas tecnologias e formas de desenvolver.
 
@@ -61,6 +64,7 @@ Além de symfony, curte open source, e soluções inteligentes para sites com ca
 
 ** Github**: *http://github.con/lucasts*
 
+
 Márcio Albuquerque
 ------------------
 
@@ -69,6 +73,16 @@ Desenvolvedor PHP há uns 10 anos, passou por várias versões do PHP. Já estud
 Márcio Albuquerque estudou e usou vários frameworks em PHP. Se encontrou com o symfony desde a versão 0.7, produzindo e gerenciando novos sistemas com este framework. Hoje, usa e dissemina conhecimento com relação ao symfony 1.4 e já estuda a nova versão do framework, Symfony 2.0. Já fez alguns poucos plugins (versão 1.0) e participa da comunidade symfony-pt. 
 
 Tem grande interesse em desenvolvimento e gestão ágil com qualidade.
+
+
+Maura Bouça
+-----------
+
+'Web-developer in training', começou há uns meses a tentar perceber o que é o Symfony. O desejo de contribuição com a comunidade conduziu-a até a tradução da documentação do framework.
+
+Recentemente Licenciada em Novas Tecnologias da Comunicação, procura constantemente novas tecnologias e formas de otimização do trabalho. Interessa-se por praticamente tudo o que tem a ver com tecnologia em geral, web 2.0, arte e mundo.
+
+**No twitter**: *http://twitter.com/maurabouca*
 
 
 Raphael A. Araújo
