@@ -479,7 +479,7 @@ Trabalho real, neste caso específico, é a execução da cadeia de filtros.
 
 >**NOTE**
 >A cadeia de filtros do symfony implementa um padrão de *design* conhecido como
-[*chain of responsibility*] (http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern).
+[*chain of responsibility*](http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern).
 >É um padrão simples, mas poderoso, que permite ações encadeadas, onde cada
 >parte da cadeia é capaz de decidir se deve ou não continuar a
 >execução.

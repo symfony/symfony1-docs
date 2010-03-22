@@ -70,19 +70,19 @@ Há vários [Grupos Google](http://groups.google.com) em torno de symfony
 que satisfazem propósitos diferentes. Estas mailing lists são a forma principal de entrar em contato
 com os usuários e desenvolvedores do symfony. Se você estiver trabalhando com o symfony e
 procurando apoio para um problema que tem, então
-[symfony users] (http://groups.google.com/group/symfony-users) é o lugar para estar. Os
+[symfony users](http://groups.google.com/group/symfony-users) é o lugar para estar. Os
 assinantes desta mailinglist são uma mistura de usuários regulares do symfony, principiantes do
 iniciantes e a maior parte da equipe principal do symfony. Para qualquer pergunta, lá existirá
 alguém que será capaz de lhe responder. Existem muitas
 outras listas, para outros fins:
 
-* [symfony-devs] (http://groups.google.com/group/symfony-devs): Para
+* [symfony-devs](http://groups.google.com/group/symfony-devs): Para
    discussões sobre o desenvolvimento do núcleo do symfony (não para suporte!*)
 
-* [symfony-docs] (http://groups.google.com/group/symfony-docs): Para
+* [symfony-docs](http://groups.google.com/group/symfony-docs): Para
    discussões sobre a documentação do symfony
 
-* [symfony-community] (http://groups.google.com/group/symfony-community): Para
+* [symfony-community](http://groups.google.com/group/symfony-community): Para
    discussões sobre as iniciativas da comunidade
 
 Com qualquer uma destas mailinglists, não deve esquecer que são, por natureza, menos
@@ -101,7 +101,7 @@ tanto quanto possível, o que pode levar à solução.
 
 IRC é a forma mais direta de obter respostas, devido à sua natureza imediata.
 Symfony tem um canal dedicado chamado #symfony no
-[Freenode Network] (http://freenode.net/) onde, em qualquer momento do dia, muitas
+[Freenode Network](http://freenode.net/) onde, em qualquer momento do dia, muitas
 pessoas estão. Tenha noção de que mesmo que o canal possa ter cerca de
 100 usuários presentes, muitas vezes, muitas dessas pessoas estão no trabalho e não verificam
 constantemente o canal de IRC. Assim, apesar do IRC ser em tempo real por natureza, por vezes pode
@@ -149,7 +149,7 @@ plugins externos no seu projeto. O sistema de plugin é baseado no
 Instalador PEAR e sistema de canal, e é muito flexível. Além dos
 plugins que estão incluídos na distribuição do symfony, há uma quantidade enorme
 de plugins que foram desenvolvidos e são mantidos pela comunidade. Você
-pode ir ao [site dos plugins] (http://www.symfony-project.org/plugins/) e
+pode ir ao [site dos plugins](http://www.symfony-project.org/plugins/) e
 percorrer os plugins filtrando a sua busca por categorias, ORM utilizado, versão do symfony que
 é suportada ou por palavra-chave. Graças ao trabalho da comunidade, você pode encontrar
 plugins para muitas funcionalidades comuns que encontra nas aplicações web
@@ -164,8 +164,8 @@ um público mais amplo do que apenas o PHP, têm alguns membros da comunidade sy
 ou até mesmo apresentando. É o trabalho destes membros da comunidade que irá ajudá -lo
 a aprender com os seus pares nestas conferências. Há eventos que são
 totalmente construídos em torno do symfony. Alguns bons exemplos disso são
-[Symfony Live] (http://www.symfony-live.com/), [Symfony Day] (http://www.symfonyday.com/)
-e [SymfonyCamp] (http://www.symfonycamp.com/). Todos esses eventos têm o
+[Symfony Live](http://www.symfony-live.com/), [Symfony Day](http://www.symfonyday.com/)
+e [SymfonyCamp](http://www.symfonycamp.com/). Todos esses eventos têm o
 apoio de uma empresa, mas a maioria do trabalho é um esforço da comunidade, e ao
 ir a um evento como esse você pode aprender muito sobre o symfony e entrar em contato
 com esses membros-chave da comunidade que podem ajudá-lo um pouco mais quando você está
@@ -268,7 +268,7 @@ Este comando deve ser executado na raíz do checkout do symfony, para assegurar
 que todas as alterações que foram feitas no código do symfony ficam registadas no arquivo de patch.
 
 O próximo passo seria ir a
-[bugtracker do symfony] (http://trac.symfony-project.org). Após o login, surge
+[bugtracker do symfony](http://trac.symfony-project.org). Após o login, surge
 uma nova opção para criar um novo Ticket. Ao criar um novo Ticket, tente preencher
 o maior número de campos possível, para tornar mais fácil para a equipe principal
 reproduzir bugs e / ou saber que partes do symfony estão afetadas.
@@ -296,7 +296,7 @@ dado que o código foi colocado em um plugin, é também possível fazê-lo Open
 e torná-lo disponível para todos os usuários do symfony.
 
 Contribuir com um plugin para a comunidade symfony é bastante fácil. Você pode
-[ler a documentação] (http://www.symfony-project.org/jobeet/1_3/Doctrine/en/20 chapter_20_contributing_a_plugin #)
+[ler a documentação](http://www.symfony-project.org/jobeet/1_3/Doctrine/en/20 chapter_20_contributing_a_plugin #)
 sobre como criar e empacotar o plugin e fazer o upload para o site
 do symfony. O site do symfony permite aos desenvolvedores de plugins usar um conjunto completo de ferramentas
 para publicar através do canal do symfony plugin channel server e também para
@@ -336,9 +336,9 @@ com a framework, soluções para problemas que foram encontrados durante o traba
 com a framework, ou sobre uma nova funcionalidade da versão mais recente que acha interessante.
 
 Qualquer pessoa que escreva sobre o symfony pode adicionar o seu blog a [lista de bloggers 
-do symfony] (http://trac.symfony-project.org/wiki/SymfonyBloggers). Todos os weblogs da
+do symfony](http://trac.symfony-project.org/wiki/SymfonyBloggers). Todos os weblogs da
 lista são referidos em
-[página da comunidade symfony] (http://www.symfony-project.org/community). Existem, porém, algumas
+[página da comunidade symfony](http://www.symfony-project.org/community). Existem, porém, algumas
 directrizes: é pedido um feed específico do symfony feed para que todo o conteúdo na
 página da comunidade symfony seja relacionado. Além disso, por favor, não adicione outra coisa que não
 weblogs (nada de twitter feeds, por exemplo).
@@ -370,7 +370,7 @@ repositório de documentação para tradutores e da publicação de versões tra
 da documentação disponível no site do symfony.
 
 As traduções da documentação são coordenadas e discutidas principalmente através da
-[docs do symfony mailinglist] (http://groups.google.com/group/symfony-docs).
+[docs do symfony mailinglist](http://groups.google.com/group/symfony-docs).
 Se você estiver interessado em ajudar a traduzir a documentação para a sua
 língua nativa, este é o primeiro lugar a visitar. Há uma chance
 de que existam vários tradutores para uma língua, nesse caso, é muito
@@ -380,7 +380,7 @@ do symfony é o lugar perfeito para iniciar os seus esforços de tradução.
 #### Adicionar conteúdo à Wiki
 
 Uma wiki é uma das formas mais abertas de documentar qualquer assunto. O Symfony tem
-uma [wiki] (http://trac.symfony-project.org/wiki) onde as pessoas podem adicionar
+uma [wiki](http://trac.symfony-project.org/wiki) onde as pessoas podem adicionar
 documentação. É sempre bom cacrescentar novo conteúdo à wiki. Contudo,
 também é possível contribuir olhando para os artigos existentes na
 wiki e corrigindo e / ou atualizando-os. Além de artigos novos, também existem
@@ -390,7 +390,7 @@ mais fácil para as pessoas pesquisar na wiki e encontrar o conteúdo certo.
 
 Se quer ter uma idéia de que tipo de conteúdo está na wiki ou ir buscar alguma
 inspiração para o conteúdo que deseja acrescentar, basta dar uma olhadela para na
-[página principal da wiki] (http://trac.symfony-project.org/wiki) para ver o que já está
+[página principal da wiki](http://trac.symfony-project.org/wiki) para ver o que já está
 lá.
 
 ### Apresentações
@@ -416,7 +416,7 @@ dar um feedback honesto: não apenas elogios, mas também críticas para que pos
 apresentação antes de a fazer realmente.
 
 Ajuda adicional sobre como preparar e fazer apresentações está sempre disponível
-em [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community),
+em [mailinglist da comunidade symfony](http://groups.google.com/group/symfony-community),
 onde palestrantes experientes, bem como visitantes regulares de conferências serão capazes de o ajudar
 com dicas, truques e experiências. Além disso, se não sabe de uma conferência ou
 grupo de usuários, onde poderia fazer a sua apresentação, pode se inscrever na
@@ -440,8 +440,8 @@ o symfony 1,2. Foi pequeno e simples, mas muito eficaz uma vez que os presentes 
 uma idéia sobre o que esperar da (naquele momento) nova versão do symfony.
 
 Outro bom exemplo é a organização de conferências da comunidade, tais como
-[SymfonyCamp] (http://www.symfonycamp.com/) e
-[SymfonyDay Colónia] (http://www.symfonyday.com/). Ambas as conferências symfony foram organizadas
+[SymfonyCamp](http://www.symfonycamp.com/) e
+[SymfonyDay Colónia](http://www.symfonyday.com/). Ambas as conferências symfony foram organizadas
 por empresas que trabalham de desenvolvimento que trabalham com o symfony tentando dar algo
 de volta à comunidade. Todas essas conferências foram bastante visitadas, tiveram um fantástico
 calendário de falante e tiveram um óptimo ambiente de comunidade.
@@ -457,7 +457,7 @@ e a maioria tem organizado, até agora, vários encontros para pessoas interessa
 no symfony ou que trabalham com a framework. A maioria destes eventos são muito
 informais, livres e são totalmente orientados pela comunidade.
 
-O [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community) 
+O [mailinglist da comunidade symfony](http://groups.google.com/group/symfony-community) 
 mencionado anteriormente é um ótimo
 lugar para procurar um grupo de usuários existentes em sua área, bem como o lugar para
 iniciar um novo grupo de usuários do symfony. Há membros e organizadores dos grupos
@@ -467,7 +467,7 @@ grupo de usuários locais e na sua organização.
 Para além das atividades físicas que pode organizar localmente, você também pode tentar
 promover o symfony na sua região on-line. Um bom exemplo é iniciando um
 portal local do symfony. Um bom exemplo de portal local é o
-[portal espanhol do Symfony ] (http://www.symfony.es/), que tem atualizações regulares sobre o que está
+[portal espanhol do Symfony ](http://www.symfony.es/), que tem atualizações regulares sobre o que está
 acontecendo com o symfony em espanhol. O site também
 fornece documentação extensa em Espanhol, por isso é uma ótima maneira de aprender
 symfony para os desenvolvedores espanhóis e de manter-se atualizado em relação aos novos desenvolvimentos
@@ -478,12 +478,12 @@ em torno do symfony.
 A equipe principal faz também, naturalmente, parte da comunidade. As pessoas que estão
 na equipe principal todos começaram como usuários da framework e, devido ao seu
 envolvimento em uma forma ou de outra, tornaram-se parte da equipe principal. O Symfony é uma
-[meritocracia] (http://en.wikipedia.org/wiki/Meritocracy), o que significa que se
+[meritocracia](http://en.wikipedia.org/wiki/Meritocracy), o que significa que se
 você provar as suas capacidades e / ou talento, pode vir a tornar-se parte da
 equipe principal também.
 
 Um bom exemplo disto é a
-[inclusão de Bernhard Schussek] (http://www.symfony-project.org/blog/2009/08/27/bernhard-schussek-joins-the-core-team).
+[inclusão de Bernhard Schussek](http://www.symfony-project.org/blog/2009/08/27/bernhard-schussek-joins-the-core-team).
 Bernhard se juntou à equipe principal depois do seu fantástico trabalho na segunda versão
 da framework de testes Lime e de ter apresentado patches de forma consistente
 durante um longo período de tempo.
@@ -497,7 +497,7 @@ até à comunidade.
 
 #### Mailinglist da comunidade Symfony
 
-A [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community)
+A [mailinglist da comunidade symfony](http://groups.google.com/group/symfony-community)
 é uma mailinglist onde os membros podem discutir idéias acerca dos esforços da comunidade, unir
 esforços da comunidade que estão actualmente a ser executados, e jogar-se em qualquer coisa relacionada com a comunidade.
 Se quiser juntar-se a um desses esforços, basta responder à discussão
@@ -509,7 +509,7 @@ este é também o lugar para estar.
 #### A página "Como contribuir para o symfony"
 
 Desde há algum tempo, o symfony tem uma página especial na wiki com o título
-[Como contribuir para o symfony] (http://trac.symfony-project.org/wiki/HowToContributeToSymfony).
+[Como contribuir para o symfony](http://trac.symfony-project.org/wiki/HowToContributeToSymfony).
 Esta página lista todas as formas de se envolver na ajuda ao projeto
 symfony e à comunidade com as suas capacidades, e tem links para os locais
 corretos para dar essa ajuda. É uma leitura recomendada para qualquer um
@@ -524,7 +524,7 @@ a duas dessas iniciativas, já que podem ser úteis para as pessoas que trabalha
 
 #### Symfonians
 
-A [comunidade Symfonians] (http://www.symfonians.net/) é uma comunidade que
+A [comunidade Symfonians](http://www.symfonians.net/) é uma comunidade que
 lista as pessoas e empresas que trabalham com o symfony e os projetos feitos com
 ele. O site também permite às empresas publicar vagas de trabalho e permite-lhe
 pesquisar dentro do seu próprio país por pessoas, empresas e projetos.
@@ -548,7 +548,7 @@ com as pessoas que fazem parte dela.
 
 O LinkedIn também oferece um recurso de grupos, permitindo discussões em grupo, notícias e
 anúncios de emprego. Muitos tópicos têm um grupo no LinkedIn, e o
-[symfony não é excepção] (http://www.linkedin.com/groups?gid=29205&trk=myg_ugrp_ovr)
+[symfony não é excepção](http://www.linkedin.com/groups?gid=29205&trk=myg_ugrp_ovr)
 (login necessário). Usando este grupo symfony, poderá discutir assuntos relacionados com o symfony,
 seguir notícias relacionadas com o symfony e também colocar anúncios de trabalho que tenha para desenvolvedores,
 formadores, consultores e arquitetos.
