@@ -81,17 +81,17 @@ factories.yml 設定ファイル
  * [`storage`](#chapter_05_storage)
 
    * [`auto_start`](#chapter_05_sub_auto_start)
-   * [`database`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_table`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_id_col`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_data_col`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_time_col`](#chapter_05_sub_database_storage_specific_options)
+   * `database`
+   * `db_table`
+   * `db_id_col`
+   * `db_data_col`
+   * `db_time_col`
    * [`session_cache_limiter`](#chapter_05_sub_session_cache_limiter)
-   * [`session_cookie_domain`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_httponly`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_lifetime`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_path`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_secure`](#chapter_05_sub_session_set_cookie_params_parameters)
+   * `session_cookie_domain`
+   * `session_cookie_httponly`
+   * `session_cookie_lifetime`
+   * `session_cookie_path`
+   * `session_cookie_secure`
    * [`session_name`](#chapter_05_sub_session_name)
 
  * [`view_cache_manager`](#chapter_05_view_cache_manager)
@@ -437,7 +437,7 @@ HTTP リクエストのあいだのユーザーデータの一貫性を保つた
         cache_key_use_host_name:    true
 
 >**CAUTION**
->[`cache`](#chapter_04-Settings_sub_cache) 設定が `true` にセットされている場合にのみこのファクトリが作られます。
+>[`cache`](#chapter_04_sub_cache) 設定が `true` にセットされている場合にのみこのファクトリが作られます。
 
 このファクトリのコンフィギュレーションの大半は `view_cache` ファクトリ経由で変更されます。`view_cache` ファクトリはビューキャッシュマネージャによって使われる内部のキャッシュオブジェクトを定義します。
 

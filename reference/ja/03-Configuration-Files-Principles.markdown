@@ -48,10 +48,10 @@ symfony が設定ファイルをコンパイルするとき、既存のすべて
 
  | 定数                 | 説明                 | コンフィギュレーションメソッド |
  | -------------------- | -------------------------------- | -------------------- |
- | `SF_APP`             | 現在のアプリケーションの名前     | `getApplication()`  |
- | `SF_ENVIRONMENT`     | 現在の環境の名前                  | `getEnvironment()`  |
- | `SF_DEBUG`           | デバッグモードが有効であるか     | `isDebug()`         |
- | `SF_SYMFONY_LIB_DIR` | symfony ライブラリのディレクトリ | `getSymfonyLibDir()` |
+ | ~`SF_APP`~             | 現在のアプリケーションの名前     | `getApplication()`  |
+ | ~`SF_ENVIRONMENT`~     | 現在の環境の名前                  | `getEnvironment()`  |
+ | ~`SF_DEBUG`~           | デバッグモードが有効であるか     | `isDebug()`         |
+ | ~`SF_SYMFONY_LIB_DIR`~ | symfony ライブラリのディレクトリ | `getSymfonyLibDir()` |
 
 ### ディレクトリ
 

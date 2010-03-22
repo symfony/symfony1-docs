@@ -35,7 +35,7 @@ routing.yml 設定ファイル
 ルートクラス
 ------------
 
- * [メインのコンフィギュレーション](#chapter_10_route_configuration)
+ * メインのコンフィギュレーション
 
    * [`class`](#chapter_10_sub_class)
    * [`options`](#chapter_10_sub_options)

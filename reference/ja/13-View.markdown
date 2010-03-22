@@ -29,7 +29,7 @@ view.yml 設定ファイル
 
     [yml]
     default:
-      has_layout: on
+      has_layout: true
       layout:     layout
 
 `view.yml` 設定ファイルはアプリケーションによって使われるデフォルトの ~`layout`~ を定義します。デフォルトでは、名前は `layout` で、symfony はアプリケーションの `templates/` ディレクトリにある `layout.php` ファイルですべてのページをデコレートします。~`has_layout`~ エントリを `false` にセットすることでデコレーション処理を一緒に無効にすることもできます。
@@ -49,7 +49,7 @@ view.yml 設定ファイル
 `stylesheets` エントリは現在のビューで使うスタイルシートの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義されているスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動で行うかもしくは [common フィルタ](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義されているスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動で行うかもしくは [共通フィルタ](#chapter_12)で自動的に行われます。
 
 複数のファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
@@ -81,7 +81,7 @@ view.yml 設定ファイル
 `javascripts` エントリは現在のビューに使う JavaScript ファイルの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義されている JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーによる手動で行う、もしくは  [common フィルタ](#chapter_12_common)で自動的に行われます。
+>`view.yml` で定義されている JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーによる手動で行う、もしくは  [共通フィルタ](#chapter_12)で自動的に行われます。
 
 複数のファイルが定義されている場合、symfony は定義と同じ順序でこれらをインクルードします:
 
@@ -126,4 +126,4 @@ view.yml 設定ファイル
 静的なメタ情報 (Content-Type など) のためのレイアウトの HTML を純粋に保つ、もしくは動的なメタ情報 (タイトルや説明) のスロットのためにこれらの設定は*非推奨*です。
 
 >**TIP**
->効果があるとき、[`settings.yml` 設定ファイル](#chapter_04_charset)で定義されている文字集合をインクルードするために HTTP の `Content-Type` のメタ情報は自動的に修正されます。
+>効果があるとき、[`settings.yml` 設定ファイル](#chapter_04_sub_charset)で定義されている文字集合をインクルードするために HTTP の `Content-Type` のメタ情報は自動的に修正されます。
