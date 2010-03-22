@@ -368,13 +368,13 @@ arquivo `actions.class.php`:
 >no layout: tags FBML podem ser fechadas, mas as XFBML não. Então, basta substituir
 >as tags a seguir:
 >
-> [html]
-> <fb:profile-pic uid="12345" size="normal" width="400" />
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400" />
 >
 >por:
 >
-> [html]
-> <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
 
 Claro que, para fazer isto, a aplicação precisa ser configurada também como uma 
 aplicação *Facebook Connect* nas configurações do desenvolvedor, mesmo se a aplicação for
