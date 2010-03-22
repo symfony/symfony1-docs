@@ -1,7 +1,7 @@
 イベント
 ========
 
-`sfEventDispatcher` オブジェクトのおかげでsymfony のコアコンポーネントは疎結合されています。Event Dispatcher はコアコンポーネントのあいだのコミュニケーションを管理します。
+`sfEventDispatcher` オブジェクトのおかげで symfony のコアコンポーネントは疎結合されています。Event Dispatcher はコアコンポーネントのあいだのコミュニケーションを管理します。
 
 あるオブジェクトがイベントをディスパッチャに通知し、別のオブジェクトが特定のイベントをリスニングするためにディスパッチャに接続できます。
 
@@ -189,7 +189,7 @@
 
 *デフォルトの通知オブジェクト*: `sfTask`
 
-| パラメータ | 説明
+| パラメータ  | 説明
 | ------------ | ------------------------------
 | `arguments`  | CLI に渡される引数の配列
 | `options`    | CLI に渡されるオプションの配列
@@ -294,7 +294,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 *デフォルトの通知オブジェクト*: `sfController`
 
-| パラメータ | 説明
+| パラメータ  | 説明
 | ------------ | ------------------------------------
 | `module`     | 404エラーを生成するモジュールの名前
 | `action`     | 404エラーを生成するアクションの名前
@@ -320,7 +320,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 *デフォルトの通知オブジェクト*: `sfFormSymfony`
 
-`form.filter_values` イベントは、バインディングする直前の、マージされ、汚染されたパラメータとファイルの配列をフィルタリングします。
+`form.filter_values` イベントは、バインドする直前の、マージされ、汚染されたパラメータとファイルの配列をフィルタリングします。
 
 ### ~`form.validation_error`~
 
@@ -340,7 +340,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 *デフォルトの通知オブジェクト*: `sfFormSymfony`
 
-| パラメータ | 説明
+| パラメータ  | 説明
 | ------------ | ----------------------------------------
 | `method`     | 呼び出されたが見つからないメソッドの名前
 | `arguments`  | メソッドに渡される引数
@@ -379,9 +379,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`plugin.pre_uninstall`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfPluginManager`
+*デフォルトの通知オブジェクト*: `sfPluginManager`
 
 | パラメータ   | 説明
 | ------------ | ------------------------
@@ -392,25 +392,25 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`plugin.post_uninstall`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfPluginManager`
+*デフォルトの通知オブジェクト*: `sfPluginManager`
 
 | パラメータ  | 説明
 | ------------ | -----------------------
 | `channel`    | プラグインのチャンネル
 | `plugin`     | プラグインの名前
 
-プラグインがアンインストールされる直後に `plugin.post_uninstall` イベントが通知されます。
+プラグインがアンインストールされた直後に `plugin.post_uninstall` イベントが通知されます。
 
 `request`
 ---------
 
 ### ~`request.filter_parameters`~
 
-*通知メソッド* `filter`
+*通知メソッド*: `filter`
 
-*デフォルトの通知オブジェクト* `sfWebRequest`
+*デフォルトの通知オブジェクト*: `sfWebRequest`
 
 | パラメータ   | 説明
 | ------------ | -----------------
@@ -420,9 +420,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`request.method_not_found`~
 
-*通知メソッド* `notifyUntil`
+*通知メソッド*: `notifyUntil`
 
-*デフォルトの通知オブジェクト* `sfRequest`
+*デフォルトの通知オブジェクト*: `sfRequest`
 
 | パラメータ  | 説明
 | ----------- | ------------------------------------------
@@ -436,9 +436,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`response.method_not_found`~
 
-*通知メソッド* `notifyUntil`
+*通知メソッド*: `notifyUntil`
 
-*デフォルトの通知オブジェクト* `sfResponse`
+*デフォルトの通知オブジェクト*: `sfResponse`
 
 | パラメータ  | 説明
 | ----------- | -------------------------------------------
@@ -449,9 +449,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`response.filter_content`~
 
-*通知メソッド* `filter`
+*通知メソッド*: `filter`
 
-*デフォルトの通知オブジェクト* `sfResponse`
+*デフォルトの通知オブジェクト*: `sfResponse`
 
 レスポンスが送信される前に `response.filter_content` イベントが通知されます。このイベントをリスニングすることで、送信される前のレスポンスの内容を操作することができます。
 
@@ -460,9 +460,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`routing.load_configuration`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfRouting`
+*デフォルトの通知オブジェクト*: `sfRouting`
 
 ルーティングファクトリがルーティングコンフィギュレーションをロードするときに `routing.load_configuration` イベントが通知されます。
 
@@ -471,9 +471,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`task.cache.clear`~
 
-*通知メソッド* `notifyUntil`
+*通知メソッド*: `notifyUntil`
 
-*デフォルトの通知オブジェクト* `sfCacheClearTask`
+*デフォルトの通知オブジェクト*: `sfCacheClearTask`
 
 | パラメータ | 説明
 | ---------- | --------------------------
@@ -488,9 +488,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`template.filter_parameters`~
 
-*通知メソッド* `filter`
+*通知メソッド*: `filter`
 
-*デフォルトの通知オブジェクト* `sfViewParameterHolder`
+*デフォルトの通知オブジェクト*: `sfViewParameterHolder`
 
 ビューファイルがレンダリングされる前に `template.filter_parameters` イベントが通知されます。このイベントをリスニングすることで、テンプレートに渡される変数へのアクセスおよび操作ができます。
 
@@ -499,21 +499,21 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`user.change_culture`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfUser`
+*デフォルトの通知オブジェクト*: `sfUser`
 
 | パラメータ | 説明
-| ----------- | -----------
+| ----------- | -----------------
 | `culture`   | ユーザーカルチャ
 
 リクエストのあいだにユーザーカルチャが変更されるときに `user.change_culture` イベントが通知されます。
 
 ### ~`user.method_not_found`~
 
-*通知メソッド* `notifyUntil`
+*通知メソッド*: `notifyUntil`
 
-*デフォルトの通知オブジェクト* `sfUser`
+*デフォルトの通知オブジェクト*: `sfUser`
 
 | パラメータ | 説明
 | ----------- | -------------------------------------------
@@ -524,9 +524,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`user.change_authentication`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfBasicSecurityUser`
+*デフォルトの通知オブジェクト*: `sfBasicSecurityUser`
 
 | パラメータ      | 説明
 | --------------- | ----------------------------------
@@ -539,9 +539,9 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`view.configure_format`~
 
-*通知メソッド* `notify`
+*通知メソッド*: `notify`
 
-*デフォルトの通知オブジェクト* `sfView`
+*デフォルトの通知オブジェクト*: `sfView`
 
 | パラメータ | 説明
 | ---------- | -------------------------------
@@ -553,7 +553,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`view.method_not_found`~
 
-*通知メソッド* `notifyUntil`
+*通知メソッド*: `notifyUntil`
 
 *通知元クラス*: `sfView`
 
@@ -569,7 +569,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 
 ### ~`view.cache.filter_content`~
 
-*通知メソッド* `filter`
+*通知メソッド*: `filter`
 
 *デフォルトの通知オブジェクト*: `sfViewCacheManager`
 
