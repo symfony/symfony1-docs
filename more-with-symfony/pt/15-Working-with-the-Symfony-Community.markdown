@@ -1,7 +1,7 @@
 ﻿Trabalhando com a comunidade symfony
 ==================================
 
-* por Stefan Koopmanschap *
+*por Stefan Koopmanschap*
 
 Há muitas razões para trabalhar com software Open-Source. Ser capaz de ver
 o código-fonte é um deles. O software é frequentemente livre. Mas uma das razões mais
@@ -16,7 +16,7 @@ alguma inspiração para a melhor maneira de interagir com a comunidade e
 tirar o máximo proveito dela.
 
 Obtendo o melhor da Comunidade
------------------------------------
+------------------------------
 
 Há muitas maneiras de obter algo da comunidade symfony. Algumas formas estão
 tão integradas no uso do symfony enquanto framework que talvez nem
@@ -97,7 +97,7 @@ sistema operacional tem, que soluções possíveis tentou e
 falharam. Pode incluir no e-mail quaisquer exemplos de código, para contextualizar o seu problema
 tanto quanto possível, o que pode levar à solução.
 
-# # # # IRC
+#### IRC
 
 IRC é a forma mais direta de obter respostas, devido à sua natureza imediata.
 Symfony tem um canal dedicado chamado #symfony no
@@ -130,7 +130,7 @@ irá tornar mais claro com quem você está falando, quer para quem fez a pergun
 quer para aqueles que estão noutras conversas; assim sabem que podem ignorar
 a sua mensagem porque não é uma parte da conversa deles.
 
-# # # Ajustes e novas funcionalidades
+### Ajustes e novas funcionalidades
 
 Isso é algo que todos assumimos como garantido, mas que precisa de ser dito: todo
 o código base do symfony é um grande esforço da comunidade. Há muito tempo investido
@@ -142,7 +142,7 @@ você está trabalhando com o symfony (ou qualquer outro projeto Open Source par
 efeito) esteja ciente de que é graças à comunidade que você é capaz de usar
 o software.
 
-# # # Plugins
+### Plugins
 
 Symfony tem um sistema de plugins muito extenso, o que lhe permite instalar facilmente
 plugins externos no seu projeto. O sistema de plugin é baseado no
@@ -155,7 +155,7 @@ percorrer os plugins filtrando a sua busca por categorias, ORM utilizado, versã
 plugins para muitas funcionalidades comuns que encontra nas aplicações web
 de hoje.
 
-# # # Conferências e Eventos
+### Conferências e Eventos
 
 Além da interação com a comunidade através de meios digitais, como descrito
 antes, pode também comunicar com a comunidade em conferências e outros
@@ -181,7 +181,7 @@ permitir a criação de uma rede de pessoas relacionadas com o symfony que podem
 nos problemas ligados ao symfony, poderão ter um trabalho para você, se você está procurando
 um, ou conhecem um desenvolvedor que está disponível quando você precisar de um.
 
-# # # Reputação
+### Reputação
 
 Estar presente na comunidade, ser visto, conversar com pessoas,
 talvez também tornar-se mais ativo na comunidade, vão permitir que construa uma
@@ -208,7 +208,7 @@ Como pode você ajudar a comunidade a ser uma comunidade melhor e a crescer? Com
 contribuir para a existência e resistência da comunidade? Vejamos
 algumas das maneiras como poderá contribuir.
 
-# # # Os Fóruns e Mailinglists
+### Os Fóruns e Mailinglists
 
 Conforme descrito anteriormente, os fóruns e mailing lists são um local onde pode
 obter suporte. Pode obter respostas às suas perguntas, sugestões sobre a forma de
@@ -222,7 +222,7 @@ numa nova direcção pode ajudar as pessoas a encontrar a solução para o seu p
 Como você já se deve ter inscrito em uma mailinglist, acrescentar os seus conhecimentos
 é um pequeno esforço que vai ajudar os outros.
 
-# # # IRC
+### IRC
 
 A comunicação mais direta relacionada com o symfony é feita no IRC, como descrito anteriormente.
 Assim como com as mailiglists, se andar pelo canal de IRC
@@ -239,14 +239,14 @@ pode então responder. Isto irá torná-lo mais acessível pela
 comunidade se eles tiverem uma pergunta a que sabem que você poderá responder. Assim,
 mesmo quando não fazer nada, você está fazendo algo de útil: estar disponível.
 
-# # # Contribuindo com Código
+### Contribuindo com Código
 
 Provavelmente, a maneira mais fácil de contribuir para as pessoas que trabalham com o symfony
 é contribuir com algum código. Como todos os usuários do symfony são também desenvolvedores, este é
 o método mais divertido de dar algo à comunidade em retorno. Existem várias
 formas de contribuir com código. Abaixo está uma lista deformas de o fazer.
 
-# # # # Core Patches
+#### Core Patches
 
 Naturalmente, pode acontecer que, enquanto estiver trabalhando com o symfony, você descubra um bug.
 Ou, pode, até, querer fazer alguma coisa que, na verdade, o symfony não permite por
@@ -284,7 +284,7 @@ de que menciona em "Full Description" quais as partes do symfony que são afetad
 que assinala a opção que indica se há um arquivo de patch para anexar ao novo
 Ticket.
 
-# # # # Contribuindo com Plugins
+#### Contribuindo com Plugins
 
 Alterar o núcleo da framework não é para todos. Mas os usuários do symfony trabalham em
 projetos que contêm funcionalidades personalizadas. Algumas funcionalidades são muito
@@ -310,7 +310,7 @@ do simfony sem configuração adicional. Obviamente, porém, é tammbém possív
 criar um servidor pacote PEAR e ter os usuários adicionando isso a seus projetos para
 instalar plugins.
 
-# # # Documentação
+### Documentação
 
 Uma das partes fortes do symfony é sua documentação. A equipe principal
 escreveu muita documentação sobre como usar o symfony, mas uma grande parte da
@@ -321,7 +321,7 @@ como uma referência para desenvolvedores experientes, por isso é muito importa
 boa documentação. Existem várias maneiras de contribuir com documentação para
 o symfony.
 
-# # # # Escrever no seu weblog
+#### Escrever no seu weblog
 
 Partilhar experiências e conhecimentos sobre o symfony é muito importante para a
 comunidade. Especialmente quando se trata de algo que é difícil de descobrir,
@@ -343,7 +343,7 @@ directrizes: é pedido um feed específico do symfony feed para que todo o conte
 página da comunidade symfony seja relacionado. Além disso, por favor, não adicione outra coisa que não
 weblogs (nada de twitter feeds, por exemplo).
 
-# # # # Escrever artigos
+#### Escrever artigos
 
 As pessoas que estão mais confortáveis com a sua escrita podem levá-la a um passo
 mais à frente. Existem várias revistas PHP em todo o mundo, assim como muitas revistas
@@ -360,7 +360,7 @@ bem-vindos. Por exemplo, sites de grupos de usuários de PHP ou grupos de usuár
 Websites genéricos de desenvolvimento para a web, e outras publicações on-line muitas vezes
 aceitam artigos com bom conteúdo que possa ser publicado no seu site.
 
-# # # # Traduzir documentação
+#### Traduzir documentação
 
 A maioria das pessoas que fazem o desenvolvimento PHP hoje-em-dia estão familiarizados com o Inglês
 . No entanto, para muitas pessoas, não é a sua primeira língua, o que torna
@@ -377,7 +377,7 @@ de que existam vários tradutores para uma língua, nesse caso, é muito
 importante coordenar esforços e não duplicar trabalho. A mailinglist docs
 do symfony é o lugar perfeito para iniciar os seus esforços de tradução.
 
-# # # # Adicionar conteúdo à Wiki
+#### Adicionar conteúdo à Wiki
 
 Uma wiki é uma das formas mais abertas de documentar qualquer assunto. O Symfony tem
 uma [wiki] (http://trac.symfony-project.org/wiki) onde as pessoas podem adicionar
@@ -393,7 +393,7 @@ inspiração para o conteúdo que deseja acrescentar, basta dar uma olhadela par
 [página principal da wiki] (http://trac.symfony-project.org/wiki) para ver o que já está
 lá.
 
-# # # Apresentações
+### Apresentações
 
 Escrever é uma boa maneira de partilhar conhecimentos e experiências. O conteúdo está
 disponível para um grande número de pessoas e é pesquisável. No entanto, existem mais maneiras
@@ -423,7 +423,7 @@ grupo de usuários, onde poderia fazer a sua apresentação, pode se inscrever n
 mailinglist para receber atualizações sobre Chamadas de Conferências ou contatos com
 Grupos de usuários.
 
-# # # Organizar um evento / encontro
+### Organizar um evento / encontro
 
 Além de fazer apresentações em conferências e reuniões existentes, você pode
 também organizar algo. Pode ser muito pequeno ou muito grande. Pode ser
@@ -446,7 +446,7 @@ por empresas que trabalham de desenvolvimento que trabalham com o symfony tentan
 de volta à comunidade. Todas essas conferências foram bastante visitadas, tiveram um fantástico
 calendário de falante e tiveram um óptimo ambiente de comunidade.
 
-# # # Tornar-se localmente ativo
+### Tornar-se localmente ativo
 
 Foi mencionado anteriormente que nem toda a gente é capaz de entender muito do
 conteúdo técnico em Inglês. Além disso, às vezes, pode ser bom não só
@@ -473,7 +473,7 @@ fornece documentação extensa em Espanhol, por isso é uma ótima maneira de ap
 symfony para os desenvolvedores espanhóis e de manter-se atualizado em relação aos novos desenvolvimentos
 em torno do symfony.
 
-# # # Tornar-se parte da equipe principal
+### Tornar-se parte da equipe principal
 
 A equipe principal faz também, naturalmente, parte da comunidade. As pessoas que estão
 na equipe principal todos começaram como usuários da framework e, devido ao seu
@@ -488,14 +488,14 @@ Bernhard se juntou à equipe principal depois do seu fantástico trabalho na seg
 da framework de testes Lime e de ter apresentado patches de forma consistente
 durante um longo período de tempo.
 
-# # # Por onde começar?
+### Por onde começar?
 
 Agora que já ouviu o que pode conseguir a partir da comunidade e como pode
 contribuir, seria simpático rever por alto alguns dos pontos de partida
 para se envolver na comunidade symfony. Use-os para encontrar o seu caminho
 até à comunidade.
 
-# # # # Mailinglist da comunidade Symfony
+#### Mailinglist da comunidade Symfony
 
 A [mailinglist da comunidade symfony] (http://groups.google.com/group/symfony-community)
 é uma mailinglist onde os membros podem discutir idéias acerca dos esforços da comunidade, unir
@@ -506,7 +506,7 @@ comunidade symfony, pode publicá-las nesta lista. Se tiver dúvidas
 sobre a comunidade ou sobre as diferentes maneiras de comunicar com ela,
 este é também o lugar para estar.
 
-# # # # A página "Como contribuir para o symfony"
+#### A página "Como contribuir para o symfony"
 
 Desde há algum tempo, o symfony tem uma página especial na wiki com o título
 [Como contribuir para o symfony] (http://trac.symfony-project.org/wiki/HowToContributeToSymfony).
@@ -515,14 +515,14 @@ symfony e à comunidade com as suas capacidades, e tem links para os locais
 corretos para dar essa ajuda. É uma leitura recomendada para qualquer um
 que quer se envolver na comunidade symfony.
 
-# # # Comunidades Externas
+### Comunidades Externas
 
 Por favor, não pare de envolver-se na comunidade symfony das formas descritas
 neste artigo. Há uma série de iniciativas por todo o mundo que são
 relativas ao symfony ou organizadas por usuários da framework. Quero dar alguma atenção extra
 a duas dessas iniciativas, já que podem ser úteis para as pessoas que trabalham com o symfony.
 
-# # # # Symfonians
+#### Symfonians
 
 A [comunidade Symfonians] (http://www.symfonians.net/) é uma comunidade que
 lista as pessoas e empresas que trabalham com o symfony e os projetos feitos com
@@ -539,7 +539,7 @@ Uma vez que todo o conteúdo do site é desenvolvido pela comunidade, pode tamb�
 obter uma conta e criar seu próprio perfil, o perfil da sua empresa, adicionar
 aplicações que construiu com o symfony ou publicar vagas de emprego ou cargo.
 
-# # # # Grupo do Symfony no LinkedIn
+#### Grupo do Symfony no LinkedIn
 
 Qualquer desenvolvedor de PHP profissional já encontrou, provavelmente, o LinkedIn. A maioria
 terá o seu próprio perfil. Para aqueles que não conhecem o LinkedIn:
