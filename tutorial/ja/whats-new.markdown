@@ -34,7 +34,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 `generate:app` タスクで新しいアプリケーションを作るとき、セキュリティの設定項目はデフォルトで有効になります:
 
-  * `escaping_strategy`: デフォルトではこの値は `true` です (`--escaping-strategy` オプションで無効にできます)。
+  * `escaping_strategy`: 既定値は `true` です (`--escaping-strategy` オプションで無効にできます)。
 
   * `csrf_secret`: デフォルトでランダムなパスワードが生成されます。CSRF 防止機能は標準で有効です (`--csrf-secret` オプションで無効にできます)。`settings.yml` 設定ファイルを編集するか、`--csrf-secret` オプションを指定することで、初期パスワードを変更することを強くおすすめします。
 
@@ -125,7 +125,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 にもとづく新しい標準メーラ�
 
 ### デフォルトのエラーメッセージ
 
-次のように `sfForm::setDefaultMessage()` メソッドを使うことでデフォルトのエラーメッセージをグローバルに定義できるようになりました:
+次のように `sfForm::setDefaultMessage()` メソッドを使うことデフォルトのエラーメッセージをグローバルに定義できるようになりました:
 
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
@@ -351,7 +351,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
 タスク
 ------
 
-symfony CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの78カラムに合わせようとします。
+symfony CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅を既定値の78カラムに合わせようとします。
 
 ### `sfTask::askAndValidate()`
 
@@ -569,11 +569,11 @@ Propel の `symfony` ビヘイビアにパラメータを渡すことで特定�
 
 ### デフォルトの要件
 
-`column` オプションがデフォルトの `id` であるとき、デフォルトの必須要件の `\d+` は `sfObjectRouteCollection` にだけ適用されるようになりました。このことが意味するのは (`slug` のような) 数字ではないカラムが指定されているときに代わりの必須要件を用意する必要はないということです。
+`column` オプションが既定値の `id` であるとき、デフォルトの必須要件の `\d+` は `sfObjectRouteCollection` にだけ適用されるようになりました。このことが意味するのは (`slug` のような) 数字ではないカラムが指定されているときに代わりの必須要件を用意する必要はないということです。
 
 ### `sfObjectRouteCollection` オプション
 
-新しい `default_params` オプションが `sfObjectRouteCollection` に追加されました。これはデフォルトパラメータをそれぞれの生成ルートに登録することを可能にします:
+新しい `default_params` オプションが `sfObjectRouteCollection` に追加されました。このオプションはパラメータの既定値をそれぞれの生成ルートに登録することを可能にします:
 
     [yml]
     forum_topic:
@@ -958,9 +958,9 @@ symfony が Doctrine モデルに追加するゲッターとセッターのマ�
 
 `factories.yml` で2つのパラメータが利用できます:
 
-  * `cache_key_use_vary_headers` (デフォルト: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメータで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
+  * `cache_key_use_vary_headers` (既定値: true): キャッシュキーが Vary ヘッダーの一部を含むか指定します。実際には、`vary` キャッシュパラメータで指定されるので、これはページキャッシュが HTTP ヘッダーに依存するかどうかを伝えます。
 
-  * `cache_key_use_host_name` (デフォルト: true): キャッシュキーがホスト名の部分を含むか指定します。実際には、これはページキャッシュがホスト名に依存するかどうかを伝えます。
+  * `cache_key_use_host_name` (既定値: true): キャッシュキーがホスト名の部分を含むか指定します。実際には、これはページキャッシュがホスト名に依存するかどうかを伝えます。
 
 ### キャッシュの強化
 
