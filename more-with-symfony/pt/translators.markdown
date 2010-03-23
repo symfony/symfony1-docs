@@ -62,7 +62,7 @@ Além de symfony, curte open source, e soluções inteligentes para sites com ca
 
 **No Twitter** : *http://twitter.com/lucasts*
 
-** Github**: *http://github.con/lucasts*
+**Github**: *http://github.con/lucasts*
 
 
 Márcio Albuquerque
@@ -85,6 +85,16 @@ Recentemente Licenciada em Novas Tecnologias da Comunicação, procura constante
 **No twitter**: *http://twitter.com/maurabouca*
 
 
+Rafael Goulart
+--------------
+
+Graduado em Administração, é desenvolvedor PHP há 8 anos e 2,5 anos desenvolvedor symfony, ZCE, especialista em sistemas CRM , leciona PHP e symfony. 
+
+Trabalha como consultor e desenvolvedor freelancer para vários clientes em todo Brasil.
+
+**Seu site** : *http://rgou.net*
+
+
 Raphael A. Araújo
 -----------------
 
@@ -95,16 +105,6 @@ Membro proativo do grupo symfony-pt, busca compartilhar experiências com todos 
 **Seu site** : *http://sites.google.com/site/raphoxaraujo*
 
 **No Twitter** : *http://twitter.com/raphox*
-
-
-Rafael Goulart
---------------
-
-Graduado em Administração, é desenvolvedor PHP há 8 anos e 2,5 anos desenvolvedor symfony, ZCE, especialista em sistemas CRM , leciona PHP e symfony. 
-
-Trabalha como consultor e desenvolvedor freelancer para vários clientes em todo Brasil.
-
-**Seu site** : *http://rgou.net*
 
 
 Rimenes Ribeiro

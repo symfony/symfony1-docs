@@ -467,7 +467,7 @@ pois a informação sobre `Client` é armazenada no próprio subdomínio.
 >deve retornar um array de parâmetros que você quer que seja utilizado durante a
 >geração da rota.
 
-Coleções (*Collections*) de Rota
+Coleções (*Collections*) de Rotas
 -----------------
 
 Para terminar a aplicação Sympal Builder, precisamos criar uma área administrativa
@@ -567,7 +567,7 @@ de cada rota para uma aplicação específica:
     pageAdmin_delete DELETE /pages/:id
     pageAdmin_show GET /pages/:id
 
-### Substituindo as Rotas com uma Coleção de Rota
+### Substituindo as Rotas com uma Coleção de Rotas
 
 Felizmente, o symfony fornece uma maneira muito mais fácil para especificar todas as rotas
 que pertencem a um CRUD tradicional. Substitua todo o conteúdo em `routing.yml` com uma simples rota.
@@ -599,10 +599,10 @@ Coleções de Rotas são um tipo especial de objeto de rota que representa inter
 mais de uma rota. A rota ~`sfDoctrineRouteCollection`~, por exemplo
 gera automaticamente as sete rotas mais comuns necessárias para um CRUD. Debaixo
 dos panos, `sfDoctrineRouteCollection` não está fazendo nada mais do que criar
-as mesmas sete rotas previamente especificadas em `routing.yml`. Coleções de rota
+as mesmas sete rotas previamente especificadas em `routing.yml`. Coleções de rotas
 existem basicamente como um atalho para a criação de um grupo comum de rotas.
 
-Criando uma Coleção de Rota Personalizada
+Criando uma Coleção de Rotas Personalizadas
 ----------------------------------
 
 Neste ponto, cada `Client`, será capaz de modificar seus objetos `Page` dentro de
@@ -701,7 +701,7 @@ podemos facilmente fazer o objeto `Client` disponível através da rota. A colun
 `client_id` dos novos objetos `Page` será automatica e corretamente definida
 baseando-se no subdomínio do host atual.
 
-Personalizando um Objeto de Coleção de Roteamento
+Personalizando um Objeto de Coleção de Roteamentos
 --------------------------------------
 
 Ao utilizar o framework de roteamento, resolvemos agora facilmente os problemas que surgiram
@@ -709,7 +709,7 @@ ao criar a aplicação Sympal Builder. Conforme a aplicação cresce, o desenvol
 será capaz de reutilizar as rotas personalizadas para os outros módulos na área de back-end
 (por exemplo, para que cada `Client` possa gerenciar suas galerias de foto).
 
-Outro motivo comum para criar uma coleção de roteamento personalizada é para acrescentar rotas,
+Outro motivo comum para criar uma coleção de roteamentos personalizada é para acrescentar rotas,
 de uso comum adicionaiss. Por exemplo, imagine que um projeto utilize muitos modelos, cada um
 com uma coluna `is_active`. Na área administrativa, é preciso haver uma maneira fácil
 para alternar o valor de `is_active` para qualquer objeto em particular. Primeiramente, modifique
@@ -766,7 +766,7 @@ chamado `getRouteForToggleActive()`:
       );
     }
 
-O único passo restante é configurar a coleção de roteamento em `routing.yml`.
+O único passo restante é configurar a coleção de roteamentos em `routing.yml`.
 Observe que `generateRoutes()` procura por uma opção chamada `with_is_active`
 antes de adicionar a nova rota. Adicionar esta lógica nos dá mais controle em caso
 de querermos utilizar `acClientObjectRouteCollection` em algum lugar depois que não
