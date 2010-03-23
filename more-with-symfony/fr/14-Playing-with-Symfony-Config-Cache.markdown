@@ -340,8 +340,8 @@ Les deux premières méthodes implémentent le principe de
 La méthode statique `getConfiguration()` du gestionnaire aura besoin d'une méthode personnalisée afin de regrouper les configurations des classes dont elle hérite. Par conséquent, il convient d'écrire une méthode `applyInheritance()` qui appliquera cette logique.
 
     [php]
-    // lib/config/sfFormYamlEnhancementsConfigHander.class.php
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    // lib/config/sfFormYamlEnhancementsConfigHandler.class.php
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       public function execute($configFiles)
       {
@@ -395,7 +395,7 @@ De plus, cette opération est effectuée dans le gestionnaire de configuration e
       public function __construct(sfConfigCache $configCache)
       {
         $this->configCache = $configCache;
-        $this->configCache->registerConfigHandler('config/forms.yml', 'sfFormYamlEnhancementsConfigHander');
+        $this->configCache->registerConfigHandler('config/forms.yml', 'sfFormYamlEnhancementsConfigHandler');
       }
 
       // ...
@@ -485,7 +485,7 @@ Pour que le test fonctionne de nouveau, il faut développer une version plus ava
 Pour ce faire, une version personnalisée doit être écrite pour chaque méthode de chaque classe. Ces méthodes seront générées par le gestionnaire de configuration personnalisé dans une nouvelle classe métier.
 
     [php]
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       // ...
 
@@ -539,7 +539,7 @@ Il est important de remarquer ici que le tableau de configuration est vérifié 
 Le code généré est ensuite placé dans une définition de classe sauvegardée dans le répertoire de cache.
 
     [php]
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       public function execute($configFiles)
       {
@@ -689,7 +689,7 @@ Cela peut paraître intimidant pour ceux qui n'ont jamais publié de plugin mais
         sfFormYamlEnhancementsPluginConfiguration.class.php
       lib/
         config/
-          sfFormYamlEnhancementsConfigHander.class.php
+          sfFormYamlEnhancementsConfigHandler.class.php
         form/
           sfFormYamlEnhancer.class.php
       test/
@@ -781,7 +781,7 @@ La méthode `loadWorker()` peut alors être surchargée afin d'appeler le gestio
       {
         if (!class_exists('sfFormYamlEnhancementsWorker', false))
         {
-          $configHandler = new sfFormYamlEnhancementsConfigHander();
+          $configHandler = new sfFormYamlEnhancementsConfigHandler();
           $code = $configHandler->execute(array(dirname(__FILE__).'/../../fixtures/forms.yml'));
 
           $file = tempnam(sys_get_temp_dir(), 'sfFormYamlEnhancementsWorker');

@@ -336,8 +336,8 @@ YAMLの設定の適用
 今回のコンフィグハンドラーで使う`::getConfiguration()`メソッドは、クラス継承に基づくコンフィギュレーションをマージするカスタムメソッドが必要になります。`::applyInheritance()`を作成し、このロジックをカプセル化しましょう:
 
     [php]
-    // lib/config/sfFormYamlEnhancementsConfigHander.class.php
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    // lib/config/sfFormYamlEnhancementsConfigHandler.class.php
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       public function execute($configFiles)
       {
@@ -396,7 +396,7 @@ YAMLの設定の適用
       {
         $this->configCache = $configCache;
         $this->configCache->registerConfigHandler('config/forms.yml',
-          'sfFormYamlEnhancementsConfigHander');
+          'sfFormYamlEnhancementsConfigHandler');
       }
 
       // ...
@@ -489,7 +489,7 @@ symfonyのフォームフレームワークの重要な特徴である埋め込�
 テストをパスさせるために、より高度なコンフィグハンドラーが必要になります。埋め込みフォームにも`forms.yml`で設定された強化内容を適用できるようにする必要があります。そして、それぞれの設定されたフォームクラスに合う強化役メソッドを生成しましょう。新しい"ワーカー"クラスの中で、カスタムコンフィグハンドラーによって、これらのメソッドを生成します。
 
     [php]
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       // ...
 
@@ -542,7 +542,7 @@ symfonyのフォームフレームワークの重要な特徴である埋め込�
 生成されたコードは、クラス定義の中に書かれ、キャッシュディレクトリに保存されます。
 
     [php]
-    class sfFormYamlEnhancementsConfigHander extends sfYamlConfigHandler
+    class sfFormYamlEnhancementsConfigHandler extends sfYamlConfigHandler
     {
       public function execute($configFiles)
       {
@@ -688,7 +688,7 @@ Just For Fun: プラグインの作成
         sfFormYamlEnhancementsPluginConfiguration.class.php
       lib/
         config/
-          sfFormYamlEnhancementsConfigHander.class.php
+          sfFormYamlEnhancementsConfigHandler.class.php
         form/
           sfFormYamlEnhancer.class.php
       test/
@@ -782,7 +782,7 @@ Just For Fun: プラグインの作成
       {
         if (!class_exists('sfFormYamlEnhancementsWorker', false))
         {
-          $configHandler = new sfFormYamlEnhancementsConfigHander();
+          $configHandler = new sfFormYamlEnhancementsConfigHandler();
           $code = $configHandler->execute(array(dirname(__FILE__).'/../../fixtures/forms.yml'));
 
           $file = tempnam(sys_get_temp_dir(), 'sfFormYamlEnhancementsWorker');
