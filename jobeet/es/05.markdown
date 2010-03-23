@@ -18,7 +18,7 @@ Exponer el funcionamiento interno de tu aplicación es también es bastante malo
 
 Las URL son tan importantes en Symfony que tiene todo un framework dedicado a su gestión: el framework de **enrutamiento**. El enrutamiento gestiona el URI interno y la URL externa. Cuando una petición llega, el enrutamiento analiza la URL y la convierte en un URI interno.
 
-Ya has visto el URI interno de la página de puestos de trabajo en la plantilla `showSuccess.php`:
+Ya has visto el URI interno de la página de puestos de trabajo en la plantilla `indexSuccess.php`:
 
     'job/show?id='.$job->getId()
 

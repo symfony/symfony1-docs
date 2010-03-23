@@ -38,7 +38,7 @@ URIs internes que les URLs externes. Après une requête, le routage analyse l'U
 et la convertit en URI interne.
 
 Vous avez déjà vu une URI interne sur la page job dans le
-Template `showSuccess.php` :
+Template `indexSuccess.php` :
 
     'job/show?id='.$job->getId()
 

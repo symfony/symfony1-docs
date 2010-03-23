@@ -38,7 +38,7 @@ internal URIs and external URLs. When a request comes in, the routing parses
 the URL and converts it to an internal URI.
 
 You have already seen the internal URI of the job page in the
-`showSuccess.php` template:
+`indexSuccess.php` template:
 
     'job/show?id='.$job->getId()
 

@@ -40,7 +40,7 @@ gestione degli URI interni e URL esterni. Quando arriva una richiesta, il routin
 processa l'URL e lo converte in un URI interno.
 
 Abbiamo già visto un URI interno della pagina di un'offerta di lavoro nel template
-`showSuccess.php`:
+`indexSuccess.php`:
 
     'job/show?id='.$job->getId()
 
