@@ -189,7 +189,7 @@ exceções que devem ser verificadas são:
 Então, é sempre bom para executar o Windows Update para garantir que todos os pacotes do software 
 estão instalados com as últimas correções, patches e documentação.
 
-![Verificar status do Windows Update, diretamente no Painel de controle.](Http://www.symfony-project.org/images/more-with-symfony/windows_03.png)
+![Verificar status do Windows Update, diretamente no Painel de controle.](http://www.symfony-project.org/images/more-with-symfony/windows_03.png)
 
 Como última etapa de preparação, e por uma questão de eliminar quaisquer potenciais
 parâmetros conflitantes na distribuição existente no Windows ou configuração do IIS,
@@ -232,7 +232,7 @@ Depois de selecionar o PHP, Web PI 2,0 automaticamente são selecionadas todas a
 para servir páginas web `.php` armazenadas no servidor, incluindo o mínimo
 IIS 7.0 roles services:
 
-![PI Web 2.0 - Dependências automaticamente adicionadas - 1 / 3.] (http://www.symfony-project.org/images/more-with-symfony/windows_08.png)
+![PI Web 2.0 - Dependências automaticamente adicionadas - 1 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_08.png)
 
 ![PI Web 2.0 - Dependências automaticamente adicionadas - 2 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_09.png)
 
@@ -270,7 +270,7 @@ Abra o Windows Explorer e vá para "C:\inetpub\wwwroot`. Clique com o botão dir
 "New Text Document". Renomeie para `phpinfo.php` e copie a chamada de função 
 usual:
 
-![Windows Explorer - Criar phpinfo.php.] (Http://www.symfony-project.org/images/more-with-symfony/windows_15.png)
+![Windows Explorer - Criar phpinfo.php.](http://www.symfony-project.org/images/more-with-symfony/windows_15.png)
 
 Em seguida, reabrir o navegador web, e colocar `/phpinfo.php` no final da
 URL do servidor:
@@ -278,19 +278,19 @@ URL do servidor:
 ![Firefox - Execução do phpinfo.php está OK](http://www.symfony-project.org/images/more-with-symfony/windows_16.png)
 
 Finalmente, para garantir que o symfony irá instalar sem problemas, faça o download
-[http://sf-to.org/1.3/check.php] ( `check_configuration.php`).
+[http://sf-to.org/1.3/check.php]( `check_configuration.php`).
 
 ![PHP - Onde baixar check.php.](http://www.symfony-project.org/images/more-with-symfony/windows_17.png)
 
 Copie para o mesmo diretório como `phpinfo.php` ( `C:\inetpub\wwwroot`) e
 renomeie para `check_configuration.php` se necessário.
 
-![PHP - Copie e renomeie o check_configuration.php.] (Http://www.symfony-project.org/images/more-with-symfony/windows_18.png)
+![PHP - Copie e renomeie o check_configuration.php.](http://www.symfony-project.org/images/more-with-symfony/windows_18.png)
 
 Por fim, reabra o navegador web uma última vez para agora, e coloque
 `/check_configuration.php` no final da URL do servidor:
 
-![Firefox - Execução check_configuration.php está OK.] Http://www.symfony-project.org/images/more-with-symfony/windows_19.png ()
+![Firefox - Execução check_configuration.php está OK.] http://www.symfony-project.org/images/more-with-symfony/windows_19.png ()
 
 Executando o PHP na interface de linha de comando
 ---------------------------------------------
@@ -399,7 +399,7 @@ Isso deve retornar o mesmo resultado:
 
     symfony version 1.3.0 (F:\dev\sfsandbox\lib\symfony)
 
-![Sandbox - Teste de linha de comando - Sucesso.] (http://www.symfony-project.org/images/more-with-symfony/windows_25.png)
+![Sandbox - Teste de linha de comando - Sucesso.](http://www.symfony-project.org/images/more-with-symfony/windows_25.png)
 
 ### A criação de aplicativos Web
 
@@ -416,7 +416,7 @@ O Gerenciador do IIS é acessível a partir do Menu *Start* em *Programs*,
 Queremos garantir que apenas o nosso symfony sandbox está respondendo na porta 80
 (HTTP). Para fazer isso, altere a porta atual do "Default Web Site porta" para 8080.
 
-![*IIS Manager* - Editar *Binding* para "Default Web Site".](Http://www.symfony-project.org/images/more-with-symfony/windows_26.png)
+![*IIS Manager* - Editar *Binding* para "Default Web Site".](http://www.symfony-project.org/images/more-with-symfony/windows_26.png)
 
 Observe que, se o Firewall do Windows estiver ativo, você poderá ter de criar uma 
 exceção para a porta 8080 para continuar a ser capaz de atingir o "Default Web Site". Para
@@ -424,7 +424,7 @@ esse efeito, vá para Windows Control Panel, selecione Windows Firewall, clique 
 *"Allow a program through Windows Firewall"* e clique em *"Add port"* para criar
 esta exceção. Marque a caixa para ativá-lo após a criação.
 
-![Firewall do Windows - Criar Uma Exceção para a Porta 8080.] (Http://www.symfony-project.org/images/more-with-symfony/windows_27.png)
+![Firewall do Windows - Criar Uma Exceção para a Porta 8080.](http://www.symfony-project.org/images/more-with-symfony/windows_27.png)
 
 #### Adicionar um Novo Site para a Sandbox
 
@@ -433,7 +433,7 @@ e clique com o botão direito. Selecione *Add Web Site* a partir do menu de cont
 exemplo, "symfony Sandbox" como o nome do site, `D:\dev\sfsandbox` para a Physical 
 Path, e deixe os outros campos inalterados. Você verá esta caixa de diálogo:
 
-![IIS Manager - Adicionando o Web Site.](Http://www.symfony-project.org/images/more-with-symfony/windows_28.png)
+![IIS Manager - Adicionando o Web Site.](http://www.symfony-project.org/images/more-with-symfony/windows_28.png)
 
 Clique em OK. Se um pequeno `X` aparece no ícone do site (em Features View /
 Sites), não deixe de clicar em "Restart" no painel direito para fazê-lo 
@@ -527,7 +527,7 @@ Baixe o arquivo contendo a biblioteca do
 Em seguida, extraia o diretório contido em um local temporário, como a
 diretório de "downloads".
 
-![Windows Explorer - Baixe e descompacte o arquivo do projeto.] (Http://www.symfony-project.org/images/more-with-symfony/windows_37.png)
+![Windows Explorer - Baixe e descompacte o arquivo do projeto.](http://www.symfony-project.org/images/more-with-symfony/windows_37.png)
 
 Agora precisamos criar uma árvore de diretórios para o destino final do
 projeto. Isto é um pouco mais complicado do que o sandbox.
@@ -566,7 +566,7 @@ Selecione todos os arquivos (CTRL + `A` no Windows Explorer) a partir do seu loc
 (fonte), e copie de Downloads para `D:\dev\sfproject\lib\vendor\symfony`.
 Você deverá ver 3819 itens copiados para o diretório de destino:
 
-![Windows Explorer - Cópia de 3819 itens.] (Http://www.symfony-project.org/images/more-with-symfony/windows_39.png)
+![Windows Explorer - Cópia de 3819 itens.](http://www.symfony-project.org/images/more-with-symfony/windows_39.png)
 
 ### Criação e inicialização
 
@@ -647,14 +647,14 @@ Digite `http://localhost/web` na barra de endereços do seu navegador, você dev
 ver a página "*Symfony Project Created*", mas com uma discreta diferença da 
 mesma página resultante de inicialização do sandbox: não existem imagens:
 
-![Internet Explorer - *symfony Project Created* - sem imagens.] (Http://www.symfony-project.org/images/more-with-symfony/windows_42.png)
+![Internet Explorer - *symfony Project Created* - sem imagens.](http://www.symfony-project.org/images/more-with-symfony/windows_42.png)
 
 As imagens não estão aqui por enquanto, porém elas estão localizadas em um diretório `sf`
 na biblioteca symfony. É fácil ligá-los ao
 diretório `/` web, adicionando um diretório virtual em `/web, nomeado
 `sf`, e apontando para `D:\dev\sfproject\lib\vendor\symfony\data\web\sf`.
 
-![IIS Manager - Adicionar o Diretório Virtual sf.](Http://www.symfony-project.org/images/more-with-symfony/windows_43.png)
+![IIS Manager - Adicionar o Diretório Virtual sf.](http://www.symfony-project.org/images/more-with-symfony/windows_43.png)
 
 Agora temos a página "symfony Project Created" regular com imagens como
 esperado:
