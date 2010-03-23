@@ -4,7 +4,7 @@ security.yml 設定ファイル
 ~`security.yml`~ 設定ファイルでは symfony アプリケーションの認証と承認を記述します。
 
 >**TIP**
->`security.yml` ファイルからのコンフィギュレーション情報は [`user`](#chapter_05_user) ファクトリクラス (既定値は `sfBasicSecurityUser`) によって使われます。認証と承認の実行は `security` [フィルタ](#chapter_12_security)によって行われます。
+>`security.yml` ファイルからのコンフィギュレーション情報は [`user`](#chapter_05_user) ファクトリクラス (デフォルトは `sfBasicSecurityUser`) によって使われます。認証と承認の実行は `security` [フィルタ](#chapter_12_security)によって行われます。
 
 アプリケーションが作られるとき、symfony はアプリケーションの `config/` ディレクトリでデフォルトの `security.yml` ファイルを生成します。このファイルではアプリケーション全体のセキュリティを記述します (`default` キーの下):
 

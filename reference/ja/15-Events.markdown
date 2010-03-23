@@ -156,7 +156,7 @@
 | ------------ | ----------------------------------------------------------------------------------
 | `priority`   | 優先順位 (`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`application.log` イベントはウェブリクエストのロギングをするために symfony によって利用されるメカニズムです (logger ファクトリを参照)。このイベントは symfony のコアコンポーネントの大半によって通知されます。
+`application.log` イベントは Web リクエストのロギングをするために symfony によって利用されるメカニズムです (logger ファクトリを参照)。このイベントは symfony のコアコンポーネントの大半によって通知されます。
 
 ### ~`application.throw_exception`~
 
@@ -360,7 +360,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 | ------------ | ------------------------------------------------------------------------------------
 | `channel`    | プラグインのチャンネル
 | `plugin`     | プラグインの名前
-| `is_package` | ローカルパッケージ (`true`)、もしくはウェブパッケージ (`false`) をインストールするかどうか
+| `is_package` | ローカルパッケージ (`true`)、もしくは Web パッケージ (`false`) をインストールするかどうか
 
 プラグインがインストールされる直前に `plugin.pre_install` イベントが通知されます。
 
