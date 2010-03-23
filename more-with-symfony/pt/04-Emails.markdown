@@ -1,4 +1,4 @@
-﻿Emails
+﻿E-mails
 ======
 
 *por Fabien Potencier*
