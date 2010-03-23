@@ -3,271 +3,271 @@ Windows e symfony
 
 *por Laurent Bonnet*
 
-Vis„o Geral
+Vis√£o Geral
 -----------
 
-Este documento È um novo tutorial passo-a-passo cobrindo a instalaÁ„o,
-implantaÁ„o e teste de funcionamento do framework symfony no Windows Server
+Este documento √© um novo tutorial passo-a-passo cobrindo a instala√ß√£o,
+implanta√ß√£o e teste de funcionamento do framework symfony no Windows Server
 2008.
 
 A fim de preparar o desenvolvimento para Internet, o tutorial pode ser
 executado em um ambiente de servidor dedicado, hospedado na Internet.
 
-Naturalmente, È possÌvel concluir o tutorial em um servidor local, ou uma
-m·quina virtual na estaÁ„o de trabalho do leitor.
+Naturalmente, √© poss√≠vel concluir o tutorial em um servidor local, ou uma
+m√°quina virtual na esta√ß√£o de trabalho do leitor.
 
-### A raz„o para um novo tutorial
+### A raz√£o para um novo tutorial
 
-Atualmente, existem duas fontes de informaÁ„o relacionadas com o Microsoft Internet
+Atualmente, existem duas fontes de informa√ß√£o relacionadas com o Microsoft Internet
 Information Server (IIS) no symfony
 [website](http://trac.symfony-project.org/wiki/symfonyOnIIS)
   [](http://www.symfony-project.org/cookbook/1_2/en/web_server_iis),
-mas eles se referem ‡s versıes anteriores que n„o evoluÌram com novas versıes
+mas eles se referem √†s vers√µes anteriores que n√£o evolu√≠ram com novas vers√µes
 de sistemas operacionais Microsoft Windows, especialmente Windows Server 2008
-(lanÁado em fevereiro de 2008), que inclui muitas mudanÁas de interesse para desenvolvedores PHP:
+(lan√ßado em fevereiro de 2008), que inclui muitas mudan√ßas de interesse para desenvolvedores PHP:
 
-* IIS vers„o 7, a vers„o embutida no Windows Server 2008, foi inteiramente
+* IIS vers√£o 7, a vers√£o embutida no Windows Server 2008, foi inteiramente
    reescrita para um design totalmente modular.
 
-* IIS 7 provou ser muito confi·vel, com muito poucas correÁıes necess·rias de
-   Windows Update, desde o lanÁamento do produto.
+* IIS 7 provou ser muito confi√°vel, com muito poucas corre√ß√µes necess√°rias de
+   Windows Update, desde o lan√ßamento do produto.
 
-* O IIS 7 tambÈm inclui o acelerador FastCGI, um pool de aplicativos multi-threaded
-   que tira proveito do modelo de segmentaÁ„o nativo do sistemas operacionais Windows.
+* O IIS 7 tamb√©m inclui o acelerador FastCGI, um pool de aplicativos multi-threaded
+   que tira proveito do modelo de segmenta√ß√£o nativo do sistemas operacionais Windows.
 
-* A implementaÁ„o do PHP FastCGI equivale a um desempenho 5x a 10x
-   melhor na execuÁ„o, sem cache, quando comparado ao tradicional ISAPI
-   ou implantaÁıes CGI do PHP em Windows e IIS.
+* A implementa√ß√£o do PHP FastCGI equivale a um desempenho 5x a 10x
+   melhor na execu√ß√£o, sem cache, quando comparado ao tradicional ISAPI
+   ou implanta√ß√µes CGI do PHP em Windows e IIS.
 
 * Mais recentemente, a Microsoft mostrou um acelerador de cache para o PHP,
-   que est· em status de lanÁamento *Release Candidate* no momento da redaÁ„o deste texto (02/11/2009).
+   que est√° em status de lan√ßamento *Release Candidate* no momento da reda√ß√£o deste texto (02/11/2009).
 
 >**SIDEBAR**
->Planejamento de Extens„o para este tutorial
+>Planejamento de Extens√£o para este tutorial
 >
->Uma seÁ„o complementar deste capÌtulo est· em construÁ„o e ser· liberada
->no site do symfony projeto web logo apÛs a publicaÁ„o 
->deste livro. Abrange a conex„o com MS SQL Server atravÈs do PDO, algo que a
+>Uma se√ß√£o complementar deste cap√≠tulo est√° em constru√ß√£o e ser√° liberada
+>no site do symfony projeto web logo ap√≥s a publica√ß√£o 
+>deste livro. Abrange a conex√£o com MS SQL Server atrav√©s do PDO, algo que a
 >Microsoft planeja melhorias em breve.
 >
 >[PHP_PDO_MSSQL]
 >extension=php_pdo_mssql.dll
 >
->Atualmente, o melhor desempenho na execuÁ„o de cÛdigo È obtido pelo 
->driver nativo do Microsoft SQL Server para PHP 5, um driver open-source disponÌvel no Windows
->e atualmente disponÌvel na vers„o 1.1. Isso È implementado como uma
->nova extens„o DLL do PHP:
+>Atualmente, o melhor desempenho na execu√ß√£o de c√≥digo √© obtido pelo 
+>driver nativo do Microsoft SQL Server para PHP 5, um driver open-source dispon√≠vel no Windows
+>e atualmente dispon√≠vel na vers√£o 1.1. Isso √© implementado como uma
+>nova extens√£o DLL do PHP:
 >
 >[PHP_SQLSRV]
 >extension=php_sqlsrv.dll
 >
->… possÌvel usar o Microsoft SQL Server 2005 ou 2008 como
->banco de dados. A extens„o de tutorial planejada ir· cobrir o uso da
->ediÁ„o que est· disponÌvel de graÁa: SQL Server Express.
+>√â poss√≠vel usar o Microsoft SQL Server 2005 ou 2008 como
+>banco de dados. A extens√£o de tutorial planejada ir√° cobrir o uso da
+>edi√ß√£o que est√° dispon√≠vel de gra√ßa: SQL Server Express.
 
 ### Como utilizar este tutorial em diferentes sistemas Windows, incluindo 32-bit
 
-Este documento foi escrito especificamente para ediÁıes do Windows Server 2008 de 64-bits 
-. Entretanto, vocÍ deve ser capaz de usar as outras versıes, sem quaisquer complicaÁıes.
+Este documento foi escrito especificamente para edi√ß√µes do Windows Server 2008 de 64-bits 
+. Entretanto, voc√™ deve ser capaz de usar as outras vers√µes, sem quaisquer complica√ß√µes.
 
 >**NOTE**
->A vers„o exata do software operacional utilizado na tela È
+>A vers√£o exata do software operacional utilizado na tela √©
 >Windows Server 2008 Enterprise Edition com Service Pack 2, 64-bit edition.
 
-#### Versıes do Windows 32-bit
+#### Vers√µes do Windows 32-bit
 
-O tutorial È facilmente transport·vel para versıes do Windows 32-bit, substituindo
-as seguintes referÍncias no texto:
+O tutorial √© facilmente transport√°vel para vers√µes do Windows 32-bit, substituindo
+as seguintes refer√™ncias no texto:
 
-* Em ediÁıes 64-bit: `C:\Program Files (x86)\` e `C:\Windows\SysWOW64\`
+* Em edi√ß√µes 64-bit: `C:\Program Files (x86)\` e `C:\Windows\SysWOW64\`
 
-* Em ediÁıes de 32-bit: `C:\Program Files\` e `C:\Windows\System32\`
+* Em edi√ß√µes de 32-bit: `C:\Program Files\` e `C:\Windows\System32\`
 
-#### Sobre outras ediÁıes do Enterprise
+#### Sobre outras edi√ß√µes do Enterprise
 
-AlÈm disso, se vocÍ n„o tiver Enterprise Edition, este n„o È um problema. Essa
-documentaÁ„o È diretamente port·vel para outras ediÁıes do Windows Server:
+Al√©m disso, se voc√™ n√£o tiver Enterprise Edition, este n√£o √© um problema. Essa
+documenta√ß√£o √© diretamente port√°vel para outras edi√ß√µes do Windows Server:
 Windows Server 2008 Web, Standard ou Datacenter Windows Server 2008 Web
 Standard ou Datacenter, com Service Pack 2 do Windows Server 2008 R2 Web
-EdiÁıes Standard, Enterprise ou Datacenter.
+Edi√ß√µes Standard, Enterprise ou Datacenter.
 
-Por favor, note que todas as ediÁıes do Windows Server 2008 R2 est„o disponÌveis apenas como
+Por favor, note que todas as edi√ß√µes do Windows Server 2008 R2 est√£o dispon√≠veis apenas como
 sistemas operacionais 64-bit.
 
-#### Sobre a EdiÁıes Internacionais
+#### Sobre a Edi√ß√µes Internacionais
 
-As configuraÁıes regionais usadas nas imagens s„o `en-US`. NÛs tambÈm
-instalamos um pacote de linguagem internacional para a FranÁa.
+As configura√ß√µes regionais usadas nas imagens s√£o `en-US`. N√≥s tamb√©m
+instalamos um pacote de linguagem internacional para a Fran√ßa.
 
-… possÌvel executar o tutorial sobre sistemas operacionais Windows clientes:
+√â poss√≠vel executar o tutorial sobre sistemas operacionais Windows clientes:
 Windows XP, Windows Vista e Windows Seven, tanto em modos x64 e x86.
 
 ### Servidor Web utilizado em todo o documento
 
-O servidor web utilizado È o Microsoft Internet Information Server vers„o 7.0,
-que È incluÌdo em todas as ediÁıes como parte do Windows Server 2008. ComeÁamos o
+O servidor web utilizado √© o Microsoft Internet Information Server vers√£o 7.0,
+que √© inclu√≠do em todas as edi√ß√µes como parte do Windows Server 2008. Come√ßamos o
 tutorial com um servidor Windows Server 2008 totalmente funcional e instalamos o IIS
-a partir do zero. As etapas de instalaÁ„o usam as opÁıes padrıes, bastando adicionar dois
-mÛdulos especÌficos que vem com o design modular do IIS 7.0: **FastCGI** e 
+a partir do zero. As etapas de instala√ß√£o usam as op√ß√µes padr√µes, bastando adicionar dois
+m√≥dulos espec√≠ficos que vem com o design modular do IIS 7.0: **FastCGI** e 
 **URL Rewrite**.
 
 ### Bancos de Dados
 
-SQLite È o banco de dados prÈ-configurado para no sandbox do symfony. No Windows,
-n„o h· nada especÌfico para instalar: SQLite È diretamente implementado na
-extens„o PDO do PHP para o SQLite, que È instalado no momento da instalaÁ„o do PHP.
+SQLite √© o banco de dados pr√©-configurado para no sandbox do symfony. No Windows,
+n√£o h√° nada espec√≠fico para instalar: SQLite √© diretamente implementado na
+extens√£o PDO do PHP para o SQLite, que √© instalado no momento da instala√ß√£o do PHP.
 
-Assim, n„o h· necessidade de baixar e executar uma inst‚ncia separada do SQLITE.EXE:
+Assim, n√£o h√° necessidade de baixar e executar uma inst√¢ncia separada do SQLITE.EXE:
 
       [PHP_PDO_SQLITE]
       extension=php_pdo_sqlite.dll
 
-### ConfiguraÁ„o do Windows Server
+### Configura√ß√£o do Windows Server
 
-… melhor usar uma nova instalaÁ„o do Windows Server, a fim de corresponder
-as capturas de telas (*screenshots*) do passo-a-passo neste capÌtulo.
+√â melhor usar uma nova instala√ß√£o do Windows Server, a fim de corresponder
+as capturas de telas (*screenshots*) do passo-a-passo neste cap√≠tulo.
 
-Claro que vocÍ pode trabalhar diretamente em uma m·quina existente, mas vocÍ pode encontrar
-diferenÁas devido aos softwares instalados, tempo de execuÁ„o, e as configuraÁıes regionais.
+Claro que voc√™ pode trabalhar diretamente em uma m√°quina existente, mas voc√™ pode encontrar
+diferen√ßas devido aos softwares instalados, tempo de execu√ß√£o, e as configura√ß√µes regionais.
 
 A fim de obter as mesmas telas que aparecem no
-tutorial, È recomend·vel a obtenÁ„o de um Windows Server dedicado em um 
-ambiente virtual, disponÌvel gratuitamente na Internet por um perÌodo de 30 dias.
+tutorial, √© recomend√°vel a obten√ß√£o de um Windows Server dedicado em um 
+ambiente virtual, dispon√≠vel gratuitamente na Internet por um per√≠odo de 30 dias.
 
 >**SIDEBAR** 
 >Como obter um Windows Server Trial gratuito?
 >
->… claro que È possÌvel utilizar qualquer servidor dedicado com acesso ‡ Internet. Um
-> servidor fÌsico ou mesmo servidor virtual dedicado (VDS) vai funcionar perfeitamente.
+>√â claro que √© poss√≠vel utilizar qualquer servidor dedicado com acesso √† Internet. Um
+> servidor f√≠sico ou mesmo servidor virtual dedicado (VDS) vai funcionar perfeitamente.
 >
->Um servidor disponÌvel para avaliaÁ„o por 30 dias com o Windows est· no Ikoula, um provedor francÍs, 
->que oferece uma lista abrangente de serviÁos para os desenvolvedores e
->designers. Esta avaliaÁ„o comeÁa em 0 Ä / mÍs para uma m·quina virtual Windows
->sendo executado em um ambiente Microsoft Hyper-V. Sim, vocÍ pode obter uma
-> m·quina virtual com o Windows Server 2008 Web plenamente funcional, Standard, Enterprise
->ou mesmo a ediÁ„o Datacenter gratuitamente durante um perÌodo de 30 dias.
+>Um servidor dispon√≠vel para avalia√ß√£o por 30 dias com o Windows est√° no Ikoula, um provedor franc√™s, 
+>que oferece uma lista abrangente de servi√ßos para os desenvolvedores e
+>designers. Esta avalia√ß√£o come√ßa em 0 ¬Ä / m√™s para uma m√°quina virtual Windows
+>sendo executado em um ambiente Microsoft Hyper-V. Sim, voc√™ pode obter uma
+> m√°quina virtual com o Windows Server 2008 Web plenamente funcional, Standard, Enterprise
+>ou mesmo a edi√ß√£o Datacenter gratuitamente durante um per√≠odo de 30 dias.
 >
 >Para solicitar, basta abrir no navegador http://www.ikoula.com/flex_server e
->clique no bot„o "Testez gratuitement".
+>clique no bot√£o "Testez gratuitement".
 >
 >A fim de obter as mesmas mensagens descritas neste documento, o sistema operacional 
->que solicitamos ao servidor Flex È: "Windows Server 2008 Enterprise Edition
->64 bits". Esta È uma distribuiÁ„o x64, entregues com as lÌnguas fr-FR
->e en-US. … f·cil mudar de `fr-FR` para `en-US` e vice-versa
->a partir do Painel de Controle do Windows. Especificamente, esta configuraÁ„o pode ser encontrada
+>que solicitamos ao servidor Flex √©: "Windows Server 2008 Enterprise Edition
+>64 bits". Esta √© uma distribui√ß√£o x64, entregues com as l√≠nguas fr-FR
+>e en-US. √â f√°cil mudar de `fr-FR` para `en-US` e vice-versa
+>a partir do Painel de Controle do Windows. Especificamente, esta configura√ß√£o pode ser encontrada
 >em "Regional and Language Options", que fica sob a guia
 >"Keyboards and Languages". Basta clicar em "Install/uninstall languages".
 
-… necess·rio ter acesso de Administrador no servidor.
+√â necess√°rio ter acesso de Administrador no servidor.
 
-Se estiver trabalhando em uma estaÁ„o de trabalho remota, o leitor deve executar Remote Desktop
+Se estiver trabalhando em uma esta√ß√£o de trabalho remota, o leitor deve executar Remote Desktop
 Services (anteriormente conhecido como cliente do Terminal Server) e garantir que ele tem
 acesso de Administrador.
 
-A distribuiÁ„o usada aqui È: Windows Server 2008 com Service Pack 2.
+A distribui√ß√£o usada aqui √©: Windows Server 2008 com Service Pack 2.
 
-![Verifique o seu ambiente de inÌcio, com o comando Winver - aqui em InglÍs](http://www.symfony-project.org/images/more-with-symfony/windows_01.png)
+![Verifique o seu ambiente de in√≠cio, com o comando Winver - aqui em Ingl√™s](http://www.symfony-project.org/images/more-with-symfony/windows_01.png)
 
-Windows Server 2008 foi instalado com o ambiente gr·fico, que
-utiliza visual do Windows Vista. TambÈm È possÌvel usar uma linha de comando
-apenas para a vers„o do Windows Server 2008 com os mesmos serviÁos, a fim de reduzir o tamanho da distribuiÁ„o (1,5 GB em vez de 6,5 GB). Isto tambÈm reduz a ·rea de ataque e o n˙mero de patches do Windows Update, que ter„o de ser aplicados.
+Windows Server 2008 foi instalado com o ambiente gr√°fico, que
+utiliza visual do Windows Vista. Tamb√©m √© poss√≠vel usar uma linha de comando
+apenas para a vers√£o do Windows Server 2008 com os mesmos servi√ßos, a fim de reduzir o tamanho da distribui√ß√£o (1,5 GB em vez de 6,5 GB). Isto tamb√©m reduz a √°rea de ataque e o n√∫mero de patches do Windows Update, que ter√£o de ser aplicados.
 
-VerificaÁıes preliminares - Servidor Dedicado na Internet
+Verifica√ß√µes preliminares - Servidor Dedicado na Internet
 -----------------------------------------------------
 
-Uma vez que o servidor est· diretamente acessÌvel na Internet, È sempre uma boa
-idÈia verificar se o Firewall do Windows est· fornecendo proteÁ„o ativa. As ˙nicas
-exceÁıes que devem ser verificadas s„o:
+Uma vez que o servidor est√° diretamente acess√≠vel na Internet, √© sempre uma boa
+id√©ia verificar se o Firewall do Windows est√° fornecendo prote√ß√£o ativa. As √∫nicas
+exce√ß√µes que devem ser verificadas s√£o:
 
 * Core Networking
 * Remote Desktop (se acessado remotamente)
 * Secure World Wide Web Services (HTTPS)
 * World Wide Web Services (HTTP)
 
-![Verifique as configuraÁıes de firewall, diretamente no painel de controle.](http://www.symfony-project.org/images/more-with-symfony/windows_02.png)
+![Verifique as configura√ß√µes de firewall, diretamente no painel de controle.](http://www.symfony-project.org/images/more-with-symfony/windows_02.png)
 
-Ent„o, È sempre bom para executar o Windows Update para garantir que todos os pacotes do software 
-est„o instalados com as ˙ltimas correÁıes, patches e documentaÁ„o.
+Ent√£o, √© sempre bom para executar o Windows Update para garantir que todos os pacotes do software 
+est√£o instalados com as √∫ltimas corre√ß√µes, patches e documenta√ß√£o.
 
 ![Verificar status do Windows Update, diretamente no Painel de controle.](Http://www.symfony-project.org/images/more-with-symfony/windows_03.png)
 
-Como ˙ltima etapa de preparaÁ„o, e por uma quest„o de eliminar quaisquer potenciais
-par‚metros conflitantes na distribuiÁ„o existente no Windows ou configuraÁ„o do IIS,
-recomendamos que vocÍ desinstale o ServiÁo Web do servidor Windows, se previamente
+Como √∫ltima etapa de prepara√ß√£o, e por uma quest√£o de eliminar quaisquer potenciais
+par√¢metros conflitantes na distribui√ß√£o existente no Windows ou configura√ß√£o do IIS,
+recomendamos que voc√™ desinstale o Servi√ßo Web do servidor Windows, se previamente
 instalado.
 
-![Retire o serviÁo Servidor Web (*Web Server role*), a partir do Server Manager.](http://www.symfony-project.org/images/more-with-symfony/windows_04.png)
+![Retire o servi√ßo Servidor Web (*Web Server role*), a partir do Server Manager.](http://www.symfony-project.org/images/more-with-symfony/windows_04.png)
 
-Instalando PHP - Apenas alguns cliques de dist‚ncia
+Instalando PHP - Apenas alguns cliques de dist√¢ncia
 ---------------------------------------
 
-Agora, podemos instalar o IIS e o PHP em uma operaÁ„o simples.
+Agora, podemos instalar o IIS e o PHP em uma opera√ß√£o simples.
 
-PHP n„o È uma parte da distribuiÁ„o do Windows Server 2008, portanto, nÛs precisamos
+PHP n√£o √© uma parte da distribui√ß√£o do Windows Server 2008, portanto, n√≥s precisamos
 instalar primeiro o Microsoft Web Platform Installer 2.0, denominada Web PI
-nas seÁıes seguintes.
+nas se√ß√µes seguintes.
 
-Web PI toma cuidado de instalar todas as dependÍncias necess·rias para a execuÁ„o de PHP
-em qualquer Windows / sistema do IIS. Ent„o, ele instala o IIS com o mÌnimo de Role Services 
-para o servidor Web, e tambÈm oferece opÁıes mÌnimas para o PHP runtime.
+Web PI toma cuidado de instalar todas as depend√™ncias necess√°rias para a execu√ß√£o de PHP
+em qualquer Windows / sistema do IIS. Ent√£o, ele instala o IIS com o m√≠nimo de Role Services 
+para o servidor Web, e tamb√©m oferece op√ß√µes m√≠nimas para o PHP runtime.
 
-![http://www.microsoft.com/web - FaÁa o download agora.](http://www.symfony-project.org/images/more-with-symfony/windows_05.png)
+![http://www.microsoft.com/web - Fa√ßa o download agora.](http://www.symfony-project.org/images/more-with-symfony/windows_05.png)
 
-A instalaÁ„o do Microsoft Web Platform Installer 2.0 contÈm um
-analisador de configuraÁ„o, verifica mÛdulos existentes, propıe as atualizaÁıes de mÛdulos necess·rias, 
-e ainda permite que vocÍ faÁa um beta-teste de extensıes ainda n„o lanÁadas da
+A instala√ß√£o do Microsoft Web Platform Installer 2.0 cont√©m um
+analisador de configura√ß√£o, verifica m√≥dulos existentes, prop√µe as atualiza√ß√µes de m√≥dulos necess√°rias, 
+e ainda permite que voc√™ fa√ßa um beta-teste de extens√µes ainda n√£o lan√ßadas da
 Microsoft Web Platform.
 
-![Web PI 2.0 - Primeira Vis„o.](http://www.symfony-project.org/images/more-with-symfony/windows_06.png)
+![Web PI 2.0 - Primeira Vis√£o.](http://www.symfony-project.org/images/more-with-symfony/windows_06.png)
 
-Web PI 2.0 oferece a instalaÁ„o do PHP runtime em um clique. A seleÁ„o
-instala a implementaÁ„o Win32 "non-thread safe" do PHP, que È
-melhor associada ao IIS 7 e FastCGI. TambÈm oferece o mais recente
-runtime testado, aqui 5.2.11. Para encontr·-lo, basta selecionar a guia "Frameworks and 
-Runtimes" ‡ esquerda:
+Web PI 2.0 oferece a instala√ß√£o do PHP runtime em um clique. A sele√ß√£o
+instala a implementa√ß√£o Win32 "non-thread safe" do PHP, que √©
+melhor associada ao IIS 7 e FastCGI. Tamb√©m oferece o mais recente
+runtime testado, aqui 5.2.11. Para encontr√°-lo, basta selecionar a guia "Frameworks and 
+Runtimes" √† esquerda:
 
 ![PI Web 2.0 - Guia Frameworks e Runtimes.](http://www.symfony-project.org/images/more-with-symfony/windows_07.png)
 
-Depois de selecionar o PHP, Web PI 2,0 automaticamente s„o selecionadas todas as dependÍncias necess·rias
-para servir p·ginas web `.php` armazenadas no servidor, incluindo o mÌnimo
+Depois de selecionar o PHP, Web PI 2,0 automaticamente s√£o selecionadas todas as depend√™ncias necess√°rias
+para servir p√°ginas web `.php` armazenadas no servidor, incluindo o m√≠nimo
 IIS 7.0 roles services:
 
-![PI Web 2.0 - DependÍncias automaticamente adicionadas - 1 / 3.] (http://www.symfony-project.org/images/more-with-symfony/windows_08.png)
+![PI Web 2.0 - Depend√™ncias automaticamente adicionadas - 1 / 3.] (http://www.symfony-project.org/images/more-with-symfony/windows_08.png)
 
-![PI Web 2.0 - DependÍncias automaticamente adicionadas - 2 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_09.png)
+![PI Web 2.0 - Depend√™ncias automaticamente adicionadas - 2 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_09.png)
 
-![PI Web 2.0 - DependÍncias automaticamente adicionadas - 3 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_10.png)
+![PI Web 2.0 - Depend√™ncias automaticamente adicionadas - 3 / 3.](http://www.symfony-project.org/images/more-with-symfony/windows_10.png)
 
-Em seguida, clique em Install, em seguida, no bot„o "I Accept". A instalaÁ„o dos componentes IIS 
-comeÁar· enquanto, paralelamente, o PHP È transferido
-[runtime](http://windows.php.net) e alguns mÛdulos s„o atualizados (atualizaÁ„o para um
+Em seguida, clique em Install, em seguida, no bot√£o "I Accept". A instala√ß√£o dos componentes IIS 
+come√ßar√° enquanto, paralelamente, o PHP √© transferido
+[runtime](http://windows.php.net) e alguns m√≥dulos s√£o atualizados (atualiza√ß√£o para um
 IIS FastCGI 7,0 por exemplo).
 
-![PI Web 2.0 - InstalaÁ„o dos componentes do IIS enquanto as atualizaÁıes s„o baixadas da web.](http://www.symfony-project.org/images/more-with-symfony/windows_11.png)
+![PI Web 2.0 - Instala√ß√£o dos componentes do IIS enquanto as atualiza√ß√µes s√£o baixadas da web.](http://www.symfony-project.org/images/more-with-symfony/windows_11.png)
 
-Finalmente, o programa de instalaÁ„o do PHP È executado, e, apÛs alguns minutos, dever· apresentar:
+Finalmente, o programa de instala√ß√£o do PHP √© executado, e, ap√≥s alguns minutos, dever√° apresentar:
 
-![PI Web 2.0 - InstalaÁ„o do PHP foi finalizada.](http://www.symfony-project.org/images/more-with-symfony/windows_12.png)
+![PI Web 2.0 - Instala√ß√£o do PHP foi finalizada.](http://www.symfony-project.org/images/more-with-symfony/windows_12.png)
 
 Clique em "Finish".
 
-O Windows Server est· escutando e agora È capaz de ouvir e responder na porta 80.
+O Windows Server est√° escutando e agora √© capaz de ouvir e responder na porta 80.
 
 Vamos verificar isso no navegador:
 
-![Firefox - IIS 7.0 est· respondendo na porta 80.](http://www.symfony-project.org/images/more-with-symfony/windows_13.png)
+![Firefox - IIS 7.0 est√° respondendo na porta 80.](http://www.symfony-project.org/images/more-with-symfony/windows_13.png)
 
-Agora, para verificar que o PHP est· instalado corretamente, e disponÌvel a partir do IIS, nÛs
-criamos um pequeno arquivo `phpinfo.php` a ser acessado pelo servidor web padr„o
+Agora, para verificar que o PHP est√° instalado corretamente, e dispon√≠vel a partir do IIS, n√≥s
+criamos um pequeno arquivo `phpinfo.php` a ser acessado pelo servidor web padr√£o
 na porta 80, em `C:\inetpub\wwwroot`.
 
 Antes de fazer isso, garantimos que, no Windows Explorer, podemos ver as 
-extensıes corretas dos arquivos. Selecione "Unhide Extensions for Known Files Types".
+extens√µes corretas dos arquivos. Selecione "Unhide Extensions for Known Files Types".
 
 ![Windows Explorer - Unhide Extensions for Known Files Types.](http://www.symfony-project.org/images/more-with-symfony/windows_14.png)
 
-Abra o Windows Explorer e v· para "C:\inetpub\wwwroot`. Clique com o bot„o direito do mouse e selecione
-"New Text Document". Renomeie para `phpinfo.php` e copie a chamada de funÁ„o 
+Abra o Windows Explorer e v√° para "C:\inetpub\wwwroot`. Clique com o bot√£o direito do mouse e selecione
+"New Text Document". Renomeie para `phpinfo.php` e copie a chamada de fun√ß√£o 
 usual:
 
 ![Windows Explorer - Criar phpinfo.php.] (Http://www.symfony-project.org/images/more-with-symfony/windows_15.png)
@@ -275,28 +275,28 @@ usual:
 Em seguida, reabrir o navegador web, e colocar `/phpinfo.php` no final da
 URL do servidor:
 
-![Firefox - ExecuÁ„o do phpinfo.php est· OK](http://www.symfony-project.org/images/more-with-symfony/windows_16.png)
+![Firefox - Execu√ß√£o do phpinfo.php est√° OK](http://www.symfony-project.org/images/more-with-symfony/windows_16.png)
 
-Finalmente, para garantir que o symfony ir· instalar sem problemas, faÁa o download
+Finalmente, para garantir que o symfony ir√° instalar sem problemas, fa√ßa o download
 [http://sf-to.org/1.3/check.php] ( `check_configuration.php`).
 
 ![PHP - Onde baixar check.php.](http://www.symfony-project.org/images/more-with-symfony/windows_17.png)
 
-Copie para o mesmo diretÛrio como `phpinfo.php` ( `C:\inetpub\wwwroot`) e
-renomeie para `check_configuration.php` se necess·rio.
+Copie para o mesmo diret√≥rio como `phpinfo.php` ( `C:\inetpub\wwwroot`) e
+renomeie para `check_configuration.php` se necess√°rio.
 
 ![PHP - Copie e renomeie o check_configuration.php.] (Http://www.symfony-project.org/images/more-with-symfony/windows_18.png)
 
-Por fim, reabra o navegador web uma ˙ltima vez para agora, e coloque
+Por fim, reabra o navegador web uma √∫ltima vez para agora, e coloque
 `/check_configuration.php` no final da URL do servidor:
 
-![Firefox - ExecuÁ„o check_configuration.php est· OK.] Http://www.symfony-project.org/images/more-with-symfony/windows_19.png ()
+![Firefox - Execu√ß√£o check_configuration.php est√° OK.] Http://www.symfony-project.org/images/more-with-symfony/windows_19.png ()
 
 Executando o PHP na interface de linha de comando
 ---------------------------------------------
 
 Para depois executar as tarefas da linha de comando com o symfony, precisamos assegurar que o 
-PHP.EXE È acessÌvel a partir do prompt de comando e È executad corretamente.
+PHP.EXE √© acess√≠vel a partir do prompt de comando e √© executad corretamente.
 
 Abra um prompt de comando para `C:\inetpub\wwwroot` e digite 
 
@@ -304,92 +304,92 @@ Abra um prompt de comando para `C:\inetpub\wwwroot` e digite
 
 A seguinte mensagem de erro deve aparecer:
 
-![PHP - MSVCR71.DLL n„o foi encontrado.](http://www.symfony-project.org/images/more-with-symfony/windows_20.png)
+![PHP - MSVCR71.DLL n√£o foi encontrado.](http://www.symfony-project.org/images/more-with-symfony/windows_20.png)
 
-Se n„o fizermos nada, a execuÁ„o de PHP.EXE trava na ausÍncia do 
-MSVCR71.DLL. Ent„o, temos de encontrar o arquivo DLL e instal·-lo no local 
+Se n√£o fizermos nada, a execu√ß√£o de PHP.EXE trava na aus√™ncia do 
+MSVCR71.DLL. Ent√£o, temos de encontrar o arquivo DLL e instal√°-lo no local 
 correto.
 
-Este `MSVCR71.DLL` È uma vers„o do Microsoft Visual C + + runtime, que
-remonta ‡ Època de 2003. Ele est· contido no pacote redistribuÌvel 
+Este `MSVCR71.DLL` √© uma vers√£o do Microsoft Visual C + + runtime, que
+remonta √† √©poca de 2003. Ele est√° contido no pacote redistribu√≠vel 
 .NET Framework 1.1.
 
-O pacote redistribuÌvel .NET Framework 1.1, pode ser baixado em
+O pacote redistribu√≠vel .NET Framework 1.1, pode ser baixado em
 [MSDN](http://msdn.microsoft.com/en-us/netframework/aa569264.aspx)
 
-O arquivo que estamos procurando È instalado no seguinte diretÛrio:
+O arquivo que estamos procurando √© instalado no seguinte diret√≥rio:
 `C:\Windows\Microsoft.NET\Framework\v1.1.4322`
 
 Basta copiar o para `MSVCR71.DLL` para o seguinte destino:
 
-* Em sistemas x64: o diretÛrio `C:\windows\syswow64` 
-* Em sistemas x86: o diretÛrio `C:\windows\system32`
+* Em sistemas x64: o diret√≥rio `C:\windows\syswow64` 
+* Em sistemas x86: o diret√≥rio `C:\windows\system32`
 
 Podemos agora desisntalar o .Net Framework 1.1.
 
-O execut·vel PHP.EXE agora pode ser executado no prompt de comando sem erro.
+O execut√°vel PHP.EXE agora pode ser executado no prompt de comando sem erro.
 Por exemplo:
 
     PHP phpinfo.php
     PHP check_configuration.php
 
-Mais tarde, nÛs vamos verificar que symfony.bat (a partir da distribuiÁ„o Sandbox) tambÈm
-d· a resposta esperada, que È a sintaxe do comando symfony.
+Mais tarde, n√≥s vamos verificar que symfony.bat (a partir da distribui√ß√£o Sandbox) tamb√©m
+d√° a resposta esperada, que √© a sintaxe do comando symfony.
 
-InstalaÁ„o e Uso do Sandbox do symfony 
+Instala√ß√£o e Uso do Sandbox do symfony 
 --------------------------------------
 
-O par·grafo seguinte È um trecho do "Guia de IntroduÁ„o ao symfony",
+O par√°grafo seguinte √© um trecho do "Guia de Introdu√ß√£o ao symfony",
 ["The Sandbox"](http://www.symfony-project.org/getting-started/1_3/en/A-Sandbox):
-p·gina: "O sandbox È um projeto symfony prÈ-empacotado super f·cil de instalar,
-j· configurado com alguns padrıes razo·veis. … uma Ûtima forma de praticar o
-symfony, sem o incÙmodo de uma instalaÁ„o adequada que respeite a
-melhores pr·ticas da web".
+p√°gina: "O sandbox √© um projeto symfony pr√©-empacotado super f√°cil de instalar,
+j√° configurado com alguns padr√µes razo√°veis. √â uma √≥tima forma de praticar o
+symfony, sem o inc√¥modo de uma instala√ß√£o adequada que respeite a
+melhores pr√°ticas da web".
 
-O sandbox È prÈ-configurado para usar o SQLite como banco de dados. No Windows,
-n„o h· nada especÌfico para instalar: O SQLite È diretamente implementado na
-extens„o PDO do PHP para o SQLite, que È instalado juntamente com
-o PHP. NÛs j· realizamos isto antes, quando o PHP runtime 
-foi instalado atravÈs do Microsoft Web PI.
+O sandbox √© pr√©-configurado para usar o SQLite como banco de dados. No Windows,
+n√£o h√° nada espec√≠fico para instalar: O SQLite √© diretamente implementado na
+extens√£o PDO do PHP para o SQLite, que √© instalado juntamente com
+o PHP. N√≥s j√° realizamos isto antes, quando o PHP runtime 
+foi instalado atrav√©s do Microsoft Web PI.
 
-Basta verificar se a extens„o SQLite est· corretamente referida no arquivo 
-PHP.INI, que reside no diretÛrio `C:\Program Files (x86)\PHP`, e que
-a DLL que implementa o suporte PDO para SQLite est· definida como 
+Basta verificar se a extens√£o SQLite est√° corretamente referida no arquivo 
+PHP.INI, que reside no diret√≥rio `C:\Program Files (x86)\PHP`, e que
+a DLL que implementa o suporte PDO para SQLite est√° definida como 
 `C:\Program Files (x86)\PHP\ext\php_pdo_sqlite.dll`.
 
-![PHP - LocalizaÁ„o do arquivo de configuraÁ„o php.ini.](http://www.symfony-project.org/images/more-with-symfony/windows_21.png)
+![PHP - Localiza√ß√£o do arquivo de configura√ß√£o php.ini.](http://www.symfony-project.org/images/more-with-symfony/windows_21.png)
 
-### Baixar, criar DiretÛrio, copiar todos os Arquivos
+### Baixar, criar Diret√≥rio, copiar todos os Arquivos
 
-O projeto sandbox do symfony est· "pronto para instalar e executar", e vem em um 
+O projeto sandbox do symfony est√° "pronto para instalar e executar", e vem em um 
 arquivo `.zip`.
 
 Baixe o [arquivo](http://www.symfony-project.org/get/sf_sandbox_1_3.zip)
-e extraia-o para em um local tempor·rio, como o diretÛrio "downloads",
-que est· disponÌvel para leitura/escrita no diretÛrio `C:\User\administrador`.
+e extraia-o para em um local tempor√°rio, como o diret√≥rio "downloads",
+que est√° dispon√≠vel para leitura/escrita no diret√≥rio `C:\User\administrador`.
 
 ![sandbox - Baixe e descompacte o arquivo.](http://www.symfony-project.org/images/more-with-symfony/windows_22.png)
 
-Crie um diretÛrio para o destino final do sandbox, como `F:\dev\sfsandbox`:
+Crie um diret√≥rio para o destino final do sandbox, como `F:\dev\sfsandbox`:
 
 ![sandbox - Criar sfsandbox Directory.](http://www.symfony-project.org/images/more-with-symfony/windows_23.png)
 
 Selecione todos os arquivos - `CTRL-A` no Windows Explorer - a partir do seu local de download
-(fonte), e os copie para o diretÛrio `F:\dev\sfsandbox`.
+(fonte), e os copie para o diret√≥rio `F:\dev\sfsandbox`.
 
-VocÍ dever· ver 2599 itens copiados para o diretÛrio de destino:
+Voc√™ dever√° ver 2599 itens copiados para o diret√≥rio de destino:
 
-![sandbox - CÛpia de 2599 itens.](http://www.symfony-project.org/images/more-with-symfony/windows_24.png)
+![sandbox - C√≥pia de 2599 itens.](http://www.symfony-project.org/images/more-with-symfony/windows_24.png)
 
-### Teste de ExecuÁ„o
+### Teste de Execu√ß√£o
 
-Abra o prompt de comando. V· para `F:\dev\sfsandbox` e execute o seguinte comando:
+Abra o prompt de comando. V√° para `F:\dev\sfsandbox` e execute o seguinte comando:
 
     PHP symfony -V
 
 Isso deve retornar:
 
-    symfony vers„o 1.3.0 (F:\dev\sfsandbox\lib\symfony)
+    symfony vers√£o 1.3.0 (F:\dev\sfsandbox\lib\symfony)
 
 A partir do mesmo prompt de comando, execute:
 
@@ -401,94 +401,94 @@ Isso deve retornar o mesmo resultado:
 
 ![Sandbox - Teste de linha de comando - Sucesso.] (http://www.symfony-project.org/images/more-with-symfony/windows_25.png)
 
-### A criaÁ„o de aplicativos Web
+### A cria√ß√£o de aplicativos Web
 
-Para criar uma aplicaÁ„o Web no servidor local, utilize o gerenciador do IIS7,
-que È o painel de controle da interface gr·fica do usu·rio para todas as atividades relacionadas com 
-o IIS. Todas as aÁıes realizadas a partir da interface do usu·rio que s„o efetivamente realizadas por tr·s dos bastidores
-atravÈs da interface de linha de comando.
+Para criar uma aplica√ß√£o Web no servidor local, utilize o gerenciador do IIS7,
+que √© o painel de controle da interface gr√°fica do usu√°rio para todas as atividades relacionadas com 
+o IIS. Todas as a√ß√µes realizadas a partir da interface do usu√°rio que s√£o efetivamente realizadas por tr√°s dos bastidores
+atrav√©s da interface de linha de comando.
 
-O Gerenciador do IIS È acessÌvel a partir do Menu *Start* em *Programs*,
+O Gerenciador do IIS √© acess√≠vel a partir do Menu *Start* em *Programs*,
 *Administrative Tools*, *Internet Information Server (IIS) Manager*.
 
-#### Reconfigurando o "Default Web Site" de modo a n„o interferir na Porta 80
+#### Reconfigurando o "Default Web Site" de modo a n√£o interferir na Porta 80
 
-Queremos garantir que apenas o nosso symfony sandbox est· respondendo na porta 80
+Queremos garantir que apenas o nosso symfony sandbox est√° respondendo na porta 80
 (HTTP). Para fazer isso, altere a porta atual do "Default Web Site porta" para 8080.
 
 ![*IIS Manager* - Editar *Binding* para "Default Web Site".](Http://www.symfony-project.org/images/more-with-symfony/windows_26.png)
 
-Observe que, se o Firewall do Windows estiver ativo, vocÍ poder· ter de criar uma 
-exceÁ„o para a porta 8080 para continuar a ser capaz de atingir o "Default Web Site". Para
-esse efeito, v· para Windows Control Panel, selecione Windows Firewall, clique em
+Observe que, se o Firewall do Windows estiver ativo, voc√™ poder√° ter de criar uma 
+exce√ß√£o para a porta 8080 para continuar a ser capaz de atingir o "Default Web Site". Para
+esse efeito, v√° para Windows Control Panel, selecione Windows Firewall, clique em
 *"Allow a program through Windows Firewall"* e clique em *"Add port"* para criar
-esta exceÁ„o. Marque a caixa para ativ·-lo apÛs a criaÁ„o.
+esta exce√ß√£o. Marque a caixa para ativ√°-lo ap√≥s a cria√ß√£o.
 
-![Firewall do Windows - Criar Uma ExceÁ„o para a Porta 8080.] (Http://www.symfony-project.org/images/more-with-symfony/windows_27.png)
+![Firewall do Windows - Criar Uma Exce√ß√£o para a Porta 8080.] (Http://www.symfony-project.org/images/more-with-symfony/windows_27.png)
 
 #### Adicionar um Novo Site para a Sandbox
 
-Abra o *IIS Manager* a partir *Administration Tools*. No painel esquerdo, selecione o Ìcone "Sites"
-e clique com o bot„o direito. Selecione *Add Web Site* a partir do menu de contexto. Digite, por
+Abra o *IIS Manager* a partir *Administration Tools*. No painel esquerdo, selecione o √≠cone "Sites"
+e clique com o bot√£o direito. Selecione *Add Web Site* a partir do menu de contexto. Digite, por
 exemplo, "symfony Sandbox" como o nome do site, `D:\dev\sfsandbox` para a Physical 
-Path, e deixe os outros campos inalterados. VocÍ ver· esta caixa de di·logo:
+Path, e deixe os outros campos inalterados. Voc√™ ver√° esta caixa de di√°logo:
 
 ![IIS Manager - Adicionando o Web Site.](Http://www.symfony-project.org/images/more-with-symfony/windows_28.png)
 
-Clique em OK. Se um pequeno `X` aparece no Ìcone do site (em Features View /
-Sites), n„o deixe de clicar em "Restart" no painel direito para fazÍ-lo 
+Clique em OK. Se um pequeno `X` aparece no √≠cone do site (em Features View /
+Sites), n√£o deixe de clicar em "Restart" no painel direito para faz√™-lo 
 desaparecer.
 
-#### Verifique se o Site est· Respondendo
+#### Verifique se o Site est√° Respondendo
 
 Do IIS Manager, selecione o site "symfony Sandbox", e, no painel da direita,
 Clique em "Browse *. 80 (http)".
 
 ![IIS Manager - Clique em Browse port 80.](http://www.symfony-project.org/images/more-with-symfony/windows_29.png)
 
-VocÍ dever· receber uma mensagem de erro explÌcita, isso n„o È inesperado:
+Voc√™ dever√° receber uma mensagem de erro expl√≠cita, isso n√£o √© inesperado:
 `HTTP Error 403.14 - Forbidden`.
-O servidor Web est· configurado para n„o listar o conte˙do deste diretÛrio.
+O servidor Web est√° configurado para n√£o listar o conte√∫do deste diret√≥rio.
 
-Isto È originado a partir da configuraÁ„o padr„o do servidor web, que especifica
-que o conte˙do deste diretÛrio n„o deve ser listado. Uma vez que nenhum arquivo 
-padr„o como `index.php` ou `index.html` existe em `D:\dev\sfsandbox`, o
-servidor retorna corretamente a mensagem de erro "Forbidden". N„o tenha medo.
+Isto √© originado a partir da configura√ß√£o padr√£o do servidor web, que especifica
+que o conte√∫do deste diret√≥rio n√£o deve ser listado. Uma vez que nenhum arquivo 
+padr√£o como `index.php` ou `index.html` existe em `D:\dev\sfsandbox`, o
+servidor retorna corretamente a mensagem de erro "Forbidden". N√£o tenha medo.
 
 ![Internet Explorer - Erro Normal.](http://www.symfony-project.org/images/more-with-symfony/windows_30.png)
 
-Digite `http://localhost/web` na barra de endereÁos do seu navegador, em vez de apenas
-http://localhost `. Agora vocÍ deve ver o seu navegador, por padr„o o Internet
+Digite `http://localhost/web` na barra de endere√ßos do seu navegador, em vez de apenas
+http://localhost `. Agora voc√™ deve ver o seu navegador, por padr√£o o Internet
 Explorer, exibindo "symfony Project Created":
 
 ![IIS Manager - Digite http://localhost/web na URL. Sucesso!](http://www.symfony-project.org/images/more-with-symfony/windows_31.png)
 
-A propÛsito, vocÍ pode ver uma faixa amarela no topo dizendo 
-"Intranet settings are now turned off by default". ConfiguraÁıes de Intranet s„o menos seguras do que
-ConfiguraÁıes de Internet. Clique para ver opÁıes. N„o tenha medo desta mensagem.
+A prop√≥sito, voc√™ pode ver uma faixa amarela no topo dizendo 
+"Intranet settings are now turned off by default". Configura√ß√µes de Intranet s√£o menos seguras do que
+Configura√ß√µes de Internet. Clique para ver op√ß√µes. N√£o tenha medo desta mensagem.
 
-Para fech·-lo permanentemente, clique com o bot„o direito do mouse na faixa amarela, e selecione a
-opÁ„o apropriada.
+Para fech√°-lo permanentemente, clique com o bot√£o direito do mouse na faixa amarela, e selecione a
+op√ß√£o apropriada.
 
-Esta tela confirma que a p·gina padr„o `index.php` foi corretamente carregado
+Esta tela confirma que a p√°gina padr√£o `index.php` foi corretamente carregado
 a partir de `D:\dev\sfsandbox\web\index.php`, executado corretamente, e que as bibliotecas symfony
-est„o corretamente configuradas.
+est√£o corretamente configuradas.
 
-Temos que realizar uma ˙ltima tarefa antes de comeÁar a brincar com o symfony
-Sandbox: configurar a p·gina web do front-end importando as regras de reescrita de URL.
-Estas regras s„o implementadas como arquivos `.htaccess` e podem ser controladas em
+Temos que realizar uma √∫ltima tarefa antes de come√ßar a brincar com o symfony
+Sandbox: configurar a p√°gina web do front-end importando as regras de reescrita de URL.
+Estas regras s√£o implementadas como arquivos `.htaccess` e podem ser controladas em
 apenas alguns cliques no Gerenciador do IIS.
 
-### Sandbox: ConfiguraÁ„o do Front-end Web
+### Sandbox: Configura√ß√£o do Front-end Web
 
-NÛs queremos configurar aplicaÁ„o sandbox a fim de comeÁar a
-brincar realmente com as coisas do symfony. Por padr„o, a primeira p·gina final pode ser
-alcanÁada e executa corretamente quando solicitada a partir da m·quina local
-(isto È, o nome localhost ou o endereÁo `127.0.0.1`).
+N√≥s queremos configurar aplica√ß√£o sandbox a fim de come√ßar a
+brincar realmente com as coisas do symfony. Por padr√£o, a primeira p√°gina final pode ser
+alcan√ßada e executa corretamente quando solicitada a partir da m√°quina local
+(isto √©, o nome localhost ou o endere√ßo `127.0.0.1`).
 
-![Internet Explorer - p·gina frontend_dev.php est· OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_32.png)
+![Internet Explorer - p√°gina frontend_dev.php est√° OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_32.png)
 
-Vamos explorar as "configuration", "logs" e "timers" os painÈis de debug web para
+Vamos explorar as "configuration", "logs" e "timers" os pain√©is de debug web para
 garantir que o sandbox esteja totalmente funcional no Windows Server 2008.
 
 ![uso do sandbox: configuration.](http://www.symfony-project.org/images/more-with-symfony/windows_33.png)
@@ -497,48 +497,48 @@ garantir que o sandbox esteja totalmente funcional no Windows Server 2008.
 
 ![uso do sandbox: timers.](http://www.symfony-project.org/images/more-with-symfony/windows_35.png)
 
-Enquanto nÛs poderÌamos tentar acessar a aplicaÁ„o sandbox da Internet ou
-a partir de um endereÁo IP remoto, o sandbox È mais concebido como uma ferramenta para aprender o
-framework symfony na m·quina local. Portanto, nÛs vamos cobrir detalhes relacionados
-ao acesso remoto na ˙ltima seÁ„o: Projeto: ConfiguraÁ„o do Front-end Web.
+Enquanto n√≥s poder√≠amos tentar acessar a aplica√ß√£o sandbox da Internet ou
+a partir de um endere√ßo IP remoto, o sandbox √© mais concebido como uma ferramenta para aprender o
+framework symfony na m√°quina local. Portanto, n√≥s vamos cobrir detalhes relacionados
+ao acesso remoto na √∫ltima se√ß√£o: Projeto: Configura√ß√£o do Front-end Web.
 
-CriaÁ„o de um novo Projeto symfony
+Cria√ß√£o de um novo Projeto symfony
 ---------------------------------
 
-Criar um ambiente de projeto symfony para fins de desenvolvimento real È quase
-t„o simples como a instalaÁ„o do sandbox. Vamos ver todo o
-processo de instalaÁ„o de um procedimento simplificado, que È equivalente a
-instalaÁ„o e implantaÁ„o do sandbox.
+Criar um ambiente de projeto symfony para fins de desenvolvimento real √© quase
+t√£o simples como a instala√ß√£o do sandbox. Vamos ver todo o
+processo de instala√ß√£o de um procedimento simplificado, que √© equivalente a
+instala√ß√£o e implanta√ß√£o do sandbox.
 
-A diferenÁa È que, neste seÁ„o "projeto", vamos nos concentrar na
-configuraÁ„o da aplicaÁ„o Web para fazer funcionar de qualquer lugar
+A diferen√ßa √© que, neste se√ß√£o "projeto", vamos nos concentrar na
+configura√ß√£o da aplica√ß√£o Web para fazer funcionar de qualquer lugar
 Internet.
 
-Como o sandbox, o projeto symfony vem prÈ-configurado para usar o SQLite como 
-motor de base de dados. Este foi instalado e configurado no inÌcio deste capÌtulo.
+Como o sandbox, o projeto symfony vem pr√©-configurado para usar o SQLite como 
+motor de base de dados. Este foi instalado e configurado no in√≠cio deste cap√≠tulo.
 
-### Baixar, criar um diretÛrio e copiar os arquivos
+### Baixar, criar um diret√≥rio e copiar os arquivos
 
-Cada vers„o do symfony pode ser baixada como um arquivo zip e ent„o usada para
+Cada vers√£o do symfony pode ser baixada como um arquivo zip e ent√£o usada para
 criar um projeto do zero.
 
 Baixe o arquivo contendo a biblioteca do
 [website symfony](http://www.symfony-project.org/get/symfony-1.3.0.zip).
-Em seguida, extraia o diretÛrio contido em um local tempor·rio, como a
-diretÛrio de "downloads".
+Em seguida, extraia o diret√≥rio contido em um local tempor√°rio, como a
+diret√≥rio de "downloads".
 
 ![Windows Explorer - Baixe e descompacte o arquivo do projeto.] (Http://www.symfony-project.org/images/more-with-symfony/windows_37.png)
 
-Agora precisamos criar uma ·rvore de diretÛrios para o destino final do
-projeto. Isto È um pouco mais complicado do que o sandbox.
+Agora precisamos criar uma √°rvore de diret√≥rios para o destino final do
+projeto. Isto √© um pouco mais complicado do que o sandbox.
 
-### ¡rvore de diretÛrios de instalaÁ„o
+### √Årvore de diret√≥rios de instala√ß√£o
 
-Vamos criar uma ·rvore de diretÛrios para o projeto. Iniciar a partir da raiz do volume,
+Vamos criar uma √°rvore de diret√≥rios para o projeto. Iniciar a partir da raiz do volume,
 `D:` por exemplo.
 
-Criar um diretÛrio `\dev` em `D:`, e criar outro diretÛrio chamado
-`sfproject` l·:
+Criar um diret√≥rio `\dev` em `D:`, e criar outro diret√≥rio chamado
+`sfproject` l√°:
 
     D:
     MD dev
@@ -548,7 +548,7 @@ Criar um diretÛrio `\dev` em `D:`, e criar outro diretÛrio chamado
 
 Estamos agora em: `D:\dev\sfproject`
 
-A partir daÌ, criar uma ·rvore de subdiretÛrios, criando os diretÛrios `lib`, `vendor`
+A partir da√≠, criar uma √°rvore de subdiret√≥rios, criando os diret√≥rios `lib`, `vendor`
 e `symfony` em cascata:
 
     MD lib
@@ -560,17 +560,17 @@ e `symfony` em cascata:
 
 Estamos agora em: `D:\dev\sfproject\lib\vendor\symfony`
 
-![Windows Explorer - a ·rvore de diretÛrios do projeto.](http://www.symfony-project.org/images/more-with-symfony/windows_38.png)
+![Windows Explorer - a √°rvore de diret√≥rios do projeto.](http://www.symfony-project.org/images/more-with-symfony/windows_38.png)
 
 Selecione todos os arquivos (CTRL + `A` no Windows Explorer) a partir do seu local de download
 (fonte), e copie de Downloads para `D:\dev\sfproject\lib\vendor\symfony`.
-VocÍ dever· ver 3819 itens copiados para o diretÛrio de destino:
+Voc√™ dever√° ver 3819 itens copiados para o diret√≥rio de destino:
 
-![Windows Explorer - CÛpia de 3819 itens.] (Http://www.symfony-project.org/images/more-with-symfony/windows_39.png)
+![Windows Explorer - C√≥pia de 3819 itens.] (Http://www.symfony-project.org/images/more-with-symfony/windows_39.png)
 
-### CriaÁ„o e inicializaÁ„o
+### Cria√ß√£o e inicializa√ß√£o
 
-Abra o prompt de comando. Mude para o diretÛrio `D:\dev\sfproject` e execute
+Abra o prompt de comando. Mude para o diret√≥rio `D:\dev\sfproject` e execute
 o seguinte comando:
 
     PHP lib\vendor\symfony\data\bin\symfony -V
@@ -583,138 +583,138 @@ Para iniciar o projeto, basta executar o seguinte linha de comando PHP:
 
     PHP lib\vendor\symfony\data\bin\symfony generate:project sfproject
 
-Isso deve retornar uma lista de operaÁıes de arquivo, incluindo alguns comandos 
+Isso deve retornar uma lista de opera√ß√µes de arquivo, incluindo alguns comandos 
 `chmod 777`:
 
-![Windows Explorer - InicializaÁ„o do Projeto OK.](http://www.symfony-project.org/images/more-with-symfony/windows_40.png)
+![Windows Explorer - Inicializa√ß√£o do Projeto OK.](http://www.symfony-project.org/images/more-with-symfony/windows_40.png)
 
-Ainda no prompt de comando, crie uma aplicaÁ„o symfony, executando o
+Ainda no prompt de comando, crie uma aplica√ß√£o symfony, executando o
 seguinte comando:
 
     PHP lib\vendor\symfony\data\bin\symfony generate:app sfapp
 
-Novamente, este deve retornar uma lista de operaÁıes de arquivo, incluindo alguns 
+Novamente, este deve retornar uma lista de opera√ß√µes de arquivo, incluindo alguns 
 comandos `chmod 777`.
 
-A partir deste ponto, ao invÈs de digitar `PHP lib\vendor\symfony\data\bin\symfony`
-cada vez que for necess·rio, copie o arquivo `symfony.bat` desde a sua origem:
+A partir deste ponto, ao inv√©s de digitar `PHP lib\vendor\symfony\data\bin\symfony`
+cada vez que for necess√°rio, copie o arquivo `symfony.bat` desde a sua origem:
 
     copy lib\vendor\symfony\data\bin\symfony.bat
 
 Temos agora um comando conveniente para ser executado na linha de comando no prompt
 `D:\dev\sfproject`.
 
-Ainda em `D:\dev\sfproject`, podemos agora executar o comando cl·ssico:
+Ainda em `D:\dev\sfproject`, podemos agora executar o comando cl√°ssico:
 
     symfony -V
 
-para obter a resposta cl·ssica:
+para obter a resposta cl√°ssica:
 
     symfony version 1.3.0 (D:\dev\sfproject\lib\vendor\symfony\lib)
 
-### A criaÁ„o de aplicativos Web
+### A cria√ß√£o de aplicativos Web
 
-Nas linhas que se segue, vamos supor que vocÍ j· leu em "Sandbox: CriaÁ„o do Front-end Web" 
+Nas linhas que se segue, vamos supor que voc√™ j√° leu em "Sandbox: Cria√ß√£o do Front-end Web" 
 os passos preliminares para reconfigurar o" Default Web Site" para 
-que n„o interfira na porta 80.
+que n√£o interfira na porta 80.
 
 #### Adicione um novo Web Site para o Projeto
 
 Abra o IIS Manager a partir do Administration Tools. No painel esquerdo, selecione o icone "Sites"
-e clique com o bot„o direito do mouse. Selecione "Add Web Site" do menu popup. Digite, por
+e clique com o bot√£o direito do mouse. Selecione "Add Web Site" do menu popup. Digite, por
 exemplo, "symfony Project" como o nome do site, `D:\dev\sfproject` para a
-"Physical Path", e deixar os outros campos inalterados; vocÍ ver· esta caixa 
-de di·logo:
+"Physical Path", e deixar os outros campos inalterados; voc√™ ver√° esta caixa 
+de di√°logo:
 
 ![IIS Manager - Add Web Site.](http://www.symfony-project.org/images/more-with-symfony/windows_41.png)
 
-Clique em OK. Se um pequeno `x` aparece no Ìcone do site (em Features View / 
-Sites), n„o deixe de clicar em "Restart" no painel direito para faze-lo
+Clique em OK. Se um pequeno `x` aparece no √≠cone do site (em Features View / 
+Sites), n√£o deixe de clicar em "Restart" no painel direito para faze-lo
 desaparecer.
 
-#### Verifique se o Web Site est· respondendo
+#### Verifique se o Web Site est√° respondendo
 
 A partir do *IIS Manager*, selecione o site "Symfony Project", e, no painel da direita,
 clique em "Browse *. 80 (http)".
 
-VocÍ deve obter a mesma mensagem de erro explÌcita como vocÍ tinha quando se testava o sandbox:
+Voc√™ deve obter a mesma mensagem de erro expl√≠cita como voc√™ tinha quando se testava o sandbox:
 
     *HTTP Error 403.14 - Forbidden*
 
-O servidor Web est· configurado para n„o listar o conte˙do deste diretÛrio.
+O servidor Web est√° configurado para n√£o listar o conte√∫do deste diret√≥rio.
 
-Digite `http://localhost/web` na barra de endereÁos do seu navegador, vocÍ deve agora
-ver a p·gina "*Symfony Project Created*", mas com uma discreta diferenÁa da 
-mesma p·gina resultante de inicializaÁ„o do sandbox: n„o existem imagens:
+Digite `http://localhost/web` na barra de endere√ßos do seu navegador, voc√™ deve agora
+ver a p√°gina "*Symfony Project Created*", mas com uma discreta diferen√ßa da 
+mesma p√°gina resultante de inicializa√ß√£o do sandbox: n√£o existem imagens:
 
 ![Internet Explorer - *symfony Project Created* - sem imagens.] (Http://www.symfony-project.org/images/more-with-symfony/windows_42.png)
 
-As imagens n„o est„o aqui por enquanto, porÈm elas est„o localizadas em um diretÛrio `sf`
-na biblioteca symfony. … f·cil lig·-los ao
-diretÛrio `/` web, adicionando um diretÛrio virtual em `/web, nomeado
+As imagens n√£o est√£o aqui por enquanto, por√©m elas est√£o localizadas em um diret√≥rio `sf`
+na biblioteca symfony. √â f√°cil lig√°-los ao
+diret√≥rio `/` web, adicionando um diret√≥rio virtual em `/web, nomeado
 `sf`, e apontando para `D:\dev\sfproject\lib\vendor\symfony\data\web\sf`.
 
-![IIS Manager - Adicionar o DiretÛrio Virtual sf.](Http://www.symfony-project.org/images/more-with-symfony/windows_43.png)
+![IIS Manager - Adicionar o Diret√≥rio Virtual sf.](Http://www.symfony-project.org/images/more-with-symfony/windows_43.png)
 
-Agora temos a p·gina "symfony Project Created" regular com imagens como
+Agora temos a p√°gina "symfony Project Created" regular com imagens como
 esperado:
 
 ![Internet Explorer - symfony Project Created- com imagens.](http://www.symfony-project.org/images/more-with-symfony/windows_44.png)
 
-E, finalmente, toda a aplicaÁ„o symfony est· funcionando. A partir do navegador da Web,
-digite o endereÁo da aplicaÁ„o web, i.e. `http://localhost/web/sfapp_dev.php`:
+E, finalmente, toda a aplica√ß√£o symfony est√° funcionando. A partir do navegador da Web,
+digite o endere√ßo da aplica√ß√£o web, i.e. `http://localhost/web/sfapp_dev.php`:
 
-![Internet Explorer - p·gina sfapp_dev.php est· OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_45.png)
+![Internet Explorer - p√°gina sfapp_dev.php est√° OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_45.png)
 
-Vamos realizar um ˙ltimo teste no modo de local: verificar os painÈis do web debug "configuration",
-"logs" e "timers" para garantir que o projeto est· totalmente
+Vamos realizar um √∫ltimo teste no modo de local: verificar os pain√©is do web debug "configuration",
+"logs" e "timers" para garantir que o projeto est√° totalmente
 funcional.
 
-![Internet Explorer - P·gina de logs est· OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_46.png)
+![Internet Explorer - P√°gina de logs est√° OK a partir de localhost.](http://www.symfony-project.org/images/more-with-symfony/windows_46.png)
 
-### ConfiguraÁ„o da AplicaÁ„o para AplicaÁıes Prontas para Internet 
+### Configura√ß√£o da Aplica√ß√£o para Aplica√ß√µes Prontas para Internet 
 
-Nosso projeto symfony genÈrico est· agora trabalhando localmente, como o sandbox, a partir da
+Nosso projeto symfony gen√©rico est√° agora trabalhando localmente, como o sandbox, a partir da
 servidor host local, localizado em `http://localhost` ou `http://127.0.0.1`.
 
-Agora, nÛs gostarÌamos de ser capazes de acessar o aplicativo da Internet.
+Agora, n√≥s gostar√≠amos de ser capazes de acessar o aplicativo da Internet.
 
-A configuraÁ„o padr„o do projeto protege a aplicaÁ„o de 
+A configura√ß√£o padr√£o do projeto protege a aplica√ß√£o de 
 ser executada de um local remoto, embora, na realidade, tudo deve estar ok
 para acessar os arquivos `index.php` e `sfapp_dev.php`. Vamos executar o
-projeto a partir do navegador da Web, usando o endereÁo IP do servidor externo
+projeto a partir do navegador da Web, usando o endere√ßo IP do servidor externo
 (por exemplo `94.125.163.150`) e o FQDN do nosso Servidor Dedicado Virtual
-(por exemplo, `12543hpv163150.ikoula.com`). VocÍ ainda pode usar os dois endereÁos
-a partir de dentro do servidor, uma vez que eles n„o est„o mapeadas ao `127.0.0.1`:
+(por exemplo, `12543hpv163150.ikoula.com`). Voc√™ ainda pode usar os dois endere√ßos
+a partir de dentro do servidor, uma vez que eles n√£o est√£o mapeadas ao `127.0.0.1`:
 
-![Internet Explorer - Acesso a index.php pela Internet est· OK.](http://www.symfony-project.org/images/more-with-symfony/windows_47.png)
+![Internet Explorer - Acesso a index.php pela Internet est√° OK.](http://www.symfony-project.org/images/more-with-symfony/windows_47.png)
 
-![Internet Explorer - A execuÁ„o de sfapp_dev.php da Internet n„o est· OK.](http://www.symfony-project.org/images/more-with-symfony/windows_48.png)
+![Internet Explorer - A execu√ß√£o de sfapp_dev.php da Internet n√£o est√° OK.](http://www.symfony-project.org/images/more-with-symfony/windows_48.png)
 
 Como dissemos antes, o acesso a `index.php` e `sfapp_dev.php` de um
-localizaÁ„o remota est· ok. A execuÁ„o do `sfapp_dev.php` entretanto falha, pois
-n„o È permitida por padr„o. Isso impede usu·rios maliciosos de
-acessarem seu ambiente de desenvolvimento, que contÈm informaÁıes potencialmente sensÌveis
-sobre o projeto. VocÍ pode editar o arquivo `sfapp_dev.php` para fazer
-o trabalho, mas isto È fortemente desencorajado.
+localiza√ß√£o remota est√° ok. A execu√ß√£o do `sfapp_dev.php` entretanto falha, pois
+n√£o √© permitida por padr√£o. Isso impede usu√°rios maliciosos de
+acessarem seu ambiente de desenvolvimento, que cont√©m informa√ß√µes potencialmente sens√≠veis
+sobre o projeto. Voc√™ pode editar o arquivo `sfapp_dev.php` para fazer
+o trabalho, mas isto √© fortemente desencorajado.
 
-Finalmente, podemos simular um domÌnio real, editando o arquivo "hosts".
+Finalmente, podemos simular um dom√≠nio real, editando o arquivo "hosts".
 
-Este arquivo executa a resoluÁ„o de nomes FQDN local, sem necessidade de instalar o
-ServiÁo de DNS no Windows. O serviÁo de DNS est· disponÌvel em todas as ediÁıes do
-Windows Server 2008 R2, e tambÈm no Windows Server 2008 Standard, Enterprise
+Este arquivo executa a resolu√ß√£o de nomes FQDN local, sem necessidade de instalar o
+Servi√ßo de DNS no Windows. O servi√ßo de DNS est√° dispon√≠vel em todas as edi√ß√µes do
+Windows Server 2008 R2, e tamb√©m no Windows Server 2008 Standard, Enterprise
 e Datacenter.
 
-Em sistemas operacionais Windows x64, o arquivo "hosts" est· localizado por padr„o em:
+Em sistemas operacionais Windows x64, o arquivo "hosts" est√° localizado por padr√£o em:
 `C:\Windows\SysWOW64\Drivers\etc`
 
-O arquivo "hosts" È prÈ-preenchido para a m·quina poder resolver `localhost` para
+O arquivo "hosts" √© pr√©-preenchido para a m√°quina poder resolver `localhost` para
 `C:\Windows\SysWOW64\Drivers\etc`
 
-Vamos adicionar um nome real de domÌnio falso, como o `sfwebapp.local`, e poder
-resolvÍ-lo localmente.
+Vamos adicionar um nome real de dom√≠nio falso, como o `sfwebapp.local`, e poder
+resolv√™-lo localmente.
 
-![AlteraÁıes aplicadas ao arquivo "hosts".](http://www.symfony-project.org/images/more-with-symfony/windows_50.png)
+![Altera√ß√µes aplicadas ao arquivo "hosts".](http://www.symfony-project.org/images/more-with-symfony/windows_50.png)
 
-Seu projeto symfony agora roda na Internet, sem DNS, a partir de uma sess„o de navegador web
+Seu projeto symfony agora roda na Internet, sem DNS, a partir de uma sess√£o de navegador web
 executada de dentro do servidor web.
