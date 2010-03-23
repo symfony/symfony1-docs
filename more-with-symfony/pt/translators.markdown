@@ -62,7 +62,7 @@ Além de symfony, curte open source, e soluções inteligentes para sites com ca
 
 **No Twitter** : *http://twitter.com/lucasts*
 
-**Github**: *http://github.con/lucasts*
+**Github**: *[http://github.com/lucasts](http://github.com/lucasts "lucasts's github account")*
 
 
 Márcio Albuquerque
