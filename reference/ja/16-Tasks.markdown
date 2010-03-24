@@ -1811,7 +1811,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
     ./symfony propel:build-sql
     ./symfony propel:insert-sql
 
-詳細な情報はこれらのタスクのヘルプページを参照してください。
+詳しい情報はこれらのタスクのヘルプページを参照してください。
 
 確認を避けるには、`no-confirmation` オプションを渡します:
 
@@ -1853,7 +1853,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
     ./symfony propel:build-all
     ./symfony propel:data-load
 
-詳細な情報はこれらのタスクのヘルプページを参照してください。
+詳しい情報はこれらのタスクのヘルプページを参照してください。
 
 確認を避けるには、`no-confirmation` オプションを渡します:
 
@@ -1884,7 +1884,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
 このタスクはプロジェクトとすべてのインストールされたプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
+このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:build-filters --connection="name"
 
@@ -1917,7 +1917,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
 このタスクはプロジェクトとインストールしたすべてのプラグインから `config/*schema.xml` かつ/もしくは `config/*schema.yml` のスキーマ情報を読み込みます。
 
-このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
+このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:build-forms --connection="name"
 
@@ -2037,7 +2037,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 `propel:data-load` タスクを使うことでダンプファイルを YAML フォーマットで再インポートできます。
 
-デフォルトでは、`config/databases.yml` で定義されている `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
+デフォルトでは、`config/databases.yml` で定義される `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:data-dump --connection="name"
 
@@ -2080,7 +2080,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:data-load data/fixtures/dev data/fixtures/users.yml
 
-このタスクは `config/databases.yml` で定義されている `propel` 接続を使います。`--connection` オプションを指定することで別の接続を使うことができます:
+このタスクは `config/databases.yml` で定義される `propel` 接続を使います。`--connection` オプションを指定することで別の接続を使うことができます:
 
     ./symfony propel:data-load --connection="name"
 
@@ -2385,7 +2385,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 | オプション (ショートカット) | デフォルト | 説明
 | -------------------------- | ---------- | --------------------
-| `--detailed`               | `-`        | 詳細な情報を出力する
+| `--detailed`               | `-`        | 詳しい情報を出力する
 
 
 `test:coverage` タスクはテストディレクトリもしくはテストディレクトリと lib ファイルもしくは lib ディレクトリのほしいコードカバレージを出力します:

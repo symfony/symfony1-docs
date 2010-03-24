@@ -27,20 +27,20 @@ symfony のすべての設定ファイルはコンフィギュレーションハ
 `core_compile.yml`、`factories.yml`、`generator.yml`、`databases.yml`、
 `filters.yml`、`view.yml`、`autoload.yml`
 
-設定ファイルのなかにはあらかじめ定義されている定数の使用を許可するものがあります。定数は `%XXX%` (XXX は大文字のキー) で表記されるプレースホルダで宣言され「コンパイル」のときに実際の値に置き換わります。
+設定ファイルのなかにはあらかじめ定義される定数の使用を許可するものがあります。定数は `%XXX%` (XXX は大文字のキー) で表記されるプレースホルダで宣言され「コンパイル」のときに実際の値に置き換わります。
 
 ### コンフィギュレーションの設定項目
 
-定数は `settings.yml` 設定ファイルで定義されている任意の設定になることができます。プレースホルダのキーは接頭辞が `SF_` である大文字の設定キーの名前です:
+定数は `settings.yml` 設定ファイルで定義される任意の設定になることができます。プレースホルダのキーは接頭辞が `SF_` である大文字の設定キーの名前です:
 
     [yml]
     logging: %SF_LOGGING_ENABLED%
 
-symfony が設定ファイルをコンパイルするとき、既存のすべての `%SF_XXX%` プレースホルダは `settings.yml` からの値に置き換わります。上記の例では、`SF_LOGGING_ENABLED` プレースホルダは `settings.yml` の `logging_enabled` で定義されている値に置き換わります。
+symfony が設定ファイルをコンパイルするとき、既存のすべての `%SF_XXX%` プレースホルダは `settings.yml` からの値に置き換わります。上記の例では、`SF_LOGGING_ENABLED` プレースホルダは `settings.yml` の `logging_enabled` で定義される値に置き換わります。
 
 ### アプリケーションの設定項目
 
-キーの名前に接頭辞の `APP_` をつけることで `app.yml` 設定ファイルで定義されている設定も使うことができます。
+キーの名前に接頭辞の `APP_` をつけることで `app.yml` 設定ファイルで定義される設定も使うことができます。
 
 ### 特別な定数
 
@@ -133,13 +133,13 @@ symfony が設定ファイルからの値を必要とするとき、現在の環
   * モジュールのコンフィギュレーション (`PROJECT_ROOT_DIR/apps/APP_NAME/modules/MODULE_NAME/config/XXX.yml`)
   * アプリケーションのコンフィギュレーション (`PROJECT_ROOT_DIR/apps/APP_NAME/config/XXX.yml`)
   * プロジェクトのコンフィギュレーション (`PROJECT_ROOT_DIR/config/XXX.yml`)
-  * プラグインで定義されているコンフィギュレーション (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
-  * symfony ライブラリで定義されているデフォルトコンフィギュレーション (`SF_LIB_DIR/config/XXX.yml`)
+  * プラグインで定義されるコンフィギュレーション (`PROJECT_ROOT_DIR/plugins/*/config/XXX.yml`)
+  * symfony ライブラリで定義されるデフォルトコンフィギュレーション (`SF_LIB_DIR/config/XXX.yml`)
 
-たとえば、アプリケーションディレクトリで定義されている `settings.yml` はプロジェクトの `config/` ディレクトリのメインコンフィギュレーションのセット、およびフレームワーク自身に収められているデフォルトコンフィギュレーション (`lib/config/config/settings.yml`) を継承します。
+たとえば、アプリケーションディレクトリで定義される `settings.yml` はプロジェクトの `config/` ディレクトリのメインコンフィギュレーションのセット、およびフレームワーク自身に収められているデフォルトコンフィギュレーション (`lib/config/config/settings.yml`) を継承します。
 
 >**TIP**
->設定ファイルが環境を認識し複数のディレクトリで定義できる場合、次の優先順位リストが適用されます:
+>設定ファイルが環境を認識し複数のディレクトリのなかで定義できます。次の優先順位リストが適用されます:
 >
 > 1. モジュール
 > 2. アプリケーション
