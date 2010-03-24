@@ -221,9 +221,9 @@ XFBML アプリケーションや Facebook コネクト Web サイトのため�
         <?php include_metas() ?>
         <?php include_title() ?>
         <script type="text/javascript" src="/sfFacebookConnectPlugin/js/animation/animation.js"></script>
-      <link rel="stylesheet" type="text/css" media="screen" href="/trajoin/css/main.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/trajoin/css/trajoin.css" />
-</head>
+       <link rel="stylesheet" type="text/css" media="screen" href="/trajoin/css/main.css" />
+       <link rel="stylesheet" type="text/css" media="screen" href="/trajoin/css/trajoin.css" />
+     </head>
       <body>
         <?php echo $sf_content ?>
         <?php echo include_facebook_connect_script() ?>

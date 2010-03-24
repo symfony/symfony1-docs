@@ -76,6 +76,6 @@ Masaki Kagaya (加賀谷 昌樹)
 
 PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。2010 年より PHP 公式マニュアルの翻訳も始める。
 
-** Web サイト**: *http://sarabande.jp*
+**Web サイト**: *http://sarabande.jp*
 
 **Twitter**: *http://twitter.com/masakielastic*
