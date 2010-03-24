@@ -126,7 +126,7 @@
       view_class:         sfPHP
       partial_view_class: sf
 
-`enabled` パラメータが `false` にセットされている場合、モジュールのすべてのアクションは無効になります。これらのアクションへのリクエストは ([`settings.yml`](#chapter_04) で定義される) ~[`module_disabled_module`](#chapter_04n)~/~`module_disabled_action`~ アクションにリダイレクトされます。
+`enabled` パラメータが `false` にセットされている場合、モジュールのすべてのアクションは無効になります。これらのアクションへのリクエストは ([`settings.yml`](#chapter_04) で定義される) ~[`module_disabled_module`](#chapter_04)~/~`module_disabled_action`~ アクションにリダイレクトされます。
 
 `view_class` パラメータはモジュールのすべてのアクションによって使われるビュークラス (接尾辞の `View` はつけない) を定義し、`sfView` を継承しなければなりません。
 
