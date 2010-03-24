@@ -5,7 +5,7 @@ symfony 1.3/1.4 の新しい機能
 
 最初に、symfony 1.3/1.4 と互換性のある PHP のバージョンが 5.2.4 およびそれ以降であることにご注意ください。
 
-1.2 からアップグレードしたいのであれば、[「プロジェクトを 1.2 から 1.3/1.4 にアップグレードする」](http://www.symfony-project.org/tutorial/1_4/ja/upgrade)のページをご覧ください。プロジェクトを symfony 1.3/1.4 に安全にアップグレードするために必要なすべての情報が手に入ります。
+symfony 1.2 からアップグレードしたいのであれば、[「プロジェクトを 1.2 から 1.3/1.4 にアップグレードする」](http://www.symfony-project.org/tutorial/1_4/ja/upgrade)のページをご覧ください。プロジェクトを symfony 1.3/1.4 に安全にアップグレードするために必要なすべての情報が手に入ります。
 
 
 メーラー
@@ -106,14 +106,14 @@ symfony 1.3/1.4 では SwiftMailer 4.1 をベースにする標準メーラー�
 
 ### `sfValidatorSchemaCompare`
 
-`sfValidatorSchemaCompare` クラスに新しいコンパレータが2つ用意されました:
+`sfValidatorSchemaCompare` クラスに2つの新しいコンパレータが用意されました:
 
  * `IDENTICAL` は `===` と同等です;
  * `NOT_IDENTICAL` は `!==` と同等です;
 
 ### `sfValidatorChoice`、`sfValidator(Propel|Doctrine)Choice`
 
-`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデータには `multiple` オプションが `true` の場合のみ有効になる新しいオプションが2つ用意されました:
+`sfValidatorChoice`、`sfValidatorPropelChoice` そして `sfValidatorDoctrineChoice` バリデータには `multiple` オプションが `true` の場合のみ有効になる2つの新しいオプションが用意されました:
 
  * `min` 選択する必要がある最小の数
  * `max` 選択する必要がある最大の数
@@ -126,7 +126,7 @@ symfony 1.3/1.4 では SwiftMailer 4.1 をベースにする標準メーラー�
 
 ### デフォルトのエラーメッセージ
 
-次のように `sfForm::setDefaultMessage()` メソッドを使うことデフォルトのエラーメッセージをグローバルに定義できるようになりました:
+`sfForm::setDefaultMessage()` メソッドを次のように使うことでデフォルトのエラーメッセージをグローバルに定義できるようになりました:
 
     [php]
     sfValidatorBase::setDefaultMessage('required', 'This field is required.');
@@ -158,14 +158,14 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `sfValidatorFile`
 
-`php.ini` で `file_uploads` が無効な場合 `sfValidatorFile` のインスタンスを作る際に例外が投げられます。
+`php.ini` で `file_uploads` が無効にされている場合 `sfValidatorFile` のインスタンスを作る際に例外が投げられます。
 
 フォーム
 --------
 
 ### `sfForm::useFields()`
 
-新しい `sfForm::useFields()` メソッドは引数として提供されるフィールド以外、隠しフィールドではないすべてのフィールドをフォームから削除します。ときには不要なフィールドの割り当てを解除するよりもフォームで維持したいフィールドを明示的に指示するほうが簡単です。たとえば、新しいフィールドを基底フォームに追加するとき、これらは明示的に追加されるまでフォームに自動表示されることはありません (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
+新しい `sfForm::useFields()` メソッドは引数として提供されるフィールド以外、隠しフィールドではないすべてのフィールドをフォームから削除します。ときには不要なフィールドの割り当てを解除するよりもフォームで維持したいフィールドを明示的に指示するほうが簡単です。たとえば、新しいフィールドを基底フォームに追加するとき、これらのフィールドは明示的に追加されるまでフォームに自動表示されることはありません (モデルフォームで新しいカラムを関連テーブルに追加する場合を考えてください)。
 
     [php]
     class ArticleForm extends BaseArticleForm
@@ -205,7 +205,7 @@ symfony がエラーを表示するとき、使われるエラーメッセージ
 
 ### `BaseForm`
 
-Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使う `BaseForm` クラスが symfony 1.3/1.4 のすべての新しいプロジェクトに用意されます。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームはこのクラスを自動的に継承します。追加のフォームクラスを作るのであれば継承するのは `sfForm` ではなく `BaseForm` です。
+symfony 1.3/1.4 では Form コンポーネントを拡張するもしくはプロジェクト固有の機能を追加するために使う `BaseForm` クラスがすべての新しいプロジェクトに用意されます。`sfDoctrinePlugin` と `sfPropelPlugin` によって生成されるフォームはこのクラスを自動的に継承します。追加のフォームクラスを作るのであれば継承するのは `sfForm` ではなく `BaseForm` です。
 
 ### `sfForm::doBind()`
 
@@ -352,7 +352,7 @@ symfony 1.3/1.4 では、lime はカラー出力を正しく行うようにな�
 タスク
 ------
 
-symfony CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI は幅をデフォルトの78カラムに合わせようとします。
+symfony CLI はターミナルウィンドウの幅を検出することを試み、ラインのフォーマットを合わせようとします。検出できない場合 CLI はウィンドウの幅をデフォルトの78カラムに合わせようとします。
 
 ### `sfTask::askAndValidate()`
 
@@ -365,7 +365,7 @@ symfony CLI はターミナルウィンドウの幅を検出することを試�
 
 ### `symfony:test`
 
-ときに開発者は特定のプラットフォームで symfony が正しく動くのかをチェックするために symfony のテストスイートを実行する必要があります。従来は、この確認作業を行うために symfony に附属する `prove.php` スクリプトの存在を知らなければなりませんでした。symfony 1.3/1.4 では組み込みのタスク、コマンドラインから symfony のコアテストスイートを実行できる `symfony:test` タスクが用意され、ほかのタスクと同じように使うことができます:
+ときに開発者は特定のプラットフォームで symfony が正しく動くのかをチェックするために symfony のテストスイートを実行する必要があります。従来ではこの確認作業を行うために symfony に附属する `prove.php` スクリプトの存在を知らなければなりませんでした。symfony 1.3/1.4 では組み込みのタスク、コマンドラインから symfony のコアテストスイートを実行できる `symfony:test` タスクが用意され、ほかのタスクと同じように使うことができます:
 
     $ php symfony symfony:test
 
@@ -390,12 +390,12 @@ Propel もしくは Doctrine のどちらも使いたくない場合は `--orm` 
 
     $ php /path/to/symfony generate:project foo --orm=none
 
-新しい `--installer` オプションのおかげで新たに生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドで使うことができます。次のようなもっと便利なメソッドがあります:
+新しい `--installer` オプションのおかげで新たに生成されるプロジェクトをかなりカスタマイズできる PHP スクリプトを指定することができます。スクリプトはタスクで実行され、タスクのメソッドのなかで使うことができます。次のようなもっと便利なメソッドがあります:
 
 `installDir()`、`runTask()`、`ask()`、`askConfirmation()`、`askAndValidate()`、
 `reloadTasks()`、`enablePlugin()` そして `disablePlugin()`
 
-詳しい情報は公式ブログの[記事](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)にあります。
+詳しい情報は公式ブログの[記事  (New in symfony 1.3: Project Creation Customization)](http://www.symfony-project.org/blog/2009/06/10/new-in-symfony-1-3-project-creation-customization)に掲載されています。
 
 プロジェクトを生成するとき、2番目の引数として著者の名前を渡すことができます。この引数は symfony が新しいクラスを生成するときに PHPDoc の `@author` タグに使う値を指定します。
 
@@ -430,14 +430,14 @@ Propel もしくは Doctrine のどちらも使いたくない場合は `--orm` 
 
 ### `sfBaseTask::setConfiguration()`
 
-PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()` に `--application` と `--env` オプションを渡す必要はもはやありません。その代わりに、`->setConfiguration()` を呼び出すだけで設定オブジェクトを直接セットすることができます。
+PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()` に `--application` と `--env` オプションを渡す必要はもはやありません。その代わりに`->setConfiguration()` を呼び出すだけで設定オブジェクトを直接セットすることができます。
 
     [php]
     $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
     $task->setConfiguration($this->configuration);
     $task->run();
 
-以前のバージョンでは、次のように書けばまだ動きます:
+以前のバージョンでは次のように書けばまだ動きます:
 
     [php]
     $task = new sfDoctrineLoadDataTask($this->dispatcher, $this->formatter);
@@ -448,7 +448,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 
 ### `project:disable` と `project:enable`
 
-`project:disable` と `project:enable` タスクを使うことで、環境全体を無効もしくは有効にできるようになりました:
+`project:disable` と `project:enable` タスクを使うことで環境全体を無効もしくは有効にできるようになりました:
 
     $ php symfony project:disable prod
     $ php symfony project:enable prod
@@ -506,7 +506,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 Propel との統合
 ---------------
 
-Propel のバージョンは 1.4 にアップグレードされました。Propel のアップグレードに関する詳しい情報は[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
+Propel のバージョンは 1.4 にアップグレードされました。詳しいアップグレード情報に関しては[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
 
 ### Propel のビヘイビア
 
@@ -514,7 +514,7 @@ Propel を拡張するために symfony が依存するカスタムのビルダ�
 
 ### `propel:insert-sql`
 
-`propel:insert-sql` はデータベースからすべてのデータを削除する前に確認の問い合わせを行います。このタスクは複数のデータベースからデータを削除することができるので、関連するデータベースの接続名も表示するようになりました。
+`propel:insert-sql` はデータベースからすべてのデータを削除する前に削除してよいのか尋ねます。このタスクは複数のデータベースからデータを削除することができるので、関連するデータベースの接続名も表示するようになりました。
 
 ### `propel:generate-module`、`propel:generate-admin`、`propel:generate-admin-for-route`
 
@@ -588,7 +588,7 @@ CLI
 
 ### カラー出力
 
-symfony の CLI を使うとき、symfony はご利用のコンソールがカラー出力をサポートしているかどうかを推測します。ただし、たとえば Cygwin を使っている場合に推測が間違っていることがあります (Windows プラットフォームではカラー出力はつねにオフだからです)。
+symfony CLI を使うとき、symfony はご利用のコンソールがカラー出力をサポートしているかどうかを推測します。ただし、たとえば Cygwin を使っている場合に推測が間違っていることがあります (Windows プラットフォームではカラー出力がつねにオフだからです)。
 
 symfony 1.3/1.4 では、グローバルオプションの `--color` を渡すことでカラー出力を強制できるようになりました。
 
@@ -634,7 +634,7 @@ symfony 1.3/1.4 では、新たに作られたプロジェクトでプラグイ�
 `sfProtoculousPlugin` もしくは `sfCompat10Plugin` のようなコアプラグインを使いたい場合、必要なのは対応する `enablePlugins()` メソッドを `ProjectConfiguration` クラスに追加することだけです。
 
 >**NOTE**
->symfony 1.2 からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。新しいふるまいの適用は symfony 1.3/1.4 の新規プロジェクトのみです。
+>symfony 1.2 からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。新しいふるまいが適用されるのは symfony 1.3/1.4 の新規プロジェクトだけです。
 
 ### `sfPluginConfiguration::connectTests()`
 
@@ -654,9 +654,9 @@ symfony 1.3/1.4 では、新たに作られたプロジェクトでプラグイ�
 
 ### `sf_file_link_format`
 
-symfony 1.3/1.4 は可能であればファイルパスをクリック可能なリンク (すなわちデバッグ例外のテンプレート) にフォーマットします。`sf_file_link_format` がセットされている場合、この目的に使われ、そうでなければ、symfony は PHP コンフィギュレーションの `xdebug.file_link_format` の値を探します。
+symfony 1.3/1.4 は可能であればファイルパスをクリック可能なリンク (すなわちデバッグ例外のテンプレート) にフォーマットします。`sf_file_link_format` がセットされている場合、この目的に使われ、そうでなければ symfony は PHP コンフィギュレーションの `xdebug.file_link_format` の値を探します。
 
-たとえば、ファイルを TextMate で開きたい場合、次のコードを `settings.yml` に追加します:
+たとえばファイルを TextMate で開きたい場合、次のコードを `settings.yml` に追加します:
 
     [yml]
     all:
@@ -674,7 +674,7 @@ Doctrine のバージョンは 1.2 にアップグレードされました。ア
 
 Doctrine の YAML スキーマファイルのなかで symfony の追加オプションを指定できるようになりました。そしてフォームとフィルタクラスの生成を無効にするオプションもいくつか追加されました。
 
-たとえば、 典型的な多対多のリファレンスモデルでは、フォームもしくはフィルタフォームクラスを生成させる必要はありません。ですので次のようなことができます:
+たとえば典型的な多対多のリファレンスモデルでは、フォームもしくはフィルタフォームクラスを生成させる必要はありません。ですので次のようなことができます:
 
     UserGroup:
       options:
@@ -699,7 +699,7 @@ Doctrine で開発するときに手助けしてくれる新しいタスクが�
 
 #### モデルテーブルを作る
 
-指定モデルの配列のためにテーブルを個別に作ることができるようになりました。テーブルを削除するとき Doctrine はあなたに代わってテーブルを再作成してくれます。既存のプロジェクト/データベースで新しいモデルを開発するとき、データベース全体を一掃したくなく単にテーブル群を再構築したいときに役立ちます。
+指定モデルの配列のためにテーブルを個別に作ることができるようになりました。テーブルを削除するとき、 Doctrine はあなたに代わってテーブルを再作成してくれます。既存のプロジェクト/データベースで新しいモデルを開発するとき、データベース全体を一掃したくなく単にテーブル群を再構築したいときに役立ちます。
 
     $ php symfony doctrine:create-model-tables Model1 Model2 Model3
 
@@ -709,7 +709,7 @@ YAML スキーマファイルのなかでモデルや名前を変更したり、
 
     $ php symfony doctrine:delete-model-files ModelName
 
-上記タスクは関連する生成ファイルを見つけ、そのファイルを削除したいかどうかあなたに報告してくれます。
+上記タスクは関連する生成ファイルを見つけ、そのファイルを削除したいかどうか尋ねます。
 
 #### モデルファイルをきれいにする
 
@@ -883,7 +883,7 @@ Doctrine の日付とタイムスタンプの値を PHP の DateTime オブジ�
       }
     }
 
-以前のバージョンでこれを動かすには、ウィジェットをメソッドを作ることに加えて `getFields()` を拡張する必要がありました。
+以前のバージョンでこれを動かすには、ウィジェットとメソッドを作ることに加えて `getFields()` を拡張する必要がありました。
 
 ### Doctrine を設定する
 
@@ -931,7 +931,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 
 ### スロットの改善
 
-スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは戻り値として返すスロットのデフォルト内容を指定するための2番目のパラメータを受け取ります:
+スロットが提供されない場合、`get_slot()` と `include_slot()` ヘルパーは2番目の引数として受け取ったスロットのデフォルト内容を返します:
 
     [php]
     <?php echo get_slot('foo', 'bar') // foo スロットが定義されていなければ  bar が出力される ?>
@@ -955,7 +955,7 @@ Web デバッグツールバーのそれぞれのパネルはタイトルの背�
 ビューキャッシュ
 -----------------
 
-ビューキャッシュマネージャは `factories.yml` でパラメータを受け取ります。クラスを異なる方法で簡単に拡張できるようにビューのキャッシュキーの生成はリファクタリングされました。
+ビューキャッシュマネージャは `factories.yml` のなかのパラメータを受け取ります。クラスを異なる方法で簡単に拡張できるようにビューのキャッシュキーの生成はリファクタリングされました。
 
 `factories.yml` で2つのパラメータが利用できます:
 
