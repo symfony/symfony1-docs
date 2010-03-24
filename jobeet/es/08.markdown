@@ -265,7 +265,7 @@ Pero cuando descubres uno, tienes que escribir una prueba antes de arreglar tu c
 >     static public function slugify($text)
 >     {
 >       // replace non letter or digits by -
->       $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+>       $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
 >
 >       // trim
 >       $text = trim($text, '-');
@@ -280,7 +280,7 @@ Pero cuando descubres uno, tienes que escribir una prueba antes de arreglar tu c
 >       $text = strtolower($text);
 >
 >       // remove unwanted characters
->       $text = preg_replace('~[^-\w]+~', '', $text);
+>       $text = preg_replace('#[^-\w]+#', '', $text);
 >
 >       if (empty($text))
 >       {
