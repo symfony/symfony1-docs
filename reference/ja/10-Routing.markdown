@@ -295,13 +295,19 @@ routing.yml 設定ファイル
 
 *デフォルト*: 空の配列
 
-`collection_actions` オプションはコレクションルートで利用可能な追加アクションの配列を定義します。
+`collection_actions` オプションはコレクションルートで利用可能な追加アクションの配列を定義します。キーはアクションの名前で値はそのアクションに対して有効なメソッドです:
+
+    [yml]
+    articles:
+      options:
+        collection_actions: { filter: post }
+        # ...
 
 ### ~`object_actions`~
 
 *デフォルト*: 空の配列
 
-`object_actions` オプションはオブジェクトルートで利用可能な追加アクションの配列を定義します。
+`object_actions` オプションはオブジェクトルートで利用可能な追加アクションの配列を定義します。キーはアクションの名前で値はそのアクションに対して有効なメソッドです:
 
     [yml]
     articles:
