@@ -178,7 +178,7 @@ symfony CLI はグローバルな `--dry-run` オプションを受け入れな�
 
 symfony 1.0 のアドミンジェネレータの Propel テンプレートと CRUD は symfony 1.4 で削除されます (`plugins/sfPropelPlugin/data/generator/sfPropelAdmin/`)。
 
-「Dynarch Calendar」 (`data/web/calendar/` で見つかります) は symfony 1.4 は削除されます。このライブラリを使っていたのは symfony 1.4 で削除される Form ヘルパーグループだけだったからです。
+「Dynarch Calendar」 (`data/web/calendar/` で見つかります) は symfony 1.4 で削除されます。このライブラリを使っていたのは symfony 1.4 で削除される Form ヘルパーグループだけだったからです。
 
 symfony 1.3 に関して、サイトが利用不可能なときに表示されるページは `%SF_APP_CONFIG_DIR%/` と `%SF_CONFIG_DIR%/` ディレクトリでのみ探されます。まだこのページを `%SF_WEB_DIR%/errors/` に保存しているのであれば、symfony 1.4 へのマイグレーションを行う前に削除しなければなりません。
 
