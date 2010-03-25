@@ -11,7 +11,7 @@ factories.yml 設定ファイル
 
 [第3章](#chapter_03)で説明したように、`factories.yml` ファイルでは**環境が認識され**、**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
-`factories.yml` 設定ファイルは名前つきファクトリのリストを収めます:
+`factories.yml` 設定ファイルには名前つきファクトリのリストが収められています:
 
     [yml]
     FACTORY_1:
@@ -406,7 +406,7 @@ HTTP リクエストのあいだのユーザーデータの一貫性を保つた
  * ~`session_cookie_httponly`~: `true` にセットされている場合、セッションクッキーを設定する際に PHP は `httponly` フラグを送信しようとします。
 
 >**NOTE**
->それぞれのオプションの説明は PHP 公式マニュアルの `session_set_cookie_params()` 関数の説明ページにあります。
+>それぞれのオプションの説明は PHP 公式マニュアルの `session_set_cookie_params()` 関数のページにあります。
 
 ### ~`session_cache_limiter`~
 

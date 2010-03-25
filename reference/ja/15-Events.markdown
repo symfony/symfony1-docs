@@ -181,7 +181,7 @@
 | ------------ | -----------------------------------------------------------------------------------
 | `priority`   | 優先順位 (`sfLogger::EMERG`、`sfLogger::ALERT`、`sfLogger::CRIT`、`sfLogger::ERR`、 `sfLogger::WARNING`、`sfLogger::NOTICE`、`sfLogger::INFO` もしくは `sfLogger::DEBUG`)
 
-`command.log` イベントは symfony の CLI ユーティリティでロギングするために symfony によって利用されるメカニズムです (`logger` ファクトリを参照)。
+`command.log` イベントは symfony CLI ユーティリティでロギングするために symfony によって利用されるメカニズムです (`logger` ファクトリを参照)。
 
 ### ~`command.pre_command`~
 
@@ -230,7 +230,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 | `method`     | 呼び出されたが見つからないメソッドの名前
 | `arguments`  | メソッドに渡される引数
 
-メソッドが `sfProjectConfiguration` クラスで定義されていない場合 `configuration.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
+メソッドが `sfProjectConfiguration` クラスで定義されていない場合 `configuration.method_not_found` イベントが通知されます。このイベントをリスニングすることで継承を使わずにメソッドをクラスに追加できます。
 
 `component`
 -----------
@@ -246,7 +246,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 | `method`     | 呼び出されたが見つからないメソッド
 | `arguments`  | メソッドに渡される引数
 
-メソッドが `sfComponent` クラスで定義されていないとき `component.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
+メソッドが `sfComponent` クラスで定義されていないとき `component.method_not_found` イベントが通知されます。このイベントをリスニングすることで継承を使わずにメソッドをクラスに追加できます。
 
 `context`
 ---------
@@ -345,7 +345,7 @@ CLI でタスクオプションが解析される前に `command.filter_options`
 | `method`     | 呼び出されたが見つからないメソッドの名前
 | `arguments`  | メソッドに渡される引数
 
-メソッドが `sfFormSymfony` クラスで定義されていないときに `form.method_not_found` イベントが通知されます。このイベントをリスニングすることで、継承を使わずにメソッドをクラスに追加できます。
+メソッドが `sfFormSymfony` クラスで定義されていないときに `form.method_not_found` イベントが通知されます。このイベントをリスニングすることで継承を使わずにメソッドをクラスに追加できます。
 
 `plugin`
 --------

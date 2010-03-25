@@ -38,7 +38,7 @@ security.yml 設定ファイル
     default:
       is_secure: false
 
-アプリケーションの ~`security.yml`~ ファイルで `is_secure` キーを `true` にセットすれば、アプリケーション全体ですべてのユーザーの認証が必須になります。
+アプリケーションの ~`security.yml`~ ファイルのなかで `is_secure` キーを `true` にセットすれば、アプリケーション全体ですべてのユーザーの認証が必須になります。
 
 >**NOTE**
 >認証されていないユーザーがセキュアなアクションにアクセスしようとすると、symfony はリクエストを `settings.yml` で設定されている `login` アクションに転送します。
