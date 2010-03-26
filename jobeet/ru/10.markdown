@@ -182,9 +182,6 @@
 будут удалены.
 
 Вместо удаления полей, который вы не хотите отображать, Вы также можете
-explicitly list the fields you want by using the `useFields()` method:
-
-Instead of unsetting the fields you don't want to display, you can also
 явно перечислить поля, который нужны на форме, используя метод `useFields()`:
 
     [php]

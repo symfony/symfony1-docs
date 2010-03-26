@@ -994,7 +994,7 @@ symfony сгенерирует исключение, сообщающее Вам
   * `is_image`:    Если `true`, то содежимое файла может быть показано как изображение 
   * `edit_mode`:   Находится ли форма в состоянии редактирования или создания
   * `with_delete`: Надо ли отображать чекбокс для удаления
-  * `template`:    'аблон для отображения виджета
+  * `template`:    Шаблон для отображения виджета
 
 ![File upload](http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png)
 
@@ -1005,10 +1005,10 @@ symfony сгенерирует исключение, сообщающее Вам
 >класс, зависящий от типа поля как `sf_admin_text` или `sf_admin_boolean`.
 
 <propel>
-The `edit_mode` option uses the `sfPropel::isNew()` method.
+Опция `edit_mode` использует метод `sfPropel::isNew()`.
 </propel>
 <doctrine>
-The `edit_mode` option uses the `sfDoctrineRecord::isNew()` method.
+Опция `edit_mode` использует метод `sfDoctrineRecord::isNew()`.
 </doctrine>
 
 Он возвращает `true`, если объект модели для формы создается и `false`
@@ -1094,7 +1094,7 @@ The `edit_mode` option uses the `sfDoctrineRecord::isNew()` method.
 при помощи создани шаблона с таким же именем в модуле (например, в каталоге
 `apps/backend/modules/job/templates/` для бэкэнд-модуля `job`):
 
- | 'аблон                       | Описание
+ | Шаблон                       | Описание
  | ---------------------------- | -------------------------------------
  | `_assets.php`                | Подгружает CSS и JS для использования в остальных шаблонах
  | `_filters.php`               | Подготавливает область фильтров для отображения

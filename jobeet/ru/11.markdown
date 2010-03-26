@@ -796,15 +796,9 @@ HTTP метод `PUT`. Поскольку браузеры не понимают
 он дает Вам простой способ тестирования форм а также уверенность, что формы
 защищены по умолчанию.
 
-Our tour of great symfony features do not end today. Tomorrow, we will create
-the backend application for Jobeet. Creating a backend interface is a must for
-most web projects, and Jobeet is no different. But how will we be able to
-develop such an interface in just one hour? Simple, we will use the symfony
-admin generator framework. Until then, take care.
-
 Наше путешествие в удивительный мир Symfony сегодня не заканчивается. Завтра
 мы создадим бэкэнд-приложение для Jobeet. Бэкэнд-интерфейс - важная часть большинства
-веб-проектов и Jobeet не является исключением. Но ка мы сможем создать его всего
+веб-проектов и Jobeet не является исключением. Но как мы сможем создать его всего
 за час? Очень просто -  мы будем использовать фреймворк Symfony для генерации
 админки. А до тех пор - берегите себя.
 
