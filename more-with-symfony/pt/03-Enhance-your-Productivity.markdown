@@ -23,14 +23,14 @@ então usar outras tarefas do symfony para criar aplicações, instalar plugins,
 configurar seu modelo e muito mais.
 
 Mas os primeiros passos para se criar um novo projeto geralmente são os
-mesmos: você cria uma aplicação principal, instala vários de plugins, ajusta
-algumas configurações padrão para seu gosto, e assim por diante.
+mesmos: você cria uma aplicação principal, instala vários plugins, ajusta
+algumas configurações padrão ao seu gosto, e assim por diante.
 
 A partir do symfony 1.3, o processo de criação de projetos pode ser personalizado e
 automatizado.
 
 >**NOTE**
->Como todas as tarefas do symfony são classes, é muito fácil de personalizá-las e estendê-las, com algumas exceções.
+>Como todas as tarefas do symfony são classes, é muito fácil personalizá-las e estendê-las, com algumas exceções.
 >A tarefa `generate:project`, entretanto, não é facilmente customizável
 >porque não existe um projeto quando a tarefa é executada.
 
@@ -40,7 +40,7 @@ será executado durante o processo de criação do projeto:
     $ php /path/to/symfony generate:project --installer=/algumlugar/meu_instalador.php
 
 O script `/algumlugar/meu_instalador.php` será executado no contexto da instância 
-de `sfGenerateProjecttarefa`, então ele tem acesso à todos os métodos da tarefa usando o 
+de `sfGenerateProjecttarefa`, então, ele tem acesso à todos os métodos da tarefa usando o 
 objeto `$this`. As próximas sessões descrevem todos os métodos disponíveis que você
 pode utilizar na personalização de seu processo de criação de um projeto.
 

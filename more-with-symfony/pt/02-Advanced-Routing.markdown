@@ -21,7 +21,7 @@ Configuração do Projeto: Um CMS para Muitos Clientes
 -------------------------------------
 
 Neste projeto, uma empresa fictícia - *Sympal Builder* - quer criar um
-*CMS* para que seus clientes possam construir sites como subdomínios de `sympalbuilder.com`.
+*CMS* para que seus clientes possam construir sites com subdomínios de `sympalbuilder.com`.
 Especificamente, o cliente XXX pode visualizar seu site em `xxx.sympalbuilder.com` e utilizar
 a área administrativa em `xxx.sympalbuilder.com/backend.php`.
 
@@ -119,7 +119,7 @@ que define o título e o conteúdo de sua saída. Para fazer a ligação de cada
 a um objeto `Page` específico, crie um objeto de rotas do tipo
 `sfDoctrineRoute` que utiliza o campo `slug`. O código a seguir
 irá procurar automaticamente um objeto `Page` no banco de dados com um campo `slug`
-que corresponda à url:
+que corresponda à URL:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -134,7 +134,7 @@ que corresponda à url:
         action: show
 
 A rota acima irá casar corretamente a página
-`http://pete.sympalbuilder.com/location` com o objeto `Page` correto. Infelizmente, a rota acima casaria
+`http://pete.sympalbuilder.com/location` com o respectivo objeto `Page`. Infelizmente, a rota acima casaria
 *também* a URL `http://pete.sympalbuilder.com/menu`, significando que o
 menu do restaurante será exibido no site Pete! Neste momento, a
 rota desconhece a importância dos subdomínios de clientes.

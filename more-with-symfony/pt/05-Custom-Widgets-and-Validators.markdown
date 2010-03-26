@@ -544,8 +544,8 @@ o validador `sfValidatorGMapAddress` diretamente e testa diferentes valores.
 Considerações Finais
 --------------
 
-O erro mais comum durante a criação de um *widget* é ser focar excessivamente em
-como as informações serão armazenadas no banco de dados. O framework formulário é
+O erro mais comum durante a criação de um *widget* é focar excessivamente em
+como as informações serão armazenadas no banco de dados. O framework de formulário é
 simplesmente um contêiner de dados e um framework de validação. Portanto, um widget deve
 gerenciar somente a sua informação relacionada. Se os dados forem válidos, em seguida, os diferentes
 valores limpos poderão então ser utilizados no modelo ou no controlador.

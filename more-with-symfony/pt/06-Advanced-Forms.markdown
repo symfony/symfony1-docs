@@ -95,14 +95,14 @@ O campo `filename` é obrigatório porque, por padrão, um objeto validador seta
 
 >**NOTE**
 >~`sfForm::useFields()`~ é uma nova função do symfony 1.3 que permite ao
->desenvolvedor especificar exatamente quais os campos do formulário desejar usar e em que
+>desenvolvedor especificar exatamente quais os campos do formulário deseja utilizar e, em que
 >ordem eles devem ser exibidos. Todos os outros campos não ocultos são removidos
 >do formulário.
 
 Até agora, nós não fizemos nada mais do que a configuração simples de um formulário. 
 A seguir, vamos combinar os formulários em um.
 
-Mesclando Formulários
+Embutindo Formulários
 ---------------------
 
 Ao utilizar o ~`sfForm::embedForm()`~, o `ProductForm` e `ProductPhotoForms` 
@@ -296,7 +296,7 @@ Vamos analisar como cada array é organizado no objeto `ProductForm` finalizado.
 Como esperado, os campos básicos (`id`, `name` e `price`) estão representados no primeiro
 nível de cada array. Em um formulário que não incorpora outros formulários, os arrays `widgetSchema` 
 e `validatorSchema` têm apenas um nível, que representa os campos básicos do formulário.
-Os *widgets* e validadores de qualquer formulário incorporados são representados como arrays filhos
+Os *widgets* e validadores de qualquer formulário incorporado são representados como arrays filhos
 no `widgetSchema` e `validatorSchema` como visto acima. 
 O método que gerencia este processo é explicado a seguir.
 
@@ -348,7 +348,7 @@ de cada `ProductPhotoForm` aos arrays `widgetSchema` e `validatorSchema`
 do objeto `ProductPhotoCollectionForm` vazio.
 
 Quando finalizado, os arrays `widgetSchema` e `validatorSchema` do formulário
-"wrapper" (`ProductPhotoCollectionForm`) serão arrays multi-nível que mantêm os
+"wrapper" (`ProductPhotoCollectionForm`) serão arrays multi-dimensional que mantêm os
 widgets e validadores de ambos os `ProductPhotoForm`.
 
     [php]
@@ -387,7 +387,7 @@ widgets e validadores de ambos os `ProductPhotoForm`.
 Na etapa final do nosso processo, o formulário "wrapper" resultante,
 `ProductPhotoCollectionForm`, é embutido (`embedded`) diretamente no `ProductForm`.
 Isso ocorre dentro de `ProductForm::configure()`, que tira proveito de
-todo o trabalho que foi feito dentro de `ProductPhotoCollectionForm`:
+todo o trabalho que foi feito dentro do `ProductPhotoCollectionForm`:
 
     [php]
     $form = new ProductPhotoCollectionForm(null, array(
@@ -421,13 +421,13 @@ seguinte:
 
     <!-- ... -->
 
-A declaração `<?php echo $ form?>` é a forma mais simples de exibir um formulário,
+A declaração `<?php echo $form?>` é a forma mais simples de exibir um formulário,
 mesmo os mais complexos. São de grande ajuda durante a prototipagem, mas logo
 que você desejar alterar o layout, será necessário substituí-lo pela sua própria
 lógica. Remova esta linha agora, já que iremos substituí-la nesta seção.
 
-A coisa mais importante para compreender quando estiver renderizando formulários incorporadas na
-visão é a organização do array multi-nível `widgetSchema` explicado
+A coisa mais importante para compreender quando estiver renderizando formulários incorporados na
+visão é a organização do array multi-dimensional `widgetSchema` explicado
 nas seções anteriores. Para este exemplo, vamos começar renderizando os campos básicos
 `name` e `price` do ProductForm` na visão:
 
@@ -454,9 +454,9 @@ implementa a interface `ArrayAccess`, nativa do PHP 5, o que significa que pode 
 campos do formulário usando a sintaxe chave array vista acima.
 
 Para a saída de campos, você pode simplesmente acessá-los diretamente e chamar o método
-`renderRow()`. Mas que tipo de objeto é o `$form['name']`? Enquanto você pode esperar
-que a resposta seja um `sfWidgetFormInputText` para o campo `name`,
-a resposta é realmente um pouco diferente.
+`renderRow()`. Mas que tipo de objeto é o `$form['name']`? Você pode esperar
+que a resposta seja um `sfWidgetFormInputText` para o campo `name`, mas,
+a resposta é um pouco diferente.
 
 ### Renderizando cada campo de formulário com o ~`sfFormField`~
 

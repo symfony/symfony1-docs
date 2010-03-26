@@ -75,7 +75,7 @@ Quando eu comecei a pensar em escrever outro livro sobre symfony em Agosto de
 e publicá-lo em cinco línguas simultaneamente! Claro, envolver
 a comunidade em um projeto deste tamanho era quase obrigatório. Comecei a falar
 sobre a idéia durante a conferência de PHP no Japão, e em questão de horas, a
-equipe de tradução para o japonês estava pronto para trabalhar. Isso foi incrível! A resposta
+equipe de tradução para o japonês estava pronta para trabalhar. Isso foi incrível! A resposta
 dos autores e tradutores foi igualmente encorajadora e, em pouco tempo,
 "Mais com o symfony" havia nascido.
 
@@ -98,7 +98,7 @@ Este livro foi escrito para ambos symfony 1.3 e symfony 1.4. Como escrever um
 seção explica quais são as principais diferenças entre as duas versões, e
 como fazer a melhor escolha para seus projetos.
 
-Tanto a versão do 1.3 quanto a versão 1.4 do symfony foram lançadas quase
+Tanto a versão 1.3 quanto a versão 1.4 do symfony foram lançadas quase
 ao mesmo tempo (no final de 2009). Na verdade, ambas possuem
 **exatamente as mesmas funcionalidades**. A única diferença entre as duas versões
 é como cada uma suporta a compatibilidade com versões mais antigas do symfony.
@@ -112,8 +112,8 @@ durante o período de desenvolvimento da versão 1.3 ainda estão disponíveis. 
 No entando, se você começar um novo projeto hoje, você deve usar o symfony 1.4. Essa
 versão possui o mesmo conjunto de funcionalidades do symfony 1.3, exceto as funcionalidades depreciadas
 e a camada de compatibilidade que foram removidas. Esta versão
-é mais limpa e também um pouco mais rápido do que o symfony 1.3. Outra grande vantagem
-de usar 1.4 symfony é o seu suporte estendido. Sendo uma versão de suporte estendido,
+é mais limpa e também um pouco mais rápida do que o symfony 1.3. Outra grande vantagem
+de usar o symfony 1.4 é o seu suporte estendido. Sendo uma versão de suporte estendido,
 será mantida pela equipe principal do symfony por três anos (até novembro de
 2012).
 
