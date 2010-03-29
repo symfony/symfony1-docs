@@ -560,7 +560,11 @@ The executed method received the primary keys of the selected objects via the
 *Default value*: `{ _edit: ~, _delete: ~ }`
 
 The `object_actions` option defines the list of actions that can be executed
-on each object of the list.
+on each object of the list. The list of actions is an associative array which
+keys are the route names and values an array of methods:
+
+    [yml]
+    object_actions: { publish: get, publishBis: [get, post] }
 
 If you don't define an `action`, the admin generator will look for a method
 named after the camel-cased name prefixed by `executeList`.

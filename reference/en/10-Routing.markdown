@@ -359,7 +359,7 @@ values are the valid methods for that action:
     [yml]
     articles:
       options:
-        collection_actions: { filter: post }
+        collection_actions: { filter: post, filterBis: [post, get] }
         # ...
 
 ### ~`object_actions`~
@@ -373,7 +373,7 @@ values are the valid methods for that action:
     [yml]
     articles:
       options:
-        object_actions: { publish: put }
+        object_actions: { publish: put, publishBis: [post, put] }
         # ...
 
 ~`sfPropelRouteCollection`~
