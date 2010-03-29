@@ -560,7 +560,11 @@ paramètre de requête des `ids`.
 *Valeur par défaut* : `{ _edit: ~, _delete: ~ }`
 
 L'option `object_actions` définit la liste des actions qui peuvent être exécutées
-sur chaque objet de la liste.
+sur chaque objet de la liste. La liste des actions est un tableau associatif dont
+les clés sont les noms des routes et les valeurs un tableau de méthodes : 
+
+    [yml] 
+    object_actions: { publish: get, publishBis: [get, post] }
 
 Si vous ne définissez pas une `action`, l'admin generator cherchera une méthode
 nommée dont le nom en CamelCase est préfixé par `executeList`.
