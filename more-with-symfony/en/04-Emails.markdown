@@ -42,7 +42,7 @@ From an action, retrieving the mailer instance is made simple with the
 
 ### The Fastest Way
 
-Sending an email is then as simple as using the ~`sfAction::composeAndSend()`~
+Sending an email is then as simple as using the ~`sfMailer::composeAndSend()`~
 method:
 
     [php]
@@ -85,7 +85,7 @@ of emails as the second argument of the method:
 
 ### The Flexible Way
 
-If you need more flexibility, you can also use the ~`sfAction::compose()`~
+If you need more flexibility, you can also use the ~`sfMailer::compose()`~
 method to create a message, customize it the way you want, and eventually send
 it. This is useful, for instance, when you need to add an
 ~attachment|email attachment~ as shown below:
