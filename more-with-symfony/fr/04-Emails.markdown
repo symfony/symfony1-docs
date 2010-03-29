@@ -234,7 +234,7 @@ Le listing ci-dessous décrit une configuration typique du spool Doctrine :
     MailMessage:
      actAs: { Timestampable: ~ }
      columns:
-       message: { type: clob, notnull: true }
+       message: { type: blob, notnull: true }
 
 -
 
@@ -252,7 +252,7 @@ Le code ci-après décrit la même configuration pour le spool Propel :
     [yml]
     # Schema configuration in schema.yml
     mail_message:
-      message:    { type: clob, required: true }
+      message:    { type: blob, required: true }
       created_at: ~
 
 -
@@ -576,7 +576,7 @@ Dans cette section, il s'agit d'apprendre comment implémenter un système de pr
     [yml]
     # for Propel
     mail_message:
-      message:    { type: clob, required: true }
+      message:    { type: blob, required: true }
       created_at: ~
       priority:   { type: integer, default: 3 }
 
@@ -584,7 +584,7 @@ Dans cette section, il s'agit d'apprendre comment implémenter un système de pr
     MailMessage:
       actAs: { Timestampable: ~ }
       columns:
-        message:  { type: clob, notnull: true }
+        message:  { type: blob, notnull: true }
         priority: { type: integer }
 
 Lorsqu'un email est envoyé, l'en-tête de priorité de celui-ci doit être fixé. La 
