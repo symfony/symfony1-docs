@@ -271,6 +271,9 @@ et trois sont fournis par défaut :
 
   * ~`Swift_MailTransport`~ : Utilise la fonction native PHP `mail()` pour envoyer
     des messages.
+ 
+  * ~`Swift_NullTransport`~: Désactive complètement le transport (utile avec la stratégie `none`
+    pour contourner la connexion au serveur de messagerie).
 
  Vous pouvez configurer le transport en définissant le paramètre `param`. La
 section ["Transport Types"](http://swiftmailer.org/docs/transport-types) de
