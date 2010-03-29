@@ -272,6 +272,9 @@ and three are provided by default:
   * ~`Swift_MailTransport`~: Uses the native PHP `mail()` function to send
     messages.
 
+  * ~`Swift_NullTransport`~: Disables the transport altogether (useful with the
+    `none` strategy to bypass the connection to the mail server).
+
 You can further configure the transport by setting the `param` setting. The
 ["Transport Types"](http://swiftmailer.org/docs/transport-types) section of
 the Swift Mailer official documentation describes all you need to know about
