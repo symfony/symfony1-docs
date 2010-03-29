@@ -259,7 +259,7 @@ Here is a classic configuration for a Doctrine spool:
     MailMessage:
      actAs: { Timestampable: ~ }
      columns:
-       message: { type: clob, notnull: true }
+       message: { type: blob, notnull: true }
 
 -
 
@@ -277,7 +277,7 @@ And the same configuration for a Propel spool:
     [yml]
     # Schema configuration in schema.yml
     mail_message:
-      message:    { type: clob, required: true }
+      message:    { type: blob, required: true }
       created_at: ~
 
 -
@@ -678,7 +678,7 @@ First, add a `priority` column to the schema:
     [yml]
     # for Propel
     mail_message:
-      message:    { type: clob, required: true }
+      message:    { type: blob, required: true }
       created_at: ~
       priority:   { type: integer, default: 3 }
 
@@ -686,7 +686,7 @@ First, add a `priority` column to the schema:
     MailMessage:
       actAs: { Timestampable: ~ }
       columns:
-        message:  { type: clob, notnull: true }
+        message:  { type: blob, notnull: true }
         priority: { type: integer }
 
 When sending an email, set the priority header (1 means highest):
