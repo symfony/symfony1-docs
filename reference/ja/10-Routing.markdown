@@ -300,7 +300,7 @@ routing.yml 設定ファイル
     [yml]
     articles:
       options:
-        collection_actions: { filter: post }
+        collection_actions: { filter: post, filterBis: [post, get] }
         # ...
 
 ### ~`object_actions`~
