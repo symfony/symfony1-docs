@@ -726,7 +726,7 @@ lorsque vous utilisez une classe de cache basée sur la mémoire (`sfAPCCache` p
             param:
               level: debug
               condition:       %SF_WEB_DEBUG%
-              xdebug_logging:  true
+              xdebug_logging:  false
               web_debug_class: sfWebDebug
           sf_file_debug:
             class: sfFileLogger

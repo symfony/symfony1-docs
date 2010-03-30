@@ -726,7 +726,7 @@ when using a memory-based cache class (`sfAPCCache` for instance).
             param:
               level: debug
               condition:       %SF_WEB_DEBUG%
-              xdebug_logging:  true
+              xdebug_logging:  false
               web_debug_class: sfWebDebug
           sf_file_debug:
             class: sfFileLogger

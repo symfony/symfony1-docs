@@ -613,7 +613,7 @@ HTTP リクエストのあいだのユーザーデータの一貫性を保つた
             param:
               level: debug
               condition:       %SF_WEB_DEBUG%
-              xdebug_logging:  true
+              xdebug_logging:  false
               web_debug_class: sfWebDebug
           sf_file_debug:
             class: sfFileLogger
