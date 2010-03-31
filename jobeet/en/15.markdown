@@ -754,7 +754,7 @@ number of affiliate that need to be activated:
       </a>
 </propel>
 <doctrine>
-      <a href="<?php echo url_for('@jobeet_affiliate_affiliate') ?>">
+      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
         Affiliates - <strong><?php echo Doctrine::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
       </a>
 </doctrine>
@@ -840,7 +840,7 @@ The only other code to write is for the `activate`, `deactivate` actions:
         $this->redirect('@jobeet_affiliate');
 </propel>
 <doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
+        $this->redirect('@jobeet_affiliate');
 </doctrine>
       }
 
@@ -852,7 +852,7 @@ The only other code to write is for the `activate`, `deactivate` actions:
         $this->redirect('@jobeet_affiliate');
 </propel>
 <doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
+        $this->redirect('@jobeet_affiliate');
 </doctrine>
       }
 
@@ -878,7 +878,7 @@ The only other code to write is for the `activate`, `deactivate` actions:
         $this->redirect('@jobeet_affiliate');
 </propel>
 <doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
+        $this->redirect('@jobeet_affiliate');
 </doctrine>
       }
 
@@ -904,7 +904,7 @@ The only other code to write is for the `activate`, `deactivate` actions:
         $this->redirect('@jobeet_affiliate');
 </propel>
 <doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
+        $this->redirect('@jobeet_affiliate');
 </doctrine>
       }
     }
