@@ -29,8 +29,7 @@ Il file di configurazione `factories.yml` contiene un elenco di dichiarazioni di
     # ...
 
 I nomi dei factory supportati sono: `controller`, `logger`, `i18n`, `request`,
-`response`, `routing`, `storage`, `user`, `view_cache`, e
-`view_cache_manager`.
+`response`, `routing`, `storage`, `user`, `view_cache` e `view_cache_manager`.
 
 Quando `sfContext` inizializza i factory, legge dal file `factories.yml`
 i nomi delle classi dei factory (`class`) e i relativi parametri (`param`)
@@ -42,16 +41,16 @@ per configurare i corrispettivi oggetti:
       param: { ARRAY DI PARAMETRI }
 
 La possibilità di modificare i factory significa che è possibile usare una classe
-personalizzata per istanziare un oggetto del core di symfony piuttosto che quella 
-predefinita. È inoltre possibile cambiare anche il comportamento di queste classi 
+personalizzata per istanziare un oggetto del core di symfony, piuttosto che la classe 
+predefinita. È inoltre possibile cambiare il comportamento di queste classi,
 modificando i parametri inviati alle stesse.
 
 Se la classe di un factory non può essere caricata automaticamente, deve essere definito 
-un parametro `file` che sarà utilizzato per indicare il percorso della classe che verrà
+un parametro `file`, che sarà utilizzato per indicare il percorso della classe che verrà
 automaticamente usato prima che il factory sia creato:
 
     [yml]
-    FACTORY_NAME:
+    NOME_DEL_FACTORY:
       class: NOME_DELLA_CLASSE
       file:  PERCORSO_ASSOLUTO_DEL_FILE
 
@@ -63,7 +62,7 @@ automaticamente usato prima che il factory sia creato:
 <div class="pagebreak"></div>
 
 Factory
----------
+-------
 
  * [`mailer`](#chapter_05_mailer)
 
@@ -96,17 +95,17 @@ Factory
  * [`storage`](#chapter_05_storage)
 
    * [`auto_start`](#chapter_05_sub_auto_start)
-   * [`database`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_table`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_id_col`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_data_col`](#chapter_05_sub_database_storage_specific_options)
-   * [`db_time_col`](#chapter_05_sub_database_storage_specific_options)
+   * [`database`](#chapter_05_sub_opzioni_specifiche_del_database)
+   * [`db_table`](#chapter_05_sub_opzioni_specifiche_del_database)
+   * [`db_id_col`](#chapter_05_sub_opzioni_specifiche_del_database)
+   * [`db_data_col`](#chapter_05_sub_opzioni_specifiche_del_database)
+   * [`db_time_col`](#chapter_05_sub_opzioni_specifiche_del_database)
    * [`session_cache_limiter`](#chapter_05_sub_session_cache_limiter)
-   * [`session_cookie_domain`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_httponly`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_lifetime`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_path`](#chapter_05_sub_session_set_cookie_params_parameters)
-   * [`session_cookie_secure`](#chapter_05_sub_session_set_cookie_params_parameters)
+   * [`session_cookie_domain`](#chapter_05_parametri_di_set_cookie_params)
+   * [`session_cookie_httponly`](#chapter_05_parametri_di_set_cookie_params)
+   * [`session_cookie_lifetime`](#chapter_05_parametri_di_set_cookie_params)
+   * [`session_cookie_path`](#chapter_05_parametri_di_set_cookie_params)
+   * [`session_cookie_secure`](#chapter_05_parametri_di_set_cookie_params)
    * [`session_name`](#chapter_05_sub_session_name)
 
  * [`view_cache_manager`](#chapter_05_view_cache_manager)
@@ -147,7 +146,7 @@ Factory
 `mailer`
 --------
 
-*sfContext Accessor*: `$context->getMailer()`
+*Accesso da sfContext*: `$context->getMailer()`
 
 *Configurazione predefinita*:
 
@@ -183,7 +182,7 @@ Factory
 
 ### ~`charset`~
 
-L'opzione `charset` definisce l'insieme di caratteri da usare per i mesaggi di mail. Per
+L'opzione `charset` definisce l'insieme di caratteri da usare per i mesaggi email. Per
 impostazione predefinita, usa l'impostazione `charset` da `settings.yml`.
 
 ### ~`delivery_strategy`~
@@ -210,11 +209,11 @@ L'opzione `delivery_address` definisce il destinatario di tutti i messaggi quand
 L'opzione `spool_class` definisce la classe di spool da usare quando
 `delivery_strategy` è impostato a `spool`:
 
-  * ~`Swift_FileSpool`~: I messaggi sono memorizzati sul filesystem.
+  * ~`Swift_FileSpool`~:     I messaggi sono memorizzati sul filesystem.
 
   * ~`Swift_DoctrineSpool`~: I messaggi sono memorizzati in un modello di Doctrine.
 
-  * ~`Swift_PropelSpool`~: I messaggi sono memorizzati in un modello di Propel.
+  * ~`Swift_PropelSpool`~:   I messaggi sono memorizzati in un modello di Propel.
 
 >**NOTE**
 >Quando lo spool è istanziato, l'opzione ~`spool_arguments`~ è usata come
@@ -245,7 +244,7 @@ Queste sono le opzioni disponibili per le classi built-in delle code:
     * Il nome della colonna da usare per memorizzare il messaggio (Predefinito `message`)
 
     * Il metodo da chiamare per recuperare i messaggi da inviare (facoltativo). Esso
-      riceve il Criteria corrente come argomento.
+      riceve il `Criteria` corrente come argomento.
 
 La configurazione sottostante è una configurazione tipica per uno spool di Doctrine:
 
@@ -282,7 +281,7 @@ sulle classi di trasporto built-in e i loro differenti parametri.
 `request`
 ---------
 
-*sfContext Accessor*: `$context->getRequest()`
+*Accesso da sfContext*: `$context->getRequest()`
 
 *Configurazione standard*:
 
@@ -331,7 +330,7 @@ cambiamenti.
 `response`
 ----------
 
-*sfContext Accessor*: `$context->getResponse()`
+*Accesso da sfContext*: `$context->getResponse()`
 
 *Configurazione standard*:
 
@@ -374,7 +373,7 @@ altrimenti usa `HTTP/1.0`.
 `user`
 ------
 
-*sfContext Accessor*: `$context->getUser()`
+*Accesso da sfContext*: `$context->getUser()`
 
 *Configurazione standard*:
 
@@ -426,7 +425,7 @@ l'utente che entra nel sito per la prima volta. Se non dichiarato, utilizza il v
 Il factory storage è usato dal factory user per salvare i dati dell'utente tra
 una richiesta HTTP e l'altra.
 
-*sfContext Accessor*: `$context->getStorage()`
+*Accesso da sfContext*: `$context->getStorage()`
 
 *Configurazione standard*:
 
@@ -456,28 +455,28 @@ memorizzare la sessione utente. Per impostazione predefinita, il nome è `symfon
 tutte le applicazioni condividono lo stesso cookie (e quindi anche le corrispondenti
 autenticazioni e autorizzazioni).
 
-### `session_set_cookie_params()` parameters
+### Parametri di `session_set_cookie_params()`
 
-Il factory `storage`  chiama la funzione
+Il factory `storage` chiama la funzione
 [`session_set_cookie_params()`](http://www.php.net/session_set_cookie_params)
 con il valore delle seguenti opzioni:
 
  * ~`session_cookie_lifetime`~: Durata del cookie di sessione, definita in
                                 secondi.
- * ~`session_cookie_path`~:   Percorso sul dominio dove il cookie andrà a lavorare.
+ * ~`session_cookie_path`~:   Percorso sul dominio dove il cookie funzionerà.
                               Usare una barra singola (`/`) per tutti i percorsi sul
                               dominio.
  * ~`session_cookie_domain`~: Dominio del cookie, per esempio `www.php.net`. Per
-                              rendere visibili i cookie su tutti i sotto domini,
+                              rendere visibili i cookie su tutti i sottodomini,
                               il dominio deve essere preceduto da un punto, come `.php.net`.
  * ~`session_cookie_secure`~: Se `true`, il cookie sarà inviato solo su connessioni
                               sicure.
- * ~`session_cookie_httponly`~: Se è impostato a `true`, PHP tenterà di inviare il
+ * ~`session_cookie_httponly`~: Se `true`, PHP tenterà di inviare il
                                 flag `httponly` quando imposta il cookie di sessione.
 
 >**NOTE**
 >La descrizione di ciascuna opzione proviene dalla descrizione della funzione 
->`session_set_cookie_params()` presente sul sito web del PHP
+>`session_set_cookie_params()` presente sul sito web di PHP
 
 ### ~`session_cache_limiter`~
 
@@ -485,21 +484,21 @@ Se l'opzione `session_cache_limiter` è assegnata, la funzione PHP
 [`session_cache_limiter()`](http://www.php.net/session_cache_limiter)
 è chiamata e il valore dell'opzione è passato come parametro.
 
-### Database Storage-specific Options
+### Opzioni specifiche del database
 
-Quando si utilizza uno storage che eredita dalla classe `sfDatabaseSessionStorage`,
-sono disponibili molte altre opzioni:
+Quando si utilizza un sistema di memorizzazione che eredita dalla classe
+`sfDatabaseSessionStorage`, sono disponibili molte altre opzioni:
 
- * ~`database`~:     Il nome del database (necessario)
- * ~`db_table`~:     Il nome della tabella (necessario)
- * ~`db_id_col`~:    Il nome della colonna della chiave primaria (`sess_id` per impostazione predefinita)
- * ~`db_data_col`~:  Il nome della colonna con i dati (`sess_data` per impostazione predefinita)
- * ~`db_time_col`~:  Il nome della colonna con il tempo (`sess_time` per impostazione predefinita)
+ * ~`database`~:    Il nome del database (obbligatorio)
+ * ~`db_table`~:    Il nome della tabella (obbligatorio)
+ * ~`db_id_col`~:   Il nome della colonna della chiave primaria (`sess_id` per impostazione predefinita)
+ * ~`db_data_col`~: Il nome della colonna con i dati (`sess_data` per impostazione predefinita)
+ * ~`db_time_col`~: Il nome della colonna con il tempo (`sess_time` per impostazione predefinita)
 
 `view_cache_manager`
 --------------------
 
-*sfContext Accessor*: `$context->getViewCacheManager()`
+*Accesso da sfContext*: `$context->getViewCacheManager()`
 
 *Configurazione standard*:
 
@@ -533,7 +532,7 @@ dipendente dal nome dell'host (valore predefinito: `true`).
 `view_cache`
 ------------
 
-*sfContext Accessor*: none (usato direttamente dal factory `view_cache_manager`)
+*Accesso da sfContext*: none (usato direttamente dal factory `view_cache_manager`)
 
 *Configurazione standard*:
 
@@ -556,7 +555,7 @@ Il factory `view_cache` definisce una classe cache che deve ereditare da
 `i18n`
 ------
 
-*sfContext Accessor*: `$context->getI18N()`
+*Accesso da sfContext*: `$context->getI18N()`
 
 *Configurazione standard*:
 
@@ -607,7 +606,7 @@ in cache i dati i18n (vedere la sezione Cache per maggiori informazioni).
 `routing`
 ---------
 
-*sfContext Accessor*: `$context->getRouting()`
+*Accesso da sfContext*: `$context->getRouting()`
 
 *Configurazione standard*:
 
@@ -709,7 +708,7 @@ quando si usa una classe cache basata sulla memoria (per esempio `sfAPCCache`).
 `logger`
 --------
 
-*sfContext Accessor*: `$context->getLogger()`
+*Accesso da sfContext*: `$context->getLogger()`
 
 *Configurazione standard*:
 
@@ -766,7 +765,7 @@ factory logger anonimi.
 `controller`
 ------------
 
-*sfContext Accessor*: `$context->getController()`
+*Accesso da sfContext*: `$context->getController()`
 
 *Configurazione standard*:
 
@@ -778,7 +777,7 @@ Factory cache anonimi
 ---------------------
 
 Alcuni factory (`view_cache`, `i18n` e `routing`) possono trarre vantaggio da
-un oggetto cache se definito nella loro configurazione. La configurazione
+un oggetto cache, se definito nella loro configurazione. La configurazione
 dell'oggetto cache è simile per tutti i factory. La chiave `cache` definisce un
 factory cache anonimo. Come ogni altro factory, accetta le voci `class` e
 `param`. La voce `param` può accettare qualunque opzione disponibile per la data
@@ -788,4 +787,4 @@ L'opzione `prefix` è la più importante, dal momento che permette di condivider
 separare una cache tra differenti ambienti/applicazioni/progetti.
 
 *Classi cache disponibili*: `sfAPCCache`, `sfEAcceleratorCache`, `sfFileCache`,
-`sfMemcacheCache`, `sfNoCache`, `sfSQLiteCache`, e `sfXCacheCache`.
+`sfMemcacheCache`, `sfNoCache`, `sfSQLiteCache` e `sfXCacheCache`.

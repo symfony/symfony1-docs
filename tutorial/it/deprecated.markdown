@@ -102,7 +102,7 @@ in symfony 1.4:
 
   * `sfNoRouting` e `sfPathInfoRouting`
 
-  * `sfRichTextEditor`, `sfRichTextEditorFCK`, e `sfRichTextEditorTinyMCE`:
+  * `sfRichTextEditor`, `sfRichTextEditorFCK` e `sfRichTextEditorTinyMCE`:
     Sono state sostituite dal sistema dei widget (si veda la sezione "Helper"
     più avanti)
 

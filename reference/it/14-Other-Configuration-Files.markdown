@@ -143,7 +143,7 @@ può includere [**costanti**](#chapter_03_costanti).
 --------------
 
 Il file di configurazione `module.yml` consente la configurazione di un modulo. Questo
-file di configurazione è utilizzato raramente, e può contenere solo le voci definite 
+file di configurazione è utilizzato raramente e può contenere solo le voci definite 
 di seguito.
 
 Il file `module.yml` richiede di essere memorizzato nella sotto-cartella `config/` di un

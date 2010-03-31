@@ -272,7 +272,7 @@ associato con la rotta corrente.
 *Predefinito*: `false`
 
 L'opzione `actions` definisce un array di azioni autorizzate per la rotta. Le
-azioni devono essere un sotto insieme di tutte le azioni disponibili: `list`, `new`, `create`,
+azioni devono essere un sottoinsieme di tutte le azioni disponibili: `list`, `new`, `create`,
 `edit`, `update`, `delete` e `show`.
 
 Se l'opzione è `false`, il valore predefinito, tutte le azioni saranno disponibili

@@ -384,7 +384,7 @@ Creare una cartella per la collocazione finale della sandbox, ad esempio
 ![sandbox - Creare la cartella sfsandbox.](http://www.symfony-project.org/images/more-with-symfony/windows_23.png)
 
 Selezionare tutti i file - `CTRL-A` in Windows Explorer - dalla cartella di download
-(sorgente), e copiarli nella cartella `F:\dev\sfsandbox`.
+(sorgente) e copiarli nella cartella `F:\dev\sfsandbox`.
 
 Si dovrebbero vedere 2599 elementi copiati nella cartella di destinazione:
 

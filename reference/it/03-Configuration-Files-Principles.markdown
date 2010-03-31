@@ -57,7 +57,7 @@ dell'impostazione con prefisso `SF_`:
 
 Quando symfony compila i file di configurazione, si occupa di sostituire tutte le
 occorrenze dei segnaposto `%SF_XXX%` con i corrispondenti valori contenuti in 
-`settings.yml`. Nell'esempio qui sotto sostituirà il segnaposto `SF_LOGGING_ENABLED`
+`settings.yml`. Nell'esempio qui sotto, sostituirà il segnaposto `SF_LOGGING_ENABLED`
 con il valore dell'impostazione `logging_enabled` definita in `settings.yml`.
 
 ### Impostazioni dell'applicazione
@@ -70,12 +70,12 @@ Si possono utilizzare anche le impostazioni definite nel file di configurazione
 Per impostazione predefinita, symfony definisce quattro costanti in relazione al front controller 
 corrente:
 
- | Costanti               | Descrizione                           | Metodo di configurazione |
- | ---------------------- | ------------------------------------- | ------------------------ |
- | ~`SF_APP`~             | Il nome dell'applicazione corrente    | `getApplication()`       |
- | ~`SF_ENVIRONMENT`~     | Il nome dell'ambiente corrente        | `getEnvironment()`       |
- | ~`SF_DEBUG`~           | Indica se il debug è attivo o meno    | `isDebug()`              |
- | ~`SF_SYMFONY_LIB_DIR`~ | La cartella delle librerie symfony    | `getSymfonyLibDir()`     |
+ | Costanti               | Descrizione                        | Metodo di configurazione |
+ | ---------------------- | ---------------------------------- | ------------------------ |
+ | ~`SF_APP`~             | Il nome dell'applicazione corrente | `getApplication()`       |
+ | ~`SF_ENVIRONMENT`~     | Il nome dell'ambiente corrente     | `getEnvironment()`       |
+ | ~`SF_DEBUG`~           | Indica se il debug è attivo o meno | `isDebug()`              |
+ | ~`SF_SYMFONY_LIB_DIR`~ | La cartella delle librerie symfony | `getSymfonyLibDir()`     |
 
 ### Le cartelle
 
@@ -164,7 +164,7 @@ Configurazione a cascata
 `factories.yml`, `databases.yml`, `security.yml`, `cache.yml`, `app.yml`,
 `filters.yml`, `view.yml`
 
-Alcuni file di configurazione possono essere definiti in molte sotto cartelle
+Alcuni file di configurazione possono essere definiti in molte sottocartelle
 `config/`, contenute nella struttura delle cartelle del progetto.
 
 Quando la configurazione viene compilata, i valori da tutti i diversi file vengono
@@ -190,4 +190,4 @@ ed eventualmente dalla configurazione predefinita contenuta nel framework stesso
 > 3. Progetto
 > 4. Ambiente specifico
 > 5. Tutti gli ambienti
-> 6. Default
+> 6. Impostazione predefinita

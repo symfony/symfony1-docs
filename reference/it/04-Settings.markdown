@@ -12,8 +12,8 @@ Come anticipato nell'introduzione il file `settings.yml` è
 [consapevole dell'ambiente](#chapter_03_consapevolezza_dell_ambiente) 
 e beneficia del [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata).
 
-Ogni sezione dedicata ad un ambiente ha due sotto sezioni: `.actions` e `.settings`.
-Tutte le impostazioni vanno inserite nella sotto sezione `.settings`, eccezion 
+Ogni sezione dedicata ad un ambiente ha due sottosezioni: `.actions` e `.settings`.
+Tutte le impostazioni vanno inserite nella sottosezione `.settings`, eccezion 
 fatta per le azioni predefinite da visualizzare per alcune pagine comuni.
 
 >**NOTE**
@@ -60,8 +60,8 @@ Impostazioni
 
 <div class="pagebreak"></div>
 
-La sotto sezione `.actions`
----------------------------
+La sottosezione `.actions`
+--------------------------
 
 *Configurazione predefinita*:
 
@@ -80,7 +80,7 @@ La sotto sezione `.actions`
         module_disabled_module: default
         module_disabled_action: disabled
 
-La sotto sezione `.actions` definisce che azione eseguire quando è necessario
+La sottosezione `.actions` definisce che azione eseguire quando è necessario
 visualizzare pagine comuni. Ogni definizione ha due componenti: la prima per il 
 modulo (con suffisso `_module`) e la seconda per l'azione (con suffisso `_action`).
 
@@ -103,10 +103,10 @@ L'azione `secure` viene eseguita quando un utente non ha le credenziali richiest
 L'azione `module_disabled` viene eseguita quando un utente invia una richiesta
 ad un modulo disabilitato.
 
-La sotto sezione `.settings`
-----------------------------
+La sottosezione `.settings`
+---------------------------
 
-La sotto sezione `.settings` è dove si specifica la configurazione del framework.
+La sottosezione `.settings` è dove si specifica la configurazione del framework.
 I paragrafi seguenti descrivono tutte le possibili impostazioni ordinate per
 importanza.
 
@@ -122,15 +122,15 @@ utilizzare:
 
 *Predefinito*: `true`
 
-L'impostazione `escaping_strategy` è un valore Booleano che determina se il 
-sub-framework per l'escape dell'output è abilitato o meno. Quando è abilitato
+L'impostazione `escaping_strategy` è un valore booleano che determina se il 
+sub-framework per l'escape dell'output è abilitato o meno. Quando è abilitato,
 tutte le variabili disponibili nei template vengono automaticamente sottoposte
-all'escape chiamando la funzione di supporto definita nell'impostazione 
+all'escape, chiamando la funzione di supporto definita nell'impostazione 
 `escaping_method` (vedere sotto).
 
 Notare che `escaping_method` è l'helper predefinito usato da symfony, tuttavia
 può essere rimpiazzato di volta in volta (un esempio è l'output di una variabile
-in uno script Javascript).
+in uno script JavaScript).
 
 Il sub-framework che si occupa dell'escape dell'output utilizza l'impostazione
 `charset` per il suo compito.
@@ -139,7 +139,7 @@ Il sub-framework che si occupa dell'escape dell'output utilizza l'impostazione
 
 >**TIP**
 >Queste impostazioni possono essere dichiarate quando si crea un'applicazione 
->con il task `generate:app` utilizzando l'opzione `--escaping-strategy`.
+>con il task `generate:app`, utilizzando l'opzione `--escaping-strategy`.
 
 ### ~`escaping_method`~
 
@@ -149,11 +149,11 @@ L'impostazione `escaping_method` definisce la funzione predefinita da utilizzare
 per l'escape delle variabili nei template (vedere `escaping_strategy` precedente).
 
 È possibile selezionare uno dei valori proposti: ~`ESC_SPECIALCHARS`~, ~`ESC_RAW`~,
-~`ESC_ENTITIES`~, ~`ESC_JS`~, ~`ESC_JS_NO_ENTITIES`~, e
-~`ESC_SPECIALCHARS`~ o creare una nuova funzione.
+~`ESC_ENTITIES`~, ~`ESC_JS`~, ~`ESC_JS_NO_ENTITIES`~ e
+~`ESC_SPECIALCHARS`~, oppure creare una nuova funzione.
 
 Per la maggior parte dei casi il valore predefinito è la scelta migliore. Può essere
-utilizzato anche l'helper `ESC_ENTITIES` specialmente se si lavora solamente con
+utilizzato anche l'helper `ESC_ENTITIES`, specialmente se si lavora solamente con
 l'inglese o lingue europee.
 
 ### ~`csrf_secret`~
@@ -205,7 +205,7 @@ con cui vengono inseriti non importa):
     enabled_modules: [default, sfGuardAuth]
 
 Il modulo `default` definito nel framework contiene tutte le azioni predefinite 
-impostate nella sotto sezione `.actions` del file `settings.yml`. Raccomandiamo 
+impostate nella sottosezione `.actions` del file `settings.yml`. Raccomandiamo 
 di personalizzare tutte le impostazioni e quindi rimuovere il modulo `default`
 da questa configurazione.
 

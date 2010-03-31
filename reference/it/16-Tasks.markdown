@@ -28,10 +28,10 @@ Dopo il nome del task, possono essere passati parametri e opzioni:
 
     $ php symfony cache:clear --type=template
 
-Lo strumento della CLI supporto sia le opzioni lunghe che quelle corte, con o senza
+Lo strumento della CLI supporta sia le opzioni lunghe che quelle corte, con o senza
 valori.
 
-L'opzione `-t` è una opzione globale per chiedere a qualunque task di mostrare più informazioni
+L'opzione `-t` è un'opzione globale per chiedere a qualunque task di mostrare più informazioni
 per il debug.
 
 <div class="pagebreak"></div>
@@ -152,7 +152,7 @@ Il task `help` mostra l'aiuto per un task:
 
 | Opzione (Scorciatoia) | Predefinito | Descrizione
 | --------------------- | ----------- | -----------
-| `--xml`               | `-`         | To output help as XML
+| `--xml`               | `-`         | Mostra l'aiuto come XML
 
 
 Il task `help` mostra l'aiuto per un dato task:
@@ -178,7 +178,7 @@ Il task `list` elenca i task:
 
 | Opzione (Scorciatoia) | Predefinito | Descrizione
 | --------------------- | ----------- | -----------
-| `--xml`               | `-`         | Per visualizzare l'aiuto in XML
+| `--xml`               | `-`         | Mostra l'aiuto come XML
 
 
 Il task `list` elenca tutti i task:
@@ -238,10 +238,10 @@ Il task `cache::clear` pulisce la cache:
 
 Il task `cache:clear` pulisce la cache di symfony.
 
-Per impostazione predefinita, rimuove la cache per tutti i tipi disponibili, tutte le applicazioni,
+Per impostazione predefinita, rimuove la cache per tutti i tipi disponibili, tutte le applicazioni
 e tutti gli ambienti.
 
-È possibile restringere per tipo, applicazione, o ambiente:
+È possibile restringere per tipo, applicazione o ambiente:
 
 Per esempio, per pulire la cache dell'applicazione `frontend`:
 
@@ -357,7 +357,7 @@ Il task `doctrine::build` genera il codice basato sullo schema:
 | `--forms` | `-` | Crea le classi dei form
 | `--filters` | `-` | Crea le classi dei filtri
 | `--sql` | `-` | Crea l'SQL
-| `--db` | `-` | Cancella, crea, e inserisce l'SQL o migra il database
+| `--db` | `-` | Cancella, crea e inserisce l'SQL o migra il database
 | `--and-migrate` | `-` | Migra il database
 | `--and-load` | `-` | Carica i dati delle fixture (sono consentiti più valori)
 | `--and-append` | `-` | Appende i dati delle fixture (sono consentiti più valori)
@@ -2083,7 +2083,7 @@ Il task `propel::build` genera il codice basandosi sullo schema:
 | `--forms` | `-` | Crea le classi dei form
 | `--filters` | `-` | Crea le classi dei filtri
 | `--sql` | `-` | Crea l'SQL
-| `--db` | `-` | Cancella, crea, e inserisce l'SQL
+| `--db` | `-` | Cancella, crea e inserisce l'SQL
 | `--and-load` | `-` | Carica i dati delle fixture (sono ammessi valori multipli)
 | `--and-append` | `-` | Aggiunge i dati delle fixture (sono ammessi valori multipli)
 
