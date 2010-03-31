@@ -571,8 +571,8 @@ Quando l'utente non è ~autenticato|Autenticazione~, la barra del menù va nasco
           <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
 </propel>
 <doctrine>
-          <li><?php echo link_to('Jobs', '@jobeet_job_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
+          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
 </doctrine>
         </ul>
       </div>
