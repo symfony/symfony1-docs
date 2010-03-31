@@ -345,15 +345,19 @@ questo caso, non serve nessuna protezione CSRF, quindi possiamo
 rimuovere il token CSRF:
 
     [php]
-     // plugins/sfJobeetJob/lib/form/JobeetJobForm.class.php
+<propel>
+    // plugins/sfJobeetPlugin/lib/form/JobeetJobForm.class.php
     class JobeetJobForm extends BaseJobeetJobForm
+</propel>
+<doctrine>
+    // plugins/sfJobeetPlugin/lib/form/doctrine/PluginJobeetJobForm.class.php
+    abstract PluginJobeetJobForm extends BaseJobeetJobForm
+</doctrine>
     {
-      public function __construct(BaseObject $object = null, $options = array(), $CSRFSecret = null)
+      public function configure()
       {
-        parent::__construct($object, $options, false);
+        $this->disableLocalCSRFProtection();
       }
-
-      // ...
     }
 
 Dopo aver fatto questa modifica, puliamo la cache e riproviamo lo stesso
@@ -471,7 +475,12 @@ Testiamo la pagina di creazione di un lavoro:
       get('/fr/')->
       with('view_cache')->isCached(true, false)->
 
+<propel>
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
+</propel>
+<doctrine>
+      createJob(array('category_id' => Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
+</doctrine>
 
       get('/fr/')->
       with('view_cache')->isCached(true, false)->
