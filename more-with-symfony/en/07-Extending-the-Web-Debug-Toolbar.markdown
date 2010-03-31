@@ -103,7 +103,7 @@ That's it! Refresh your browser and you'll instantly see the result.
 >As of symfony 1.3, a `sfWebDebugPanel` url parameter can be used to automatically
 >open a particular web debug panel on page load. For example, adding
 >`?sfWebDebugPanel=documentation` to the end of the url would automatically
->open the documentation panel we just added. This is can become quite handy
+>open the documentation panel we just added. This can become quite handy
 >while building custom panels.
 
 The Three Types of Web Debug Panels
