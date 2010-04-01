@@ -465,7 +465,7 @@ Testons la page de création d'emplois :
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->
