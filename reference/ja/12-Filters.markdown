@@ -5,7 +5,7 @@ filters.yml 設定ファイル
 
 アプリケーションのメイン設定ファイルである `filters.yml` は `apps/APP_NAME/config/` ディレクトリで見つかります。
 
-[第3章](#chapter_03)で説明したように、`filters.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
+[設定ファイルの原則の章](#chapter_03)で説明したように、`filters.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
 `filters.yml` 設定ファイルには名前つきフィルタ定義のリストが収められています:
 
@@ -25,7 +25,7 @@ filters.yml 設定ファイル
       class: CLASS_NAME
       param: { ARRAY OF PARAMETERS }
 
-フィルタは設定ファイルに記載されている順序で実行されます。symfony は複数のフィルタを1つのチェーンとして実行するので、最初に登録されたフィルタは最初と最後に実行されます。
+フィルタは設定ファイルに記載されている順序で実行されます。symfony は複数のフィルタを1つのチェーンとして実行するので、最初に登録されるフィルタは最初と最後に実行されます。
 
 `class` クラスは `sfFilter` 基底クラスを継承します。
 
@@ -66,7 +66,7 @@ filters.yml 設定ファイル
         type: execution
 
 >**NOTE**
->`filters.yml` 設定ファイルは PHP ファイルとしてキャッシュされます; 処理は ~`sfFilterConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
+>`filters.yml` 設定ファイルは PHP ファイルとしてキャッシュされます。処理は ~`sfFilterConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
 
 <div class="pagebreak"></div>
 
@@ -89,7 +89,7 @@ filters.yml 設定ファイル
       param:
         type: rendering
 
-`rendering` フィルタはブラウザへのレスポンス出力の責務を担います。これは最初に登録されるフィルタになるので、リクエストを管理する機会をもつ最後のフィルタにもなります。
+`rendering` フィルタはブラウザへのレスポンス出力の責務を担います。このフィルタは最初に登録されるフィルタであり、リクエストを管理する機会をもつ最後のフィルタでもあります。
 
 `security`
 ----------
@@ -122,7 +122,7 @@ filters.yml 設定ファイル
       param:
         condition: %SF_CACHE%
 
-`cache` フィルタはアクションとページを管理します。これは必要な HTTP キャッシュヘッダーをレスポンスに追加するための責務も担います (`Last-Modified`、`ETag`、`Cache-Control`、`Expires`、・・・)。
+`cache` フィルタはアクションとページを管理します。このフィルタは必要な HTTP キャッシュヘッダーをレスポンスに追加するための責務も担います (`Last-Modified`、`ETag`、`Cache-Control`、`Expires`、・・・)。
 
 `execution`
 -----------

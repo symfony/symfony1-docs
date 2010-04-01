@@ -1,7 +1,7 @@
 security.yml 設定ファイル
 ========================
 
-~`security.yml`~ 設定ファイルでは symfony アプリケーションの認証と承認を記述します。
+~`security.yml`~ 設定ファイルでは symfony アプリケーションの認証 (authentication) と承認 (authorization) を記述します。
 
 >**TIP**
 >`security.yml` ファイルからのコンフィギュレーション情報は [`user`](#chapter_05_user) ファクトリクラス (デフォルトは `sfBasicSecurityUser`) によって使われます。認証と承認の実行は `security` [フィルタ](#chapter_12_security)によって行われます。
@@ -12,7 +12,7 @@ security.yml 設定ファイル
     default:
       is_secure: off
 
-[第3章](#chapter_03)で説明したように、`security.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
+[設定ファイルの原則の章](#chapter_03)で説明したように、`security.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
 アプリケーションのデフォルトコンフィギュレーションはモジュールの `config/` ディレクトリで `security.yml` ファイルを作ることでオーバーライドできます。メインキーはアクションの名前で接頭辞の `execute` はつけません (たとえば `executeIndex` メソッドであれば `index`)。
 
@@ -27,12 +27,12 @@ security.yml 設定ファイル
 アクションにアクセスするのに必要なクレデンシャルを決めるのに同じ優先ルールが適用されます。
 
 >**NOTE**
->`security.yml` 設定ファイルは PHP ファイルとしてキャッシュできます; 処理は ~`sfSecurityConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
+>`security.yml` 設定ファイルは PHP ファイルとしてキャッシュできます。処理は ~`sfSecurityConfigHandler`~ [クラス](#chapter_14_config_handlers_yml)によって自動管理されます。
 
 ~認証~
 ------
 
-`security.yml` のコンフィギュレーションはそれぞれのアプリケーションごとにインストールされ、デフォルトでは、すべてのユーザーのアクセスが許可されます:
+`security.yml` のコンフィギュレーションはそれぞれのアプリケーションごとにインストールされ、デフォルトではすべてのユーザーのアクセスが許可されます:
 
     [yml]
     default:
