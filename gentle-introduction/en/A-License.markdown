@@ -1,12 +1,16 @@
-GNU Free Documentation License
+Appendix A - GNU Free Documentation License
+===========================================
 
   * Version 1.2, November 2002
+
   * Copyright © 2000, 2001, 2002 Free Software Foundation, Inc.
+
   * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed. 
 
-## 0. PREAMBLE
+0. PREAMBLE
+-----------
 
 The purpose of this License is to make a manual, textbook, or other functional and useful document "free" in the sense of freedom: to assure everyone the effective freedom to copy and redistribute it, with or without modifying it, either commercially or noncommercially. Secondarily, this License preserves for the author and publisher a way to get credit for their work, while not being considered responsible for modifications made by others. 
 
@@ -14,7 +18,8 @@ This License is a kind of "copyleft", which means that derivative works of the d
 
 We have designed this License in order to use it for manuals for free software, because free software needs free documentation: a free program should come with manuals providing the same freedoms that the software does. But this License is not limited to software manuals; it can be used for any textual work, regardless of subject matter or whether it is published as a printed book. We recommend this License principally for works whose purpose is instruction or reference. 
 
-## 1. APPLICABILITY AND DEFINITIONS
+1. APPLICABILITY AND DEFINITIONS
+--------------------------------
 
 This License applies to any manual or other work, in any medium, that contains a notice placed by the copyright holder saying it can be distributed under the terms of this License. Such a notice grants a worldwide, royalty-free license, unlimited in duration, to use that work under the conditions stated herein. The "Document", below, refers to any such manual or work. Any member of the public is a licensee, and is addressed as "you". You accept the license if you copy, modify or distribute the work in a way requiring permission under copyright law. 
 
@@ -36,13 +41,15 @@ A section "Entitled XYZ" means a named subunit of the Document whose title eithe
 
 The Document may include Warranty Disclaimers next to the notice which states that this License applies to the Document. These Warranty Disclaimers are considered to be included by reference in this License, but only as regards disclaiming warranties: any other implication that these Warranty Disclaimers may have is void and has no effect on the meaning of this License. 
 
-## 2. VERBATIM COPYING
+2. VERBATIM COPYING
+-------------------
 
 You may copy and distribute the Document in any medium, either commercially or noncommercially, provided that this License, the copyright notices, and the license notice saying this License applies to the Document are reproduced in all copies, and that you add no other conditions whatsoever to those of this License. You may not use technical measures to obstruct or control the reading or further copying of the copies you make or distribute. However, you may accept compensation in exchange for copies. If you distribute a large enough number of copies you must also follow the conditions in section 3. 
 
 You may also lend copies, under the same conditions stated above, and you may publicly display copies. 
 
-## 3. COPYING IN QUANTITY
+3. COPYING IN QUANTITY
+----------------------
 
 If you publish printed copies (or copies in media that commonly have printed covers) of the Document, numbering more than 100, and the Document's license notice requires Cover Texts, you must enclose the copies in covers that carry, clearly and legibly, all these Cover Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on the back cover. Both covers must also clearly and legibly identify you as the publisher of these copies. The front cover must present the full title with all words of the title equally prominent and visible. You may add other material on the covers in addition. 
 
@@ -54,7 +61,8 @@ If you publish or distribute Opaque copies of the Document numbering more than 1
 
 It is requested, but not required, that you contact the authors of the Document well before redistributing any large number of copies, to give them a chance to provide you with an updated version of the Document. 
 
-## 4. MODIFICATIONS
+4. MODIFICATIONS
+----------------
 
 You may copy and distribute a Modified Version of the Document under the conditions of sections 2 and 3 above, provided that you release the Modified Version under precisely this License, with the Modified Version filling the role of the Document, thus licensing distribution and modification of the Modified Version to whoever possesses a copy of it. In addition, you must do these things in the Modified Version: 
 
@@ -82,7 +90,8 @@ You may add a passage of up to five words as a Front-Cover Text, and a passage o
 
 The author(s) and publisher(s) of the Document do not by this License give permission to use their names for publicity for or to assert or imply endorsement of any Modified Version. 
 
-## 5. COMBINING DOCUMENTS
+5. COMBINING DOCUMENTS
+----------------------
 
 You may combine the Document with other documents released under this License, under the terms defined in section 4 above for modified versions, provided that you include in the combination all of the Invariant Sections of all of the original documents, unmodified, and list them all as Invariant Sections of your combined work in its license notice, and that you preserve all their Warranty Disclaimers. 
 
@@ -90,29 +99,34 @@ The combined work need only contain one copy of this License, and multiple ident
 
 In the combination, you must combine any sections Entitled "History" in the various original documents, forming one section Entitled "History"; likewise combine any sections Entitled "Acknowledgements", and any sections Entitled "Dedications". You must delete all sections Entitled "Endorsements". 
 
-## 6. COLLECTIONS OF DOCUMENTS
+6. COLLECTIONS OF DOCUMENTS
+---------------------------
 
 You may make a collection consisting of the Document and other documents released under this License, and replace the individual copies of this License in the various documents with a single copy that is included in the collection, provided that you follow the rules of this License for verbatim copying of each of the documents in all other respects. 
 
 You may extract a single document from such a collection, and distribute it individually under this License, provided you insert a copy of this License into the extracted document, and follow this License in all other respects regarding verbatim copying of that document. 
 
-## 7. AGGREGATION WITH INDEPENDENT WORKS
+7. AGGREGATION WITH INDEPENDENT WORKS
+-------------------------------------
 
 A compilation of the Document or its derivatives with other separate and independent documents or works, in or on a volume of a storage or distribution medium, is called an "aggregate" if the copyright resulting from the compilation is not used to limit the legal rights of the compilation's users beyond what the individual works permit. When the Document is included in an aggregate, this License does not apply to the other works in the aggregate which are not themselves derivative works of the Document. 
 
 If the Cover Text requirement of section 3 is applicable to these copies of the Document, then if the Document is less than one half of the entire aggregate, the Document's Cover Texts may be placed on covers that bracket the Document within the aggregate, or the electronic equivalent of covers if the Document is in electronic form. Otherwise they must appear on printed covers that bracket the whole aggregate. 
 
-## 8. TRANSLATION
+8. TRANSLATION
+--------------
 
 Translation is considered a kind of modification, so you may distribute translations of the Document under the terms of section 4. Replacing Invariant Sections with translations requires special permission from their copyright holders, but you may include translations of some or all Invariant Sections in addition to the original versions of these Invariant Sections. You may include a translation of this License, and all the license notices in the Document, and any Warranty Disclaimers, provided that you also include the original English version of this License and the original versions of those notices and disclaimers. In case of a disagreement between the translation and the original version of this License or a notice or disclaimer, the original version will prevail. 
 
 If a section in the Document is Entitled "Acknowledgements", "Dedications", or "History", the requirement (section 4) to Preserve its Title (section 1) will typically require changing the actual title. 
 
-## 9. TERMINATION
+9. TERMINATION
+--------------
 
 You may not copy, modify, sublicense, or distribute the Document except as expressly provided for under this License. Any other attempt to copy, modify, sublicense or distribute the Document is void, and will automatically terminate your rights under this License. However, parties who have received copies, or rights, from you under this License will not have their licenses terminated so long as such parties remain in full compliance. 
 
-## 10. FUTURE REVISIONS OF THIS LICENSE
+10. FUTURE REVISIONS OF THIS LICENSE
+------------------------------------
 
 The Free Software Foundation may publish new, revised versions of the GNU Free Documentation License from time to time. Such new versions will be similar in spirit to the present version, but may differ in detail to address new problems or concerns. See `http://www.gnu. org/copyleft/`. 
 
