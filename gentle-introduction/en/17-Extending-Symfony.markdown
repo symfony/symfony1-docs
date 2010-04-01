@@ -207,62 +207,62 @@ Many of symfony's classes have built-in events, allowing you to extend the frame
 
 Table 17-1 - Symfony's Events
 
-| **event namespace** | **event name**                 | **type**    | **notifiers**                 | **arguments**               |
-| ------------------- | ------------------------------ | ----------- | ----------------------------- | --------------------------- |
-| **application**     | log                            | notify      | lot of classes                | priority                    |
-|                     | throw_exception                | notifyUntil | sfException                   | -                           |
-| **autoload**        | filter_config                  | filter      | sfAutoloadConfigHandler       | -                           |
-| **command**         | log                            | notify      | sfCommand* classes            | priority                    |
-|                     | pre_command                    | notifyUntil | sfTask                        | arguments, options          |
-|                     | post_command                   | notify      | sfTask                        | -                           |
-|                     | filter_options                 | filter      | sfTask                        | command_manager             |
-| **configuration**   | method_not_found               | notifyUntil | sfProjectConfiguration        | method, arguments           |
-| **component**       | method_not_found               | notifyUntil | sfComponent                   | method, arguments           |
-| **context**         | load_factories                 | notify      | sfContext                     | -                           |
-|                     | method_not_found               | notifyUntil | sfContext                     | method, arguments           |
-| **controller**      | change_action                  | notify      | sfController                  | module, action              |
-|                     | method_not_found               | notifyUntil | sfController                  | method, arguments           |
-|                     | page_not_found                 | notify      | sfController                  | module, action              |
-| **debug**           | web.load_panels                | notify      | sfWebDebug                    | -                           |
-|                     | web.view.filter_parameter_html | filter      | sfWebDebugPanelView           | parameter                   |
-| **doctrine**        | configure                      | notify      | sfDoctrinePluginConfiguration | -                           |
-|                     | filter_model_builder_options   | filter      | sfDoctrinePluginConfiguration | -                           |
-|                     | filter_cli_config              | filter      | sfDoctrinePluginConfiguration | -                           |
-|                     | configure_connection           | notify      | sfDoctrineDatabase            | connection, database        |
-|                     | admin.delete_object            | notify      | -                             | object                      |
-|                     | admin.save_object              | notify      | -                             | object                      |
-|                     | admin.build_query              | filter      | -                             |                             |
-|                     | admin.pre_execute              | notify      | -                             | configuration               |
-| **form**            | post_configure                 | notify      | sfFormSymfony                 | -                           |
-|                     | filter_values                  | filter      | sfFormSymfony                 | -                           |
-|                     | validation_error               | notify      | sfFormSymfony                 | error                       |
-|                     | method_not_found               | notifyUntil | sfFormSymfony                 | method, arguments           |
-| **mailer**          | configure                      | notify      | sfMailer                      | -                           |
-| **plugin**          | pre_install                    | notify      | sfPluginManager               | channel, plugin, is_package |
-|                     | post_install                   | notify      | sfPluginManager               | channel, plugin             |
-|                     | pre_uninstall                  | notify      | sfPluginManager               | channel, plugin             |
-|                     | post_uninstall                 | notify      | sfPluginManager               | channel, plugin             |
-| **propel**          | configure                      | notify      | sfPropelPluginConfiguration   | -                           |
-|                     | filter_phing_args              | filter      | sfPropelBaseTask              | -                           |
-|                     | filter_connection_config       | filter      | sfPropelDatabase              | name, database              |
-|                     | admin.delete_object            | notify      | -                             | object                      |
-|                     | admin.save_object              | notify      | -                             | object                      |
-|                     | admin.build_criteria           | filter      | -                             |                             |
-|                     | admin.pre_execute              | notify      | -                             | configuration               |
-| **request**         | filter_parameters              | filter      | sfWebRequest                  | path_info                   |
-|                     | method_not_found               | notifyUntil | sfRequest                     | method, arguments           |
-| **response**        | method_not_found               | notifyUntil | sfResponse                    | method, arguments           |
-|                     | filter_content                 | filter      | sfResponse, sfException       | -                           |
-| **routing**         | load_configuration             | notify      | sfRouting                     | -                           |
-| **task**            | cache.clear                    | notifyUntil | sfCacheClearTask              | app, type, env              |
-|                     | test.filter_test_files         | filter      | sfTestBaseTask                | arguments, options          |
-| **template**        | filter_parameters              | filter      | sfViewParameterHolder         | -                           |
-| **user**            | change_culture                 | notify      | sfUser                        | culture                     |
-|                     | method_not_found               | notifyUntil | sfUser                        | method, arguments           |
-|                     | change_authentication          | notify      | sfBasicSecurityUser           | authenticated               |
-| **view**            | configure_format               | notify      | sfView                        | format, response, request   |
-|                     | method_not_found               | notifyUntil | sfView                        | method, arguments           |
-| **view.cache**      | filter_content                 | filter      | sfViewCacheManager            | response, uri, new          |
+| **Event name** (**Type**)                      | **Notifiers**                 | **Arguments**               |
+| ---------------------------------------------- | ----------------------------- | --------------------------- |
+| application.log (notify)                       | lot of classes                | priority                    |
+| application.throw_exception (notifyUntil)      | sfException                   | -                           |
+| autoload.filter_config (filter)                | sfAutoloadConfigHandler       | -                           |
+| command.log (notify)                           | sfCommand* classes            | priority                    |
+| command.pre_command (notifyUntil)              | sfTask                        | arguments, options          |
+| command.post_command (notify)                  | sfTask                        | -                           |
+| command.filter_options (filter)                | sfTask                        | command_manager             |
+| configuration.method_not_found (notifyUntil)   | sfProjectConfiguration        | method, arguments           |
+| component.method_not_found (notifyUntil)       | sfComponent                   | method, arguments           |
+| context.load_factories (notify)                | sfContext                     | -                           |
+| context.method_not_found (notifyUntil)         | sfContext                     | method, arguments           |
+| controller.change_action (notify)              | sfController                  | module, action              |
+| controller.method_not_found (notifyUntil)      | sfController                  | method, arguments           |
+| controller.page_not_found (notify)             | sfController                  | module, action              |
+| debug.web.load_panels (notify)                 | sfWebDebug                    | -                           |
+| debug.web.view.filter_parameter_html (filter)  | sfWebDebugPanelView           | parameter                   |
+| doctrine.configure (notify)                    | sfDoctrinePluginConfiguration | -                           |
+| doctrine.filter_model_builder_options (filter) | sfDoctrinePluginConfiguration | -                           |
+| doctrine.filter_cli_config (filter)            | sfDoctrinePluginConfiguration | -                           |
+| doctrine.configure_connection (notify)         | sfDoctrineDatabase            | connection, database        |
+| doctrine.admin.delete_object (notify)          | -                             | object                      |
+| doctrine.admin.save_object (notify)            | -                             | object                      |
+| doctrine.admin.build_query (filter)            | -                             |                             |
+| doctrine.admin.pre_execute (notify)            | -                             | configuration               |
+| form.post_configure (notify)                   | sfFormSymfony                 | -                           |
+| form.filter_values (filter)                    | sfFormSymfony                 | -                           |
+| form.validation_error (notify)                 | sfFormSymfony                 | error                       |
+| form.method_not_found (notifyUntil)            | sfFormSymfony                 | method, arguments           |
+| mailer.configure (notify)                      | sfMailer                      | -                           |
+| plugin.pre_install (notify)                    | sfPluginManager               | channel, plugin, is_package |
+| plugin.post_install (notify)                   | sfPluginManager               | channel, plugin             |
+| plugin.pre_uninstall (notify)                  | sfPluginManager               | channel, plugin             |
+| plugin.post_uninstall (notify)                 | sfPluginManager               | channel, plugin             |
+| propel.configure (notify)                      | sfPropelPluginConfiguration   | -                           |
+| propel.filter_phing_args (filter)              | sfPropelBaseTask              | -                           |
+| propel.filter_connection_config (filter)       | sfPropelDatabase              | name, database              |
+| propel.admin.delete_object (notify)            | -                             | object                      |
+| propel.admin.save_object (notify)              | -                             | object                      |
+| propel.admin.build_criteria (filter)           | -                             |                             |
+| propel.admin.pre_execute (notify)              | -                             | configuration               |
+| request.filter_parameters (filter)             | sfWebRequest                  | path_info                   |
+| request.method_not_found (notifyUntil)         | sfRequest                     | method, arguments           |
+| response.method_not_found (notifyUntil)        | sfResponse                    | method, arguments           |
+| response.filter_content (filter)               | sfResponse, sfException       | -                           |
+| routing.load_configuration (notify)            | sfRouting                     | -                           |
+| task.cache.clear (notifyUntil)                 | sfCacheClearTask              | app, type, env              |
+| task.test.filter_test_files (filter)           | sfTestBaseTask                | arguments, options          |
+| template.filter_parameters (filter)            | sfViewParameterHolder         | -                           |
+| user.change_culture (notify)                   | sfUser                        | culture                     |
+| user.method_not_found (notifyUntil)            | sfUser                        | method, arguments           |
+| user.change_authentication (notify)            | sfBasicSecurityUser           | authenticated               |
+| view.configure_format (notify)                 | sfView                        | format, response, request   |
+| view.method_not_found (notifyUntil)            | sfView                        | method, arguments           |
+| view.cache.filter_content (filter)             | sfViewCacheManager            | response, uri, new          |
 
 You are free to register event listeners on any of these events. Just make sure that listener callables return a Boolean when registered on a `notifyUntil` event type, and that they return the filtered value when registered on a `filter` event type.
 
