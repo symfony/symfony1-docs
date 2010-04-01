@@ -36,7 +36,7 @@ Actions displaying static information (not depending on database or session-depe
 
 Figure 12-1 - Caching an action
 
-![Caching an action](/images/book/F1201.png "Caching an action")
+![Caching an action](http://www.symfony-project.org/images/book/1_4/F1201.png "Caching an action")
 
 For instance, consider a `user/list` action that returns the list of all users of a website. Unless a user is modified, added, or removed (and this matter will be discussed later in the "Removing Items from the Cache" section), this list always displays the same information, so it is a good candidate for caching.
 
@@ -96,7 +96,7 @@ Chapter 7 explained how to reuse code fragments across several templates, using 
 
 Figure 12-2 - Caching a partial or component
 
-![Caching a partial or component](/images/book/F1202.png "Caching a partial or component")
+![Caching a partial or component](http://www.symfony-project.org/images/book/1_4/F1202.png "Caching a partial or component")
 
 For instance, Listing 12-4 shows how to edit the `cache.yml` file to enable the cache on a `_my_partial.php` partial located in the `user` module. Note that the `with_layout` setting doesn't make sense in this case.
 
@@ -141,7 +141,7 @@ Action caching applies to only a subset of actions. For the other actions--those
 
 Figure 12-3 - Caching a template fragment
 
-![Caching a template fragment](/images/book/F1203.png "Caching a template fragment")
+![Caching a template fragment](http://www.symfony-project.org/images/book/1_4/F1203.png "Caching a template fragment")
 
 For instance, you may have a list of users that shows a link of the last-accessed user, and this information is dynamic. The `cache()` helper defines the parts of a template that are to be put in the cache. See Listing 12-5 for details on the syntax.
 
@@ -485,7 +485,7 @@ The last number on the right side of the debug toolbar is the duration of the re
 
 Figure 12-4 - Web debug toolbar for pages using caching
 
-![Web debug toolbar for pages using caching](/images/book/F1204.png "Web debug toolbar for pages using caching")
+![Web debug toolbar for pages using caching](http://www.symfony-project.org/images/book/1_4/F1204.png "Web debug toolbar for pages using caching")
 
 The debug toolbar also shows the number of database queries executed during the processing of the request, and the detail of the durations per category (click the total duration to display the detail). Monitoring this data, in conjunction with the total duration, will help you do fine measures of the performance improvements brought by the cache.
 
@@ -501,7 +501,7 @@ When the web debug toolbar is enabled, the cached elements are identified in a p
 
 Figure 12-5 - Identification for cached elements in a page
 
-![Identification for cached elements in a page](/images/book/F1205.png "Identification for cached elements in a page")
+![Identification for cached elements in a page](http://www.symfony-project.org/images/book/1_4/F1205.png "Identification for cached elements in a page")
 
 HTTP 1.1 and Client-Side Caching
 --------------------------------

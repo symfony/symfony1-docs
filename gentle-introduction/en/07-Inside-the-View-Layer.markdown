@@ -130,7 +130,7 @@ The template shown in Listing 7-1 is not a valid XHTML document. The `DOCTYPE` d
 
 Figure 7-1 - Decorating a template with a layout
 
-![Decorating a template with a layout](/images/book/F0701.png "Decorating a template with a layout")
+![Decorating a template with a layout](http://www.symfony-project.org/images/book/1_4/F0701.png "Decorating a template with a layout")
 
 Listing 7-5 shows the default page layout, located in the application `templates/` directory.
 
@@ -226,7 +226,7 @@ A partial is a reusable chunk of template code. For instance, in a publication a
 
 Figure 7-2 - Reusing partials in templates
 
-![Reusing partials in templates](/images/book/F0702.png "Reusing partials in templates")
+![Reusing partials in templates](http://www.symfony-project.org/images/book/1_4/F0702.png "Reusing partials in templates")
 
 Just like templates, partials are files located in the `templates/` directory, and they contain HTML code with embedded PHP. A partial file name always starts with an underscore (`_`), and that helps to distinguish partials from templates, since they are located in the same `templates/` folders.
 
@@ -318,7 +318,7 @@ For this example, shown in Listings 7-11 and 7-12, the component will be kept in
 
 Figure 7-3 - Using components in templates
 
-![Using components in templates](/images/book/F0703.png "Using components in templates")
+![Using components in templates](http://www.symfony-project.org/images/book/1_4/F0703.png "Using components in templates")
 
 Listing 7-11 - The Components Class, in `modules/news/actions/components.class.php`
 
@@ -384,7 +384,7 @@ Imagine a layout with one zone for the template and two slots: one for the sideb
 
 Figure 7-4 - Layout slots defined in a template
 
-![Layout slots defined in a template](/images/book/F0704.png "Layout slots defined in a template")
+![Layout slots defined in a template](http://www.symfony-project.org/images/book/1_4/F0704.png "Layout slots defined in a template")
 
 Seeing some code will clarify things further. To include a slot, use the `include_slot()` helper. The `has_slot()` helper returns `true` if the slot has been defined before, providing a fallback mechanism as a bonus. For instance, define a placeholder for a `'sidebar'` slot in the layout and its default content as shown in Listing 7-14.
 

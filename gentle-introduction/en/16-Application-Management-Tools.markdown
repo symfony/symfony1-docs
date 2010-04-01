@@ -195,7 +195,7 @@ The exception messages are clearly written and refer to the most probable cause 
 
 Figure 16-1 - Sample exception message for a symfony application
 
-![Sample exception message for a symfony application](/images/book/F1601.png "Sample exception message for a symfony application")
+![Sample exception message for a symfony application](http://www.symfony-project.org/images/book/1_4/F1601.png "Sample exception message for a symfony application")
 
 During the development phase, the symfony exceptions will be of great use as you debug your application.
 
@@ -234,7 +234,7 @@ This toolbar appears as a semitransparent box superimposed over the normal conte
 
 Figure 16-2 - The web debug toolbar appears in the top-right corner of the window
 
-![The web debug toolbar appears in the top-right corner of the window](/images/book/F1602.jpg "The web debug toolbar appears in the top-right corner of the window")
+![The web debug toolbar appears in the top-right corner of the window](http://www.symfony-project.org/images/book/1_4/F1602.jpg "The web debug toolbar appears in the top-right corner of the window")
 
 The color of the debug toolbar background depends on the highest level of log message issued during the request. If no message passes the `debug` level, the toolbar has a gray background. If a single message reaches the `err` level, the toolbar has a red background.
 
@@ -256,14 +256,14 @@ When displayed, the web debug toolbar offers a lot of information/interaction:
 
 Figure 16-3 - The "config" section shows all the variables and constants of the request
 
-![The "config" section shows all the variables and constants of the request](/images/book/F1603.png "The config section shows all the variables and constants of the request")
+![The "config" section shows all the variables and constants of the request](http://www.symfony-project.org/images/book/1_4/F1603.png "The config section shows all the variables and constants of the request")
 
   * When the cache is enabled, a green arrow appears in the toolbar. Click this arrow to reprocess the page, regardless of what is stored in the cache (but the cache is not cleared).
   * Click the "logs" section to reveal the log messages for the current request, as shown in Figure 16-4. According to the importance of the events, they are displayed in gray, yellow, or red lines. You can filter the events that are displayed by category using the links displayed at the top of the list.
 
 Figure 16-4 - The "logs" section shows the log messages for the current request
 
-![The "logs" section shows the log messages for the current request](/images/book/F1604.png "The logs section shows the log messages for the current request")
+![The "logs" section shows the log messages for the current request](http://www.symfony-project.org/images/book/1_4/F1604.png "The logs section shows the log messages for the current request")
 
 >**NOTE**
 >When the current action results from a redirect, only the logs of the latest request are present in the "logs" pane, so the log files are still indispensable for good debugging.
@@ -274,11 +274,11 @@ Figure 16-4 - The "logs" section shows the log messages for the current request
 
 Figure 16-5 - The database queries section shows queries executed for the current request
 
-![The database queries section shows queries executed for the current request](/images/book/F1605.png "The database queries section shows queries executed for the current request")
+![The database queries section shows queries executed for the current request](http://www.symfony-project.org/images/book/1_4/F1605.png "The database queries section shows queries executed for the current request")
 
 Figure 16-6 - The clock icon shows execution time by category
 
-![The clock icon shows execution time by category](/images/book/F1606.png "The clock icon shows execution time by category")
+![The clock icon shows execution time by category](http://www.symfony-project.org/images/book/1_4/F1606.png "The clock icon shows execution time by category")
 
 >**SIDEBAR**
 >Adding your own timer
@@ -333,7 +333,7 @@ The use of the `err` level guarantees that the event will be clearly visible in 
 
 Figure 16-7 - A custom log message appears in the "logs" section of the web debug toolbar
 
-![A custom log message appears in the "logs" section of the web debug toolbar](/images/book/F1607.png "A custom log message appears in the logs section of the web debug toolbar")
+![A custom log message appears in the "logs" section of the web debug toolbar](http://www.symfony-project.org/images/book/1_4/F1607.png "A custom log message appears in the logs section of the web debug toolbar")
 
 Using symfony outside of a web context
 --------------------------------------
@@ -504,7 +504,7 @@ Let's return to the example in Chapter 8, where a `blog_article` table is linked
 
 Figure 16-8 - A sample database relational model
 
-![A sample database relational model](/images/book/F1608.png "A sample database relational model")
+![A sample database relational model](http://www.symfony-project.org/images/book/1_4/F1608.png "A sample database relational model")
 
 This is where the labels given to the records become really useful. To add a `Comment` field to the `first_post` article, you simply need to append the lines shown in Listing 16-17 to the `import_data.yml` data file.
 

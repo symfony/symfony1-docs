@@ -26,7 +26,7 @@ This URL conveys information about the application's architecture and database. 
 
 Figure 9-1 - URLs appear in many places, such as in search results
 
-![URLs appear in many places, such as in search results](/images/book/F0901.png "URLs appear in many places, such as in search results")
+![URLs appear in many places, such as in search results](http://www.symfony-project.org/images/book/1_4/F0901.png "URLs appear in many places, such as in search results")
 
   * If one URL has to be changed (for instance, if a script name or one of its parameters is modified), every link to this URL must be changed as well. It means that modifications in the controller structure are heavyweight and expensive, which is not ideal in agile development.
 
@@ -52,7 +52,7 @@ The benefits are immense:
 
 Figure 9-2 - URLs can convey additional information about a page, like the publication date
 
-![URLs can convey additional information about a page, like the publication date](/images/book/F0902.png "URLs can convey additional information about a page, like the publication date")
+![URLs can convey additional information about a page, like the publication date](http://www.symfony-project.org/images/book/1_4/F0902.png "URLs can convey additional information about a page, like the publication date")
 
   * URLs written in paper documents are easier to type and remember. If your company website appears as `http://www.example.com/controller/web/index.jsp?id=ERD4` on your business card, it will probably not receive many visits.
   * The URL can become a command-line tool of its own, to perform actions or retrieve information in an intuitive way. Applications offering such a possibility are faster to use for power users.

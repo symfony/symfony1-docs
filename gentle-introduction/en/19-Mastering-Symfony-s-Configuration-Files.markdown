@@ -23,7 +23,7 @@ Before deploying an application to production, you should customize these action
 
 Figure 19-1 - Default 404 error page
 
-![Default 404 error page](/images/book/F1901.jpg "Default 404 error page")
+![Default 404 error page](http://www.symfony-project.org/images/book/1_4/F1901.jpg "Default 404 error page")
 
 You can override the default pages in two ways:
 

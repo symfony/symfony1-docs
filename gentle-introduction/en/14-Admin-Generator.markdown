@@ -48,7 +48,7 @@ Listing 14-1 - `schema.yml` of the Example Weblog Application
 
 Figure 14-1 - Example data model
 
-![Example data model](/images/book/F1401.png "Example data model")
+![Example data model](http://www.symfony-project.org/images/book/1_4/F1401.png "Example data model")
 
 There is no particular rule to follow during the schema creation to allow code generation. Symfony will use the schema as is and interpret its attributes to generate an administration.
 
@@ -126,11 +126,11 @@ The look and feel of a generated module, illustrated in Figures 14-5 and 14-6, i
 
 Figure 14-5 - `list` view of the `article` module in the `backend` application
 
-![list view of the article module in the backend application](/images/book/F1405.png "list view of the article module in the backend application")
+![list view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1405.png "list view of the article module in the backend application")
 
 Figure 14-6 - `edit` view of the `article` module in the `backend` application
 
-![edit view of the article module in the backend application](/images/book/F1406.png "edit view of the article module in the backend application")
+![edit view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1406.png "edit view of the article module in the backend application")
 
 >**TIP**
 >If you don't see the expected look and feel (no stylesheet and no image), this is because you need to install the assets in your project by running the `plugin:publish-assets` task:
@@ -283,7 +283,7 @@ The examples of this section will tweak the `article` administration module, as 
 
 Figure 14-7 - The administration generator cheat sheet
 
-![The administration generator cheat sheet](/images/book/F1407.png "The administration generator cheat sheet")
+![The administration generator cheat sheet](http://www.symfony-project.org/images/book/1_4/F1407.png "The administration generator cheat sheet")
 
 ### Fields
 
@@ -352,11 +352,11 @@ The `list` will then display three columns, as in Figure 14-8, and the `new` and
 
 Figure 14-8 - Custom column setting in the `list` view of the `comment` module
 
-![Custom column setting in the list view of the comment module](/images/book/F1408.png "Custom column setting in the list view of the comment module")
+![Custom column setting in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1408.png "Custom column setting in the list view of the comment module")
 
 Figure 14-9 - Grouping fields in the `edit` view of the `comment` module
 
-![Grouping fields in the edit view of the comment module](/images/book/F1409.png "Grouping fields in the edit view of the comment module")
+![Grouping fields in the edit view of the comment module](http://www.symfony-project.org/images/book/1_4/F1409.png "Grouping fields in the edit view of the comment module")
 
 So you can use the `display` setting in two ways:
 
@@ -388,7 +388,7 @@ The resulting `list` view of the `article` module is shown in Figure 14-10.
 
 Figure 14-10 - Custom field in the `list` view of the `article` module
 
-![Custom field in the list view of the article module](/images/book/F1410.png "Custom field in the list view of the article module")
+![Custom field in the list view of the article module](http://www.symfony-project.org/images/book/1_4/F1410.png "Custom field in the list view of the article module")
 
 Custom fields can even return HTML code to display more than raw data. For instance, you can extend the `BlogComment` class with a `getArticleLink()` method as in Listing 14-12.
 
@@ -411,7 +411,7 @@ Listing 14-13 - Custom Getters Returning HTML Can Also Be Used As Additional Col
 
 Figure 14-11 - Custom field in the `list` view of the `comment` module
 
-![Custom field in the list view of the comment module](/images/book/F1411.png "Custom field in the list view of the comment module")
+![Custom field in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1411.png "Custom field in the list view of the comment module")
 
 #### Partial Fields
 
@@ -481,7 +481,7 @@ Listing 14-18 - Setting a Custom Title for Each View, in `backend/modules/articl
 
 Figure 14-12 - Custom title in the `edit` view of the `article` module
 
-![Custom title in the edit view of the article module](/images/book/F1412.png "Custom title in the edit view of the article module")
+![Custom title in the edit view of the article module](http://www.symfony-project.org/images/book/1_4/F1412.png "Custom title in the edit view of the article module")
 
 As the default titles use the class name, they are often good enough--provided that your model uses explicit class names.
 
@@ -502,7 +502,7 @@ Listing 14-19 - Setting a Tooltip in the `edit` View, in `modules/comment/config
 
 Figure 14-13 - Tooltip in the `edit` view of the `comment` module
 
-![Tooltip in the edit view of the comment module](/images/book/F1413.png "Tooltip in the edit view of the comment module")
+![Tooltip in the edit view of the comment module](http://www.symfony-project.org/images/book/1_4/F1413.png "Tooltip in the edit view of the comment module")
 
 In the `list` view, tooltips are displayed in the column header; in the `new`, `edit`, and `filter` views, they appear under the field tag.
 
@@ -556,7 +556,7 @@ Listing 14-21 - Moving the Hyperlink for the `edit` View in the `list` View, in 
 
 Figure 14-14 - Moving the link to the `edit` view on another column, in the `list` view of the `comment` module
 
-![Moving the link to the edit view on another column, in the list view of the comment module](/images/book/F1414.png "Moving the link to the edit view on another column, in the list view of the comment module")
+![Moving the link to the edit view on another column, in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1414.png "Moving the link to the edit view on another column, in the list view of the comment module")
 
 By default, the `list` view uses the `tabular` layout, where the fields appear as columns, as shown previously. But you can also use the `stacked` layout and concatenate the fields into a single string that expands on the full length of the table. If you choose the `stacked` layout, you must set in the `params` key the pattern defining the value of each line of the list. For instance, Listing 14-22 defines a stacked layout for the list view of the comment module. The result appears in Figure 14-15.
 
@@ -573,7 +573,7 @@ Listing 14-22 - Using a `stacked` Layout in the `list` View, in `modules/comment
 
 Figure 14-15 - Stacked layout in the `list` view of the `comment` module
 
-![Stacked layout in the list view of the comment module](/images/book/F1415.png "Stacked layout in the list view of the comment module")
+![Stacked layout in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1415.png "Stacked layout in the list view of the comment module")
 
 Notice that a `tabular` layout expects an array of fields under the `display` key, but a `stacked` layout uses the `params` key for the HTML code generated for each record. However, the `display` array is still used in a `stacked` layout to determine which column headers are available for the interactive sorting.
 
@@ -597,7 +597,7 @@ Listing 14-23 - Setting the Filters in the `list` View, in `modules/comment/conf
 
 Figure 14-16 - Filters in the `list` view of the `comment` module
 
-![Filters in the list view of the comment module](/images/book/F1416.png "Filters in the list view of the comment module")
+![Filters in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1416.png "Filters in the list view of the comment module")
 
 The filters displayed by symfony depend on the column type defined in the schema, and can be customized in the filter form class:
 
@@ -636,7 +636,7 @@ In a `list` view, the table headers are hyperlinks that can be used to reorder t
 
 Figure 14-18 - Table headers of the `list` view are sort controls
 
-![Table headers of the list view are sort controls](/images/book/F1418.png "Table headers of the list view are sort controls")
+![Table headers of the list view are sort controls](http://www.symfony-project.org/images/book/1_4/F1418.png "Table headers of the list view are sort controls")
 
 You can reuse the syntax to point to a list directly sorted according to a column:
 
@@ -663,7 +663,7 @@ The generated administration effectively deals with even large tables, because t
 
 Figure 14-19 - Pagination controls appear on long lists
 
-![Pagination controls appear on long lists](/images/book/F1419.png "Pagination controls appear on long lists")
+![Pagination controls appear on long lists](http://www.symfony-project.org/images/book/1_4/F1419.png "Pagination controls appear on long lists")
 
 You can customize the number of records to be displayed in each page with the `max_per_page` parameter:
 
@@ -729,13 +729,13 @@ Symfony also takes care of n-n table relationships out of the box, as shown in F
 
 Figure 14-20 - Many-to-many relationships
 
-![Many-to-many relationships](/images/book/F1420.png "Many-to-many relationships")
+![Many-to-many relationships](http://www.symfony-project.org/images/book/1_4/F1420.png "Many-to-many relationships")
 
 By customizing the widget used to render the relationship, you can tweak the rendering of the field (illustrated in Figure 14-21):
 
 Figure 14-21 - Available controls for many-to-many relationships
 
-![Available controls for many-to-many relationships](/images/book/F1421.png "Available controls for many-to-many relationships")
+![Available controls for many-to-many relationships](http://www.symfony-project.org/images/book/1_4/F1421.png "Available controls for many-to-many relationships")
 
 ### Adding Interactions
 
@@ -767,7 +767,7 @@ In a `list` view, there are three action settings: the actions available for eve
 
 Figure 14-22 - Interactions in the `list` view
 
-![Interactions in the list view](/images/book/F1422.png "Interactions in the list view")
+![Interactions in the list view](http://www.symfony-project.org/images/book/1_4/F1422.png "Interactions in the list view")
 
 In a `new` and `edit` views, as there is only one record edited at a time, there is only one set of actions to define (under `actions`). The `edit` interactions defined in Listing 14-31 render like in Figure 14-23. Both the `save` and the `save_and_add` actions save the current edits in the records, the difference being that the `save` action displays the `edit` view on the current record after saving, while the `save_and_add` action displays a `new` view to add another record. The `save_and_add` action is a shortcut that you will find very useful when adding many records in rapid succession. As for the position of the `delete` action, it is separated from the other buttons so that users don't click it by mistake.
 
@@ -775,7 +775,7 @@ The interaction names starting with an underscore (`_`) tell symfony to use the 
 
 Figure 14-23 - Interactions in the `edit` view
 
-![Interactions in the edit view](/images/book/F1423.png "Interactions in the edit view")
+![Interactions in the edit view](http://www.symfony-project.org/images/book/1_4/F1423.png "Interactions in the edit view")
 
 But you can also add a custom interaction, in which case you must specify a name starting with no underscore, and a target action in the current module, as in Listing 14-32.
 
@@ -793,7 +793,7 @@ Each article in the list will now show the `Add a comment` link, as shown in Fig
 
 Figure 14-24 - Custom interaction in the `list` view
 
-![Custom interaction in the list view](/images/book/F1424.png "Custom interaction in the list view")
+![Custom interaction in the list view](http://www.symfony-project.org/images/book/1_4/F1424.png "Custom interaction in the list view")
 
 The `addComment` action can be implemented as in Listing 14-33.
 

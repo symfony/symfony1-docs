@@ -627,7 +627,7 @@ The default login and secure pages are pretty simple, and you will probably want
 
 Figure 6-1 - The default secure action page
 
-![The default secure action page](/images/book/F0601.jpg "The default secure action page")
+![The default secure action page](http://www.symfony-project.org/images/book/1_4/F0601.jpg "The default secure action page")
 
 Listing 6-22 - Default Security Actions Are Defined in `apps/frontend/config/settings.yml`
 
@@ -745,7 +745,7 @@ Symfony actually sees the processing of a request as a chain of filters. When a 
 
 Figure 6-3 - Sample filter chain
 
-![Sample filter chain](/images/book/F0603.png "Sample filter chain")
+![Sample filter chain](http://www.symfony-project.org/images/book/1_4/F0603.png "Sample filter chain")
 
 This process justifies the structure of the filter classes. They all extend the `sfFilter` class, and contain one `execute()` method, expecting a `$filterChain` object as parameter. Somewhere in this method, the filter passes to the next filter in the chain by calling `$filterChain->execute()`. See Listing 6-28 for an example. So basically, filters are divided into two parts:
 

@@ -18,7 +18,7 @@ The MVC architecture separates the business logic (model) and the presentation (
 
 Figure 2-1 - The MVC pattern
 
-![The MVC pattern](/images/book/F0201.png "The MVC pattern")
+![The MVC pattern](http://www.symfony-project.org/images/book/1_4/F0201.png "The MVC pattern")
 
 ### MVC Layering
 
@@ -332,7 +332,7 @@ And the last thing is that the view logic can be easily translated as a simple c
 
 Figure 2-2 - Symfony workflow
 
-![Symfony workflow](/images/book/F0202.png "Symfony workflow")
+![Symfony workflow](http://www.symfony-project.org/images/book/1_4/F0202.png "Symfony workflow")
 
 That means that the list of posts described in our example would require only three files to work in symfony, as shown in Listings 2-11, 2-12, and 2-13.
 
@@ -419,7 +419,7 @@ Figure 2-3 shows a sample code organization for a weblog project, in a project/a
 
 Figure 2-3 - Example of code organization
 
-![Example of code organization](/images/book/F0203.png "Example of code organization")
+![Example of code organization](http://www.symfony-project.org/images/book/1_4/F0203.png "Example of code organization")
 
 ### File Tree Structure
 

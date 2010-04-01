@@ -63,7 +63,7 @@ How do you translate a database structure into a schema? An example is the best 
 
 Figure 8-1 - A blog database table structure
 
-![A blog database table structure](/images/book/F0801.png "A blog database table structure")
+![A blog database table structure](http://www.symfony-project.org/images/book/1_4/F0801.png "A blog database table structure")
 
 The related `schema.yml` file should look like Listing 8-3.
 

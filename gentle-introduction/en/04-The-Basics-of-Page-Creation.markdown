@@ -53,7 +53,7 @@ The default `index` action will not be used in this chapter, so you can remove t
 
 Figure 4-1 - The default generated index page
 
-![The default generated index page](/images/book/F0401.jpg "The default generated index page")
+![The default generated index page](http://www.symfony-project.org/images/book/1_4/F0401.jpg "The default generated index page")
 
 Adding a Page
 -------------
