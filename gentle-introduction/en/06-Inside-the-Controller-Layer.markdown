@@ -454,9 +454,9 @@ Symfony automatically manages user sessions and is able to keep persistent data 
 
 ### Accessing the User Session
 
-The session object for the current user is accessed in the action with the `getUser()` method and is an instance of the `sfUser` class. This class contains a parameter holder that allows you to store any user attribute in it. This data will be available to other requests until the end of the user session, as shown in Listing 6-15. User attributes can store any type of data (strings, arrays, and associative arrays). They can be set for every individual user, even if that user is not identified.
+The session object for the current user is accessed in the action with the `getUser()` method and is an instance of the `sfUser` class. This class contains a parameter holder that allows you to store any user attribute in it. This data will be available to other requests until the end of the user session, as shown in Listing 6-14. User attributes can store any type of data (strings, arrays, and associative arrays). They can be set for every individual user, even if that user is not identified.
 
-Listing 6-15 - The `sfUser` Object Can Hold Custom User Attributes Existing Across Requests
+Listing 6-14 - The `sfUser` Object Can Hold Custom User Attributes Existing Across Requests
 
     [php]
     class mymoduleActions extends sfActions
@@ -479,9 +479,9 @@ Listing 6-15 - The `sfUser` Object Can Hold Custom User Attributes Existing Acro
 >**CAUTION**
 >You can store objects in the user session, but it is strongly discouraged. This is because the session object is serialized between requests. When the session is deserialized, the class of the stored objects must already be loaded, and that's not always the case. In addition, there can be "stalled" objects if you store Propel or Doctrine objects.
 
-Like many getters in symfony, the `getAttribute()` method accepts a second argument, specifying the default value to be used when the attribute is not defined. To check whether an attribute has been defined for a user, use the `hasAttribute()` method. The attributes are stored in a parameter holder that can be accessed by the `getAttributeHolder()` method. It allows for easy cleanup of the user attributes with the usual parameter holder methods, as shown in Listing 6-16.
+Like many getters in symfony, the `getAttribute()` method accepts a second argument, specifying the default value to be used when the attribute is not defined. To check whether an attribute has been defined for a user, use the `hasAttribute()` method. The attributes are stored in a parameter holder that can be accessed by the `getAttributeHolder()` method. It allows for easy cleanup of the user attributes with the usual parameter holder methods, as shown in Listing 6-15.
 
-Listing 6-16 - Removing Data from the User Session
+Listing 6-15 - Removing Data from the User Session
 
     [php]
     class mymoduleActions extends sfActions
@@ -497,9 +497,9 @@ Listing 6-16 - Removing Data from the User Session
       }
     }
 
-The user session attributes are also available in the templates by default via the `$sf_user` variable, which stores the current `sfUser` object, as shown in Listing 6-17.
+The user session attributes are also available in the templates by default via the `$sf_user` variable, which stores the current `sfUser` object, as shown in Listing 6-16.
 
-Listing 6-17 - Templates Also Have Access to the User Session Attributes
+Listing 6-16 - Templates Also Have Access to the User Session Attributes
 
     [php]
     <p>
@@ -540,9 +540,9 @@ Flash attributes are a clean way of passing information to the very next request
 
 Symfony's session-handling feature completely masks the client and server storage of the session IDs to the developer. However, if you want to modify the default behaviors of the session-management mechanisms, it is still possible. This is mostly for advanced users.
 
-On the client side, sessions are handled by cookies. The symfony session cookie is called `symfony`, but you can change its name by editing the `factories.yml` configuration file, as shown in Listing 6-18.
+On the client side, sessions are handled by cookies. The symfony session cookie is called `symfony`, but you can change its name by editing the `factories.yml` configuration file, as shown in Listing 6-17.
 
-Listing 6-18 - Changing the Session Cookie Name, in `apps/frontend/config/factories.yml`
+Listing 6-17 - Changing the Session Cookie Name, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -557,9 +557,9 @@ Symfony's session handling is based on PHP sessions. This means that if you want
 
     session.use_trans_sid = 1
 
-On the server side, symfony stores user sessions in files by default. You can store them in your database by changing the value of the `class` parameter in `factories.yml`, as shown in Listing 6-19.
+On the server side, symfony stores user sessions in files by default. You can store them in your database by changing the value of the `class` parameter in `factories.yml`, as shown in Listing 6-18.
 
-Listing 6-19 - Changing the Server Session Storage, in `apps/frontend/config/factories.yml`
+Listing 6-18 - Changing the Server Session Storage, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -576,9 +576,9 @@ The `database` setting defines the database connection to be used. Symfony will 
 
 The available session storage classes are `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage`, and `sfPDOSessionStorage`; the latter is preferred. To disable session storage completely, you can use the `sfNoStorage` class.
 
-Session expiration occurs automatically after 30 minutes. This default setting can be modified for each environment in the same `factories.yml` configuration file, but this time in the `user` factory, as shown in Listing 6-20.
+Session expiration occurs automatically after 30 minutes. This default setting can be modified for each environment in the same `factories.yml` configuration file, but this time in the `user` factory, as shown in Listing 6-19.
 
-Listing 6-20 - Changing Session Lifetime, in `apps/frontend/config/factories.yml`
+Listing 6-19 - Changing Session Lifetime, in `apps/frontend/config/factories.yml`
 
     all:
       user:
@@ -600,9 +600,9 @@ Before being executed, every action passes by a special filter that checks if th
   * Secure actions require users to be authenticated.
   * Credentials are named security privileges that allow organizing security by group.
 
-Restricting access to an action is simply made by creating and editing a YAML configuration file called `security.yml` in the module `config/` directory. In this file, you can specify the security requirements that users must fulfill for each action or for `all` actions. Listing 6-21 shows a sample `security.yml`.
+Restricting access to an action is simply made by creating and editing a YAML configuration file called `security.yml` in the module `config/` directory. In this file, you can specify the security requirements that users must fulfill for each action or for `all` actions. Listing 6-20 shows a sample `security.yml`.
 
-Listing 6-21 - Setting Access Restrictions, in `apps/frontend/modules/mymodule/config/security.yml`
+Listing 6-20 - Setting Access Restrictions, in `apps/frontend/modules/mymodule/config/security.yml`
 
     read:
       is_secure:   false       # All users can request the read action
@@ -623,13 +623,13 @@ Actions are not secure by default, so when there is no `security.yml` or no ment
   * If the user is not identified, he will be redirected to the default login action.
   * If the user is identified but doesn't have the proper credentials, he will be redirected to the default secure action, shown in Figure 6-1.
 
-The default login and secure pages are pretty simple, and you will probably want to customize them. You can configure which actions are to be called in case of insufficient privileges in the application `settings.yml` by changing the value of the properties shown in Listing 6-22.
+The default login and secure pages are pretty simple, and you will probably want to customize them. You can configure which actions are to be called in case of insufficient privileges in the application `settings.yml` by changing the value of the properties shown in Listing 6-21.
 
 Figure 6-1 - The default secure action page
 
 ![The default secure action page](http://www.symfony-project.org/images/book/1_4/F0601.jpg "The default secure action page")
 
-Listing 6-22 - Default Security Actions Are Defined in `apps/frontend/config/settings.yml`
+Listing 6-21 - Default Security Actions Are Defined in `apps/frontend/config/settings.yml`
 
     all:
       .actions:
@@ -641,9 +641,9 @@ Listing 6-22 - Default Security Actions Are Defined in `apps/frontend/config/set
 
 ### Granting Access
 
-To get access to restricted actions, users need to be authenticated and/or to have certain credentials. You can extend a user's privileges by calling methods of the `sfUser` object. The authenticated status of the user is set by the `setAuthenticated()` method and can be checked with `isAuthenticated()`. Listing 6-23 shows a simple example of user authentication.
+To get access to restricted actions, users need to be authenticated and/or to have certain credentials. You can extend a user's privileges by calling methods of the `sfUser` object. The authenticated status of the user is set by the `setAuthenticated()` method and can be checked with `isAuthenticated()`. Listing 6-22 shows a simple example of user authentication.
 
-Listing 6-23 - Setting the Authenticated Status of a User
+Listing 6-22 - Setting the Authenticated Status of a User
 
     [php]
     class myAccountActions extends sfActions
@@ -662,9 +662,9 @@ Listing 6-23 - Setting the Authenticated Status of a User
       }
     }
 
-Credentials are a bit more complex to deal with, since you can check, add, remove, and clear credentials. Listing 6-24 describes the credential methods of the `sfUser` class.
+Credentials are a bit more complex to deal with, since you can check, add, remove, and clear credentials. Listing 6-23 describes the credential methods of the `sfUser` class.
 
-Listing 6-24 - Dealing with User Credentials in an Action
+Listing 6-23 - Dealing with User Credentials in an Action
 
     [php]
     class myAccountActions extends sfActions
@@ -696,9 +696,9 @@ Listing 6-24 - Dealing with User Credentials in an Action
       }
     }
 
-If a user has the `foo` credential, that user will be able to access the actions for which the `security.yml` requires that credential. Credentials can also be used to display only authorized content in a template, as shown in Listing 6-25.
+If a user has the `foo` credential, that user will be able to access the actions for which the `security.yml` requires that credential. Credentials can also be used to display only authorized content in a template, as shown in Listing 6-24.
 
-Listing 6-25 - Dealing with User Credentials in a Template
+Listing 6-24 - Dealing with User Credentials in a Template
 
     [php]
     <ul>
@@ -716,9 +716,9 @@ As for the authenticated status, credentials are often given to users during the
 
 ### Complex Credentials
 
-The YAML syntax used in the `security.yml` file allows you to restrict access to users having a combination of credentials, using either AND-type or OR-type associations. With such a combination, you can build a complex workflow and user privilege management system--for instance, a content management system (CMS) back-office accessible only to users with the admin credential, where articles can be edited only by users with the `editor` credential and published only by the ones with the `publisher` credential. Listing 6-26 shows this example.
+The YAML syntax used in the `security.yml` file allows you to restrict access to users having a combination of credentials, using either AND-type or OR-type associations. With such a combination, you can build a complex workflow and user privilege management system--for instance, a content management system (CMS) back-office accessible only to users with the admin credential, where articles can be edited only by users with the `editor` credential and published only by the ones with the `publisher` credential. Listing 6-25 shows this example.
 
-Listing 6-26 - Credentials Combination Syntax
+Listing 6-25 - Credentials Combination Syntax
 
     editArticle:
       credentials: [ admin, editor ]              # admin AND editor
@@ -747,12 +747,12 @@ Figure 6-3 - Sample filter chain
 
 ![Sample filter chain](http://www.symfony-project.org/images/book/1_4/F0603.png "Sample filter chain")
 
-This process justifies the structure of the filter classes. They all extend the `sfFilter` class, and contain one `execute()` method, expecting a `$filterChain` object as parameter. Somewhere in this method, the filter passes to the next filter in the chain by calling `$filterChain->execute()`. See Listing 6-28 for an example. So basically, filters are divided into two parts:
+This process justifies the structure of the filter classes. They all extend the `sfFilter` class, and contain one `execute()` method, expecting a `$filterChain` object as parameter. Somewhere in this method, the filter passes to the next filter in the chain by calling `$filterChain->execute()`. See Listing 6-26 for an example. So basically, filters are divided into two parts:
 
   * The code before the call to `$filterChain->execute()` executes before the action execution.
   * The code after the call to `$filterChain->execute()` executes after the action execution and before the rendering.
 
-Listing 6-28 - Filter Class Struture
+Listing 6-26 - Filter Class Struture
 
     [php]
     class myFilter extends sfFilter
@@ -770,9 +770,9 @@ Listing 6-28 - Filter Class Struture
       }
     }
 
-The default filter chain is defined in an application configuration file called `filters.yml`, and is shown in Listing 6-29. This file lists the filters that are to be executed for every request.
+The default filter chain is defined in an application configuration file called `filters.yml`, and is shown in Listing 6-27. This file lists the filters that are to be executed for every request.
 
-Listing 6-29 - Default Filter Chain, in `frontend/config/filters.yml`
+Listing 6-27 - Default Filter Chain, in `frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
@@ -782,9 +782,9 @@ Listing 6-29 - Default Filter Chain, in `frontend/config/filters.yml`
     cache:     ~
     execution: ~
 
-These declarations have no parameter (the tilde character, `~`, means "null" in YAML), because they inherit the parameters defined in the symfony core. In the core, symfony defines `class` and `param` settings for each of these filters. For instance, Listing 6-30 shows the default parameters for the `rendering` filter.
+These declarations have no parameter (the tilde character, `~`, means "null" in YAML), because they inherit the parameters defined in the symfony core. In the core, symfony defines `class` and `param` settings for each of these filters. For instance, Listing 6-28 shows the default parameters for the `rendering` filter.
 
-Listing 6-30 - Default Parameters of the rendering Filter, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
+Listing 6-28 - Default Parameters of the rendering Filter, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
 
     rendering:
       class: sfRenderingFilter   # Filter class
@@ -806,13 +806,13 @@ You can customize the filter chain in various ways:
 
 ### Building Your Own Filter
 
-It is pretty simple to build a filter. Create a class definition similar to the one shown in Listing 6-28, and place it in one of the project's `lib/` folders to take advantage of the autoloading feature.
+It is pretty simple to build a filter. Create a class definition similar to the one shown in Listing 6-26, and place it in one of the project's `lib/` folders to take advantage of the autoloading feature.
 
 As an action can forward or redirect to another action and consequently relaunch the full chain of filters, you might want to restrict the execution of your own filters to the first action call of the request. The `isFirstCall()` method of the `sfFilter` class returns a Boolean for this purpose. This call only makes sense before the action execution.
 
-These concepts are clearer with an example. Listing 6-31 shows a filter used to auto-log users with a specific `MyWebSite` cookie, which is supposedly created by the login action. It is a rudimentary but working way to implement the "remember me" feature offered in login forms.
+These concepts are clearer with an example. Listing 6-29 shows a filter used to auto-log users with a specific `MyWebSite` cookie, which is supposedly created by the login action. It is a rudimentary but working way to implement the "remember me" feature offered in login forms.
 
-Listing 6-31 - Sample Filter Class File, Saved in `apps/frontend/lib/rememberFilter.class.php`
+Listing 6-29 - Sample Filter Class File, Saved in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
@@ -849,9 +849,9 @@ In some cases, instead of continuing the filter chain execution, you will need t
 
 ### Filter Activation and Parameters
 
-Creating a filter file is not enough to activate it. You need to add your filter to the filter chain, and for that, you must declare the filter class in the `filters.yml`, located in the application or in the module `config/` directory, as shown in Listing 6-32.
+Creating a filter file is not enough to activate it. You need to add your filter to the filter chain, and for that, you must declare the filter class in the `filters.yml`, located in the application or in the module `config/` directory, as shown in Listing 6-30.
 
-Listing 6-32 - Sample Filter Activation File, Saved in `apps/frontend/config/filters.yml`
+Listing 6-30 - Sample Filter Activation File, Saved in `apps/frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
@@ -865,9 +865,9 @@ Listing 6-32 - Sample Filter Activation File, Saved in `apps/frontend/config/fil
     cache:     ~
     execution: ~
 
-When activated, the filter is executed for each request. The filter configuration file can contain one or more parameter definitions under the `param` key. The filter class has the ability to get the value of these parameters with the `getParameter()` method. Listing 6-33 demonstrates how to get a filter parameter value.
+When activated, the filter is executed for each request. The filter configuration file can contain one or more parameter definitions under the `param` key. The filter class has the ability to get the value of these parameters with the `getParameter()` method. Listing 6-31 demonstrates how to get a filter parameter value.
 
-Listing 6-33 - Getting the Parameter Value, in `apps/frontend/lib/rememberFilter.class.php`
+Listing 6-31 - Getting the Parameter Value, in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
@@ -885,16 +885,16 @@ Listing 6-33 - Getting the Parameter Value, in `apps/frontend/lib/rememberFilter
       }
     }
 
-The `condition` parameter is tested by the filter chain to see if the filter must be executed. So your filter declarations can rely on an application configuration, just like the one in Listing 6-32. The remember filter will be executed only if your application `app.yml` shows this:
+The `condition` parameter is tested by the filter chain to see if the filter must be executed. So your filter declarations can rely on an application configuration, just like the one in Listing 6-30. The remember filter will be executed only if your application `app.yml` shows this:
 
     all:
       enable_remember_me: true
 
 ### Sample Filters
 
-The filter feature is useful to repeat code for every action. For instance, if you use a distant analytics system, you probably need to put a code snippet calling a distant tracker script in every page. You could put this code in the global layout, but then it would be active for all of the application. Alternatively, you could place it in a filter, such as the one shown in Listing 6-34, and activate it on a per-module basis.
+The filter feature is useful to repeat code for every action. For instance, if you use a distant analytics system, you probably need to put a code snippet calling a distant tracker script in every page. You could put this code in the global layout, but then it would be active for all of the application. Alternatively, you could place it in a filter, such as the one shown in Listing 6-32, and activate it on a per-module basis.
 
-Listing 6-34 - Google Analytics Filter
+Listing 6-32 - Google Analytics Filter
 
     [php]
     class sfGoogleAnalyticsFilter extends sfFilter
@@ -918,9 +918,9 @@ Listing 6-34 - Google Analytics Filter
 
 Be aware that this filter is not perfect, as it should not add the tracker on responses that are not HTML.
 
-Another example would be a filter that switches the request to SSL if it is not already, to secure the communication, as shown in Listing 6-35.
+Another example would be a filter that switches the request to SSL if it is not already, to secure the communication, as shown in Listing 6-33.
 
-Listing 6-35 - Secure Communication Filter
+Listing 6-33 - Secure Communication Filter
 
     [php]
     class sfSecureFilter extends sfFilter
@@ -950,9 +950,9 @@ Filters are used extensively in plug-ins, as they allow you to extend the featur
 Module Configuration
 --------------------
 
-A few module behaviors rely on configuration. To modify them, you must create a `module.yml` file in the module's `config/` directory and define settings on a per-environment basis (or under the `all:` header for all environments). Listing 6-36 shows an example of a `module.yml` file for the `mymodule` module.
+A few module behaviors rely on configuration. To modify them, you must create a `module.yml` file in the module's `config/` directory and define settings on a per-environment basis (or under the `all:` header for all environments). Listing 6-34 shows an example of a `module.yml` file for the `mymodule` module.
 
-Listing 6-36 - Module Configuration, in `apps/frontend/modules/mymodule/config/module.yml`
+Listing 6-34 - Module Configuration, in `apps/frontend/modules/mymodule/config/module.yml`
 
     all:                  # For all environments
       enabled:            true

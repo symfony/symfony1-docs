@@ -342,9 +342,9 @@ You may want to execute a script from the command line (or via a cron table) wit
 
 ### Batch Files
 
-Initializing symfony just takes a couple lines of PHP code. You can take advantage of all symfony features by creating a PHP file, for instance under the `lib/` directory of your project, starting with the lines shown in Listing 16-13.
+Initializing symfony just takes a couple lines of PHP code. You can take advantage of all symfony features by creating a PHP file, for instance under the `lib/` directory of your project, starting with the lines shown in Listing 16-12.
 
-Listing 16-13 - Sample Batch Script, in `lib/myScript.php`
+Listing 16-12 - Sample Batch Script, in `lib/myScript.php`
 
     [php]
     <?php
@@ -373,9 +373,9 @@ To execute your code, just call the script from the command line:
 
 An alternative way of creating custom command line scripts using symfony is to write a **symfony task**. Just like the `cache:clear` and the `propel:build-model` tasks, you can launch your own custom tasks from the command line with `php symfony`. Custom tasks benefit from the ability to parse command line arguments and options, can embed their own help text, and can extend existing tasks.
 
-A custom task is just a class extending `sfBaseTask` and located under a `lib/task/` directory, either under the project root, or in a plugin directory. Its file name must end with 'Task.class.php'. Listing 16-14 shows a sample custom task.
+A custom task is just a class extending `sfBaseTask` and located under a `lib/task/` directory, either under the project root, or in a plugin directory. Its file name must end with 'Task.class.php'. Listing 16-13 shows a sample custom task.
 
-Listing 16-14 - Sample Task, in `lib/task/testHelloTask.class.php`
+Listing 16-13 - Sample Task, in `lib/task/testHelloTask.class.php`
 
     [php]
     <?php
@@ -408,9 +408,9 @@ Rather than writing a task skeleton by yourself, you can use the symfony `genera
 
     $ php symfony help generate:task
 
-Tasks can accept arguments (compulsory parameters, in a predefined order) and options (optional and unordered parameters). Listing 16-15 shows a more complete task, taking advantage of all these features.
+Tasks can accept arguments (compulsory parameters, in a predefined order) and options (optional and unordered parameters). Listing 16-14 shows a more complete task, taking advantage of all these features.
 
-Listing 16-15 - More Complete Sample Task, in `lib/task/mySecondTask.class.php`
+Listing 16-14 - More Complete Sample Task, in `lib/task/mySecondTask.class.php`
 
     [php]
     class mySecondTask extends sfBaseTask
@@ -457,9 +457,9 @@ In the process of application development, developers are often faced with the p
 
 ### Fixture File Syntax
 
-Symfony can read data files that follow a very simple YAML syntax, provided that they are located under the `data/fixtures/` directory. Fixture files are organized by class, each class section being introduced by the class name as a header. For each class, records labeled with a unique string are defined by a set of `fieldname: value` pairs. Listing 16-16 shows an example of a data file for database population.
+Symfony can read data files that follow a very simple YAML syntax, provided that they are located under the `data/fixtures/` directory. Fixture files are organized by class, each class section being introduced by the class name as a header. For each class, records labeled with a unique string are defined by a set of `fieldname: value` pairs. Listing 16-15 shows an example of a data file for database population.
 
-Listing 16-16 - Sample Fixture File, in `data/fixtures/import_data.yml`
+Listing 16-15 - Sample Fixture File, in `data/fixtures/import_data.yml`
 
     Article:                             ## Insert records in the blog_article table
       first_post:                        ## First record label
@@ -506,9 +506,9 @@ Figure 16-8 - A sample database relational model
 
 ![A sample database relational model](http://www.symfony-project.org/images/book/1_4/F1608.png "A sample database relational model")
 
-This is where the labels given to the records become really useful. To add a `Comment` field to the `first_post` article, you simply need to append the lines shown in Listing 16-17 to the `import_data.yml` data file.
+This is where the labels given to the records become really useful. To add a `Comment` field to the `first_post` article, you simply need to append the lines shown in Listing 16-16 to the `import_data.yml` data file.
 
-Listing 16-17 - Adding a Record to a Related Table, in `data/fixtures/import_data.yml`
+Listing 16-16 - Adding a Record to a Related Table, in `data/fixtures/import_data.yml`
 
     Comment:
       first_comment:
@@ -520,9 +520,9 @@ The `propel:data-load` task will recognize the label that you gave to an article
 
 The only constraint for linked records is that the objects called in a foreign key must be defined earlier in the file; that is, as you would do if you defined them one by one. The data files are parsed from the top to the bottom, and the order in which the records are written is important.
 
-This also works for many-to-many relationships, where two classes are related through a third class. For instance, an `Article` can have many `Authors`, and an `Author` can have many `Articles`. You usually use an `ArticleAuthor` class for that, corresponding to an `article_author` table with an `article_id` and an `author_id` columns. Listing 16-18 shows how to write a fixture file to define many-to-many relationships with this model. Notice the plural table name used here--this is what triggers the search for a middle class.
+This also works for many-to-many relationships, where two classes are related through a third class. For instance, an `Article` can have many `Authors`, and an `Author` can have many `Articles`. You usually use an `ArticleAuthor` class for that, corresponding to an `article_author` table with an `article_id` and an `author_id` columns. Listing 16-17 shows how to write a fixture file to define many-to-many relationships with this model. Notice the plural table name used here--this is what triggers the search for a middle class.
 
-Listing 16-18 - Adding a Record to a Table Related by a Many-to-Many relationship, in `data/fixtures/import_data.yml`
+Listing 16-17 - Adding a Record to a Table Related by a Many-to-Many relationship, in `data/fixtures/import_data.yml`
 
     Author:
       first_author:
@@ -553,9 +553,9 @@ The solution that is supported by symfony is rsync synchronization through an SS
 
 Symfony adds SSH on top of rsync to secure the data transfer. More and more commercial hosts support an SSH tunnel to secure file uploads on their servers, and that's a good practice to avoid security breaches.
 
-The SSH client called by symfony uses connection settings from the `config/properties.ini` file. Listing 16-19 gives an example of connection settings for a production server. Write the settings of your own production server in this file before any synchronization. You can also define a single parameters setting to provide your own rsync command line parameters.
+The SSH client called by symfony uses connection settings from the `config/properties.ini` file. Listing 16-18 gives an example of connection settings for a production server. Write the settings of your own production server in this file before any synchronization. You can also define a single parameters setting to provide your own rsync command line parameters.
 
-Listing 16-19 - Sample Connection Settings for a Server Synchronization, in `myproject/config/properties.ini`
+Listing 16-18 - Sample Connection Settings for a Server Synchronization, in `myproject/config/properties.ini`
 
     [symfony]
       name=myproject
@@ -613,9 +613,9 @@ If you synchronize your symfony project with a production host, a few files and 
   * The `cache/` and `log/` directories of a project must not be erased in the host server each time you do a synchronization. These directories must be ignored as well. If you have a `stats/` directory, it should probably be treated the same way.
   * The files uploaded by users should not be transferred. One of the good practices of symfony projects is to store the uploaded files in the `web/uploads/` directory. This allows you to exclude all these files from the synchronization by pointing to only one directory.
 
-To exclude files from rsync synchronizations, open and edit the `rsync_exclude.txt` file under the `myproject/config/` directory. Each line can contain a file, a directory, or a pattern. The symfony file structure is organized logically, and designed to minimize the number of files or directories to exclude manually from the synchronization. See Listing 16-20 for an example.
+To exclude files from rsync synchronizations, open and edit the `rsync_exclude.txt` file under the `myproject/config/` directory. Each line can contain a file, a directory, or a pattern. The symfony file structure is organized logically, and designed to minimize the number of files or directories to exclude manually from the synchronization. See Listing 16-19 for an example.
 
-Listing 16-20 - Sample rsync Exclusion Settings, in `myproject/config/rsync_exclude.txt`
+Listing 16-19 - Sample rsync Exclusion Settings, in `myproject/config/rsync_exclude.txt`
 
     # Project files
     /cache/*

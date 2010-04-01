@@ -179,9 +179,9 @@ Note that the use of the short opening tags (`<?=`, equivalent to `<?php echo`) 
 Linking to Another Action
 -------------------------
 
-You already know that there is a total decoupling between an action name and the URL used to call it. So if you create a link to `update` in a template as in Listing 4-10, it will only work with the default routing. If you later decide to change the way the URLs look, then you will need to review all templates to change the hyperlinks.
+You already know that there is a total decoupling between an action name and the URL used to call it. So if you create a link to `update` in a template as in Listing 4-8, it will only work with the default routing. If you later decide to change the way the URLs look, then you will need to review all templates to change the hyperlinks.
 
-Listing 4-10 - Hyperlinks, the Classic Way
+Listing 4-8 - Hyperlinks, the Classic Way
 
     [php]
     <a href="/frontend_dev.php/content/update?name=anonymous">
@@ -190,9 +190,9 @@ Listing 4-10 - Hyperlinks, the Classic Way
 
 To avoid this hassle, you should always use the `link_to()` helper to create hyperlinks to your application's actions. And if you only want to generate the URL part, the `url_for()` is the helper you're looking for.
 
-A helper is a PHP function defined by symfony that is meant to be used within templates. It outputs some HTML code and is faster to use than writing the actual HTML code by yourself. Listing 4-11 demonstrates the use of the hyperlink helpers.
+A helper is a PHP function defined by symfony that is meant to be used within templates. It outputs some HTML code and is faster to use than writing the actual HTML code by yourself. Listing 4-9 demonstrates the use of the hyperlink helpers.
 
-Listing 4-11 - The `link_to()`, and `url_for()` Helpers
+Listing 4-9 - The `link_to()`, and `url_for()` Helpers
 
     [php]
     <p>Hello, world!</p>
@@ -210,9 +210,9 @@ The resulting HTML will be the same as previously, except that when you change y
 
 Form manipulation deserves a whole chapter of its own, since symfony provides many tools to make it even easier. You will learn more about these helpers in Chapter 10.
 
-The `link_to()` helper, like many other helpers, accepts another argument for special options and additional tag attributes. Listing 4-12 shows an example of an option argument and the resulting HTML. The option argument is either an associative array or a simple string showing `key=value` couples separated by blanks.
+The `link_to()` helper, like many other helpers, accepts another argument for special options and additional tag attributes. Listing 4-10 shows an example of an option argument and the resulting HTML. The option argument is either an associative array or a simple string showing `key=value` couples separated by blanks.
 
-Listing 4-12 - Most Helpers Accept an Option Argument
+Listing 4-10 - Most Helpers Accept an Option Argument
 
     [php]
     // Option argument as an associative array
@@ -232,7 +232,7 @@ Listing 4-12 - Most Helpers Accept an Option Argument
         href="http://localhost/frontend_dev.php/content/update/name/anonymous">
         I never say my name</a>
 
-Whenever you use a symfony helper that outputs an HTML tag, you can insert additional tag attributes (like the `class` attribute in the example in Listing 4-12) in the option argument. You can even write these attributes in the "quick-and-dirty" HTML 4.0 way (without double quotes), and symfony will output them in nicely formatted XHTML. That's another reason why helpers are faster to write than HTML.
+Whenever you use a symfony helper that outputs an HTML tag, you can insert additional tag attributes (like the `class` attribute in the example in Listing 4-10) in the option argument. You can even write these attributes in the "quick-and-dirty" HTML 4.0 way (without double quotes), and symfony will output them in nicely formatted XHTML. That's another reason why helpers are faster to write than HTML.
 
 >**NOTE**
 >Because it requires an additional parsing and transformation, the string syntax is a little slower than the array syntax.
@@ -242,9 +242,9 @@ Like all symfony helpers, the link helpers are numerous and have many options. C
 Getting Information from the Request
 ------------------------------------
 
-Whether the user sends information via a form (usually in a POST request) or via the URL (GET request), you can retrieve the related data from the action with the `getParameter()` method of the `sfRequest` object. Listing 4-13 shows how, in `update`, you retrieve the value of the `name` parameter.
+Whether the user sends information via a form (usually in a POST request) or via the URL (GET request), you can retrieve the related data from the action with the `getParameter()` method of the `sfRequest` object. Listing 4-11 shows how, in `update`, you retrieve the value of the `name` parameter.
 
-Listing 4-13 - Getting Data from the Request Parameter in the Action
+Listing 4-11 - Getting Data from the Request Parameter in the Action
 
     [php]
     <?php
@@ -263,9 +263,9 @@ As a convenience, all `executeXxx()` methods take the current `sfRequest` object
 
 If the data manipulation is simple, you don't even need to use the action to retrieve the request parameters. The template has access to an object called `$sf_params`, which offers a `get`() method to retrieve the request parameters, just like the `getParameter()` in the action.
 
-If `executeUpdate()` were empty, Listing 4-14 shows how the `updateSuccess.php` template would retrieve the same `name` parameter.
+If `executeUpdate()` were empty, Listing 4-12 shows how the `updateSuccess.php` template would retrieve the same `name` parameter.
 
-Listing 4-14 - Getting Data from the Request Parameter Directly in the Template
+Listing 4-12 - Getting Data from the Request Parameter Directly in the Template
 
     [php]
     <p>Hello, <?php echo $sf_params->get('name') ?>!</p>
@@ -273,9 +273,9 @@ Listing 4-14 - Getting Data from the Request Parameter Directly in the Template
 >**NOTE**
 >Why not use the `$_POST`, `$_GET`, or `$_REQUEST` variables instead? Because then your URLs will be formatted differently (as in `http://localhost/articles/europe/france/finance.html`, without `?` nor `=`), the usual PHP variables won't work anymore, and only the routing system will be able to retrieve the request parameters. And you may want to add input filtering to prevent malicious code injection, which is only possible if you keep all request parameters in one clean parameter holder.
 
-The `$sf_params` object is more powerful than just giving a getter equivalent to an array. For instance, if you only want to test the existence of a request parameter, you can simply use the `$sf_params->has()` method instead of testing the actual value with `get()`, as in Listing 4-15.
+The `$sf_params` object is more powerful than just giving a getter equivalent to an array. For instance, if you only want to test the existence of a request parameter, you can simply use the `$sf_params->has()` method instead of testing the actual value with `get()`, as in Listing 4-13.
 
-Listing 4-15 - Testing the Existence of a Request Parameter in the Template
+Listing 4-13 - Testing the Existence of a Request Parameter in the Template
 
     [php]
     <?php if ($sf_params->has('name')): ?>

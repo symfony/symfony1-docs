@@ -866,9 +866,9 @@ You could escape your output manually by enclosing every unsure value in a call 
 
 Output escaping is configured globally for an application in the `settings.yml` file. Two parameters control the way that output escaping works: the strategy determines how the variables are made available to the view, and the method is the default escaping function applied to the data.
 
-Basically, all you need to do to activate output escaping is to set the `escaping_strategy` parameter to `true` (which is the default), as shown in Listing 7-44.
+Basically, all you need to do to activate output escaping is to set the `escaping_strategy` parameter to `true` (which is the default), as shown in Listing 7-38.
 
-Listing 7-44 - Activating Output Escaping, in `frontend/config/settings.yml`
+Listing 7-38 - Activating Output Escaping, in `frontend/config/settings.yml`
 
     all:
       .settings:
@@ -917,9 +917,9 @@ Escaping helpers are functions returning an escaped version of their input. They
 
 ### Escaping Arrays and Objects
 
-Output escaping not only works for strings, but also for arrays and objects. Any values that are objects or arrays will pass on their escaped state to their children. Assuming your strategy is set to `true`, Listing 7-45 demonstrates the escaping cascade.
+Output escaping not only works for strings, but also for arrays and objects. Any values that are objects or arrays will pass on their escaped state to their children. Assuming your strategy is set to `true`, Listing 7-39 demonstrates the escaping cascade.
 
-Listing 7-45 - Escaping Also Works for Arrays and Objects
+Listing 7-39 - Escaping Also Works for Arrays and Objects
 
     [php]
     // Class definition
@@ -956,9 +956,9 @@ As a matter of fact, the variables in the template are not of the type you might
 
 This explains why some usual PHP functions (like `array_shift()`, `print_r()`, and so on) don't work on escaped arrays anymore. But they can still be accessed using `[]`, be traversed using `foreach`, and they give back the right result with `count()`. And in templates, the data should be read-only anyway, so most access will be through the methods that do work.
 
-You still have a way to retrieve the raw data through the `$sf_data` object. In addition, methods of escaped objects are altered to accept an additional parameter: an escaping method. So you can choose an alternative escaping method each time you display a variable in a template, or opt for the `ESC_RAW` helper to deactivate escaping. See Listing 7-46 for an example.
+You still have a way to retrieve the raw data through the `$sf_data` object. In addition, methods of escaped objects are altered to accept an additional parameter: an escaping method. So you can choose an alternative escaping method each time you display a variable in a template, or opt for the `ESC_RAW` helper to deactivate escaping. See Listing 7-40 for an example.
 
-Listing 7-46 - Methods of Escaped Objects Accept an Additional Parameter
+Listing 7-40 - Methods of Escaped Objects Accept an Additional Parameter
 
     [php]
     <?php echo $test_object->testSpecialChars('&') ?>

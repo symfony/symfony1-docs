@@ -336,9 +336,9 @@ For instance, if you want all applications to share a common directory for the t
 
 ### Modifying the Project Web Root
 
-All the paths built in the configuration classes rely on the project root directory, which is determined by the `ProjectConfiguration` file included in the front controller. Usually, the root directory is one level above the `web/` directory, but you can use a different structure. Suppose that your main directory structure is made of two directories, one public and one private, as shown in Listing 19-7. This typically happens when hosting a project on a shared host.
+All the paths built in the configuration classes rely on the project root directory, which is determined by the `ProjectConfiguration` file included in the front controller. Usually, the root directory is one level above the `web/` directory, but you can use a different structure. Suppose that your main directory structure is made of two directories, one public and one private, as shown in Listing 19-6. This typically happens when hosting a project on a shared host.
 
-Listing 19-7 - Example of Custom Directory Structure for a Shared Host
+Listing 19-6 - Example of Custom Directory Structure for a Shared Host
 
     symfony/    # Private area
       apps/
@@ -375,9 +375,9 @@ Each configuration file has a handler. The job of configuration handlers is to m
 
 ### Default Configuration Handlers
 
-The default handler configuration is stored in `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. This file links the handlers to the configuration files according to a file path. Listing 19-9 shows an extract of this file.
+The default handler configuration is stored in `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. This file links the handlers to the configuration files according to a file path. Listing 19-7 shows an extract of this file.
 
-Listing 19-9 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
+Listing 19-7 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
 
     config/settings.yml:
       class:    sfDefineEnvironmentConfigHandler
@@ -418,9 +418,9 @@ Using a handler to deal with a configuration file provides two important benefit
 
 If you feel like writing your own configuration handler, follow the example of the structure used by the framework in the `sfConfig::get('sf_symfony_lib_dir')/config/` directory.
 
-Let's suppose that your application contains a `myMapAPI` class, which provides an interface to a third-party web service delivering maps. This class needs to be initialized with a URL and a user name, as shown in Listing 19-10.
+Let's suppose that your application contains a `myMapAPI` class, which provides an interface to a third-party web service delivering maps. This class needs to be initialized with a URL and a user name, as shown in Listing 19-8.
 
-Listing 19-10 - Example of Initialization of the `myMapAPI` Class
+Listing 19-8 - Example of Initialization of the `myMapAPI` Class
 
     [php]
     $mapApi = new myMapAPI();
@@ -433,9 +433,9 @@ You may want to store these two parameters in a custom configuration file called
       url:  map.api.example.com
       user: foobar
 
-In order to transform these settings into code equivalent to Listing 19-9, you must build a configuration handler. Each configuration handler must extend `sfConfigHandler` and provide an `execute()` method, which expects an array of file paths to configuration files as a parameter, and must return data to be written in a cache file. Handlers for YAML files should extend the `sfYamlConfigHandler` class, which provides additional facilities for YAML parsing. For the `map.yml` file, a typical configuration handler could be written as shown in Listing 19-11.
+In order to transform these settings into code equivalent to Listing 19-7, you must build a configuration handler. Each configuration handler must extend `sfConfigHandler` and provide an `execute()` method, which expects an array of file paths to configuration files as a parameter, and must return data to be written in a cache file. Handlers for YAML files should extend the `sfYamlConfigHandler` class, which provides additional facilities for YAML parsing. For the `map.yml` file, a typical configuration handler could be written as shown in Listing 19-9.
 
-Listing 19-11 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandler.class.php`
+Listing 19-9 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandler.class.php`
 
     [php]
     <?php

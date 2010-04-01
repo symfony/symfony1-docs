@@ -577,9 +577,9 @@ The best choice depends on the project. In the long run, it's up to you.
 
 As is true of most of the configuration files, the `routing.yml` is a solution to define routing rules, but not the only one. You can define rules in PHP, but before the call to `dispatch()`, because this method determines the action to execute according to the present routing rules. Defining rules in PHP authorizes you to create dynamic rules, depending on configuration or other parameters.
 
-The object that handles the routing rules is the `sfPatternRouting` factory. It is available from every part of the code by requiring `sfContext::getInstance()->getRouting()`. Its `prependRoute()` method adds a new rule on top of the existing ones defined in `routing.yml`. It expects two parameters: a route name and a `sfRoute` object. For instance, the `routing.yml` rule definition shown in Listing 9-18 is equivalent to the PHP code shown in Listing 9-24.
+The object that handles the routing rules is the `sfPatternRouting` factory. It is available from every part of the code by requiring `sfContext::getInstance()->getRouting()`. Its `prependRoute()` method adds a new rule on top of the existing ones defined in `routing.yml`. It expects two parameters: a route name and a `sfRoute` object. For instance, the `routing.yml` rule definition shown in Listing 9-18 is equivalent to the PHP code shown in Listing 9-22.
 
-Listing 9-24 - Defining a Rule in PHP
+Listing 9-22 - Defining a Rule in PHP
 
     [php]
     sfContext::getInstance()->getRouting()->prependRoute(
@@ -602,9 +602,9 @@ The `sfPatternRouting` class has other useful methods for handling routes by han
 Dealing with Routes in Actions
 ------------------------------
 
-If you need to retrieve information about the current route--for instance, to prepare a future "back to page xxx" link--you should use the methods of the `sfPatternRouting` object. The URIs returned by the `getCurrentInternalUri()` method can be used in a call to a `link_to()` helper, as shown in Listing 9-25.
+If you need to retrieve information about the current route--for instance, to prepare a future "back to page xxx" link--you should use the methods of the `sfPatternRouting` object. The URIs returned by the `getCurrentInternalUri()` method can be used in a call to a `link_to()` helper, as shown in Listing 9-23.
 
-Listing 9-25 - Using `sfRouting` to Get Information About the Current Route
+Listing 9-23 - Using `sfRouting` to Get Information About the Current Route
 
     [php]
     // If you require a URL like
@@ -627,9 +627,9 @@ Listing 9-25 - Using `sfRouting` to Get Information About the Current Route
     $module = $request->getParameter('module');
     $action = $request->getParameter('action');
 
-If you need to transform an internal URI into an external URL in an action--just as `url_for()` does in a template--use the `genUrl()` method of the sfController object, as shown in Listing 9-26.
+If you need to transform an internal URI into an external URL in an action--just as `url_for()` does in a template--use the `genUrl()` method of the sfController object, as shown in Listing 9-24.
 
-Listing 9-26 - Using `sfController` to Transform an Internal URI
+Listing 9-24 - Using `sfController` to Transform an Internal URI
 
     [php]
     $uri = 'article/read?id=21';

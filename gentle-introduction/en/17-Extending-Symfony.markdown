@@ -400,23 +400,23 @@ Plug-ins are installed applications on a per-project basis. All the methods desc
 
 #### PEAR Plug-Ins
 
-Plug-ins listed on the symfony plugin section can be bundled as PEAR packages and made available via the official symfony plugins PEAR channel: `plugins.symfony-project.org`. To install such a plug-in, use the `plugin:install` task with a plugin name, as shown in Listing 17-10.
+Plug-ins listed on the symfony plugin section can be bundled as PEAR packages and made available via the official symfony plugins PEAR channel: `plugins.symfony-project.org`. To install such a plug-in, use the `plugin:install` task with a plugin name, as shown in Listing 17-9.
 
-Listing 17-10 - Installing a Plug-In from the Official symfony plugins PEAR Channel
+Listing 17-9 - Installing a Plug-In from the Official symfony plugins PEAR Channel
 
     $ cd myproject
     $ php symfony plugin:install pluginName
 
-Alternatively, you can download the plug-in and install it from the disk. In this case, use the path to the package archive, as shown in Listing 17-11.
+Alternatively, you can download the plug-in and install it from the disk. In this case, use the path to the package archive, as shown in Listing 17-10.
 
-Listing 17-11 - Installing a Plug-In from a Downloaded PEAR Package
+Listing 17-10 - Installing a Plug-In from a Downloaded PEAR Package
 
     $ cd myproject
     $ php symfony plugin:install /home/path/to/downloads/pluginName.tgz
 
-Some plug-ins are hosted on external PEAR channels. Install them with the `plugin:install` task, and don't forget to register the channel and mention the channel name, as shown in Listing 17-12.
+Some plug-ins are hosted on external PEAR channels. Install them with the `plugin:install` task, and don't forget to register the channel and mention the channel name, as shown in Listing 17-11.
 
-Listing 17-12 - Installing a Plug-In from a PEAR Channel
+Listing 17-11 - Installing a Plug-In from a PEAR Channel
 
     $ cd myproject
     $ php symfony plugin:add-channel channel.symfony.pear.example.com
@@ -424,9 +424,9 @@ Listing 17-12 - Installing a Plug-In from a PEAR Channel
 
 These three types of installation all use a PEAR package, so the term "PEAR plug-in" will be used indiscriminately to talk about plug-ins installed from the symfony plugins PEAR channel, an external PEAR channel, or a downloaded PEAR package.
 
-The `plugin:install` task also takes a number of options, as shown on Listing 17-13.
+The `plugin:install` task also takes a number of options, as shown on Listing 17-12.
 
-Listing 17-13 - Installing a Plug-In with some Options
+Listing 17-12 - Installing a Plug-In with some Options
 
     $ php symfony plugin:install --stability=beta pluginName
     $ php symfony plugin:install --release=1.0.3 pluginName
@@ -437,9 +437,9 @@ Listing 17-13 - Installing a Plug-In with some Options
 
 #### Archive Plug-Ins
 
-Some plug-ins come as a simple archive of files. To install those, just unpack the archive into your project's `plugins/` directory. If the plug-in contains a `web/` subdirectory, don't forget to run the `plugin:publish-assets` command to create the corresponding symlink under the main `web/` folder as shown in listing 17-14. Finally, don't forget to clear the cache.
+Some plug-ins come as a simple archive of files. To install those, just unpack the archive into your project's `plugins/` directory. If the plug-in contains a `web/` subdirectory, don't forget to run the `plugin:publish-assets` command to create the corresponding symlink under the main `web/` folder as shown in listing 17-13. Finally, don't forget to clear the cache.
 
-Listing 17-14 - Installing a Plug-In from an Archive
+Listing 17-13 - Installing a Plug-In from an Archive
 
     $ cd plugins
     $ tar -zxpf myPlugin.tgz
@@ -451,9 +451,9 @@ Listing 17-14 - Installing a Plug-In from an Archive
 
 Plug-ins sometimes have their own source code repository for version control. You can install them by doing a simple checkout in the `plugins/` directory, but this can be problematic if your project itself is under version control.
 
-Alternatively, you can declare the plug-in as an external dependency so that every update of your project source code also updates the plug-in source code. For instance, Subversion stores external dependencies in the `svn:externals` property. So you can add a plug-in by editing this property and updating your source code afterwards, as Listing 17-15 demonstrates.
+Alternatively, you can declare the plug-in as an external dependency so that every update of your project source code also updates the plug-in source code. For instance, Subversion stores external dependencies in the `svn:externals` property. So you can add a plug-in by editing this property and updating your source code afterwards, as Listing 17-14 demonstrates.
 
-Listing 17-15 - Installing a Plug-In from a Source Version Repository
+Listing 17-14 - Installing a Plug-In from a Source Version Repository
 
     $ cd myproject
     $ svn propedit svn:externals plugins
@@ -467,9 +467,9 @@ Listing 17-15 - Installing a Plug-In from a Source Version Repository
 
 #### Activating a Plug-In Module
 
-Some plug-ins contain whole modules. The only difference between module plug-ins and classical modules is that module plug-ins don't appear in the `myproject/apps/frontend/modules/` directory (to keep them easily upgradeable). They also need to be activated in the `settings.yml` file, as shown in Listing 17-16.
+Some plug-ins contain whole modules. The only difference between module plug-ins and classical modules is that module plug-ins don't appear in the `myproject/apps/frontend/modules/` directory (to keep them easily upgradeable). They also need to be activated in the `settings.yml` file, as shown in Listing 17-15.
 
-Listing 17-16 - Activating a Plug-In Module, in `frontend/config/settings.yml`
+Listing 17-15 - Activating a Plug-In Module, in `frontend/config/settings.yml`
 
     all:
       .settings:
@@ -482,9 +482,9 @@ This is to avoid a situation where the plug-in module is mistakenly made availab
 
 #### Listing the Installed Plug-Ins
 
-If a glance at your project's `plugins/` directory can tell you which plug-ins are installed, the `plugin:list` task tells you even more: the version number and the channel name of each installed plug-in (see Listing 17-17).
+If a glance at your project's `plugins/` directory can tell you which plug-ins are installed, the `plugin:list` task tells you even more: the version number and the channel name of each installed plug-in (see Listing 17-16).
 
-Listing 17-17 - Listing Installed Plug-Ins
+Listing 17-16 - Listing Installed Plug-Ins
 
     $ cd myproject
     $ php symfony plugin:list
@@ -496,9 +496,9 @@ Listing 17-17 - Listing Installed Plug-Ins
 
 #### Upgrading and Uninstalling Plug-Ins
 
-To uninstall a PEAR plug-in, call the `plugin:uninstall` task from the root project directory, as shown in Listing 17-18. You must prefix the plug-in name with its installation channel if it's different from the default `symfony` channel (use the `plugin:list` task to determine this channel).
+To uninstall a PEAR plug-in, call the `plugin:uninstall` task from the root project directory, as shown in Listing 17-17. You must prefix the plug-in name with its installation channel if it's different from the default `symfony` channel (use the `plugin:list` task to determine this channel).
 
-Listing 17-18 - Uninstalling a Plug-In
+Listing 17-17 - Uninstalling a Plug-In
 
     $ cd myproject
     $ php symfony plugin:uninstall sfSuperCachePlugin
@@ -514,9 +514,9 @@ Plug-ins are written using the PHP language. If you can understand how an applic
 
 #### Plug-In File Structure
 
-A plug-in directory is organized more or less like a project directory. The plug-in files have to be in the right directories in order to be loaded automatically by symfony when needed. Have a look at the plug-in file structure description in Listing 17-19.
+A plug-in directory is organized more or less like a project directory. The plug-in files have to be in the right directories in order to be loaded automatically by symfony when needed. Have a look at the plug-in file structure description in Listing 17-18.
 
-Listing 17-19 - File Structure of a Plug-In
+Listing 17-18 - File Structure of a Plug-In
 
     pluginName/
       config/
@@ -556,9 +556,9 @@ Listing 17-19 - File Structure of a Plug-In
 
 Plug-ins can contain a lot of things. Their content is automatically taken into account by your application at runtime and when calling tasks with the command line. But for plug-ins to work properly, you must respect a few conventions:
 
-  * Database schemas are detected by the `propel-` tasks. When you call `propel:build --classes` in your project, you rebuild the project model and all the plug-in models with it. Note that a plug-in schema must always have a package attribute under the shape `plugins.pluginName`. `lib.model`, as shown in Listing 17-20.
+  * Database schemas are detected by the `propel-` tasks. When you call `propel:build --classes` in your project, you rebuild the project model and all the plug-in models with it. Note that a plug-in schema must always have a package attribute under the shape `plugins.pluginName`. `lib.model`, as shown in Listing 17-19.
 
-Listing 17-20 - Example Schema Declaration in a Plug-In, in `myPlugin/config/schema.yml`
+Listing 17-19 - Example Schema Declaration in a Plug-In, in `myPlugin/config/schema.yml`
 
     propel:
       _attributes:    { package: plugins.myPlugin.lib.model }
@@ -600,7 +600,7 @@ Listing 17-20 - Example Schema Declaration in a Plug-In, in `myPlugin/config/sch
 
 There are some elements that the `plugin:install` task cannot handle on its own, and which require manual setup during installation:
 
-  * Custom application configuration can be used in the plug-in code (for instance, by using `sfConfig::get('app_myplugin_foo')`), but you can't put the default values in an `app.yml` file located in the plug-in `config/` directory. To handle default values, use the second argument of the `sfConfig::get()` method. The settings can still be overridden at the application level (see Listing 17-26 for an example).
+  * Custom application configuration can be used in the plug-in code (for instance, by using `sfConfig::get('app_myplugin_foo')`), but you can't put the default values in an `app.yml` file located in the plug-in `config/` directory. To handle default values, use the second argument of the `sfConfig::get()` method. The settings can still be overridden at the application level (see Listing 17-25 for an example).
   * Custom routing rules have to be added manually to the application `routing.yml`.
   * Custom filters have to be added manually to the application `filters.yml`.
   * Custom factories have to be added manually to the application `factories.yml`.
@@ -611,9 +611,9 @@ Generally speaking, all the configuration that should end up in one of the appli
 
 Whenever you want to customize a plug-in, never alter the code found in the `plugins/` directory. If you do so, you will lose all your modifications when you upgrade the plug-in. For customization needs, plug-ins provide custom settings, and they support overriding.
 
-Well-designed plug-ins use settings that can be changed in the application `app.yml`, as Listing 17-21 demonstrates.
+Well-designed plug-ins use settings that can be changed in the application `app.yml`, as Listing 17-20 demonstrates.
 
-Listing 17-21 - Customizing a Plug-In That Uses the Application Configuration
+Listing 17-20 - Customizing a Plug-In That Uses the Application Configuration
 
     [php]
     // example plug-in code
@@ -628,9 +628,9 @@ The module settings and their default values are often described in the plug-in'
 
 You can replace the default contents of a plug-in module by creating a module of the same name in your own application. It is not really overriding, since the elements in your application are used instead of the ones of the plug-in. It works fine if you create templates and configuration files of the same name as the ones of the plug-ins.
 
-On the other hand, if a plug-in wants to offer a module with the ability to override its actions, the `actions.class.php` in the plug-in module must be empty and inherit from an autoloading class, so that the method of this class can be inherited as well by the `actions.class.php` of the application module. See Listing 17-22 for an example.
+On the other hand, if a plug-in wants to offer a module with the ability to override its actions, the `actions.class.php` in the plug-in module must be empty and inherit from an autoloading class, so that the method of this class can be inherited as well by the `actions.class.php` of the application module. See Listing 17-21 for an example.
 
-Listing 17-22 - Customizing a Plug-In Action
+Listing 17-21 - Customizing a Plug-In Action
 
     [php]
     // In myPlugin/modules/mymodule/lib/myPluginmymoduleActions.class.php
@@ -707,9 +707,9 @@ Only plug-ins packaged as PEAR packages can be installed with the `plugin:instal
 
 #### File Organization
 
-Suppose you have developed a new feature and want to package it as a plug-in. The first step is to organize the files logically so that the symfony loading mechanisms can find them when needed. For that purpose, you have to follow the structure given in Listing 17-19. Listing 17-23 shows an example of file structure for an `sfSamplePlugin` plug-in.
+Suppose you have developed a new feature and want to package it as a plug-in. The first step is to organize the files logically so that the symfony loading mechanisms can find them when needed. For that purpose, you have to follow the structure given in Listing 17-18. Listing 17-22 shows an example of file structure for an `sfSamplePlugin` plug-in.
 
-Listing 17-23 - Example List of Files to Package As a Plug-In
+Listing 17-22 - Example List of Files to Package As a Plug-In
 
     sfSamplePlugin/
       README
@@ -743,16 +743,16 @@ Listing 17-23 - Example List of Files to Package As a Plug-In
         images/
           sfSampleImage.png
 
-For authoring, the location of the plug-in directory (`sfSamplePlugin/` in Listing 17-23) is not important. It can be anywhere on the disk.
+For authoring, the location of the plug-in directory (`sfSamplePlugin/` in Listing 17-22) is not important. It can be anywhere on the disk.
 
 >**TIP**
 >Take examples of the existing plug-ins and, for your first attempts at creating a plug-in, try to reproduce their naming conventions and file structure.
 
 #### Creating the package.xml File
 
-The next step of plug-in authoring is to add a package.xml file at the root of the plug-in directory. The `package.xml` follows the PEAR syntax. Have a look at a typical symfony plug-in `package.xml` in Listing 17-24.
+The next step of plug-in authoring is to add a package.xml file at the root of the plug-in directory. The `package.xml` follows the PEAR syntax. Have a look at a typical symfony plug-in `package.xml` in Listing 17-23.
 
-Listing 17-24 - Example `package.xml` for a Symfony Plug-In
+Listing 17-23 - Example `package.xml` for a Symfony Plug-In
 
     [xml]
     <?xml version="1.0" encoding="UTF-8"?>
@@ -853,7 +853,7 @@ The interesting parts here are the `<contents>` and the `<dependencies>` tags, d
 
 #### Contents
 
-The `<contents>` tag is the place where you must describe the plug-in file structure. This will tell PEAR which files to copy and where. Describe the file structure with `<dir>` and `<file>` tags. All `<file>` tags must have a `role="data"` attribute. The `<contents>` part of Listing 17-24 describes the exact directory structure of Listing 17-23.
+The `<contents>` tag is the place where you must describe the plug-in file structure. This will tell PEAR which files to copy and where. Describe the file structure with `<dir>` and `<file>` tags. All `<file>` tags must have a `role="data"` attribute. The `<contents>` part of Listing 17-23 describes the exact directory structure of Listing 17-22.
 
 >**NOTE**
 >The use of `<dir>` tags is not compulsory, since you can use relative paths as `name` values in the `<file>` tags. However, it is recommended so that the `package.xml` file remains readable.
@@ -872,26 +872,26 @@ If you specify plugins as dependencies, users will be able to install your plugi
 
 #### Building the Plug-In
 
-The PEAR component has a command (`pear package`) that creates the `.tgz` archive of the package, provided you call the command shown in Listing 17-25 from a directory containing a `package.xml`.
+The PEAR component has a command (`pear package`) that creates the `.tgz` archive of the package, provided you call the command shown in Listing 17-24 from a directory containing a `package.xml`.
 
-Listing 17-25 - Packaging a Plug-In As a PEAR Package
+Listing 17-24 - Packaging a Plug-In As a PEAR Package
 
     $ cd sfSamplePlugin
     $ pear package
 
     Package sfSamplePlugin-1.0.0.tgz done
 
-Once your plug-in is built, check that it works by installing it yourself, as shown in Listing 17-26.
+Once your plug-in is built, check that it works by installing it yourself, as shown in Listing 17-25.
 
-Listing 17-26 - Installing the Plug-In
+Listing 17-25 - Installing the Plug-In
 
     $ cp sfSamplePlugin-1.0.0.tgz /home/production/myproject/
     $ cd /home/production/myproject/
     $ php symfony plugin:install sfSamplePlugin-1.0.0.tgz
 
-According to their description in the `<contents>` tag, the packaged files will end up in different directories of your project. Listing 17-27 shows where the files of the `sfSamplePlugin` should end up after installation.
+According to their description in the `<contents>` tag, the packaged files will end up in different directories of your project. Listing 17-26 shows where the files of the `sfSamplePlugin` should end up after installation.
 
-Listing 17-27 - The Plug-In Files Are Installed on the `plugins/` and `web/` Directories
+Listing 17-26 - The Plug-In Files Are Installed on the `plugins/` and `web/` Directories
 
     plugins/
       sfSamplePlugin/

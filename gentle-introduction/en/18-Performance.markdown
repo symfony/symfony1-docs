@@ -492,9 +492,9 @@ Deactivating the Unused Features
 
 The default symfony configuration activates the most common features of a web application. However, if you happen to not need all of them, you should deactivate them to save the time their initialization takes on each request.
 
-For instance, if your application doesn't use the session mechanism, or if you want to start the session handling by hand, you should turn the `auto_start` setting to `false` in the `storage` key of the `factories.yml` file, as in Listing 18-19.
+For instance, if your application doesn't use the session mechanism, or if you want to start the session handling by hand, you should turn the `auto_start` setting to `false` in the `storage` key of the `factories.yml` file, as in Listing 18-18.
 
-Listing 18-19 - Turning Sessions Off, in `frontend/config/factories.yml`
+Listing 18-18 - Turning Sessions Off, in `frontend/config/factories.yml`
 
     all:
       storage:
@@ -502,17 +502,17 @@ Listing 18-19 - Turning Sessions Off, in `frontend/config/factories.yml`
         param:
           auto_start: false
 
-The same applies for the database feature (as explained in the "Tweaking the Model" section earlier in this chapter). If your application makes no use of a database, deactivate it for a small performance gain, this time in the `settings.yml` file (see Listing 18-20).
+The same applies for the database feature (as explained in the "Tweaking the Model" section earlier in this chapter). If your application makes no use of a database, deactivate it for a small performance gain, this time in the `settings.yml` file (see Listing 18-19).
 
-Listing 18-20 - Turning Database Features Off, in `frontend/config/settings.yml`
+Listing 18-19 - Turning Database Features Off, in `frontend/config/settings.yml`
 
     all:
       .settings:
         use_database:      false    # Database and model features
 
-As for the security features (see Chapter 6), you can deactivate them in the `filters.yml` file, as shown in Listing 18-21.
+As for the security features (see Chapter 6), you can deactivate them in the `filters.yml` file, as shown in Listing 18-20.
 
-Listing 18-21 - Turning Features Off, in `frontend/config/filters.yml`
+Listing 18-20 - Turning Features Off, in `frontend/config/filters.yml`
 
     rendering: ~
     security:
@@ -541,9 +541,9 @@ Loading ten files requires more I/O operations than loading one long file, espec
 
 So merging a large number of files and stripping out the comments they contain is an operation that improves performance. Symfony already does that optimization; it's called the core compilation. At the beginning of the first request (or after the cache is cleared), a symfony application concatenates all the core framework classes (`sfActions`, `sfRequest`, `sfView`, and so on) into one file, optimizes the file size by removing comments and double blanks, and saves it in the cache, in a file called `config_core_compile.yml.php`. Each subsequent request only loads this single optimized file instead of the 30 files that compose it.
 
-If your application has classes that must always be loaded, and especially if they are big classes with lots of comments, it may be beneficial to add them to the core compile file. To do so, just add a `core_compile.yml` file in your application `config/` directory, and list in it the classes that you want to add, as in Listing 18-22.
+If your application has classes that must always be loaded, and especially if they are big classes with lots of comments, it may be beneficial to add them to the core compile file. To do so, just add a `core_compile.yml` file in your application `config/` directory, and list in it the classes that you want to add, as in Listing 18-21.
 
-Listing 18-22 - Adding Your Classes to the Core Compile File, in `frontend/config/core_compile.yml`
+Listing 18-21 - Adding Your Classes to the Core Compile File, in `frontend/config/core_compile.yml`
 
     - %SF_ROOT_DIR%/lib/myClass.class.php
     - %SF_ROOT_DIR%/apps/frontend/lib/myToolkit.class.php

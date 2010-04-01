@@ -122,13 +122,13 @@ This call is enough to create an `article` module in the `backend` application b
 
     http://localhost/backend_dev.php/article
 
-The look and feel of a generated module, illustrated in Figures 14-5 and 14-6, is sophisticated enough to make it usable out of the box for a commercial application.
+The look and feel of a generated module, illustrated in Figures 14-2 and 14-3, is sophisticated enough to make it usable out of the box for a commercial application.
 
-Figure 14-5 - `list` view of the `article` module in the `backend` application
+Figure 14-2 - `list` view of the `article` module in the `backend` application
 
 ![list view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1405.png "list view of the article module in the backend application")
 
-Figure 14-6 - `edit` view of the `article` module in the `backend` application
+Figure 14-3 - `edit` view of the `article` module in the `backend` application
 
 ![edit view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1406.png "edit view of the article module in the backend application")
 
@@ -139,9 +139,9 @@ Figure 14-6 - `edit` view of the `article` module in the `backend` application
 
 ### A Look at the Generated Code
 
-The code of the article administration module, in the `apps/backend/modules/article/` directory, looks empty because it is only initiated. The best way to review the generated code of this module is to interact with it using the browser, and then check the contents of the `cache/` folder. Listing 14-4 lists the generated actions and the templates found in the cache.
+The code of the article administration module, in the `apps/backend/modules/article/` directory, looks empty because it is only initiated. The best way to review the generated code of this module is to interact with it using the browser, and then check the contents of the `cache/` folder. Listing 14-2 lists the generated actions and the templates found in the cache.
 
-Listing 14-4 - Generated Administration Elements, in `cache/backend/ENV/modules/autoArticle/`
+Listing 14-2 - Generated Administration Elements, in `cache/backend/ENV/modules/autoArticle/`
 
     // Actions in actions/actions.class.php
     index            // Displays the list of the records of the table
@@ -186,9 +186,9 @@ This shows that a generated administration module is composed mainly of three vi
 
 ### Introducing the `generator.yml` Configuration File
 
-The generated administration modules rely on parameters found in the `generator.yml` YAML configuration file. To see the default configuration of a newly created administration module, open the `generator.yml` file, located in the `backend/modules/article/config/generator.yml` directory and reproduced in Listing 14-5.
+The generated administration modules rely on parameters found in the `generator.yml` YAML configuration file. To see the default configuration of a newly created administration module, open the `generator.yml` file, located in the `backend/modules/article/config/generator.yml` directory and reproduced in Listing 14-3.
 
-Listing 14-5 - Default Generator Configuration, in `backend/modules/article/config/generator.yml`
+Listing 14-3 - Default Generator Configuration, in `backend/modules/article/config/generator.yml`
 
     [yml]
     generator:
@@ -213,9 +213,9 @@ Listing 14-5 - Default Generator Configuration, in `backend/modules/article/conf
           edit:    ~
           new:     ~
 
-This configuration is enough to generate the basic administration. Any customization is added under the `config` key. Listing 14-6 shows a typical customized `generator.yml`.
+This configuration is enough to generate the basic administration. Any customization is added under the `config` key. Listing 14-4 shows a typical customized `generator.yml`.
 
-Listing 14-6 - Typical Complete Generator Configuration
+Listing 14-4 - Typical Complete Generator Configuration
 
     [yml]
     generator:
@@ -281,7 +281,7 @@ The examples of this section will tweak the `article` administration module, as 
 
     $ php symfony propel:generate-admin backend BlogComment --module=comment
 
-Figure 14-7 - The administration generator cheat sheet
+Figure 14-4 - The administration generator cheat sheet
 
 ![The administration generator cheat sheet](http://www.symfony-project.org/images/book/1_4/F1407.png "The administration generator cheat sheet")
 
@@ -291,9 +291,9 @@ By default, the columns of the `list` view are the columns defined in `schema.ym
 
 #### Field Settings
 
-The administration generator creates a `field` for each column in the `schema.yml` file. Under the `fields` key, you can modify the way each field is displayed, formatted, etc. For instance, the field settings shown in Listing 14-7 define a custom label class and input type for the `title` field, and a label and a tooltip for the `content` field. The following sections will describe in detail how each parameter works.
+The administration generator creates a `field` for each column in the `schema.yml` file. Under the `fields` key, you can modify the way each field is displayed, formatted, etc. For instance, the field settings shown in Listing 14-5 define a custom label class and input type for the `title` field, and a label and a tooltip for the `content` field. The following sections will describe in detail how each parameter works.
 
-Listing 14-7 - Setting a Custom Label for a Column
+Listing 14-5 - Setting a Custom Label for a Column
 
     [yml]
     config:
@@ -303,9 +303,9 @@ Listing 14-7 - Setting a Custom Label for a Column
           attributes: { class: foo }
         content: { label: Body, help: Fill in the article body }
 
-In addition to this default definition for all the views, you can override the field settings for a given view (`list`, `filter`, `form`, `new`, and `edit`), as demonstrated in Listing 14-8.
+In addition to this default definition for all the views, you can override the field settings for a given view (`list`, `filter`, `form`, `new`, and `edit`), as demonstrated in Listing 14-6.
 
-Listing 14-8 - Overriding Global Settings View per View
+Listing 14-6 - Overriding Global Settings View per View
 
     [yml]
     config:
@@ -329,9 +329,9 @@ This is a general principle: Any settings that are set for the whole module unde
 
 #### Adding Fields to the Display
 
-The fields that you define in the `fields` section can be displayed, hidden, ordered, and grouped in various ways for each view. The `display` key is used for that purpose. For instance, to arrange the fields of the `comment` module, use the code of Listing 14-9.
+The fields that you define in the `fields` section can be displayed, hidden, ordered, and grouped in various ways for each view. The `display` key is used for that purpose. For instance, to arrange the fields of the `comment` module, use the code of Listing 14-7.
 
-Listing 14-9 - Choosing the Fields to Display, in `modules/comment/config/generator.yml`
+Listing 14-7 - Choosing the Fields to Display, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -348,7 +348,7 @@ Listing 14-9 - Choosing the Fields to Display, in `modules/comment/config/genera
           NONE:     [blog_article_id]
           Editable: [author, content, created_at]
 
-The `list` will then display three columns, as in Figure 14-8, and the `new` and `edit` form will display four fields, assembled in two groups, as in Figure 14-9.
+The `list` will then display three columns, as in Figure 14-5, and the `new` and `edit` form will display four fields, assembled in two groups, as in Figure 14-6.
 
 Figure 14-8 - Custom column setting in the `list` view of the `comment` module
 
@@ -365,9 +365,9 @@ So you can use the `display` setting in two ways:
 
 #### Custom Fields
 
-As a matter of fact, the fields configured in `generator.yml` don't even need to correspond to actual columns defined in the schema. If the related class offers a custom getter, it can be used as a field for the `list` view; if there is a getter and/or a setter, it can also be used in the `edit` view. For instance, you can extend the `BlogArticle` model with a `getNbComments()` method similar to the one in Listing 14-10.
+As a matter of fact, the fields configured in `generator.yml` don't even need to correspond to actual columns defined in the schema. If the related class offers a custom getter, it can be used as a field for the `list` view; if there is a getter and/or a setter, it can also be used in the `edit` view. For instance, you can extend the `BlogArticle` model with a `getNbComments()` method similar to the one in Listing 14-8.
 
-Listing 14-10 - Adding a Custom Getter in the Model, in `lib/model/BlogArticle.php`
+Listing 14-8 - Adding a Custom Getter in the Model, in `lib/model/BlogArticle.php`
 
     [php]
     public function getNbComments()
@@ -375,24 +375,24 @@ Listing 14-10 - Adding a Custom Getter in the Model, in `lib/model/BlogArticle.p
       return $this->countBlogComments();
     }
 
-Then `nb_comments` is available as a field in the generated module (notice that the getter uses a camelCase version of the field name), as in Listing 14-11.
+Then `nb_comments` is available as a field in the generated module (notice that the getter uses a camelCase version of the field name), as in Listing 14-9.
 
-Listing 14-11 - Custom Getters Provide Additional Columns for Administration Modules, in `backend/modules/article/config/generator.yml`
+Listing 14-9 - Custom Getters Provide Additional Columns for Administration Modules, in `backend/modules/article/config/generator.yml`
 
     [yml]
     config:
       list:
         display:  [title, blog_author_id, blog_category_id, nb_comments]
 
-The resulting `list` view of the `article` module is shown in Figure 14-10.
+The resulting `list` view of the `article` module is shown in Figure 14-12.
 
 Figure 14-10 - Custom field in the `list` view of the `article` module
 
 ![Custom field in the list view of the article module](http://www.symfony-project.org/images/book/1_4/F1410.png "Custom field in the list view of the article module")
 
-Custom fields can even return HTML code to display more than raw data. For instance, you can extend the `BlogComment` class with a `getArticleLink()` method as in Listing 14-12.
+Custom fields can even return HTML code to display more than raw data. For instance, you can extend the `BlogComment` class with a `getArticleLink()` method as in Listing 14-10.
 
-Listing 14-12 - Adding a Custom Getter Returning HTML, in `lib/model/BlogComment.php`
+Listing 14-10 - Adding a Custom Getter Returning HTML, in `lib/model/BlogComment.php`
 
     [php]
     public function getArticleLink()
@@ -400,9 +400,9 @@ Listing 14-12 - Adding a Custom Getter Returning HTML, in `lib/model/BlogComment
       return link_to($this->getBlogArticle()->getTitle(), 'blog_article_edit', $this->getBlogArticle());
     }
 
-You can use this new getter as a custom field in the `comment/list` view with the same syntax as in Listing 14-11. See the example in Listing 14-13, and the result in Figure 14-11, where the HTML code output by the getter (a hyperlink to the article) appears in the second column instead of the article primary key.
+You can use this new getter as a custom field in the `comment/list` view with the same syntax as in Listing 14-9. See the example in Listing 14-11, and the result in Figure 14-11, where the HTML code output by the getter (a hyperlink to the article) appears in the second column instead of the article primary key.
 
-Listing 14-13 - Custom Getters Returning HTML Can Also Be Used As Additional Columns, in `modules/comment/config/generator.yml`
+Listing 14-11 - Custom Getters Returning HTML Can Also Be Used As Additional Columns, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -415,18 +415,18 @@ Figure 14-11 - Custom field in the `list` view of the `comment` module
 
 #### Partial Fields
 
-The code located in the model must be independent from the presentation. The example of the `getArticleLink()` method earlier doesn't respect this principle of layer separation, because some view code appears in the model layer. As a matter of fact, if you try to use this configuration, you will end up with the link being display as an `<a>` tag as it is escaped by default. To achieve the same goal in a correct way, you'd better put the code that outputs HTML for a custom field in a partial. Fortunately, the administration generator allows it if you declare a field name prefixed by an underscore. In that case, the `generator.yml` file of Listing 14-13 is to be modified as in Listing 14-14.
+The code located in the model must be independent from the presentation. The example of the `getArticleLink()` method earlier doesn't respect this principle of layer separation, because some view code appears in the model layer. As a matter of fact, if you try to use this configuration, you will end up with the link being display as an `<a>` tag as it is escaped by default. To achieve the same goal in a correct way, you'd better put the code that outputs HTML for a custom field in a partial. Fortunately, the administration generator allows it if you declare a field name prefixed by an underscore. In that case, the `generator.yml` file of Listing 14-11 is to be modified as in Listing 14-12.
 
-Listing 14-14 - Partials Can Be Used As Additional Columns--Use the `_` Prefix
+Listing 14-12 - Partials Can Be Used As Additional Columns--Use the `_` Prefix
 
     [yml]
     config:
       list:
         display: [id, _article_link, created_at]
 
-For this to work, an `_article_link.php` partial must be created in the `modules/comment/templates/` directory, as in Listing 14-15.
+For this to work, an `_article_link.php` partial must be created in the `modules/comment/templates/` directory, as in Listing 14-13.
 
-Listing 14-15 - Example Partial for the `list` View, in `modules/comment/templates/_article_link.php`
+Listing 14-13 - Example Partial for the `list` View, in `modules/comment/templates/_article_link.php`
 
     [php]
     <?php echo link_to($BlogComment->getBlogArticle()->getTitle(), 'blog_article_edit', $BlogComment->getBlogArticle()) ?> 
@@ -435,18 +435,18 @@ Notice that the partial template of a partial field has access to the current ob
 
 The result is the same as in Figure 14-11, except that the layer separation is respected. If you get used to respecting the layer separation, you will end up with more maintainable applications.
 
-If you need to customize the parameters of a partial field, do the same as for a normal field, under the `field` key. Just don't include the leading underscore (`_`) in the key--see an example in Listing 14-16.
+If you need to customize the parameters of a partial field, do the same as for a normal field, under the `field` key. Just don't include the leading underscore (`_`) in the key--see an example in Listing 14-14.
 
-Listing 14-16 - Partial Field Properties Can Be Customized Under the `fields` Key
+Listing 14-14 - Partial Field Properties Can Be Customized Under the `fields` Key
 
     [yml]
     config:
       fields:
         article_link: { label: Article }
 
-If your partial becomes crowded with logic, you'll probably want to replace it with a component. Change the `_` prefix to `~` and you can define a component field, as you can see in Listing 14-17.
+If your partial becomes crowded with logic, you'll probably want to replace it with a component. Change the `_` prefix to `~` and you can define a component field, as you can see in Listing 14-15.
 
-Listing 14-17 - Components Can Be Used As Additional Columns--Use the `~` Prefix
+Listing 14-15 - Components Can Be Used As Additional Columns--Use the `~` Prefix
 
     [yml]
     config:
@@ -464,9 +464,9 @@ To change the `new`, `edit` and `list` views' appearance, you could be tempted t
 
 #### Changing the View Title
 
-In addition to a custom set of fields, the `list`, `new`, and `edit` pages can have a custom page title. For instance, if you want to customize the title of the `article` views, do as in Listing 14-18. The resulting `edit` view is illustrated in Figure 14-12.
+In addition to a custom set of fields, the `list`, `new`, and `edit` pages can have a custom page title. For instance, if you want to customize the title of the `article` views, do as in Listing 14-16. The resulting `edit` view is illustrated in Figure 14-10.
 
-Listing 14-18 - Setting a Custom Title for Each View, in `backend/modules/article/config/generator.yml`
+Listing 14-16 - Setting a Custom Title for Each View, in `backend/modules/article/config/generator.yml`
 
     [yml]
     config:
@@ -490,9 +490,9 @@ As the default titles use the class name, they are often good enough--provided t
 
 #### Adding Tooltips
 
-In the `list`, `new`, `edit`, and `filter` views, you can add tooltips to help describe the fields that are displayed. For instance, to add a tooltip to the `blog_article_id` field of the `edit` view of the `comment` module, add a `help` property in the `fields` definition as in Listing 14-19. The result is shown in Figure 14-13.
+In the `list`, `new`, `edit`, and `filter` views, you can add tooltips to help describe the fields that are displayed. For instance, to add a tooltip to the `blog_article_id` field of the `edit` view of the `comment` module, add a `help` property in the `fields` definition as in Listing 14-17. The result is shown in Figure 14-13.
 
-Listing 14-19 - Setting a Tooltip in the `edit` View, in `modules/comment/config/generator.yml`
+Listing 14-17 - Setting a Tooltip in the `edit` View, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -508,9 +508,9 @@ In the `list` view, tooltips are displayed in the column header; in the `new`, `
 
 #### Modifying the Date Format
 
-Dates can be displayed using a custom format as soon as you use the `date_format` option, as demonstrated in Listing 14-20.
+Dates can be displayed using a custom format as soon as you use the `date_format` option, as demonstrated in Listing 14-18.
 
-Listing 14-20 - Formatting a Date in the `list` View
+Listing 14-18 - Formatting a Date in the `list` View
 
     [yml]
     config:
@@ -545,9 +545,9 @@ The `list` view can display the details of a record in a tabular way, or with al
 
 By default, the hyperlink between the `list` view and the `edit` view is borne by the primary key column. If you refer back to Figure 14-11, you will see that the `id` column in the comment list not only shows the primary key of each comment, but also provides a hyperlink allowing users to access the `edit` view.
 
-If you prefer the hyperlink to the detail of the record to appear on another column, prefix the column name by an equal sign (`=`) in the `display` key. Listing 14-21 shows how to remove the `id` from the displayed fields of the comment `list` and to put the hyperlink on the `content` field instead. Check Figure 14-14 for a screenshot.
+If you prefer the hyperlink to the detail of the record to appear on another column, prefix the column name by an equal sign (`=`) in the `display` key. Listing 14-19 shows how to remove the `id` from the displayed fields of the comment `list` and to put the hyperlink on the `content` field instead. Check Figure 14-14 for a screenshot.
 
-Listing 14-21 - Moving the Hyperlink for the `edit` View in the `list` View, in `modules/comment/config/generator.yml`
+Listing 14-19 - Moving the Hyperlink for the `edit` View in the `list` View, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -558,9 +558,9 @@ Figure 14-14 - Moving the link to the `edit` view on another column, in the `lis
 
 ![Moving the link to the edit view on another column, in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1414.png "Moving the link to the edit view on another column, in the list view of the comment module")
 
-By default, the `list` view uses the `tabular` layout, where the fields appear as columns, as shown previously. But you can also use the `stacked` layout and concatenate the fields into a single string that expands on the full length of the table. If you choose the `stacked` layout, you must set in the `params` key the pattern defining the value of each line of the list. For instance, Listing 14-22 defines a stacked layout for the list view of the comment module. The result appears in Figure 14-15.
+By default, the `list` view uses the `tabular` layout, where the fields appear as columns, as shown previously. But you can also use the `stacked` layout and concatenate the fields into a single string that expands on the full length of the table. If you choose the `stacked` layout, you must set in the `params` key the pattern defining the value of each line of the list. For instance, Listing 14-20 defines a stacked layout for the list view of the comment module. The result appears in Figure 14-15.
 
-Listing 14-22 - Using a `stacked` Layout in the `list` View, in `modules/comment/config/generator.yml`
+Listing 14-20 - Using a `stacked` Layout in the `list` View, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -579,9 +579,9 @@ Notice that a `tabular` layout expects an array of fields under the `display` ke
 
 #### Filtering the Results
 
-In a `list` view, you can add a set of filter interactions. With these filters, users can both display fewer results and get to the ones they want faster. Configure the filters under the `filter` key, with an array of field names. For instance, add a filter on the `blog_article_id`, `author`, and `created_at` fields to the comment `list` view, as in Listing 14-23, to display a filter box similar to the one in Figure 14-16.
+In a `list` view, you can add a set of filter interactions. With these filters, users can both display fewer results and get to the ones they want faster. Configure the filters under the `filter` key, with an array of field names. For instance, add a filter on the `blog_article_id`, `author`, and `created_at` fields to the comment `list` view, as in Listing 14-21, to display a filter box similar to the one in Figure 14-16.
 
-Listing 14-23 - Setting the Filters in the `list` View, in `modules/comment/config/generator.yml`
+Listing 14-21 - Setting the Filters in the `list` View, in `modules/comment/config/generator.yml`
 
     [yml]
     config:
@@ -606,9 +606,9 @@ The filters displayed by symfony depend on the column type defined in the schema
   * For date columns (like the `created_at` field in the `comment` module), the filter is a pair of rich date tags, allowing the selection of a time interval.
   * For Boolean columns, the filter is a drop-down list having `true`, `false`, and `true or false` options--the last value reinitializes the filter.
 
-Just like the `new` and `edit` views are tied to a form class, the filters use the default filter form class associated with the model (`BlogArticleFormFilter` for the `BlogArticle` model for example). By defining a custom class for the filter form, you can customize the filter fields by leveraging the power of the form framework and by using all the available filter widgets. It is as easy as defining a `class` under the `filter` entry as shown in Listing 14-24.
+Just like the `new` and `edit` views are tied to a form class, the filters use the default filter form class associated with the model (`BlogArticleFormFilter` for the `BlogArticle` model for example). By defining a custom class for the filter form, you can customize the filter fields by leveraging the power of the form framework and by using all the available filter widgets. It is as easy as defining a `class` under the `filter` entry as shown in Listing 14-22.
 
-Listing 14-24 - Customizing the Form Class used for Filtering
+Listing 14-22 - Customizing the Form Class used for Filtering
 
     [yml]
     config:
@@ -618,9 +618,9 @@ Listing 14-24 - Customizing the Form Class used for Filtering
 >**TIP**
 >To disable filters altogether, you can just specify `false` as the `class` to use for the filters.
 
-You can also use partial filters to implement custom filter logic. Each partial receives the `form` and the HTML `attributes` to use when rendering the form element. Listing 14-24 shows an example implementation that mimics the default behavior but with a partial.
+You can also use partial filters to implement custom filter logic. Each partial receives the `form` and the HTML `attributes` to use when rendering the form element. Listing 14-23 shows an example implementation that mimics the default behavior but with a partial.
 
-Listing 14-24 - Using a Partial Filter
+Listing 14-23 - Using a Partial Filter
 
     [php]
     // Define the partial, in templates/_state.php
@@ -643,9 +643,9 @@ You can reuse the syntax to point to a list directly sorted according to a colum
     [php]
     <?php echo link_to('Comment list by date', '@blog_comment?sort=created_at&sort_type=desc' ) ?>
 
-You can also define a default `sort` order for the `list` view directly in the `generator.yml` file. The syntax follows the example given in Listing 14-26.
+You can also define a default `sort` order for the `list` view directly in the `generator.yml` file. The syntax follows the example given in Listing 14-24.
 
-Listing 14-26 - Setting a Default Sort Field in the `list` View
+Listing 14-24 - Setting a Default Sort Field in the `list` View
 
     [yml]
     config:
@@ -685,9 +685,9 @@ Chapter 18 explains the concept of Join more extensively.
 
 ### New and Edit View-Specific Customization
 
-In a `new` or `edit` view, the user can modify the value of each column for a new record or a given record. By default, the form used by the admin generator is the form associated with the model: `BlogArticleForm` for the `BlogArticle` model. You can customize the class to use by defining the `class` under the `form` entry as shown in Listing 14-27.
+In a `new` or `edit` view, the user can modify the value of each column for a new record or a given record. By default, the form used by the admin generator is the form associated with the model: `BlogArticleForm` for the `BlogArticle` model. You can customize the class to use by defining the `class` under the `form` entry as shown in Listing 14-25.
 
-Listing 14-27 - Customizing the Form Class used for the `new` and `edit` views
+Listing 14-25 - Customizing the Form Class used for the `new` and `edit` views
 
     [yml]
     config:
@@ -696,9 +696,9 @@ Listing 14-27 - Customizing the Form Class used for the `new` and `edit` views
 
 Using a custom form class allows the customization of all the widgets and validators used for the admin generator. The default form class can then be used and customized specifically for the frontend application.
 
-You can also customize the labels, help messages, and the layout of the form directly in the `generator.yml` configuration file as show in Listing 14-28.
+You can also customize the labels, help messages, and the layout of the form directly in the `generator.yml` configuration file as show in Listing 14-26.
 
-Listing 14-28 - Customizing the Form Display
+Listing 14-26 - Customizing the Form Display
 
     [yml]
     config:
@@ -739,9 +739,9 @@ Figure 14-21 - Available controls for many-to-many relationships
 
 ### Adding Interactions
 
-Administration modules allow users to perform the usual CRUD operations, but you can also add your own interactions or restrict the possible interactions for a view. For instance, the interaction definition shown in Listing 14-31 gives access to all the default CRUD actions on the `article` module.
+Administration modules allow users to perform the usual CRUD operations, but you can also add your own interactions or restrict the possible interactions for a view. For instance, the interaction definition shown in Listing 14-27 gives access to all the default CRUD actions on the `article` module.
 
-Listing 14-31 - Defining Interactions for Each View, in `backend/modules/article/config/generator.yml`
+Listing 14-27 - Defining Interactions for Each View, in `backend/modules/article/config/generator.yml`
 
     [yml]
     config:
@@ -763,13 +763,13 @@ Listing 14-31 - Defining Interactions for Each View, in `backend/modules/article
           _save:         ~
           _save_and_add: ~
 
-In a `list` view, there are three action settings: the actions available for every object (`object_actions`), the actions available for a selection of objects (`batch_actions`), and actions available for the whole page (`actions`). The list interactions defined in Listing 14-31 render like in Figure 14-22. Each line shows one button to edit the record and one to delete it, plus one checkbox on each line to delete a selection of records. At the bottom of the list, a button allows the creation of a new record.
+In a `list` view, there are three action settings: the actions available for every object (`object_actions`), the actions available for a selection of objects (`batch_actions`), and actions available for the whole page (`actions`). The list interactions defined in Listing 14-27 render like in Figure 14-22. Each line shows one button to edit the record and one to delete it, plus one checkbox on each line to delete a selection of records. At the bottom of the list, a button allows the creation of a new record.
 
 Figure 14-22 - Interactions in the `list` view
 
 ![Interactions in the list view](http://www.symfony-project.org/images/book/1_4/F1422.png "Interactions in the list view")
 
-In a `new` and `edit` views, as there is only one record edited at a time, there is only one set of actions to define (under `actions`). The `edit` interactions defined in Listing 14-31 render like in Figure 14-23. Both the `save` and the `save_and_add` actions save the current edits in the records, the difference being that the `save` action displays the `edit` view on the current record after saving, while the `save_and_add` action displays a `new` view to add another record. The `save_and_add` action is a shortcut that you will find very useful when adding many records in rapid succession. As for the position of the `delete` action, it is separated from the other buttons so that users don't click it by mistake.
+In a `new` and `edit` views, as there is only one record edited at a time, there is only one set of actions to define (under `actions`). The `edit` interactions defined in Listing 14-27 render like in Figure 14-23. Both the `save` and the `save_and_add` actions save the current edits in the records, the difference being that the `save` action displays the `edit` view on the current record after saving, while the `save_and_add` action displays a `new` view to add another record. The `save_and_add` action is a shortcut that you will find very useful when adding many records in rapid succession. As for the position of the `delete` action, it is separated from the other buttons so that users don't click it by mistake.
 
 The interaction names starting with an underscore (`_`) tell symfony to use the default icon and action corresponding to these interactions. The administration generator understands `_edit`, `_delete`, `_new`, `_list`, `_save`, `_save_and_add`, and `_create`.
 
@@ -777,9 +777,9 @@ Figure 14-23 - Interactions in the `edit` view
 
 ![Interactions in the edit view](http://www.symfony-project.org/images/book/1_4/F1423.png "Interactions in the edit view")
 
-But you can also add a custom interaction, in which case you must specify a name starting with no underscore, and a target action in the current module, as in Listing 14-32.
+But you can also add a custom interaction, in which case you must specify a name starting with no underscore, and a target action in the current module, as in Listing 14-28.
 
-Listing 14-32 - Defining a Custom Interaction
+Listing 14-28 - Defining a Custom Interaction
 
     [yml]
     list:
@@ -795,9 +795,9 @@ Figure 14-24 - Custom interaction in the `list` view
 
 ![Custom interaction in the list view](http://www.symfony-project.org/images/book/1_4/F1424.png "Custom interaction in the list view")
 
-The `addComment` action can be implemented as in Listing 14-33.
+The `addComment` action can be implemented as in Listing 14-29.
 
-Listing 14-33 - Implementing the Custom Interaction Action, in `actions/actions.class.php`
+Listing 14-29 - Implementing the Custom Interaction Action, in `actions/actions.class.php`
 
     [php]
     public function executeAddComment($request)
@@ -811,9 +811,9 @@ Listing 14-33 - Implementing the Custom Interaction Action, in `actions/actions.
 
 Batch actions receive an array of the primary keys of the selected records in the `sf_admin_batch_selection` request parameter.
 
-One last word about actions: If you want to suppress completely the actions for one category, use an empty list, as in Listing 14-34.
+One last word about actions: If you want to suppress completely the actions for one category, use an empty list, as in Listing 14-30.
 
-Listing 14-34 - Removing All Actions in the `list` View
+Listing 14-30 - Removing All Actions in the `list` View
 
     [yml]
     config:
@@ -829,9 +829,9 @@ The validation is taken care of by the form used by the `new` and `edit` views a
 
 For a given administration module, the available fields and interactions can vary according to the credentials of the logged user (refer to Chapter 6 for a description of symfony's security features).
 
-The fields in the generator can take a `credentials` parameter into account so as to appear only to users who have the proper credential. This works for the `list` entry. Additionally, the generator can also hide interactions according to credentials. Listing 14-37 demonstrates these features.
+The fields in the generator can take a `credentials` parameter into account so as to appear only to users who have the proper credential. This works for the `list` entry. Additionally, the generator can also hide interactions according to credentials. Listing 14-31 demonstrates these features.
 
-Listing 14-37 - Using Credentials in `generator.yml`
+Listing 14-31 - Using Credentials in `generator.yml`
 
     [yml]
     config:
@@ -855,9 +855,9 @@ You can modify the presentation of the generated modules so that it matches any 
 
 Since the generated HTML is structured content, you can do pretty much anything you like with the presentation.
 
-You can define an alternative CSS to be used for an administration module instead of a default one by adding a `css` parameter to the generator configuration, as in Listing 14-38.
+You can define an alternative CSS to be used for an administration module instead of a default one by adding a `css` parameter to the generator configuration, as in Listing 14-32.
 
-Listing 14-38 - Using a Custom Style Sheet Instead of the Default One
+Listing 14-32 - Using a Custom Style Sheet Instead of the Default One
 
     [yml]
     generator:
@@ -885,9 +885,9 @@ The `list`, `new`, and `edit` views systematically include a header and footer p
     _form_header.php
     _form_footer.php
 
-For instance, if you want to add a custom header to the `article/edit` view, create a file called `_form_header.php` as in Listing 14-39. It will work with no further configuration.
+For instance, if you want to add a custom header to the `article/edit` view, create a file called `_form_header.php` as in Listing 14-33. It will work with no further configuration.
 
-Listing 14-39 - Example `edit` Header Partial, in `modules/article/templates/_form_header.php`
+Listing 14-33 - Example `edit` Header Partial, in `modules/article/templates/_form_header.php`
 
     [php]
     <?php if ($BlogArticle->getNbComments() > 0): ?>
@@ -954,9 +954,9 @@ The theme files must be located in a project tree structure, in a `data/generato
     sortingConfiguration.php
     updateAction.php
 
-Be aware that the template files are actually templates of templates, that is, PHP files that will be parsed by a special utility to generate templates based on generator settings (this is called the compilation phase). The generated templates must still contain PHP code to be executed during actual browsing, so the templates of templates use an alternative syntax to keep PHP code unexecuted for the first pass. Listing 14-40 shows an extract of a default template of template.
+Be aware that the template files are actually templates of templates, that is, PHP files that will be parsed by a special utility to generate templates based on generator settings (this is called the compilation phase). The generated templates must still contain PHP code to be executed during actual browsing, so the templates of templates use an alternative syntax to keep PHP code unexecuted for the first pass. Listing 14-34 shows an extract of a default template of template.
 
-Listing 14-40 - Syntax of Templates of Templates
+Listing 14-34 - Syntax of Templates of Templates
 
     [php]
     <h1>[?php echo <?php echo $this->getI18NString('edit.title') ?> ?]</h1>
