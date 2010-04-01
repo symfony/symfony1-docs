@@ -582,7 +582,7 @@ Lorsque l'utilisateur n'est pas ~authentifié|Authentification~, nous avons beso
           <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
 </propel>
 <doctrine>
-          <li><?php echo link_to('Jobs', '@jobeet_job_job') ?></li>
+          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
           <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
 </doctrine>
         </ul>
