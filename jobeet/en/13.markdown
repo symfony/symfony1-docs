@@ -583,7 +583,7 @@ When the user is not ~authenticated|Authentication~, we need to hide the menu ba
 </propel>
 <doctrine>
           <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
+          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
 </doctrine>
         </ul>
       </div>
