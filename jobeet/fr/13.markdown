@@ -6,7 +6,7 @@ PHP, l'admin generator de symfony permet au développeur de créer des interface
 backend en quelques minutes.
 
 Aujourd'hui, nous allons découvrir comment symfony gère les données persistantes entre
-les requêtes HTTP. Comme vous le savez, le protocole HTTP est apatride, ce qui signifie
+les requêtes HTTP. Comme vous le savez, le protocole HTTP est sans état, ce qui signifie
 que chaque requête est indépendante de ses précédentes ou suivantes. Les sites web modernes
 ont besoin d'un moyen de maintenir les données entre les requêtes pour améliorer l'expérience
 utilisateur.
