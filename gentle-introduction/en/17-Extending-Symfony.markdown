@@ -676,28 +676,28 @@ Listing 17-21 - Customizing a Plug-In Action
 >
 >Symfony will then merge the two schemas based on each table's `phpName`. The merging process allows for addition or modification of tables, columns, and column attibutes. For instance, the next listing shows how a custom schema can add columns to a table defined in a plug-in schema.
 >
->    # Original schema, in plugins/myPlugin/config/schema.yml
->    propel:
->      article:
->        _attributes:    { phpName: Article }
->        title:          varchar(50)
->        user_id:        { type: integer }
->        created_at:
+>     # Original schema, in plugins/myPlugin/config/schema.yml
+>     propel:
+>       article:
+>         _attributes:    { phpName: Article }
+>         title:          varchar(50)
+>         user_id:        { type: integer }
+>         created_at:
 >
->    # Custom schema, in myPlugin_schema.custom.yml
->    propel:
->      article:
->        _attributes:    { phpName: Article, package: foo.bar.lib.model }
->        stripped_title: varchar(50)
+>     # Custom schema, in myPlugin_schema.custom.yml
+>     propel:
+>       article:
+>         _attributes:    { phpName: Article, package: foo.bar.lib.model }
+>         stripped_title: varchar(50)
 >
->    # Resulting schema, merged internally and used for model and sql generation
->    propel:
->      article:
->        _attributes:    { phpName: Article, package: foo.bar.lib.model }
->        title:          varchar(50)
->        user_id:        { type: integer }
->        created_at:
->        stripped_title: varchar(50)
+>     # Resulting schema, merged internally and used for model and sql generation
+>     propel:
+>       article:
+>         _attributes:    { phpName: Article, package: foo.bar.lib.model }
+>         title:          varchar(50)
+>         user_id:        { type: integer }
+>         created_at:
+>         stripped_title: varchar(50)
 >
 >As the merging process uses the table's `phpName` as a key, you can even change the name of a plugin table in the database, provided that you keep the same `phpName` in the schema.
 
