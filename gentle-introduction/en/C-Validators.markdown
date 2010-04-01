@@ -339,7 +339,8 @@ The validator accepts several type of inputs:
 
  * an array composed of the following keys: `year`, `month`, `day`, `hour`,
    `minute`, and `second`
- * a string matching the `date_format` regular expression if provided
+ * a string matching the `date_format` regular expression if provided (for
+   instance `~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~`)
  * a string that can be parsed by the `strtotime()` PHP function
  * an integer representing a timestamp
 
@@ -348,7 +349,7 @@ The tainted value is converted to a date by applying the `date_output` or
 
 | Option                    | Error        | Description
 | ------------------------- | ------------ | -----------
-| `date_format`             | `bad_format` | A regular expression that dates must match
+| `date_format`             | `bad_format` | A regular expression that dates must match; note that the regular expression must use named subpatterns like `(?P<year>)`
 | `with_time`               | n/a          | `true` if the validator must return a time, `false` otherwise
 | `date_output`             | n/a          | The format to use when returning a date (default to `Y-m-d`)
 | `datetime_output`         | n/a          | The format to use when returning a date with time (default to `Y-m-d H:i:s`)
