@@ -23,6 +23,8 @@ On the other hand, make sure you deactivate any debug utility, such as the Xdebu
 >**NOTE**
 >You might be wondering about the overhead caused by the `mod_rewrite` extension: it is negligible. Of course, loading an image with rewriting rules is slower than loading an image without, but the slowdown is orders of magnitude below the execution of any PHP statement.
 
+-
+
 >**TIP**
 >When one server is not enough, you can still add another and use load balancing. As long as the `uploads/` directory is shared and you use database storage for sessions, a symfony project will react seamlessly in a load-balanced architecture.
 

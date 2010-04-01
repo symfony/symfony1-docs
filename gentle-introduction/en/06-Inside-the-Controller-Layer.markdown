@@ -441,9 +441,9 @@ Name                             | Function                               |  Sam
 `getCharsets()`                  | Array of accepted charsets             | `Array( ` ` [0] => ISO-8859-1 ` ` [1] => UTF-8 ` ` [2] => * )`
 getAcceptableContentTypes()      | Array of accepted content types        | `Array( [0] => text/xml [1] => text/html`
 
-* *Works with prototype, Prototype, Mootools, and jQuery*
+`*` *Works with prototype, Prototype, Mootools, and jQuery*
 
-** *Sometimes blocked by proxies*
+`**` *Sometimes blocked by proxies*
 
 You don't have to worry about whether your server supports the `$_SERVER` or the `$_ENV` variables, or about default values or server-compatibility issues--the `sfWebRequest` methods do it all for you. Besides, their names are so evident that you will no longer need to browse the PHP documentation to find out how to get information from the request.
 
