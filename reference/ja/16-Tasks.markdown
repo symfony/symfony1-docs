@@ -268,7 +268,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony configure:author "Fabien Potencier <fabien.potencier@symfony-project.com>"
 
-それぞれの生成ファイルのなかで PHPDoc ヘッダーをあらかじめ設定しておくためにジェネレータは著者の名前を使います。
+それぞれの生成ファイルのなかで PHPDoc ヘッダーをあらかじめ用意しておくためにジェネレータは著者の名前を使います。
 
 値は `config/properties.ini` に保存されます。
 
@@ -295,7 +295,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--app`                      | `-`                  | アプリケーションの名前
 
 
-`configure:database` タスクはプロジェクトのデータベースの DSN を設定します:
+`configure:database` タスクはプロジェクトにおけるデータベースの DSN を設定します:
 
     ./symfony configure:database mysql:host=localhost;dbname=example root mYsEcret
 
@@ -352,11 +352,11 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:build --model --forms
 
-すべてのクラスと SQL を生成させてデータベースをリビルドしたければショートカットの `--all` オプションをつけます:
+すべてのクラスと SQL を生成してデータベースを再構築したければショートカットの `--all` オプションをつけます:
 
     ./symfony doctrine:build --all
 
-これは次のタスク群を実行するのと同じです:
+これは次のタスクの組み合わせを実行するのと同じです:
 
     ./symfony doctrine:drop-db
     ./symfony doctrine:build-db
@@ -415,7 +415,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::build-filters`~
 
-`doctrine::build-filters` タスクは現在のモデルのフォームクラスからフィルタを作る:
+`doctrine::build-filters` タスクは現在のモデルに対応するフィルタフォームクラスを作る:
 
     $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--generator-class="..."]
 
@@ -432,7 +432,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータクラス
 
 
-`doctrine:build-filters` タスクはスキーマからフォームフィルタクラスを作ります:
+`doctrine:build-filters` タスクはスキーマに対応するフォームフィルタクラスを作ります:
 
     ./symfony doctrine:build-filters
 
@@ -459,7 +459,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--generator-class` | `sfDoctrineFormFilterGenerator` | ジェネレータクラス
 
 
-`doctrine:build-forms` タスクはスキーマからフォームクラスを作ります:
+`doctrine:build-forms` タスクはスキーマに対応するフォームクラスを作ります:
 
     ./symfony doctrine:build-forms
 
@@ -469,7 +469,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::build-model`~
 
-`doctrine::build-model` タスクは現在のモデルのクラスを作る:
+`doctrine::build-model` タスクは現在のモデルに対応するクラスを作る:
 
     $ php symfony doctrine:build-model [--application[="..."]] [--env="..."]
 
@@ -483,7 +483,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--env`                      | `dev`    | 環境
 
 
-`doctrine:build-model` タスクはスキーマからモデルクラスを作ります:
+`doctrine:build-model` タスクはスキーマに対応するモデルクラスを作ります:
 
     ./symfony doctrine:build-model
 
@@ -495,7 +495,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::build-schema`~
 
-`doctrine::build-schema` タスクは既存のデータベースからスキーマを作る:
+`doctrine::build-schema` タスクは既存のデータベースに対応するスキーマを作る:
 
     $ php symfony doctrine:build-schema [--application[="..."]] [--env="..."]
 
@@ -503,10 +503,10 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 
 
-| オプション (ショートカット) | デフォルト  | 説明
-| ---------------------------- | -------- | -----------------------
-| `--application`              | `1`      | アプリケーションの名前
-| `--env`                      | `dev`    | 環境
+| オプション (ショートカット) | デフォルト | 説明
+| ---------------------------- | ----------- | -----------------------
+| `--application`              | `1`         | アプリケーションの名前
+| `--env`                      | `dev`       | 環境
 
 
 `doctrine:build-schema` タスクはスキーマのもとになるデータベースをイントロスペクトします:
@@ -517,7 +517,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::build-sql`~
 
-`doctrine::build-sql` タスクは現在のモデルの SQL を生成する:
+`doctrine::build-sql` タスクは現在のモデルに対応する SQL を生成する:
 
     $ php symfony doctrine:build-sql [--application[="..."]] [--env="..."]
 
@@ -583,7 +583,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::data-dump`~
 
-`doctrine::data-dump` タスクはデータをフィクスチャディレクトリにダンプする:
+`doctrine::data-dump` タスクはデータをフィクスチャディレクトリに吐き出す:
 
     $ php symfony doctrine:data-dump [--application[="..."]] [--env="..."] [target]
 
@@ -599,19 +599,19 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--application`            | `1`        | アプリケーションの名前
 | `--env`                    | `dev`      | 環境
 
-`doctrine:data-dump` タスクはデータベースデータをダンプします:
+`doctrine:data-dump` タスクはデータベースデータを吐き出します:
 
     ./symfony doctrine:data-dump
 
-このタスクはデータベースのデータを `data/fixtures/%target%` にダンプします。
+このタスクはデータベースのデータを `data/fixtures/%target%` に吐き出します。
 
-`doctrine:data-load` タスクを使うことで YAML フォーマットのダンプファイルを再インポートできます。
+`doctrine:data-load` タスクを使うことで吐き出された YAML フォーマットのファイルを再インポートできます。
 
     ./symfony doctrine:data-load
 
 ### ~`doctrine::data-load`~
 
-`doctrine::data-load` タスクは YAML フィクスチャデータをロードする:
+`doctrine::data-load` タスクは YAML フィクスチャデータを読み込む:
 
     $ php symfony doctrine:data-load [--application[="..."]] [--env="..."] [--append] [dir_or_file1] ... [dir_or_fileN]
 
@@ -619,7 +619,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 | 引数          | デフォルト | 説明
 | ------------- | ------- | --------------------------------------
-| `dir_or_file` | `-`     | ロードするディレクトリもしくはファイル
+| `dir_or_file` | `-`     | 読み込むディレクトリもしくはファイル
 
 
 | オプション(ショートカット)| デフォルト | 説明
@@ -629,13 +629,13 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--append`     | `-`   | データベースの現在の値を削除しない
 
 
-`doctrine:data-load` タスクはデータフィクスチャをデータベースにロードします:
+`doctrine:data-load` タスクはデータフィクスチャをデータベースに読み込みます:
 
     ./symfony doctrine:data-load
 
-このタスクは `data/fixtures/` で見つかるすべてのファイルからデータをロードします。
+このタスクは `data/fixtures/` で見つかるすべてのファイルからデータを読み込みます。
 
-特定のファイルもしくはディレクトリからデータをロードしたいのであれば、これらを引数として追加できます:
+特定のファイルもしくはディレクトリからデータを読み込ませたければ、これらを引数として追加できます:
 
     ./symfony doctrine:data-load data/fixtures/dev data/fixtures/users.yml
 
@@ -687,7 +687,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--table`                  | `-`       | 結果をテーブル形式で返す
 
 
-`doctrine:dql` タスクは DQL クエリを実行し整形された結果を表示します:
+`doctrine:dql` タスクは DQL クエリを実行し整えられた結果を表示します:
 
     ./symfony doctrine:dql "FROM User"
 
@@ -701,7 +701,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::drop-db`~
 
-`doctrine::drop-db` タスクは現在のモデルのデータベースを削除する:
+`doctrine::drop-db` タスクは現在のモデルに対応するデータベースを削除する:
 
     $ php symfony doctrine:drop-db [--application[="..."]] [--env="..."] [--no-confirmation] [database1] ... [databaseN]
 
@@ -1000,7 +1000,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:migrate --down
 
-データベースが DDL 文のロールバックをサポートする場合、`--dry-run` オプションを指定すれば、ドライモードでマイグレーションを実行できます:
+データベースが DDL 文のロールバックをサポートする場合、`--dry-run` オプションを指定すれば、マイグレーションをドライモードで実行できます:
 
     ./symfony doctrine:migrate --dry-run
 
@@ -1026,7 +1026,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--csrf-secret`              | `1`     | CSRF 防止に使う秘密の文字列
 
 
-`generate:app` タスクは現在のプロジェクトで新しいアプリケーションの基本ディレクトリ構造を作ります:
+`generate:app` タスクは現在のプロジェクトにおいて新しいアプリケーションの基本ディレクトリ構造を作ります:
 
     ./symfony generate:app frontend
 
@@ -1039,13 +1039,13 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 すでに同じ名前のアプリケーションが存在する場合、`sfCommandException` が投げられます。
 
-デフォルトでは、XSS を防止するために出力エスケーピングが有効で、CSRF も阻止するためにランダムな秘密の文字列が生成されます。
+デフォルトでは、XSS を防ぐために出力エスケーピングが有効で、CSRF も防ぐためにランダムな秘密の文字列が生成されます。
 
 `escaping-strategy` オプションをつけることで出力エスケーピングを無効にできます:
 
     ./symfony generate:app frontend --escaping-strategy=false
 
-(CSRF を阻止するために) `csrf-secret` オプションで秘密の文字列を定義することでフォームのセッショントークンを有効にできます:
+(CSRF を防ぐために) `csrf-secret` オプションで秘密の文字列を定義することでフォームのセッショントークンを有効にできます:
 
     ./symfony generate:app frontend --csrf-secret=UniqueSecret
 
@@ -1067,7 +1067,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 
 
-`generate:module` タスクは既存のアプリケーションで新しいモジュールの基本ディレクトリ構造を作ります:
+`generate:module` タスクは既存のアプリケーションにおいて新しいモジュールの基本ディレクトリ構造を作ります:
 
     ./symfony generate:module frontend article
 
@@ -1103,7 +1103,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--installer` | `-`           | 実行するインストーラースクリプト
 
 
-`generate:project` タスクは現在のディレクトリで新しいプロジェクトの基本ディレクトリ構造を作ります:
+`generate:project` タスクは現在のディレクトリにおいて新しいプロジェクトの基本ディレクトリ構造を作ります:
 
     ./symfony generate:project blog
 
@@ -1135,7 +1135,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 | 引数        | デフォルト | 説明
 | ----------- | ------- | ----------------------------------------------
-| `task_name` | `-`     | タスクの名前 (名前空間をつけることができる)
+| `task_name` | `-`     | タスクの名前 (名前空間をつけられる)
 
 
 | オプション (ショートカット)     | デフォルト | 説明
@@ -1150,7 +1150,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony generate:task namespace:name
 
-`namespaceNameTask.class.php` スケルトンタスクは `lib/task/` ディレクトリの下で作られます。名前空間はオプションであることにご注意ください。
+`namespaceNameTask.class.php` スケルトンタスクは `lib/task/` ディレクトリに作られます。名前空間はオプションであることにご注意ください。
 
 別のディレクトリ (プロジェクトのルートフォルダに相対的な位置) でファイルを作りたい場合、`--dir` オプションで指定します。このディレクトリがまだ存在していなければ作られます。
 
@@ -1197,13 +1197,13 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony i18n:extract frontend fr
 
-デフォルトでは、このタスクは現在のプロジェクトで見つかる新旧の文字列の数のみを表示します。
+デフォルトでは、このタスクは現在のプロジェクトで見つかる新旧の文字列の数だけを表示します。
 
 新しい文字列を表示したい場合、`--display-new` オプションを指定します:
 
     ./symfony i18n:extract --display-new frontend fr
 
-これらの文字列を国際化対応のメッセージカタログに保存するには、`--auto-save` オプションを指定します:
+これらの文字列を国際化対応メッセージカタログに保存するには、`--auto-save` オプションを指定します:
 
     ./symfony i18n:extract --auto-save frontend fr
 
@@ -1548,7 +1548,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony project:deploy production
 
-サーバーは `config/properties.ini` で設定しなければなりません:
+サーバーのコンフィギュレーションは `config/properties.ini` で変更します:
 
     [production]
     host=www.example.com
@@ -1582,7 +1582,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
 ### ~`project::disable`~
 
-`project::disable` タスクを任意は環境のアプリケーションを無効にする:
+`project::disable` タスクは任意の環境のアプリケーションを無効にする:
 
     $ php symfony project:disable  env [app1] ... [appN]
 
@@ -1648,7 +1648,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony project:optimize frontend prod
 
-このタスクは運用サーバーでのみ使うべきです。プロジェクトを変更するたびにタスクを再実行することをお忘れなく。
+このタスクは運用サーバーでのみ使うべきです。プロジェクトのコードを修正するたびにタスクを再実行することをお忘れなく。
 
 ### ~`project::permissions`~
 
@@ -1755,7 +1755,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony propel:build --all
 
-これは次のタスク群を実行するのと同等です:
+このタスクは次のタスクの組み合わせを実行するのと同じです:
 
     ./symfony propel:build-model
     ./symfony propel:build-forms
@@ -1803,7 +1803,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony propel:build-all
 
-このタスクは次のタスク群と同等です:
+このタスクは次のタスクの組み合わせを実行するのと同じです:
 
     ./symfony propel:build-model
     ./symfony propel:build-forms
@@ -1848,7 +1848,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony propel:build-all-load
 
-このタスクは次の2つのタスクの組み合わせと同等です:
+このタスクは次の2つのタスクの組み合わせと同じです:
 
     ./symfony propel:build-all
     ./symfony propel:data-load
@@ -2022,10 +2022,10 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | `--application`             | `1`        | アプリケーションの名前
 | `--env`                     | `cli`      | 環境
 | `--connection`              | `propel`   | 接続名
-| `--classes`                 | `-`        | ダンプするクラスの名前 (コロンで区切られる)
+| `--classes`                 | `-`        | 吐き出すクラスの名前 (コロンで区切られる)
 
 
-`propel:data-dump` タスクはデータベースデータをダンプします:
+`propel:data-dump` タスクはデータベースデータを吐き出します:
 
     ./symfony propel:data-dump > data/fixtures/dump.yml
 
@@ -2033,15 +2033,15 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:data-dump dump.yml
 
-このタスクはデータを `data/fixtures/%target%` にダンプします (この例では `data/fixtures/dump.yml`)。
+このタスクはデータを `data/fixtures/%target%` に吐き出します (この例では `data/fixtures/dump.yml`)。
 
-`propel:data-load` タスクを使うことでダンプファイルを YAML フォーマットで再インポートできます。
+`propel:data-load` タスクを使うことで吐き出されたファイルを YAML フォーマットで再インポートできます。
 
 デフォルトでは、`config/databases.yml` で定義される `propel` 接続を使います。`connection` オプションをつけることで別の接続を使うことができます:
 
     ./symfony propel:data-dump --connection="name"
 
-クラスをダンプしたいだけなら、`classes` オプションを指定します:
+クラスだけを吐き出させたいなら、`classes` オプションを指定します:
 
     ./symfony propel:data-dump --classes="Article,Category"
 
@@ -2171,7 +2171,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:generate-module frontend article Article
 
-このタスクは `%model%` モデルクラスのために `%application%` アプリケーションで `%module%` モジュールを作ります。
+このタスクは `%application%` アプリケーションにおいて `%model%` モデルクラスに対応する `%module%` モジュールを作ります。
 
 `--generate-in-cache` オプションを指定すれば `%sf_app_cache_dir%/modules/auto%module%` のなかで実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールを作ることもできます:
 
@@ -2219,7 +2219,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`propel::graphviz`~
 
-`propel::graphviz` タスクは現在のオブジェクトモデルの Graphviz チャートを生成する:
+`propel::graphviz` タスクは現在のオブジェクトモデルに対応する Graphviz チャートを生成する:
 
     $ php symfony propel:graphviz [--phing-arg="..."]
 
@@ -2319,7 +2319,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | オプション (ショートカット)      | デフォルト    | 説明
 | --------------------------------- | --------- | -------------------------------------------
 | `--update-autoloader`<br />`(-u)` | `-`       | sfCoreAutoload クラスを更新する
-| `--only-failed`<br />`(-f)`       | `-`       | 最後に通らなかったテストのみを実行する
+| `--only-failed`<br />`(-f)`       | `-`       | 最後に通らなかったテストだけを実行する
 | `--xml`                           | `-`       | JUnit と互換性のある XML ログファイルの名前
 | `--rebuild-all`                   | `-`       | すべての生成フィクスチャファイルをリビルドする
 
@@ -2343,7 +2343,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 | オプション (ショートカット) | デフォルト | 説明
 | --------------------------- | ---------- | -------------------------------------------
-| `--only-failed`<br />`(-f)` | `-`        | 最後に通らなかったテストのみを実行する
+| `--only-failed`<br />`(-f)` | `-`        | 最後に通らなかったテストだけを実行する
 | `--xml`                     | `-`        | JUnit と互換性のある XML ログファイルの名前
 
 
@@ -2357,7 +2357,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony test:all -t
 
-もしくは `test:unit` と `test:functional` タスクでこれらのテストスイートを実行することで問題の修正にとりかかることもできます。
+もしくは `test:unit` と `test:functional` タスクでこれらのテストスイートを実行することで問題の対応にとりかかることもできます。
 
 以前の実行のときに通らなかったテストのみの実行を強制するには `--only-failed` オプションをつけます:
 
@@ -2388,7 +2388,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 | `--detailed`               | `-`        | 詳しい情報を出力する
 
 
-`test:coverage` タスクはテストディレクトリもしくはテストディレクトリと lib ファイルもしくは lib ディレクトリのほしいコードカバレージを出力します:
+`test:coverage` タスクはテストディレクトリもしくはテストディレクトリかつ lib ファイルもしくは lib ディレクトリとしてコードカバレージを出力します:
 
     ./symfony test:coverage test/unit/model lib/model
 
@@ -2404,18 +2404,18 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 
 
-| 引数          | デフォルト    | 説明
+| 引数          | デフォルト | 説明
 | ------------- | ---------- | -----------------------
 | `application` | `-`        | アプリケーションの名前
 | `controller`  | `-`        | コントローラの名前
 
 
 | オプション (ショートカット) | デフォルト | 説明
-| -------------------------- | ---------- | ---------------
+| ---------------------------- | ----------- | ---------------
 | `--xml` | `-` | JUnit と互換性のある XML ログファイルの名前
 
 
-`test:functional` タスクは任意のアプリケーションの機能テストを実行します:
+`test:functional` タスクは任意のアプリケーションに対する機能テストを実行します:
 
     ./symfony test:functional frontend
 
@@ -2425,11 +2425,11 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony test:functional frontend -t
 
-コントローラの名前を渡すことで特定のコントローラのすべての機能テストを実行することができます:
+コントローラの名前を渡すことで特定のコントローラに対するすべての機能テストを実行することができます:
 
     ./symfony test:functional frontend article
 
-複数のコントローラの機能テストをすべて実行することもできます:
+複数のコントローラに対する機能テストをすべて実行することもできます:
 
     ./symfony test:functional frontend article comment
 

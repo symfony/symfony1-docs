@@ -49,7 +49,7 @@ view.yml 設定ファイル
 `stylesheets` エントリは現在のビューで使うスタイルシートの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義されるスタイルシートのインクルードは `include_stylesheets()` ヘルパーによる手動で行います。
+>`view.yml` で定義されるスタイルシートを手動でインクルードするには `include_stylesheets()` ヘルパーを使います。
 
 複数のファイルが定義される場合、symfony は定義と同じ順序でこれらのファイルをインクルードします:
 
@@ -81,7 +81,7 @@ view.yml 設定ファイル
 `javascripts` エントリは現在のビューに使う JavaScript ファイルの配列を定義します。
 
 >**NOTE**
->`view.yml` で定義される JavaScript ファイルのインクルードは `include_javascripts()` ヘルパーによる手動で行います。
+>`view.yml` で定義される JavaScript ファイルを手動でインクルードするには `include_javascripts()` ヘルパーを使います。
 
 複数のファイルが定義される場合、symfony は定義と同じ順序でこれらのファイルをインクルードします:
 

@@ -1,7 +1,7 @@
 factories.yml 設定ファイル
 ==========================
 
-ファクトリはリクエストが存在しているあいだにフレームワークが必要とするコアオブジェクトです。これらのコンフィギュレーションは `factories.yml` 設定ファイルで変更され `sfContext` オブジェクトを通してつねにアクセスできます:
+ファクトリはリクエストが存在しているあいだにフレームワークが必要とするコアオブジェクトです。これらのコンフィギュレーションは `factories.yml` 設定ファイルで変更され、`sfContext` オブジェクトを通してつねにアクセスできます:
 
     [php]
     // ユーザーファクトリを取得する
@@ -11,7 +11,7 @@ factories.yml 設定ファイル
 
 [設定ファイルの原則の章](#chapter_03)で説明したように、`factories.yml` ファイルでは**環境が認識され**、**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
-`factories.yml` 設定ファイルには名前つきファクトリのリストが収められています:
+`factories.yml` 設定ファイルには名前つきファクトリのリストが用意されています:
 
     [yml]
     FACTORY_1:
@@ -240,11 +240,11 @@ Doctrine スプールのコンフィギュレーションの典型例は次の�
 
 `class` 設定は `Swift_Transport` を実装する任意のクラスになります。デフォルトでは3つの設定が提供されます:
 
-  * ~`Swift_SmtpTransport`~: メッセージを送信するために SMTP サーバーを使います。
+  * ~`Swift_SmtpTransport`~: メッセージの送信に SMTP サーバーを使います。
 
-  * ~`Swift_SendmailTransport`~: メッセージを送信するために `sendmail` を使います。
+  * ~`Swift_SendmailTransport`~: メッセージの送信に `sendmail` を使います。
 
-  * ~`Swift_MailTransport`~: メッセージを送信するために PHP ネイティブの `mail()` 関数を使います。
+  * ~`Swift_MailTransport`~: メッセージの送信に PHP ネイティブの `mail()` 関数を使います。
 
 `param` 設定をセットすることでトランスポートを細かく調整できます。組み込みのトランスポートクラスと異なるパラメータに関して知る必要のあるすべての知識は Swift Mailer の公式ドキュメントの [「Transport Types」](http://swiftmailer.org/docs/transport-types) のセクションで説明されています。
 
@@ -342,7 +342,7 @@ Doctrine スプールのコンフィギュレーションの典型例は次の�
         default_culture: %SF_DEFAULT_CULTURE%
 
 >**NOTE**
->デフォルトでは、`myUser` クラスは `sfBasicSecurityUser` を継承します。これは [`security.yml`](#chapter_08) 設定ファイルで設定できます。
+>デフォルトでは、`myUser` クラスは `sfBasicSecurityUser` を継承します。このクラスは [`security.yml`](#chapter_08) 設定ファイルで変更できます。
 
 ### ~`timeout`~
 
@@ -367,7 +367,7 @@ Doctrine スプールのコンフィギュレーションの典型例は次の�
 `storage`
 ---------
 
-HTTP リクエストのあいだのユーザーデータの一貫性を保つためにストレージファクトリがユーザーファクトリによって使われます。
+HTTP リクエストにおいて、ユーザーデータの一貫性を保つためにストレージファクトリがユーザーファクトリによって使われます。
 
 *sfContext アクセサ*: `$context->getStorage()`
 
@@ -410,7 +410,7 @@ HTTP リクエストのあいだのユーザーデータの一貫性を保つた
 
 ### ~`session_cache_limiter`~
 
-`session_cache_limiter` オプションがセットされている場合、PHP の [`session_cache_limiter()`](http://www.php.net/session_cache_limiter) 関数が呼び出され引数としてオプションの値が渡されます。
+`session_cache_limiter` オプションがセットされている場合、PHP の [`session_cache_limiter()`](http://www.php.net/session_cache_limiter) 関数が呼び出され、引数としてオプションの値が渡されます。
 
 ### データベースストレージ固有のオプション
 
@@ -585,7 +585,7 @@ HTTP リクエストのあいだのユーザーデータの一貫性を保つた
 
 *デフォルト*: `false`
 
-`true` にセットされている場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえておりマッチするルートが最初のほうにある場合、この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスにわるい影響を与える可能性があるので、運用サーバーにデプロイする前にこの設定をテストすることを強くおすすめします。
+`true` にセットされている場合、`lazy_routes_deserialize` 設定はルーティングキャッシュの遅延デシリアライゼーションを有効にします。たくさんのルートをかかえておりマッチするルートが最初のほうにある場合、この設定はアプリケーションのパフォーマンスを改善できます。特定の状況ではパフォーマンスにわるい影響を与える可能性があるので、運用サーバーにデプロイする前にこの設定をテストすることをぜひおすすめします。
 
 ### ~`lookup_cache_dedicated_keys`~
 
