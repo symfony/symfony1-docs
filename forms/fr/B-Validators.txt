@@ -339,7 +339,8 @@ Le validateur accepte plusieurs types d'entrées :
 
  * un tableau composé des clés suivantes : `year`, `month`, `day`, `hour`,
    `minute` et `second`
- * une chaîne correspondante à l'expression régulière `date_format` si fournie
+ * une chaîne correspondante à l'expression régulière `date_format` si fournie (par 
+   exemple `~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~`)
  * une chaîne qui peut être analysée par la fonction PHP `strtotime()`
  * un entier, représentant un timestamp
  
@@ -348,7 +349,7 @@ La valeur saisie est convertie en une date en appliquant les formats
 
 | Option                    | Erreur       | Description
 | ------------------------- | ------------ | -----------
-| `date_format`             | `bad_format` | Une expression régulière dont la date doit correspondre
+| `date_format`             | `bad_format` | Une expression régulière dont la date doit correspondre. Notez que l'expréssion régulière doit utilisé un sous-modèle nommé comme `(?P<year>)`
 | `with_time`               | n/a          | `true` si le validateur doit retourner l'heure, `false` autrement
 | `date_output`             | n/a          | Le format à utiliser pour retourner une date (par défaut à `Y-m-d`)
 | `datetime_output`         | n/a          | Le format à utiliser pour retourner une date avec l'heure (par défaut à `Y-m-d H:i:s`)
