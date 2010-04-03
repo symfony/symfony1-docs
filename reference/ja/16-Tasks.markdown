@@ -319,7 +319,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 ### ~`doctrine::build`~
 
-`doctrine::build` タスクはスキーマをもとにコードを生成する:
+`doctrine::build` タスクはスキーマに対応するコードを生成する:
 
     $ php symfony doctrine:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-migrate] [--and-load[="..."]] [--and-append[="..."]]
 
@@ -344,15 +344,15 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--and-append`      | `-`  | フィクスチャデータを追加する (複数の値が可能)
 
 
-`doctrine:build` タスクはスキーマをもとにコードを生成します:
+`doctrine:build` タスクはスキーマに対応するコードを生成します:
 
     ./symfony doctrine:build
 
-ビルドしたいものを指定しなければなりません。たとえば、モデルとフォームクラスをビルドしたければ `--model` と `--forms` オプションをつけます:
+ビルドしたいものを指定しなければなりません。たとえば、モデルとフォームクラスをビルドしたければ、`--model` と `--forms` オプションをつけます:
 
     ./symfony doctrine:build --model --forms
 
-すべてのクラスと SQL を生成してデータベースを再構築したければショートカットの `--all` オプションをつけます:
+すべてのクラスと SQL を生成してデータベースをリビルドしたければ、ショートカットの `--all` オプションをつけます:
 
     ./symfony doctrine:build --all
 
@@ -436,7 +436,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:build-filters
 
-このタスクはモデルをもとにフォームフィルタクラスを `lib/doctrine/filter` に作ります。
+このタスクはモデルに対応するフォームフィルタクラスを `lib/doctrine/filter` に作ります。
 
 このタスクが `lib/doctrine/filter` のカスタムクラスを上書きすることはけっしてありません。このタスクは `lib/doctrine/filter/base` に生成される基底クラスを置き換えるだけです。
 
@@ -463,7 +463,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:build-forms
 
-このタスクはモデルをもとにフォームクラスを `lib/doctrine/form` に作ります。
+このタスクはモデルに対応するフォームクラスを `lib/doctrine/form` に作ります。
 
 このタスクは `lib/doctrine/form` のカスタムクラスを上書きすることはけっしてありません。このタスクは `lib/doctrine/form/base` に生成された基底クラスだけを置き換えるだけです。
 
@@ -535,7 +535,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:build-sql
 
-生成される SQL は `config/databases.yml` で設定されるデータベースに合わせて最適化されます:
+生成される SQL は `config/databases.yml` で設定されているデータベースに合わせて最適化されます:
 
     doctrine.database = mysql
 
@@ -629,7 +629,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 | `--append`     | `-`   | データベースの現在の値を削除しない
 
 
-`doctrine:data-load` タスクはデータフィクスチャをデータベースに読み込みます:
+`doctrine:data-load` タスクはデータベースにデータフィクスチャを読み込ませます:
 
     ./symfony doctrine:data-load
 
@@ -639,7 +639,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:data-load data/fixtures/dev data/fixtures/users.yml
 
-このタスクでデータベースの既存のデータを削除したくない場合、`--append` オプションを指定します:
+このタスクでデータベースの既存のデータを削除したくなければ、`--append` オプションを指定します:
 
     ./symfony doctrine:data-load --append
 
@@ -673,7 +673,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
 
 
-| 引数        | デフォルト  | 説明
+| 引数        | デフォルト | 説明
 | ----------- | -------- | -------------------
 | `dql_query` | `-`      | 実行する DQL クエリ
 | `parameter` | `-`      | クエリパラメータ
@@ -723,7 +723,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony doctrine:drop-db
 
-`--no-confirmation` オプションを提供しないかぎりデータベースが削除される前に確認の質問をされます:
+`--no-confirmation` オプションを提供しないかぎり、データベースが削除される前に確認の質問をされます:
 
     ./symfony doctrine:drop-db --no-confirmation
 
@@ -1049,7 +1049,7 @@ type オプションに組み込まれている引数は次のとおりです: `
 
     ./symfony generate:app frontend --csrf-secret=UniqueSecret
 
-`%sf_data_dir%/skeleton/app` ディレクトリを作ることでタスクに使われるデフォルトのスケルトンをカスタマイズできます。
+`%sf_data_dir%/skeleton/app` ディレクトリを作ることでタスクが使うデフォルトのスケルトンをカスタマイズできます。
 
 ### ~`generate::module`~
 
@@ -1152,11 +1152,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 `namespaceNameTask.class.php` スケルトンタスクは `lib/task/` ディレクトリに作られます。名前空間はオプションであることにご注意ください。
 
-別のディレクトリ (プロジェクトのルートフォルダに相対的な位置) でファイルを作りたい場合、`--dir` オプションで指定します。このディレクトリがまだ存在していなければ作られます。
+別のディレクトリ (プロジェクトのルートフォルダに相対的な位置) でファイルを作りたければ、`--dir` オプションで指定します。このディレクトリがまだ存在していなければ作られます。
 
     ./symfony generate:task namespace:name --dir=plugins/myPlugin/lib/task
 
-デフォルトの `doctrine` 以外の接続を使いたい場合、`--use-database` オプションで接続の名前を提供します:
+デフォルトの `doctrine` 以外の接続を使いたければ、`--use-database` オプションで接続の名前を提供します:
 
     ./symfony generate:task namespace:name --use-database=main
 
@@ -1199,7 +1199,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 デフォルトでは、このタスクは現在のプロジェクトで見つかる新旧の文字列の数だけを表示します。
 
-新しい文字列を表示したい場合、`--display-new` オプションを指定します:
+新しい文字列を表示したければ、`--display-new` オプションを指定します:
 
     ./symfony i18n:extract --display-new frontend fr
 
@@ -1207,11 +1207,11 @@ symfony が新しいクラスを生成するときにオプションとして著
 
     ./symfony i18n:extract --auto-save frontend fr
 
-国際化対応メッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したい場合、`--display-old` オプションを指定します:
+国際化対応メッセージカタログで見つかるがアプリケーションで見つからない文字列を表示したければ、`--display-old` オプションを指定します:
 
     ./symfony i18n:extract --display-old frontend fr
 
-古い文字列を自動的に削除するには `--auto-delete` を指定しますが、とりわけプラグインの翻訳がある場合、表示されるのは現在の文字列ではなく古い文字列であることにご注意ください:
+古い文字列を自動的に削除するには `--auto-delete` を指定しますが、特にプラグインの翻訳がある場合、表示されるのは現在の文字列ではなく古い文字列であることにご注意ください:
 
     ./symfony i18n:extract --auto-delete frontend fr
 
@@ -1242,7 +1242,7 @@ symfony が新しいクラスを生成するときにオプションとして著
     <p>Non i18n text</p>
     <p><?php echo 'Test' ?></p>
 
-このタスクは PHP に埋め込まれているすべての文字列を返しますが、誤検出する可能性があります (とりわけヘルパーの引数に文字列構文を使う場合)。
+このタスクは PHP に埋め込まれているすべての文字列を返しますが、誤検出する可能性があります (特にヘルパーの引数に文字列構文を使う場合)。
 
 `log`
 -----
@@ -1341,7 +1341,7 @@ symfony が新しいクラスを生成するときにオプションとして著
 
 デフォルトでは、最新の `stable` リリースがインストールされます。
 
-まだ安定版ではないプラグインをインストールしたい場合、`stability` オプションを指定します:
+まだ安定版ではないプラグインをインストールしたければ、`stability` オプションを指定します:
 
     ./symfony plugin:install --stability=beta sfGuardPlugin
     ./symfony plugin:install -s beta sfGuardPlugin
@@ -1415,7 +1415,7 @@ Web サイトでホストされている PEAR パッケージをインストー�
 
 実際このタスクは `plugin.post_install` イベントをそれぞれのプラグインに送信します。
 
-引数としてこれらのプラグインの名前を渡すことで1つもしくは複数のプラグインがアセットをインストールするか指定できます:
+引数としてこれらのプラグインの名前を渡すことで、1つもしくは複数のプラグインがアセットをインストールするか指定できます:
 
     ./symfony plugin:publish-assets sfDoctrinePlugin
 
@@ -1719,7 +1719,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
 ### ~`propel::build`~
 
-`propel::build` タスクはスキーマをもとにコードを生成する:
+`propel::build` タスクはスキーマに対応するコードを生成する:
 
     $ php symfony propel:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-load[="..."]] [--and-append[="..."]]
 
@@ -1743,7 +1743,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
 
 
-`propel:build` タスクはスキーマをもとにコードを生成します:
+`propel:build` タスクはスキーマに対応するコードを生成します:
 
     ./symfony propel:build
 
@@ -1751,7 +1751,7 @@ Web コンテンツ (画像、スタイルシートもしくは JavaScript) が�
 
     ./symfony propel:build --model --forms
 
-すべてのクラスと SQL ファイルを生成してデータベースをリビルドしたい場合、ショートカットの `--all` オプションをつけることができます:
+すべてのクラスと SQL ファイルを生成してデータベースをリビルドしたければ、ショートカットの `--all` オプションをつけることができます:
 
     ./symfony propel:build --all
 
@@ -2000,13 +2000,13 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:build-sql
 
-生成される SQL は `config/propel.ini`で 設定されているデータベースに合わせて最適化されます:
+生成される SQL は `config/propel.ini`で設定されているデータベースに合わせて最適化されます:
 
     propel.database = mysql
 
 ### ~`propel::data-dump`~
 
-`propel::data-dump` タスクはデータをフィクスチャディレクトリにダンプする:
+`propel::data-dump` タスクはデータをフィクスチャディレクトリに吐き出す:
 
     $ php symfony propel:data-dump [--application[="..."]] [--env="..."] [--connection="..."] [--classes="..."] [target]
 
@@ -2051,32 +2051,32 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 ### ~`propel::data-load`~
 
-`propel::data-load` タスクは YAML フィクスチャデータをロードする:
+`propel::data-load` タスクは YAML フィクスチャデータを読み込む:
 
     $ php symfony propel:data-load [--application[="..."]] [--env="..."] [--append] [--connection="..."] [dir_or_file1] ... [dir_or_fileN]
 
 
 
 | 引数 | デフォルト | 説明
-| ---- | ------- | ----------------------------------------
+| ---- | ------ | ----------------------------------------------
 | `dir_or_file` | `-` | ロードするディレクトリもしくはファイル
 
 
 | オプション (ショートカット) | デフォルト | 説明
-| ---------------------------- | ---------- | -----------
+| ---------------------------- | ----------- | -----------
 | `--application` | `1` | アプリケーションの名前
 | `--env` | `cli` | 環境
 | `--append` | `-` | データベースの現在のデータを削除しない
 | `--connection` | `propel` | 接続名
 
 
-`propel:data-load` タスクはデータフィクスチャをデータベースにロードします:
+`propel:data-load` タスクはデーターベースにデータフィクスチャを読み込ませます:
 
     ./symfony propel:data-load
 
-タスクは `data/fixtures/` で見つかるすべてのファイルからデータをロードします。
+タスクは `data/fixtures/` で見つかるすべてのファイルからデータを読み込ます。
 
-特定のファイルもしくはディレクトリからデータをロードしたければ、これらを引数として追加できます:
+特定のファイルもしくはディレクトリからデータを読み込ませたければ、これらを引数として追加できます:
 
     ./symfony propel:data-load data/fixtures/dev data/fixtures/users.yml
 
@@ -2084,11 +2084,11 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
     ./symfony propel:data-load --connection="name"
 
-データベースのなかの既存のデータを削除したくない場合、`--append` オプションをつけます:
+データベースのなかの既存のデータを削除したくなければ、`--append` オプションをつけます:
 
     ./symfony propel:data-load --append
 
-アプリケーションから特定のデータベースコンフィギュレーションを使いたい場合、`application` オプションをつけます:
+アプリケーションから特定のデータベースコンフィギュレーションを使いたければ、`application` オプションをつけます:
 
     ./symfony propel:data-load --application=frontend
 
@@ -2173,7 +2173,7 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 このタスクは `%application%` アプリケーションにおいて `%model%` モデルクラスに対応する `%module%` モジュールを作ります。
 
-`--generate-in-cache` オプションを指定すれば `%sf_app_cache_dir%/modules/auto%module%` のなかで実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールを作ることもできます:
+`--generate-in-cache` オプションを指定すれば、`%sf_app_cache_dir%/modules/auto%module%` のなかで実行時に生成されるモジュールからアクションとテンプレートを継承する空のモジュールを作ることもできます:
 
     ./symfony propel:generate-module --generate-in-cache frontend article Article
 
@@ -2261,15 +2261,15 @@ XML フォーマットは YAML よりも多くの情報を収めることがで�
 
 タスクはデータベースに接続して `config/sql/*schema.sql` ファイルで見つかるすべての SQL 文を実行します。
 
-実行前に、データベースのすべてのデータを削除するので本当に実行するかどうかをタスクはあなたに尋ねます。
+実行前に、データベースのすべてのデータを削除するので本当に実行するかどうかをタスクはあなたに確認の質問をします。
 
-確認の質問を省くために `--no-confirmation` オプションを渡すことができます:
+確認の質問を省くには、`--no-confirmation` オプションを渡します:
 
     ./symfony propel:insert-sql --no-confirmation
 
 タスクは `databases.yml` からデータベースコンフィギュレーションを読み込みます。`--application` もしくは `--env` オプションを渡すことで特定のアプリケーション/環境を使うことができます。
 
-任意の接続で SQL 文だけをロードしたければ、`--connection` オプションを指定することもできます。
+任意の接続で SQL 文だけを読み込ませたければ、`--connection` オプションを指定することもできます。
 
 ### ~`propel::schema-to-xml`~
 

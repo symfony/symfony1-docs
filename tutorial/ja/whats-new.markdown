@@ -385,7 +385,7 @@ Propel のプロジェクトを生成するには `--orm` オプションを渡�
 
     $ php /path/to/symfony generate:project foo --orm=Propel
 
-Propel もしくは Doctrine のどちらも使いたくない場合は `--orm` オプションに `none` を渡します:
+Propel もしくは Doctrine のどちらも使いたくなければ、`--orm` オプションに `none` を渡します:
 
     $ php /path/to/symfony generate:project foo --orm=none
 
@@ -523,7 +523,7 @@ Propel を拡張するために symfony が依存するカスタムのビルダ�
 
 Propel 1.4 はビヘイビアの実装を導入しました。カスタムの symfony ビルダーはこの新しいシステムに移植されました。
 
-Propel モデルネイティブなビヘイビアを Propel モデルに追加したい場合、`schema.yml` でも可能です:
+Propel モデルネイティブなビヘイビアを Propel モデルに追加したければ、`schema.yml` でも可能です:
 
     classes:
       Article:
@@ -630,7 +630,7 @@ symfony 1.3/1.4 では、新たなプロジェクトでプラグインを使う�
 
 `plugin:install` タスクはインストールするプラグインを自動的に有効にします (そして `plugin:uninstall` はプラグインを無効にします)。Subversion 経由でプラグインをインストールする場合、手動で有効にする必要があります。
 
-`sfProtoculousPlugin` もしくは `sfCompat10Plugin` のようなコアプラグインを使いたい場合、必要なのは対応する `enablePlugins()` メソッドを `ProjectConfiguration` クラスに追加することだけです。
+`sfProtoculousPlugin` もしくは `sfCompat10Plugin` のようなコアプラグインを使いたければ、必要なのは対応する `enablePlugins()` メソッドを `ProjectConfiguration` クラスに追加することだけです。
 
 >**NOTE**
 >symfony 1.2 からプロジェクトをアップグレードする場合、古いふるまいはアクティブなままです。これはアップグレードタスクが `ProjectConfiguration` ファイルを変更しないからです。新しいふるまいが適用されるのは symfony 1.3/1.4 の新規プロジェクトだけです。
@@ -655,7 +655,7 @@ symfony 1.3/1.4 では、新たなプロジェクトでプラグインを使う�
 
 symfony 1.3/1.4 は可能であればファイルパスをクリック可能なリンクの形式 (すなわちデバッグ例外のテンプレート) に整えます。`sf_file_link_format` がセットされていればこの設定が使われ、そうでなければ symfony は PHP コンフィギュレーションの `xdebug.file_link_format` の値を探します。
 
-たとえばファイルを TextMate で開きたい場合、次のコードを `settings.yml` に追加します:
+たとえばファイルを TextMate で開きたいのであれば、次のコードを `settings.yml` に追加します:
 
     [yml]
     all:
