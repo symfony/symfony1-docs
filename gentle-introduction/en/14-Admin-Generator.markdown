@@ -241,7 +241,7 @@ Listing 14-4 - Typical Complete Generator Configuration
 
           list:
             title:          Articles
-            display:        [title, blog_author_id, blog_category_id]
+            display:        [title, blog_author, blog_category]
             fields:
               published_on: { date_format: dd/MM/yy }
             layout:         stacked
@@ -382,7 +382,7 @@ Listing 14-9 - Custom Getters Provide Additional Columns for Administration Modu
     [yml]
     config:
       list:
-        display:  [title, blog_author_id, blog_category_id, nb_comments]
+        display:  [title, blog_author, blog_category, nb_comments]
 
 The resulting `list` view of the `article` module is shown in Figure 14-12.
 
