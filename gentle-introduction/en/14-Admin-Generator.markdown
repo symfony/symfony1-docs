@@ -390,29 +390,6 @@ Figure 14-10 - Custom field in the `list` view of the `article` module
 
 ![Custom field in the list view of the article module](http://www.symfony-project.org/images/book/1_4/F1410.png "Custom field in the list view of the article module")
 
-Custom fields can even return HTML code to display more than raw data. For instance, you can extend the `BlogComment` class with a `getArticleLink()` method as in Listing 14-10.
-
-Listing 14-10 - Adding a Custom Getter Returning HTML, in `lib/model/BlogComment.php`
-
-    [php]
-    public function getArticleLink()
-    {
-      return link_to($this->getBlogArticle()->getTitle(), 'blog_article_edit', $this->getBlogArticle());
-    }
-
-You can use this new getter as a custom field in the `comment/list` view with the same syntax as in Listing 14-9. See the example in Listing 14-11, and the result in Figure 14-11, where the HTML code output by the getter (a hyperlink to the article) appears in the second column instead of the article primary key.
-
-Listing 14-11 - Custom Getters Returning HTML Can Also Be Used As Additional Columns, in `modules/comment/config/generator.yml`
-
-    [yml]
-    config:
-      list:
-        display: [id, article_link, content]
-
-Figure 14-11 - Custom field in the `list` view of the `comment` module
-
-![Custom field in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1411.png "Custom field in the list view of the comment module")
-
 #### Partial Fields
 
 The code located in the model must be independent from the presentation. The example of the `getArticleLink()` method earlier doesn't respect this principle of layer separation, because some view code appears in the model layer. As a matter of fact, if you try to use this configuration, you will end up with the link being display as an `<a>` tag as it is escaped by default. To achieve the same goal in a correct way, you'd better put the code that outputs HTML for a custom field in a partial. Fortunately, the administration generator allows it if you declare a field name prefixed by an underscore. In that case, the `generator.yml` file of Listing 14-11 is to be modified as in Listing 14-12.
