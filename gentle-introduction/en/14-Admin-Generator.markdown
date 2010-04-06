@@ -124,6 +124,11 @@ This call is enough to create an `article` module in the `backend` application b
 
 The look and feel of a generated module, illustrated in Figures 14-2 and 14-3, is sophisticated enough to make it usable out of the box for a commercial application.
 
+>**TIP**
+>If you don't see the expected look and feel (no stylesheet and no image), this is because you need to install the assets in your project by running the `plugin:publish-assets` task:
+>
+>     $ php symfony plugin:publish-assets
+
 Figure 14-2 - `list` view of the `article` module in the `backend` application
 
 ![list view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1405.png "list view of the article module in the backend application")
@@ -131,11 +136,6 @@ Figure 14-2 - `list` view of the `article` module in the `backend` application
 Figure 14-3 - `edit` view of the `article` module in the `backend` application
 
 ![edit view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1406.png "edit view of the article module in the backend application")
-
->**TIP**
->If you don't see the expected look and feel (no stylesheet and no image), this is because you need to install the assets in your project by running the `plugin:publish-assets` task:
->
->     $ php symfony plugin:publish-assets
 
 ### A Look at the Generated Code
 
