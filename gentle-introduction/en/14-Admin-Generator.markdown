@@ -124,6 +124,11 @@ This call is enough to create an `article` module in the `backend` application b
 
 The look and feel of a generated module, illustrated in Figures 14-2 and 14-3, is sophisticated enough to make it usable out of the box for a commercial application.
 
+>**TIP**
+>If you don't see the expected look and feel (no stylesheet and no image), this is because you need to install the assets in your project by running the `plugin:publish-assets` task:
+>
+>     $ php symfony plugin:publish-assets
+
 Figure 14-2 - `list` view of the `article` module in the `backend` application
 
 ![list view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1405.png "list view of the article module in the backend application")
@@ -131,11 +136,6 @@ Figure 14-2 - `list` view of the `article` module in the `backend` application
 Figure 14-3 - `edit` view of the `article` module in the `backend` application
 
 ![edit view of the article module in the backend application](http://www.symfony-project.org/images/book/1_4/F1406.png "edit view of the article module in the backend application")
-
->**TIP**
->If you don't see the expected look and feel (no stylesheet and no image), this is because you need to install the assets in your project by running the `plugin:publish-assets` task:
->
->     $ php symfony plugin:publish-assets
 
 ### A Look at the Generated Code
 
@@ -241,7 +241,7 @@ Listing 14-4 - Typical Complete Generator Configuration
 
           list:
             title:          Articles
-            display:        [title, blog_author_id, blog_category_id]
+            display:        [title, blog_author, blog_category]
             fields:
               published_on: { date_format: dd/MM/yy }
             layout:         stacked
@@ -382,36 +382,13 @@ Listing 14-9 - Custom Getters Provide Additional Columns for Administration Modu
     [yml]
     config:
       list:
-        display:  [title, blog_author_id, blog_category_id, nb_comments]
+        display:  [title, blog_author, blog_category, nb_comments]
 
 The resulting `list` view of the `article` module is shown in Figure 14-12.
 
 Figure 14-10 - Custom field in the `list` view of the `article` module
 
 ![Custom field in the list view of the article module](http://www.symfony-project.org/images/book/1_4/F1410.png "Custom field in the list view of the article module")
-
-Custom fields can even return HTML code to display more than raw data. For instance, you can extend the `BlogComment` class with a `getArticleLink()` method as in Listing 14-10.
-
-Listing 14-10 - Adding a Custom Getter Returning HTML, in `lib/model/BlogComment.php`
-
-    [php]
-    public function getArticleLink()
-    {
-      return link_to($this->getBlogArticle()->getTitle(), 'blog_article_edit', $this->getBlogArticle());
-    }
-
-You can use this new getter as a custom field in the `comment/list` view with the same syntax as in Listing 14-9. See the example in Listing 14-11, and the result in Figure 14-11, where the HTML code output by the getter (a hyperlink to the article) appears in the second column instead of the article primary key.
-
-Listing 14-11 - Custom Getters Returning HTML Can Also Be Used As Additional Columns, in `modules/comment/config/generator.yml`
-
-    [yml]
-    config:
-      list:
-        display: [id, article_link, content]
-
-Figure 14-11 - Custom field in the `list` view of the `comment` module
-
-![Custom field in the list view of the comment module](http://www.symfony-project.org/images/book/1_4/F1411.png "Custom field in the list view of the comment module")
 
 #### Partial Fields
 

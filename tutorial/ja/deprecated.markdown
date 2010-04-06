@@ -172,7 +172,7 @@ PHP のインクルードパスからヘルパーをロードする機能は sym
   * `sfParameterHolder::get()`、`sfParameterHolder::has()`、
     `sfParameterHolder::remove()`、
     `sfNamespacedParameterHolder::get()`、
-    `sfNamespacedParameterHolder::has()` と `sfNamespacedParameterHolder::remove()` メソッドの配列表記 (`[]`) のサポートは廃止予定になり symfony 1.4 では利用できません (パフォーマンス向上のため)。
+    `sfNamespacedParameterHolder::has()` と `sfNamespacedParameterHolder::remove()` メソッドの配列表記 (`[]`) のサポートは廃止予定になり、symfony 1.4 では利用できません (パフォーマンス向上のため)。
 
 symfony CLI はグローバルな `--dry-run` オプションを受け入れなくなりました。このオプションは symfony の組み込みタスクによって使われていなかったからです。タスクの1つがこのオプションに依存する場合、このオプションをタスククラスのローカルオプションとして追加できます。
 

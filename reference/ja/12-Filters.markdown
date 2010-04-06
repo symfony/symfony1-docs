@@ -7,7 +7,7 @@ filters.yml 設定ファイル
 
 [設定ファイルの原則の章](#chapter_03)で説明したように、`filters.yml` ファイルでは**コンフィギュレーションカスケードのメカニズム**がはたらき、**定数**を収めることができます。
 
-`filters.yml` 設定ファイルには名前つきフィルタ定義のリストが収められています:
+`filters.yml` 設定ファイルには名前つきフィルタ定義のリストが用意されています:
 
     [yml]
     FILTER_1:
@@ -50,7 +50,7 @@ filters.yml 設定ファイル
     FACTORY_NAME:
       enabled: false
 
-特別な名前のフィルタが2つ: `rendering` と `execution` あります。これらのフィルタは両方とも必須で `type` パラメータで指定します。`rendering` フィルタはつねに最初に登録されフィルタリングされ `execution` フィルタは最後になります:
+特別な名前のフィルタが2つあります (`rendering` と `execution`)。これらのフィルタは両方とも必須で `type` パラメータで指定します。`rendering` フィルタはつねに最初に登録されフィルタリングされ `execution` フィルタは最後になります:
 
     [yml]
     rendering:
