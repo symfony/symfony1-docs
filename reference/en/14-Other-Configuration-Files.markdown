@@ -158,7 +158,7 @@ module to be loaded by symfony. The following code shows a typical
 
 If the `enabled` parameter is set to `false`, all actions of a module are
 disabled. They are redirected to the
-~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~
+[~`module_disabled_module`~](#chapter_04_the_actions_sub_section)/~`module_disabled_action`~
 action (as defined in [`settings.yml`](#chapter_04)).
 
 The `view_class` parameter defines the view class used by all actions of the

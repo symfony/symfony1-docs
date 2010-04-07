@@ -158,7 +158,7 @@ di `module.yml` con i valori predefiniti per tutte le impostazioni:
 
 Se il parametro `enabled` è impostato a `false`, tutte le azioni di un modulo sono
 disabilitate. Queste vengono reindirizzate all'azione
-~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~
+[~`module_disabled_module`~](#chapter_04_the_actions_sub_section)/~`module_disabled_action`~
 (come definito in [`settings.yml`](#chapter_04)).
 
 Il parametro `view_class` definisce la classe vista usata da tutte le azioni del

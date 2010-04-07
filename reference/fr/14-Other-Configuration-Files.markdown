@@ -158,7 +158,7 @@ module pour être chargé par symfony. Le code suivant montre un contenu typique
 
 Si le paramètre `enabled` est défini à `false`, toutes les actions d'un module sont
 désactivés. Ils sont redirigés vers l'action
-~[`module_disabled_module`](#chapter_04_the_actions_sub_section)~/~`module_disabled_action`~
+[~`module_disabled_module`~](#chapter_04_the_actions_sub_section)/~`module_disabled_action`~
 (tel que défini dans [`settings.yml`](#chapter_04)).
 
 Le paramètre `view_class` définit la classe de la vue utilisée par toutes les actions du
