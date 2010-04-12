@@ -1,26 +1,23 @@
 Day 14: Feeds
 =============
 
-Yesterday, you started developing your first very own symfony application.
-Don't stop now. As you learn more on symfony, try to add new features to your
+Yesterday, you started developing your first very own symfony application. Don't
+stop now. As you learn more on symfony, try to add new features to your
 application, host it somewhere, and share it with the community.
 
-Let's move on to something completely different today.
-
-If you are looking for a job, you will probably want to be informed as soon as
-a new job is posted. Because it is not very convenient to check the website
-every other hour, we will add several job feeds today to keep our Jobeet users
-up-to-date.
+Let's move on to something completely different. If you are looking for a job,
+you will probably want to be informed as soon as a new job is posted. Because it
+is not very convenient to check the website every other hour, we will add
+several job feeds here to keep our Jobeet users up-to-date.
 
 Formats
 -------
 
 The symfony framework has native support for ~formats|Formats~ and
-~mime-types|Mime Types~. This means that the same Model and Controller can
-have different ~templates|Templates~ based on the requested format. The
-default format is HTML but symfony supports ~several other formats|Built-in
-Formats~ out of the box like `txt`, `js`, `css`, `json`, `xml`, `rdf`, or
-`atom`.
+~mime-types|Mime Types~. This means that the same Model and Controller can have
+different ~templates|Templates~ based on the requested format. The default
+format is HTML but symfony supports ~several other formats|Built-in Formats~ out
+of the box like `txt`, `js`, `css`, `json`, `xml`, `rdf`, or `atom`.
 
 The format can be set by using the `setRequestFormat()` method of the
 ~request|HTTP Request~ object:
@@ -79,9 +76,10 @@ latest jobs, create an `indexSuccess.atom.php` template:
 >**SIDEBAR**
 >Template Names
 >
->As `html` is the most common format used for web applications, it can be omitted
->from the template name. Both `indexSuccess.php` and `indexSuccess.html.php`
->templates are equivalent and symfony uses the first one it finds.
+>As `html` is the most common format used for web applications, it can be 
+>omitted from the template name. Both `indexSuccess.php` and 
+>`indexSuccess.html.php` templates are equivalent and symfony uses the first one 
+>it finds.
 >
 >Why are default templates suffixed with `Success`? An action can return a value
 >to indicate which template to render. If the action returns nothing, it is
@@ -97,38 +95,37 @@ latest jobs, create an `indexSuccess.atom.php` template:
 >
 >     return 'Foo';
 >
->As seen in a previous day, the name of the template can also be changed by
->using the `setTemplate()` method:
+>As seen yesterday, the name of the template can also be changed by using the 
+>`setTemplate()` method:
 >
 >     [php]
 >     $this->setTemplate('foo');
 
 By default, symfony will change the response `~Content-Type~` according to the
-format, and for all non-HTML formats, the layout is disabled. For an Atom
-feed, symfony changes the `Content-Type` to `application/atom+xml;
-charset=utf-8`.
+format, and for all non-HTML formats, the layout is disabled. For an Atom feed,
+symfony changes the `Content-Type` to `application/atom+xml;charset=utf-8`.
 
 In the Jobeet footer, update the link to the feed:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <li class="feed">
-      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+      <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
 The ~internal URI|Internal URI~ is the same as for the `job` list with the
 `sf_format` added as a variable.
 
-Add a `<link>` tag in the head section of the layout to allow automatic
-discover by the browser of our feed:
+Add a `<link>` tag in the head section of the layout to allow automatic discover
+by the browser of our feed:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+      href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
-For the link `href` attribute, an ~URL (Absolute)~ is used thanks to the
-second argument of the `url_for()` helper.
+For the link `href` attribute, an ~URL (Absolute)~ is used thanks to the second
+argument of the `url_for()` helper.
 
 Replace the Atom template header with the following code:
 
@@ -136,22 +133,22 @@ Replace the Atom template header with the following code:
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
     <title>Jobeet</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-    <link href="<?php echo url_for('@homepage', true) ?>"/>
+    <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+    <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
     </author>
-    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+    <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
 <propel>
-Notice the usage of `U` as an argument to `getCreatedAt()` to get the date as
-a timestamp. To get the date of the latest post, create the `getLatestPost()`
+Notice the usage of `U` as an argument to `getCreatedAt()` to get the date as a
+timestamp. To get the date of the latest post, create the `getLatestPost()`
 method:
 </propel>
 <doctrine>
@@ -183,8 +180,8 @@ method:
     {
       public function getLatestPost()
       {
-        $q = Doctrine_Query::create()
-          ->from('JobeetJob j');
+        $q = Doctrine_Query::create()->from('JobeetJob j');
+
         $this->addActiveJobsQuery($q);
 
         return $q->fetchOne();
@@ -222,7 +219,7 @@ The feed entries can be generated with the following code:
                      alt="<?php echo $job->getCompany() ?> logo" />
                  </a>
                </div>
-             <?php endif; ?>
+             <?php endif ?>
 
              <div>
                <?php echo simple_format_text($job->getDescription()) ?>
@@ -237,12 +234,11 @@ The feed entries can be generated with the following code:
             <name><?php echo $job->getCompany() ?></name>
           </author>
         </entry>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
+      <?php endforeach ?>
+    <?php endforeach ?>
 
-The `getHost()` method of the request object (`$sf_request`) returns the
-current host, which comes in handy for creating an absolute link for the company
-logo.
+The `getHost()` method of the request object (`$sf_request`) returns the current
+host, which comes in handy for creating an absolute link for the company logo.
 
 ![Feed](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
 
@@ -283,10 +279,10 @@ Update the links to category feeds in the ~templates|Templates~:
       <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
     </div>
 
-The last step is to create the `showSuccess.atom.php` template. But as this
-feed will also list jobs, we can ~refactor|Refactoring~ the code that
-generates the feed entries by creating a `_list.atom.php` partial. As for the
-`html` format, ~partials|Partial Templates~ are format specific:
+The last step is to create the `showSuccess.atom.php` template. But as this feed
+will also list jobs, we can ~refactor|Refactoring~ the code that generates the
+feed entries by creating a `_list.atom.php` partial. As for the `html` format,
+~partials|Partial Templates~ are format specific:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_list.atom.php -->
@@ -312,7 +308,7 @@ generates the feed entries by creating a `_list.atom.php` partial. As for the
                    alt="<?php echo $job->getCompany() ?> logo" />
                </a>
              </div>
-           <?php endif; ?>
+           <?php endif ?>
 
            <div>
              <?php echo simple_format_text($job->getDescription()) ?>
@@ -327,7 +323,7 @@ generates the feed entries by creating a `_list.atom.php` partial. As for the
           <name><?php echo $job->getCompany() ?></name>
         </author>
       </entry>
-    <?php endforeach; ?>
+    <?php endforeach ?>
 
 You can use the `_list.atom.php` partial to simplify the job feed template:
 
@@ -337,22 +333,22 @@ You can use the `_list.atom.php` partial to simplify the job feed template:
     <feed xmlns="http://www.w3.org/2005/Atom">
       <title>Jobeet</title>
       <subtitle>Latest Jobs</subtitle>
-      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-      <link href="<?php echo url_for('@homepage', true) ?>"/>
+      <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+      <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
       <author>
         <name>Jobeet</name>
       </author>
-      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+      <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
     <?php foreach ($categories as $category): ?>
       <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </feed>
 
 Eventually, create the `showSuccess.atom.php` template:
@@ -392,9 +388,7 @@ As for the main job feed, we need the date of the latest job for a category:
     {
       public function getLatestPost()
       {
-        $jobs = $this->getActiveJobs(1);
-
-        return $jobs[0];
+        return $this->getActiveJobs(1)->getFirst();
       }
 
       // ...
@@ -402,13 +396,12 @@ As for the main job feed, we need the date of the latest job for a category:
 
 ![Category Feed](http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png)
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-As with many symfony features, the native format support allows you to add
-feeds to your websites without effort.
-
-Today, we have enhanced the job seeker experience. Tomorrow, we will see how
-to provide greater exposure to the job posters by providing a Web Service.
+As with many symfony features, the native format support allows you to add feeds
+to your websites without effort. Today, we have enhanced the job seeker
+experience. Tomorrow, we will see how to provide greater exposure to the job
+posters by providing a Web Service.
 
 __ORM__

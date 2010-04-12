@@ -365,7 +365,7 @@ faisons-le depuis l'action et le component du module `sfJobeetLanguage` :
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($this->form[$this->form->getCSRFFieldName()]);
+        $this->form->disableLocalCSRFProtection();
       }
     }
 
@@ -375,15 +375,13 @@ faisons-le depuis l'action et le component du module `sfJobeetLanguage` :
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($form[$form->getCSRFFieldName()]);
+        $form->disableLocalCSRFProtection();
 
         // ...
       }
     }
 
-Le `getCSRFFieldName()` retourne le nom du champ qui contient le jeton CSRF.
-Par désactivation de ce champ, le widget et le validateur associés sont
-supprimés.
+La méthode `disableLocalCSRFProtection()` désactive le jeton unique CSRF du formulaire courant.
 
 ~Suppression du cache|Cache (Suppression)~
 ------------------------------------------
@@ -424,7 +422,7 @@ du cache manuellement :
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect('job_show_user', $job);
+      $this->redirect($this->generateUrl('job_show_user', $job));
     }
 
 Le cache est géré par la classe `sfViewCacheManager`. La méthode `remove()`
@@ -465,7 +463,7 @@ Testons la page de création d'emplois :
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

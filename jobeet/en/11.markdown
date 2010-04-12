@@ -1,11 +1,10 @@
 Day 11: Testing your Forms
 ==========================
 
-In chapter 10, we created our first form with symfony. People are now able to
-post a new job on Jobeet but we ran out of time before we could add some tests.
-
-That's what we will do along this chapter. Along the way, we will also learn more
-about the form framework.
+In day 10, we created our first form with symfony. People are now able to post a
+new job on Jobeet but we ran out of time before we could add some tests. That's
+what we will do along these lines. Along the way, we will also learn more about
+the form framework.
 
 >**SIDEBAR**
 >Using the Form Framework without symfony
@@ -44,11 +43,11 @@ At the end of the file, add the following code to get the job creation page:
       end()
     ;
 
-We have already used the `click()` method to simulate clicks on links. The
-same `click()` method can be used to submit a ~form|Forms~. For a form, you
-can pass the values to submit for each field as a second argument of the
-method. Like a real browser, the browser object will merge the default values
-of the form with the submitted values.
+We have already used the `click()` method to simulate clicks on links. The same
+`click()` method can be used to submit a ~form|Forms~. For a form, you can pass
+the values to submit for each field as a second argument of the method. Like a
+real browser, the browser object will merge the default values of the form with
+the submitted values.
 
 But to pass the field values, we need to know their names. If you open the
 source code or use the Firefox Web Developer Toolbar "Forms > Display Form
@@ -72,9 +71,9 @@ adding the following code at the end of the `configure()` method of
 </doctrine>
     $this->widgetSchema->setNameFormat('job[%s]');
 
-After this change, the `company` name should be `job[company]` in your
-browser. It is now time to actually click on the "Preview your job" button and
-pass valid values to the form:
+After this change, the `company` name should be `job[company]` in your browser.
+It is now time to actually click on the "Preview your job" button and pass valid
+values to the form:
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -113,8 +112,7 @@ After submitting the form, we checked that the executed action is `create`.
 The Form Tester
 ---------------
 
-The form we have submitted should be valid. You can test this by using the
-**form tester**:
+The form we have submitted should be valid. You can test this by using the **form tester**:
 
     [php]
     with('form')->begin()->
@@ -125,10 +123,10 @@ The form tester has several methods to test the current form status, like the
 errors.
 
 If you make a mistake in the test, and the test does not pass, you can use the
-`with('response')->~debug|Debug~()` statement we have seen during day 9. But
-you will have to dig into the generated HTML to check for error messages.
-That's not really convenient. The form tester also provides a `debug()` method
-that outputs the form status and all error messages associated with it:
+`with('response')->~debug|Debug~()` statement we have seen during day 9. But you
+will have to dig into the generated HTML to check for error messages. That's not
+really convenient. The form tester also provides a `debug()` method that outputs
+the form status and all error messages associated with it:
 
     [php]
     with('form')->debug()
@@ -193,13 +191,13 @@ objects in the database match the criteria passed as an argument.
     end()
 
 <propel>
-The criteria can be an array of values like above, or a `Criteria` instance
-for more complex queries. You can test the existence of objects matching the
+The criteria can be an array of values like above, or a `Criteria` instance for
+more complex queries. You can test the existence of objects matching the
 criteria with a Boolean as the third argument (the default is `true`), or the
 number of matching objects by passing an integer.
 </propel>
 <doctrine>
-The criteria can be an array of values like above, or a `Doctrine_Query` 
+The criteria can be an array of values like above, or a `Doctrine_Query`
 instance for more complex queries. You can test the existence of objects
 matching the criteria with a Boolean as the third argument (the default is
 `true`), or the number of matching objects by passing an integer.
@@ -231,8 +229,8 @@ Let's add a test to check the behavior when we submit non-valid data:
       end()
     ;
 
-The `hasErrors()` method can test the number of errors if passed an integer.
-The `isError()` method tests the error code for a given field.
+The `hasErrors()` method can test the number of errors if passed an integer. The
+`isError()` method tests the error code for a given field.
 
 >**TIP**
 >In the tests we have written for the non-valid data submission, we have not
@@ -240,14 +238,14 @@ The `isError()` method tests the error code for a given field.
 >specific things.
 
 You can also test the generated ~HTML~ to check that it contains the error
-messages, but it is not necessary in our case as we have not customized the
-form layout.
+messages, but it is not necessary in our case as we have not customized the form
+layout.
 
-Now, we need to test the admin bar found on the job preview page. When a job
-has not been activated yet, you can edit, delete, or publish the job. To test
-those three links, we will need to first create a job. But that's a lot of
-copy and paste. As I don't like to waste e-trees, let's add a job creator
-method in the `JobeetTestFunctional` class:
+Now, we need to test the admin bar found on the job preview page. When a job has
+not been activated yet, you can edit, delete, or publish the job. To test those
+three links, we will need to first create a job. But that's a lot of copy and
+paste. As I don't like to waste e-trees, let's add a job creator method in the
+`JobeetTestFunctional` class:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -301,14 +299,14 @@ Testing the "Publish" link is now more simple:
       end()
     ;
 
-If you remember from chapter 10, the "Publish" link has been configured to be
-called with the HTTP `~PUT|PUT (HTTP Method)~` method. As browsers don't
-understand `PUT` requests, the `link_to()` helper converts the link to a form
-with some JavaScript. As the test browser does not execute JavaScript, we need
-to force the method to `PUT` by passing it as a third option of the `click()`
-method. Moreover, the `link_to()` helper also embeds a ~CSRF token~ as we have
-enabled CSRF protection during chapter 1; the `_with_csrf` option simulates this
-token.
+If you remember from day 10, the "Publish" link has been configured to be called
+with the HTTP `~PUT|PUT (HTTP Method)~` method. As browsers don't understand
+`PUT` requests, the `link_to()` helper converts the link to a form with some
+JavaScript. As the test browser does not execute JavaScript, we need to force
+the method to `PUT` by passing it as a third option of the `click()` method.
+Moreover, the `link_to()` helper also embeds a ~CSRF token~ as we have enabled
+CSRF protection during the very first day; the `_with_csrf` option simulates
+this token.
 
 Testing the "Delete" link is quite similar:
 
@@ -332,13 +330,13 @@ Testing the "Delete" link is quite similar:
 Tests as a SafeGuard
 --------------------
 
-When a job is published, you cannot edit it anymore. Even if the "Edit" link
-is not displayed anymore on the preview page, let's add some tests for this
+When a job is published, you cannot edit it anymore. Even if the "Edit" link is
+not displayed anymore on the preview page, let's add some tests for this
 requirement.
 
 First, add another argument to the `createJob()` method to allow automatic
-publication of the job, and create a `getJobByPosition()` method that returns
-a job given its position value:
+publication of the job, and create a `getJobByPosition()` method that returns a
+job given its position value:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -426,17 +424,15 @@ job is activated:
     }
 
 The fix is trivial, but are you sure that everything else still works as
-expected? You can open your browser and start testing all possible
-combinations to access the edit page. But there is a simpler way: run your
-test suite; if you have introduced a ~regression|Regression~, symfony will
-tell you right away.
+expected? You can open your browser and start testing all possible combinations
+to access the edit page. But there is a simpler way: run your test suite; if you
+have introduced a ~regression|Regression~, symfony will tell you right away.
 
 Back to the Future in a Test
 ----------------------------
 
-When a job is expiring in less than five days, or if it is already expired,
-the user can extend the job validation for another 30 days from the current
-date.
+When a job is expiring in less than five days, or if it is already expired, the
+user can extend the job validation for another 30 days from the current date.
 
 Testing this requirement in a browser is not easy as the expiration date is
 automatically set when the job is created to 30 days in the future. So, when
@@ -614,10 +610,10 @@ steps:
 
 ### Built-in Security Features
 
-The `fromArray()` method takes an array of values and updates the
-corresponding column values. Does this represent a ~security|Security~ issue?
-What if someone tries to submit a value for a column for which he does not
-have authorization? For instance, can I force the `token` column?
+The `fromArray()` method takes an array of values and updates the corresponding
+column values. Does this represent a ~security|Security~ issue? What if someone
+tries to submit a value for a column for which he does not have authorization?
+For instance, can I force the `token` column?
 
 Let's write a test to simulate a job submission with a `token` field:
 
@@ -644,8 +640,8 @@ validator.
 >You can also submit additional fields from the comfort of your browser using
 >tools like the Firefox Web Developer Toolbar.
 
-You can bypass this security measure by setting the `allow_extra_fields`
-option to `true`:
+You can bypass this security measure by setting the `allow_extra_fields` option
+to `true`:
 
     [php]
     class MyForm extends sfForm
@@ -672,17 +668,17 @@ really want the value, set the `filter_extra_fields` option to `false`:
 
 ### ~XSS~ and ~CSRF~ Protection
 
-During chapter 1, you learned the `generate:app` task created a secured
-application by default.
+During day 1, you learned the `generate:app` task created a secured application
+by default.
 
 First, it enabled the protection against XSS. It means that all variables used
-in templates are escaped by default. If you try to submit a job description
-with some HTML tags inside, you will notice that when symfony renders the job
-page, the HTML tags from the description are not interpreted, but rendered as
-plain text.
+in templates are escaped by default. If you try to submit a job description with
+some HTML tags inside, you will notice that when symfony renders the job page,
+the HTML tags from the description are not interpreted, but rendered as plain
+text.
 
-Then, it enabled the CSRF protection. When a CSRF token is set, all forms
-embed a `_csrf_token` hidden field.
+Then, it enabled the CSRF protection. When a CSRF token is set, all forms embed
+a `_csrf_token` hidden field.
 
 >**TIP**
 >The escaping strategy and the CSRF secret can be changed at any time by
@@ -703,15 +699,15 @@ embed a `_csrf_token` hidden field.
 Maintenance Tasks
 -----------------
 
-Even if symfony is a web framework, it comes with a ~command line|Command
-Line~ tool. You have already used it to create the default directory structure
-of the project and the application, but also to generate various files for the
-model. Adding a new ~task|Tasks~ is quite easy as the tools used by the
-symfony command line are packaged in a framework.
+Even if symfony is a web framework, it comes with a ~command line|Command Line~
+tool. You have already used it to create the default directory structure of the
+project and the application, but also to generate various files for the model.
+Adding a new ~task|Tasks~ is quite easy as the tools used by the symfony command
+line are packaged in a framework.
 
-When a user creates a job, he must activate it to put it online. But if not,
-the database will grow with stale jobs. Let's create a task that remove stale
-jobs from the database. This task will have to be run regularly in a cron job.
+When a user creates a job, he must activate it to put it online. But if not, the
+database will grow with stale jobs. Let's create a task that remove stale jobs
+from the database. This task will have to be run regularly in a cron job.
 
     [php]
     // lib/task/JobeetCleanupTask.class.php
@@ -747,14 +743,14 @@ jobs from the database. This task will have to be run regularly in a cron job.
         $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
         $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
       }
     }
 
-The task configuration is done in the `configure()` method. Each task must
-have a unique name (`namespace`:`name`), and can have arguments and options.
+The task configuration is done in the `configure()` method. Each task must have
+a unique name (`namespace`:`name`), and can have arguments and options.
 
 >**TIP**
 >Browse the built-in symfony tasks (`lib/task/`) for more examples of usage.
@@ -809,18 +805,18 @@ As always, the database cleanup code has been factored out in the
 Final Thoughts
 --------------
 
-Testing is at the heart of the symfony philosophy and tools. In this chapter,
-we have learned again how to leverage symfony tools to make the development process
+Testing is at the heart of the symfony philosophy and tools. Today, we have
+learned again how to leverage symfony tools to make the development process
 easier, faster, and more important, safer.
 
-The symfony form framework provides much more than just widgets and
-validators: it gives you a simple way to test your forms and ensure that your
-forms are secure by default.
+The symfony form framework provides much more than just widgets and validators:
+it gives you a simple way to test your forms and ensure that your forms are
+secure by default.
 
-Our tour of great symfony features do not end today. In the next chapter, we
-will create the backend application for Jobeet. Creating a backend interface is
-a must for most web projects, and Jobeet is no different. But how will we be
-able to develop such an interface in just one hour? Simple, we will use the
-symfony admin generator framework.
+Our tour of great symfony features do not end here. Tomorrow, we will create the
+backend application for Jobeet. Creating a backend interface is a must for most
+web projects, and Jobeet is no different. But how will we be able to develop
+such an interface in just one hour? Simple, we will use the symfony admin
+generator framework.
 
 __ORM__

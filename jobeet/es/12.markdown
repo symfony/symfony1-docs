@@ -119,7 +119,7 @@ Sustituye el contenido por defecto del `layout.php` con el siguiente:
         <div id="container">
           <div id="header">
             <h1>
-              <a href="<?php echo url_for('@homepage') ?>">
+              <a href="<?php echo url_for('homepage') ?>">
                 <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
@@ -128,10 +128,10 @@ Sustituye el contenido por defecto del `layout.php` con el siguiente:
           <div id="menu">
             <ul>
               <li>
-                <?php echo link_to('Jobs', '@jobeet_job') ?>
+                <?php echo link_to('Jobs', 'jobeet_job') ?>
               </li>
               <li>
-                <?php echo link_to('Categories', '@jobeet_category') ?>
+                <?php echo link_to('Categories', 'jobeet_category') ?>
               </li>
             </ul>
           </div>
@@ -470,7 +470,7 @@ framework. Si actualizas tu navegador y seleccionas las acciones extendidas, sym
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
     }
 
@@ -546,7 +546,7 @@ Como para las batch actions, las acciones `_delete` y `_edit` son las definidas 
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...
@@ -593,7 +593,7 @@ Crea la acción `listDeleteNeverActivated` en el módulo `job`:
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...

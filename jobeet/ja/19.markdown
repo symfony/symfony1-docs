@@ -135,10 +135,8 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
       {
         return $this->getAttribute('first_request', true);
       }
-      else
-      {
-        $this->setAttribute('first_request', $boolean);
-      }
+      
+      $this->setAttribute('first_request', $boolean);
     }
 
 `localized_homepage` ルートを追加します:
@@ -170,14 +168,14 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('@localized_homepage');
+        $this->redirect('localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -236,6 +234,23 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
     $ php symfony plugin:install sfFormExtraPlugin
 
+Or via Subversion with the following command:
+
+        $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
+
+In order for plugin's classes to be loaded, the `sfFormExtraPlugin` plugin must be activated in the `config/ProjectConfiguration.class.php` file as shown below:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin'
+      ));
+    }
+
 >**NOTE**
 >`sfFormExtraPlugin` は JavaScript ライブラリのような外部依存を必要とするウィジェットを含みます。リッチな日付セレクター、WYSIWYG エディターなどもあります。便利なものがたくさん見つかりましたらドキュメントを読むのに時間をかけてください。
 
@@ -255,7 +270,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('@change_language') ?>">
+        <form action="<?php echo url_for('change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
@@ -304,7 +319,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('@change_language') ?>">
+    <form action="<?php echo url_for('change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
@@ -331,7 +346,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
         $form->process($request);
 
-        return $this->redirect('@localized_homepage');
+        return $this->redirect('localized_homepage');
       }
     }
 
@@ -394,13 +409,13 @@ Jobeet のフッターに対する `__()` ヘルパーの使い方です:
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -526,7 +541,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 タスクを実行した後で、フランス語翻訳を追加するために XLIFF ファイルを開きます:
 
     [xml]
-    <trans-unit id="5">
+    <trans-unit id="6">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
@@ -574,7 +589,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 文字列の翻訳は他のメッセージ文字列と似ています:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="7">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
     </trans-unit>
@@ -919,9 +934,28 @@ admin ジェネレーターの翻訳ファイルは、`fr/messages.xml` の代�
 `test/fixtures/categories.yml` で定義したフィクスチャファイルをコピーして、最初に、カテゴリー用のテストフィクスチャを更新します。
 </doctrine>
 
+<doctrine>
+Don't forget to update methods in the `lib/test/JobeetTestFunctional.class.php` file in order to care of our modifications concerning the `JobeetCategory`'s internationalization.
+
+    [php]
+    public function getMostRecentProgrammingJob()
+    {
+      $q = Doctrine_Query::create()
+        ->select('j.*')
+        ->from('JobeetJob j')
+        ->leftJoin('j.JobeetCategory c')
+        ->leftJoin('c.Translation t')
+        ->where('t.slug = ?', 'programming');
+
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+      return $q->fetchOne();
+    }
+</doctrine>
+
 `test` 環境のモデルをリビルドします:
 
-    $ php symfony propel:build --all -and-load --no-confirmation --env=test
+    $ php symfony propel:build --all --no-confirmation --env=test
 
 正しく動作しているかチェックするためにすべてのテストを立ち上げることができます:
 

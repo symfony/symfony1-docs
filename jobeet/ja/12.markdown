@@ -108,7 +108,7 @@ admin ジェネレーターはパッケージを設定するシンプルなバ�
         <div id="container">
           <div id="header">
             <h1>
-              <a href="<?php echo url_for('@homepage') ?>">
+              <a href="<?php echo url_for('homepage') ?>">
                 <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
@@ -117,10 +117,10 @@ admin ジェネレーターはパッケージを設定するシンプルなバ�
           <div id="menu">
             <ul>
               <li>
-                <?php echo link_to('Jobs', '@jobeet_job') ?>
+                <?php echo link_to('Jobs', 'jobeet_job') ?>
               </li>
               <li>
-                <?php echo link_to('Categories', '@jobeet_category') ?>
+                <?php echo link_to('Categories', 'jobeet_category') ?>
               </li>
             </ul>
           </div>
@@ -446,7 +446,7 @@ list は異なる~レイアウト~で表示されます。デフォルトでは�
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
     }
 
@@ -522,7 +522,7 @@ list において、単独のオブジェクトで実行できるアクション
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...
@@ -569,7 +569,7 @@ list において、単独のオブジェクトで実行できるアクション
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...

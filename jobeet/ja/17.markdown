@@ -150,7 +150,7 @@ Zend Lucene はインデックスの存在の有無に対応してインデッ�
       $index = JobeetJobPeer::getLuceneIndex();
 </propel>
 <doctrine>
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 </doctrine>
 
       // 既存のエントリーを削除する
@@ -226,7 +226,7 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
     {
       // ...
 
-      $conn = $conn ? $conn : $this->getTable()->getConnection();
+      $conn = $conn ? $conn : JobeetJobTable::getConnection();
       $conn->beginTransaction();
       try
       {
@@ -270,7 +270,7 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
     // lib/model/doctrine/JobeetJob.class.php
     public function delete(Doctrine_Connection $conn = null)
     {
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       if ($hit = $index->find('pk:'.$this->getId()))
       {
@@ -305,9 +305,7 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
 
 準備が整ったので、フィクスチャのデータのインデックスを作成するためにこれらをリロードできます:
 
-    $ php symfony propel:data-load --env=dev
-
-インデックスは環境に依存しておりタスクのデフォルト環境は `cli` なのでタスクは `--env` オプションつきで実行します。
+    $ php symfony propel:data-load
 
 >**TIP**
 >Unix 系ユーザーの方へ: インデックスはコマンドラインと Web からも修正されるので、設定に依存してインデックスパーミッションを変更しなければなりません: 使うコマンドラインユーザーと Web サーバーのユーザーがインデックスディレクトリに書き込みできることをチェックします。
@@ -332,22 +330,31 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('job', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
          ➥ ->getForLuceneQuery($query);
 </doctrine>
       }
 
       // ...
     }
+
+>**NOTE**
+>La nouvelle méthode `forwardUnless()` redirige l'utilisateur vers l'action 
+> `index` du module `job` si la variable `query` de l'URL n'existe pas ou est 
+>vide.
+>
+>Cette méthode n'est en fait qu'un simple alias pour le code suivant:
+>
+>    if (!$query = $request->getParameter('query'))
+>    {
+>      $this->forward('job', 'index');
+>    }
 
 テンプレートも非常に単刀直入です:
 
@@ -386,7 +393,7 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
     // lib/model/doctrine/JobeetJobTable.class.php
     public function getForLuceneQuery($query)
     {
-      $hits = $this->getLuceneIndex()->find($query);
+      $hits = self::getLuceneIndex()->find($query);
 
       $pks = array();
       foreach ($hits as $hit)
@@ -402,6 +409,7 @@ Zend Lucene は既存のエントリーを更新できないので、インデ�
       $q = $this->createQuery('j')
         ->whereIn('j.id', $pks)
         ->limit(20);
+
       $q = $this->addActiveJobsQuery($q);
 
       return $q->execute();
@@ -415,7 +423,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
     [php]
     // apps/frontend/templates/layout.php
     <h2>Ask for a job</h2>
-    <form action="<?php echo url_for('@job_search') ?>" method="get">
+    <form action="<?php echo url_for('job_search') ?>" method="get">
       <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
       <input type="submit" value="search" />
       <div class="help">
@@ -443,7 +451,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return non activated jobs');
 
@@ -453,7 +461,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 1, '::getForLuceneQuery() returns jobs matching the criteria');
     $t->is($jobs[0]->getId(), $job->getId(), '::getForLuceneQuery() returns jobs matching the criteria');
@@ -463,7 +471,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return deleted jobs');
 
@@ -490,7 +498,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
 </propel>
 <doctrine>
       // Lucene のインデックスをクリーンナップする
-      $index = Doctrine::getTable('JobeetJob')->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
@@ -517,7 +525,7 @@ Lucene インデックスからすべての結果を取得した後で、アク�
       $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-      $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+      $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
 
       $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>

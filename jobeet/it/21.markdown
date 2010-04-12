@@ -370,31 +370,29 @@ togliere solo il token CSRF, facciamolo dall'azione e dal component
 del modulo `sfJobeetLanguage`:
 
     [php]
-    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/components.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/components.class.php
     class sfJobeetLanguageComponents extends sfComponents
     {
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($this->form[$this->form->getCSRFFieldName()]);
+        $this->form->disableLocalCSRFProtection();
       }
     }
 
-    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/actions.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/actions.class.php
     class sfJobeetLanguageActions extends sfActions
     {
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($form[$form->getCSRFFieldName()]);
+        $form->disableLocalCSRFProtection();
 
         // ...
       }
     }
 
-`getCSRFFieldName()` restituisce il nome del campo che contiene il token
-CSRF. Togliendo questo campo, il widget e il validatore associato vengono
-rimossi.
+The `disableLocalCSRFProtection()` method disables the CSRF token for this form.
 
 ~Rimuovere la cache~
 --------------------
@@ -420,7 +418,7 @@ nuovo lavoro, basta modificare il metodo `executePublish()` del modulo
 `sfJobeetJob` aggiungendo una pulizia manuale della cache:
 
     [php]
-    // plugins/sfJobeetJob/modules/sfJobeetJob/actions/actions.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
     public function executePublish(sfWebRequest $request)
     {
       $request->checkCSRFProtection();
@@ -436,7 +434,7 @@ nuovo lavoro, basta modificare il metodo `executePublish()` del modulo
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect('job_show_user', $job);
+      $this->redirect($this->generateUrl('job_show_user', $job));
     }
 
 La cache è gestita dalla classe `sfViewCacheManager`. Il metodo `remove()`
@@ -479,7 +477,7 @@ Testiamo la pagina di creazione di un lavoro:
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

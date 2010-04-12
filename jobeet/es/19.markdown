@@ -140,10 +140,8 @@ En primer lugar, añade el método `isFirstRequest()` a `myUser`. Devuelve `true
       {
         return $this->getAttribute('first_request', true);
       }
-      else
-      {
-        $this->setAttribute('first_request', $boolean);
-      }
+      
+      $this->setAttribute('first_request', $boolean);
     }
 
 Agrega una ruta `localized_homepage`:
@@ -175,14 +173,14 @@ Cambia la acción `index` del módulo `job` para aplicar la lógica para redirig
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('@localized_homepage');
+        $this->redirect('localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -244,6 +242,23 @@ Instala el plugin con la tarea `plugin:install`:
 
     $ php symfony plugin:install sfFormExtraPlugin
 
+Or via Subversion with the following command:
+
+        $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
+
+In order for plugin's classes to be loaded, the `sfFormExtraPlugin` plugin must be activated in the `config/ProjectConfiguration.class.php` file as shown below:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin'
+      ));
+    }
+
 >**NOTE**
 >El `sfFormExtraPlugin` tiene widgets que requieran dependencias externas
 >como bibliotecas JavaScript. Encontrarás un widget para seleccionar fechas, 
@@ -268,7 +283,7 @@ El plugin `sfFormExtraPlugin` da un formulario `sfFormLanguage` para gestionar l
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('@change_language') ?>">
+        <form action="<?php echo url_for('change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
@@ -317,7 +332,7 @@ La plantilla para un componente utiliza la misma convención de nombres como lo 
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('@change_language') ?>">
+    <form action="<?php echo url_for('change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
@@ -344,7 +359,7 @@ Y crea la acción correspondiente:
 
         $form->process($request);
 
-        return $this->redirect('@localized_homepage');
+        return $this->redirect('localized_homepage');
       }
     }
 
@@ -407,13 +422,13 @@ Aquí está cómo usa el helper `__()` para el pie de página de Jobeet:
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -549,7 +564,7 @@ Añadir la nueva cadena manualmente insertando una etiqueta `trans-unit` en el a
 Después de ejecutar la tarea, abre el archivo XLIFF para añadir la traducción al francés:
 
     [xml]
-    <trans-unit id="5">
+    <trans-unit id="6">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
@@ -596,7 +611,7 @@ El rango puede describirse con cualquier serie de números:
 Traducir la cadena es similar a otras cadenas de mensajes:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="7">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catÃ©gorie|[1]Une annonce dans cette catÃ©gorie|(1,+Inf]%count% annonces dans cette catÃ©gorie</target>
     </trans-unit>
@@ -868,8 +883,7 @@ y `doSelectForSlug()` y cambiar el `findOneBySlug()` para simplemente usar el `f
 
 </doctrine>
 
-A continuación, utiliza la opción `method` para decirle a la ruta `category` que use el método 
-`doSelectForSlug()` para recuperar el objeto:
+A continuación, utiliza la opción `method` para decirle a la ruta `category` que use el método `doSelectForSlug()` para recuperar el objeto:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -947,9 +961,28 @@ definidos antes en `test/fixtures/010_categories.yml`.
 definidos antes en `test/fixtures/categories.yml`.
 </doctrine>
 
+<doctrine>
+Don't forget to update methods in the `lib/test/JobeetTestFunctional.class.php` file in order to care of our modifications concerning the `JobeetCategory`'s internationalization.
+
+    [php]
+    public function getMostRecentProgrammingJob()
+    {
+      $q = Doctrine_Query::create()
+        ->select('j.*')
+        ->from('JobeetJob j')
+        ->leftJoin('j.JobeetCategory c')
+        ->leftJoin('c.Translation t')
+        ->where('t.slug = ?', 'programming');
+
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+      return $q->fetchOne();
+    }
+</doctrine>
+
 Reconstruir el modelo para el entorno `test`:
 
-    $ php symfony propel:build --all --and-load --no-confirmation --env=test
+    $ php symfony propel:build --all --and-load --env=test
 
 Ahora puedes lanzar todas las pruebas para comprobar que están funcionando bien:
 

@@ -113,7 +113,7 @@ Dans le pied de page de Jobeet, mettez à jour le lien vers le flux :
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <li class="feed">
-      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+      <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
 L'~URI interne|URI interne~ est la même que pour la liste `job` avec le
@@ -125,7 +125,7 @@ de découvrir par le navigateur automatiquement notre flux :
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+      href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
 Pour l'attribut `href` du lien, une ~URL (Absolue)~ est utilisée grâce au second
 argument du helper `url_for()`.
@@ -136,18 +136,18 @@ Remplacer l'entête du Template Atom avec le code suivant :
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
     <title>Jobeet</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-    <link href="<?php echo url_for('@homepage', true) ?>"/>
+    <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+    <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
     </author>
-    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+    <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
 <propel>
 Notez l'utilisation du `U` comme un argument pour `getCreatedAt()` pour obtenir
@@ -222,7 +222,7 @@ Les entrées du flux peuvent être générées par le code suivant :
                      alt="<?php echo $job->getCompany() ?> logo" />
                  </a>
                </div>
-             <?php endif; ?>
+             <?php endif ?>
 
              <div>
                <?php echo simple_format_text($job->getDescription()) ?>
@@ -237,8 +237,8 @@ Les entrées du flux peuvent être générées par le code suivant :
             <name><?php echo $job->getCompany() ?></name>
           </author>
         </entry>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
+      <?php endforeach ?>
+    <?php endforeach ?>
 
 La méthode `getHost()` de l'objet de la requête (`$sf_request`) retourne
 l'hôte actuel, qui est très pratique pour créer un lien absolu pour le logo
@@ -312,7 +312,7 @@ format `html`, les ~partials|Templates Partial~ ont un format spécifique :
                    alt="<?php echo $job->getCompany() ?> logo" />
                </a>
              </div>
-           <?php endif; ?>
+           <?php endif ?>
 
            <div>
              <?php echo simple_format_text($job->getDescription()) ?>
@@ -327,7 +327,7 @@ format `html`, les ~partials|Templates Partial~ ont un format spécifique :
           <name><?php echo $job->getCompany() ?></name>
         </author>
       </entry>
-    <?php endforeach; ?>
+    <?php endforeach ?>
 
 Vous pouvez utiliser le partial `_list.atom.php` pour simplifier le Template du flux emploi :
 
@@ -337,22 +337,22 @@ Vous pouvez utiliser le partial `_list.atom.php` pour simplifier le Template du 
     <feed xmlns="http://www.w3.org/2005/Atom">
       <title>Jobeet</title>
       <subtitle>Latest Jobs</subtitle>
-      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-      <link href="<?php echo url_for('@homepage', true) ?>"/>
+      <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+      <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
       <author>
         <name>Jobeet</name>
       </author>
-      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+      <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
     <?php foreach ($categories as $category): ?>
       <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </feed>
 
 Enfin, créez le Template `showSuccess.atom.php` :
@@ -392,9 +392,7 @@ Quant au flux principal des emplois, nous avons besoin de la date du dernier emp
     {
       public function getLatestPost()
       {
-        $jobs = $this->getActiveJobs(1);
-
-        return $jobs[0];
+        return $this->getActiveJobs(1)->getFirst();
       }
 
       // ...

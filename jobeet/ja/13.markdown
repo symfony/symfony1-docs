@@ -32,7 +32,7 @@ flash は `sfUser` の `setFlash()` メソッドを使って設定できます:
       $this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', date('m/d/Y', strtotime($job->getExpiresAt()))));
 </doctrine>
 
-      $this->redirect('job_show_user', $job);
+      $this->redirect($this->generateUrl('job_show_user', $job));
     }
 
 最初の引数は flash の識別子で2番目は表示するメッセージです。望むのであれば flash はなんでも定義できますが、`notice` と `error` はもっとも共通するものの2つです (これらは admin ジェネレーターによって広範囲で使われます)。
@@ -49,10 +49,10 @@ flash は `sfUser` の `setFlash()` メソッドを使って設定できます:
       <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
     <?php endif; ?>
 
-テンプレートにおいて、ユーザーは特別な変数 `sf_user` をとおしてアクセス可能です.
+テンプレートにおいて、ユーザーは特別な変数 `$sf_user` をとおしてアクセス可能です.
 
 >**NOTE**
->symfony オブジェクトのなかにはアクションから明示的に渡さなくても常にテンプレートにアクセスできるものがあります: `sf_request`、`sf_user` と `sf_response`
+>symfony オブジェクトのなかにはアクションから明示的に渡さなくても常にテンプレートにアクセスできるものがあります: `$sf_request`、`$sf_user` と `$sf_response`
 
 ユーザー属性
 ------------
@@ -151,7 +151,7 @@ flash は `sfUser` の `setFlash()` メソッドを使って設定できます:
           <li>
             <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
           </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
       </ul>
     </div>
 
@@ -180,15 +180,14 @@ flash は `sfUser` の `setFlash()` メソッドを使って設定できます:
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
-            ->execute();
+            ->execute()
+          ;
         }
-        else
-        {
-          return array();
-        }
+        
+        return array();
       }
 </doctrine>
 
@@ -382,10 +381,13 @@ symfony フレークワークの大きな強みの1つは[プラグインのエ�
       public function setup()
       {
 <propel>
-        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin');
+        $this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin'));
 </propel>
 <doctrine>
-        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin');
+        $this->enablePlugins(array(
+          'sfDoctrinePlugin', 
+          'sfDoctrineGuardPlugin'
+        ));
 </doctrine>
       }
     }
@@ -408,7 +410,7 @@ symfony フレークワークの大きな強みの1つは[プラグインのエ�
     $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
-    $ php symfony doctrine:build --all --and-load
+    $ php symfony doctrine:build --all --and-load --no-confirmation
 </doctrine>
 
 >**TIP**
@@ -471,23 +473,17 @@ symfony フレークワークの大きな強みの1つは[プラグインのエ�
     <?php if ($sf_user->isAuthenticated()): ?>
       <div id="menu">
         <ul>
-<propel>
-          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
-</propel>
-<doctrine>
-          <li><?php echo link_to('Jobs', '@jobeet_job_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
-</doctrine>
+          <li><?php echo link_to('Jobs', 'jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', 'jobeet_category') ?></li>
         </ul>
       </div>
-    <?php endif; ?>
+    <?php endif ?>
 
 ユーザーが認証されたとき、メニューに~ログアウト~リンクを追加する必要があります:
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Logout', '@sf_guard_signout') ?></li>
+    <li><?php echo link_to('Logout', 'sf_guard_signout') ?></li>
 
 >**TIP**
 >`sfGuardPlugin` によって提供されるすべてのルートの一覧を表示するには、`app:routes` タスクを使います。
@@ -504,7 +500,7 @@ Jobeet バックエンドにさらに磨きをかけるには、管理者ユー�
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
+    <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
 
 ![バックエンドのメニュー](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 

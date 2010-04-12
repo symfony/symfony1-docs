@@ -274,7 +274,7 @@ Jobeet アプリケーションでは、"history job" バーがあるために�
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($this->form[$this->form->getCSRFFieldName()]);
+        $this->form->disableLocalCSRFProtection();
       }
     }
 
@@ -284,13 +284,13 @@ Jobeet アプリケーションでは、"history job" バーがあるために�
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($form[$form->getCSRFFieldName()]);
+        $form->disableLocalCSRFProtection();
 
         // ...
       }
     }
 
-`getCSRFFieldName()` メソッドは CSRF トークンを含むフィールドの名前を返します。このフィールドを `unset` すると、ウィジェットと関連するバリデーターは削除されます。
+The `disableLocalCSRFProtection()` method disables the CSRF token for this form.
 
 ~キャッシュを削除する|キャッシュの削除~
 --------------------------------------
@@ -361,7 +361,7 @@ Jobeet アプリケーションでは、"history job" バーがあるために�
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine_Core::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

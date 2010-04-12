@@ -193,7 +193,7 @@ E create il metodo `updateLuceneIndex()` che fa il vero lavoro:
       $index = JobeetJobPeer::getLuceneIndex();
 </propel>
 <doctrine>
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 </doctrine>
 
       // cancella una voce esistente
@@ -277,7 +277,7 @@ all'interno di una transazione e annullarli in caso di errore:
     {
       // ...
 
-      $conn = $conn ? $conn : $this->getTable()->getConnection();
+      $conn = $conn ? $conn : JobeetJobTable::getConnection();
       $conn->beginTransaction();
       try
       {
@@ -322,7 +322,7 @@ dall'indice il corrispondente lavoro :
     // lib/model/doctrine/JobeetJob.class.php
     public function delete(Doctrine_Connection $conn = null)
     {
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       if ($hit = $index->find('pk:'.$this->getId()))
       {
@@ -361,10 +361,7 @@ Ricerca
 
 Ora che abbiamo tutto al suo posto, possiamo ricaricare le fixture per indicizzarle:
 
-    $ php symfony propel:data-load --env=dev
-
-Questo processo viene eseguito con l'opzione `--env`, dato che l'indice dipende
-dall'ambiente e l'ambiente di default per i processi è `cli`.
+    $ php symfony propel:data-load
 
 >**TIP**
 >Per gli utenti di sistemi Unix-like: dato che l'indice è modificato sia dalla
@@ -389,21 +386,31 @@ E l'azione corrispondente:
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('job', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
+         ➥ ->getForLuceneQuery($query);
 </doctrine>
       }
 
       // ...
     }
+
+>**NOTE**
+>La nouvelle méthode `forwardUnless()` redirige l'utilisateur vers l'action 
+> `index` du module `job` si la variable `query` de l'URL n'existe pas ou est 
+>vide.
+>
+>Cette méthode n'est en fait qu'un simple alias pour le code suivant:
+>
+>    if (!$query = $request->getParameter('query'))
+>    {
+>      $this->forward('job', 'index');
+>    }
 
 Anche il template è abbastanza immediato:
 
@@ -442,7 +449,7 @@ La ricerca stessa è delegata al metodo `getForLuceneQuery()`:
     // lib/model/doctrine/JobeetJobTable.class.php
     public function getForLuceneQuery($query)
     {
-      $hits = $this->getLuceneIndex()->find($query);
+      $hits = self::getLuceneIndex()->find($query);
 
       $pks = array();
       foreach ($hits as $hit)
@@ -458,6 +465,7 @@ La ricerca stessa è delegata al metodo `getForLuceneQuery()`:
       $q = $this->createQuery('j')
         ->whereIn('j.id', $pks)
         ->limit(20);
+
       $q = $this->addActiveJobsQuery($q);
 
       return $q->execute();
@@ -472,7 +480,7 @@ Per farlo funzionare, aggiorniamo il layout:
     [php]
     // apps/frontend/templates/layout.php
     <h2>Ask for a job</h2>
-    <form action="<?php echo url_for('@job_search') ?>" method="get">
+    <form action="<?php echo url_for('job_search') ?>" method="get">
       <input type="text" name="query" value="<?php echo isset($query) ? $query : '' ?>" id="search_keywords" />
       <input type="submit" value="search" />
       <div class="help">
@@ -503,7 +511,7 @@ aggiornare il numero di test all'inizio del file:
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return non activated jobs');
 
@@ -513,7 +521,7 @@ aggiornare il numero di test all'inizio del file:
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 1, '::getForLuceneQuery() returns jobs matching the criteria');
     $t->is($jobs[0]->getId(), $job->getId(), '::getForLuceneQuery() returns jobs matching the criteria');
@@ -523,7 +531,7 @@ aggiornare il numero di test all'inizio del file:
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return deleted jobs');
 
@@ -547,7 +555,7 @@ con queste nuove caratteristiche:
 
 <propel>
       // pulisce l'indice di Lucene
-      $index = JobeetJobPeer::getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       $criteria = new Criteria();
       $criteria->add(JobeetJobPeer::EXPIRES_AT, time(), Criteria::LESS_THAN);
@@ -555,7 +563,7 @@ con queste nuove caratteristiche:
 </propel>
 <doctrine>
       // pulisce l'indice di Lucene
-      $index = Doctrine::getTable('JobeetJob')->getLuceneIndex();
+      $index = Doctrine_Core::getTable('JobeetJob')->getLuceneIndex();
 
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
@@ -582,7 +590,7 @@ con queste nuove caratteristiche:
       $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-      $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+      $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
 
       $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>

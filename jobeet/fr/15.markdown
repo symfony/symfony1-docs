@@ -159,7 +159,7 @@ activé, nous avons besoin de modifier le comportement par défaut de la route :
     {
       public function getForToken(array $parameters)
       {
-        $affiliate = Doctrine::getTable('JobeetAffiliate')
+        $affiliate = Doctrine_Core::getTable('JobeetAffiliate')
           ➥ ->findOneByToken($parameters['token']);
         if (!$affiliate || !$affiliate->getIsActive())
         {
@@ -244,7 +244,7 @@ renvoie la liste des emplois actuellement actifs :
           ->leftJoin('c.JobeetAffiliates a')
           ->where('a.id = ?', $this->getId());
 
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->execute();
       }
@@ -328,9 +328,9 @@ Le support du format `xml` est aussi simple que la création d'un Template :
       <job url="<?php echo $url ?>">
     <?php foreach ($job as $key => $value): ?>
         <<?php echo $key ?>><?php echo $value ?></<?php echo $key ?>>
-    <?php endforeach; ?>
+    <?php endforeach ?>
       </job>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </jobs>
 
 ### Le format `json`
@@ -346,10 +346,10 @@ Le support du [format JSON](http://json.org/) est similaire :
     <?php $nb1 = count($job); $j = 0; foreach ($job as $key => $value): ++$j ?>
       "<?php echo $key ?>": <?php echo json_encode($value).($nb1 == $j ? '' : ',') ?>
 
-    <?php endforeach; ?>
+    <?php endforeach ?>
     }<?php echo $nb == $i ? '' : ',' ?>
 
-    <?php endforeach; ?>
+    <?php endforeach ?>
     ]
 
 ### ~Le format `yaml`|Formats (Création)~
@@ -396,8 +396,8 @@ Le Template pour YAML se lit comme suit :
     <?php foreach ($job as $key => $value): ?>
       <?php echo $key ?>: <?php echo sfYaml::dump($value) ?>
 
-    <?php endforeach; ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
+    <?php endforeach ?>
 
 Si vous essayez d'appeler le service web avec un jeton non-valide, vous aurez une page
 XML 404 pour le format XML, et une page JSON 404 pour le format JSON. Mais pour le format
@@ -473,7 +473,10 @@ le répertoire `test/fixtures/` et remplacez le contenu auto-généré du fichie
       info('2 - The jobs returned are limited to the categories configured for the affiliate')->
       get('/api/sensio_labs/jobs.xml')->
       with('request')->isFormat('xml')->
-      with('response')->checkElement('job', 32)->
+      with('response')->begin()->
+        isValid()->
+        checkElement('job', 32)->
+      end()->
 
       info('3 - The web service supports the JSON format')->
       get('/api/sensio_labs/jobs.json')->
@@ -488,11 +491,22 @@ le répertoire `test/fixtures/` et remplacez le contenu auto-généré du fichie
       end()
     ;
 
-Dans ce test, vous remarquerez deux nouvelles méthodes :
+Dans ce test, vous remarquerez trois nouvelles méthodes :
 
+  * `isValid()`: Vérifie si oui ou non la réponse XML est bien formée
   * `isFormat()` : Elle teste le format d'une requête
-  * `matches()` : Pour le format non-HTML, elle contrôle que la réponse correspond
-                  au regex passé en argument
+  * `matches()` : Pour le format non-HTML, elle contrôle que la réponse correspond à l'expression régulière passée en argument
+
+>**TIP**
+>La méthode `isValid()` accepte un booléen en guise de premier paramètre qui 
+>permet de valider la réponse XML contre sa définition XSD.
+>
+>    $browser->with('response')->isValid(true);
+>
+>Cette méthode accepte également une chaîne représentant le chemin absolu vers 
+>un fichier XSD propriétaire contre lequel la réponse XML doit être validée.
+>
+>    $browser->with('response')->isValid('/path/to/schema/xsd');
 
 Le formulaire de demande d'affiliation
 --------------------------------------
@@ -577,7 +591,7 @@ Enfin, modifiez le lien dans le pied de page pour qu'il pointe vers le module `a
     [php]
     // apps/frontend/templates/layout.php
     <li class="last">
-      <a href="<?php echo url_for('@affiliate_new') ?>">Become an affiliate</a>
+      <a href="<?php echo url_for('affiliate_new') ?>">Become an affiliate</a>
     </li>
 
 ### Les actions
@@ -596,7 +610,7 @@ L'action `wait` est simple car nous n'avons pas besoin de passer quelque chose p
 
     [php]
     // apps/frontend/modules/affiliate/actions/actions.class.php
-    public function executeWait()
+    public function executeWait(sfWebRequest $request)
     {
     }
 
@@ -614,16 +628,18 @@ Ouvrez le fichier `JobeetAffiliateForm` pour personnaliser le ~formulaire|Formul
     {
       public function configure()
       {
+        $this->useFields(array(
+          'url', 
+          'email', 
+          'jobeet_categories_list'
+        ));
 <propel>
-        unset($this['is_active'], $this['token'], $this['created_at']);
         $this->widgetSchema['jobeet_category_affiliate_list']->setOption('expanded', true);
-        $this->widgetSchema['jobeet_category_affiliate_list']->setLabel('Categories');
+                $this->widgetSchema['jobeet_category_affiliate_list']->setLabel('Categories');
 
         $this->validatorSchema['jobeet_category_affiliate_list']->setOption('required', true);
 </propel>
 <doctrine>
-        unset($this['is_active'], $this['token'], $this['created_at'], $this['updated_at']);
-
         $this->widgetSchema['jobeet_categories_list']->setOption('expanded', true);
         $this->widgetSchema['jobeet_categories_list']->setLabel('Categories');
 
@@ -638,6 +654,8 @@ Ouvrez le fichier `JobeetAffiliateForm` pour personnaliser le ~formulaire|Formul
         $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => true));
       }
     }
+
+La nouvelle méthode `sfForm::useFields()` permet de spécifier une liste blanche des champs à conserver. Tous les autres champs non mentionnés seront retirés du formulaire.
 
 Le framework de formulaire prend en charge les ~relations plusieurs-vers-plusieurs|Relations
 plusieurs-vers-plusieurs (Formulaires)~ comme n'importe quel autre colonne. Par défaut, une telle
@@ -675,7 +693,7 @@ Remplacez les tests générés pour le module `affiliate` par le code suivant :
         'jobeet_category_affiliate_list' => array($browser->getProgrammingCategory()->getId()),
 </propel>
 <doctrine>
-        'jobeet_categories_list'         => array(Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
+        'jobeet_categories_list'         => array(Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
 </doctrine>
       )))->
       with('response')->isRedirected()->
@@ -749,13 +767,13 @@ le nombre d'affiliés qui ont besoin d'être activés :
     <!-- apps/backend/templates/layout.php -->
     <li>
 <propel>
-      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
+      <a href="<?php echo url_for('jobeet_affiliate') ?>">
         Affiliates - <strong><?php echo JobeetAffiliatePeer::countToBeActivated() ?></strong>
       </a>
 </propel>
 <doctrine>
-      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
-        Affiliates - <strong><?php echo Doctrine::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
+      <a href="<?php echo url_for('jobeet_affiliate') ?>">
+        Affiliates - <strong><?php echo Doctrine_Core::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
       </a>
 </doctrine>
     </li>
@@ -836,24 +854,14 @@ Le seul autre code à écrire, c'est les actions `activate` et `deactivate` :
       {
         $this->getRoute()->getObject()->activate();
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeListDeactivate()
       {
         $this->getRoute()->getObject()->deactivate();
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeBatchActivate(sfWebRequest $request)
@@ -874,12 +882,7 @@ Le seul autre code à écrire, c'est les actions `activate` et `deactivate` :
           $affiliate->activate();
         }
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeBatchDeactivate(sfWebRequest $request)
@@ -900,12 +903,7 @@ Le seul autre code à écrire, c'est les actions `activate` et `deactivate` :
           $affiliate->deactivate();
         }
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
     }
 

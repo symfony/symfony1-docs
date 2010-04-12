@@ -89,6 +89,19 @@ Inizializzare un plugin è semplice come creare una nuova cartella sotto
 
     $ mkdir plugins/sfJobeetPlugin
 
+Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php` file.
+
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+
 >**NOTE**
 >Tutti i plugin devono terminare con `Plugin`. È anche buona abitudine mettere come
 >~prefisso|Prefisso~ `sf`, per quanto non obbligatorio.
@@ -112,6 +125,22 @@ Spostare i file dei modelli, dei form e dei filtri in `plugins/sfJobeetPlugin/li
     $ mv lib/model/ plugins/sfJobeetPlugin/lib/
     $ mv lib/form/ plugins/sfJobeetPlugin/lib/
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<propel>
+    $ rm plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+</propel>
+
+<doctrine>
+    $ rm plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+</doctrine>
+
+Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseForm.class.php
 
 <doctrine>
 Dopo aver spostato modelli, form e filtri, le classi devono essere rinominate,
@@ -203,13 +232,13 @@ dallo schema. Per esempio il modello `JobeetJob` ora ha questa struttura di clas
      `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
      come la classe `JobeetJob`, tranne che questa è un'istanza
      di `Doctrine_Table` restituita dalla chiamata a
-     `Doctrine::getTable('JobeetJob')`.
+     `Doctrine_Core::getTable('JobeetJob')`.
 
   * `PluginJobeetJobTable` (estende `Doctrine_Table`) in
      `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
      questa classe contiene tutte le funzionalità specifiche
      del plugin, ad esempio per l'istanza di `Doctrine_Table`
-     restituita dalla chiamata a `Doctrine::getTable('JobeetJob')`.
+     restituita dalla chiamata a `Doctrine_Core::getTable('JobeetJob')`.
 
 Con questa struttura generata, si ha la possibilità di personalizzare i
 modelli di un plugin modificando la classe `JobeetJob` di primo livello.
@@ -332,12 +361,15 @@ Aggiornare le azioni `search` e `delete`:
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('sfJobeetJob', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'sfJobeetJob', 'index');
 
+<propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
+</propel>
+<doctrine>
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
+          ➥ ->getForLuceneQuery($query);
+</doctrine>
 
         if ($request->isXmlHttpRequest())
         {
@@ -345,10 +377,9 @@ Aggiornare le azioni `search` e `delete`:
           {
             return $this->renderText('No results.');
           }
-          else
-          {
-            return $this->renderPartial('sfJobeetJob/list', array('jobs' => $this->jobs));
-          }
+
+          return $this->renderPartial('sfJobeetJob/list',
+             ➥ array('jobs' => $this->jobs));
         }
       }
 
@@ -619,13 +650,13 @@ Rimuovere tutti i metodi dalla classe `myUser` e creare la classe `JobeetUser`:
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
             ->execute();
-        } else {
-          return array();
         }
+
+        return array();
 </doctrine>
       }
 

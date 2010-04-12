@@ -1,20 +1,20 @@
 Day 7: Playing with the Category Page
-=====================================
+======================================
 
-Yesterday you expanded your knowledge of symfony in a lot of different areas:
+Yesterday, you expanded your knowledge of symfony in a lot of different areas:
 querying with ##ORM##, fixtures, routing, debugging, and custom configuration.
-And we finished with a little challenge to start this chapter.
+And we finished with a little challenge to start today.
 
-We hope you worked on the Jobeet category page as today's tutorial will then be
-much more valuable for you.
+We hope you worked on the Jobeet category page as today will then be much more
+valuable for you.
 
 Ready? Let's talk about a possible implementation.
 
 The Category Route
 ------------------
 
-First, we need to add a route to define a pretty URL for the category page.
-Add it at the beginning of the routing file:
+First, we need to add a route to define a pretty URL for the category page. Add
+it at the beginning of the routing file:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -26,14 +26,14 @@ Add it at the beginning of the routing file:
 
 >**TIP**
 >Whenever you start implementing a new feature, it is a good practice to first
->think about the ~URL~ and create the associated ~route|Route~. And it is mandatory if
->you removed the default routing rules.
+>think about the ~URL~ and create the associated ~route|Route~. And it is 
+>mandatory if you removed the default routing rules.
 
 A route can use any column from its related object as a parameter. It can also
-use any other value if there is a related accessor defined in the object
-class. Because the `slug` parameter has no corresponding column in the
-`category` table, we need to add a virtual accessor in `JobeetCategory` to
-make the route works:
+use any other value if there is a related accessor defined in the object class.
+Because the `slug` parameter has no corresponding column in the `category`
+table, we need to add a virtual accessor in `JobeetCategory` to make the route
+works:
 
     [php]
 <propel>
@@ -50,8 +50,8 @@ make the route works:
 The Category Link
 -----------------
 
-Now, edit the `indexSuccess.php` template of the `job` module to add the link
-to the category page:
+Now, edit the `indexSuccess.php` template of the `job` module to add the link to
+the category page:
 
     [php]
     <!-- some HTML code -->
@@ -76,9 +76,8 @@ to the category page:
     </div>
 
 We only add the link if there are more than 10 jobs to display for the current
-category. The link contains the number of jobs not displayed. For this
-template to work, we need to add the `countActiveJobs()` method to
-`JobeetCategory`:
+category. The link contains the number of jobs not displayed. For this template
+to work, we need to add the `countActiveJobs()` method to `JobeetCategory`:
 
 <propel>
     [php]
@@ -148,7 +147,8 @@ file with the following code:
 
 As you can see for yourself, we have refactored the whole code of
 `JobeetJobPeer` to introduce a new shared `addActiveJobsCriteria()` method to
-make the code more [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
+make the code more [~DRY~ (Don't Repeat
+Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </propel>
 <doctrine>
     [php]
@@ -188,8 +188,9 @@ make the code more [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/
     }
 
 As you can see for yourself, we have refactored the whole code of
-`JobeetJobTable` to introduce a new shared `addActiveJobsQuery()` method to
-make the code more [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
+`JobeetJobTable` to introduce a new shared `addActiveJobsQuery()` method to make
+the code more [~DRY~ (Don't Repeat
+Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </doctrine>
 
 >**TIP**
@@ -198,20 +199,20 @@ make the code more [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/
 >function or a method, as we have done here.
 
 <propel>
-In the `countActiveJobs()` method, instead of using `doSelect()` and then
-count the number of results, we have used the much faster `doCount()` method.
+In the `countActiveJobs()` method, instead of using `doSelect()` and then count
+the number of results, we have used the much faster `doCount()` method.
 </propel>
 <doctrine>
-In the `countActiveJobs()` method, instead of using `execute()` and then
-count the number of results, we have used the much faster `count()` method.
+In the `countActiveJobs()` method, instead of using `execute()` and then count
+the number of results, we have used the much faster `count()` method.
 </doctrine>
 
 We have changed a lot of files, just for this simple feature. But each time we
 have added some code, we have tried to put it in the right layer of the
-application and we have also tried to make the code reusable. In the process,
-we have also refactored some existing code. That's a typical workflow when
-working on a symfony project. In the following screenshot we are showing 5
-jobs to keep it short, you should see 10 (the `max_jobs_on_homepage` setting):
+application and we have also tried to make the code reusable. In the process, we
+have also refactored some existing code. That's a typical workflow when working
+on a symfony project. In the following screenshot we are showing 5 jobs to keep
+it short, you should see 10 (the `max_jobs_on_homepage` setting):
 
 ![Homepage](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
 
@@ -223,9 +224,8 @@ It's time to create the `category` ~module|Module~:
     $ php symfony generate:module frontend category
 
 If you have created a module, you have probably used the
-`propel:generate-module`. That's fine but as we won't need 90% of the
-generated code, I have used the `generate:module` which creates an empty
-module.
+`propel:generate-module`. That's fine but as we won't need 90% of the generated
+code, I have used the `generate:module` which creates an empty module.
 
 >**TIP**
 >Why not add a `category` action to the `job` module? We could, but as the
@@ -233,9 +233,9 @@ module.
 >create a dedicated `category` module.
 
 When accessing the category page, the `category` route will have to find the
-category associated with the request `slug` variable. But as the ~slug|Slug~
-is not stored in the database, and because we cannot deduce the category name
-from the slug, there is no way to find the category associated with the slug.
+category associated with the request `slug` variable. But as the ~slug|Slug~ is
+not stored in the database, and because we cannot deduce the category name from
+the slug, there is no way to find the category associated with the slug.
 
 Update the Database
 -------------------
@@ -252,9 +252,9 @@ We need to add a `slug` column for the `category` table:
         slug:         { type: varchar(255), required: true, index: unique }
 </propel>
 <doctrine>
-This `slug` column can be taken care of by a Doctrine behavior named `Sluggable`.
-We simply need to enable the behavior on our `JobeetCategory` model and it will 
-take care of everything for you.
+This `slug` column can be taken care of by a Doctrine behavior named
+`Sluggable`. We simply need to enable the behavior on our `JobeetCategory` model
+and it will take care of everything for you.
 
     [yml]
     # config/doctrine/schema.yml
@@ -270,12 +270,12 @@ take care of everything for you.
 
 </doctrine>
 
-Now that `slug` is a real column, you need to remove the `getSlug()` method
-from `JobeetCategory`.
+Now that `slug` is a real column, you need to remove the `getSlug()` method from
+`JobeetCategory`.
 
 <propel>
-Each time the `category` name changes, we need to compute and change the
-`slug` as well. Let's override the `setName()` method:
+Each time the `category` name changes, we need to compute and change the `slug`
+as well. Let's override the `setName()` method:
 
     [php]
     // lib/model/JobeetCategory.php
@@ -293,8 +293,8 @@ Each time the `category` name changes, we need to compute and change the
 >object.
 </doctrine>
 
-Use the `propel:build --all --and-load` task to update the database tables,
-and repopulate the database with our fixtures:
+Use the `propel:build --all --and-load` task to update the database tables, and
+repopulate the database with our fixtures:
 
     $ php symfony propel:build --all --and-load --no-confirmation
 
@@ -353,9 +353,9 @@ The last step is to create the `showSuccess.php` template:
 Notice that we have copied and pasted the `<table>` tag that create a list of
 jobs from the job `indexSuccess.php` template. That's bad. Time to learn a new
 trick. When you need to reuse some portion of a template, you need to create a
-**~partial|Partial Templates~**. A partial is a snippet of
-~template|Templates~ code that can be shared among several templates. A
-partial is just another template that starts with an underscore (`_`).
+**~partial|Partial Templates~**. A partial is a snippet of ~template|Templates~
+code that can be shared among several templates. A partial is just another
+template that starts with an underscore (`_`).
 
 Create the `_list.php` file:
 
@@ -404,14 +404,14 @@ Replace the `<table>` HTML code from both templates with the call to
 List ~Pagination~
 -----------------
 
-From day 2 requirements:
+From the second day's requirements:
 
   "The list is paginated with 20 jobs per page."
 
 To paginate a list of ##ORM## objects, symfony provides a dedicated class:
-[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager).
-In the `category` action, instead of passing the job objects to the
-`showSuccess` template, we pass a pager:
+[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager). In the
+`category` action, instead of passing the job objects to the `showSuccess`
+template, we pass a pager:
 
     [php]
     // apps/frontend/modules/category/actions/actions.class.php
@@ -449,8 +449,8 @@ items to return per page. Add the latter value to your configuration file:
       max_jobs_on_category: 20
 
 <propel>
-The `sfPropelPager::setCriteria()` method takes a `Criteria` object to use
-when selecting the items from the database.
+The `sfPropelPager::setCriteria()` method takes a `Criteria` object to use when
+selecting the items from the database.
 </propel>
 <doctrine>
 The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use
@@ -603,17 +603,17 @@ you can use `count()` function to get the number of results instead of the
 
 ![Pagination](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-If you worked on your own implementation yesterday and feel that you didn't
-learn much today, it means that you are getting used to the symfony
-philosophy. The process to add a new feature to a symfony website is always
-the same: think about the URLs, create some actions, update the model, and
-write some templates. And, if you can apply some good development practices to
-the mix, you will become a symfony master very fast.
+If you worked on your own implementation in day 6 and feel that you didn't
+learn much here, it means that you are getting used to the symfony philosophy.
+The process to add a new feature to a symfony website is always the same: think
+about the URLs, create some actions, update the model, and write some templates.
+And, if you can apply some good development practices to the mix, you will
+become a symfony master very fast.
 
-Tomorrow will be the start of a new week for Jobeet. To celebrate, we will
-talk about a brand new topic: tests.
+Tomorrow will be the start of a new week for Jobeet. To celebrate, we will talk
+about a brand new topic: automated tests.
 
 __ORM__

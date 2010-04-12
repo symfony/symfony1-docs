@@ -1,30 +1,29 @@
 Day 20: The Plugins
 ===================
 
-Yesterday you learned how to internationalize and localize your symfony
+Yesterday, you learned how to internationalize and localize your symfony
 applications. Once again, thanks to the ICU standard and a lot of helpers,
-symfony makes this really easy.
-
-Today, we will talk about ~plugins|Plugins~: what they are, what you can bundle in a
-plugin, and what they can be used for.
+symfony makes this really easy. Until the end of these lines, we will talk about
+~plugins|Plugins~: what they are, what you can bundle in a plugin, and what they
+can be used for.
 
 Plugins
 -------
 
 ### A symfony Plugin
 
-A symfony plugin offers a way to package and distribute a subset of your
-project files. Like a project, a plugin can contain classes, helpers,
-configuration, tasks, modules, schemas, and even web assets.
+A symfony plugin offers a way to package and distribute a subset of your project
+files. Like a project, a plugin can contain classes, helpers, configuration,
+tasks, modules, schemas, and even web assets.
 
 ### ~Private Plugins~
 
-The first usage of plugins is to ease sharing code between your applications,
-or even between different projects. Recall that symfony applications only share
-the model. Plugins provide a way to share more components between applications.
+The first usage of plugins is to ease sharing code between your applications, or
+even between different projects. Recall that symfony applications only share the
+model. Plugins provide a way to share more components between applications.
 
-If you need to ~reuse|Code reuse~ the same schema for different projects, or the same
-modules, move them to a plugin. As a plugin is just a directory, you can
+If you need to ~reuse|Code reuse~ the same schema for different projects, or the
+same modules, move them to a plugin. As a plugin is just a directory, you can
 move it around quite easily by creating a SVN repository and using
 `svn:externals`, or by just copying the files from one project to another.
 
@@ -32,15 +31,16 @@ We call these "private plugins" because their usage is restricted to a single
 developer or a company. They are not publicly available.
 
 >**TIP**
->You can even create a ~package|Packaging~ out of your private plugins, create your own
->symfony plugin channel, and install them via the `plugin:install` task.
+>You can even create a ~package|Packaging~ out of your private plugins, create 
+>your own symfony plugin channel, and install them via the `plugin:install` 
+>task.
 
 ### ~Public Plugins~
 
-Public plugins are available for the ~community|Community~ to download and install. During
+Public plugins are available for the ~community|Community~ to download and
+install. During
 <propel>
-this tutorial, we have used a couple of public plugins: `sfGuardPlugin` and
-`sfFormExtraPlugin`.
+this tutorial, we have used a couple of public plugins: `sfGuardPlugin` and `sfFormExtraPlugin`.
 </propel>
 <doctrine>
 this tutorial, we have used a couple of public plugins: `sfDoctrineGuardPlugin`
@@ -56,17 +56,17 @@ publish and host a public plugin on the symfony website.
 There is one more way to think about plugins and how to use them. Forget about
 re-usability and sharing. Plugins can be used as a different way to organize
 your code. Instead of organizing the files by layers: all models in the
-`lib/model/` directory, templates in the `templates/` directory, ...; the
-files are put together by feature: all the job files together (the model,
-modules, and templates), all the CMS files together, and so on.
+`lib/model/` directory, templates in the `templates/` directory, ...; the files
+are put together by feature: all job files together (the model, modules, and
+templates), all CMS files together, and so on.
 
 Plugin File Structure
 ---------------------
 
-A plugin is just a directory ~structure|Structure~ with files organized in a pre-defined
-structure, according to the nature of the files. Today, we will move most of
-the code we have written for Jobeet in a `sfJobeetPlugin`. The basic layout we
-will use is as follows:
+A plugin is just a directory ~structure|Structure~ with files organized in a
+pre-defined structure, according to the nature of the files. Here, we will move
+most of the code we have written for Jobeet in a `sfJobeetPlugin`. The basic
+layout we will use is as follows:
 
     sfJobeetPlugin/
 <propel>
@@ -104,9 +104,23 @@ Bootstrapping a plugin is as simple as creating a new directory under
 
     $ mkdir plugins/sfJobeetPlugin
 
+Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php`
+file.
+
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+
 >**NOTE**
->All plugins must end with `Plugin`. It is also a good habit to ~prefix|Prefix~ them
->with `sf`, although it is not mandatory.
+>All plugins must end with the `Plugin` suffix. It is also a good habit to 
+>~prefix|Prefix~ them with `sf`, although it is not mandatory.
 
 ### The Model
 
@@ -139,16 +153,32 @@ Move model, form, and filter files to `plugins/sfJobeetPlugin/lib/`:
     $ mv lib/form/ plugins/sfJobeetPlugin/lib/
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
 
+<propel>
+    $ rm plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+</propel>
+
+<doctrine>
+    $ rm plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+</doctrine>
+
+Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseForm.class.php
+
 <doctrine>
 After you move the models, forms and filters the classes must be renamed, made
 abstract and prefixed with the word `Plugin`.
 
 >**TIP**
->Only ~prefix|Prefix~ the auto-generated classes with `Plugin` and not all classes. 
->For example do not prefix any classes you wrote by hand. Only the auto-generated 
->ones require the prefix.
+>Only ~prefix|Prefix~ the auto-generated classes with `Plugin` and not all 
+>classes. For example do not prefix any classes you wrote by hand. Only the 
+>auto-generated ones require the prefix.
 
-Here is an example where we move the `JobeetAffiliate` and 
+Here is an example where we move the `JobeetAffiliate` and
 `JobeetAffiliateTable` classes.
 
     $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
@@ -183,8 +213,8 @@ The class definition should now look like the following:
       // ...
     }
 
-Now do the same thing for the forms and filter classes. Rename them to include
-a prefix with the word `Plugin`.
+Now do the same thing for the forms and filter classes. Rename them to include a
+prefix with the word `Plugin`.
 
 Make sure to remove the `base` directory in
 `plugins/sfJobeetPlugin/lib/*/doctrine/` for `form`, `filter`, and `model`
@@ -199,13 +229,12 @@ run the tasks to build the re-build all the classes:
 
     $ php symfony doctrine:build --all-classes
 
-Now you will notice some new directories created to hold the models created
-from the schema included with the `sfJobeetPlugin` at
+Now you will notice some new directories created to hold the models created from
+the schema included with the `sfJobeetPlugin` at
 `lib/model/doctrine/sfJobeetPlugin/`.
 
-This directory contains the top level models and the base classes generated
-from the schema. For example the model `JobeetJob` now has this class
-structure:
+This directory contains the top level models and the base classes generated from
+the schema. For example the model `JobeetJob` now has this class structure:
 
   * `JobeetJob` (extends `PluginJobeetJob`) in
     `lib/model/doctrine/sfJobeetPlugin/JobeetJob.class.php`:
@@ -228,13 +257,13 @@ structure:
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
     Same as the `JobeetJob` class except this is the instance of
     `Doctrine_Table` that will be returned when you call
-    `Doctrine::getTable('JobeetJob')`.
+    `Doctrine_Core::getTable('JobeetJob')`.
 
   * `PluginJobeetJobTable` (extends `Doctrine_Table`) in
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
     This class contains all the plugin specific functionality for the instance
     of `Doctrine_Table` that will be returned when you call
-    `Doctrine::getTable('JobeetJob')`.
+    `Doctrine_Core::getTable('JobeetJob')`.
 
 With this generated structure you have the ability to customize the models of a
 plugin by editing the top level `JobeetJob` class. You can customize the schema
@@ -269,11 +298,11 @@ output directory can be configured by adding a `package` option. Open the
       _attributes:      { package: plugins.sfJobeetPlugin.lib.model }
 
 Now symfony will generate its files under the
-`plugins/sfJobeetPlugin/lib/model/` directory. The form and filter builders
-also take this configuration into account when they generate files.
+`plugins/sfJobeetPlugin/lib/model/` directory. The form and filter builders also
+take this configuration into account when they generate files.
 
-The `propel:build --sql` task generates a SQL file to create tables. As the
-file is named after the package, remove the current one:
+The `propel:build --sql` task generates a SQL file to create tables. As the file
+is named after the package, remove the current one:
 
     $ rm data/sql/lib.model.schema.sql
 
@@ -293,7 +322,7 @@ As these files are global for a project, remove them from the plugin:
 </propel>
 <doctrine>
 We need to make sure our plugin doesn't have the base classes for all Doctrine
-forms. These files are global for a project and will be re-generated with the 
+forms. These files are global for a project and will be re-generated with the
 `doctrine:build --forms` and `doctrine:build --filters`.
 
 Remove the files from the plugin:
@@ -321,8 +350,8 @@ check that everything still works fine:
 
 ### The Controllers and the Views
 
-The next logical step is to move the modules to the plugin. To avoid module
-name collisions, it is always a good habit to ~prefix|Prefix~ plugin module names 
+The next logical step is to move the modules to the plugin. To avoid module name
+collisions, it is always a good habit to ~prefix|Prefix~ plugin module names
 with the plugin name:
 
     $ mkdir plugins/sfJobeetPlugin/modules/
@@ -336,8 +365,8 @@ For each module, you also need to change the class name in all
 `actions.class.php` and `components.class.php` files (for instance, the
 `affiliateActions` class needs to be renamed to `sfJobeetAffiliateActions`).
 
-The `include_partial()` and `include_component()` calls must also be changed
-in the following templates:
+The `include_partial()` and `include_component()` calls must also be changed in
+the following templates:
 
   * `sfJobeetAffiliate/templates/_form.php` (change `affiliate` to `sfJobeetAffiliate`)
   * `sfJobeetCategory/templates/showSuccess.atom.php`
@@ -356,16 +385,13 @@ Update the `search` and `delete` actions:
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('sfJobeetJob', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'sfJobeetJob', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
           ➥ ->getForLuceneQuery($query);
 </doctrine>
 
@@ -375,11 +401,9 @@ Update the `search` and `delete` actions:
           {
             return $this->renderText('No results.');
           }
-          else
-          {
-            return $this->renderPartial('sfJobeetJob/list',
+
+          return $this->renderPartial('sfJobeetJob/list',
              ➥ array('jobs' => $this->jobs));
-          }
         }
       }
 
@@ -481,28 +505,10 @@ Now, modify the `routing.yml` file to take these changes into account:
       url:   /
       param: { module: sfJobeetJob, action: index }
 
-Eventually, enable the plugin by hand in `ProjectConfiguration.class.php` as
-it was not installed via the `plugin:install` task:
-
-    [php]
-    // config/ProjectConfiguration.class.php
-    class ProjectConfiguration extends sfProjectConfiguration
-    {
-      public function setup()
-      {
-<propel>
-        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</propel>
-<doctrine>
-        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</doctrine>
-      }
-    }
-
-If you try to browse the Jobeet website now, you will have exceptions
-telling you that the modules are not enabled. As plugins are shared amongst
-all applications in a project, you need to specifically enable the module you
-need for a given application in its `settings.yml` configuration file:
+If you try to browse the Jobeet website now, you will have exceptions telling
+you that the modules are not enabled. As plugins are shared amongst all
+applications in a project, you need to specifically enable the module you need
+for a given application in its `settings.yml` configuration file:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -516,8 +522,8 @@ need for a given application in its `settings.yml` configuration file:
           - sfJobeetJob
           - sfJobeetLanguage
 
-The last step of the migration is to fix the functional tests where we test
-for the module name.
+The last step of the migration is to fix the functional tests where we test for
+the module name.
 
 ### The Tasks
 
@@ -539,15 +545,14 @@ A plugin can also contain routing rules:
 
 ### The Assets
 
-Even if it is a bit counter-intuitive, a plugin can also contain web assets
-like images, stylesheets, and JavaScripts. As we don't want to distribute the
-Jobeet plugin, it does not really make sense, but it is possible by creating a
+Even if it is a bit counter-intuitive, a plugin can also contain web assets like
+images, stylesheets, and JavaScripts. As we don't want to distribute the Jobeet
+plugin, it does not really make sense, but it is possible by creating a
 `plugins/sfJobeetPlugin/web/` directory.
 
 A plugin's assets must be accessible in the project's `web/` directory to be
-viewable from a browser. The `plugin:publish-assets` addresses this by
-creating symlinks under Unix system and by copying the files on the Windows
-platform:
+viewable from a browser. The `plugin:publish-assets` addresses this by creating
+symlinks under Unix system and by copying the files on the Windows platform:
 
     $ php symfony plugin:publish-assets
 
@@ -577,8 +582,8 @@ plugin configuration class:
 
 Event notifications are managed by
 [`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher),
-the event dispatcher object. Registering a listener is as simple as calling
-the `connect()` method. The `connect()` method connects an event name to a PHP
+the event dispatcher object. Registering a listener is as simple as calling the
+`connect()` method. The `connect()` method connects an event name to a PHP
 callable.
 
 >**NOTE**
@@ -649,13 +654,13 @@ Remove all methods from the `myUser` class and create the `JobeetUser` class:
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
             ->execute();
-        } else {
-          return array();
         }
+        
+        return array();
 </doctrine>
       }
 
@@ -672,8 +677,8 @@ If the method exists in the `JobeetUser` class, it is called and its returned
 value is subsequently returned to the notifier. If not, symfony will try the
 next registered listener or throw an Exception.
 
-The `getSubject()` method returns the notifier of the event, which in this
-case is the current `myUser` object.
+The `getSubject()` method returns the notifier of the event, which in this case
+is the current `myUser` object.
 
 ### The Default Structure vs. the Plugin Architecture
 
@@ -685,12 +690,11 @@ way:
 Using Plugins
 -------------
 
-When you start implementing a new feature, or if you try to solve a classic
-web problem, odds are that someone has already solved the same problem and
-perhaps packaged the solution as a symfony plugin. To you look for a public
-symfony plugin, go to the
-[plugin section](http://www.symfony-project.org/plugins/) of the symfony
-website.
+When you start implementing a new feature, or if you try to solve a classic web
+problem, odds are that someone has already solved the same problem and perhaps
+packaged the solution as a symfony plugin. To you look for a public symfony
+plugin, go to the [plugin section](http://www.symfony-project.org/plugins/) of
+the symfony website.
 
 As a plugin is self-contained in a directory, there are several way to install
 it:
@@ -704,8 +708,8 @@ it:
 
 The last two ways are easy but lack some flexibility. The first way allows you
 to install the latest version according to the project symfony version, easily
-upgrade to the latest stable release, and to easily manage dependencies
-between plugins.
+upgrade to the latest stable release, and to easily manage dependencies between
+plugins.
 
 Contributing a Plugin
 ---------------------
@@ -715,10 +719,10 @@ Contributing a Plugin
 To create a plugin package, you need to add some mandatory files to the plugin
 directory structure. First, create a `README` file at the root of the plugin
 directory and explain how to install the plugin, what it provides, and what not.
-The `README` file must be formatted with the
-[Markdown format](http://daringfireball.net/projects/markdown/syntax). This
-file will be used on the symfony website as the main piece of documentation.
-You can test the conversion of your README file to HTML by using the
+The `README` file must be formatted with the 
+[Markdown format](http://daringfireball.net/projects/markdown/syntax). This file 
+will be used on the symfony website as the main piece of documentation. You can
+test the conversion of your README file to HTML by using the
 [symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus).
 
 >**SIDEBAR**
@@ -734,19 +738,18 @@ You can test the conversion of your README file to HTML by using the
 > * `plugin:package`
 
 You also need to create a `LICENSE` file. Choosing a license is not an easy
-task, but the symfony plugin section only lists plugins that are released
-under a license similar to the symfony one (MIT, BSD, LGPL, and PHP). The
-content of the `LICENSE` file will be displayed under the license tab of your
-plugin's public page.
+task, but the symfony plugin section only lists plugins that are released under
+a license similar to the symfony one (MIT, BSD, LGPL, and PHP). The content of
+the `LICENSE` file will be displayed under the license tab of your plugin's
+public page.
 
 The last step is to create a `package.xml` file at the root of the plugin
-directory. This `package.xml` file follows the
+directory. This `package.xml` file follows the 
 [PEAR package syntax](http://pear.php.net/manual/en/guide-developers.php).
 
 >**NOTE**
 >The best way to learn the `package.xml` syntax is certainly to copy the one
->used by an
->[existing plugin](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml).
+>used by an [existing plugin](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.2/package.xml).
 
 The `package.xml` file is composed of several parts as you can see in this
 template example:
@@ -760,8 +763,7 @@ template example:
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
        http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0
-       http://pear.php.net/dtd/package-2.0.xsd"
-    >
+       http://pear.php.net/dtd/package-2.0.xsd">
       <name>sfJobeetPlugin</name>
       <channel>plugins.symfony-project.org</channel>
       <summary>A job board plugin.</summary>
@@ -819,8 +821,8 @@ The `<contents>` tag contains the files that need to be put into the package:
       </dir>
     </contents>
 
-The `<dependencies>` tag references all dependencies the plugin might have:
-PHP, symfony, and also other plugins. This information is used by the
+The `<dependencies>` tag references all dependencies the plugin might have: PHP,
+symfony, and also other plugins. This information is used by the
 `plugin:install` task to install the best plugin version for the project
 environment and to also install required plugin dependencies if any.
 
@@ -861,7 +863,7 @@ Declaring a dependency with another plugin is also possible:
 
 The `<changelog>` tag is optional but gives useful information about what
 changed between releases. This information is available under the "Changelog"
-tab and also in the
+tab and also in the 
 [plugin feed](http://www.symfony-project.org/plugins/recently.rss).
 
     [xml]
@@ -890,22 +892,22 @@ tab and also in the
 
 If you develop a useful plugin and you want to share it with the symfony
 community, [create a symfony account](http://www.symfony-project.org/user/new)
-if you don't have one already and then, create a
+if you don't have one already and then, create a 
 [new plugin](http://www.symfony-project.org/plugins/new).
 
-You will automatically become the administrator for the plugin and you will
-see an "admin" tab in the interface. In this tab, you will find everything you
-need to manage your plugin and upload your packages.
+You will automatically become the administrator for the plugin and you will see
+an "admin" tab in the interface. In this tab, you will find everything you need
+to manage your plugin and upload your packages.
 
 >**NOTE**
 >The [plugin FAQ](http://www.symfony-project.org/plugins/FAQ) contains a lot
 >of useful information for plugin developers.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-Creating plugins, and sharing them with the community is one of the best ways
-to contribute back to the symfony project. It is so easy, that the symfony
-plugin repository is full of useful, fun, but also ridiculous plugins.
+Creating plugins, and sharing them with the community is one of the best ways to
+contribute back to the symfony project. It is so easy, that the symfony plugin
+repository is full of useful, fun, but also ridiculous plugins.
 
 __ORM__

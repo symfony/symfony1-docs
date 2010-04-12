@@ -46,14 +46,8 @@ Remplacez l'action `activate` avec le code suivant :
         );
 
         $this->getMailer()->send($message);
-<propel>
 
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-
-        $this->redirect('@jobeet_affiliate_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       // ...
@@ -224,8 +218,33 @@ Maintenant que nous avons vu comment envoyer un email avec le mailer de symfony,
 symfony recense un testeur `mailer` (~`sfMailerTester`~) pour faciliter les tests
 de messagerie dans les tests fonctionnels.
 
-Remplacer le fichier de test fonctionnel `affiliate` pour l'application backend
-avec le code suivant :
+Tout d'abord, changez la configuration de l'objet `mailer` pour l'environnement de `test` si le serveur web local n'est pas équipé d'un service SMTP. Nous devons remplacer l'actuelle classe de transport `Swift_SmtpTransport` par la classe `Swift_MailTransport`:
+
+    [yaml]
+    # apps/backend/config/factories.yml
+    test:
+
+      # ...
+
+      mailer:
+        param:
+          delivery_strategy: none
+          transport:
+            class:  Swift_MailTransport
+
+Ensuite, ajoutez un nouveau fichier `test/fixtures/administrators.yml` contenant la définition YAML suivante:
+
+    [yaml]
+    sfGuardUser:
+      admin:
+        email_address: admin@example.com
+        username: admin
+        password: admin
+        first_name: Fabien
+        last_name: Potencier
+        is_super_admin: true
+
+Enfin, remplacez le fichier de test fonctionnel `affiliate` de l'application `backend` avec le code suivant:
 
     [php]
     // test/functional/backend/affiliateActionsTest.php
@@ -235,18 +254,22 @@ avec le code suivant :
     $browser->loadData();
 
     $browser->
-      info('1 - When validating an affiliate, an email must be sent with its token')->
+      info('1 - Authentication')->
+      get('/affiliate')->
+      click('Signin', array(
+        'signin' => array('username' => 'admin', 'password' => 'admin'),
+        array('_with_csrf' => true)
+      ))->
+      with('response')->isRedirected()->
+      followRedirect()->
 
-      get('/affiliate/new')->
-      click('activate', array(), array('position' => 1))->
+      info('2 - When validating an affiliate, an email must be sent with its token')->
+      click('Activate', array(), array('position' => 1))->
       with('mailer')->begin()->
         checkHeader('Subject', '/Jobeet affiliate token/')->
         checkBody('/Your token is symfony/')->
       end()
     ;
-
-Pour que le code précédent fonctionne, vous devez copier le fichier fixture d'hier
-(`data/fixtures/030_affiliates.yml`) dans le répertoire `test/fixtures/`.
 
 Chaque message envoyé peut être testé à l'aide des méthodes ~`checkHeader()`~
 et ~`checkBody()`~. Le deuxième argument de `checkHeader()` et le premier argument

@@ -143,7 +143,7 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
     {
       public function getForToken(array $parameters)
       {
-        $affiliate = Doctrine::getTable('JobeetAffiliate')
+        $affiliate = Doctrine_Core::getTable('JobeetAffiliate')
           ➥ ->findOneByToken($parameters['token']);
         if (!$affiliate || !$affiliate->getIsActive())
         {
@@ -222,7 +222,7 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
           ->leftJoin('c.JobeetAffiliates a')
           ->where('a.id = ?', $this->getId());
 
-        $q = Doctrine::getTable('JobeetJob')->addActiveJobsQuery($q);
+        $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
 
         return $q->execute();
       }
@@ -301,9 +301,9 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
       <job url="<?php echo $url ?>">
     <?php foreach ($job as $key => $value): ?>
         <<?php echo $key ?>><?php echo $value ?></<?php echo $key ?>>
-    <?php endforeach; ?>
+    <?php endforeach ?>
       </job>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </jobs>
 
 ### `json` フォーマット
@@ -319,10 +319,10 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
     <?php $nb1 = count($job); $j = 0; foreach ($job as $key => $value): ++$j ?>
       "<?php echo $key ?>": <?php echo json_encode($value).($nb1 == $j ? '' : ',') ?>
 
-    <?php endforeach; ?>
+    <?php endforeach ?>
     }<?php echo $nb == $i ? '' : ',' ?>
 
-    <?php endforeach; ?>
+    <?php endforeach ?>
     ]
 
 ### ~`yaml` フォーマット|フォーマット (作成)~
@@ -366,8 +366,8 @@ YAML 用のテンプレートは次の内容を読み込みます:
     <?php foreach ($job as $key => $value): ?>
       <?php echo $key ?>: <?php echo sfYaml::dump($value) ?>
 
-    <?php endforeach; ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
+    <?php endforeach ?>
 
 有効ではないトークンで Web サービスを呼び出すとき、XML フォーマットの404ページ、JSON フォーマットの404ページを用意します。しかし YAML フォーマットに関して、symfony は何をレンダリングすればよいのかわかりません。
 
@@ -432,7 +432,10 @@ Web サービスをテストするには、アフィリエイトフィクスチ�
       info('2 - The jobs returned are limited to the categories configured for the affiliate')->
       get('/api/sensio_labs/jobs.xml')->
       with('request')->isFormat('xml')->
-      with('response')->checkElement('job', 32)->
+      with('response')->begin()->
+        isValid()->
+        checkElement('job', 32)->
+      end()->
 
       info('3 - The web service supports the JSON format')->
       get('/api/sensio_labs/jobs.json')->
@@ -449,6 +452,7 @@ Web サービスをテストするには、アフィリエイトフィクスチ�
 
 このテストにおいて、2つの新しいメソッドに注目します:
 
+  * `isValid()`: Checks whether or not the XML response is well formed
   * `isFormat()`: これはリクエストのフォーマットをテストします
   * `matches()` : HTML ではないフォーマットに対して、レスポンスが引数として渡される正規表現を検証します
 
@@ -526,7 +530,7 @@ Web サービスを提供する準備ができたので、アフィリエイト�
     [php]
     // apps/frontend/templates/layout.php
     <li class="last">
-      <a href="<?php echo url_for('@affiliate_new') ?>">Become an affiliate</a>
+      <a href="<?php echo url_for('affiliate_new') ?>">Become an affiliate</a>
     </li>
 
 ### アクション
@@ -543,28 +547,35 @@ Web サービスを提供する準備ができたので、アフィリエイト�
 
     [php]
     // apps/frontend/modules/affiliate/actions/actions.class.php
-    public function executeWait()
+    public function executeWait(sfWebRequest $request)
     {
     }
 
 アフィリエイトはトークンを選択したり、アカウントを即座にアクティベートできません。~フォーム~をカスタマイズするために `JobeetAffiliateForm` ファイルを開きます:
 
     [php]
-    // lib/form/doctrine/JobeetAffiliateForm.class.php 
+<propel>
+    // lib/form/JobeetAffiliateForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetAffiliateForm.class.php
+</doctrine>
     class JobeetAffiliateForm extends BaseJobeetAffiliateForm
     {
       public function configure()
       {
+        $this->useFields(array(
+          'url', 
+          'email', 
+          'jobeet_categories_list'
+        ));
 <propel>
-        unset($this['is_active'], $this['token'], $this['created_at']);
         $this->widgetSchema['jobeet_category_affiliate_list']->setOption('expanded', true);
-        $this->widgetSchema['jobeet_category_affiliate_list']->setLabel('Categories');
+                $this->widgetSchema['jobeet_category_affiliate_list']->setLabel('Categories');
 
         $this->validatorSchema['jobeet_category_affiliate_list']->setOption('required', true);
 </propel>
 <doctrine>
-        unset($this['is_active'], $this['token'], $this['created_at'], $this['updated_at']);
-
         $this->widgetSchema['jobeet_categories_list']->setOption('expanded', true);
         $this->widgetSchema['jobeet_categories_list']->setLabel('Categories');
 
@@ -579,6 +590,8 @@ Web サービスを提供する準備ができたので、アフィリエイト�
         $this->validatorSchema['email'] = new sfValidatorEmail(array('required' => true));
       }
     }
+
+The new `sfForm::useFields()` method allows to specify the white list of fields to keep. All non mentionned fields will be removed from the form.
 
 フォームフレームワークは他のカラムのように~多対多のリレーション|多対多のリレーション(フォーム)~をサポートします。
 デフォルトでは、`sfWidgetFormChoice` ウィジェットのおかげでこのようなリレーションはドロップダウンボックスのようなレンダラーです。10日目で見たように、`expanded` オプションを指定してレンダリングされたタグを変更しました。
@@ -611,7 +624,7 @@ Web サービスを提供する準備ができたので、アフィリエイト�
         'jobeet_category_affiliate_list' => array($browser->getProgrammingCategory()->getId()),
 </propel>
 <doctrine>
-        'jobeet_categories_list'         => array(Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
+        'jobeet_categories_list'         => array(Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
 </doctrine>
       )))->
       isRedirected()->
@@ -679,13 +692,13 @@ Web サービスを提供する準備ができたので、アフィリエイト�
     <!-- apps/backend/templates/layout.php -->
     <li>
 <propel>
-      <a href="<?php echo url_for('@jobeet_affiliate') ?>">
+      <a href="<?php echo url_for('jobeet_affiliate') ?>">
         Affiliates - <strong><?php echo JobeetAffiliatePeer::countToBeActivated() ?></strong>
       </a>
 </propel>
 <doctrine>
-      <a href="<?php echo url_for('@jobeet_affiliate_affiliate') ?>">
-        Affiliates - <strong><?php echo Doctrine::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
+      <a href="<?php echo url_for('jobeet_affiliate_affiliate') ?>">
+        Affiliates - <strong><?php echo Doctrine_Core::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
       </a>
 </doctrine>
     </li>
@@ -762,24 +775,14 @@ Web サービスを提供する準備ができたので、アフィリエイト�
       {
         $this->getRoute()->getObject()->activate();
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeListDeactivate()
       {
         $this->getRoute()->getObject()->deactivate();
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeBatchActivate(sfWebRequest $request)
@@ -800,12 +803,7 @@ Web サービスを提供する準備ができたので、アフィリエイト�
           $affiliate->activate();
         }
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
 
       public function executeBatchDeactivate(sfWebRequest $request)
@@ -826,12 +824,7 @@ Web サービスを提供する準備ができたので、アフィリエイト�
           $affiliate->deactivate();
         }
 
-<propel>
-        $this->redirect('@jobeet_affiliate');
-</propel>
-<doctrine>
-        $this->redirect('@jobeet_affiliate_affiliate');
-</doctrine>
+        $this->redirect('jobeet_affiliate');
       }
     }
 

@@ -756,7 +756,7 @@ regolarmente in un cron job.
         $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
         $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
       }

@@ -2,28 +2,28 @@ Day 23: Another Look at symfony
 ===============================
 
 Today is the last stop of our trip to the wonderful world of symfony. During
-these twenty-three days, you learned symfony by example: from the design
-patterns used by the framework, to the powerful built-in features. You are not
-a symfony master yet, but you have all the needed knowledge to start building
-your symfony applications with confidence.
+these twenty-three last days, you learned symfony by example: from the design
+patterns used by the framework, to the powerful built-in features. You are not a
+symfony master yet, but you have all the needed knowledge to start building your
+symfony applications with confidence.
 
-As we wrap up the Jobeet tutorial, let's have another look at the
-framework. Forget Jobeet for an hour, and recall all the features you learned
-during the last three weeks.
+As we wrap up the Jobeet tutorial, let's have another look at the framework.
+Forget Jobeet for an hour, and recall all the features you learned during this
+whole book.
 
 What is symfony?
 ----------------
 
-The symfony ~framework|Framework~ is a set of
-[cohesive but decoupled sub-frameworks](#chapter_11_sidebar_using_the_form_framework_without_symfony),
+The symfony ~framework|Framework~ is a set of [cohesive but decoupled
+sub-frameworks](#chapter_11_sidebar_using_the_form_framework_without_symfony),
 that forms a full-stack [MVC framework](#chapter_04_the_mvc_architecture)
 (Model, View, Controller).
 
-Before coding head first, take some time to read the
-[symfony history and philosophy](#chapter_01_introduction).
-Then, check the framework [prerequisites](#chapter_01_prerequisites)
-and use the [`check_configuration.php` script](#chapter_01_symfony_installation)
-to validate your configuration.
+Before coding head first, take some time to read the [symfony history and
+philosophy](#chapter_01_introduction). Then, check the framework
+[prerequisites](#chapter_01_prerequisites) and use the
+[`check_configuration.php` script](#chapter_01_symfony_installation) to validate
+your configuration.
 
 Eventually, [install symfony](#chapter_01_symfony_installation). After some time
 you will also want to [upgrade](#chapter_22_sub_upgrading_symfony) to the latest
@@ -43,14 +43,13 @@ The Model part of symfony can be done with the help of the
 </doctrine>
 [database description](#chapter_03_the_schema), it generates classes for
 [objects](#chapter_03_the_orm), [forms](#chapter_10_##ORM_LOWER##_forms), and
-[filters](#chapter_12_filters_configuration). ##ORM## also
-[generates the SQL](#chapter_03_the_orm) statements used to create the tables in the
-database.
+[filters](#chapter_12_filters_configuration). ##ORM## also [generates the
+SQL](#chapter_03_the_orm) statements used to create the tables in the database.
 
 The database configuration can be done with a [task](#chapter_03_the_database)
 or by editing a [configuration file](#chapter_03_the_database). Beside its
-configuration, it is also possible to inject initial data, thanks to
-[fixture files](#chapter_03_the_initial_data). You can even make these files
+configuration, it is also possible to inject initial data, thanks to [fixture
+files](#chapter_03_the_initial_data). You can even make these files
 [dynamic](#chapter_06_dynamic_fixtures).
 
 <propel>
@@ -66,35 +65,38 @@ The ~View~
 By default, the View layer of the MVC architecture uses plain PHP files as
 templates.
 
-Templates can use [helpers](#chapter_04_the_stylesheets_images_and_javascripts) for
-recurrent tasks like creating a [URL](#chapter_05_routing_in_actions_and_templates)
-or a [link](#chapter_05_routing_in_actions_and_templates).
+Templates can use [helpers](#chapter_04_the_stylesheets_images_and_javascripts)
+for recurrent tasks like creating an
+[URL](#chapter_05_routing_in_actions_and_templates) or a
+[link](#chapter_05_routing_in_actions_and_templates).
 
-A template can be decorated by a [layout](#chapter_04_the_layout) to 
-abstract the header and footer of pages. To make views even more reusable, you can
-define [slots](#chapter_04_slot_s), 
-[partials](#chapter_07_partials_partial_templates), and
-[components](#chapter_19_language_switching).
+A template can be decorated by a [layout](#chapter_04_the_layout) to abstract
+the header and footer of pages. To make views even more reusable, you can define
+[slots](#chapter_04_slot_s), [partials](#chapter_07_partials_partial_templates),
+and [components](#chapter_19_language_switching).
 
-To speed up things, you can use the
-[cache sub-framework](#chapter_21_cache_configuration) to cache a
-[whole page](#chapter_21_page_cache), just the [action](#chapter_21_action_cache),
-or even just [partials or components](#chapter_21_partial_partial_templates_and_component_cache).
-You can also [remove the cache](#chapter_21_removing_the_cache_cache_removal) manually.
+To speed up things, you can use the 
+[cache sub-framework](#chapter_21_cache_configuration) to cache a 
+[whole page](#chapter_21_page_cache), just the 
+[action](#chapter_21_action_cache), or
+even just 
+[partials or components](#chapter_21_partial_partial_templates_and_component_cache). You can
+also [remove the cache](#chapter_21_removing_the_cache_cache_removal) manually.
 
 The ~Controller~
 ----------------
 
 The Controller part is managed by 
-[front controllers](#chapter_01_the_environments) and [actions](#chapter_03_see_it_in_action_in_the_browser).
+[front controllers](#chapter_01_the_environments) and
+[actions](#chapter_03_see_it_in_action_in_the_browser).
 
 Tasks can be used to create 
-[simple modules](#chapter_07_job_category_module_creation),
+[simple modules](#chapter_07_job_category_module_creation), 
 [CRUD modules](#chapter_03_see_it_in_action_in_the_browser), or even to generate
 fullly working [admin modules](#chapter_12_backend_modules) for model classes.
 
-Admin modules allows you to built a fully functional application without
-coding anything.
+Admin modules allows you to built a fully functional application without coding
+anything.
 
 To abstract the technical implementation of a website, symfony uses a
 [routing](#chapter_05_routing_configuration) sub-framework that generates
@@ -102,20 +104,23 @@ To abstract the technical implementation of a website, symfony uses a
 symfony supports [formats](#chapter_14_formats) out of the box. You can also
 create your own [formats](#chapter_15_sub_the_yaml_format_formats_creation).
 
-An action can be [forwarded](#chapter_04_sidebar_the_forward_action_forwarding_methods_family) to another
-one, or [redirected](#chapter_05_sidebar_the_redirect_redirection_methods_family).
+An action can be
+[forwarded](#chapter_04_sidebar_the_forward_action_forwarding_methods_family) to
+another one, or
+[redirected](#chapter_05_sidebar_the_redirect_redirection_methods_family).
 
 ~Configuration~
 ---------------
 
-The symfony framework makes it easy to have different configuration ~settings|Settings~
-for different ~environments|Environments~. An [environment](#chapter_01_the_environments) 
-is a set of settings that allows different behaviors on the development or production
-servers. You can also create new [environments](#chapter_21_creating_a_new_environment).
+The symfony framework makes it easy to have different configuration
+~settings|Settings~ for different ~environments|Environments~. An
+[environment](#chapter_01_the_environments) is a set of settings that allows
+different behaviors on the development or production servers. You can also
+create new [environments](#chapter_21_creating_a_new_environment).
 
-The symfony configuration files can be defined at
-[different levels](#chapter_04_sidebar_configuration_principles_in_symfony) and
-most of them are
+The symfony configuration files can be defined at 
+[different levels](#chapter_04_sidebar_configuration_principles_in_symfony) and 
+most of them are 
 [environment aware](#chapter_08_sidebar_configuration_principles_in_symfony):
 
  * [`app.yml`](#chapter_06_custom_configuration)
@@ -129,68 +134,71 @@ most of them are
  * [`settings.yml`](#chapter_11_sub_built_in_security_features)
  * [`view.yml`](#chapter_04_the_stylesheets_images_and_javascripts)
 
-The configuration files mostly use the
+The configuration files mostly use the 
 [YAML format](#chapter_03_sidebar_the_yaml_format).
 
-Instead of using the default directory structure and organize your application
-files by layers, you can also organize them by feature, and bundle them in
-[a plugin](#chapter_20_sub_a_different_way_to_organize_code_code_organization). Speaking 
-of the default directory structure, you can also
-[customize it](#chapter_22_customizing_the_directory_structure)
-according to your needs.
+Instead of using the default directory structure and organize your application 
+files by layers, you can also organize them by feature, and bundle them in 
+[a plugin](#chapter_20_sub_a_different_way_to_organize_code_code_organization). 
+Speaking of the default directory structure, you can also 
+[customize it](#chapter_22_customizing_the_directory_structure) according to 
+your needs.
 
 ~Debugging|Debug~
 -----------------
 
 <propel>
-From [logging](#chapter_06_debugging_propel_generated_sql) to the
+From [logging](#chapter_06_debugging_propel_generated_sql) to the 
 [web debug toolbar](#chapter_06_debugging_propel_generated_sql), and
 </propel>
 <doctrine>
-From [logging](#chapter_06_debugging_doctrine_generated_sql) to the
+From [logging](#chapter_06_debugging_doctrine_generated_sql) to the 
 [web debug toolbar](#chapter_06_debugging_doctrine_generated_sql), and
 </doctrine>
-[meaningful exceptions](#chapter_01_the_environments), symfony 
-provides a lot of useful tools to help the developer debug problems faster.
+[meaningful exceptions](#chapter_01_the_environments), symfony provides a lot of 
+useful tools to help the developer debug problems faster.
 
 Main symfony Objects
 --------------------
 
-The symfony framework provides quite a few core objects that abstract
-recurrent needs in web projects: the [request](#chapter_04_sub_the_request),
-the [response](#chapter_04_sub_the_response), the
-[user](#chapter_13_sub_the_myuser_class), the [logging](#chapter_22_sub_logging),
-the [routing](#chapter_05_routing_configuration), the [mailer](#chapter_16), and
-the [view cache manager](#chapter_16_sidebar_the_code_sfcontext_code_class).
+The symfony framework provides quite a few core objects that abstract recurrent 
+needs in web projects: the [request](#chapter_04_sub_the_request), the 
+[response](#chapter_04_sub_the_response), the 
+[user](#chapter_13_sub_the_myuser_class), the 
+[logging](#chapter_22_sub_logging), the 
+[routing](#chapter_05_routing_configuration), the [mailer](#chapter_16), and the 
+[view cache manager](#chapter_16_sidebar_the_code_sfcontext_code_class).
 
-These core objects are managed by the
-[`sfContext` object](#chapter_16_sidebar_the_code_sfcontext_code_class), and
+These core objects are managed by the 
+[`sfContext` object](#chapter_16_sidebar_the_code_sfcontext_code_class), and 
 they are configured via the [factories](#chapter_16_sub_factories).
 
-The user manages user [authentication](#chapter_13_sub_authentication),
-[authorization](#chapter_13_sub_authorization), [flashes](#chapter_13_user_flashes),
-and [attributes](#chapter_13_user_attributes) to be serialized in the session.
+The user manages user [authentication](#chapter_13_sub_authentication), 
+[authorization](#chapter_13_sub_authorization), 
+[flashes](#chapter_13_user_flashes), and 
+[attributes](#chapter_13_user_attributes) to be serialized in the session.
 
 ~Security~
 ----------
 
-The symfony framework has built-in protections against
-[XSS](#chapter_01_sub_application_creation) and
-[CSRF](#chapter_01_sub_application_creation). These settings can be configured
-from the [command line](#chapter_01_sub_application_creation),
-or by editing a [configuration file](#chapter_11_sub_xss_and_csrf_protection).
+The symfony framework has built-in protections against 
+[XSS](#chapter_01_sub_application_creation) and 
+[CSRF](#chapter_01_sub_application_creation). These settings can be configured 
+from the [command line](#chapter_01_sub_application_creation), or by editing a 
+[configuration file](#chapter_11_sub_xss_and_csrf_protection).
 
-The form framework also provides
+The form framework also provides 
 [built-in security features](#chapter_11_sub_built_in_security_features).
 
 ~Forms~
 -------
 
-As managing forms is one of the most tedious task for a web developer, symfony
-provides a [form sub-framework](#chapter_10_the_form_framework). The form framework
-comes bundled with a lot of [widgets](http://www.symfony-project.org/api/1_4/widget)
-and [validators](http://www.symfony-project.org/api/1_4/validator). One of the
-strength of the form sub-framework is that templates are very easily
+As managing forms is one of the most tedious task for a web developer, symfony 
+provides a [form sub-framework](#chapter_10_the_form_framework). The form 
+framework comes bundled with a lot of 
+[widgets](http://www.symfony-project.org/api/1_4/widget) and 
+[validators](http://www.symfony-project.org/api/1_4/validator). One of the 
+strength of the form sub-framework is that templates are very easily 
 [customizables](#chapter_10_sidebar_customizing_the_look_and_feel_of_a_form).
 
 If you use ##ORM##, the form framework also makes it easy to
@@ -204,11 +212,11 @@ If you use ##ORM##, the form framework also makes it easy to
 Internationalization and Localization
 -------------------------------------
 
-[Internationalization](#chapter_19_internationalization) and
-[localization](#chapter_19_localization) are supported by symfony, thanks to the
-ICU standard. The [user culture](#chapter_19_sub_the_user_culture) determines the
-language and the country of the user. It can be defined by the user itself, or
-embedded in the [URL](#chapter_19_culture_in_the_url).
+[Internationalization](#chapter_19_internationalization) and 
+[localization](#chapter_19_localization) are supported by symfony, thanks to the 
+ICU standard. The [user culture](#chapter_19_sub_the_user_culture) determines 
+the language and the country of the user. It can be defined by the user itself, 
+or embedded in the [URL](#chapter_19_culture_in_the_url).
 
 Tests
 -----
@@ -221,22 +229,19 @@ The lime library, used for **unit tests**, provides a lot of
 <doctrine>
 [Doctrine objects can also be tested](#chapter_08_doctrine_unit_tests) from
 </doctrine>
-a [dedicated database](#chapter_08_sub_database_configuration) and
-with dedicated [fixtures](#chapter_08_sub_test_data).
+a [dedicated database](#chapter_08_sub_database_configuration) and with 
+dedicated [fixtures](#chapter_08_sub_test_data).
 
-Unit tests can be run
-[one at a time](#chapter_08_running_unit_tests) or
-[all together](#chapter_08_unit_tests_harness).
+Unit tests can be run [one at a time](#chapter_08_running_unit_tests) or [all together](#chapter_08_unit_tests_harness).
 
-**Functional tests** are written with the
-[`sfFunctionalTest`](#chapter_09_the_sftestfunctional_class) class, which
-uses a [browser simulator](#chapter_09_the_sfbrowser_class) and allows
-symfony core objects introspection through
-[Testers](#chapter_09_the_sftestfunctional_class). Testers exist for
-the [request object](#chapter_09_sub_the_request_tester), the
-[response object](#chapter_09_sub_the_response_tester), the
-[user object](#chapter_13_user_testing), the
-[current form object](#chapter_11_the_form_tester), the
+**Functional tests** are written with the 
+[`sfFunctionalTest`](#chapter_09_the_sftestfunctional_class) class, which uses a 
+[browser simulator](#chapter_09_the_sfbrowser_class) and allows symfony core 
+objects introspection through [Testers](#chapter_09_the_sftestfunctional_class). 
+Testers exist for the [request object](#chapter_09_sub_the_request_tester), the 
+[response object](#chapter_09_sub_the_response_tester), the [user 
+object](#chapter_13_user_testing), the 
+[current form object](#chapter_11_the_form_tester), the 
 [cache layer](#chapter_21_testing_the_cache_testing_cache) and the
 <propel>
 [Propel objects](#chapter_11_the_propel_tester).
@@ -245,12 +250,12 @@ the [request object](#chapter_09_sub_the_request_tester), the
 [Doctrine objects](#chapter_11_the_doctrine_tester).
 </doctrine>
 
-You can also use debugging tools for the
-[response](#chapter_09_debugging_functional_tests)
-and [forms](#chapter_11_the_form_tester).
+You can also use debugging tools for the 
+[response](#chapter_09_debugging_functional_tests) and 
+[forms](#chapter_11_the_form_tester).
 
-As for the unit tests, functional tests can be run
-[one by one](#chapter_09_running_functional_tests) or
+As for the unit tests, functional tests can be run 
+[one by one](#chapter_09_running_functional_tests) or 
 [all together](#chapter_09_functional_tests_harness).
 
 You can also run [all tests together](#chapter_09_tests_harness).
@@ -258,23 +263,23 @@ You can also run [all tests together](#chapter_09_tests_harness).
 Plugins
 -------
 
-The symfony framework only provides the foundation for your web applications
-and relies on [plugins](#chapter_20_using_plugins) to add more
-features. In this tutorial, we have talked about [`sfGuardPlugin`](#chapter_13_plugins),
-[`sfFormExtraPlugin`](#chapter_19_language_switching), and
+The symfony framework only provides the foundation for your web applications and 
+relies on [plugins](#chapter_20_using_plugins) to add more features. In this 
+tutorial, we have talked about [`sfGuardPlugin`](#chapter_13_plugins), 
+[`sfFormExtraPlugin`](#chapter_19_language_switching), and 
 [`sfTaskExtraPlugin`](#chapter_20_contributing_a_plugin).
 
-A plugin must be [activated](#chapter_20_sidebar_plugin_activation) after
+A plugin must be [activated](#chapter_20_sidebar_plugin_activation) after 
 installation.
 
-Plugins are the best way to [contribute back](#chapter_20_contributing_a_plugin)
+Plugins are the best way to [contribute back](#chapter_20_contributing_a_plugin) 
 to the symfony project.
 
 ~Tasks~
 -------
 
-The symfony CLI provides a lot of tasks, and the most useful have been
-discussed in this tutorial:
+The symfony CLI provides a lot of tasks, and the most useful have been discussed 
+in this tutorial:
 
  * [`app:routes`](#chapter_05_route_debugging)
  * [`cache:clear`](#chapter_21_clearing_the_cache)
@@ -288,12 +293,14 @@ discussed in this tutorial:
  * [`plugin:install`](#chapter_13_plugins)
  * [`plugin:publish-assets`](#chapter_20_sub_the_assets)
  * [`project:deploy`](#chapter_22_sub_deploying_strategies)
- * [`propel:build-all`](#chapter_03_the_orm)
- * [`propel:build-all-load`](#chapter_07_update_the_database)
+ * [`propel:build --all`](#chapter_03_the_orm)
+ * [`propel:build --all -and-load`](#chapter_07_update_the_database)
 <propel>
  * [`propel:build-forms`](#chapter_10_propel_forms)
 </propel>
 <doctrine>
+ * [`doctrine:build --all`](#chapter_03_the_orm)
+ * [`doctrine:build --all -and-load`](#chapter_07_update_the_database)
  * [`doctrine:build --forms`](#chapter_10_doctrine_forms)
 </doctrine>
  * [`propel:build-model`](#chapter_03_the_orm)
@@ -315,12 +322,12 @@ See you soon
 ### Learning by Practicing
 
 The symfony framework, as does any piece of software, has a learning curve. In
-the learning process, the first step is to learn from practical examples with
-a book like this one. The second step is to **practice**. Nothing will ever
+the learning process, the first step is to learn from practical examples with a
+book like this one. The second step is to **practice**. Nothing will ever
 replace practicing.
 
-That's what you can start doing today. Think about the simplest web project
-that still provides some value: a todo list manager, a simple blog, a time or
+That's what you can start doing today. Think about the simplest web project that
+still provides some value: a todo list manager, a simple blog, a time or
 currency converter, whatever... Choose one and start implementing it with the
 knowledge you have today. Use the task help messages to learn the different
 options, browse the code generated by symfony, use a text editor that has PHP
@@ -334,10 +341,10 @@ symfony.
 ### The community
 
 Before you leave, I would like to talk about one last thing about symfony. The
-framework has a lot of great features and a lot of free documentation. But,
-one of the most valuable asset an Open-Source can have is its community. And
-symfony has one of the most amazing and active community around. If you
-start using symfony for your projects, consider joining the symfony community:
+framework has a lot of great features and a lot of free documentation. But, one
+of the most valuable asset an Open-Source can have is its community. And symfony
+has one of the most amazing and active community around. If you start using
+symfony for your projects, consider joining the symfony community:
 
   * Subscribe to the [user mailing-list](http://groups.google.com/group/symfony-users)
   * Subscribe to the official [blog feed](http://feeds.feedburner.com/symfony/blog)

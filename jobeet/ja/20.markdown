@@ -81,6 +81,19 @@ Jobeet プラグイン
 
     $ mkdir plugins/sfJobeetPlugin
 
+Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php` file.
+
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+
 >**NOTE**
 >すべてのプラグインの名前は `Plugin` で終わらなければなりません。義務ではありませんが、~プレフィックス~として `sf` をつけるのはよい習慣です。
 
@@ -111,6 +124,22 @@ Jobeet プラグイン
     $ mv lib/model/ plugins/sfJobeetPlugin/lib/
     $ mv lib/form/ plugins/sfJobeetPlugin/lib/
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<propel>
+    $ rm plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+</propel>
+
+<doctrine>
+    $ rm plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+</doctrine>
+
+Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseForm.class.php
 
 <doctrine>
 モデル、フォームとフィルターを移動させた後でクラスを抽象クラスにし、リネームしてプレフィックスとして `Plugin` をつけなければなりません。
@@ -182,11 +211,11 @@ Jobeet プラグイン
 
   * `JobeetJobTable` (`PluginJobeetJobTable` を継承)
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
-     `Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンスであることを除いて`JobeetJob`クラスと同じ
+     `Doctrine_Core::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンスであることを除いて`JobeetJob`クラスと同じ
 
   * `PluginJobeetJobTable` (`Doctrine_Table` を継承)
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
-    このクラスは`Doctrine::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンス用のプラグイン固有の機能をすべて含みます
+    このクラスは`Doctrine_Core::getTable('JobeetJob')`を呼び出す際に返される`Doctrine_Table`のインスタンス用のプラグイン固有の機能をすべて含みます
 
 この生成された構造によってトップレベルの `JobeetJob` クラスを編集することでプラグインのモデルをカスタマイズできます。
 `setTableDefinition()` と `setUp()` メソッドをオーバーライドすることでスキーマとカラムをカスタマイズし、リレーションを追加できます。
@@ -287,16 +316,13 @@ Jobeet プラグイン
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('sfJobeetJob', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'sfJobeetJob', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
           ➥ ->getForLuceneQuery($query);
 </doctrine>
 
@@ -306,11 +332,9 @@ Jobeet プラグイン
           {
             return $this->renderText('No results.');
           }
-          else
-          {
-            return $this->renderPartial('sfJobeetJob/list',
+
+          return $this->renderPartial('sfJobeetJob/list',
              ➥ array('jobs' => $this->jobs));
-          }
         }
       }
 
@@ -411,23 +435,6 @@ Jobeet プラグイン
     homepage:
       url:   /
       param: { module: sfJobeetJob, action: index }
-
-最後に、`plugin:install` タスクを通してインストールされなかったので、`ProjectConfiguration.class.php` でプラグインを手作業で有効にします:
-
-    [php]
-    // config/ProjectConfiguration.class.php
-    class ProjectConfiguration extends sfProjectConfiguration
-    {
-      public function setup()
-      {
-<propel>
-        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</propel>
-<doctrine>
-        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</doctrine>
-      }
-    }
 
 Jobeet の Web サイトを見ようとすると、モジュールが有効にされていないことを知らせる例外が表示されます。プラグインはプロジェクトのすべてのアプリケーションの間で共有されるので、アプリケーションに必要なモジュールを `settings.yml` 設定ファイルで有効にする必要があります:
 
@@ -553,13 +560,13 @@ symfony が初期化されるときにプラグインのコンフィギュレー
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
             ->execute();
-        } else {
-          return array();
         }
+        
+        return array();
 </doctrine>
       }
 

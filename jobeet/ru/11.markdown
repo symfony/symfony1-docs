@@ -727,7 +727,7 @@ HTTP метод `PUT`. Поскольку браузеры не понимают
         $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
         $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
       }

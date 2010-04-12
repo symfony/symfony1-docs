@@ -1,11 +1,10 @@
 Day 19: Internationalization and Localization
 =============================================
 
-Yesterday, we finished the search engine feature by making it more fun with
-the addition of some AJAX goodness.
-
-Today, we will talk about Jobeet **~internationalization|Internationalization~** 
-(or ~i18n|I18N~) and **~localization|Localization~** (or ~l10n|L10n~).
+Yesterday, we finished the search engine feature by making it more fun with the
+addition of some AJAX goodness. Now, we will talk about Jobeet
+**~internationalization|Internationalization~** (or ~i18n|I18N~) and
+**~localization|Localization~** (or ~l10n|L10n~).
 
 From [Wikipedia](http://en.wikipedia.org/wiki/Internationalization):
 
@@ -32,13 +31,13 @@ is responsible for choosing the one that fits him best.
 
 ### The ~User Culture~
 
-The i18n and l10n features of symfony are based on the **user ~culture|Culture~**. The
-culture is the combination of the language and the country of the user. For
-instance, the culture for a user that speaks French is `fr` and the culture
-for a user from France is `fr_FR`.
+The i18n and l10n features of symfony are based on the **user
+~culture|Culture~**. The culture is the combination of the language and the
+country of the user. For instance, the culture for a user that speaks French is
+`fr` and the culture for a user from France is `fr_FR`.
 
-You can manage the user culture by calling the `setCulture()` and
-`getCulture()` method on the User object:
+You can manage the user culture by calling the `setCulture()` and `getCulture()`
+methods on the `User` object:
 
     [php]
     // in an action
@@ -69,8 +68,8 @@ configuration file:
 >~cookie|Cookies~ for the new setting to have any effect in your browser.
 
 When a user starts a session on the Jobeet website, we can also determine the
-best culture, based on the information provided by the ~`Accept-Language`~ 
-~HTTP header|HTTP Headers~.
+best culture, based on the information provided by the ~`Accept-Language`~ ~HTTP
+header|HTTP Headers~.
 
 The `getLanguages()` method of the request object returns an array of accepted
 languages for the current user, sorted by order of preference:
@@ -88,19 +87,19 @@ website:
     // in an action
     $language = $request->getPreferredCulture(array('en', 'fr'));
 
-In the previous call, the returned language will be English or French
-according to the user preferred languages, or English (the first language in
-the array) if none match.
+In the previous call, the returned language will be English or French according
+to the user preferred languages, or English (the first language in the array) if
+none match.
 
 Culture in the URL
 ------------------
 
-The Jobeet website will be available in English and French. As a URL can only
+The Jobeet website will be available in English and French. As an URL can only
 represent a single resource, the culture must be embedded in the URL. In order
 to do that, open the ~`routing.yml`~ file, and add the special `:sf_culture`
 variable for all routes but the `api_jobs` and the `homepage` ones. For simple
-routes, add `/:sf_culture` to the front of the `url`. For collection routes, add a
-~`prefix_path`|Prefix~ option that starts with `/:sf_culture`.
+routes, add `/:sf_culture` to the front of the `url`. For collection routes, add
+a ~`prefix_path`|Prefix~ option that starts with `/:sf_culture`.
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -157,14 +156,13 @@ routes, add `/:sf_culture` to the front of the `url`. For collection routes, add
 When the ~`sf_culture`~ variable is used in a route, symfony will automatically
 use its value to change the culture of the user.
 
-As we need as many homepages as languages we support (`/en/`, `/fr/`, ...),
-the default homepage (`/`) must redirect to the appropriate localized one,
-according to the user culture. But if the user has no culture yet, because he
-comes to Jobeet for the first time, the preferred culture will be chosen for
-him.
+As we need as many homepages as languages we support (`/en/`, `/fr/`, ...), the
+default homepage (`/`) must redirect to the appropriate localized one, according
+to the user culture. But if the user has no culture yet, because he comes to
+Jobeet for the first time, the preferred culture will be chosen for him.
 
-First, add the `isFirstRequest()` method to `myUser`. It returns `true` only
-for the very first request of a user session:
+First, add the `isFirstRequest()` method to `myUser`. It returns `true` only for
+the very first request of a user session:
 
     [php]
     // apps/frontend/lib/myUser.class.php
@@ -174,10 +172,8 @@ for the very first request of a user session:
       {
         return $this->getAttribute('first_request', true);
       }
-      else
-      {
-        $this->setAttribute('first_request', $boolean);
-      }
+      
+      $this->setAttribute('first_request', $boolean);
     }
 
 Add a `localized_homepage` route:
@@ -190,8 +186,8 @@ Add a `localized_homepage` route:
       requirements:
         sf_culture: (?:fr|en)
 
-Change the `index` action of the `job` module to implement the logic to
-redirect the user to the "best" homepage on the first request of a session:
+Change the `index` action of the `job` module to implement the logic to redirect
+the user to the "best" homepage on the first request of a session:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -210,14 +206,14 @@ redirect the user to the "best" homepage on the first request of a session:
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('@localized_homepage');
+        $this->redirect('localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -230,7 +226,7 @@ The last step is to redirect the user to the `localized_homepage` URL. Notice
 that the `sf_culture` variable has not been passed in the redirect call as
 symfony adds it automatically for you.
 
-Now, if you try to go to the `/it/` URL, symfony will return a ~404|404 Error~ 
+Now, if you try to go to the `/it/` URL, symfony will return a ~404|404 Error~
 error as we have restricted the `sf_culture` variable to `en`, or `fr`. Add this
 requirement to all the routes that embed the culture:
 
@@ -241,14 +237,13 @@ requirement to all the routes that embed the culture:
 ~Culture~ ~Testing~
 -------------------
 
-It is time to test our implementation. But before adding more tests, we need
-to fix the existing ones. As all URLs have changed, edit all functional test
-files in `test/functional/frontend/` and add `/en` in front of all URLs. Don't
-forget to also change the URLs in the
-`lib/test/JobeetTestFunctional.class.php` file. Launch the test suite to check
-that you have correctly fixed the tests:
+It is time to test our implementation. But before adding more tests, we need to
+fix the existing ones. As all URLs have changed, edit all functional test files
+in `test/functional/frontend/` and add `/en` in front of all URLs. Don't forget
+to also change the URLs in the `lib/test/JobeetTestFunctional.class.php` file.
+Launch the test suite to check that you have correctly fixed the tests:
 
-    $ php symfony test:functional frontend
+ $ php symfony test:functional frontend
 
 The user tester provides an `isCulture()` method that tests the current user's
 culture. Open the `jobActionsTest` file and add the following tests:
@@ -290,13 +285,31 @@ layout. The form framework does not provide such a form out of the box but as
 the need is quite common for internationalized websites, the symfony core team
 maintains the
 [~`sfFormExtraPlugin`~](http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme),
-which contains ~validators|Validators~, ~widgets|Widgets~, and forms which cannot be included with
-the main symfony package as they are too specific or have external
-dependencies but are nonetheless very useful.
+which contains ~validators|Validators~, ~widgets|Widgets~, and forms which
+cannot be included with the main symfony package as they are too specific or
+have external dependencies but are nonetheless very useful.
 
 Install the plugin with the `plugin:install` task:
 
     $ php symfony plugin:install sfFormExtraPlugin
+
+Or via Subversion with the following command:
+
+    $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
+
+In order for plugin's classes to be loaded, the `sfFormExtraPlugin` plugin must
+be activated in the `config/ProjectConfiguration.class.php` file as shown below:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin'
+      ));
+    }
 
 >**NOTE**
 >The `sfFormExtraPlugin` contains widgets that require external dependencies
@@ -309,7 +322,7 @@ language selection. Adding the language form can be done in the layout like
 this:
 
 >**NOTE**
->The below code is not meant to be implemented. It is here to show you how you
+>The code below is not meant to be implemented. It is here to show you how you
 >might be tempted to implement something in the wrong way. We will go on to show
 >you how to implement it properly using symfony.
 
@@ -324,18 +337,18 @@ this:
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('@change_language') ?>">
+        <form action="<?php echo url_for('change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
     </div>
 
 Do you spot a problem? Right, the form object creation does not belong to the
-View layer. It must be created from an action. But as the code is in the
-layout, the form must be created for every ~action|Action~, which is far from practical.
-In such cases, you should use a **component**. A ~component|Component~ is like a partial
-but with some code attached to it. Consider it a lightweight action.
+View layer. It must be created from an action. But as the code is in the layout,
+the form must be created for every ~action|Action~, which is far from practical.
 
+In such cases, you should use a **component**. A ~component|Component~ is like a
+partial but with some code attached to it. Consider it as a lightweight action.
 Including a component from a template can be done by using the
 ~`include_component()` helper~:
 
@@ -349,8 +362,8 @@ Including a component from a template can be done by using the
       </div>
     </div>
 
-The helper takes the module and the action as arguments. The third argument
-can be used to pass parameters to the component.
+The helper takes the module and the action as arguments. The third argument can
+be used to pass parameters to the component.
 
 Create a `language` module to host the component and the action that will
 actually change the user language:
@@ -376,18 +389,17 @@ Create this file now:
 
 As you can see, a components class is quite similar to an actions class.
 
-The template for a component uses the same naming convention as a partial
-would: an underscore (`_`) followed by the component name:
+The template for a component uses the same naming convention as a partial would:
+an underscore (`_`) followed by the component name:
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('@change_language') ?>">
+    <form action="<?php echo url_for('change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
 As the plugin does not provide the action that actually changes the user
-culture, edit the `routing.yml` file to create the `change_language`
-route:
+culture, edit the `routing.yml` file to create the `change_language` route:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -410,7 +422,7 @@ And create the corresponding action:
 
         $form->process($request);
 
-        return $this->redirect('@localized_homepage');
+        return $this->redirect('localized_homepage');
       }
     }
 
@@ -431,13 +443,13 @@ Russian, Chinese, or Arabic are much more complex as all their characters are
 outside the ASCII range. Such languages are defined with totally different
 character sets.
 
-When dealing with internationalized data, it is better to use the unicode
-norm. The idea behind ~unicode|Unicode~ is to establish a universal set of
-characters that contains all characters for all languages. The problem with
-unicode is that a single character can be represented with as many as 21
-octets. Therefore, for the web, we use ~UTF-8~, which maps Unicode code points
-to variable-length sequences of octets. In UTF-8, most used languages have
-their characters coded with less than 3 octets.
+When dealing with internationalized data, it is better to use the unicode norm.
+The idea behind ~unicode|Unicode~ is to establish a universal set of characters
+that contains all characters for all languages. The problem with unicode is that
+a single character can be represented with as many as 21 octets. Therefore, for
+the web, we use ~UTF-8~, which maps Unicode code points to variable-length
+sequences of octets. In UTF-8, most used languages have their characters coded
+with less than 3 octets.
 
 UTF-8 is the default encoding used by symfony, and it is defined in the
 `settings.yml` configuration file:
@@ -448,8 +460,7 @@ UTF-8 is the default encoding used by symfony, and it is defined in the
       .settings:
         charset: utf-8
 
-Also, to enable the internationalization layer of symfony, you must set the
-`i18n` setting to `true` in `settings.yml`:
+Also, to enable the internationalization layer of symfony, you must set the `i18n` setting to `true` in `settings.yml`:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -462,14 +473,14 @@ Also, to enable the internationalization layer of symfony, you must set the
 An internationalized website means that the user interface is translated into
 several languages.
 
-In a template, all strings that are language dependent must be wrapped with
-the ~`__()` helper~ (notice that there is two underscores).
+In a template, all strings that are language dependent must be wrapped with the
+~`__()` helper~ (notice that there is two underscores).
 
 The `__()` helper is part of the `I18N` helper group, which contains helpers
-that ease i18n management in templates. As this helper group is not loaded
-by default, you need to either manually add it in each template with
-`use_helper('I18N')` as we already did for the `Text` helper group, or
-load it globally by adding it to the ~`standard_helpers` setting~:
+that ease i18n management in templates. As this helper group is not loaded by
+default, you need to either manually add it in each template with
+`use_helper('I18N')` as we already did for the `Text` helper group, or load it
+globally by adding it to the ~`standard_helpers` setting~:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -493,13 +504,13 @@ Here is how to use the `__()` helper for the Jobeet footer:
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -511,16 +522,15 @@ Here is how to use the `__()` helper for the Jobeet footer:
 >also use a unique identifier for each string. It is just a matter of taste.
 >For Jobeet, we will use the former strategy so templates are more readable.
 
-When symfony renders a template, each time the `__()` helper is called,
-symfony looks for a translation for the current user's culture. If a
-translation is found, it is used, if not, the first argument is returned
-as a fallback value.
+When symfony renders a template, each time the `__()` helper is called, symfony
+looks for a translation for the current user's culture. If a translation is
+found, it is used, if not, the first argument is returned as a fallback value.
 
-All translations are stored in a ~catalogue|Translations Catalogue~. 
-The i18n framework provides a lot of different strategies to store the translations. 
-We will use the ["~XLIFF~"](http://en.wikipedia.org/wiki/XLIFF) format, which is a 
-standard and the most flexible one. It is also the store used by the admin generator 
-and most symfony plugins.
+All translations are stored in a ~catalogue|Translations Catalogue~. The i18n
+framework provides a lot of different strategies to store the translations. We
+will use the ["~XLIFF~"](http://en.wikipedia.org/wiki/XLIFF) format, which is a
+standard and the most flexible one. It is also the store used by the admin
+generator and most symfony plugins.
 
 >**NOTE**
 >Other catalogue stores are ~`gettext`~, `MySQL`, and `SQLite`. As always, have
@@ -529,16 +539,16 @@ and most symfony plugins.
 
 ### `i18n:extract`
 
-Instead of creating the catalogue file by hand, use the built-in
-~`i18n:extract` task|I18n Extraction Task~:
+Instead of creating the catalogue file by hand, use the built-in ~`i18n:extract`
+task|I18n Extraction Task~:
 
     $ php symfony i18n:extract frontend fr --auto-save
 
-The `i18n:extract` task finds all strings that need to be translated in `fr`
-in the `frontend` application and creates or updates the corresponding
-catalogue. The `--auto-save` option saves the new strings in the catalogue.
-You can also use the `--auto-delete` option to automatically remove strings
-that do not exist anymore.
+The `i18n:extract` task finds all strings that need to be translated in `fr` in
+the `frontend` application and creates or updates the corresponding catalogue.
+The `--auto-save` option saves the new strings in the catalogue. You can also
+use the `--auto-delete` option to automatically remove strings that do not exist
+anymore.
 
 In our case, it populates the file we have created:
 
@@ -623,9 +633,9 @@ language:
 
 ### Translations with Arguments
 
-The main principle behind internationalization is to translate whole
-sentences. But some sentences embed dynamic values. In Jobeet, this is the
-case on the homepage for the "more..." link:
+The main principle behind internationalization is to translate whole sentences.
+But some sentences embed dynamic values. In Jobeet, this is the case on the
+homepage for the "more..." link:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
@@ -643,8 +653,8 @@ translation:
     </div>
 
 The string to be translated is now "and %count% more...", and the `%count%`
-placeholder will be replaced by the real number at runtime, thanks to the
-value given as the second argument to the `__()` helper.
+placeholder will be replaced by the real number at runtime, thanks to the value
+given as the second argument to the `__()` helper.
 
 Add the new string manually by inserting a `trans-unit` tag in the
 `messages.xml` file, or use the `i18n:extract` task to update the file
@@ -655,18 +665,18 @@ automatically:
 After running the task, open the XLIFF file to add the French translation:
 
     [xml]
-    <trans-unit id="5">
+    <trans-unit id="6">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
 
-The only requirement in the translated string is to use the `%count%` placeholder
-somewhere.
+The only requirement in the translated string is to use the `%count%`
+placeholder somewhere.
 
-Some other strings are even more complex as they involve ~plurals|Plurals (I18n)~. 
-According to some numbers, the sentence changes, but not necessarily the same way for all
-languages. Some languages have very complex grammar rules for plurals, like
-Polish or Russian.
+Some other strings are even more complex as they involve ~plurals|Plurals
+(I18n)~. According to some numbers, the sentence changes, but not necessarily
+the same way for all languages. Some languages have very complex grammar rules
+for plurals, like Polish or Russian.
 
 On the category page, the number of jobs in the current category is displayed:
 
@@ -688,11 +698,11 @@ When a sentence has different translations according to a number, the
 The ~`format_number_choice()` helper~ takes three arguments:
 
   * The string to use depending on the number
-  * An array of placeholder replacements
+  * An array of placeholders
   * The number to use to determine which text to use
 
-The string that describes the different translations according to the number
-is formatted as follows:
+The string that describes the different translations according to the number is
+formatted as follow:
 
   * Each possibility is separated by a pipe character (`|`)
   * Each string is composed of a range followed by the translation
@@ -709,21 +719,21 @@ The ~range|Ranges (I18n)~ can describe any range of numbers:
 Translating the string is similar to other message strings:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="7">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
     </trans-unit>
 
-Now that you know how to internationalize all kind of strings, take the time
-to add `__()` calls for all templates of the frontend application. We won't
+Now that you know how to internationalize all kind of strings, take the time to
+add `__()` calls for all templates of the frontend application. We won'tt
 internationalize the backend application.
 
 ### ~Forms|Forms (I18n)~
 
 The form classes contain many strings that need to be translated, like labels,
 error messages, and help messages. All these strings are automatically
-internationalized by symfony, so you only need to provide translations
-in the XLIFF files.
+internationalized by symfony, so you only need to provide translations in the
+XLIFF files.
 
 >**NOTE**
 >Unfortunately, the `i18n:extract` task does not yet parse form classes for
@@ -731,14 +741,14 @@ in the XLIFF files.
 
 ### ##ORM## Objects
 
-For the Jobeet website, we won't ~internationalize all tables|Model Internationalization~ 
-as it does not make sense to ask the job posters to ~translate|I18N (Model)~ 
-their job posts in all available languages. But the category table definitely 
-needs to be translated.
+For the Jobeet website, we won't ~internationalize all tables|Model
+Internationalization~ as it does not make sense to ask the job posters to
+~translate|I18N (Model)~ their job posts in all available languages. But the
+category table definitely needs to be translated.
 
 The ##ORM## plugin supports i18n tables out of the box. For each table that
-contains localized data, two tables need to be created: one for columns that
-are i18n-independent, and the other one with columns that need to be
+contains localized data, two tables need to be created: one for columns that are
+i18n-independent, and the other one with columns that need to be
 internationalized. The two tables are linked by a one-to-many relationship.
 
 Update the ~`schema.yml`|`schema.yml` (I18n)~ accordingly:
@@ -789,8 +799,7 @@ Rebuild the model to create the `i18n` stub classes:
     $ php symfony propel:build --all --no-confirmation
     $ php symfony cc
 
-As the `name` and `slug` columns have been moved to the i18n table, move the
-`setName()` method from `JobeetCategory` to `JobeetCategoryI18n`:
+As the `name` and `slug` columns have been moved to the i18n table, move the `setName()` method from `JobeetCategory` to `JobeetCategoryI18n`:
 
     [php]
     // lib/model/JobeetCategoryI18n.php
@@ -828,13 +837,13 @@ We also need to fix the `getForSlug()` method in `JobeetCategoryPeer`:
       columns:
         name: { type: string(255), notnull: true }
 
-By turning on the `I18n` behavior, a model named `JobeetCategoryTranslation` 
-will be automatically created and the specified `fields` are moved to that 
+By turning on the `I18n` behavior, a model named `JobeetCategoryTranslation`
+will be automatically created and the specified `fields` are moved to that
 model.
 
 Notice we simply turn on the `I18n` behavior and move the `Sluggable` behavior
-to be attached to the `JobeetCategoryTranslation` model which is automatically 
-created. The `uniqueBy` option tells the `Sluggable` behavior which fields 
+to be attached to the `JobeetCategoryTranslation` model which is automatically
+created. The `uniqueBy` option tells the `Sluggable` behavior which fields
 determine whether a slug is unique or not. In this case each slug must be unique
 for each `lang` and `name` pair.
 
@@ -873,7 +882,7 @@ Since Doctrine provides some magic finders for all columns in a model, we need
 to simply create the `findOneBySlug()` method so that we override the default
 magic functionality Doctrine provides.
 
-We need to make a few changes so that the category is retrieved based on the 
+We need to make a few changes so that the category is retrieved based on the
 english slug in the `JobeetCategoryTranslation` table.
 
     [php]
@@ -895,10 +904,10 @@ Rebuild the model:
 </doctrine>
 
 >**TIP**
->As the `propel:build --all --and-load` removes all tables and data from the database,
->don't forget to re-create a user to access the Jobeet backend with the
->`guard:create-user` task. Alternatively, you can add a fixture file to add it
->automatically for you.
+>As the `propel:build --all --and-load` removes all tables and data from the 
+>database, don't forget to re-create a user to access the Jobeet backend with 
+>the `guard:create-user` task. Alternatively, you can add a fixture file to add 
+>it automatically for you.
 
 <propel>
 When building the model, symfony creates proxy methods in the main
@@ -916,8 +925,8 @@ When building the model, symfony creates proxy methods in the main
 </propel>
 <doctrine>
 When using the `I18n` behavior, proxies are created between the `JobeetCategory`
-object and the `JobeetCategoryTranslation` object so all the old functions
-for retrieving the category name will still work and retrieve the value for the
+object and the `JobeetCategoryTranslation` object so all the old functions for
+retrieving the category name will still work and retrieve the value for the
 current culture.
 
     [php]
@@ -933,18 +942,18 @@ current culture.
 
 <propel>
 >**TIP**
->To reduce the number of ~database requests|Performances~, use the `doSelectWithI18n()` method
->instead of the regular `doSelect()` one. It will retrieve the main object and
->the i18n one in one request.
+>To reduce the number of ~database requests|Performances~, use the 
+>`doSelectWithI18n()` method instead of the regular `doSelect()` one. It will 
+>retrieve the main object and the i18n one in one query.
 >
 >     [php]
 >     $categories = JobeetCategoryPeer::doSelectWithI18n($c, $culture);
 </propel>
 <doctrine>
 >**TIP**
->To reduce the number of ~database requests|Performances~, join the `JobeetCategoryTranslation`
->in your queries. It will retrieve the main object and the i18n one in one
->request.
+>To reduce the number of ~database requests|Performances~, join the 
+>`JobeetCategoryTranslation` in your queries. It will retrieve the main object 
+>and the i18n one in one query.
 >
 >     [php]
 >     $categories = Doctrine_Query::create()
@@ -965,8 +974,8 @@ As the `category` route is tied to the `JobeetCategory` model class and
 because the `slug` is now part of `JobeetCategoryI18n`, the route is not able
 </propel>
 <doctrine>
-because the `slug` is now part of the `JobeetCategoryTranslation`, the route
-is not able
+because the `slug` is now part of the `JobeetCategoryTranslation`, the route is
+not able
 </doctrine>
 to retrieve the `Category` object automatically. To help the routing system,
 let's create a method that will take care of object retrieval:
@@ -990,8 +999,8 @@ let's create a method that will take care of object retrieval:
 <doctrine>
 Since we already overrode the `findOneBySlug()` let's refactor a little bit more
 so these methods can be shared. We'll create a new `findOneBySlugAndCulture()`
-and `doSelectForSlug()` methods and change the `findOneBySlug()` method to simply use
-the `findOneBySlugAndCulture()` method.
+and `doSelectForSlug()` methods and change the `findOneBySlug()` method to
+simply use the `findOneBySlugAndCulture()` method.
 
     [php]
     // lib/model/doctrine/JobeetCategoryTable.class.php
@@ -1015,8 +1024,8 @@ the `findOneBySlugAndCulture()` method.
     }
 </doctrine>
 
-Then, use the ~`method` option|`method` option (Routing)~ to tell the `category` route to use the
-`doSelectForSlug()` method to retrieve the object:
+Then, use the ~`method` option|`method` option (Routing)~ to tell the `category`
+route to use the `doSelectForSlug()` method to retrieve the object:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -1033,21 +1042,20 @@ categories:
 
     $ php symfony propel:data-load
 
-Now the `category` route is internationalized and the URL for a category
-embeds the translated category slug:
+Now the `category` route is internationalized and the URL for a category embeds
+the translated category slug:
 
     /frontend_dev.php/fr/category/programmation
     /frontend_dev.php/en/category/programming
 
 ### Admin Generator
 
-For the backend, we want the French and the English translations to be edited
-in the same form:
+For the backend, we want the French and the English translations to be edited in
+the same form:
 
 ![Backend categories](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
-Embedding an ~i18n form|Forms (Translation)~ can be done by using the 
-`embedI18N()` method:
+Embedding an ~i18n form|Forms (Translation)~ can be done by using the `embedI18N()` method:
 
     [php]
     // lib/form/JobeetCategoryForm.class.php
@@ -1071,42 +1079,63 @@ Embedding an ~i18n form|Forms (Translation)~ can be done by using the
       }
     }
 
-The admin generator interface supports internationalization out of the box.
-It comes with translations for more than 20 languages, and it is quite easy to
-add a new one, or to customize an existing one. Copy the file for the language
-you want to customize from symfony (admin translations are to be found in
+The admin generator interface supports internationalization out of the box. It
+comes with translations for more than 20 languages, and it is quite easy to add
+a new one, or to customize an existing one. Copy the file for the language you
+want to customize from symfony (admin translations are to be found in
 <propel>
 `lib/vendor/symfony/lib/plugins/sfPropelPlugin/i18n/`) in the application
 </propel>
 <doctrine>
 `lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/i18n/`) in the application
 </doctrine>
-`i18n` directory. As the file in your application will be merged with the symfony
-one, only keep the modified strings in the application file.
+`i18n` directory. As the file in your application will be merged with the
+symfony one, only keep the modified strings in the application file.
 
 You will notice that the admin generator translation files are named like
-`sf_admin.fr.xml`, instead of `fr/messages.xml`. As a matter of fact,
-`messages` is the name of the default catalogue used by symfony, and can be 
-changed to allow a better separation between different parts of your application. 
-Using a catalogue other than the default one requires that you specify it when 
-using the `__()` helper:
+`sf_admin.fr.xml`, instead of `fr/messages.xml`. As a matter of fact, `messages`
+is the name of the default catalogue used by symfony, and can be changed to
+allow a better separation between different parts of your application. Using a
+catalogue other than the default one requires that you specify it when using the
+`__()` helper:
 
     [php]
     <?php echo __('About Jobeet', array(), 'jobeet') ?>
 
-In the above `__()` call, symfony will look for the "About Jobeet" string in
-the `jobeet` catalogue.
+In the above `__()` call, symfony will look for the "About Jobeet" string in the
+`jobeet` catalogue.
 
 ### Tests
 
-Fixing ~tests|I18n (Testing)~ is an integral part of the internationalization 
-migration. First, update the test fixtures for categories by copying the 
+Fixing ~tests|I18n (Testing)~ is an integral part of the internationalization
+migration. First, update the test fixtures for categories by copying the
 fixtures we have
 <propel>
 defined above in `test/fixtures/010_categories.yml`.
 </propel>
 <doctrine>
 define above in `test/fixtures/categories.yml`.
+</doctrine>
+
+<doctrine>
+Don't forget to update methods in the `lib/test/JobeetTestFunctional.class.php`
+file in order to care of our modifications concerning the `JobeetCategory`'s
+internationalization.
+
+    [php]
+    public function getMostRecentProgrammingJob()
+    {
+      $q = Doctrine_Query::create()
+        ->select('j.*')
+        ->from('JobeetJob j')
+        ->leftJoin('j.JobeetCategory c')
+        ->leftJoin('c.Translation t')
+        ->where('t.slug = ?', 'programming');
+
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+      return $q->fetchOne();
+    }
 </doctrine>
 
 Rebuild the model for the `test` environment:
@@ -1131,8 +1160,7 @@ Supporting different cultures also means supporting different way to format
 dates and numbers. In a template, several helpers are at your disposal to help
 take all these differences into account, based on the current user culture:
 
-In the [`Date`](http://www.symfony-project.org/api/1_4/DateHelper) helper
-group:
+In the [`Date`](http://www.symfony-project.org/api/1_4/DateHelper) helper group:
 
  | Helper                         | Description                                                |
  | ------------------------------ | ---------------------------------------------------------- |
@@ -1150,8 +1178,7 @@ group:
  | `format_number()`   | Formats a number   |
  | `format_currency()` | Formats a currency |
 
-In the [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper) helper
-group:
+In the [`I18N`](http://www.symfony-project.org/api/1_4/I18NHelper) helper group:
 
  | Helper              | Description                     |
  | ------------------- | ------------------------------- |
@@ -1176,15 +1203,14 @@ The form framework provides several ~widgets|Widgets (I18n)~ and
  * [`sfValidatorI18nChoiceLanguage`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceLanguage)
  * [`sfValidatorI18nChoiceTimezone`](http://www.symfony-project.org/api/1_4/sfValidatorI18nChoiceTimezone)
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 Internationalization and localization are first-class citizens in symfony.
-Providing a localized website to your users is very easy as symfony provides
-all the basic tools and even gives you command line tasks to make it fast.
+Providing a localized website to your users is very easy as symfony provides all
+the basic tools and even gives you command line tasks to make it fast.
 
-Be prepared for a very special tutorial tomorrow as we will be moving a lot of
-files around and exploring a different approach to organizing a symfony
-project.
+Be prepared for a very special day as we will be moving a lot of files around
+and exploring a different approach to organizing a symfony project.
 
 __ORM__

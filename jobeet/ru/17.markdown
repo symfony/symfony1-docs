@@ -182,7 +182,7 @@ Zend Lucene предоставляет два метода для получен
       $index = JobeetJobPeer::getLuceneIndex();
 </propel>
 <doctrine>
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 </doctrine>
 
       // удалить существующие записи
@@ -266,7 +266,7 @@ Zend Lucene предоставляет два метода для получен
     {
       // ...
 
-      $conn = $conn ? $conn : $this->getTable()->getConnection();
+      $conn = $conn ? $conn : JobeetJobTable::getConnection();
       $conn->beginTransaction();
       try
       {
@@ -310,7 +310,7 @@ Zend Lucene предоставляет два метода для получен
     // lib/model/doctrine/JobeetJob.class.php
     public function delete(Doctrine_Connection $conn = null)
     {
-      $index = $this->getTable()->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       foreach ($index->find('pk:'.$this->getId()) as $hit)
       {
@@ -347,10 +347,7 @@ Zend Lucene предоставляет два метода для получен
 
 Сейчас, когда у нас все готово, Вы можете перезагрузить начальные данные для их индексирования:
 
-    $ php symfony propel:data-load --env=dev
-
-Задача запускается с опцией `--env`, поскольку индексирование зависит от окружения
-и для команд окружение по умолчанию `cli`.
+    $ php symfony propel:data-load
 
 >**TIP**
 >Для пользователей Unix: поскольку индекс модифицируется из командной строки и из
@@ -377,22 +374,31 @@ Zend Lucene предоставляет два метода для получен
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('job', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
          ➥ ->getForLuceneQuery($query);
 </doctrine>
       }
 
       // ...
     }
+
+>**NOTE**
+>La nouvelle méthode `forwardUnless()` redirige l'utilisateur vers l'action 
+> `index` du module `job` si la variable `query` de l'URL n'existe pas ou est 
+>vide.
+>
+>Cette méthode n'est en fait qu'un simple alias pour le code suivant:
+>
+>    if (!$query = $request->getParameter('query'))
+>    {
+>      $this->forward('job', 'index');
+>    }
 
 Шаблон тоже достаточно простой:
 
@@ -431,7 +437,7 @@ Zend Lucene предоставляет два метода для получен
     // lib/model/doctrine/JobeetJobTable.class.php
     public function getForLuceneQuery($query)
     {
-      $hits = $this->getLuceneIndex()->find($query);
+      $hits = self::getLuceneIndex()->find($query);
 
       $pks = array();
       foreach ($hits as $hit)
@@ -447,6 +453,7 @@ Zend Lucene предоставляет два метода для получен
       $q = $this->createQuery('j')
         ->whereIn('j.id', $pks)
         ->limit(20);
+
       $q = $this->addActiveJobsQuery($q);
 
       return $q->execute();
@@ -461,7 +468,7 @@ Zend Lucene предоставляет два метода для получен
     [php]
     // apps/frontend/templates/layout.php
     <h2>Ask for a job</h2>
-    <form action="<?php echo url_for('@job_search') ?>" method="get">
+    <form action="<?php echo url_for('job_search') ?>" method="get">
       <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
       <input type="submit" value="search" />
       <div class="help">
@@ -493,7 +500,7 @@ Zend Lucene предоставляет два метода для получен
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return non activated jobs');
 
@@ -503,7 +510,7 @@ Zend Lucene предоставляет два метода для получен
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 1, '::getForLuceneQuery() returns jobs matching the criteria');
     $t->is($jobs[0]->getId(), $job->getId(), '::getForLuceneQuery() returns jobs matching the criteria');
@@ -513,7 +520,7 @@ Zend Lucene предоставляет два метода для получен
     $jobs = JobeetJobPeer::getForLuceneQuery('position:foobar');
 </propel>
 <doctrine>
-    $jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
+    $jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery('position:foobar');
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return deleted jobs');
 
@@ -543,7 +550,7 @@ Zend Lucene предоставляет два метода для получен
 </propel>
 <doctrine>
       // очистка индекса Lucene
-      $index = Doctrine::getTable('JobeetJob')->getLuceneIndex();
+      $index = JobeetJobTable::getLuceneIndex();
 
       $q = Doctrine_Query::create()
         ->from('JobeetJob j')
@@ -570,7 +577,7 @@ Zend Lucene предоставляет два метода для получен
       $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-      $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+      $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
 
       $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
