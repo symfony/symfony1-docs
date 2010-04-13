@@ -198,7 +198,7 @@ Each column is described with the following information:
     `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar(size)`,
     `longvarchar`, `date`, `time`, `timestamp`, `blob`, and `clob`)
   * `required`: Set it to `true` if you want the column to be required
-  * `~index|Database indexes~`: Set it to `true` if you want to create an index 
+  * ~`index|Database indexes`~: Set it to `true` if you want to create an index 
     for the column or to `unique` if you want a unique index to be created on 
     the column.
   * `primaryKey`: Define a column as the ~primary key|Primary Key~ for the

@@ -411,9 +411,9 @@ Faisons de même pour le module `job` pour le rendre plus lisible :
 ### `layout`
 
 La liste peut être affichée avec des ~layout|Layout~s différents. Par défaut, le
-layout est `~tabular|Layout tabular~`, ce qui signifie que chaque valeur de colonne
+layout est ~`tabular|Layout tabular`~, ce qui signifie que chaque valeur de colonne
 est la colonne dans sa propre table. Mais pour le module `job`, il serait préférable
-d'utiliser le layout `~stacked|Layout stacked~`, qui est l'autre layout intégré :
+d'utiliser le layout ~`stacked|Layout stacked`~, qui est l'autre layout intégré :
 
     [yml]
     # apps/backend/modules/job/config/generator.yml
@@ -474,7 +474,7 @@ défaut en ajoutant l'option `sort` :
 ### `max_per_page`
 
 Par défaut, la liste est ~paginée|Pagination~ et chaque page contient 20
-articles. Ceci peut être modifié avec l'option `~max_per_page~` :
+articles. Ceci peut être modifié avec l'option ~`max_per_page`~ :
 
     [yml]
     # apps/backend/modules/job/config/generator.yml

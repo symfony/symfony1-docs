@@ -520,7 +520,7 @@ selezionata nella sezione precedente.
 ![Congratulazioni](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 >**TIP**
->Se avete il modulo di Apache `~mod_rewrite~` installato, potete
+>Se avete il modulo di Apache ~`mod_rewrite`~ installato, potete
 >rimuovere la parte /index.php/ da tutti gli URL. Questo è possibile
 >grazie alle regole di riscrittura configurate nel file `web/.~htaccess~`.
 

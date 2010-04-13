@@ -198,7 +198,7 @@ Chaque colonne est décrite avec les informations suivantes :
     `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar(size)`,
     `longvarchar`, `date`, `time`, `timestamp`, `blob`, et `clob`)
   * `required`: Réglez-le à `true` si vous souhaitez que la colonne soit requise
-  * `~index|Database indexes~`: Réglez-le à `true` si vous souhaitez créer un index
+  * ~`index|Database indexes`~: Réglez-le à `true` si vous souhaitez créer un index
     pour la colonne ou à `unique` si vous voulez qu'un index unique soit créé pour
 	la colonne.
   * `primaryKey`: Définit la colonne comme une ~clé primaire|Clé primaire~ pour la table.

@@ -175,7 +175,7 @@ activé, nous avons besoin de modifier le comportement par défaut de la route :
 
 Si le jeton n'existe pas dans la base de données, nous lançons une exception
 `sfError404Exception`. Cette classe d'exception est ensuite automatiquement converti en
-une réponse `~404|Erreur 404~`. C'est le moyen le plus simple pour générer une page `404`
+une réponse ~`404|Erreur 404`~. C'est le moyen le plus simple pour générer une page `404`
 d'une classe de modèle.
 
 <propel>

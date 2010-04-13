@@ -104,7 +104,7 @@ le ultime offerte inserite, create il template `indexSuccess.atom.php`:
 >     [php]
 >     $this->setTemplate('foo');
 
-Di default symfony cambia la risposta `~Content-Type~` in accordo al formato, 
+Di default symfony cambia la risposta ~`Content-Type`~ in accordo al formato, 
 per tutti i formati non-HTML il layout viene disabilitato. Per un feed Atom
 symfony cambia il `Content-Type` a `application/atom+xml; charset=utf-8`.
 

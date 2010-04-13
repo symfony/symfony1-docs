@@ -135,7 +135,7 @@ Per rendere migliore la user experience, il layout di default del backend può
 essere personalizzato. Abbiamo inoltre aggiunto un semplice menù per rendere
 più semplice la navigazione tra i differenti moduli
 
-Rimpiazzate il contenuto del file di default `~layout.php|Layout~` con il seguente:
+Rimpiazzate il contenuto del file di default ~`layout.php|Layout`~ con il seguente:
 
     [php]
     // apps/backend/templates/layout.php
@@ -406,9 +406,9 @@ Facciamo lo stesso per rendere il modulo `job` più leggibile:
 ### `layout`
 
 La lista può venir visualizzata da differenti ~layout|Layout~. Di default, il layout è
-`~tabular|Layout tabulare~`, ciò significa che il valore di ogni colonna è nella corrispondente
+~`tabular|Layout tabulare`~, ciò significa che il valore di ogni colonna è nella corrispondente
 colonna della tabella. Ma per il modulo `job`, sarebbe meglio usare il layout
-`~stacked|Layout impilato~`, che è l'altro layout a disposizione:
+~`stacked|Layout impilato`~, che è l'altro layout a disposizione:
 
     [yml]
     config:
@@ -464,7 +464,7 @@ lavori inseriti. Si può configurare l'ordinamento di default con l'opzione `sor
 ### `max_per_page`
 
 Di default, la lista è ~paginata|Paginazione~ e ogni pagina contiene 20 oggetti. Questo
-può essere modificato con l'opzione `~max_per_page~`:
+può essere modificato con l'opzione ~`max_per_page`~:
 
     [yml]
     config:

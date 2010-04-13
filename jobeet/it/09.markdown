@@ -648,7 +648,7 @@ Debug dei test funzionali
 
 A volte un test funzionale fallisce. Siccome symfony simula un browser senza
 interfaccia grafica, può essere difficile diagnosticare il problema.
-Fortunatamente, symfony fornisce il metodo `~debug()|Debug~` per mostrare gli header
+Fortunatamente, symfony fornisce il metodo ~`debug()|Debug`~ per mostrare gli header
 e i contenuti della risposta:
 
     [php]

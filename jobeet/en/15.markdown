@@ -173,7 +173,7 @@ activated, we need to override the default behavior of the route:
 
 If the token does not exist in the database, we throw an `sfError404Exception`
 exception. This exception class is then automatically converted to a 
-`~404|404 Error~` response. This is the simplest way to generate a `404` page
+~`404|404 Error`~ response. This is the simplest way to generate a `404` page
 from a model class.
 
 <propel>

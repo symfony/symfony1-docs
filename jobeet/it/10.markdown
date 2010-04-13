@@ -67,7 +67,7 @@ un tag di tipo `<textarea>` (`sfWidgetFormTextarea`) e dovrà essere una stringa
 di non più di 255 caratteri (`sfValidatorString`).
 
 Di default tutti i campi sono obbligatori, visto che il valore impostato per
-l'opzione `~required|Campi di form obbligatori~` è impostata a `true`. Quindi la definizione della validazione
+l'opzione ~`required|Campi di form obbligatori`~ è impostata a `true`. Quindi la definizione della validazione
 per `email` è equivalente a `new sfValidatorEmail(array('required' => true))`.
 
 >**TIP**

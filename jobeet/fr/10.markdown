@@ -534,8 +534,8 @@ widgets du formulaire.
 Le ~helper `form_tag_for()`~ génère une ~balise|Formulaires (HTML)~ `<form>` pour le
 formulaire et la route donnés et modifie les ~méthodes HTTP|Méthodes HTTP POST~ en
 ~`POST`|POST (Méthode HTTP)~ ou en ~`PUT`|PUT (Méthode HTTP)~ PUT selon si l'objet est
-nouveau ou non. Il s'occupe aussi de l'attribut `~multipart|Formulaires
-(Multipart)~` si le formulaire a aucune balise input file.
+nouveau ou non. Il s'occupe aussi de l'attribut ~`multipart|Formulaires
+(Multipart)`~ si le formulaire a aucune balise input file.
 
 Finalement, le `<?php echo $form ?>` rend les widgets du formulaire.
 

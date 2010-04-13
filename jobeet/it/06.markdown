@@ -46,7 +46,7 @@ fatto che siano attive o meno:
 
 <propel>
 Un'offerta di lavoro attiva è un'offerta pubblicata da meno di 30 giorni. Il 
-metodo `doSelect()` utilizza un oggetto di tipo `~Criteria~`, che descrive la 
+metodo `doSelect()` utilizza un oggetto di tipo ~`Criteria`~, che descrive la 
 richiesta da fare al database. Nel codice precedente viene passato un `Criteria`
 vuoto, il che significa che tutti i record vengono recuperati dal database.
 </propel>
@@ -225,7 +225,7 @@ il metodo `save()` della classe del modello:
     }
 </doctrine>
 
-Il metodo `~isNew()~` restituisce il valore `true` quando l'oggetto non è ancora 
+Il metodo ~`isNew()`~ restituisce il valore `true` quando l'oggetto non è ancora 
 stato serializzato nel database e `false` altrimenti.
 
 Modifichiamo ora l'azione per utilizzare la colonna `expires_at` al
@@ -323,7 +323,7 @@ YAML può contenere tutte le impostazioni che si desiderano:
       active_days: 30
 
 Nell'applicazione, queste impostazioni sono disponibili tramite la classe
-globale `~sfConfig~`:
+globale ~`sfConfig`~:
 
     [php]
     sfConfig::get('app_active_days')
@@ -508,7 +508,7 @@ Aprire la classe `JobeetCategoryTable` e aggiungere un metodo `getWithJobs()`:
       }
     }
 
-Il metodo `Criteria::addJoin()` aggiunge una clausola `~JOIN~` all'SQL generato.
+Il metodo `Criteria::addJoin()` aggiunge una clausola ~`JOIN`~ all'SQL generato.
 Per default, la condizione di join è aggiunta alla clausola `WHERE`.
 Si può anche cambiare l'operatore di join aggiungendo un terzo parametro
 (`Criteria::LEFT_JOIN`, `Criteria::RIGHT_JOIN` e `Criteria::INNER_JOIN`).
@@ -709,7 +709,7 @@ Questo è semplice quanto aggiungere il metodo `getActiveJobs()`:
     }
 </doctrine>
 
-L'appropriata clausola `~LIMIT~` è ora insita nel Modello, ma è meglio che tale
+L'appropriata clausola ~`LIMIT`~ è ora insita nel Modello, ma è meglio che tale
 valore sia configurabile. Cambiamo il template in modo che passi un numero
 massimo di lavori, impostato in `app.yml`:
 
@@ -796,9 +796,9 @@ Ma come possiamo farlo, visto che il lavoro è recuperato automaticamente
 dalla rotta?
 
 <propel>
-Di default, `~sfPropelRoute~` usa il metodo standard `doSelectOne()` per recuperare
+Di default, ~`sfPropelRoute`~ usa il metodo standard `doSelectOne()` per recuperare
 l'oggetto, ma si può cambiare questo comportamento fornendo un'opzione
-`~method_for_criteria~` nella configurazione della rotta:
+~`method_for_criteria`~ nella configurazione della rotta:
 </propel>
 
     [yml]

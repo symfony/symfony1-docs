@@ -269,7 +269,7 @@ Sécurité de l'application
 ### Authentification
 
 Comme beaucoup d'autres fonctionnalités symfony, la ~sécurité|Sécurité~ est gérée par
-un fichier YAML, `~security.yml~`. Par exemple, vous pouvez trouver la configuration par
+un fichier YAML, ~`security.yml`~. Par exemple, vous pouvez trouver la configuration par
 défaut pour l'application backend dans le répertoire `config/` :
 
     [yml]

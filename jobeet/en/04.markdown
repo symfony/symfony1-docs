@@ -615,7 +615,7 @@ Add a slot to the layout to allow the title to be dynamic:
     <title><?php include_slot('title') ?></title>
 
 Each slot is defined by a name (`title`) and can be displayed by using the
-`~include_slot~()` helper. Now, at the beginning of the `showSuccess.php`
+~`include_slot()`~ helper. Now, at the beginning of the `showSuccess.php`
 template, use the `slot()` helper to define the content of the slot for the job
 page:
 
@@ -815,7 +815,7 @@ The `sfWebRequest` class wraps the ~`$_SERVER`~, ~`$_COOKIE`~, ~`$_GET`~,
 
 We have already accessed request parameters by using the `getParameter()`
 method. It returns a value from the `$_GET` or `$_POST` global variable, or from
-the `~PATH_INFO~` variable.
+the ~`PATH_INFO`~ variable.
 
 If you want to ensure that a request parameter comes from a particular one of
 these variables, you need use the `getGetParameter()`, `getPostParameter()`, and
@@ -829,8 +829,8 @@ these variables, you need use the `getGetParameter()`, `getPostParameter()`, and
 
 ### The Response
 
-The `sfWebResponse` class wraps the `~header|HTTP Headers~()` and
-`setraw~cookie|Cookies~()` PHP methods:
+The `sfWebResponse` class wraps the ~`header()|HTTP Headers`~ and
+~`setrawcookie()|Cookies`~ PHP methods:
 
  Method name                   | PHP equivalent
  ----------------------------- | ----------------

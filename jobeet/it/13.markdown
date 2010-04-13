@@ -608,7 +608,7 @@ Test degli utenti
 Il tutorial di oggi non è finito, perché non abbiamo ancora parlato di test.
 Poiché il browser di symfony simula i ~cookie|Cookie~, è facile testare i comportamenti
 degli utenti, usando il tester incluso
-[`~sfTesterUser~`](http://symfony-project.org/api/1_4/sfTesterUser).
+[~`sfTesterUser`~](http://symfony-project.org/api/1_4/sfTesterUser).
 
 Aggiorniamo i ~test funzionali|Test funzionali~ per le feature del menù che abbiamo aggiunto
 oggi. Aggiungiamo il codice seguente alla fine dei test funzionali

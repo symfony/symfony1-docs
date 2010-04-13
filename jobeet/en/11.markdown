@@ -300,7 +300,7 @@ Testing the "Publish" link is now more simple:
     ;
 
 If you remember from day 10, the "Publish" link has been configured to be called
-with the HTTP `~PUT|PUT (HTTP Method)~` method. As browsers don't understand
+with the HTTP ~`PUT|PUT (HTTP Method)`~ method. As browsers don't understand
 `PUT` requests, the `link_to()` helper converts the link to a form with some
 JavaScript. As the test browser does not execute JavaScript, we need to force
 the method to `PUT` by passing it as a third option of the `click()` method.

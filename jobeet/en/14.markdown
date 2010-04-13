@@ -101,7 +101,7 @@ latest jobs, create an `indexSuccess.atom.php` template:
 >     [php]
 >     $this->setTemplate('foo');
 
-By default, symfony will change the response `~Content-Type~` according to the
+By default, symfony will change the response ~`Content-Type`~ according to the
 format, and for all non-HTML formats, the layout is disabled. For an Atom feed,
 symfony changes the `Content-Type` to `application/atom+xml;charset=utf-8`.
 

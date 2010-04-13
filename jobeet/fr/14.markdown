@@ -103,7 +103,7 @@ emplois, créez un Template `indexSuccess.atom.php` :
 >     [php]
 >     $this->setTemplate('foo');
 
-Par défaut, symfony va changer le `~Content-Type~` de la réponse en fonction du
+Par défaut, symfony va changer le ~`Content-Type`~ de la réponse en fonction du
 format, et pour tous les formats non-HTML, le layout est désactivé. Pour un flux Atom,
 symfony change le `Content-Type` en `application/atom+xml;
 charset=utf-8`.

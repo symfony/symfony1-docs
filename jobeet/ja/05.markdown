@@ -160,7 +160,7 @@ Jobeet ホームページをリフレッシュしても、求人情報へのリ�
 ルートクラス
 -----------
 
-~`routing.yml`~ で定義されている各ルートは内部で [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute) オブジェクトに変換されます。このクラスはルート定義の `class` エントリーで定義することで変更可能です。~HTTP~ プロトコルをよく知っているのなら、`~GET|GET (HTTP メソッド)~`、`~POST|POST (HTTP メソッド)~`、`~HEAD|HEAD (HTTP メソッド)~`、`~DELETE|DELETE (HTTP メソッド)~` と `~PUT|PUT (HTTP メソッド)~` のようなメソッドを定義することもできます。
+~`routing.yml`~ で定義されている各ルートは内部で [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute) オブジェクトに変換されます。このクラスはルート定義の `class` エントリーで定義することで変更可能です。~HTTP~ プロトコルをよく知っているのなら、~`GET|GET (HTTP メソッド)`~、~`POST|POST (HTTP メソッド)`~、~`HEAD|HEAD (HTTP メソッド)`~、~`DELETE|DELETE (HTTP メソッド)`~ と ~`PUT|PUT (HTTP メソッド)`~ のようなメソッドを定義することもできます。
 最初の3つ (`GET`、`POST`、`HEAD`) は全てのブラウザーでサポートされますが、それ以外の2つ (`DELETE`、`PUT`) はサポートされていません。
 
 あるリクエストメソッドだけにマッチするようルートを制限するには、[`sfRequestRoute`](http://www.symfony-project.org/api/1_4/sfRequestRoute) クラスを使うようにルートクラスを変更して、`sf_method` 変数を requirements エントリーに追加できます:
@@ -445,7 +445,7 @@ Jobeet ホームページをリフレッシュしても、求人情報へのリ�
 >**NOTE**
 >`sfPropelRouteCollection` で生成されたいくつかのルートは同じ ~URL~ を持ちます。それらはリクエストされる ~HTTP メソッド~が全て異なっているので使うことができます。
 
-`job_delete` と `job_update` ルートが必要としている ~HTTP メソッド~はブラウザーでサポートされていません (`~DELETE|DELETE (HTTP メソッド)~` と `~PUT|PUT (HTTP メソッド)~`)。この動作は symfony がシミュレートしているので動きます。具体例を見るために `_form.php` テンプレートを開いてください:
+`job_delete` と `job_update` ルートが必要としている ~HTTP メソッド~はブラウザーでサポートされていません (~`DELETE|DELETE (HTTP メソッド)`~ と ~`PUT|PUT (HTTP メソッド)`~)。この動作は symfony がシミュレートしているので動きます。具体例を見るために `_form.php` テンプレートを開いてください:
 
     [php]
     // apps/frontend/modules/job/templates/_form.php

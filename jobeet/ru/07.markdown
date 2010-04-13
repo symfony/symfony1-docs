@@ -365,7 +365,7 @@
       <?php endforeach; ?>
     </table>
 
-Чтобы подключить partial используйте хелпер `~include_partial()~`:
+Чтобы подключить partial используйте хелпер ~`include_partial()`~:
 
     [php]
     <?php include_partial('job/list', array('jobs' => $jobs)) ?>

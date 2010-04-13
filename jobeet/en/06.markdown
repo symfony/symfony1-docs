@@ -44,7 +44,7 @@ But as of now, all jobs are displayed, whether they are active or not:
 
 <propel>
 An active job is one that was posted less than 30 days ago. The `doSelect()`
-method takes a `~Criteria|Propel Criteria~` object that describes the database
+method takes a ~`Criteria|Propel Criteria`~ object that describes the database
 request to execute. In the code above, an empty `Criteria` is passed, which
 means that all the records are retrieved from the database. </propel> <doctrine>
 An active job is one that was posted less than 30 days ago. The
@@ -508,7 +508,7 @@ Open the `JobeetCategoryTable` class and add a `getWithJobs()` method:
       }
     }
 
-The `Criteria::addJoin()` method adds a `~JOIN~` clause to the generated SQL. By
+The `Criteria::addJoin()` method adds a ~`JOIN`~ clause to the generated SQL. By
 default, the join condition is added to the `WHERE` clause. You can also change
 the join operator by adding a third argument (`Criteria::LEFT_JOIN`,
 `Criteria::RIGHT_JOIN`, and `Criteria::INNER_JOIN`).
@@ -801,7 +801,7 @@ how can we do this as the job is retrieved automatically by the route?
 <propel>
 By default, the ~`sfPropelRoute`~ uses the standard `doSelectOne()` method to
 retrieve the object, but you can change it by providing a
-`~method_for_criteria~` option in the ~route|Route~ configuration:
+~`method_for_criteria`~ option in the ~route|Route~ configuration:
 </propel>
 
     [yml]

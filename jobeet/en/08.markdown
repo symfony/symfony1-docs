@@ -58,7 +58,7 @@ test insanely easy.
 >can use any testing library, like the excellent
 >[PHPUnit](http://www.phpunit.de/) library.
 
-The `~lime|Lime Testing Framework~` Testing Framework
+The ~`lime|Lime Testing Framework`~ Testing Framework
 -----------------------------------------------------
 
 All unit tests written with the lime framework start with the same code:
@@ -244,7 +244,7 @@ to test.
 >tested, it just means that each line has been executed, not that all the
 >~edge cases|Edge Cases~ have been tested.
 >
->As the `test:coverage` relies on `~XDebug~` to collect its information, you
+>As the `test:coverage` relies on ~`XDebug`~ to collect its information, you
 >need to install it and enable it first.
 
 Adding Tests for new Features

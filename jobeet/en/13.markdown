@@ -275,7 +275,7 @@ Application Security
 ### Authentication
 
 Like many other symfony features, ~security|Security~ is managed by a YAML file,
-`~security.yml~`. For instance, you can find the default configuration for the
+~`security.yml`~. For instance, you can find the default configuration for the
 backend application in the `config/` directory:
 
     [yml]

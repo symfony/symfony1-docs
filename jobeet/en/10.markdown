@@ -533,7 +533,7 @@ widgets.
 The ~`form_tag_for()` helper~ generates a `<form>` ~tag|Forms (HTML)~ for the
 given form and route and changes the ~HTTP methods|HTTP Method~ to ~`POST`|POST
 (HTTP Method)~ or ~`PUT`|PUT (HTTP Method)~ depending on whether the object is
-new or not. It also takes care of the `~multipart|Forms (Multipart)~` attribute
+new or not. It also takes care of the ~`multipart|Forms (Multipart)`~ attribute
 if the form has any file input tags.
 
 Eventually, the `<?php echo $form ?>` renders the form widgets.

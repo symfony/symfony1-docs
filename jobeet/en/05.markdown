@@ -102,7 +102,7 @@ variable/value pairs separated by slashes (`/`):
   | id                | 1     |
 
 >**NOTE**
->The `~module|Module~` and `~action|Action~` variables are special as they are 
+>The ~`module|Module`~ and ~`action|Action`~ variables are special as they are 
 >used by symfony to determine the action to execute.
 
 The `/job/show/id/1` URL can be created from a template by using the following
@@ -206,7 +206,7 @@ Requirements
 At the beginning of the book, we talked about validation and error handling for
 good reasons. The routing system has a built-in ~validation|Validation~ feature.
 Each pattern variable can be validated by a regular expression defined using the
-`~requirements|Requirements~` entry of a ~route|Route~ definition:
+~`requirements|Requirements`~ entry of a ~route|Route~ definition:
 
     [yml]
     job_show_user:
@@ -225,8 +225,8 @@ Each route defined in ~`routing.yml`~ is internally converted to an object of
 class [`sfRoute`](http://www.symfony-project.org/api/1_4/sfRoute). This class
 can be changed by defining a `class` entry in the route definition. If you are
 familiar with the ~HTTP~ protocol, you know that it defines several "methods",
-like `~GET|GET (HTTP Method)~`, `~POST|POST (HTTP Method)~`, `~HEAD|HEAD (HTTP
-Method)~`, `~DELETE|DELETE (HTTP Method)~`, and `~PUT|PUT (HTTP Method)~`. The
+like ~`GET|GET (HTTP Method)`~, ~`POST|POST (HTTP Method)`~, ~`HEAD|HEAD (HTTP
+Method)`~, ~`DELETE|DELETE (HTTP Method)`~, and ~`PUT|PUT (HTTP Method)`~. The
 first three are supported by all browsers, while the other two are not.
 
 To restrict a route to only match for certain request methods, you can change
@@ -423,7 +423,7 @@ Routing in Actions and Templates
 
 In a template, the `url_for()` helper converts an internal URI to an external
 URL. Some other symfony helpers also take an internal URI as an argument, like
-the `~link_to()~` helper which generates an `<a>` tag:
+the ~`link_to()`~ helper which generates an `<a>` tag:
 
     [php]
     <?php echo link_to($job->getPosition(), 'job_show_user', $job) ?>
@@ -563,8 +563,8 @@ following seven `sfPropelRoute` routes:
 >~HTTP method|HTTP Method~ requirements.
 
 The `job_delete` and `job_update` routes requires ~HTTP methods|HTTP Method~
-that are not supported by browsers (`~DELETE|DELETE (HTTP Method)~` and
-`~PUT|PUT (HTTP Method)~` respectively). This works because symfony simulates
+that are not supported by browsers (~`DELETE|DELETE (HTTP Method)`~ and
+~`PUT|PUT (HTTP Method)`~ respectively). This works because symfony simulates
 them. Open the `_form.php` template to see an example:
 
     [php]

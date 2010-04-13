@@ -44,7 +44,7 @@ Mais pour l'instant, tous les emplois sont affichés, qu'ils soient actifs ou no
 
 <propel>
 Un emploi est considéré actif s'il a été posté il y a moins de 30 jours. La méthode
-`doSelect()` utilise un objet `~Criteria|Criteria de Propel~` qui décrit la requête
+`doSelect()` utilise un objet ~`Criteria|Criteria de Propel`~ qui décrit la requête
 à exécuter sur la base de données. Dans le code ci-dessus, aucun argument n'est passé
 dans `Criteria`, ce qui signifie que tous les enregistrements seront retournés.
 </propel>
@@ -318,7 +318,7 @@ Configuration personnalisée
 
 Dans la méthode `JobeetJob::save()`, nous avons figé le nombre de jours qui détermine
 l'expiration d'un emploi. Il serait préférable que la valeur de 30 jours soit paramétrable.
-Le framework symfony utilise le fichier de configuration interne `~app.yml~` qui permet de
+Le framework symfony utilise le fichier de configuration interne ~`app.yml`~ qui permet de
 définir des ~paramètres|Paramètres~ spécifiques à l'~application|Application~.
 Ce fichier YAML peut contenir n'importe quel paramètre nécessaire :
 
@@ -328,7 +328,7 @@ Ce fichier YAML peut contenir n'importe quel paramètre nécessaire :
       active_days: 30
 
 Dans l'application, ces paramètres sont disponibles à travers la classe globale
-`~sfConfig~` :
+~`sfConfig`~ :
 
     [php]
     sfConfig::get('app_active_days')
@@ -513,7 +513,7 @@ Editez la classe `JobeetCategoryTable` et ajoutez la méthode `getWithJobs()` :
       }
     }
 
-La méthode `Criteria::addJoin()` ajoute une clause `~JOIN~` à la requête. Par défaut,
+La méthode `Criteria::addJoin()` ajoute une clause ~`JOIN`~ à la requête. Par défaut,
 la condition join est ajoutée à la clause `WHERE`. Vous pouvez également modifier
 l'opérateur join en ajoutant un troisième argument (`Criteria::LEFT_JOIN`,
 `Criteria::RIGHT_JOIN`, et `Criteria::INNER_JOIN`).
@@ -716,7 +716,7 @@ C'est assez simple de l'ajouter à la méthode `getActiveJobs()` :
     }
 </doctrine>
 
-La clause `~LIMIT~` est codée en dur dans le Modèle, mais il est préférable de
+La clause ~`LIMIT`~ est codée en dur dans le Modèle, mais il est préférable de
 pouvoir configurer cette valeur. Modifiez le Template pour utiliser le nombre
 maximum d'emplois configuré dans `app.yml` :
 
@@ -804,9 +804,9 @@ Au lieu d'afficher l'emploi, nous devons rediriger l'utilisateur vers une erreur
 Mais comment faire alors que l'emploi est recherché automatiquement par la route ?
 
 <propel>
-Par défaut,`~sfPropelRoute~` utilise la méthode standard `doSelectOne()` pour
+Par défaut,~`sfPropelRoute`~ utilise la méthode standard `doSelectOne()` pour
 rechercher l'objet. Mais il est possible de le modifier en indiquant une option
-`~method_for_criteria~` dans la configuration de la ~route|Route~ :
+~`method_for_criteria`~ dans la configuration de la ~route|Route~ :
 </propel>
 
     [yml]
