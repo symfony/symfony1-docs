@@ -130,7 +130,7 @@ To make the user experience a bit better, we need to customize the default
 backend. We will also add a simple menu to make it easy to navigate between the
 different modules.
 
-Replace the default `~layout|Layout~.php` file content with the code below:
+Replace the default ~`layout|Layout.php`~ file content with the code below:
 
     [php]
     // apps/backend/templates/layout.php
