@@ -81,13 +81,11 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
     // lib/model/doctrine/JobeetAffiliate.php
     class JobeetAffiliate extends BaseJobeetAffiliate
     {
-      public function preValidate($event)
+      public function save(Doctrine_Connection $conn = null)
       {
-        $object = $event->getInvoker();
-
-        if (!$object->getToken())
+        if (!$this->getToken())
         {
-          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
         }
       }
 

@@ -33,11 +33,11 @@ Il più delle volte il formato è integrato nell'URL. In questo caso symfony
 lo imposterà per voi se la variabile speciale ~`sf_format`~ è utilizzata
 nella corrispondente rotta. Per la lista delle offerte l'URL è:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Questo URL è equivalente a:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Entrambi gli URL sono equivalenti perché le rotte generate dalla classe 
 `sfPropelRouteCollection` hanno `sf_format` come estensione e perché

@@ -687,7 +687,7 @@ disponibili per il modulo `job`:
 
 Ora si può provare il modulo `job` in un browser:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![Modulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

@@ -503,8 +503,8 @@ Remplacez le contenu du partial généré `_form` par le code suivant :
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -521,9 +521,9 @@ Remplacez le contenu du partial généré `_form` par le code suivant :
       </table>
     </form>
 
-Les helpers `include_javascripts_for_form()` et `include_stylesheets_for_form()`
-incluent des dépendances de JavaScript et de feuille de style nécessaires pour les
-widgets du formulaire.
+Les helpers `use_javascripts_for_form()` et `use_stylesheets_for_form()`
+incluent des dépendances de JavaScript et de feuille de style nécessaires pour
+les widgets du formulaire.
 
 >**TIP**
 >Même si le formulaire emploi n'a pas besoin de JavaScript ou d'un fichier de style, c'est
@@ -776,7 +776,7 @@ n'importe quelle chaîne car le requirements de symfony par défaut est `\d+` po
 Maintenant, toutes les routes liées aux emplois, à l'exception des `job_show_user`, incorporent
 le jeton. Par exemple, la route pour modifier un emploi est maintenant sur le modèle suivant :
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 Vous aurez aussi besoin de changer le lien "Edit" dans le Template `showSuccess` :
 

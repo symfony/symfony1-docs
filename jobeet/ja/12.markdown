@@ -12,7 +12,7 @@
 
     $ php symfony generate:app backend
 
-`prod` 環境では `http://jobeet.localhost/backend.php/`、`dev` 環境では `http://jobeet.localhost/backend_dev.php/` を通してバックエンドアプリケーションを利用できます。
+`prod` 環境では `http://www.jobeet.com.localhost/backend.php/`、`dev` 環境では `http://www.jobeet.com.localhost/backend_dev.php/` を通してバックエンドアプリケーションを利用できます。
 
 >**NOTE**
 >フロントエンドアプリケーションを作成したとき、運用環境のフロントコントローラーの名前は `index.php` でした。ディレクトリごとに1つの `index.php` ファイルだけ用意できるので、symfony は初期の運用環境のフロントコントローラーである `index.php` ファイルを作り名前をアプリケーションからつけます。
@@ -72,8 +72,8 @@
 
 生成されたモジュールはすぐに利用できます:
 
-    http://jobeet.localhost/backend_dev.php/job
-    http://jobeet.localhost/backend_dev.php/category
+    http://www.jobeet.com.localhost/backend_dev.php/job
+    http://www.jobeet.com.localhost/backend_dev.php/category
 
 admin モジュールは以前に生成したシンプルなモジュールよりも多くの機能を持ちます。PHP を一行も書くことなく、それぞれのモジュールはこれらのすばらしい機能を提供します:
 
@@ -87,6 +87,14 @@ admin モジュールは以前に生成したシンプルなモジュールよ�
   * さらに多くの機能がある
 
 admin ジェネレーターはパッケージを設定するシンプルなバックエンドインターフェイスを作成するために必要なすべての機能を提供します。
+
+If you have a look at our two generated modules, you will notice there is no
+activated webdesign whereas the symfony built-in admin generator feature has a
+basic graphic interface by default. For now, assets from the `sfPropelPlugin`
+are not located under the `web/` folder. We need to publish them under the
+`web/` folder thanks to the `plugin:publish-assets` task:
+
+    $ php symfony plugin:publish-assets
 
 ユーザーエクスペリエンスを少し改善するために、デフォルトのバックエンドをカスタマイズする必要があります。異なるモジュールの間を渡り歩くのを楽にするためにシンプルなメニューを追加します。
 

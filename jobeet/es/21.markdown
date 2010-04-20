@@ -47,7 +47,7 @@ Eso es todo lo que hay para él. El nuevo entorno `cache` ahora es utilizable. L
 Puede probar el entorno `cache` en tu navegador, llamando su
 controlador:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >El controlador frontal tiene un script que comienza con un código que garantiza que el

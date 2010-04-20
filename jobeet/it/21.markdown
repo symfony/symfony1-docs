@@ -63,7 +63,7 @@ che rappresenta il nome dell'ambiente, `cache`.
 Si può testare l'ambiente `cache` nel browser, richiamando il suo front
 controller:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >Lo script del front controller inizia con una parte di codice che si assicura

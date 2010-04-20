@@ -414,8 +414,8 @@ symfony のフォームは1つ以上のフィールドから構成されるク�
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -432,7 +432,7 @@ symfony のフォームは1つ以上のフィールドから構成されるク�
       </table>
     </form>
 
-`include_javascripts_for_form()` と `include_stylesheets_for_form()` ヘルパーは、フォームウィジェットに必要な JavaScript とスタイルシートをインクルードします。
+`use_javascripts_for_form()` と `use_stylesheets_for_form()` ヘルパーは、フォームウィジェットに必要な JavaScript とスタイルシートをインクルードします。
 
 >**TIP**
 >求人フォームが ~JavaScript~ もしくは~スタイルシート~を必要としなくても、万が一に備えてこれらのヘルパーを呼び出しておくのはよい習慣です。ウィジェットを JavaScript もしくは固有のスタイルシートを必要とするウィジェットに変更する場合、後で時間の節約になります。
@@ -643,7 +643,7 @@ symfony のフォームは1つ以上のフィールドから構成されるク�
 
 job に関連するすべてのルートは、`job_show_user` のものを除いて、トークンを埋め込みます。たとえば、job を編集するルートは次のパターンで構成されます:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 `showSuccess`テンプレートの"Edit"リンクも変更してください:
 

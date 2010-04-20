@@ -62,7 +62,7 @@ utilisable. La seule différence est que le deuxième argument de la méthode
 Vous pouvez tester l'environnement `cache` dans votre navigateur en appelant
 son contrôleur frontal :
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >Le script du contrôleur frontal commence par un code qui assure que le contrôleur

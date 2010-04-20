@@ -152,15 +152,15 @@ Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php` f
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
 
 <propel>
-    $ rm plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
-    $ rm plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
-    $ rm plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
 </propel>
 
 <doctrine>
-    $ rm plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
-    $ rm plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
-    $ rm plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
 </doctrine>
 
 Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
@@ -184,14 +184,14 @@ Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
     [php]
     abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
     {
-      public function preValidate($event)
+      public function save(Doctrine_Connection $conn = null)
       {
-        $object = $event->getInvoker();
-
-        if (!$object->getToken())
+        if (!$this->getToken())
         {
-          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
         }
+        
+        parent::save($conn);
       }
 
       // ...

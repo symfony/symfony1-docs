@@ -505,7 +505,7 @@ symfony では、指定したモデル用の、基本的な操作機能を提供
 
 ブラウザーで job モジュールをテストできます:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![jobモジュール](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

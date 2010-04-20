@@ -30,11 +30,11 @@
 за Вас, если в соответствующем маршруте указана переменная `sf_format`.
 URL для списка вакансий выглядит следующим образом:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Это равносильно такому URL:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Оба URL равносильны, потому что маршруты созданные классом
 `sfPropelRouteCollection` наследуют переменную `sf_format`, которая содержит

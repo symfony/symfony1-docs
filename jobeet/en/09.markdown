@@ -192,8 +192,8 @@ tester methods against the `sfWebResponse` object:
  | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
 
 >**NOTE**
->We will describe more [testers](http://www.symfony-project.org/api/1_4/test)
->classes in the coming days (for forms, user, cache, ...).
+>We will describe more testers classes in the coming days 
+>(for forms, user, cache, ...).
 
 Running Functional Tests
 ------------------------

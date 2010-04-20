@@ -13,8 +13,8 @@ El primer paso es crear la aplicación backend. Si tu memoria te sirve bien, deb
     $ php symfony generate:app backend
 
 La aplicación backend ya está disponible en
-`http://jobeet.localhost/backend.php/` para el entorno `prod`, and at
-`http://jobeet.localhost/backend_dev.php/` para el entorno `dev`.
+`http://www.jobeet.com.localhost/backend.php/` para el entorno `prod`, and at
+`http://www.jobeet.com.localhost/backend_dev.php/` para el entorno `dev`.
 
 >**NOTE**
 >Cuando creaste la aplicación frontend, el controlador frontal de producción fue 
@@ -83,8 +83,8 @@ Aspecto del Backend
 
 De buenas a primeras, ya puedes utilizar los módulos generados:
 
-    http://jobeet.localhost/backend_dev.php/job
-    http://jobeet.localhost/backend_dev.php/category
+    http://www.jobeet.com.localhost/backend_dev.php/job
+    http://www.jobeet.com.localhost/backend_dev.php/category
 
 Los módulos de administración tienen muchas más funciones que los simples módulos que hemos generado en los días anteriores. Sin escribir una sola línea de PHP, cada módulo proporciona estas características:
 
@@ -97,9 +97,20 @@ Los módulos de administración tienen muchas más funciones que los simples mó
   * Los **Mensajes Flash** dan información inmediata al usuario
   * ... y mucho mucho más
 
-El Generador de Admin proporciona todas las funciones que necesitas para crear una interfaz backend en un paquete fácil de configurar.
+El Generador de Admin proporciona todas las funciones que necesitas para crear
+una interfaz backend en un paquete fácil de configurar.
 
-Para hacer la experiencia de los usuarios un poco mejor, necesitamos personalizar el backend por defecto. También vamos a añadir un menú simple para que sea fácil de navegar entre los diferentes módulos. 
+If you have a look at our two generated modules, you will notice there is no
+activated webdesign whereas the symfony built-in admin generator feature has a
+basic graphic interface by default. For now, assets from the `sfPropelPlugin`
+are not located under the `web/` folder. We need to publish them under the
+`web/` folder thanks to the `plugin:publish-assets` task:
+
+    $ php symfony plugin:publish-assets
+
+Para hacer la experiencia de los usuarios un poco mejor, necesitamos
+personalizar el backend por defecto. También vamos a añadir un menú simple para
+que sea fácil de navegar entre los diferentes módulos.
 
 Sustituye el contenido por defecto del `layout.php` con el siguiente:
 

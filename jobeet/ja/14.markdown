@@ -19,11 +19,11 @@ symfony フレームワークは~フォーマット~と ~MIME-Type|MIME Type~ �
 
 しかしたいていの場合、フォーマットは URL に埋め込まれます。このケースの場合、特別な変数 ~`sf_format`~ が対応するルートで使われる場合、symfony は自動的に設定します。求人リストに関して、リストの URL は次のとおりです:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 この URL は次の内容と同等です:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 両方の URL は同等です。`sfPropelRouteCollection` クラスによって生成されたルートは拡張子として `sf_format` を持ち `html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行することであなた自身で確認できます:
 

@@ -198,8 +198,8 @@ per analizzare e testare gli oggetti `sfWebResponse`:
  | `isValid()`        | Controlla se una risposta è in XML ben formato (passando `true` come parametro, si valida la risposta anche su come deve essere il tipo di documento)
 
 >**NOTE**
->Descriveremo altre classi [tester](http://www.symfony-project.org/api/1_4/test)
->nei prossimi giorni (per form, user, cache, ...).
+>Descriveremo altre classi tester nei prossimi giorni 
+>(per form, user, cache, ...).
 
 Eseguire Test funzionali
 ------------------------

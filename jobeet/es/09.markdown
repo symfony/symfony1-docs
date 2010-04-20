@@ -160,7 +160,7 @@ También hay una clase **response tester** que proporciona métodos tester contr
  | `isRedirected()`   | Verifica si la respuesta actual es un redireccionamiento
 
 >**NOTE**
->Vamos a describir más clases [testers](http://www.symfony-project.org/api/1_2/test) en los próximos días (para forms, user, cache, ...).
+>Vamos a describir más clases testers en los próximos días (para forms, user, cache, ...).
 
 Ejecutando las pruebas funcionales
 ----------------------------------

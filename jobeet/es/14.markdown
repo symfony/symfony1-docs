@@ -19,11 +19,11 @@ El formato se puede configurar utilizando el método `setRequestFormat()` del ob
 
 Pero la mayor parte del tiempo, el formato está incluído en la URL. En este caso, Symfony lo establecerá por tí si la variable especial `sf_format` se utiliza en la ruta correspondiente. Para la lista de puestos de trabajo (job), la URL es:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Esta URL es equivalente a:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Ambas URL son equivalentes porque las rutas generadas por la clase 
 `sfPropelRouteCollection` tienen la `sf_format` como extension. Puedes comprobarlo por tí mismo ejecutando la tarea `app:routes`:

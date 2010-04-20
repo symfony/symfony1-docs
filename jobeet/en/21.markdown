@@ -62,7 +62,7 @@ which is the environment name, `cache`.
 You can test the `cache` environment in your browser by calling its front
 controller:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >The front controller script begins with a code that ensures that the front

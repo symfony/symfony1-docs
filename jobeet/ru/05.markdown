@@ -297,7 +297,7 @@ URL `/job/show/id/1` можно создать из шаблона, исполь
 Если Вы посмотрите на сгенерированные URL’ы, они еще не совсем такие, какими
 они должны быть:
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 Нам нужно "почистить" столбец значений, заменив все не ASCII символы, на
 дефисы(`-`). Откройте файл класса `JobeetJob` и добавьте следующие методы в
@@ -367,7 +367,7 @@ URL `/job/show/id/1` можно создать из шаблона, исполь
 
 Теперь будет ожидаться такие URL:
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 Но это лишь половина истории. Маршрут способен генерировать URL основанный на
 объекте, а также найти объект, связанный с данным URL. Связанный объект можно

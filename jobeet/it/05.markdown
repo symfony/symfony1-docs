@@ -300,7 +300,7 @@ metodo di accesso nella classe `JobeetJob` (ad esempio, la variabile di rotta
 
 Guardando gli URL generati, non sono proprio come li avremmo voluti:
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 Dobbiamo applicare uno "~slug|Slug~" ai valori delle colonne, sostituendo tutti i
 caratteri non ASCII con un `-`. Apriamo il file `JobeetJob` e aggiungiamo i
@@ -372,7 +372,7 @@ corrispettivi virtuali nella rotta `job_show_user`:
 
 Ora abbiamo gli URL che ci aspettavamo:
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 Ma siamo solo a metà strada. La rotta può generare un URL basato su un
 oggetto, ma può anche trovare l'oggetto relativo a un URL dato. L'oggetto

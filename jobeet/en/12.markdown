@@ -27,9 +27,9 @@ The backend application is now available at
 >controller and names the others after the application name.
 
 If you try to reload the data fixtures with the `propel:data-load` task, it
-won't work anymore. That's because the `JobeetJob::save()` method needs access
-to the ~`app.yml`~ configuration file from the `frontend` application. As we
-have now two applications, symfony uses the first it finds, which is now the
+won't work as expected. That's because the `JobeetJob::save()` method needs
+access to the ~`app.yml`~ configuration file from the `frontend` application. As
+we have now two applications, symfony uses the first it finds, which is now the
 `backend` one.
 
 But as seen during day 8, the settings can be configured at different
@@ -125,6 +125,14 @@ module provides these great features:
 
 The admin generator provides all the features you need to create a backend
 interface in a simple to configure package.
+
+If you have a look at our two generated modules, you will notice there is no
+activated webdesign whereas the symfony built-in admin generator feature has a
+basic graphic interface by default. For now, assets from the `sfPropelPlugin`
+are not located under the `web/` folder. We need to publish them under the
+`web/` folder thanks to the `plugin:publish-assets` task:
+
+    $ php symfony plugin:publish-assets
 
 To make the user experience a bit better, we need to customize the default
 backend. We will also add a simple menu to make it easy to navigate between the

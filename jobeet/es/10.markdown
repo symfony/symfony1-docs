@@ -393,8 +393,8 @@ El formulario en sí mismo es mostrado en el partial `_form`. Reemplaza el conte
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -411,7 +411,8 @@ El formulario en sí mismo es mostrado en el partial `_form`. Reemplaza el conte
       </table>
     </form>
 
-Los helpers `include_javascripts_for_form()` y `include_stylesheets_for_form()` incluyen el JavaScript y hoja de estilo necesarios para los form widgets.
+Los helpers `use_javascripts_for_form()` y `use_stylesheets_for_form()` incluyen
+el JavaScript y hoja de estilo necesarios para los form widgets.
 
 >**TIP**
 >Incluso si el formulario job no necesita ningún JavaScript o hoja de estilo, se trata de un
@@ -635,7 +636,7 @@ Nota que tenemos también que cambiar el parámetro de requirement `token`  para
 
 Ahora, todas las rutas, excepto la `job_show_user`, tienen un token. Por ejemplo, la ruta para editar un job es ahora:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 También tendrás que cambiar el enlace "Edit" en la plantilla `showSuccess`:
 

@@ -180,7 +180,7 @@ layout ci sono chiamate a funzioni PHP e riferimenti a variabili PHP.
 `$sf_content` è la variabile più interessante: è definita dal framework stesso
 e contiene l'HTML generato dall'azione.
 
-Se navigate il modulo `job` (`http://jobeet.localhost/frontend_dev.php/job`)
+Se navigate il modulo `job` (`http://www.jobeet.com.localhost/frontend_dev.php/job`)
 potete vedere che tutte le azioni sono decorate dal layout.
 
 

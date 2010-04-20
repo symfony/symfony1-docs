@@ -584,7 +584,7 @@ El archivo `actions/actions.class.php` define todas las **acciones** disponibles
 
 Ahora puedes probar el módulo job en un navegador:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![El módulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

@@ -297,7 +297,7 @@ the value of `getCompany()`).
 If you have a look at generated URLs, they are not quite yet as we want them to
 be:
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 We need to "~slug|Slug~ify" the column values by replacing all non ASCII
 characters by a `-`. Open the `JobeetJob` file and add the following methods to
@@ -366,7 +366,7 @@ real column names by these virtual ones in the `job_show_user` route:
 
 You will now have the expected URLs:
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 But that's only half the story. The route is able to generate a URL based on an
 object, but it is also able to find the object related to a given URL. The

@@ -664,7 +664,7 @@ The `actions/actions.class.php` file defines all the available
 
 Vous pouvez tester le module job dans un navigateur :
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![Le module Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

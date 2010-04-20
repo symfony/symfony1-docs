@@ -32,11 +32,11 @@ Mais la plupart du temps, le format est incorporé dans l'URL. Dans ce cas, symf
 va le mettre pour vous, si la variable spéciale ~`sf_format`~ est utilisé dans la route
 correspondante. Pour la liste des emplois, l'URL de la liste est :
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Cette URL est équivalent à :
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Les deux URL sont équivalentes car les routes générés par la classe
 `sfPropelRouteCollection` ont le `sf_format` comme extension et parce

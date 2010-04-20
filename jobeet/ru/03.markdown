@@ -659,7 +659,7 @@ Symfony может автоматически сгенерировать мод�
 
 Теперь вы можете протестировать модуль "Вакансии" по адресу:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![Job module](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

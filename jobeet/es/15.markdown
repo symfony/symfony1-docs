@@ -83,13 +83,11 @@ En el archivo de datos, los tokens están hardcodeados para simplificar las prue
     // lib/model/doctrine/JobeetAffiliate.class.php
     class JobeetAffiliate extends BaseJobeetAffiliate
     {
-      public function preValidate($event)
+      public function save(Doctrine_Connection $conn = null)
       {
-        $object = $event->getInvoker();
-
-        if (!$object->getToken())
+        if (!$this->getToken())
         {
-          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
         }
       }
 

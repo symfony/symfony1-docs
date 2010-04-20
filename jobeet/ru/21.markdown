@@ -59,7 +59,7 @@
 
 Вы можете протестировать окружение `cache` в вашем браузере с помощью вызова его контроллера:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >Скрипт контроллера начинается с кода, который проверяет, что он вызван с локального

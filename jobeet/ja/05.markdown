@@ -211,7 +211,7 @@ Jobeet ホームページをリフレッシュしても、求人情報へのリ�
 
 生成された URL を見ると、これらはまだ完全に欲しい URL にはなっていません:
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 全ての非 ASCII 文字をハイフン (`-`) に置き換えることでカラム値の値を "~slugify|スラッグ~" する必要があります。`JobeetJob` ファイルを開いて、下記のメソッドをクラスに追加してください:
 
@@ -272,7 +272,7 @@ Jobeet ホームページをリフレッシュしても、求人情報へのリ�
 
 これで期待する URL が利用できるようになります:
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 しかしこれは話の半分です。ルートはオブジェクトに基づいて URL を生成できますが、渡された URL に関連するオブジェクトを見つけることもできます。関連オブジェクトはルートオブジェクトの `getObject()` メソッドで読み取ることができます。やってくるリクエストを解析する際に、ルーティングはアクションで使うためにマッチするルートオブジェクトを保存します。`Jobeet` オブジェクトを読み取るためにルートオブジェクトを使う `executeShow()` メソッドを変更します:
 

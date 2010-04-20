@@ -502,10 +502,10 @@ the content of the generated `_form` partial with the following code:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
-    <?php echo form_tag_for($form, 'job') ?>
+    <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
         <tfoot>
           <tr>
@@ -520,9 +520,8 @@ the content of the generated `_form` partial with the following code:
       </table>
     </form>
 
-The `include_javascripts_for_form()` and `include_stylesheets_for_form()`
-helpers include JavaScript and stylesheet dependencies needed for the form
-widgets.
+The `use_javascripts_for_form()` and `use_stylesheets_for_form()` helpers
+include JavaScript and stylesheet dependencies needed for the form widgets.
 
 >**TIP**
 >Even if the job form does not need any JavaScript or stylesheet file, it is a
@@ -775,7 +774,7 @@ string as the symfony default requirements is `\d+` for the unique key.
 Now, all routes related to the jobs, except the `job_show_user` one, embed the
 token. For instance, the route to edit a job is now of the following pattern:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 You will also need to change the "Edit" link in the `showSuccess` template:
 

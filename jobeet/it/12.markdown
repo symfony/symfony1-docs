@@ -27,8 +27,8 @@ Jobeet, abbiamo abilitato tutte le feature integrate in symfony per la sicurezza
 >     $ php symfony generate:app --csrf-secret=Unique\$ecret backend
 
 L'applicazione backend è ora disponibile all'indirizzo
-`http://jobeet.localhost/backend.php` per l'ambiente `prod` e all'indirizzo
-`http://jobeet.localhost/backend_dev.php` per l'ambiente `dev`.
+`http://www.jobeet.com.localhost/backend.php` per l'ambiente `prod` e all'indirizzo
+`http://www.jobeet.com.localhost/backend_dev.php` per l'ambiente `dev`.
 
 >**NOTE**
 >Quando avete creato l'applicazione frontend il front controller di produzione 
@@ -112,8 +112,8 @@ Aspetto del Backend
 
 Immediatamente potete usare i moduli generati:
 
-    http://jobeet.localhost/backend_dev.php/job
-    http://jobeet.localhost/backend_dev.php/category
+    http://www.jobeet.com.localhost/backend_dev.php/job
+    http://www.jobeet.com.localhost/backend_dev.php/category
 
 I moduli di amministrazione hanno molte più feature di quelli più semplici 
 generati nei giorni scorsi. Senza scrivere una riga di PHP, ogni modulo 
@@ -130,6 +130,14 @@ mette a disposizione queste grandi funzionalità:
 
 L'admin generator offre tutte le funzionalità di cui avete bisogno per
 creare un'interfaccia di backend semplice da configurare.
+
+If you have a look at our two generated modules, you will notice there is no
+activated webdesign whereas the symfony built-in admin generator feature has a
+basic graphic interface by default. For now, assets from the `sfPropelPlugin`
+are not located under the `web/` folder. We need to publish them under the
+`web/` folder thanks to the `plugin:publish-assets` task:
+
+    $ php symfony plugin:publish-assets
 
 Per rendere migliore la user experience, il layout di default del backend può
 essere personalizzato. Abbiamo inoltre aggiunto un semplice menù per rendere

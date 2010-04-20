@@ -300,7 +300,7 @@ remplacée par la valeur de `getCompany()`).
 A ce stade, les URLs générées ne sont pas encore comme nous le
 voudrions :
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 Nous devons utiliser un "~slug|Slug~" sur la valeur de la colonne pour remplaçer tous les
 charactères non ASCII par un `-`. Ouvrez le fichier `JobeetJob` et ajouter les
@@ -370,7 +370,7 @@ remplaçer le nom réel des colonnes par leur équivalent virtuel dans la route 
 
 Les nouvelles URLs sont maintenant fonctionnelles :
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 Mais nous ne sommes qu'au milieu de l'histoire. La route est capable de générer une URL basée
 sur un objet, mais elle peut aussi trouver l'objet lié à une URL donnée. L'objet
