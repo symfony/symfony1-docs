@@ -505,7 +505,7 @@ PHP から `sfBaseTask` を継承するタスクを呼び出すとき、`->run()
 Propel との統合
 ---------------
 
-Propel のバージョンは 1.4 にアップグレードされました。詳しいアップグレード情報に関しては[公式サイト](http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4)を訪問してくださるようお願いします。
+Propel のバージョンは 1.4 にアップグレードされました。詳しいアップグレード情報に関しては[公式サイト](http://www.propelorm.org/wiki/Documentation/1.4)を訪問してくださるようお願いします。
 
 ### Propel のビヘイビア
 

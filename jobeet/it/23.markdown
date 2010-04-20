@@ -36,7 +36,7 @@ Il ~Modello~
 
 La parte di symfony del Modello può essere fatta con l'aiuto di
 <propel>
-[Propel](http://propel.phpdb.org/). Basato sulla
+[Propel](http://www.propelorm.org/). Basato sulla
 </propel>
 <doctrine>
 [Doctrine](http://www.doctrine-project.org/). Basato sulla

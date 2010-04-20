@@ -38,7 +38,7 @@ record dal database, preferiamo utilizzare gli oggetti.
 Le informazioni del database relazionale devono essere mappate da un modello a
 oggetti. Questo può essere fatto con un [ORM](http://it.wikipedia.org/wiki/Object-relational_mapping)
 e fortunatamente symfony viene distribuito con due soluzioni di questo tipo:
-[Propel](http://propel.phpdb.org/) e [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/).
 In questo tutorial useremo ##ORM##.
 
 L'ORM ha bisogno della descrizione delle tabelle e delle loro relazioni

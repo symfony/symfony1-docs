@@ -36,7 +36,7 @@ des enregistrements de la base de données, nous préférons utiliser des objets
 Les informations de base de données relationnelle doivent être mappées sur un modèle objet. Cela
 peut être fait avec un [outil ORM](http://en.wikipedia.org/wiki/Object-relational_mapping)
 et heureusement, symfony est livré avec deux d'entre eux :
-[Propel](http://propel.phpdb.org/) et [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://www.propelorm.org/) et [Doctrine](http://www.doctrine-project.org/).
 Dans ce tutoriel, nous allons utiliser ##ORM##.
 
 L'ORM a besoin d'une description des tables et leurs relations pour créer

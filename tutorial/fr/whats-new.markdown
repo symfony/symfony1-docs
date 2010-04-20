@@ -638,7 +638,7 @@ Intégration de Propel
 
 Propel a été mis à niveau vers la version 1.4. Merci de visiter le site de Propel pour plus
 d'informations sur sa mise à jour
-(http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4).
+(http://www.propelorm.org/wiki/Documentation/1.4).
 
 ### Comportements de Propel
 

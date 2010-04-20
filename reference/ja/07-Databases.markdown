@@ -84,7 +84,7 @@ Propel
  | `options`    | Propel オプションのセット    | -              |
  | `debug`      | `DebugPDO` クラスのオプション| n/a            |
 
-`debug` エントリは Propel の[ドキュメント](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)で説明されるすべてのオプションを定義します。次の YAML は利用可能なオプションを示します:
+`debug` エントリは Propel の[ドキュメント](http://www.propelorm.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)で説明されるすべてのオプションを定義します。次の YAML は利用可能なオプションを示します:
 
     [yml]
     debug:

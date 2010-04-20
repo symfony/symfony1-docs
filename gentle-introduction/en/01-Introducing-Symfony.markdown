@@ -163,7 +163,7 @@ Using this method we are able to control the values returned from an object leve
 
 Out of the box, symfony supports the two most popular open source ORMs in PHP: Propel and Doctrine. Symfony integrates both of them seamlessly. When creating a new symfony project, it's a matter of choice to use Propel or Doctrine.
 
-This book will describe how to use the Propel and Doctrine objects, but for a more complete reference, a visit to the [Propel](http://propel.phpdb.org/trac/) website or the [Doctrine](http://www.doctrine-project.org/) website is recommended.
+This book will describe how to use the Propel and Doctrine objects, but for a more complete reference, a visit to the [Propel](http://www.propelorm.org/) website or the [Doctrine](http://www.doctrine-project.org/) website is recommended.
 
 ### Rapid Application Development (RAD)
 

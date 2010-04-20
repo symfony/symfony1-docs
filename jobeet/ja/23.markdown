@@ -23,7 +23,7 @@ symfony は[デプロイ](#chapter_22_deploying)作業を楽にするツール�
 
 symfony の Model 部分の作業は
 <propel>
-[Propel ORM](http://propel.phpdb.org/)
+[Propel ORM](http://www.propelorm.org/)
 </propel>
 <doctrine>
 [Doctrine ORM](http://www.doctrine-project.org/)

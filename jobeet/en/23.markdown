@@ -36,7 +36,7 @@ The ~Model~
 
 The Model part of symfony can be done with the help of the
 <propel>
-[Propel ORM](http://propel.phpdb.org/). Based on the
+[Propel ORM](http://www.propelorm.org/). Based on the
 </propel>
 <doctrine>
 [Doctrine ORM](http://www.doctrine-project.org/). Based on the

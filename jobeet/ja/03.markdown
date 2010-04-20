@@ -19,7 +19,7 @@
 
 しかし symfony はオブジェクト指向のフレームワークですから、可能ならいつでも~オブジェクト|OOP~として操作したいでしょう。たとえば、データベースからレコードを取得する SQL ステートメントを書くのではなく、オブジェクトを使います。
 
-リレーショナルデータベースの情報をオブジェクトモデルとしてマッピングする必要があります。このマッピングには [ORM ツール](http://en.wikipedia.org/wiki/Object-relational_mapping)を使いますが、symfony には2つの ORM ([Propel](http://propel.phpdb.org/) と [Doctrine](http://www.doctrine-project.org/)) が搭載されています。このチュートリアルでは##ORM##を使います。
+リレーショナルデータベースの情報をオブジェクトモデルとしてマッピングする必要があります。このマッピングには [ORM ツール](http://en.wikipedia.org/wiki/Object-relational_mapping)を使いますが、symfony には2つの ORM ([Propel](http://www.propelorm.org/) と [Doctrine](http://www.doctrine-project.org/)) が搭載されています。このチュートリアルでは##ORM##を使います。
 
 ORM には、関連するクラスを生成するために、テーブルとリレーション(関係)についての定義が必要になります。スキーマの記述には2つの方法があります。既存のデータベースからスキーマを作る方法と、手書きでスキーマを作る方法です。
 

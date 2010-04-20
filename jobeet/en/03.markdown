@@ -35,7 +35,7 @@ retrieve records from the database, we'd rather prefer to use objects.
 The relational database information must be mapped to an object model. This can
 be done with an [ORM
 tool](http://en.wikipedia.org/wiki/Object-relational_mapping) and thankfully,
-symfony comes bundled with two of them: [Propel](http://propel.phpdb.org/) and
+symfony comes bundled with two of them: [Propel](http://www.propelorm.org/) and
 [Doctrine](http://www.doctrine-project.org/). In this tutorial, we will use
 ##ORM##.
 

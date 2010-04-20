@@ -40,7 +40,7 @@ PHP кода, сегодня будут счастливы узнать, что 
 Информация о реляционной базе данных должна быть связана с объектной моделью.
 Это можно сделать при помощи [ORM инструмента](http://en.wikipedia.org/wiki/Object-relational_mapping)
 и, к счастью, symfony поставляется с двумя из них:
-[Propel](http://propel.phpdb.org/) и [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://www.propelorm.org/) и [Doctrine](http://www.doctrine-project.org/).
 В данной главе мы будем использовать ##ORM##.
 
 ORM потребует от вас описания таблиц и связей между ними для создания
