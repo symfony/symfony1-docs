@@ -329,10 +329,19 @@ Listing 7-11 - The Components Class, in `modules/news/actions/components.class.p
     {
       public function executeHeadlines()
       {
+        // Propel
         $c = new Criteria();
         $c->addDescendingOrderByColumn(NewsPeer::PUBLISHED_AT);
         $c->setLimit(5);
         $this->news = NewsPeer::doSelect($c);
+
+        // Doctrine
+        $query = Doctrine::getTable('News')
+                  ->createQuery()
+                  ->orderBy('published_at DESC')
+                  ->limit(5);
+
+        $this->news = $query->execute();
       }
     }
 
@@ -662,6 +671,9 @@ Listing 7-25 - Title Definition in the Action--Allows for Dynamic Titles
 
 In the `<head>` section of the final document, the title definition sets the `<meta name="title">` tag if the `include_metas()` helper is present, and the `<title>` tag if the `include_title()` helper is present. If both are included (as in the default layout of Listing 7-5), the title appears twice in the document source (see Listing 7-6), which is harmless.
 
+>**TIP**
+>Another way to handle the title definition is to use slots, as discussed above. This method allow to keep a better separation of concern between controllers and templates : the title belongs to the view, not the controller.
+
 #### File Inclusion Configuration
 
 Adding a specific style sheet or JavaScript file to a view is easy, as Listing 7-26 demonstrates.
@@ -801,6 +813,11 @@ Listing 7-35 - Style Sheet Inclusion with Media
     
     // Resulting View
     <link rel="stylesheet" type="text/css" media="print" href="/css/paper.css" />
+
+>**SIDEBAR**
+>Note about assets inclusions using the view.yml file
+>
+>The best practice is to define the defaults stylesheets and javascripts file in the project view.yml file, and include specifics stylesheets or javascripts files in your templates using the dedicated helper. This way, you do not have to remove or replace already included assets, which can be a painfull in some cases.
 
 #### Layout Configuration
 
@@ -977,7 +994,7 @@ If you deal with objects in your templates, you will use the additional paramete
 -
 
 >**TIP**
->Even if XSS is one of the most common exploit of websites, this is not the only one. CSRF is also very popular and symfony provides automatic forms protection.
+>Even if XSS is one of the most common exploit of websites, this is not the only one. CSRF is also very popular and symfony provides automatic forms protection. You will discover how this security protection works in the chapter 10.
 
 Summary
 -------

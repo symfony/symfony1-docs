@@ -21,7 +21,7 @@ The basic actions and templates that implement the CRUD operations for a given t
 
 Throughout this chapter, the listings will demonstrate the capabilities of the symfony admin generator based on a simple example, which will remind you of Chapter 8. This is the well-known example of the weblog application, containing two `BlogArticle` and `BlogComment` classes. Listing 14-1 shows its schema, illustrated in Figure 14-1.
 
-Listing 14-1 - `schema.yml` of the Example Weblog Application
+Listing 14-1 - Propel schema of the Example Weblog Application
 
     [yml]
     propel:
@@ -98,8 +98,12 @@ Administration modules interpret the model by way of a special configuration fil
 
 ### Initiating an Administration Module
 
-With symfony, you build an administration on a per-model basis. A module is generated based on a Propel object using the `propel:generate-admin` task:
+With symfony, you build an administration on a per-model basis. A module is generated based on a Propel or a Doctrine object using the `propel:generate-admin` task:
 
+    // Propel
+    $ php symfony propel:generate-admin backend BlogArticle --module=article
+    
+    // Doctrine
     $ php symfony propel:generate-admin backend BlogArticle --module=article
 
 >**NOTE**
@@ -871,8 +875,8 @@ For instance, if you want to add a custom header to the `article/edit` view, cre
 Listing 14-33 - Example `edit` Header Partial, in `modules/article/templates/_form_header.php`
 
     [php]
-    <?php if ($BlogArticle->getNbComments() > 0): ?>
-      <h2>This article has <?php echo $BlogArticle->getNbComments() ?> comments.</h2>
+    <?php if ($blog_article->getNbComments() > 0): ?>
+      <h2>This article has <?php echo $blog_article->getNbComments() ?> comments.</h2>
     <?php endif; ?>
 
 Notice that an edit partial always has access to the current object through a variable named after the class, and that a `list` partial always has access to the current pager through the `$pager` variable.

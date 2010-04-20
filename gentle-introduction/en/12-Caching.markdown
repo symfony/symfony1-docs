@@ -252,6 +252,16 @@ The `addCache()` method of the `sfViewCacheManager` object expects a module name
 >           cacheDir:                %SF_TEMPLATE_CACHE_DIR%
 >
 >You can replace the `class` with your own cache storage class or with one of the symfony alternative classes (including `sfAPCCache`, `sfEAcceleratorCache`, `sfMemcacheCache`, `sfSQLiteCache`, and `sfXCacheCache`). The parameters defined under the `param` key are passed to the constructor of the cache class as an associative array. Any view cache storage class must implement all methods found in the abstract `sfCache` class. Refer to the Chapter 19 for more information on this subject.
+>
+> Configuration for a memcache backend using two memcache servers:
+>     view_cache:
+>       class: sfMemcacheCache
+>       param:
+>         servers:
+>           server_1:
+>             host: 192.168.1.10
+>           server_2:
+>             host: 192.168.1.11
 
 ### Using the Super Fast Cache
 
@@ -270,7 +280,7 @@ Alternatively, you can use the `sfSuperCache` symfony plug-in, which automates t
 >
 >In addition to the HTML cache, symfony has two other cache mechanisms, which are completely automated and transparent to the developer. In the production environment, the configuration and the template translations are cached in files stored in the `myproject/cache/config/` and `myproject/cache/i18n/` directories without any intervention.
 >
->PHP accelerators (eAccelerator, APC, XCache, and so on), also called opcode caching modules, increase performance of PHP scripts by caching them in a compiled state, so that the overhead of code parsing and compiling is almost completely eliminated. This is particularly effective for the Propel classes, which contain a great amount of code. These accelerators are compatible with symfony and can easily triple the speed of an application. They are recommended in production environments for any symfony application with a large audience.
+>PHP accelerators (eAccelerator, APC, XCache, and so on), also called opcode caching modules, increase performance of PHP scripts by caching them in a compiled state, so that the overhead of code parsing and compiling is almost completely eliminated. This is particularly effective for the ORMs classes, which contain a great amount of code. These accelerators are compatible with symfony and can easily triple the speed of an application. They are recommended in production environments for any symfony application with a large audience.
 >
 >With a PHP accelerator, you can manually store persistent data in memory, to avoid doing the same processing for each request, with the `sfAPCCache` class if use APC for instance. And if you want to cache the result of a CPU-intensive function, you will probably use the `sfFunctionCache` object. Refer to Chapter 18 for more information about these mechanisms.
 

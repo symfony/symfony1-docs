@@ -179,7 +179,7 @@ Listing 6-7 - `sfActions` Common Methods
     [php]
     class mymoduleActions extends sfActions
     {
-      public function executeIndex($request)
+      public function executeIndex(sfWebRequest $request)
       {
         // Retrieving request parameters
         $password    = $request->getParameter('password');
@@ -223,7 +223,7 @@ Listing 6-7 - `sfActions` Common Methods
 >
 >`sfDatabaseConnection`: The database connection (`->getDatabaseConnection()`)
 >
->You can call the `sfContext::getInstance()` singleton from any part of the code.
+>All these core objects are availables through the `sfContext::getInstance()` singleton from any part of the code. However, it's a really bad practice because this will create some hard dependencies making your code really hard to test, reuse and maintain. You will learn in this book how to avoid the usage of `sfContext::getInstance()`. 
 
 ### Action Termination
 
@@ -301,7 +301,12 @@ Listing 6-10 - Escaping View Rendering and Sending Only Headers
 If the action must be rendered by a specific template, ignore the `return` statement and use the `setTemplate()` method instead.
 
     [php]
-    $this->setTemplate('myCustomTemplate');
+    public function executeIndex()
+    {
+      $this->setTemplate('myCustomTemplate');
+    }
+    
+With this code, symfony will look for a `myCustomTemplateSuccess.php` file, instead of `indexSuccess.php`.
 
 ### Skipping to Another Action
 
@@ -320,21 +325,27 @@ The action class provides two methods to execute another action:
         $this->redirect('otherModule/index');
         $this->redirect('http://www.google.com/');
 
+
 >**NOTE**
 >The code located after a forward or a redirect in an action is never executed. You can consider that these calls are equivalent to a `return` statement. They throw an `sfStopException` to stop the execution of the action; this exception is later caught by symfony and simply ignored.
 
 The choice between a redirect or a forward is sometimes tricky. To choose the best solution, keep in mind that a forward is internal to the application and transparent to the user. As far as the user is concerned, the displayed URL is the same as the one requested. In contrast, a redirect is a message to the user's browser, involving a new request from it and a change in the final resulting URL.
 
-If the action is called from a submitted form with `method="post"`, you should always do a redirect. The main advantage is that if the user refreshes the resulting page, the form will not be submitted again; in addition, the back button works as expected by displaying the form and not an alert asking the user if he wants to resubmit a POST request.
+If the action is called from a submitted form with `method="post"`, you should **always** do a redirect. The main advantage is that if the user refreshes the resulting page, the form will not be submitted again; in addition, the back button works as expected by displaying the form and not an alert asking the user if he wants to resubmit a POST request.
 
 There is a special kind of forward that is used very commonly. The `forward404()` method forwards to a "page not found" action. This method is often called when a parameter necessary to the action execution is not present in the request (thus detecting a wrongly typed URL). Listing 6-11 shows an example of a `show` action expecting an `id` parameter.
 
 Listing 6-11 - Use of the `forward404()` Method
 
     [php]
-    public function executeShow($request)
+    public function executeShow(sfWebRequest $request)
     {
+      // Doctrine
+      $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
+      
+      // Propel
       $article = ArticlePeer::retrieveByPK($request->getParameter('id'));
+      
       if (!$article)
       {
         $this->forward404();
@@ -350,16 +361,16 @@ Listing 6-12 - Use of the `forward404If()` Method
 
     [php]
     // This action is equivalent to the one shown in Listing 6-11
-    public function executeShow($request)
+    public function executeShow(sfWebRequest $request)
     {
-      $article = ArticlePeer::retrieveByPK($request->getParameter('id'));
+      $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
       $this->forward404If(!$article);
     }
 
     // So is this one
-    public function executeShow()
+    public function executeShow(sfWebRequest $request)
     {
-      $article = ArticlePeer::retrieveByPK($request->getParameter('id'));
+      $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
       $this->forward404Unless($article);
     }
 
@@ -409,6 +420,9 @@ Listing 6-13 - Using `preExecute()`, `postExecute()`, and Custom Methods in an A
         ...
       }
     }
+
+>**TIP**
+>As the pre/post execute methods are called for **each** actions of the current module, be sure you really need the execute this code for **all** your actions, to avoid unwanted side-effects.
 
 Accessing the Request
 ---------------------

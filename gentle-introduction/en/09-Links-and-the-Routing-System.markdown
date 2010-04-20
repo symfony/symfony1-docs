@@ -49,6 +49,7 @@ This is possible in symfony applications, because the URL presented to the end u
 The benefits are immense:
 
   * URLs actually mean something, and they can help the users decide if the page behind a link contains what they expect. A link can contain additional details about the resource it returns. This is particularly useful for search engine results. Additionally, URLs sometimes appear without any mention of the page title (think about when you copy a URL in an e-mail message), and in this case, they must mean something on their own. See Figure 9-2 for an example of a user-friendly URL.
+  * The technical implementation is hidden to the users : they do not know which script is used, they cannot guess an `id` or similar parameter: your application is less vulnerable to a potential security breach. More, you can totally change what happen behind the scene without affecting their experience (they won't have a 404 error or a permanent redirect).
 
 Figure 9-2 - URLs can convey additional information about a page, like the publication date
 
@@ -301,7 +302,7 @@ Symfony provides a way to transform a call to a `link_to()` or `button_to()` hel
 Listing 9-11 - Making a Link Call a POST Request
 
     [php]
-    <?php echo link_to('go to shopping cart', 'shoppingCart/add?id=100', 'post=true') ?>
+    <?php echo link_to('go to shopping cart', 'shoppingCart/add?id=100', array('post' => true)) ?>
      => <a onclick="f = document.createElement('form'); document.body.appendChild(f);
                     f.method = 'POST'; f.action = this.href; f.submit();return false;"
            href="/shoppingCart/add/id/100.html">go to shopping cart</a>
@@ -559,16 +560,20 @@ Listing 9-21 - Using the Rule Label Instead of the Module/Action
 
     // can also be written as
     <?php echo link_to('my article', '@article_by_id?id='.$article->getId()) ?>
+    // or the fastest one (does not need extra parsing):
+    <?php echo link_to('my article', 'article_by_id', array('id' => $article->getId())) ?>
+    
 
 There are pros and cons to this trick. The advantages are as follows:
 
   * The formatting of internal URIs is done faster, since symfony doesn't have to browse all the rules to find the one that matches the link. In a page with a great number of routed hyperlinks, the boost will be noticeable if you use rule labels instead of module/action pairs.
   * Using the rule label helps to abstract the logic behind an action. If you decide to change an action name but keep the URL, a simple change in the `routing.yml` file will suffice. All of the `link_to()` calls will still work without further change.
   * The logic of the call is more apparent with a rule name. Even if your modules and actions have explicit names, it is often better to call `@display_article_by_slug` than `article/display`.
+  * You know exactly which actions are enabled by reading the routing.yml file
 
-On the other hand, a disadvantage is that adding new hyperlinks becomes less self-evident, since you always need to refer to the `routing.yml` file to find out which label is to be used for an action.
+On the other hand, a disadvantage is that adding new hyperlinks becomes less self-evident, since you always need to refer to the `routing.yml` file to find out which label is to be used for an action. And in a big project, you will certainly end with a lot a routings rules, making a bit hard to maintain them. In this case, you should package your application in several plugins, each one defining a limited set of features.
 
-The best choice depends on the project. In the long run, it's up to you.
+However, the experience states that using routing rules is the best choice in the long run.
 
 >**TIP**
 >During your tests (in the `dev` environment), if you want to check which rule was matched for a given request in your browser, develop the "logs" section of the web debug toolbar and look for a line specifying "matched route XXX". You will find more information about the web debug mode in Chapter 16.
@@ -610,7 +615,7 @@ Listing 9-23 - Using `sfRouting` to Get Information About the Current Route
     // If you require a URL like
     http://myapp.example.com/article/21
 
-    $routing = sfContext::getInstance()->getRouting();
+    $routing = $this->getContext()->getRouting();
 
     // Use the following in article/read action
     $uri = $routing->getCurrentInternalUri();

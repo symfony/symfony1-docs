@@ -158,7 +158,7 @@ structure similar to `c:\dev\sfproject\lib\vendor\symfony`.
 
 #### Installing from Subversion (recommended)
 
-If you use Subversion, it is even better to use the `svn:externals` property
+If your project use Subversion, it is even better to use the `svn:externals` property
 to embed symfony into your project in the `lib/vendor/` directory:
 
     $ svn pe svn:externals lib/vendor/
@@ -549,6 +549,6 @@ For a real development or on a production server, opt for the archive installati
 
 If you have any problems during installation, you will find many tutorials and answers to frequently asked questions on the symfony website. If necessary, you can submit your problem to the symfony community, and you will get a quick and effective answer.
 
-Once your project is initialised, it is a good habit to start a version-control process.
+Once your project is initialized, it is a good habit to start a version-control process.
 
 Now that you are ready to use symfony, it is time to see how to build a basic web application.
