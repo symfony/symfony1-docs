@@ -1,7 +1,7 @@
-付録 A - sfWidgetFormGMapAddressのJavaScriptコード
-==================================================
+付録 A - sfWidgetFormGMapAddressのJavaScript コード
+====================================================
 
-次のコードは、`sfWidgetFormGMapAddress`ウィジェットの動作に必要なJavaScriptです:
+次のコードは、`sfWidgetFormGMapAddress` ウィジェットの動作に必要な  JavaScript です:
 
     [js]
     function sfGmapWidgetWidget(options){
