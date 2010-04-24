@@ -13,7 +13,7 @@ symfony フレームワークは PHP の最高のメールソリューション�
 
 アフィリエイトのアカウントが確認されアフィリエイトトークンを渡すときにアフィリエイトに通知するためのシンプルなメールを送信することから始めましょう。
 
-`activate` アクションを次のコードで置き換えます:
+`activate` アクションを次のコードに置き換えます:
 
     [php]
     // apps/backend/modules/affiliate/actions/actions.class.php
@@ -24,7 +24,7 @@ symfony フレームワークは PHP の最高のメールソリューション�
         $affiliate = $this->getRoute()->getObject();
         $affiliate->activate();
 
-        // send an email to the affiliate
+        // アフィリエイトにメールを送信する
         $message = $this->getMailer()->compose(
           array('jobeet@example.com' => 'Jobeet Bot'),
           $affiliate->getEmail(),
@@ -47,11 +47,11 @@ symfony フレームワークは PHP の最高のメールソリューション�
     }
 
 >**NOTE**
->コードをきちんと動くようにするたために、メールアドレスの `jobeet@example.com` を実際のものに変更します。
+>コードをきちんと動くようにするために、メールアドレスを `jobeet@example.com` から実際のものに変更します。
 
 symfony でのメール管理はメーラーオブジェクトに集約され、~`getMailer()`~ メソッドでアクションから取得できます。
 
-~`compose()`~ メソッドは4つの引数を受け取りEメールメッセージオブジェクトを返します:
+~`compose()`~ メソッドは4つの引数を受け取り、メールメッセージオブジェクトを返します:
 
  * 送信者のメールアドレス (`from`);
  * 受信者のメールアドレス (`to`);
@@ -72,7 +72,7 @@ symfony でのメール管理はメーラーオブジェクトに集約され、
 
 以前の日の間に、すでに`user`、`request`、`response` もしくは `routing` のような symfony のコアオブジェクトを話しました。これらのオブジェクトは symfony フレームワークによって自動的に作成され、設定され、管理されます。これらはつねに ~`sfContext`~ オブジェクトからアクセス可能で、フレームワークのほかのコンポーネントと同じで、設定ファイルの ~`factories.yml`~ を通して設定可能です。このファイルのコンフィギュレーションは環境によって設定できます。
 
-`sfContext` がコアファクトリを初期化するとき、これはコンストラクターに渡すためのクラスの名前 (`class`) とパラメーター (`param`) のために `factories.yml` ファイルを読み込みます:
+`sfContext` がコアファクトリを初期化するとき、これはコンストラクタに渡すためのクラスの名前 (`class`) とパラメータ (`param`) のために `factories.yml` ファイルを読み込みます:
 
     [yml]
     response:
@@ -80,25 +80,25 @@ symfony でのメール管理はメーラーオブジェクトに集約され、
       param:
         send_http_headers: false
 
-上記のスニペットにおいて、レスポンスファクトリを作るために、symfony は `sfWebResponse` オブジェクトをインスタンス化し `send_http_headers` オプションをパラメーターとして渡します。
+上記のスニペットにおいて、レスポンスファクトリを作るために、symfony は `sfWebResponse` オブジェクトをインスタンス化し `send_http_headers` オプションをパラメータとして渡します。
 
 >**SIDEBAR**
 >`sfContext` クラス
 >
->~`sfContext`~ オブジェクトはリクエスト、レスポンス、ユーザーなどの symfony のコアオブジェクトへの参照を持ちます。`sfContext` は Singleton のようにふるまうので、任意の場所から `sfContext::getInstance()` ステートメントを使えば symfony の任意のコアオブジェクトにアクセスできます:
+>~`sfContext`~ オブジェクトはリクエスト、レスポンス、ユーザーなどの symfony のコアオブジェクトへの参照をもちます。`sfContext` は Singleton としてふるまうので、任意の場所から `sfContext::getInstance()` ステートメントを使えば symfony の任意のコアオブジェクトにアクセスできます:
 >
 >     [php]
 >     $mailer = sfContext::getInstance()->getMailer();
 >
 >1つのクラスで `sfContext::getInstance()` を使いたいと思うときは、これは~強結合~をもたらすので考え直してください。必要なオブジェクトを引数として渡すほうがずっとよいです。
 >
->~`sfContext`~ をレジストリとして使い `set()` メソッドを使い独自のオブジェクトを追加することもできます。これはオブジェクトを引数としてとり `get()` メソッドはオブジェクトを名前として読み取るために後で使うことができます:
+>~`sfContext`~ をレジストリとして使い `set()` メソッドを使い独自のオブジェクトを追加することもできます。これはオブジェクトを引数としてとり、`get()` メソッドはオブジェクトを名前として読み取るために後で使うことができます:
 >
 >     [php]
 >     sfContext::getInstance()->set('job', $job);
 >     $job = sfContext::getInstance()->get('job');
 
-### ~デリバリー戦略~
+### ~デリバリ戦略~
 
 ほかの多くの symfony のコアオブジェクトのように、メーラーはファクトリです。ですので、`factories.yml` 設定ファイルで行われます。デフォルトのコンフィギュレーションは次の内容を読み込みます:
 
@@ -138,7 +138,7 @@ symfony でのメール管理はメーラーオブジェクトに集約され、
  * `spool`:          メッセージはキューに保存される。
  * `none`:           メッセージは無視される。
 
-戦略が何であれ、メールはつねにロギングされ Web デバッグツールバーの"mailer"パネルで利用可能です。
+戦略が何であれ、メールはつねにロギングされ、Web デバッグツールバーの「mailer」パネルで利用可能です。
 
 ### ~メールトランスポート~
 
@@ -163,14 +163,14 @@ Swift Mailer には3つの異なるトランスポートクラスが同梱され
   * ~`Swift_MailTransport`~: メッセージを送信するのに PHP ネイティブの `mail()` 関数を使う。
 
 >**TIP**
->Swift Mailer の公式ドキュメントの["トランスポートの種類"](http://swiftmailer.org/docs/transport-types)のセクションは組み込みのトランスポートクラスとこれらの異なるパラメーターに関して知る必要のあるすべての内容を説明しています。
+>Swift Mailer の公式ドキュメントの[「トランスポートの種類」](http://swiftmailer.org/docs/transport-types)のセクションは組み込みのトランスポートクラスとこれらの異なるパラメータに関して知る必要のあるすべての内容を説明しています。
 
 メールをテストする
 ------------------
 
-symfony メーラーでメールを送信する方法を見てきたので、正しく作業をしたことを保証するために機能テストを書いてみましょう。デフォルトでは、symfony は機能テストでのメールテストを楽にする `mailer` テスター (~`sfMailerTester`~) を登録します。
+symfony のメーラーでメールを送信する方法を見てきたので、正しく実装したことを保証する機能テストを書いてみましょう。デフォルトでは、メールの機能テストを楽にできるように symfony は `mailer` テスター (~`sfMailerTester`~) を登録します。
 
-First, change the `mailer` factory configuration for the `test` environment if your web server does not have a local SMTP server. We have to replace the current `Swift_SmtpTransport` class by `Swift_MailTransport`:
+最初に、Web サーバーにロカールな SMTP サーバーがなければ、`test` 環境における `mailer` ファクトリのコンフィギュレーションを変更します。`Swift_SmtpTransport` クラスを `Swift_MailTransport` に置き換えなければなりません:
 
     [yaml]
     # apps/backend/config/factories.yml
@@ -184,7 +184,7 @@ First, change the `mailer` factory configuration for the `test` environment if y
           transport:
             class:  Swift_MailTransport
 
-Then, add a new `test/fixtures/administrators.yml` file containing the following YAML definition:
+それから、次の YAML 定義が収められている `test/fixtures/administrators.yml` ファイルを追加します:
 
     [yaml]
     sfGuardUser:
@@ -196,7 +196,7 @@ Then, add a new `test/fixtures/administrators.yml` file containing the following
         last_name: Potencier
         is_super_admin: true
 
-Finally, replace the `affiliate` functional test file for the backend application with the following code:
+最後に、バックエンドアプリケーションの `affiliate` 機能テストファイルのコードを次のものに置き換えます:
 
     [php]
     // test/functional/backend/affiliateActionsTest.php
@@ -223,16 +223,16 @@ Finally, replace the `affiliate` functional test file for the backend applicatio
       end()
     ;
 
-それぞれの送信Eメールは ~`checkHeader()`~ と ~`checkBody()`~ メソッドのヘルプでテストできます。`checkHeader()` と `checkBody()` の最初の引数は次のものの1つになります:
+以前のコードを動かすためには、昨日のフィクスチャファイル (`data/fixtures/030_affiliates.yml`) を `test/fixtures/` ディレクトリにコピーします。それぞれの送信Eメールは ~`checkHeader()`~ と ~`checkBody()`~ メソッドのヘルプでテストできます。`checkHeader()` と `checkBody()` の最初の引数は次のものの1つになります:
 
  * 完全にマッチするかチェックするための文字列;
 
  * これに対する値をチェックするための正規表現;
 
- * 値がマッチしないことをチェックするためのネガティブな正規表現 (`!` で始まる正規表現)。
+ * 値がマッチしないことをチェックするための否定形の正規表現 (`!` で始まる正規表現)。
 
 >**NOTE**
->デフォルトでは、チェックは最初のメール送信で行われます。いくつかのメールが送信されたら、~`withMessage()`~ メソッドでテストしたいものを選ぶことができます。`withMessage()` は最初の引数として受信者をとります。これは複数のEメールが同じ受信者に送信される場合テストしたいEメールを示す2番目の引数もとります。
+>デフォルトでは、チェックは最初のメール送信で行われます。いくつかのメールが送信されたら、~`withMessage()`~ メソッドでテストしたいものを選ぶことができます。`withMessage()` は最初の引数として受信者をとります。これは複数のメールアドレスが同じ受信者に送信される場合テストしたいメールアドレスを示す第2引数もとります。
 
 -
 
