@@ -178,6 +178,7 @@ from a form is as simple as unsetting them:
 <doctrine>
     // lib/form/doctrine/JobeetJobForm.class.php
 </doctrine>
+
     class JobeetJobForm extends BaseJobeetJobForm
     {
       public function configure()
@@ -398,7 +399,7 @@ We also need to change the default validator:
 >You need to create the logo directory (`web/uploads/jobs/`) and check that it
 >is writable by the web server.
 
-As the validator will save the relative path in the database, change the path
+As the validator only saves the filename in the database, change the path
 used in the `showSuccess` template:
 
     [php]

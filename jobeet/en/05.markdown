@@ -2,7 +2,7 @@ Day 5: The Routing
 ==================
 
 If you've completed day 4, you should now be familiar with the MVC pattern
-andit should be feeling like a more and more natural way of coding. Spend a bit
+and it should be feeling like a more and more natural way of coding. Spend a bit
 more time with it and you won't look back. To practice a bit, we customized the
 Jobeet pages and in the process, also reviewed several symfony concepts, like
 the layout, helpers, and slots.

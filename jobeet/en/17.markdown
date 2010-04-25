@@ -296,6 +296,7 @@ of an error:
 We also need to override the `delete()` method to remove the entry of the
 deleted job from the index:
 
+<propel>
     [php]
     // lib/model/JobeetJob.php
     public function delete(PropelPDO $con = null)

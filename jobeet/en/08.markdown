@@ -33,11 +33,11 @@ Unit Tests
 ----------
 
 Writing unit tests is perhaps one of the hardest web development best practices
-to put into action. As web developers are not really used to test their work, a
-lot of questions arise: Do I have to write tests before implementing a feature?
-What do I need to test? Do my tests need to cover every single ~edge case|Edge
-Cases~? How can I be sure that everything is well tested? But usually, the first
-question is much more basic: Where to start?
+to put into action. As web developers are not really used to testing their work,
+a lot of questions arise: Do I have to write tests before implementing a
+feature? What do I need to test? Do my tests need to cover every single ~edge
+case|Edge Cases~? How can I be sure that everything is well tested? But usually,
+the first question is much more basic: Where to start?
 
 Even if we strongly advocate testing, the symfony approach is pragmatic: it's
 always better to have some tests than no test at all. Do you already have a lot
@@ -47,7 +47,7 @@ you find a bug in your code. Over time, your code will become better, the ~code
 coverage|Code Coverage~ will rise, and you will become more confident about it.
 By starting with a pragmatic approach, you will feel more comfortable with tests
 over time. The next step is to write tests for new features. In no time, you
-will become test addict.
+will become a test addict.
 
 The problem with most testing libraries is their steep learning curve. That's
 why symfony provides a very simple testing library, **lime**, to make writing
@@ -194,7 +194,7 @@ identify the behavior that fails.
 
 All lime test methods take a string as their last argument that serves as the
 description for the test. It's very convenient as it forces you to describe what
-your are really testing. It can also serve as a form of
+you are really testing. It can also serve as a form of
 ~documentation|Documentation~ for a method's expected behavior. Let's add some
 messages to the `slugify` test file:
 
