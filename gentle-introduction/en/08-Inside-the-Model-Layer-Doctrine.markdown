@@ -311,6 +311,9 @@ Listing 8-12 - Retrieving Records by Doctrine_Query with `createQuery()`--Empty 
     $q = Doctrine_Core::getTable('Article')->createQuery();
     $articles = $q->execute();
 
+    // Will result in the following SQL query
+    SELECT b.id AS b__id, b.title AS b__title, b.content AS b__content, b.created_at AS b__created_at, b.updated_at AS b__updated_at FROM blog_article b
+
 >**SIDEBAR**
 >Hydrating
 >
@@ -318,7 +321,7 @@ Listing 8-12 - Retrieving Records by Doctrine_Query with `createQuery()`--Empty 
 
 For a more complex object selection, you need an equivalent of the WHERE, ORDER BY, GROUP BY, and other SQL statements. The `Doctrine_Query` object has methods and parameters for all these conditions. For example, to get all comments written by Steve, ordered by date, build a `Doctrine_Query` as shown in Listing 8-13.
 
-Listing 8-13 - Retrieving Records by Criteria with `doSelect()`--Criteria with Conditions
+Listing 8-13 - Retrieving Records by a `Doctrine_Query` with `createQuery()`--Doctrine_Query with Conditions
 
     [php]
     $q = Doctrine_Core::getTable('Comment')
@@ -326,6 +329,9 @@ Listing 8-13 - Retrieving Records by Criteria with `doSelect()`--Criteria with C
       ->where('c.author = ?', 'Steve')
       ->orderBy('c.created_at ASC');
     $comments = $q->execute();
+
+    // Will result in the following SQL query
+    SELECT b.id AS b__id, b.article_id AS b__article_id, b.author AS b__author, b.content AS b__content, b.created_at AS b__created_at, b.updated_at AS b__updated_at FROM blog_comment b WHERE (b.author = ?) ORDER BY b.created_at ASC
 
 Table 8-1 compares the SQL syntax with the `Doctrine_Query` object syntax.
 
@@ -354,6 +360,9 @@ Listing 8-14 - Another Example of Retrieving Records by Doctrine_Query with `cre
       ->andWhere('a.content LIKE ?', '%enjoy%')
       ->orderBy('c.created_at ASC');
     $comments = $q->execute();
+
+    // Will result in the following SQL query
+    SELECT b.id AS b__id, b.article_id AS b__article_id, b.author AS b__author, b.content AS b__content, b.created_at AS b__created_at, b.updated_at AS b__updated_at, b2.id AS b2__id, b2.title AS b2__title, b2.content AS b2__content, b2.created_at AS b2__created_at, b2.updated_at AS b2__updated_at FROM blog_comment b LEFT JOIN blog_article b2 ON b.article_id = b2.id WHERE (b.author = ? AND b2.content LIKE ?) ORDER BY b.created_at ASC
 
 Just as SQL is a simple language that allows you to build very complex queries, the Doctrine_Query object can handle conditions with any level of complexity. But since many developers think first in SQL before translating a condition into object-oriented logic, the `Doctrine_Query` object may be difficult to comprehend at first. The best way to understand it is to learn from examples and sample applications. The symfony project website, for instance, is full of `Doctrine_Query` building examples that will enlighten you in many ways.
 
