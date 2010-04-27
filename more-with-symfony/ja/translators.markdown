@@ -42,14 +42,14 @@ Akky Akimoto (Akky 秋元)
 
 サイボウズ・ラボの社員ブロガー、および、副業でいろいろやってるプログラマー。新規サイトはもちろん symfony。既存運営サイトも徐々に symfony 移行中。
 
-**Webサイト**: *http://akimoto.jp/* など
+**Web サイト**: *http://akimoto.jp/* など
 
 **Twitter**: *http://twitter.com/akky*
 
 Kousuke Ebihara (海老原 昂輔)
 ----------------------------
 
-[株式会社手嶋屋](http://tejimaya.com/)のエンジニアであり、オープンソースの SNS エンジンである [OpenPNE](http://www.openpne.jp/) のリードメンテナー。 OpenPNE の開発には 17 歳の頃から携わっている。 symfony をベースのフレームワークに採用した OpenPNE3 の発展を目指して活動することはもちろん、 symfony や Doctrine など関連する OSS に対して積極的にバグレポートやパッチ提供などをおこなっている。
+[株式会社手嶋屋](http://tejimaya.com/)のエンジニアであり、オープンソースの SNS エンジンである [OpenPNE](http://www.openpne.jp/) のリードメンテナ。 OpenPNE の開発には 17 歳の頃から携わっている。 symfony をベースのフレームワークに採用した OpenPNE3 の発展を目指して活動することはもちろん、symfony や Doctrine など関連する OSS に対して積極的にバグレポートやパッチ提供などをおこなっている。
 
 **Web サイト**: *http://co3k.org/*
 
@@ -65,7 +65,7 @@ Hideki Suzuki (鈴木 秀樹)
 Yoshihiro TAKAHARA (高原 芳浩)
 ----------------------------
 
-[株式会社ディノ](http://www.dino.co.jp/)の代表取締役社長。2005年から symfony を使ってアプリケーション開発をしているので構築数と期間だけはかなりのもの。symfony 版の heroku 作りたくてしょうがない。 有効活用されていませんが、 symfony.jp のドメイン登録しています。最近ひどく多忙で書いていないのですが、 [symfonyで開発日記](http://blog.symfony.jp)の運営もしています。
+[株式会社ディノ](http://www.dino.co.jp/)の代表取締役社長。2005年から symfony を使ってアプリケーション開発をしているので構築数と期間だけはかなりのもの。symfony 版の heroku 作りたくてしょうがない。 有効活用されていませんが、 symfony.jp のドメイン登録しています。最近ひどく多忙で書いていないのですが、 [symfony で開発日記](http://blog.symfony.jp)の運営もしています。
 
 **Web サイト**: *http://d.hatena.ne.jp/tumf*
 
@@ -74,7 +74,7 @@ Yoshihiro TAKAHARA (高原 芳浩)
 Masaki Kagaya (加賀谷 昌樹)
 ---------------------------
 
-PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。2010 年より PHP 公式マニュアルの翻訳も始める。
+PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。2010年より PHP 公式マニュアルの翻訳を始める。
 
 **Web サイト**: *http://sarabande.jp*
 

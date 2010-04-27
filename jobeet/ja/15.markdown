@@ -3,18 +3,18 @@
 
 Jobeet のフィード追加に関して、求職者はリアルタイムで新しい求人情報が知らされます。
 
-一方では、求人を投稿するとき、できる限りもっとも注目されたいと願います。たくさんの小さな Web サイトで求人情報が配信される場合、適任者を見つける機会が増えます。これが[~ロングテール~](http://en.wikipedia.org/wiki/The_Long_Tail)の力です。今日開発する~Webサービス~のおかげでアフィリエイトは自身のWebサイトに投稿された最新の求人情報を公開できます。
+一方では、求人を投稿するとき、できる限りもっとも注目されたいと願います。たくさんの小さな Web サイトで求人情報が配信される場合、適任者を見つける機会が増えます。これが[~ロングテール~](http://ja.wikipedia.org/wiki/ロングテール)の力です。今日開発する ~Web サービス~のおかげでアフィリエイトは自身の Web サイトに投稿された最新の求人情報を公開できます。
 
 ~アフィリエイト~
 ----------------
 
 2日目の要件です:
 
-  "ストーリー F7: アフィリエイトは現在アクティブな求人リストを読み取る"
+  「ストーリー F7: アフィリエイトは現在アクティブな求人リストを検索する」
 
 ### フィクスチャ
 
-アフィリエイト用に新しい~フィクスチャ~ファイルを作りましょう:
+アフィリエイトのために新しい~フィクスチャ~ファイルを作りましょう:
 
     [yml]
 <propel>
@@ -49,10 +49,10 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
 </doctrine>
 
 <propel>
-多対多のリレーションのまんなかのテーブル用のレコード作成はまんなかのテーブルのキーに `s` を追加した配列を定義することで簡単に実現できます。
+多対多のリレーションシップのまんなかのテーブル用のレコード作成はまんなかのテーブルのキーに `s` を追加した配列を定義することで簡単に実現できます。
 </propel>
 <doctrine>
-多対多のリレーション用のレコード作成はリレーションの名前であるキーを持つ配列を定義することで簡単にできます。
+多対多のリレーションシップ用のレコード作成はリレーションシップの名前であるキーをもつ配列を定義することで簡単にできます。
 </doctrine>
 配列の内容はフィクスチャファイルで定義されたオブジェクトの名前です。異なるファイルからオブジェクトをリンクできますが、まず名前を定義しなければなりません。
 
@@ -111,7 +111,7 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
       requirements:
         sf_format: (?:xml|json|yaml)
 
-このルートに関して、特殊変数 ~`sf_format`~ は URL で終わり妥当な値は `xml`、`json` もしくは `yaml` です。
+このルートに関して、特殊変数の ~`sf_format`~ は URL で終わり、有効な値は `xml`、`json` もしくは `yaml` です。
 
 アクションがルートに関連するオブジェクトのコレクションを読み取るときに、`getForToken()` メソッドが呼び出されます。アフィリエイトがアクティベートされることを確認する必要があるとき、ルートのデフォルトのふるまいをオーバーライドする必要があります:
 
@@ -155,12 +155,12 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
     }
 </doctrine>
 
-トークンがデータベースに存在しない場合、`sfError404Exception` の例外が投げられます。この例外クラスは自動的に~`404|404エラー`~レスポンスに変換されます。これがモデルクラスから`404`ページを生成するためのもっともシンプルな方法です。
+トークンがデータベースに存在しない場合、`sfError404Exception` の例外が投げられます。この例外クラスは自動的に`~404|404エラー~`レスポンスに変換されます。これがモデルクラスから`404`ページを生成するためのもっともシンプルな方法です。
 
 <propel>
 `getForToken()` メソッドは今新しく作る2つのメソッドを使います。
 
-最初に、トークンを与えられたアフィリエイトを取得するために `getByToken()` メソッドを作らなければなりません:
+最初に、トークンを渡されたアフィリエイトを取得するために `getByToken()` メソッドを作らなければなりません:
 
     [php]
     // lib/model/JobeetAffiliatePeer.php
@@ -175,7 +175,7 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
       }
     }
 
-それから、`getActiveJobs()` メソッドはアフィリエイトによって選択されたカテゴリー用の現在アクティブな求人リストを返します:
+それから、`getActiveJobs()` メソッドはアフィリエイトによって選択されたカテゴリ用の現在アクティブな求人リストを返します:
 
 </propel>
 <doctrine>
@@ -325,7 +325,8 @@ Jobeet のフィード追加に関して、求職者はリアルタイムで新�
 
 ### ~`yaml` フォーマット|フォーマット (作成)~
 
-組み込みのフォーマットに関して、Content-Type を変更する、レイアウトを無効にするなど symfony はバックグランドで同じコンフィギュレーションを行います。
+組み込みのフォーマットに関して、Content-Type を変更する、レイアウトを無効にするなど、 symfony はバックグランドで同じコンフィギュレーションを変更
+します。
 
 YAML フォーマットは組み込みのリクエストフォーマットのリストにないので、レスポンスの Content-Type は変更可能でレイアウトはアクションでは無効です:
 
@@ -402,10 +403,10 @@ YAML 用のテンプレートは次の内容を読み込みます:
 ![404エラー](http://www.symfony-project.org/images/jobeet/1_2/16/404.png)
 
 >**TIP**
->組み込みのテンプレートの404エラーと~例外|例外処理~をオーバーライドするのは簡単で `config/error/` ディレクトリにファイルを作ります。
+>組み込みのテンプレートの404エラーと~例外|例外処理~をオーバーライドするのは簡単で、`config/error/` ディレクトリにファイルを作ります。
 
 ~Web サービスのテスト|テスト (Web サービス)~
--------------------------------------------
+---------------------------------------------
 
 Web サービスをテストするには、アフィリエイトフィクスチャを `data/fixtures/` から `test/fixtures/` ディレクトリにコピーして自動生成された `apiActionsTest.php` ファイルの内容を次のものに置き換えます:
 
@@ -450,18 +451,18 @@ Web サービスをテストするには、アフィリエイトフィクスチ�
 
 このテストにおいて、2つの新しいメソッドに注目します:
 
-  * `isValid()`: Checks whether or not the XML response is well formed
+  * `isValid()`: XML レスポンスが妥当であるかどうかチェックします
   * `isFormat()`: これはリクエストのフォーマットをテストします
   * `matches()` : HTML ではないフォーマットに対して、レスポンスが引数として渡される正規表現を検証します
 
 アフィリエイトアプリケーションのフォーム
---------------------------------------
+------------------------------------------
 
 Web サービスを提供する準備ができたので、アフィリエイト用のアカウント作成フォームを作りましょう。再度新しい機能をアプリケーションに追加することで古典的なプロセスを説明します。
 
 ### ルーティング
 
-ご想像の通り、~ルート~は最初に作るものです:
+ご想像のとおり、最初に作るのは~ルート~です:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -472,7 +473,7 @@ Web サービスを提供する準備ができたので、アフィリエイト�
         actions: [new, create]
         object_actions: { wait: get }
 
-これは新しい設定オプション: `actions` を持つ古典的な ##ORM## コレクションルートです。ルートによって定義されるデフォルトの7つのアクションすべてが不要なので、`actions` オプションは `new` と `create` アクションのみにマッチするようにルートに指示します。追加の `wait` ルートはまもなくアフィリエイトになる人にアカウントに関するフィードバックをします。
+これは新しい設定オプション: `actions` をもつ古典的な ##ORM## コレクションルートです。ルートによって定義されるデフォルトの7つのアクションすべてが不要なので、`actions` オプションは `new` と `create` アクションのみにマッチするようにルートに指示します。追加の `wait` ルートはまもなくアフィリエイトになる人にアカウントに関するフィードバックをします。
 
 ### ブートストラップする
 
@@ -589,18 +590,19 @@ Web サービスを提供する準備ができたので、アフィリエイト�
       }
     }
 
-The new `sfForm::useFields()` method allows to specify the white list of fields to keep. All non mentionned fields will be removed from the form.
+新しい `sfForm::useFields()` メソッドによって、保ちたいフィールドのホワイトリストを指定することができます。言及されていないフィールドはすべてフォームから削除されます。
 
-フォームフレームワークは他のカラムのように~多対多のリレーション|多対多のリレーション(フォーム)~をサポートします。
-デフォルトでは、`sfWidgetFormChoice` ウィジェットのおかげでこのようなリレーションはドロップダウンボックスのようなレンダラーです。10日目で見たように、`expanded` オプションを指定してレンダリングされたタグを変更しました。
+
+フォームフレームワークは他のカラムのように~多対多のリレーションシップ|多対多のリレーションシップ (フォーム)~をサポートします。
+デフォルトでは、`sfWidgetFormChoice` ウィジェットのおかげでこのようなリレーションシップはドロップダウンボックスのようなレンダラです。10日目で見たように、`expanded` オプションを指定してレンダリングされたタグを変更しました。
 
 メールと URL は input タグのデフォルトサイズよりも長くなりがちなので、デフォルトの HTML 属性は `setAttribute()` メソッドを使用して設定できます。
 
-![アフィリエイトのフォーム](http://www.symfony-project.org/images/jobeet/1_2/16/affiliate_form.png)
+![アフィリエイトのフォーム](http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png)
 
 ### テスト
 
-最後のステップは新しい機能に対して~機能テスト|フォーム(テスト)~を書くことです。
+最後のステップは新しい機能に対して~機能テスト|フォーム (テスト)~を書くことです。
 
 `affiliate` モジュール用の生成テストを次のコードで置き換えます:
 
@@ -625,7 +627,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
         'jobeet_categories_list'         => array(Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()),
 </doctrine>
       )))->
-      isRedirected()->
+      with('response')->isRedirected()->
       followRedirect()->
       with('response')->checkElement('#content h1', 'Your affiliate account has been created')->
 
@@ -645,10 +647,10 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
     ;
 
 <propel>
-チェックボックスの選択をシミュレートするには、チェックする識別子の配列を渡します。タスクを簡略化するために、`JobeetTestFunctional` クラスで新しい `getProgrammingCategory()` メソッドが作成されました:
+チェックボックスの選択をシミュレートするには、チェックする識別子の配列を渡します。タスクを簡略化するために、`JobeetTestFunctional` クラスのなかで新しい `getProgrammingCategory()` メソッドを作りました:
 
     [php]
-    // lib/model/JobeetTestFunctional.class.php
+    // lib/test/JobeetTestFunctional.class.php
     class JobeetTestFunctional extends sfTestFunctional
     {
       public function getProgrammingCategory()
@@ -662,7 +664,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
       // ...
     }
 
-しかし `getMostRecentProgrammingJob()` メソッドにこのコードがあるので、コードを~リファクタリング~して `JobeetCategoryPeer` で `getForSlug()` メソッドを作りましょう:
+しかし `getMostRecentProgrammingJob()` メソッドのなかにこのコードがあるので、コードを~リファクタリング~して `JobeetCategoryPeer` で `getForSlug()` メソッドを作りましょう:
 
     [php]
     // lib/model/JobeetCategoryPeer.php
@@ -678,7 +680,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
 </propel>
 
 アフィリエイトのバックエンド
-----------------------------
+-----------------------------
 
 ~バックエンド~に関して、管理者によってアフィリエイトをアクティベートするために `affiliate` モジュールを作成しなければなりません:
 
@@ -695,7 +697,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
       </a>
 </propel>
 <doctrine>
-      <a href="<?php echo url_for('jobeet_affiliate_affiliate') ?>">
+      <a href="<?php echo url_for('jobeet_affiliate') ?>">
         Affiliates - <strong><?php echo Doctrine_Core::getTable('JobeetAffiliate')->countToBeActivated() ?></strong>
       </a>
 </doctrine>
@@ -730,7 +732,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
 
     }
 
-バックエンドで必要なアクションのみがアカウントをアクティベートするもしくはアクティベートを解除するので、インターフェイスを少し簡略化するために `config` セクションのデフォルトのジェネレーターを変更し list ビューからアカウントを直接アクティベートするリンクを追加します:
+バックエンドで必要なアクションのみがアカウントをアクティベートするもしくはアクティベートを解除するので、インターフェイスを少し簡略化するために `config` セクションにおいて、デフォルトのジェネレータを変更し list ビューからアカウントを直接アクティベートするリンクを追加します:
 
     [yml]
     # apps/backend/modules/affiliate/config/generator.yml
@@ -751,7 +753,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
       filter:
         display: [url, email, is_active]
 
-管理者をより生産的にするために、アクティベートされるアフィリエイトのみを表示するようにデフォルトのフィルターを変更します:
+管理者をより生産的にするために、アクティベートされるアフィリエイトのみを表示するようにデフォルトのフィルタを変更します:
 
     [php]
     // apps/backend/modules/affiliate/lib/affiliateGeneratorConfiguration.class.php
@@ -763,7 +765,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
       }
     }
 
-書く必要があるのは `activate`、`deactivate` アクションに対するコードだけです:
+書く必要があるのは `activate`、`deactivate` アクションに対応するコードだけです:
 
     [php]
     // apps/backend/modules/affiliate/actions/actions.class.php
@@ -858,7 +860,7 @@ The new `sfForm::useFields()` method allows to specify the white list of fields 
 
 アフィリエイトのアカウントが管理者によってのみ変更されるとき、メールは購読を確認にトークンを渡すためにアフィリエイトに送信されます。
 
-PHP には [SwiftMailer](http://www.swiftmailer.org/)、[Zend_Mail](http://framework.zend.com/) と [ezcMail](http://ezcomponents.org/docs/tutorials/Mail) のようなメールを送信するためのよいライブラリがたくさんあります。来たる日に他の ~Zend Framework~ ライブラリを使うので、メールを送信するのに ~`Zend_Mail`~ を使いましょう。
+PHP には [Swift Mailer](http://www.swiftmailer.org/)、[Zend_Mail](http://framework.zend.com/) と [ezcMail](http://ezcomponents.org/docs/tutorials/Mail) のようなメールを送信するためのよいライブラリがたくさんあります。来たる日に他の ~Zend Framework~ ライブラリを使うので、メールを送信するのに ~`Zend_Mail`~ を使いましょう。
 
 ### Zend Framework のインストールと設定
 
@@ -884,7 +886,7 @@ Zend Mail ~ライブラリ|サードパーティのライブラリ~は Zend Fram
 >**NOTE**
 >Eメール送信のために `Search/` ディレクトリは必要ありませんが明日のチュートリアルで必要です。
 
-それから、Zend オートローダーを登録するシンプルな方法を提供するために次のコードを `ProjectConfiguration` クラスに追加します:
+それから、Zend オートローダを登録するシンプルな方法を提供するために次のコードを `ProjectConfiguration` クラスに追加します:
 
     [php]
     // config/ProjectConfiguration.class.php

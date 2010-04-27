@@ -1,33 +1,33 @@
 3日目: ~データモデル~
 ====================
 
-テキストエディターを開いて PHP コードを書きたい方は、今日のチュートリアルで開発を進めることを知ったら幸せになるでしょう。Jobeet のデータモデルを定義し、データベースとの情報のやりとりに ORM を使い、アプリケーションの最初のモジュールを作成します。symfony が多くの作業を我々の代わりにやってくれるので、PHP コードをあまり書かなくても十分な機能を持つ Web モジュールが手に入ります。
+テキストエディタを開いて PHP コードを書きたい方は、今日のチュートリアルで開発を進めることを知ったらしあわせになるでしょう。Jobeet のデータモデルを定義し、データベースとの情報のやりとりに ORM を使い、アプリケーションの最初のモジュールを作ります。symfony が多くの作業を私たちの代わりにやってくれるので、PHP コードをあまり書かなくても十分な機能をもつ Web モジュールが手に入ります。
 
-リレーション~モデル|Model~
+リレーションシップ~モデル|Model~
 --------------------------
 
-昨日のユーザーストーリーではプロジェクトの主要なオブジェクト: jobs (求人)、affiliates (アフィリエイト)、categories (カテゴリー)を詳しく説明しました。下図は対応するエンティティ関係図です:
+昨日のユーザーストーリーではプロジェクトの主要なオブジェクト: jobs (求人)、affiliates (アフィリエイト)、categories (カテゴリ) を詳しく説明しました。下図は対応するエンティティ関係図です:
 
 ![ER図](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
-ストーリーで説明したカラムに加えて、いくつかのテーブルには`created_at`フィールドが追加されています。このフィールドには、レコードが生成されたときの現在のシステム時刻がsymfonyによって自動的にセットされます。`updated_at`フィールドも同様です。レコードが更新されたときのシステム時刻がセットされます。
+ストーリーで説明したカラムに加えて、いくつかのテーブルには `created_at` フィールドが追加されています。このフィールドには、レコードが生成されたときの現在のシステム時刻が symfony によって自動的にセットされます。`updated_at` フィールドも同様です。レコードが更新されたときのシステム時刻がセットされます。
 
 ~スキーマ~
 ----------
 
-求人、アフィリエイト、カテゴリーを保存するために、当然リレーショナルデータベースが必要となります。
+求人、アフィリエイト、カテゴリを保存するために、当然リレーショナルデータベースが必要となります。
 
-しかし symfony はオブジェクト指向のフレームワークですから、可能ならいつでも~オブジェクト|OOP~として操作したいでしょう。たとえば、データベースからレコードを取得する SQL ステートメントを書くのではなく、オブジェクトを使います。
+しかし symfony はオブジェクト指向のフレームワークですから、可能ならいつでも~オブジェクト|OOP~として操作したいでしょう。たとえば、データベースからレコードを取得する SQL 文を書くのではなく、オブジェクトを使います。
 
-リレーショナルデータベースの情報をオブジェクトモデルとしてマッピングする必要があります。このマッピングには [ORM ツール](http://en.wikipedia.org/wiki/Object-relational_mapping)を使いますが、symfony には2つの ORM ([Propel](http://www.propelorm.org/) と [Doctrine](http://www.doctrine-project.org/)) が搭載されています。このチュートリアルでは##ORM##を使います。
+リレーショナルデータベースの情報をオブジェクトモデルとしてマッピングする必要があります。このマッピングには [ORM ツール](http://ja.wikipedia.org/wiki/ORM)を使いますが、symfony には2つの ORM ([Propel](http://www.propelorm.org/) と [Doctrine](http://www.doctrine-project.org/)) が搭載されています。このチュートリアルでは ##ORM## を使います。
 
-ORM には、関連するクラスを生成するために、テーブルとリレーション(関係)についての定義が必要になります。スキーマの記述には2つの方法があります。既存のデータベースからスキーマを作る方法と、手書きでスキーマを作る方法です。
+ORM には、関連するクラスを生成するために、テーブルとリレーションシップ (関係) についての定義が必要になります。スキーマの記述には2つの方法があります。既存のデータベースからスキーマを作る方法と、手書きでスキーマを作る方法です。
 
 <propel>
 >**Note**
->([Fabforce の Dbdesigner](http://www.fabforce.net/dbdesigner4/)など)でデータベースをグラフィカルにビルドしたり ([DB Designer 4 TO Propel Schema Converter](http://blog.tooleshed.com/docs/dbd2propel/transform.php) で) `schema.xml`を直接生成できます。
+>([Fabforce の Dbdesigner](http://www.fabforce.net/dbdesigner4/)など) でデータベースをグラフィカルにビルドしたり ([DB Designer 4 TO Propel Schema Converter](http://blog.tooleshed.com/docs/dbd2propel/transform.php) で) `schema.xml`を直接生成できます。
 
-データベースがまだ存在していないのと、Jobeet をデータベースエンジンに依存しないようにするために、空の ~`config/schema.yml`|データベーススキーマ~ ファイルを編集してスキーマファイルを手作業で作りましょう:
+データベースがまだ存在していないのと、Jobeet をデータベースエンジンに依存しないようにするために、空の ~`config/schema.yml`|データベーススキーマ~ ファイルを編集してスキーマファイルを手作業で作りましょう (注:  コピー＆ペーストする際には➥ の箇所の修正をお忘れなく):
 
     [yml]
     # config/schema.yml
@@ -77,7 +77,6 @@ ORM には、関連するクラスを生成するために、テーブルとリ�
 
     [yml]
     # config/doctrine/schema.yml
-    ---
     JobeetCategory:
       actAs: { Timestampable: ~ }
       columns:
@@ -101,8 +100,7 @@ ORM には、関連するクラスを生成するために、テーブルとリ�
         email:        { type: string(255), notnull: true }
         expires_at:   { type: timestamp, notnull: true }
       relations:
-        JobeetCategory: { onDelete: CASCADE, local: category_id, foreign: id,
-          ➥ foreignAlias: JobeetJobs } 
+        JobeetCategory: { onDelete: CASCADE, local: category_id, foreign: id, foreignAlias: JobeetJobs } 
 
     JobeetAffiliate:
       actAs: { Timestampable: ~ }
@@ -129,7 +127,7 @@ ORM には、関連するクラスを生成するために、テーブルとリ�
 </doctrine>
 
 >**TIP**
->SQLステートメントを書いてテーブルを作る場合は、`propel:build-schema` タスクを実行すると、対応する `schema.yml` 設定ファイルを生成できます:
+>SQL 文を書いてテーブルを作る場合は、`propel:build-schema`  もしくは `doctrine:build-schema` タスクを実行すると、対応する `schema.yml` 設定ファイルを生成できます:
 >
 >     $ php symfony propel:build-schema
 >
@@ -140,9 +138,9 @@ ORM には、関連するクラスを生成するために、テーブルとリ�
 >**SIDEBAR**
 >~YAML~ フォーマット
 >
->[YAML](http://yaml.org/)の公式サイトによれば、YAML は"人間にフレンドリーな、すべてのプログラミング言語用のデータシリアライゼーション標準"と説明されています。
+>[YAML](http://yaml.org/) の公式サイトによれば、YAML は"人間にフレンドリな、すべてのプログラミング言語用の標準データシリアライゼーション"と説明されています。
 >
->言い換えると、YAML はデータ(文字列、整数、日付、配列およびハッシュ)を記述するためのシンプルな言語です。
+>言い換えると、YAML はデータ (文字列、整数、日付、配列およびハッシュ) を記述するためのシンプルな言語です。
 >
 >YAML において、構造はインデントで示され、連番のアイテムはダッシュで示され、マップのキー/値の組はコロンによって分離されます。また、YAML には同じ構造をより短い行で記述するための省略記法もあります。配列は `[]` で、ハッシュは `{}` で明示的に示されます。
 >
@@ -151,16 +149,16 @@ ORM には、関連するクラスを生成するために、テーブルとリ�
 >YAML ファイルを編集する際に覚える必要がある大切なことが1つあります:
 >**インデントは1つ以上のスペースで行わなければならず、~タブ|コードのフォーマッティング~は使ってはなりません**。
 
-`schema.yml` ファイルには、全てのテーブルとカラムの説明を記述します。各カラムの説明の記述には、次の情報を使います:
+`schema.yml` ファイルには、すべてのテーブルとカラムの説明を記述します。各カラムの説明の記述には、次の情報を使います:
 
 <propel>
   * `type`: カラムの型 (`boolean`、`tinyint`、`smallint`、`integer`、`bigint`、`double`、`float`、`real`、`decimal`、`char`、`varchar(size)`、`longvarchar`、`date`、`time`、`timestamp`、`blob` および `clob`)
-  * `required`: カラムを必須にしたい場合は`true`にセットする
-  * ~`index|データベースインデックス`~: カラム用にインデックスを作りたい場合は `true` にセットする。カラムでユニークインデックスを作りたい場合は `unique` にセットする
+  * `required`: カラムを必須にしたい場合は `true` にセットする
+  * `~index|データベースインデックス~`: カラム用にインデックスを作りたい場合は `true` にセットする。カラムでユニークインデックスを作りたい場合は `unique` にセットする
   * `primaryKey`: カラムをテーブル用の~主キー~として定義する
   * `foreignTable`、`foreignReference`: 別のテーブルへの~外部キー~としてカラムを定義する
 
-`~`はYAMLでは`null`を意味します。カラムの値を`~`に設定 (`id`、`created_at` と `updated_at`) すると、symfony はベストな設定を推測します (`id` に対しては主キー、`created_at` と `updated_at` に対してはタイムスタンプ)。
+`~`は YAML では `null` を意味します。カラムの値を`~`に設定 (`id`、`created_at` と `updated_at`) すると、symfony はベストな設定を推測します (`id` に対しては主キー、`created_at` と `updated_at` に対してはタイムスタンプ)。
 
 >**NOTE**
 >`onDelete` 属性を使って外部キーの `ON DELETE` ~ビヘイビア|整合性制約~を定義でき、Propel では `CASCADE`、`SETNULL` および `RESTRICT` をサポートしています。たとえば、`job` レコードが削除されると、データベースエンジンによって、またはデータベースエンジンでサポートされていなければ Propel によって、`jobeet_category_affiliate` テーブルにあるすべての関連レコードが自動的に削除されます。
@@ -192,7 +190,7 @@ symfony で、Jobeet プロジェクト用にこのデータベースを使う�
     $ php symfony configure:database
       ➥ "mysql:host=localhost;dbname=jobeet" root mYsEcret
 
-`configure:database` タスクはデータベースにアクセスするために3つの引数: [~PDO の DSN~](http://www.php.net/manual/pdo.drivers.php)、ユーザー名およびパスワードを受け取ります。開発サーバーでデータベースにアクセスするパスワードが不要であれば、3番目の引数を省略します。
+`configure:database` タスクはデータベースにアクセスするために3つの引数: [~PDO の DSN~](http://www.php.net/manual/pdo.drivers.php)、ユーザー名およびパスワードを受け取ります。開発サーバーでデータベースにアクセスするパスワードが不要であれば、第3引数を省略します。
 
 >**NOTE**
 >`configure:database` ~タスク~は `config/databases.yml` ファイルに~データベースコンフィギュレーション~を保存します。タスクを使う代わりに手動で編集することもできます。
@@ -205,7 +203,7 @@ symfony で、Jobeet プロジェクト用にこのデータベースを使う�
 ~ORM~
 -----
 
-`schema.yml` に記述したデータベース定義を使い、##ORM## の組み込みタスクを利用して、データベースにテーブルを生成するための ~SQL~ ステートメントを作れます:
+`schema.yml` に記述したデータベース定義を使い、##ORM## の組み込みタスクを利用して、データベースにテーブルを生成するための ~SQL~ を作れます:
 
 <doctrine>
 SQL を生成するためには、最初にスキーマファイルからモデルを生成しなければなりません。
@@ -217,11 +215,11 @@ SQL を生成するためには、最初にスキーマファイルからモデ�
 
     $ php symfony propel:build --sql
 
-`propel:build --sql` タスクを実行すると、設定したデータベース用に最適化されたSQLステートメントが `data/sql/` ディレクトリに生成されます:
+`propel:build --sql` タスクを実行すると、設定したデータベース用に最適化された SQL 文が `data/sql/` ディレクトリに生成されます:
 
 <propel>
     [sql]
-    # data/sql/lib.model.schema.sqlからのスニペット
+    # data/sql/lib.model.schema.sql からのスニペット
     CREATE TABLE `jobeet_category`
     (
             `id` INTEGER  NOT NULL AUTO_INCREMENT,
@@ -232,7 +230,7 @@ SQL を生成するためには、最初にスキーマファイルからモデ�
 </propel>
 <doctrine>
     [sql]
-    # data/sql/schema.sqlからのスニペット
+    # data/sql/schema.sql からのスニペット
     CREATE TABLE jobeet_category (id BIGINT AUTO_INCREMENT, name VARCHAR(255)
     NOT NULL COMMENT 'test', created_at DATETIME, updated_at DATETIME, slug
     VARCHAR(255), UNIQUE INDEX sluggable_idx (slug), PRIMARY KEY(id))
@@ -257,7 +255,7 @@ ORM を使って、テーブルのレコードをオブジェクトにマッピ�
 `propel:build --model` タスクを実行すると、データベースと情報をやりとりするために使用する PHP ファイルが `lib/model/` ディレクトリに生成されます。
 
 <propel>
-生成されたファイルを見てみると、Propel によって~テーブル|テーブル(データベース)~ごとに4つのクラスが生成されていることがわかります。たとえば `jobeet_job` テーブルの場合は次のようになります:
+生成されたファイルを見てみると、Propel によって~テーブル|テーブル (データベース)~ごとに4つのクラスが生成されていることがわかります。たとえば `jobeet_job` テーブルの場合は次のようになります:
 
   * `JobeetJob`: このクラスのオブジェクトは `jobeet_job` テーブルの**単独の~レコード|データベースのレコード~**を表します。デフォルトではこのクラスは空です。
   * `BaseJobeetJob`: `JobeetJob` の親クラス。`propel:build --model` を実行するたびにこのクラスは上書きされるので、すべてのカスタマイズは `JobeetJob` クラスで行わなければなりません。
@@ -267,14 +265,14 @@ ORM を使って、テーブルのレコードをオブジェクトにマッピ�
 
 </propel>
 <doctrine>
-生成ファイルを見てみると、Doctrine によってテーブルごとに3つのクラスが生成されていることがわかります。たとえば`jobeet_job`テーブルの場合は次のようになります:
+生成ファイルを見てみると、Doctrine によってテーブルごとに3つのクラスが生成されていることがわかります。たとえば `jobeet_job` テーブルの場合は次のようになります:
 
  * `JobeetJob`: このクラスのオブジェクトは `jobeet_job` テーブルの単独のレコードを表します。デフォルトではこのクラスは空です。
  * `BaseJobeetJob`: `JobeetJob` の親クラス。`doctrine:build --model` を実行するたびにこのクラスは上書きされるので、すべての~カスタマイズ~は `JobeetJob` クラスで行わなければなりません。
  * `JobeetJobTable`: このクラスでは、`JobeetJob` オブジェクトのコレクションを返すメソッドなどを定義します。デフォルトではこのクラスは空です。
 </doctrine>
 
-レコードのカラム値は、モデルオブジェクトの~アクセサー~ (`get*()` メソッド) やミューテーター (`set*()` メソッド) を使って操作できます:
+レコードのカラム値は、モデルオブジェクトの~アクセサ~ (`get*()` メソッド) やミューテータ (`set*()` メソッド) を使って操作できます:
 
     [php]
     $job = new JobeetJob();
@@ -294,18 +292,18 @@ ORM を使って、テーブルのレコードをオブジェクトにマッピ�
     $job = new JobeetJob();
     $job->setCategory($category);
 
-`propel:build --all --and-load` タスクは、この章で行ったタスクを一括して実行するショートカットです。Jobeet モデルクラス用のフォームやバリデーターを生成するために、このタスクを今実行します:
+`propel:build --all` タスクは、この章で行ったタスクを一括して実行するショートカットです。Jobeet モデルクラス用のフォームやバリデータを生成するために、このタスクを今実行します:
 
-    $ php symfony propel:build --all --and-load --no-confirmation
+    $ php symfony propel:build --all --no-confirmation
 
-今日の最後にアクションにおけるバリデーターを見ることができます。フォームに関しては、10日目に詳しく説明する予定です。
+今日の最後にアクションにおけるバリデータを見ることができます。フォームに関しては、10日目に詳しく説明する予定です。
 
 初期データ
 ----------
 
 データベースにテーブルが作成されました。しかしデータがありません。Web アプリケーションには3種類のデータがあります:
 
-  * **初期データ**: アプリケーションを動作させるのに必要なデータ。たとえば、Jobeet ではカテゴリーが必要となります。もしカテゴリーがなければ誰も仕事を投稿できなくなります。また、backend にログインできる admin ユーザーが必要になります。
+  * **初期データ**: アプリケーションを動作させるのに必要なデータ。たとえば、Jobeet ではカテゴリが必要となります。もしカテゴリがなければ誰も仕事を投稿できなくなります。また、backend にログインできる admin ユーザーが必要になります。
 
   * **テストデータ**: アプリケーションのテストに必要です。開発者にとって、ストーリーどおりに Jobeet が動作するのを確認するためにテストを書きます。自動化テストを書くのが1番よい方法です。テストを実施するたびに~テストデータ~でデータベースをクリアする必要があります。
 
@@ -441,7 +439,7 @@ symfony がデータベースのテーブルを作成するたびに、すべて
 >**NOTE**
 >job フィクスチャファイルは2つの画像を参照します。(`http://www.symfony-project.org/get/jobeet/sensio-labs.gif`、`http://www.symfony-project.org/get/jobeet/extreme-sensio.gif`) からダウンロードして `web/uploads/jobs/` ディレクトリに設置してください。
 
-フィクスチャファイルは YAML で記述され、一意な名前でラベルづけされたモデルオブジェクトを定義できます。たとえば、`job_sensio_labs` と `job_extreme_sensio` のラベルがつけられた2つの求人を定義しました。このラベルは、~主キー~を定義しなくても関連オブジェクトをリンクするためにとても便利です (主キーにはよく auto-increment が使われ、値をセットできません)。たとえば、jobの `job_sensio_labs` カテゴリーは `programming` で、これは 'Programming' カテゴリーを示すラベルです。
+フィクスチャファイルは YAML で記述され、一意性のある名前でラベルづけされたモデルオブジェクトを定義できます。たとえば、`job_sensio_labs` と `job_extreme_sensio` のラベルがつけられた2つの求人を定義しました。このラベルは、~主キー~を定義しなくても関連オブジェクトをリンクするためにとても便利です (主キーにはよく auto-increment が使われ、値をセットできません)。たとえば、job の `job_sensio_labs` カテゴリは `programming` で、これは 'Programming' カテゴリを示すラベルです。
 
 >**TIP**
 >YAML ファイルにおいて、(job フィクスチャファイルの `description` カラムのように) 文字列が改行を含むとき、文字列がいくつかの行に分割されることを示すためにパイプ (`|`) を利用します。
@@ -467,15 +465,15 @@ symfony がデータベースのテーブルを作成するたびに、すべて
 >`propel:build --all --and-load` タスクは、`propel:data-load` タスクが後に続く `propel:build --all --and-load` タスク用のショートカットです。
 
 <doctrine>
-スキーマから可能なすべてを生成するには、`doctrine:build --all --and-load` タスクを実行します。このタスクによってフォーム、フィルター、モデルを生成し、データベースを削除してからすべてのテーブルを再作成します。
+スキーマから可能なすべてを生成するには、`doctrine:build --all --and-load` タスクを実行します。このタスクによってフォーム、フィルタ、モデルを生成し、データベースを削除してからすべてのテーブルを再作成します。
 
     $ php symfony doctrine:build --all --and-load
 </doctrine>
 
-ブラウザー上での動作確認
+ブラウザ上での動作確認
 ------------------------
 
-たくさんの CLI を使いましたが、あまり面白いものではありませんね。とりわけ Web プロジェクトとしては。ようやく、データベースと情報をやり取りする Web ページを作る準備ができました。
+たくさんの CLI を使いましたが、あまりおもしろいものではありませんね。とりわけ Web プロジェクトとしては。ようやく、データベースと情報をやり取りする Web ページを作る準備ができました。
 
 求人の一覧の表示方法、既存の求人を編集する方法、求人を削除する方法を見てみましょう。1日目で説明したように、symfony プロジェクトは複数のアプリケーションで構成されます。それぞれの~アプリケーション~は**~モジュール~** (module) に分割されます。1つのモジュールは自己完結した PHP コードの集まりで、アプリケーションの機能 (たとえば API モジュール)、もしくはユーザーがモデルオブジェクトで実行可能な操作の一式 (たとえば job モジュール) をあらわします。
 
@@ -493,7 +491,7 @@ symfony では、指定したモデル用の、基本的な操作機能を提供
 
 `actions/actions.class.php` ファイルは `job` モジュールに対して利用可能なすべての**~アクション~**を定義します:
 
- | アクションの名前  | 説明
+ | アクションの名前 | 説明
  | ---------------- | ----------------------------------------------
  | `index`          | テーブルのレコードを表示する
  | `show`           | 任意のレコード用のフィールドと値を表示する
@@ -503,14 +501,14 @@ symfony では、指定したモデル用の、基本的な操作機能を提供
  | `update`         | ユーザーが投稿した値に応じてレコードを更新する
  | `delete`         | 渡されたレコードをテーブルから削除する
 
-ブラウザーで job モジュールをテストできます:
+ブラウザで job モジュールをテストできます:
 
-     http://www.jobeet.com.localhost/frontend_dev.php/job
+     http://jobeet.localhost/frontend_dev.php/job
 
-![jobモジュール](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
+![job モジュール](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
-求人情報を編集しようとすると、カテゴリーオブジェクトのテキスト表現が必要なため、例外が表示されます。PHP オブジェクトのテキスト表現は~`__toString()`~ というマジックメソッドを使って定義できます。カテゴリーレコードのテキスト表現は、`JobeetCategory` モデルクラスで定義します:
+求人情報を編集しようとすると、カテゴリオブジェクトのテキスト表現が必要なため、例外が表示されます。PHP オブジェクトのテキスト表現は~`__toString()`~ というマジックメソッドを使って定義できます。カテゴリレコードのテキスト表現は、`JobeetCategory` モデルクラスで定義します:
 
     [php]
     // lib/model/JobeetCategory.php
@@ -522,10 +520,10 @@ symfony では、指定したモデル用の、基本的な操作機能を提供
       }
     }
 
-これで、symfony がカテゴリーのテキスト表現を必要とするたびに ~`__toString()`~ メソッドが呼び出され、カテゴリー名が返されます。ほかのモデルクラスでも必要となるので、全てのモデルに対して `__toString()` を定義しましょう:
+これで、symfony がカテゴリのテキスト表現を必要とするたびに ~`__toString()`~ メソッドが呼び出され、カテゴリ名が返されます。ほかのモデルクラスでも必要となるので、すべてのモデルに対して `__toString()` を定義しましょう:
 </propel>
 <doctrine>
-求人情報を編集しようとすると、Category id のドロップダウンに、すべてのカテゴリー名のリストが表示されていることがわかります。それぞれのオプションの値は `__toString()` メソッドから取得されます。
+求人情報を編集しようとすると、Category id のドロップダウンに、すべてのカテゴリ名のリストが表示されていることがわかります。それぞれのオプションの値は `__toString()` メソッドから取得されます。
 
 Doctrine は `title`、`name`、`subject` など説明用のカラム名を推測して、基本的な `__toString()` メソッドを提供しようとします。何かをカスタマイズしたい場合は、次のように独自の `__toString()` メソッドを追加する必要があります。`JobeetCategory` モデルでは、`jobeet_category` テーブルの `name` カラムを利用して `__toString()` メソッドを推測できます。
 
@@ -562,7 +560,7 @@ Doctrine は `title`、`name`、`subject` など説明用のカラム名を推�
     }
 
 これで求人情報の作成と編集が使えるようになりました。必須項目を空にしたり、無効な日付を入力して保存してみてください。
-symfony によって、データベーススキーマから基本的なバリデーションルールが自動生成されていることが分かります。
+symfony によって、データベーススキーマから基本的なバリデーションルールが自動生成されていることがわかります。
 
 ![バリデーション](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
@@ -572,6 +570,6 @@ symfony によって、データベーススキーマから基本的なバリデ
 今日はここまでです。導入部分で予告しました。今日は、PHP コードをほとんど書いていませんが、job モデル用の web モジュールに取り組み、調整とカスタマイズする準備はできています。PHP コードがないことは、バグが存在しないことも意味することを覚えておいてください！
 
 まだエネルギーが残っていたら、モジュールとモデル用に生成されたコードを読んでどのように動くのか理解を深めてください。
-そうでなければ、気にせずによく寝てください。明日は、Web フレームワークでもっともよく使われるパラダイムの1つである[MVC デザインパターン](http://en.wikipedia.org/wiki/Model-view-controller)について話します。
+そうでなければ、気にせずによく寝てください。明日は、Web フレームワークでもっともよく使われるパラダイムの1つである [MVC  デザインパターン](http://ja.wikipedia.org/wiki/Model_View_Controller)について話します。
 
 __ORM__
