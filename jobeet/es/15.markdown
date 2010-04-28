@@ -87,8 +87,10 @@ En el archivo de datos, los tokens están hardcodeados para simplificar las prue
       {
         if (!$this->getToken())
         {
-          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
         }
+        
+        return parent::save($conn);
       }
 
       // ...

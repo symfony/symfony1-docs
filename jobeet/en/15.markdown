@@ -96,8 +96,10 @@ actual user applies for an account, the ~token|Token~ will need to be generated:
       {
         if (!$this->getToken())
         {
-          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
         }
+        
+        return parent::save($conn);
       }
 
       // ...

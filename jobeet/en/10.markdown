@@ -178,7 +178,6 @@ from a form is as simple as unsetting them:
 <doctrine>
     // lib/form/doctrine/JobeetJobForm.class.php
 </doctrine>
-
     class JobeetJobForm extends BaseJobeetJobForm
     {
       public function configure()
@@ -196,21 +195,21 @@ Instead of unsetting the fields you don't want to display, you can also
 explicitly list the fields you want by using the `useFields()` method:
 
     [php]
-    <propel>
-        // lib/form/JobeetJobForm.class.php
-    </propel>
-    <doctrine>
-        // lib/form/doctrine/JobeetJobForm.class.php
-    </doctrine>
-        class JobeetJobForm extends BaseJobeetJobForm
-        {
-          public function configure()
-          {
-            $this->useFields(array('category_id', 'type', 'company', 'logo',
-              ➥ 'url', 'position', 'location', 'description', 'how_to_apply',
-              ➥ 'token', 'is_public', 'email'));
-          }
-        }
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        $this->useFields(array('category_id', 'type', 'company', 'logo',
+          ➥ 'url', 'position', 'location', 'description', 'how_to_apply',
+          ➥ 'token', 'is_public', 'email'));
+      }
+    }
 
 The `useFields()` method does two things automatically for you: it adds the
 hidden fields and the array of fields is used to change the fields order.
