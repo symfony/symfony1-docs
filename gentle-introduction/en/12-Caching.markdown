@@ -347,7 +347,8 @@ Removing cached partials and components is a little trickier. As you can pass th
     <?php include_partial('user/my_partial', array('user' => $user) ?>
 
     // Is identified in the cache as
-    @sf_cache_partial?module=user&action=_my_partial&sf_cache_key=bf41dd9c84d59f3574a5da244626dcc8
+    @sf_cache_partial?module=user&action=_my_partial
+      ➥ &sf_cache_key=bf41dd9c84d59f3574a5da244626dcc8
 
 In theory, you could remove a cached partial with the `remove()` method if you knew the value of the parameters hash used to identify it, but this is very impracticable. Fortunately, if you add a `sf_cache_key` parameter to the `include_partial()` helper call, you can identify the partial in the cache with something that you know. As you can see in Listing 12-10, clearing a single cached partial --for instance, to clean up the cache from the partial based on a modified `User`-- becomes easy.
 
@@ -363,7 +364,8 @@ Listing 12-10 - Clearing Partials from the Cache
     @sf_cache_partial?module=user&action=_my_partial&sf_cache_key=12
 
     // Clear _my_partial for a specific user in the cache with
-    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial&sf_cache_key='.$user->getId());
+    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial
+     ➥ &sf_cache_key='.$user->getId());
 
 To clear template fragments, use the same `remove()` method. The key identifying the fragment in the cache is composed of the same `sf_cache_partial` prefix, the module name, the action name, and the `sf_cache_key` (the unique name of the cache fragment included by the `cache()` helper). Listing 12-11 shows an example.
 
@@ -380,7 +382,8 @@ Listing 12-11 - Clearing Template Fragments from the Cache
     @sf_cache_partial?module=user&action=list&sf_cache_key=users
 
     // Clear it with
-    $cacheManager->remove('@sf_cache_partial?module=user&action=list&sf_cache_key=users');
+    $cacheManager->remove('@sf_cache_partial?module=user&action=list
+     ➥ &sf_cache_key=users');
 
 >**SIDEBAR**
 >Selective Cache Clearing Can damage your Brain
@@ -424,7 +427,8 @@ To remove the cached profile of the user having an `id` of `12` in all languages
 This also works for partials:
 
     [php]
-    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial&sf_cache_key=*');    // Remove for all keys
+    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial
+     ➥ &sf_cache_key=*'); // Remove for all keys
 
 The `remove()` method accepts two additional parameters, allowing you to define which hosts and vary headers you want to clear the cache for. This is because symfony keeps one cache version for each host and vary headers, so that two applications sharing the same code base but not the same hostname use different caches. This can be of great use, for instance, when an application interprets the subdomain as a request parameter (like `http://php.askeet.com` and `http://life.askeet.com`). If you don't set the last two parameters, symfony will remove the cache for the current host and for the `all` vary header. Alternatively, if you want to remove the cache for another host, call `remove()` as follows:
 
@@ -448,7 +452,8 @@ The solution is to initialize a `sfCache` object by hand, with the same settings
 For instance, if the `backend` application needs to clear the cache of the `user/show` action in the `frontend` application for the user of `id` `12`, it can use the following:
 
     [php]
-    $frontend_cache_dir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'frontend'.DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'template';
+    $frontend_cache_dir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'frontend'.
+     ➥ DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'template';
     $cache = new sfFileCache(array('cache_dir' => $frontend_cache_dir)); // Use the same settings as the ones defined in the frontend factories.yml
     $cache->removePattern('user/show?id=12');
 

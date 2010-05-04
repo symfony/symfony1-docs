@@ -284,7 +284,8 @@ Listing 9-10 - `'confirm'` and `'popup'` Options for Link Helpers
     <?php echo link_to('add to cart', 'shoppingCart/add?id=100', array(
       'popup' => array('popupWindow', 'width=310,height=400,left=320,top=0')
     )) ?>
-     => <a onclick="window.open(this.href,'popupWindow','width=310,height=400,left=320,top=0');return false;"
+     => <a onclick="window.open(this.href,'popupWindow',
+           'width=310,height=400,left=320,top=0');return false;"
            href="/fo_dev.php/shoppingCart/add/id/100.html">add to cart</a>
 
 These options can be combined.

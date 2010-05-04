@@ -51,7 +51,7 @@ Parameter               | Description | Default Value
 `use_database`          | Enables the database manager. Set it to `false` if you don't use a database. | `true`
 `i18n`                  | Enables interface translation (see Chapter 13). Set it to `true` for multilingual applications. | `false`
 `logging_enabled`       | Enables logging of symfony events. Set it to `false` when you want to turn symfony logging off completely. | `true`
-`escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `false`
+`escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `true`
 `cache`                 | Enables template caching (see Chapter 12). Set it to `true` if one of your modules includes `cache.yml` file. The cache filter (`sfCacheFilter`) is enabled only if it is on. | `false` in development, `true` in production
 `web_debug`             | Enables the web debug toolbar for easy debugging (see Chapter 16). Set it to `true` to display the toolbar on every page. | `true` in development, `false` in production
 `check_symfony_version` | Enables the check of the symfony version for every request. Set it to on for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
