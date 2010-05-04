@@ -108,6 +108,7 @@ Events
 
  * [`application`](#chapter_15_application)
    * [`application.log`](#chapter_15_sub_application_log)
+   * [`application.throw_exception`](#chapter_15_sub_application_throw_exception)
  * [`command`](#chapter_15_command)
    * [`command.log`](#chapter_15_sub_command_log)
    * [`command.pre_command`](#chapter_15_sub_command_pre_command)
@@ -119,15 +120,21 @@ Events
    * [`component.method_not_found`](#chapter_15_sub_component_method_not_found)
  * [`context`](#chapter_15_context)
    * [`context.load_factories`](#chapter_15_sub_context_load_factories)
+   * [`context.method_not_found`](#chapter_15_sub_context_method_not_found)
  * [`controller`](#chapter_15_controller)
    * [`controller.change_action`](#chapter_15_sub_controller_change_action)
    * [`controller.method_not_found`](#chapter_15_sub_controller_method_not_found)
    * [`controller.page_not_found`](#chapter_15_sub_controller_page_not_found)
+ * [`debug`](#chapter_15_debug)
+   * [`debug.web.load_panels`](#chapter_15_sub_debug_view_load_panels)
+   * [`debug.web.view.filter_parameter_html`](#chapter_15_sub_debug_web_view_filter_parameter_html)
  * [`form`](#chapter_15_form)
    * [`form.post_configure`](#chapter_15_sub_form_post_configure)
    * [`form.filter_values`](#chapter_15_sub_form_filter_values)
    * [`form.validation_error`](#chapter_15_sub_form_validation_error)
    * [`form.method_not_found`](#chapter_15_sub_form_method_not_found)
+ * [`mailer`](#chapter_15_mailer)
+   * [`mailer.configure`](#chapter_15_sub_mailer_configure)
  * [`plugin`](#chapter_15_plugin)
    * [`plugin.pre_install`](#chapter_15_sub_plugin_pre_install)
    * [`plugin.post_install`](#chapter_15_sub_plugin_post_install)
@@ -287,6 +294,21 @@ The `context.load_factories` event is notified once per request by the
 `sfContext` object just after all factories have been initialized. This is the
 first event to be notified with all core classes initialized.
 
+### ~`context.method_not_found`~
+
+*Notify method*: `notifyUntil`
+
+*Default notifiers*: `sfContext`
+
+| Parameter   | Description
+| ----------- | -----------
+| `method`    | The name of the called missing method
+| `arguments` | The arguments passed to the method
+
+The `context.method_not_found` event is notified when a method is not defined
+in the `sfContext` class. By listening to this event, a method can be added to
+the class, without using inheritance.
+
 `controller`
 ------------
 
@@ -335,6 +357,32 @@ during the handling of a request.
 You can listen to this event to do something special whenever a 404 page
 occurs, like sending an email, or logging the error. the event.
 
+`debug`
+-------
+
+### ~`debug.web.load_panels`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfWebDebug`
+
+The `debug.web.load_panels` event is notified after the call to the
+`configure` method of the `sfWebDebug` instance. You can use this event to
+manage your own panels.
+
+### `debug.web.view.filter_parameter_html`
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfWebDebugPanelView`
+
+| Parameter   | Description
+| ----------- | -----------
+| `parameter` | The parameter to filter
+
+The `debug.web.view.filter_parameter_html` event filters each parameter
+rendered by the `sfWebDebugPanelView` panel.
+
 `form`
 ------
 
@@ -381,6 +429,18 @@ The `form.validation_error` event is notified whenever form validation fails.
 The `form.method_not_found` event is notified when a method is not defined in
 the `sfFormSymfony` class. By listening to this event, a method can be added
 to the class, without using inheritance.
+
+`mailer`
+--------
+
+### ~`mailer.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfMailer`
+
+The `mailer.configure` event is notified after the mailer instance has been
+configured. The mailer instance is the subject of the event.
 
 `plugin`
 --------
