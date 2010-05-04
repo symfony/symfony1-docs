@@ -918,7 +918,7 @@ In addition, every template has access to an `$sf_data` variable, which is a con
     echo $sf_data->getRaw('test');
      => <script>alert(document.cookie)</script>
 
-You will have to access raw data each time you need variables containing HTML to be really interpreted as HTML. You can now understand why the default layout uses `$sf_data->getRaw('sf_content')` to include the template, rather than a simpler `$sf_content`, which breaks when output escaping is activated.
+You will have to access raw data each time you need variables containing HTML to be really interpreted as HTML.
 
 When `escaping_strategy` is `false`, `$sf_data` is still available, but it always returns raw data.
 
