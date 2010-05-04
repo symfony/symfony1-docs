@@ -94,7 +94,7 @@ And, of course, if you are a professional web developer, you already know all th
 Fundamental Concepts
 --------------------
 
-Before you get started with symfony, you should understand a few basic concepts. Feel free to skip ahead if you already know the meaning of OOP, ORM, RAD, DRY, KISS, TDD, YAML, and PEAR.
+Before you get started with symfony, you should understand a few basic concepts. Feel free to skip ahead if you already know the meaning of OOP, ORM, RAD, DRY, KISS, TDD, and YAML.
 
 ### PHP
 

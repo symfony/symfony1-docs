@@ -247,20 +247,7 @@ On Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project PROJECT_NAME
 
 The `generate:project` task generates the default structure of directories and
-files needed for a symfony project:
-
- | Directory   | Description
- | ----------- | ----------------------------------
- | `apps/`     | Hosts all project applications
- | `cache/`    | The files cached by the framework
- | `config/`   | The project configuration files
- | `data/`     | Data files like initial fixtures
- | `doc/`      | The project documentation files
- | `lib/`      | The project libraries and classes
- | `log/`      | The framework log files
- | `plugins/`  | The installed plugins
- | `test/`     | The unit and functional test files
- | `web/`      | The web root directory (see below)
+files needed for a symfony project.
 
 >**NOTE**
 >Why does symfony generate so many files? One of the main benefits of using
@@ -315,15 +302,7 @@ Now, create the frontend application by running the `generate:app` task:
 
 Based on the application name given as an *argument*, the `generate:app` task
 creates the default directory structure needed for the application under the
-`apps/frontend/` directory:
-
- | Directory    | Description
- | ------------ | -------------------------------------
- | `config/`    | The application configuration files
- | `i18n/`      | Tha application XLIFF files for translation
- | `lib/`       | The application libraries and classes
- | `modules/`   | The application code (MVC)
- | `templates/` | The global template files
+`apps/frontend/` directory.
 
 >**SIDEBAR**
 >Security
