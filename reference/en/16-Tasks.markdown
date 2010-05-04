@@ -215,7 +215,7 @@ The `app:routes` displays the current routes for a given application:
 
 The `cache::clear` task clears the cache:
 
-    $ php symfony cache:clear [--app[="..."]] [--env[="..."]] [--type[="..."]]
+    $ php symfony cache:clear [--app[="..."]] [--env[="..."]] [--type[="..."]] 
 
 *Alias(es)*: `cc`
 
@@ -332,7 +332,7 @@ and configure for `all` environments with no `app`.
 
 The `doctrine::build` task generate code based on your schema:
 
-    $ php symfony doctrine:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-migrate] [--and-load[="..."]] [--and-append[="..."]]
+    $ php symfony doctrine:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-migrate] [--and-load[="..."]] [--and-append[="..."]] 
 
 
 
@@ -435,7 +435,7 @@ You can specify what databases to create by providing their names:
 
 The `doctrine::build-filters` task creates filter form classes for the current model:
 
-    $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--generator-class="..."]
+    $ php symfony doctrine:build-filters [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--generator-class="..."] 
 
 
 
@@ -464,7 +464,7 @@ It only replaces base classes generated in `lib/doctrine/filter/base`.
 
 The `doctrine::build-forms` task creates form classes for the current model:
 
-    $ php symfony doctrine:build-forms [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--generator-class="..."]
+    $ php symfony doctrine:build-forms [--application[="..."]] [--env="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--generator-class="..."] 
 
 
 
@@ -493,7 +493,7 @@ It only replaces base classes generated in `lib/doctrine/form/base`.
 
 The `doctrine::build-model` task creates classes for the current model:
 
-    $ php symfony doctrine:build-model [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:build-model [--application[="..."]] [--env="..."] 
 
 
 
@@ -521,7 +521,7 @@ It only replaces files in `lib/model/doctrine/base`.
 
 The `doctrine::build-schema` task creates a schema from an existing database:
 
-    $ php symfony doctrine:build-schema [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:build-schema [--application[="..."]] [--env="..."] 
 
 
 
@@ -543,7 +543,7 @@ The task creates a yml file in `config/doctrine`
 
 The `doctrine::build-sql` task creates SQL for the current model:
 
-    $ php symfony doctrine:build-sql [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:build-sql [--application[="..."]] [--env="..."] 
 
 
 
@@ -567,7 +567,7 @@ The generated SQL is optimized for the database configured in `config/databases.
 
 The `doctrine::clean-model-files` task delete all generated model classes for models which no longer exist in your YAML schema:
 
-    $ php symfony doctrine:clean-model-files [--no-confirmation]
+    $ php symfony doctrine:clean-model-files [--no-confirmation] 
 
 *Alias(es)*: `doctrine:clean`
 
@@ -808,10 +808,10 @@ For the filters and batch actions to work properly, you need to add
 the `with_wildcard_routes` option to the route:
 
     article:
-    class: sfDoctrineRouteCollection
-    options:
-    model:                Article
-    with_wildcard_routes: true
+      class: sfDoctrineRouteCollection
+      options:
+        model:                Article
+        with_wildcard_routes: true
 
 ### ~`doctrine::generate-migration`~
 
@@ -846,7 +846,7 @@ editor of choice upon creation:
 
 The `doctrine::generate-migrations-db` task generate migration classes from existing database connections:
 
-    $ php symfony doctrine:generate-migrations-db [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:generate-migrations-db [--application[="..."]] [--env="..."] 
 
 
 
@@ -867,7 +867,7 @@ existing database connections:
 
 The `doctrine::generate-migrations-diff` task generate migration classes by producing a diff between your old and new schema.:
 
-    $ php symfony doctrine:generate-migrations-diff [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:generate-migrations-diff [--application[="..."]] [--env="..."] 
 
 
 
@@ -888,7 +888,7 @@ producing a diff between your old and new schema.
 
 The `doctrine::generate-migrations-models` task generate migration classes from an existing set of models:
 
-    $ php symfony doctrine:generate-migrations-models [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:generate-migrations-models [--application[="..."]] [--env="..."] 
 
 
 
@@ -993,7 +993,7 @@ The task creates a module in the `%frontend%` application for the
 
 The `doctrine::insert-sql` task inserts SQL for current model:
 
-    $ php symfony doctrine:insert-sql [--application[="..."]] [--env="..."]
+    $ php symfony doctrine:insert-sql [--application[="..."]] [--env="..."] 
 
 
 
@@ -1131,8 +1131,8 @@ The task can also change the author name found in the `actions.class.php`
 if you have configure it in `config/properties.ini`:
 
     [symfony]
-    name=blog
-    author=Fabien Potencier <fabien.potencier@sensio.com>
+      name=blog
+      author=Fabien Potencier <fabien.potencier@sensio.com>
 
 You can customize the default skeleton used by the task by creating a
 `%sf_data_dir%/skeleton/module` directory.
@@ -1281,7 +1281,7 @@ To save them in the i18n message catalogue, use the `--auto-save` option:
     ./symfony i18n:extract --auto-save frontend fr
 
 If you want to display strings that are present in the i18n messages
-catalogue but are not found in the application, use the
+catalogue but are not found in the application, use the 
 `--display-old` option:
 
     ./symfony i18n:extract --display-old frontend fr
@@ -1329,7 +1329,7 @@ if you use the string syntax for helper arguments).
 
 The `log::clear` task clears log files:
 
-    $ php symfony log:clear
+    $ php symfony log:clear  
 
 
 
@@ -1460,7 +1460,7 @@ On Windows, the task copy all the files to the `web/%name%` directory.
 
 The `plugin::list` task lists installed plugins:
 
-    $ php symfony plugin:list
+    $ php symfony plugin:list  
 
 
 
@@ -1583,7 +1583,7 @@ See `plugin:install` for more information about the format of the plugin name an
 
 The `project::clear-controllers` task clears all non production environment controllers:
 
-    $ php symfony project:clear-controllers
+    $ php symfony project:clear-controllers  
 
 
 
@@ -1643,11 +1643,11 @@ The `project:deploy` task deploys a project on a server:
 The server must be configured in `config/properties.ini`:
 
     [production]
-    host=www.example.com
-    port=22
-    user=fabien
-    dir=/var/www/sfblog/
-    type=rsync
+      host=www.example.com
+      port=22
+      user=fabien
+      dir=/var/www/sfblog/
+      type=rsync
 
 To automate the deployment, the task uses rsync over SSH.
 You must configure SSH access with a key or configure the password
@@ -1755,7 +1755,7 @@ the task each time the project changes.
 
 The `project::permissions` task fixes symfony directory permissions:
 
-    $ php symfony project:permissions
+    $ php symfony project:permissions  
 
 
 
@@ -1771,7 +1771,7 @@ The `project:permissions` task fixes directory permissions:
 
 The `project::send-emails` task sends emails stored in a queue:
 
-    $ php symfony project:send-emails [--application[="..."]] [--env="..."] [--message-limit[="..."]] [--time-limit[="..."]]
+    $ php symfony project:send-emails [--application[="..."]] [--env="..."] [--message-limit[="..."]] [--time-limit[="..."]] 
 
 
 
@@ -1801,7 +1801,7 @@ Or limit to time (in seconds):
 
 The `project::validate` task finds deprecated usage in a project:
 
-    $ php symfony project:validate
+    $ php symfony project:validate  
 
 
 
@@ -1823,7 +1823,7 @@ symfony 1.4.
 
 The `propel::build` task generate code based on your schema:
 
-    $ php symfony propel:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-load[="..."]] [--and-append[="..."]]
+    $ php symfony propel:build [--application[="..."]] [--env="..."] [--no-confirmation] [--all] [--all-classes] [--model] [--forms] [--filters] [--sql] [--db] [--and-load[="..."]] [--and-append[="..."]] 
 
 
 
@@ -1890,7 +1890,7 @@ the `--and-append` option:
 
 The `propel::build-all` task generates Propel model and form classes, SQL and initializes the database:
 
-    $ php symfony propel:build-all [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [-F|--skip-forms] [-C|--classes-only] [--phing-arg="..."]
+    $ php symfony propel:build-all [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [-F|--skip-forms] [-C|--classes-only] [--phing-arg="..."] 
 
 
 
@@ -1934,7 +1934,7 @@ option:
 
 The `propel::build-all-load` task generates Propel model and form classes, SQL, initializes the database, and loads data:
 
-    $ php symfony propel:build-all-load [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [-F|--skip-forms] [-C|--classes-only] [--phing-arg="..."] [--append] [--dir="..."]
+    $ php symfony propel:build-all-load [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [-F|--skip-forms] [-C|--classes-only] [--phing-arg="..."] [--append] [--dir="..."] 
 
 
 
@@ -1973,7 +1973,7 @@ option:
 
 The `propel::build-filters` task creates filter form classes for the current model:
 
-    $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] [--generator-class="..."]
+    $ php symfony propel:build-filters [--connection="..."] [--model-dir-name="..."] [--filter-dir-name="..."] [--application[="..."]] [--generator-class="..."] 
 
 
 
@@ -2009,7 +2009,7 @@ It only replaces base classes generated in `lib/filter/base`.
 
 The `propel::build-forms` task creates form classes for the current model:
 
-    $ php symfony propel:build-forms [--connection="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--application[="..."]] [--generator-class="..."]
+    $ php symfony propel:build-forms [--connection="..."] [--model-dir-name="..."] [--form-dir-name="..."] [--application[="..."]] [--generator-class="..."] 
 
 
 
@@ -2045,7 +2045,7 @@ It only replaces base classes generated in `lib/form/base`.
 
 The `propel::build-model` task creates classes for the current model:
 
-    $ php symfony propel:build-model [--phing-arg="..."]
+    $ php symfony propel:build-model [--phing-arg="..."] 
 
 
 
@@ -2075,7 +2075,7 @@ It only replaces files in `lib/model/om` and `lib/model/map`.
 
 The `propel::build-schema` task creates a schema from an existing database:
 
-    $ php symfony propel:build-schema [--application[="..."]] [--env="..."] [--connection="..."] [--xml] [--phing-arg="..."]
+    $ php symfony propel:build-schema [--application[="..."]] [--env="..."] [--connection="..."] [--xml] [--phing-arg="..."] 
 
 
 
@@ -2104,7 +2104,7 @@ The XML format contains more information than the YML one.
 
 The `propel::build-sql` task creates SQL for the current model:
 
-    $ php symfony propel:build-sql [--phing-arg="..."]
+    $ php symfony propel:build-sql [--phing-arg="..."] 
 
 
 
@@ -2264,10 +2264,10 @@ For the filters and batch actions to work properly, you need to add
 the `with_wildcard_routes` option to the route:
 
     article:
-    class: sfPropelRouteCollection
-    options:
-    model:                Article
-    with_wildcard_routes: true
+      class: sfPropelRouteCollection
+      options:
+        model:                Article
+        with_wildcard_routes: true
 
 ### ~`propel::generate-module`~
 
@@ -2357,7 +2357,7 @@ The task creates a module in the `%frontend%` application for the
 
 The `propel::graphviz` task generates a graphviz chart of current object model:
 
-    $ php symfony propel:graphviz [--phing-arg="..."]
+    $ php symfony propel:graphviz [--phing-arg="..."] 
 
 
 
@@ -2377,7 +2377,7 @@ visualization for automatic graph drawing of object model:
 
 The `propel::insert-sql` task inserts SQL for current model:
 
-    $ php symfony propel:insert-sql [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [--phing-arg="..."]
+    $ php symfony propel:insert-sql [--application[="..."]] [--env="..."] [--connection="..."] [--no-confirmation] [--phing-arg="..."] 
 
 
 
@@ -2418,7 +2418,7 @@ only load SQL statements for a given connection.
 
 The `propel::schema-to-xml` task creates schema.xml from schema.yml:
 
-    $ php symfony propel:schema-to-xml
+    $ php symfony propel:schema-to-xml  
 
 
 
@@ -2434,7 +2434,7 @@ The `propel:schema-to-xml` task converts YML schemas to XML:
 
 The `propel::schema-to-yml` task creates schema.yml from schema.xml:
 
-    $ php symfony propel:schema-to-yml
+    $ php symfony propel:schema-to-yml  
 
 
 
@@ -2453,7 +2453,7 @@ The `propel:schema-to-yml` task converts XML schemas to YML:
 
 The `symfony::test` task launches the symfony test suite:
 
-    $ php symfony symfony:test [-u|--update-autoloader] [-f|--only-failed] [--xml="..."] [--rebuild-all]
+    $ php symfony symfony:test [-u|--update-autoloader] [-f|--only-failed] [--xml="..."] [--rebuild-all] 
 
 
 
@@ -2478,7 +2478,7 @@ The `test:all` task launches the symfony test suite:
 
 The `test::all` task launches all tests:
 
-    $ php symfony test:all [-f|--only-failed] [--xml="..."]
+    $ php symfony test:all [-f|--only-failed] [--xml="..."] 
 
 
 
@@ -2636,7 +2636,6 @@ The task can output a JUnit compatible XML log file with the `--xml`
 options:
 
     ./symfony test:unit --xml=log.xml
-
 
 
 
