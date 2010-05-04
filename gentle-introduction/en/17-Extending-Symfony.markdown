@@ -228,7 +228,7 @@ Table 17-1 - Symfony's Events
 | doctrine.configure (notify)                    | sfDoctrinePluginConfiguration | -                           |
 | doctrine.filter_model_builder_options (filter) | sfDoctrinePluginConfiguration | -                           |
 | doctrine.filter_cli_config (filter)            | sfDoctrinePluginConfiguration | -                           |
-| doctrine.configure_connection (notify)         | sfDoctrineDatabase            | connection, database        |
+| doctrine.configure_connection (notify)         | Doctrine_Manager              | connection, database        |
 | doctrine.admin.delete_object (notify)          | -                             | object                      |
 | doctrine.admin.save_object (notify)            | -                             | object                      |
 | doctrine.admin.build_query (filter)            | -                             |                             |

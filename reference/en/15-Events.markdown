@@ -128,6 +128,15 @@ Events
  * [`debug`](#chapter_15_debug)
    * [`debug.web.load_panels`](#chapter_15_sub_debug_view_load_panels)
    * [`debug.web.view.filter_parameter_html`](#chapter_15_sub_debug_web_view_filter_parameter_html)
+ * [`doctrine`](#chapter_15_doctrine)
+   * [`doctrine.configure`](#chapter_15_sub_doctrine_configure)
+   * [`doctrine.filter_model_builder_options`](#chapter_15_sub_doctrine_filter_model_builder_options)
+   * [`doctrine.filter_cli_config`](#chapter_15_sub_doctrine_filter_cli_config)
+   * [`doctrine.configure_connection`](#chapter_15_sub_doctrine_configure_connection)
+   * [`doctrine.admin.delete_object`](#chapter_15_sub_doctrine_delete_object)
+   * [`doctrine.admin.save_object`](#chapter_15_sub_doctrine_save_object)
+   * [`doctrine.admin.build_query`](#chapter_15_sub_doctrine_build_query)
+   * [`doctrine.admin.pre_execute`](#chapter_15_sub_doctrine_pre_execute)
  * [`form`](#chapter_15_form)
    * [`form.post_configure`](#chapter_15_sub_form_post_configure)
    * [`form.filter_values`](#chapter_15_sub_form_filter_values)
@@ -382,6 +391,102 @@ manage your own panels.
 
 The `debug.web.view.filter_parameter_html` event filters each parameter
 rendered by the `sfWebDebugPanelView` panel.
+
+`doctrine`
+----------
+
+### ~`doctrine.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.configure` event is notified after the Doctrine plugin has been
+configured.
+
+### ~`doctrine.filter_model_builder_options`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.filter_model_builder_options` event filters the options for the
+Doctrine schema builder.
+
+### ~`doctrine.filter_cli_config`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.filter_cli_config` event filters the configuration array for the
+Doctrine CLI.
+
+### ~`doctrine.configure_connection`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `Doctrine_Manager` through `sfDoctrineDatabase`
+
+| Parameter    | Description
+| ------------ | -----------
+| `connection` | The `Doctrine_Connection` instance
+| `database`   | The `sfDoctrineDatabase` instance
+
+The `doctrine.configure_connection` event is notified when a Doctrine database
+is initialized for the first time.
+
+### ~`doctrine.admin.delete_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Doctrine object to delete
+
+The `doctrine.admin.delete_object` event is notified when a Doctrine object is
+deleted in an admin generator module.
+
+### ~`doctrine.admin.save_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Doctrine object to delete
+
+The `doctrine.admin.save_object` event is notified when a Doctrine object is
+saved in an admin generator module.
+
+### ~`doctrine.admin.build_query`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Doctrine object to delete
+
+The `doctrine.admin.build_query` event is notified when a Doctrine Query is
+created in an admin generator module.
+
+### ~`doctrine.admin.pre_execute`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter        | Description
+| ---------------- | -----------
+| `configuration`  | The admin generator configuration object
+
+The `doctrine.admin.pre_execute` event is notified in the `preExecute()`
+method of admin generator modules.
 
 `form`
 ------
