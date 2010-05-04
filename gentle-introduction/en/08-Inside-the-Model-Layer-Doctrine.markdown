@@ -6,7 +6,7 @@ Much of the discussion so far has been devoted to building pages, and processing
 This chapter explains how to create an object data model, and the way to access and modify the data in Doctrine. It also demonstrates the integration of Doctrine in Symfony.
 
 >**TIP**
->If you have want to use Propel instead of Doctrine, Appendix A contains the exact same information but for Propel users.
+>If you want to use Propel instead of Doctrine, read Appendix A instead as it contains the exact same information but for Propel.
 
 Why Use an ORM and an Abstraction Layer?
 ----------------------------------------
