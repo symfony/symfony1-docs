@@ -149,6 +149,14 @@ Events
    * [`plugin.post_install`](#chapter_15_sub_plugin_post_install)
    * [`plugin.pre_uninstall`](#chapter_15_sub_plugin_pre_uninstall)
    * [`plugin.post_uninstall`](#chapter_15_sub_plugin_post_uninstall)
+ * [`propel`](#chapter_15_propel)
+   * [`propel.configure`](#chapter_15_sub_propel_configure)
+   * [`propel.filter_phing_args`](#chapter_15_sub_propel_filter_phing_args)
+   * [`propel.filter_connection_config`](#chapter_15_sub_propel_filter_connection_config)
+   * [`propel.admin.delete_object`](#chapter_15_sub_propel_admin_delete_object)
+   * [`propel.admin.save_object`](#chapter_15_sub_propel_admin_save_object)
+   * [`propel.admin.build_criteria`](#chapter_15_sub_propel_admin_build_criteria)
+   * [`propel.admin.pre_execute`](#chapter_15_sub_propel_admin_pre_execute)
  * [`request`](#chapter_15_request)
    * [`request.filter_parameters`](#chapter_15_sub_request_filter_parameters)
    * [`request.method_not_found`](#chapter_15_sub_request_method_not_found)
@@ -464,13 +472,9 @@ saved in an admin generator module.
 
 ### ~`doctrine.admin.build_query`~
 
-*Notify method*: `notify`
+*Notify method*: `filter`
 
 *Default notifiers*: Admin generator module class
-
-| Parameter | Description
-| --------- | -----------
-| `object`  | The Doctrine object to delete
 
 The `doctrine.admin.build_query` event is notified when a Doctrine Query is
 created in an admin generator module.
@@ -606,6 +610,89 @@ uninstalled.
 
 The `plugin.post_uninstall` event is notified just after a plugin has been
 uninstalled.
+
+`propel`
+--------
+
+### ~`propel.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfPropelPluginConfiguration`
+
+The `propel.configure` event is notified after the Propel plugin has been
+configured.
+
+### ~`propel.filter_phing_args`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfPropelBaseTask`
+
+The `propel.filter_phing_args` event filters the configuration array for the
+Propel CLI.
+
+### ~`propel.filter_connection_config`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfPropelDatabase`
+
+| Parameter    | Description
+| ------------ | -----------
+| `name`       | The name of the connection
+| `database`   | The `sfPropelDatabase` instance
+
+The `propel.filter_connection_config` event is notified when a Propel
+database is initialized for the first time.
+
+### ~`propel.admin.delete_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Propel object to delete
+
+The `propel.admin.delete_object` event is notified when a Propel object is
+deleted in an admin generator module.
+
+### ~`propel.admin.save_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Propel object to delete
+
+The `propel.admin.save_object` event is notified when a Propel object is saved
+in an admin generator module.
+
+### ~`propel.admin.build_criteria`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: Admin generator module class
+
+The `propel.admin.build_criteria` event is notified when a Propel Criteria is
+created in an admin generator module.
+
+### ~`propel.admin.pre_execute`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter        | Description
+| ---------------- | -----------
+| `configuration`  | The admin generator configuration object
+
+The `propel.admin.pre_execute` event is notified in the `preExecute()`
+method of admin generator modules.
 
 `request`
 ---------
