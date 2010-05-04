@@ -794,7 +794,7 @@ Listing 14-29 - Implementing the Custom Interaction Action, in `actions/actions.
       $this->redirect('blog_comment_edit', $comment);
     }
 
-Batch actions receive an array of the primary keys of the selected records in the `sf_admin_batch_selection` request parameter.
+Batch actions receive an array of the primary keys of the selected records in the `ids` request parameter.
 
 One last word about actions: If you want to suppress completely the actions for one category, use an empty list, as in Listing 14-30.
 
