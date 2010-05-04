@@ -280,6 +280,12 @@ fun.
 >development environment. In the production one, you will need to clear the 
 >cache manually with the `cache:clear` task.
 
+--
+
+>**NOTE**
+>The `with_show` parameter has no effect. This parameter is only meaningful
+>when generating "standard" modules with the `doctrine:generate-module` task.
+
 Backend Configuration
 ---------------------
 
