@@ -22,7 +22,7 @@ The first two types are handled with YAML configuration files. Template fragment
 
 ### Global Cache Settings
 
-For each application of a project, the HTML cache mechanism can be enabled or disabled (the default), per environment, in the `cache` setting of the `settings.yml` file. Listing 12-1 demonstrates enabling the cache.
+For each application of a project, the HTML cache mechanism can be enabled or disabled (the default), per environment, in the `cache` setting of the `settings.yml` file. Listing 12-1 demonstrates enabling the ability to cache. Note this will not cause anything to be cached; to do so you must enable caching in each module/action (see below).
 
 Listing 12-1 - Activating the Cache, in `frontend/config/settings.yml`
 
