@@ -1,4 +1,4 @@
-Appendix A - GNU Free Documentation License
+Appendix B - GNU Free Documentation License
 ===========================================
 
   * Version 1.2, November 2002

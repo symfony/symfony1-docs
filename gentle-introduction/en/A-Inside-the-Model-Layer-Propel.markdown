@@ -1,4 +1,4 @@
-Chapter 8 - Inside The Model Layer (Propel)
+Appendix A - Inside The Model Layer (Propel)
 ===========================================
 
 Much of the discussion so far has been devoted to building pages, and processing requests and responses. But the business logic of a web application relies mostly on its data model. Symfony's default model component is based on an object/relational mapping layer. Symfony comes bundles with the two most popular PHP ORMs: [Propel](http://www.propelorm.org/) and [Doctrine](http://www.doctrine-project.org/). In a symfony application, you access data stored in a database and modify it through objects; you never address the database explicitly. This maintains a high level of abstraction and portability.
