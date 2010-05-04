@@ -92,7 +92,6 @@ The project directory structure is defined as follows:
  | ~`SF_CONFIG_DIR`~  | `SF_ROOT_DIR/config` |
  | ~`SF_CACHE_DIR`~   | `SF_ROOT_DIR/cache`  |
  | ~`SF_DATA_DIR`~    | `SF_ROOT_DIR/data`   |
- | ~`SF_DOC_DIR`~     | `SF_ROOT_DIR/doc`    |
  | ~`SF_LIB_DIR`~     | `SF_ROOT_DIR/lib`    |
  | ~`SF_LOG_DIR`~     | `SF_ROOT_DIR/log`    |
  | ~`SF_PLUGINS_DIR`~ | `SF_ROOT_DIR/plugins`|
