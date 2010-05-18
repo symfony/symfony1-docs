@@ -575,7 +575,7 @@ Gli oggetti del nucleo di symfony notificano eventi che possono essere catturati
 Nel nostro caso, abbiamo bisogno di catturare l'evento `user.method_not_found`, che
 si verifica quando un metodo non definito è chiamato nell'oggetto `sfUser`.
 
-Quando symfony viene inizializzato, sono inizializzati anche tutti i plugin se hanno una
+Quando symfony viene inizializzato, sono inizializzati anche tutti i plugin, se hanno una
 classe di configurazione del plugin:
 
     [php]
@@ -591,10 +591,10 @@ classe di configurazione del plugin:
 Le notifiche degli eventi sono gestiti dall'oggetto
 ([`sfEventDispatcher`](http://www.symfony-project.org/api/1_4/sfEventDispatcher)).
 Registrare un ascoltatore (listener) è semplice come chiamare `connect()`.
-Il metodo `connect()` collega un nome di evento con un PHP richiamabile (callable).
+Il metodo `connect()` collega un nome di evento con un callable PHP.
 
 >**NOTE**
->Un [PHP callable](http://www.php.net/manual/en/function.is-callable.php) è una
+>Un [callable PHP](http://www.php.net/manual/en/function.is-callable.php) è una
 >variabile PHP che può essere usata dalla funzione `call_user_func()` e restituire
 >`true` quando passata alla funzione `is_callable()`. Una stringa rappresenta una
 >funzione e un array può rappresentare il metodo di un oggetto o il metodo di una classe.
