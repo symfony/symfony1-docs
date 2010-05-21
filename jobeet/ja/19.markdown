@@ -1,5 +1,5 @@
 19日目: 国際化とローカライゼーション
-====================================
+======================================
 
 昨日は、AJAX のよいところを追加することで検索エンジンを終わらせました。
 
@@ -11,7 +11,7 @@
 >
 >**ローカライゼーション** とは~ロケール~固有のコンポーネントを追加し~テキストを翻訳する|翻訳~ことで特定の地域もしくは言語用にソフトウェアを適応させるプロセスです。
 
-いつものように、symfony フレームワークは車輪を再発明しないので国際化 (i18n) とローカライゼーションは [~ICU 標準~](http://www.icu-project.org/)に基づいてサポートされます。
+いつものように、symfony フレームワークは車輪を再発明しないので国際化 (i18n) とローカライゼーションは [~ICU 標準~](http://www.icu-project.org/)にもとづいてサポートされます。
 
 ユーザー
 --------
@@ -21,23 +21,23 @@
 >**NOTE**
 >すでに symfony の User クラスは13日目に話しました。
 
-### ~ユーザー culture~
+### ~ユーザーカルチャ~
 
-symfony の国際化とローカライゼーションの機能は**ユーザー ~culture~** に基づいています。culture はユーザーの言語と国の組み合わせです。たとえば、フランス語を話すユーザー culture は `fr` でフランス出身のユーザーは `fr_FR` です。
+symfony の国際化とローカライゼーションの機能は**ユーザー~カルチャ~** に基づいています。カルチャ (culture) はユーザーの言語と国の組み合わせです。たとえば、フランス語を話すユーザーカルチャは `fr` でフランス出身のユーザーは `fr_FR` です。
 
-User オブジェクトの `setCulture()` と `getCulture()` メソッドを呼び出すことでユーザー culture を管理できます:
+User オブジェクトの `setCulture()` と `getCulture()` メソッドを呼び出すことでユーザーカルチャを管理できます:
 
     [php]
-    // アクションにおいて
+    // アクションのなか
     $this->getUser()->setCulture('fr_BE');
     echo $this->getUser()->getCulture();
 
 >**TIP**
->[ISO 639-1 標準](http://en.wikipedia.org/wiki/ISO_639-1)に従って、~言語コード|ユーザーの言語~は小文字の2文字で構成されます。
+>[ISO 639-1 標準](http://en.wikipedia.org/wiki/ISO_639-1)にしたがって、~言語コード|ユーザーの言語~は小文字の2文字で構成されます。
 
-### オプションとしての culture
+### オプションとしてのカルチャ
 
-デフォルトでは、ユーザー culture は ~`settings.yml`~ 設定ファイルで設定できます:
+デフォルトでは、ユーザーカルチャは ~`settings.yml`~ 設定ファイルで設定できます:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -46,28 +46,28 @@ User オブジェクトの `setCulture()` と `getCulture()` メソッドを呼�
         default_culture: it_IT
 
 >**TIP**
->culture は User オブジェクトによって管理されるので、これは~ユーザーセッション|セッション~に保存されます。開発期間に、~デフォルト culture~ を変更する場合ブラウザーで新しい設定を有効にするためにセッション ~Cookie~ をクリアしなければなりません 
+>カルチャは User オブジェクトによって管理されるので、これは~ユーザーセッション|セッション~に保存されます。開発期間に、~デフォルトカルチャ~ を変更する場合、ブラウザで新しい設定を有効にするためにセッション ~Cookie~ をクリアしなければなりません 
 
-ユーザーが Jobeet の Web サイトでセッションを始めるとき、~HTTP ヘッダー~の ~`Accept-Language`~ によって提供される情報に基づいてベストな culture を決定することもできます。
+ユーザーが Jobeet の Web サイトでセッションを始めるとき、~HTTP ヘッダー~の ~`Accept-Language`~ によって提供される情報にもとづいてベストなカルチャを決めることもできます。
 
 リクエストオブジェクトの `getLanguages()` メソッドは現在のユーザーに許容される言語の配列を返します。これはプリファレンスの順序によってソートされます:
 
     [php]
-    // アクションにおいて
+    // アクションのなか
     $languages = $request->getLanguages();
 
 しかしたいていの場合、あなたの Web サイトでは世界の136の主要な言語は利用できません。ユーザーが選択した言語と Web サイトでサポートされる言語を比較することで `getPreferredCulture()` メソッドはベストな言語を返します:
 
     [php]
-    // アクションにおいて
+    // アクションのなか
     $language = $request->getPreferredCulture(array('en', 'fr'));
 
 以前の呼び出しで、ユーザーが選択した言語に従って返される言語は英語もしくはフランス語のどちらか何に一致しない場合は英語 (配列の最初の言語) です。
 
-URL の culture
----------------
+URL におけるカルチャ
+---------------------
 
-Jobeet の Web サイトは英語とフランス語の両方で利用できます。URL は単独のリソースのみを表すので、culture を URL に埋め込まなければなりません。これを行うためには、~`routing.yml`~ ファイルを開き、`api_jobs` と `homepage` 以外のすべてのルートに対して特殊な変数 `:sf_culture` を追加します。シンプルなルートに対して、`/:sf_culture` を `url` の前に追加します。コレクションルートに対して、`/:sf_culture` で始まる ~`prefix_path`|プレフィックス~ オプションを追加します。
+Jobeet の Web サイトは英語とフランス語の両方で利用できます。URL は単独のリソースのみを表すので、カルチャを URL に埋め込まなければなりません。これを行うためには、~`routing.yml`~ ファイルを開き、`api_jobs` と `homepage` 以外のすべてのルートに対して特殊な変数 `:sf_culture` を追加します。シンプルなルートに対して、`/:sf_culture` を `url` の前に追加します。コレクションルートに対して、`/:sf_culture` で始まる ~`prefix_path`|プレフィックス~ オプションを追加します。
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -121,9 +121,9 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
         id:        \d+
         sf_method: get
 
-ルートで ~`sf_culture`~ 変数が使われるとき、ユーザー culture を変更するために symfony は自動的にこの値を使います。
+ルートで ~`sf_culture`~ 変数が使われるとき、ユーザーカルチャを変更するために symfony は自動的にこの値を使います。
 
-多言語 (`/en/`、`/fr/`、・・・) で多くのホームページをサポートする必要があるので、デフォルトのホームページ (`/`) はユーザー culture に従って適切にローカライズされたページにリダイレクトされなければなりません。しかし、ユーザーが Jobeet に初めて訪問し、ユーザー culture を持たない場合、そのユーザーのために culture が選択されます。
+多言語 (`/en/`、`/fr/`、・・・) で多くのホームページをサポートする必要があるので、デフォルトのホームページ (`/`) はユーザーカルチャにしたがって、適切にローカライズされたページにリダイレクトされなければなりません。しかし、ユーザーが Jobeet に初めて訪問し、ユーザーカルチャをもたない場合、そのユーザーのためにカルチャが選択されます。
 
 最初に、`isFirstRequest()` メソッドを `myUser` に追加します。このメソッドはユーザーセッションの一番最初のリクエストに対してのみ `true` を返します:
 
@@ -135,10 +135,8 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
       {
         return $this->getAttribute('first_request', true);
       }
-      else
-      {
-        $this->setAttribute('first_request', $boolean);
-      }
+      
+      $this->setAttribute('first_request', $boolean);
     }
 
 `localized_homepage` ルートを追加します:
@@ -151,7 +149,7 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
       requirements:
         sf_culture: (?:fr|en)
 
-セッションの最初のリクエストでユーザーを"ベストな"ホームページにリダイレクトするロジックを実装するために `job` モジュールの `index` アクションを変更します:
+セッションの最初のリクエストでユーザーを「ベストな」ホームページにリダイレクトするロジックを実装するために `job` モジュールの `index` アクションを変更します:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -170,35 +168,35 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('@localized_homepage');
+        $this->redirect('localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
-リクエストの中に `sf_culture` 変数が存在しない場合、ユーザーは `/` の URL に到達することを意味します。これがあてはまりセッションが新しい場合、選択された culture がユーザー culture として使われます。さもなければ現在のユーザー culture が使われます。
+リクエストの中に `sf_culture` 変数が存在しない場合、ユーザーは `/` の URL に到達することを意味します。これがあてはまりセッションが新しい場合、選択されたカルチャがユーザーカルチャとして使われます。さもなければ現在のユーザーカルチャが使われます。
 
-最後のステップはユーザーを `localized_homepage` の URL にリダイレクトすることです。symfony は `sf_culture` 変数を自動的に追加するので `sf_culture` 変数はリダイレクト呼び出しに渡されていないことに注意してください。
+最後のステップはユーザーを `localized_homepage` の URL にリダイレクトすることです。symfony は `sf_culture` 変数を自動的に追加するので `sf_culture` 変数はリダイレクト呼び出しに渡されていないことにご注意ください。
 
-これで、`/it/` のURLに移動しようとすると、`sf_culture` 変数を `en` もしくは `fr` に制限したので、symfony は~404エラー~を返します。このルート要件を culture を埋め込むすべてのルートに追加します:
+これで、`/it/` のURLに移動しようとすると、`sf_culture` 変数を `en` もしくは `fr` に制限したので、symfony は~404エラー~を返します。このルート要件をカルチャを埋め込むすべてのルートに追加します:
 
     [yml]
     requirements:
       sf_culture: (?:fr|en)
 
-~culture~ の~テスト~
---------------------
+~カルチャ~の~テスト~
+---------------------
 
 実装をテストしましょう。しかしさらにテストを追加する前に、既存のものを修正する必要があります。すべての URL は変更されるので、`test/functional/frontend/` の機能テストすべてを編集しすべての URL の前に `/en` を追加します。`lib/test/JobeetTestFunctional.class.php` ファイルの URL も変更することをお忘れなく。テストを正しく修正したことを確認するためにテストスイートを立ち上げます:
 
     $ php symfony test:functional frontend
 
-ユーザーテスターは現在のユーザー culture をテストする `isCulture()` メソッドを提供します。`jobActionsTest` ファイルを開き次のテストを追加します:
+ユーザーテスターは現在のユーザーカルチャをテストする `isCulture()` メソッドを提供します。`jobActionsTest` ファイルを開き、次のテストを追加します:
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -210,7 +208,8 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
 
       info('  6.1 - For the first request, symfony guesses the best culture')->
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()->
+      followRedirect()->
       with('user')->isCulture('fr')->
 
       info('  6.2 - Available cultures are en and fr')->
@@ -223,18 +222,35 @@ Jobeet の Web サイトは英語とフランス語の両方で利用できま�
       info('  6.3 - The culture guessing is only for the first request')->
 
       get('/')->
-      isRedirected()->followRedirect()->
+      with('response')->isRedirected()->
+      followRedirect()->
       with('user')->isCulture('fr')
     ;
 
 言語の切り替え
 --------------
 
-culture を変更するユーザーのために、言語~フォーム~はレイアウトに追加しなければなりません。フォームフレームワークはそのまま使えるフォームを提供しませんが多言語サイトの共通のニーズなので、symfony コアチームは [~`sfFormExtraPlugin`~](http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme) をメンテナンスしています。このプラグインは~バリデーター~、~ウィジェット~とフォームを含みます。これらは symfony のメインパッケージに含めることができません。これらは限定的すぎるもしくは外部依存があるにせよとても役に立つものだからです。
+カルチャを変更するユーザーのために、言語~フォーム~はレイアウトに追加しなければなりません。フォームフレームワークはそのまま使えるフォームを提供しませんが多言語サイトの共通のニーズなので、symfony コアチームは [~`sfFormExtraPlugin`~](http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme) をメンテナンスしています。このプラグインは~バリデータ~、~ウィジェット~とフォームを含みます。これらは symfony のメインパッケージに含めることができません。これらは限定的すぎるもしくは外部依存があるにせよとても役に立つものだからです。
 
 `plugin:install` タスクでこのプラグインをインストールします:
 
     $ php symfony plugin:install sfFormExtraPlugin
+
+Or via Subversion with the following command:
+
+    $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
+
+プラグインのクラスがロードされるようにするには、次のように `config/ProjectConfiguration.class.php` のなかで `sfFormExtraPlugin` を有効にしなければなりません。
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin'
+      ));
+    }
 
 >**NOTE**
 >`sfFormExtraPlugin` は JavaScript ライブラリのような外部依存を必要とするウィジェットを含みます。リッチな日付セレクター、WYSIWYG エディターなどもあります。便利なものがたくさん見つかりましたらドキュメントを読むのに時間をかけてください。
@@ -255,7 +271,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('@change_language') ?>">
+        <form action="<?php echo url_for('change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
@@ -275,7 +291,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
       </div>
     </div>
 
-ヘルパーは引数としてモジュールとアクションを受け取ります。3番目の引数はコンポーネントにパラメーターを渡すために使われます。
+ヘルパーは引数としてモジュールとアクションを受け取ります。第3引数はコンポーネントにパラメータを渡すために使われます。
 
 実際にユーザーの言語を変更するコンポーネントとアクションをホストする `language` モジュールを作成します:
 
@@ -304,11 +320,11 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('@change_language') ?>">
+    <form action="<?php echo url_for('change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
-プラグインはユーザー culture を変更するアクションを提供しないので、`change_language` ルートを作成するために `routing.yml` ファイルを編集します:
+プラグインはユーザーカルチャを変更するアクションを提供しないので、`change_language` ルートを作るために `routing.yml` ファイルを編集します:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -316,7 +332,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
       url:   /change_language
       param: { module: language, action: changeLanguage }
 
-そして対応するアクションを作成します:
+そして対応するアクションを作ります:
 
     [php]
     // apps/frontend/modules/language/actions/actions.class.php
@@ -331,11 +347,11 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
         $form->process($request);
 
-        return $this->redirect('@localized_homepage');
+        return $this->redirect('localized_homepage');
       }
     }
 
-`sfFormLanguage` クラスの `process()` メソッドは、ユーザーのフォーム投稿に基づいて、ユーザー culture の変更を考慮します。
+`sfFormLanguage` クラスの `process()` メソッドは、ユーザーのフォーム投稿にもとづいて、ユーザーカルチャの変更を反映させます。
 
 ![国際化されたフッター](http://www.symfony-project.org/images/jobeet/1_4/19/footer.png)
 
@@ -344,7 +360,7 @@ culture を変更するユーザーのために、言語~フォーム~はレイ�
 
 ### 言語、~文字集合~、~エンコーディング~
 
-異なる言語は異なる文字集合を持ちます。英語は ~ASCII~ 文字のみを使うのでもっともシンプルですが、フランス語には "é" のようなアクセントつきの文字があるので少し複雑です。ロシア語、中国語、アラビア語は文字が ASCII の外側にあるのではるかに複雑です。このような言語は完全に異なる文字集合で定義されます。
+異なる言語は異なる文字集合をもちます。英語は ~ASCII~ 文字のみを使うのでもっともシンプルですが、フランス語には「é」のようなアクセントつきの文字があるので少し複雑です。ロシア語、中国語、アラビア語は文字が ASCII の外側にあるのではるかに複雑です。このような言語は完全に異なる文字集合で定義されます。
 
 国際化されたデータを扱うとき、~Unicode~ 標準を使うほうがよいです。Unicode の背景にあるアイデアはすべての言語のためのすべての文字を含む文字の全体集合です。Unicode の問題は単独の文字が21ビットで表されることです。それゆえ、Web に関して、私たちは ~UTF-8~ を使います。これは Unicode コードポイントをオクテットの可変長のシーケンスにマッピングします。UTF-8 において、もっともよく使われる言語の文字は3ビット未満でコード化されます。
 
@@ -356,7 +372,7 @@ UTF-8 は symfony で使われるデフォルトのエンコーディングで�
       .settings:
         charset: utf-8
 
-また、symfony の国際化レイヤーを有効にするには、`settings.yml` で `i18n` を `true` にセットしなければなりません:
+また、symfony の国際化レイヤーを有効にするには、`settings.yml` のなかで `i18n` を `true` にセットしなければなりません:
 
     [yml]
     # apps/frontend/config/settings.yml
@@ -394,13 +410,13 @@ Jobeet のフッターに対する `__()` ヘルパーの使い方です:
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -408,11 +424,11 @@ Jobeet のフッターに対する `__()` ヘルパーの使い方です:
     </div>
 
 >**NOTE**
->`__()` ヘルパーはデフォルトの言語用の文字列を受け取るもしくはそれぞれの文字列に対してユニークな識別子を使うこともできます。これは単なる好みの問題です。Jobeet に関して、テンプレートが読みやすいように先の戦略を使います。
+>`__()` ヘルパーはデフォルトの言語用の文字列を受け取るもしくはそれぞれの文字列に対して一意性のある識別子を使うこともできます。これは単なる好みの問題です。Jobeet に関して、テンプレートが読みやすいように先の戦略を使います。
 
-symfony がテンプレートをレンダリングするとき、`__()` ヘルパーが呼び出されるたびに、symfony は現在のユーザーの culture 用の翻訳を探します。翻訳が見つかればそれが使われ、そうでなければ、最初の引数とフォールバックの値として返されます。
+symfony がテンプレートをレンダリングするとき、`__()` ヘルパーが呼び出されるたびに、symfony は現在のユーザーカルチャ用の翻訳を探します。翻訳が見つかればそれが使われ、そうでなければ、最初の引数とフォールバックの値として返されます。
 
-すべての翻訳は~カタログ|翻訳カタログ~に保存されます。国際化フレームワークは翻訳を保存するために多くの異なる戦略を提供します。私たちは ["~XLIFF~"](http://en.wikipedia.org/wiki/XLIFF) フォーマットを使います。これは標準で最も柔軟なものです。これは admin ジェネレーターと symfony のたいていのプラグインにも使われます。
+すべての翻訳は~カタログ|翻訳カタログ~に保存されます。国際化フレームワークは翻訳を保存するために多くの異なる戦略を提供します。私たちは [「~XLIFF~」](http://en.wikipedia.org/wiki/XLIFF) フォーマットを使います。これは標準で最も柔軟なものです。これはアドミンジェネレータと symfony のたいていのプラグインにも使われます。
 
 >**NOTE**
 >保存する他のカタログは ~`gettext`~、`MySQL` と `SQLite` です。いつものことですが、詳細は [i18n の API](http://www.symfony-project.org/api/1_4/i18n) をご覧ください。
@@ -458,7 +474,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
       </file>
     </xliff>
 
-それぞれの翻訳は一意の `id` 属性を持つ `trans-unit` タグで管理されます。このファイルを編集してフランス語の翻訳を追加できます:
+それぞれの翻訳は一意性のある `id` 属性をもつ `trans-unit` タグで管理されます。このファイルを編集してフランス語の翻訳を追加できます:
 
     [xml]
     <!-- apps/frontend/i18n/fr/messages.xml -->
@@ -492,7 +508,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
     </xliff>
 
 >**TIP**
->XLIFF は標準フォーマットなので、翻訳作業を楽にしてくれるツールがたくさんあります。[Open Language Tools](https://open-language-tools.dev.java.net/) は XLIFF エディターが統合されたオープンソースの Java プロジェクトです。
+>XLIFF は標準フォーマットなので、翻訳作業を楽にしてくれるツールがたくさんあります。[Open Language Tools](https://open-language-tools.dev.java.net/) は XLIFF エディタが統合されたオープンソースの Java プロジェクトです。
 
 -
 
@@ -501,7 +517,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 
 ### 引数で翻訳
 
-国際化の背景にある主要な原則はセンテンス全体を翻訳することです。しかしなかには動的な値を埋め込むセンテンスがあります。Jobeet において、これは "more..." リンク用のホームページにあてはまります:
+国際化の背景にある主要な原則はセンテンス全体を翻訳することです。しかしなかには動的な値を埋め込むセンテンスがあります。Jobeet において、これは「more...」リンク用のホームページに当てはまります:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
@@ -509,15 +525,15 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
       and <?php echo link_to($count, 'category', $category) ?> more...
     </div>
 
-求人の件数は変数で翻訳用のプレースホルダーによって置き換えられなければなりません:
+求人の件数は変数で翻訳用のプレースホルダによって置き換えられなければなりません:
 
     [php]
-    <!-- apps/frontend/modules/job/templates/indexSuccess.php --> 
+    <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
     <div class="more_jobs">
       <?php echo __('and %count% more...', array('%count%' => link_to($count, 'category', $category))) ?>
     </div>
 
-翻訳される文字列は "and %count% more..." であり、`__()` ヘルパーに2番目の引数として渡される値のおかげで、`%count%` プレースホルダーは実行時に本当の数値に置き換えられます。
+翻訳される文字列は「and %count% more...」であり、`__()` ヘルパーに第2引数として渡される値のおかげで、`%count%` プレースホルダは実行時に本当の数値に置き換わります。
 
 `trans-unit` タグを `messages.xml` ファイルに挿入することで新しい文字列を手作業で追加するかファイルを自動的に更新するために `i18n:extract` タスクを使います:
 
@@ -526,28 +542,28 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 タスクを実行した後で、フランス語翻訳を追加するために XLIFF ファイルを開きます:
 
     [xml]
-    <trans-unit id="5">
+    <trans-unit id="6">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
 
 翻訳された文字列の唯一の要件はどこかで `%count%` プレースホルダーを使うことです。
 
-数、センテンスへの変化に応じた~複数形|複数形 (I18n)~を持つためにより複雑な文字列がありますが、すべての言語で必ずしも同じ方法ではありません。ポーランド語やロシア語のように、複数形に関して非常に複雑な文法ルールを持つ言語があります。
+数、センテンスへの変化に応じた~複数形|複数形 (I18n)~をもつためにより複雑な文字列がありますが、すべての言語で必ずしも同じ方法ではありません。ポーランド語やロシア語のように、複数形に関して非常に複雑な文法ルールをもつ言語があります。
 
-カテゴリーページにおいて、現在のカテゴリーの求人件数が表示されます:
+カテゴリページにおいて、現在のカテゴリの求人件数が表示されます:
 
     [php]
-    <!-- apps/frontend/modules/category/templates/showSuccess.php --> 
-    <strong><?php echo $pager->getNbResults() ?></strong> jobs in this category
+    <!-- apps/frontend/modules/category/templates/showSuccess.php -->
+    <strong><?php echo count($pager) ?></strong> jobs in this category
 
-センテンスが件数に応じて異なる翻訳を持つとき、`format_number_choice()` ヘルパーが使われます:
+センテンスが件数に応じて異なる翻訳をもつとき、`format_number_choice()` ヘルパーが使われます:
 
     [php]
     <?php echo format_number_choice(
         '[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category',
-        array('%count%' => '<strong>'.$pager->getNbResults().'</strong>'),
-        $pager->getNbResults()
+        array('%count%' => '<strong>'.count($pager).'</strong>'),
+        count($pager)
       )
     ?>
 
@@ -574,7 +590,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 文字列の翻訳は他のメッセージ文字列と似ています:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="7">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
     </trans-unit>
@@ -592,7 +608,7 @@ symfony がテンプレートをレンダリングするとき、`__()` ヘル�
 
 Jobeet の Web サイトのために、~すべてのテーブルを国際化|Model の国際化~しません。求人投稿をすべて利用可能な言語に~翻訳する|I18n (Model)~かを求人の投稿者にたずねるのは意味がないからです。しかしあきらかにカテゴリテーブルは翻訳する必要があります。
 
-##ORM## プラグインは i18n テーブルをネイティブにサポートします。ローカライズされたデータを格納するそれぞれのテーブルに対して、2つのテーブルを作成する必要があります: 1つは国際化から独立しているカラムを持ち、もう一方は国際化するために必要なカラムを持ちます。2つのテーブルは一対多のリレーションでリンクされます。
+##ORM## プラグインは i18n テーブルをネイティブにサポートします。ローカライズされたデータを格納するそれぞれのテーブルに対して、2つのテーブルを作成する必要があります: 1つは国際化から独立しているカラムを持ち、もう一方は国際化するために必要なカラムを持ちます。2つのテーブルは一対多のリレーションシップでリンクされます。
 
 ~`schema.yml`|schema.yml (I18n)~ を更新します:
 
@@ -611,7 +627,7 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
       name:         { type: varchar(255), required: true }
       slug:         { type: varchar(255), required: true }
 
-`_attributes`エントリはテーブル用のオプションを定義します。
+`_attributes` エントリはテーブル用のオプションを定義します。
 
 そしてカテゴリ用の~フィクスチャ|フィクスチャ (I18n)~を更新します:
 
@@ -680,9 +696,9 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
       columns:
         name: { type: string(255), notnull: true }
 
-`I18n` ビヘイビアを有効にすることで、`JobeetCategoryTranslation` という名前のモデルが自動的に作成され指定された `fields` がそのモデルに移動させられます。
+`I18n` ビヘイビアを有効にすることで、`JobeetCategoryTranslation` という名前のモデルが自動的に作成され、指定された `fields` がそのモデルに移動させられます。
 
-`I18n` ビヘイビアを有効にして自動的に作成される `JobeetCategoryTranslation` モデルに添付される `Sluggable` ビヘイビアを移動させていることに注目してください。`uniqueBy` オプションはスラッグが一意的かそうではないかをフィールドが決定することを `Sluggable` ビヘイビアに伝えます。この場合それぞれのスラッグは `lang` と `name` の組に対して一意的でなければなりません。
+`I18n` ビヘイビアを有効にして自動的に作られる `JobeetCategoryTranslation` モデルに添付される `Sluggable` ビヘイビアを移動させていることに注目してください。`uniqueBy` オプションはスラッグが一意性をもつかそうではないかをフィールドが決定することを `Sluggable` ビヘイビアに伝えます。この場合それぞれのスラッグは `lang` と `name` の組に対して一意性をもたなければなりません。
 
 カテゴリ用のフィクスチャを更新します:
 
@@ -716,7 +732,7 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
 
 `JobeetCategoryTable` の `findOneBySlug()` メソッドをオーバーライドすることも必要です。Doctrine はモデルのすべてのカラム用のマジックファインダーを提供するので、Doctrine が提供するデフォルトのマジック機能をオーバーライドするために `findOneBySlug()` メソッドを作ることが必要です。 
 
-カテゴリーが `JobeetCategoryTranslation` テーブルの英語のスラッグに基づいて検索されるように少しの変更を行う必要があります。
+カテゴリが `JobeetCategoryTranslation` テーブルの英語のスラッグにもとづいて検索されるように少しの変更を行う必要があります。
 
     [php]
     // lib/model/doctrine/JobeetCategoryTable.cass.php
@@ -740,24 +756,24 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
 >`propel:build --all --and-load` はデータベースからすべてのテーブルとデータを削除するので、`guard:create-user` タスクで Jobeet バックエンドにアクセスするユーザーを再作成することを忘れないでください。代わりに、自動的に追加するためにフィクスチャファイルを追加できます。
 
 <propel>
-モデルをビルドするとき、`JobeetCategoryI18n` で定義された i18n カラムにアクセスしやすくするために symfony はメインの `JobeetCategory` オブジェクトでプロキシメソッドを作成します:
+モデルをビルドするとき、`JobeetCategoryI18n` で定義される i18n カラムにアクセスしやすくするために symfony はメインの `JobeetCategory` オブジェクトでプロキシメソッドを作成します:
 
     [php]
     $category = new JobeetCategory();
 
-    $category->setName('foo');       // 現在の culture の名前を設定する
+    $category->setName('foo');       // 現在のカルチャの名前を設定する
     $category->setName('foo', 'fr'); // フランス語の名前を設定する
 
-    echo $category->getName();     // 現在の culture の名前を取得する
+    echo $category->getName();     // 現在のカルチャの名前を取得する
     echo $category->getName('fr'); // フランス語の名前を取得する
 </propel>
 <doctrine>
-`I18n` ビヘイビアを利用するとき、`JobeetCategory` オブジェクトと `JobeetCategoryTranslation` オブジェクトの間にプロキシが作成されるのでカテゴリーの名前を検索するためのすべての古い関数はまだ動作し、現在の culture 用の値を読み取ります。
+`I18n` ビヘイビアを利用するとき、`JobeetCategory` オブジェクトと `JobeetCategoryTranslation` オブジェクトの間にプロキシが作成されるのでカテゴリの名前を検索するためのすべての古い関数はまだ動作し、現在のカルチャの値を読み取ります。
 
     [php]
     $category = new JobeetCategory();
-    $category->setName('foo'); // 現在の culture 用の名前を設定する
-    $category->getName(); // 現在の culture 用の名前を取得する
+    $category->setName('foo'); // 現在のカルチャの名前を設定する
+    $category->getName(); // 現在のカルチャの名前を取得する
 
     $this->getUser()->setCulture('fr'); // アクションクラスから
 
@@ -774,7 +790,7 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
 </propel>
 <doctrine>
 >**TIP**
->~データベースリクエストの回数|パフォーマンス~を減らすために、クエリに `JobeetCategoryTranslation` を JOIN します。これは1つのリクエストでメインオブジェクトと i18n オブジェクトを読み取ります。
+>~データベースリクエストの回数|パフォーマンス~を減らすために、クエリに `JobeetCategoryTranslation` を JOIN します。これは1つのリクエストでメインオブジェクトと i18n オブジェクトを検索します。
 >
 >     [php]
 >     $categories = Doctrine_Query::create()
@@ -815,7 +831,7 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
     }
 </propel>
 <doctrine>
-すでに `findOneBySlug()` をオーバーライドしたのでこれらのメソッドが共有されるようにもう少しリファクタリングしましょう。`findOneBySlugAndCulture()` メソッドを単に使うために新しい `findOneBySlugAndCulture()` と `doSelectForSlug()` メソッドを作り、`findOneBySlug()` メソッドを変更します。
+すでに `findOneBySlug()` をオーバーライドしたのでこれらのメソッドが共有されるようにもう少しリファクタリングしましょう。`findOneBySlugAndCulture()` メソッドを単に使うために、新しい `findOneBySlugAndCulture()` と `doSelectForSlug()` メソッドを作り、`findOneBySlug()` メソッドを変更します。
 
     [php]
     // lib/model/doctrine/JobeetCategoryTable.class.php
@@ -839,9 +855,6 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
     }
 </doctrine>
 
-    // ...
-  }
-
 `category` ルートにオブジェクトを読み取る `doSelectForSlug()` メソッドを使うよう指示するために ~`method` オプション|`method` オプション (ルーティング)~を使います:
 
     [yml]
@@ -858,16 +871,16 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
 
     $ php symfony propel:data-load
 
-これで `category` ルートは国際化されカテゴリー用の URL は翻訳されたカテゴリースラッグを埋め込みます:
+これで `category` ルートは国際化されカテゴリ用の URL は翻訳されたカテゴリスラッグを埋め込みます:
 
     /frontend_dev.php/fr/category/programmation
     /frontend_dev.php/en/category/programming
 
-### admin ジェネレーター
+### アドミンジェネレータ
 
 バックエンドに関して、英語とフランス語を同じフォームで編集できるようにすることを考えます:
 
-![バックエンドカテゴリー](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
+![バックエンドカテゴリ](http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png)
 
 `embedI18N()` メソッドを使うことで~国際化フォーム|フォーム (翻訳)~を埋め込むことができます:
 
@@ -893,7 +906,7 @@ Jobeet の Web サイトのために、~すべてのテーブルを国際化|Mod
       }
     }
 
-admin ジェネレーターインターフェイスは国際化をネイティブでサポートします。これには20以上の言語の翻訳が付属しており、新しい翻訳を追加もしくはカスタマイズするのはとても簡単です。
+アドミンジェネレータインターフェイスは国際化をネイティブでサポートします。これには20以上の言語の翻訳が付属しており、新しい翻訳を追加もしくはカスタマイズするのはとても簡単です。
 <propel>
 `i18n` ディレクトリ (アプリケーションの `lib/vendor/symfony/lib/plugins/sfPropelPlugin/i18n/` で見つかる admin の翻訳)
 </propel>
@@ -902,44 +915,65 @@ admin ジェネレーターインターフェイスは国際化をネイティ�
 </doctrine>
 からカスタマイズしたい言語のファイルをコピーします。アプリケーションのファイルは symfony のものにマージされるので、修正した文字列をアプリケーションファイルのなかだけに留めておきます。
 
-admin ジェネレーターの翻訳ファイルは、`fr/messages.xml` の代わりに、`sf_admin.fr.xml` のように名づけられていることに注目してください。実際のところ、`messages` は symfony によって使われるデフォルトのカタログの名前で、アプリケーションの異なる部分の間のよりよい分離を可能にするために変更できます。`__()` ヘルパーを使うときにデフォルト以外のカタログを使う場合は指定する必要があります:
+アドミンジェネレータの翻訳ファイルは、`fr/messages.xml` の代わりに、`sf_admin.fr.xml` のように名づけられていることに注目してください。実際のところ、`messages` は symfony によって使われるデフォルトのカタログの名前で、アプリケーションの異なる部分の間のよりよい分離を可能にするために変更できます。`__()` ヘルパーを使うときにデフォルト以外のカタログを使う場合は指定する必要があります:
 
     [php]
     <?php echo __('About Jobeet', array(), 'jobeet') ?>
 
-上記の `__()` の呼び出しにおいて、symfony は `jobeet` カタログの "About Jobeet" の文字列を探します。
+上記の `__()` の呼び出しにおいて、symfony は `jobeet` カタログの「About Jobeet」の文字列を探します。
 
 ### テスト
 
-~テスト|国際化(テスト)~の修正は国際化への移行のための不可欠な部分です。
+~テスト|国際化 (テスト)~の修正は国際化への移行のための不可欠な部分です。
 <propel>
-`test/fixtures/010_categories.yml` で定義したフィクスチャをコピーして、最初に、カテゴリー用のテストフィクスチャを更新します。
+`test/fixtures/010_categories.yml` で定義したフィクスチャをコピーして、最初に、カテゴリ用のテストフィクスチャを更新します。
 </propel>
 <doctrine>
-`test/fixtures/categories.yml` で定義したフィクスチャファイルをコピーして、最初に、カテゴリー用のテストフィクスチャを更新します。
+`test/fixtures/categories.yml` で定義したフィクスチャファイルをコピーして、最初に、カテゴリ用のテストフィクスチャを更新します。
 </doctrine>
+
+<doctrine>
+`JobeetCategory` の国際化に関する修正を反映させるために、`lib/test/JobeetTestFunctional.class.php`
+ファイルのなかのメソッドを更新することをお忘れなく。
+
+    [php]
+    public function getMostRecentProgrammingJob()
+    {
+      $q = Doctrine_Query::create()
+        ->select('j.*')
+        ->from('JobeetJob j')
+        ->leftJoin('j.JobeetCategory c')
+        ->leftJoin('c.Translation t')
+        ->where('t.slug = ?', 'programming');
+
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+      return $q->fetchOne();
+    }
+</doctrine>
+
 
 `test` 環境のモデルをリビルドします:
 
-    $ php symfony propel:build --all -and-load --no-confirmation --env=test
+    $ php symfony propel:build --all --and-load --no-confirmation --env=test
 
 正しく動作しているかチェックするためにすべてのテストを立ち上げることができます:
 
     $ php symfony test:all
 
 >**NOTE**
->Jobeet のバックエンドインターフェイスを開発したとき、機能テストを書きませんでした。しかしsymfonyコマンドラインでモジュールを作成するとき、symfony はテストスタブも生成します。これらのスタブを削除しても安全です。
+>Jobeet のバックエンドインターフェイスを開発したとき、機能テストを書きませんでした。しかし symfony コマンドラインでモジュールを作成するとき、symfony はテストスタブも生成します。これらのスタブを削除しても安全です。
 
 ローカライゼーション
 --------------------
 
 ### ~テンプレート~
 
-異なる culture をサポートすることは日付と数値をフォーマットする異なる方法もサポートすることを意味します。テンプレートにおいて、現在のユーザー culture に基づいて、これらすべての違いを考慮することを手助けしてくれるいくつかのヘルパーを自由に使えます:
+異なるカルチャをサポートすることは日付と数値をフォーマットする異なる方法もサポートすることを意味します。テンプレートにおいて、現在のユーザーカルチャにもとづいて、これらすべての違いを考慮することを手助けしてくれるいくつかのヘルパーを自由に使えます:
 
-[`Date`](http://www.symfony-project.org/api/1_4/DateHelper)ヘルパーグループ:
+[`Date`](http://www.symfony-project.org/api/1_4/DateHelper) ヘルパーグループ:
 
- | ヘルパー                       | 説明                                           |
+ | ヘルパー                      | 説明                                           |
  | ----------------------------- | ---------------------------------------------- |
  | `format_date()`               | 日付をフォーマットする                          |
  | `format_datetime()`           | 日付をフォーマットする                          |
@@ -964,7 +998,7 @@ admin ジェネレーターの翻訳ファイルは、`fr/messages.xml` の代�
 
 ### ~フォーム (I18n)~
 
-フォームフレームワークはローカライズされたデータ用の~ウィジェット|ウィジェット (I18n)~と~バリデーター|バリデーター (I18n)~をいくつか提供します:
+フォームフレームワークはローカライズされたデータ用の~ウィジェット|ウィジェット (I18n)~と~バリデータ|バリデータ (I18n)~をいくつか提供します:
 
  * [`sfWidgetFormI18nDate`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate)
  * [`sfWidgetFormI18nDateTime`](http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDateTime)

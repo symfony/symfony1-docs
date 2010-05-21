@@ -351,11 +351,9 @@ Listing 16-12 - Sample Batch Script, in `lib/myScript.php`
 
     require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
-    sfContext::createInstance($configuration);
 
     // Remove the following lines if you don't use the database layer
     $databaseManager = new sfDatabaseManager($configuration);
-    $databaseManager->loadConfiguration();
 
     // add code here
 
@@ -442,7 +440,7 @@ Listing 16-14 - More Complete Sample Task, in `lib/task/mySecondTask.class.php`
     }
 
 >**NOTE**
->If your task needs access to the database layer, it should extend `sfPropelBaseTask` instead of `sfBaseTask`. The task initialization will then take care of loading the additional Propel classes. You can start a database connection in the `execute()` method by calling:
+>If your task needs access to the database layer through the , it should extend `sfPropelBaseTask` instead of `sfBaseTask`. The task initialization will then take care of loading the additional Propel classes. You can start a database connection in the `execute()` method by calling:
 >
 >    $databaseManager = new sfDatabaseManager($this->configuration);
 >

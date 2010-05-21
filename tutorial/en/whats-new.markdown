@@ -638,7 +638,7 @@ Propel Integration
 
 Propel has been upgraded to version 1.4. Please visit Propel's site for more
 information on their upgrade
-(http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4).
+(http://www.propelorm.org/wiki/Documentation/1.4).
 
 ### Propel Behaviors
 

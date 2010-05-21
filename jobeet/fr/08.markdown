@@ -58,7 +58,7 @@ de l'écriture de test avec une incroyable facilité.
 >pouvez employer n'importe quelle bibliothèque de test, comme l'excellente
 >bibliothèque [PHPUnit](http://www.phpunit.de/).
 
-Le framework de test `~lime|Framework de test Lime~`
+Le framework de test ~`lime|Framework de test Lime`~
 ----------------------------------------------------
 
 Tous les tests unitaires écrits avec le framework lime débutent avec le même code :
@@ -244,7 +244,7 @@ de la méthode à tester.
 >testé unitairement, cela signifie juste que chaque ligne a été exécuté, mais cela ne
 >signifie pas que tous les ~cas limites|Cas limites~ ont été testés.
 >
->Comme `test:coverage` repose sur `~XDebug~` pour collecter ses informations, vous
+>Comme `test:coverage` repose sur ~`XDebug`~ pour collecter ses informations, vous
 >devez l'installer et l'activer en premier.
 
 Ajout de tests pour les nouvelles fonctionnalités

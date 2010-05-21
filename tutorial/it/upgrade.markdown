@@ -99,7 +99,6 @@ automaticamente. Se si desidera l'autoload di alcune sottocartelle di
     [yml]
     autoload:
       vendor_some_lib:
-        name:      vendor_some_lib
         path:      %SF_LIB_DIR%/vendor/some_lib_dir
         recursive: true
 

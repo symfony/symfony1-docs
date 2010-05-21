@@ -17,8 +17,8 @@
     $ php symfony generate:app backend
 
 Бэкэнд-приложение теперь доступно по адресу
-`http://jobeet.localhost/backend.php/` для пользовательской среды, и
-`http://jobeet.localhost/backend_dev.php/` для среды разработки.
+`http://www.jobeet.com.localhost/backend.php/` для пользовательской среды, и
+`http://www.jobeet.com.localhost/backend_dev.php/` для среды разработки.
 
 >**NOTE**
 >Когда Вы создавали фронтэнд-приложение пользовательский фронт-контроллер назывался
@@ -71,6 +71,14 @@
 
 Эти две команды создают `job` и `category` модули для `JobeetJob` и `JobeetCategory` 
 классов модели соответственно.
+
+If you have a look at our two generated modules, you will notice there is no
+activated webdesign whereas the symfony built-in admin generator feature has a
+basic graphic interface by default. For now, assets from the `sfPropelPlugin`
+are not located under the `web/` folder. We need to publish them under the
+`web/` folder thanks to the `plugin:publish-assets` task:
+
+    $ php symfony plugin:publish-assets
 
 Необязательная опция `--module` позволяет перекрыть имя, создаваемое командой для модуля 
 по умолчанию (иначе имя было бы `jobeet_job` для класса `JobeetJob`).
@@ -136,8 +144,8 @@
 
 Безо всякой дополнительной работы мы уже можем использовать сгенеренные модули:
 
-    http://jobeet.localhost/backend_dev.php/job
-    http://jobeet.localhost/backend_dev.php/category
+    http://www.jobeet.com.localhost/backend_dev.php/job
+    http://www.jobeet.com.localhost/backend_dev.php/category
 
 Модули админки имеют много дополнительных функций по сравнению с простыми модулями,
 которые мы генерировали в предыдущие дни. Без единой новой строки кода на PHP, каждый
@@ -177,7 +185,7 @@
         <div id="container">
           <div id="header">
             <h1>
-              <a href="<?php echo url_for('@homepage') ?>">
+              <a href="<?php echo url_for('homepage') ?>">
                 <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
@@ -186,10 +194,10 @@
           <div id="menu">
             <ul>
               <li>
-                <?php echo link_to('Jobs', '@jobeet_job') ?>
+                <?php echo link_to('Jobs', 'jobeet_job') ?>
               </li>
               <li>
-                <?php echo link_to('Categories', '@jobeet_category') ?>
+                <?php echo link_to('Categories', 'jobeet_category') ?>
               </li>
             </ul>
           </div>
@@ -574,7 +582,7 @@ symfony сгенерирует исключение, сообщающее Вам
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
     }
 
@@ -659,7 +667,7 @@ symfony сгенерирует исключение, сообщающее Вам
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...
@@ -713,7 +721,7 @@ symfony сгенерирует исключение, сообщающее Вам
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...

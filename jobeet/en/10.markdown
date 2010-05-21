@@ -1,19 +1,18 @@
 Day 10: The Forms
 =================
 
-Previous chapter of this Jobeet tutorial got off to a flying start with the 
-introduction of the symfony test framework. We will continue in this new chapter 
-with the form framework.
+Previous day of this Jobeet tutorial got off to a flying start with the
+introduction of the symfony test framework. We will continue today with the form
+framework.
 
 The Form Framework
 ------------------
 
-Any website has ~forms|Forms~; from the simple contact form to the complex
-ones with lots of fields. Writing forms is also one of the most complex and
-tedious task for a web developer: you need to write the HTML form, implement
-validation rules for each field, process the values to store them in a
-database, display error messages, repopulate fields in case of errors, and
-much more...
+Any website has ~forms|Forms~; from the simple contact form to the complex ones
+with lots of fields. Writing forms is also one of the most complex and tedious
+task for a web developer: you need to write the HTML form, implement validation
+rules for each field, process the values to store them in a database, display
+error messages, repopulate fields in case of errors, and much more...
 
 Of course, instead of reinventing the wheel over and over again, symfony
 provides a framework to ease form management. The form framework is made of
@@ -63,15 +62,15 @@ Form fields are configured in the `configure()` method, by using the
 >describes them quite extensively with all the options, errors, and default
 >error messages.
 
-The widget and validator class names are quite explicit: the `email` field
-will be rendered as an HTML `<input>` tag (`sfWidgetFormInputText`) and
-validated as an email address (`sfValidatorEmail`). The `message` field will
-be rendered as a `<textarea>` tag (`sfWidgetFormTextarea`), and must be a
-string of no more than 255 characters (`sfValidatorString`).
+The widget and validator class names are quite explicit: the `email` field will
+be rendered as an HTML `<input>` tag (`sfWidgetFormInputText`) and validated as
+an email address (`sfValidatorEmail`). The `message` field will be rendered as a
+`<textarea>` tag (`sfWidgetFormTextarea`), and must be a string of no more than
+255 characters (`sfValidatorString`).
 
-By default all fields are ~required|Required Form Fields~, as the default
-value for the `required` option is `true`. So, the validation definition for
-`email` is equivalent to `new sfValidatorEmail(array('required' => true))`.
+By default all fields are ~required|Required Form Fields~, as the default value
+for the `required` option is `true`. So, the validation definition for `email`
+is equivalent to `new sfValidatorEmail(array('required' => true))`.
 
 >**TIP**
 >You can merge a form in another one by using the `mergeForm()` method, or
@@ -87,7 +86,7 @@ value for the `required` option is `true`. So, the validation definition for
 Most of the time, a form has to be serialized to the database. As symfony
 already knows everything about your database model, it can automatically
 generate forms based on this information. In fact, when you launched the
-`propel:build --all` task during chapter 3, symfony automatically called the
+`propel:build --all` task during day 3, symfony automatically called the
 `propel:build --forms` task:
 
     $ php symfony propel:build --forms
@@ -95,8 +94,8 @@ generate forms based on this information. In fact, when you launched the
 The `propel:build --forms` task generates form classes in the `lib/form/`
 directory. The organization of these generated files is similar to that of
 `lib/model/`. Each model class has a related form class (for instance
-`JobeetJob` has `JobeetJobForm`), which is empty by default as it inherits
-from a base class:
+`JobeetJob` has `JobeetJobForm`), which is empty by default as it inherits from
+a base class:
 
     [php]
 <propel>
@@ -158,19 +157,19 @@ from a base class:
 
 ### Customizing the Job Form
 
-The job form is a perfect example to learn
-~form customization|Forms (Customization)~. Let's see how to customize it, step by step.
+The job form is a perfect example to learn ~form customization|Forms
+(Customization)~. Let's see how to customize it, step by step.
 
 First, change the "Post a Job" link in the layout to be able to check changes
 directly in your browser:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
-    <a href="<?php echo url_for('@job_new') ?>">Post a Job</a>
+    <a href="<?php echo url_for('job_new') ?>">Post a Job</a>
 
 By default, a ##ORM## form displays fields for all the table columns. But for
-the job form, some of them must not be editable by the end user. Removing
-fields from a form is as simple as unsetting them:
+the job form, some of them must not be editable by the end user. Removing fields
+from a form is as simple as unsetting them:
 
     [php]
 <propel>
@@ -196,21 +195,21 @@ Instead of unsetting the fields you don't want to display, you can also
 explicitly list the fields you want by using the `useFields()` method:
 
     [php]
-    <propel>
-        // lib/form/JobeetJobForm.class.php
-    </propel>
-    <doctrine>
-        // lib/form/doctrine/JobeetJobForm.class.php
-    </doctrine>
-        class JobeetJobForm extends BaseJobeetJobForm
-        {
-          public function configure()
-          {
-            $this->useFields(array('category_id', 'type', 'company', 'logo',
-              ➥ 'url', 'position', 'location', 'description', 'how_to_apply',
-              ➥ 'token', 'is_public', 'email'));
-          }
-        }
+<propel>
+    // lib/form/JobeetJobForm.class.php
+</propel>
+<doctrine>
+    // lib/form/doctrine/JobeetJobForm.class.php
+</doctrine>
+    class JobeetJobForm extends BaseJobeetJobForm
+    {
+      public function configure()
+      {
+        $this->useFields(array('category_id', 'type', 'company', 'logo',
+          ➥ 'url', 'position', 'location', 'description', 'how_to_apply',
+          ➥ 'token', 'is_public', 'email'));
+      }
+    }
 
 The `useFields()` method does two things automatically for you: it adds the
 hidden fields and the array of fields is used to change the fields order.
@@ -239,11 +238,11 @@ Let's change the default `sfValidatorString` to a `sfValidatorEmail`:
       $this->validatorSchema['email'] = new sfValidatorEmail();
     }
 
-Replacing the default validator is not always the best solution, as the
-default validation rules introspected from the database schema are lost (`new
+Replacing the default validator is not always the best solution, as the default
+validation rules introspected from the database schema are lost (`new
 sfValidatorString(array('max_length' => 255))`). It is almost always better to
-add the new validator to the existing ones by using the special
-`sfValidatorAnd` validator:
+add the new validator to the existing ones by using the special `sfValidatorAnd`
+validator:
 
     [php]
 <propel>
@@ -341,8 +340,8 @@ different widget according to some configuration options (`expanded` and
 
 Even if you think nobody can submit a non-valid value, a hacker can easily
 bypass the widget choices by using tools like [curl](http://curl.haxx.se/) or
-the [Firefox Web Developer Toolbar](http://chrispederick.com/work/web-developer/).
-Let's change the validator to restrict the possible choices:
+the [Firefox Web Developer Toolbar](http://chrispederick.com/work/web-developer/). Let's change the
+validator to restrict the possible choices:
 
 <propel>
     [php]
@@ -399,7 +398,7 @@ We also need to change the default validator:
 >You need to create the logo directory (`web/uploads/jobs/`) and check that it
 >is writable by the web server.
 
-As the validator will save the relative path in the database, change the path
+As the validator only saves the filename in the database, change the path
 used in the `showSuccess` template:
 
     [php]
@@ -412,7 +411,7 @@ used in the `showSuccess` template:
 >filename. The method takes the `sfValidatedFile` object as an argument.
 
 Just as you can override the generated label of any field, you can also define a
-~help message|Forms (Help)~. Let's add one for the `is_public` column to better 
+~help message|Forms (Help)~. Let's add one for the `is_public` column to better
 explain its significance:
 
     [php]
@@ -498,13 +497,13 @@ job or edit an existing one. In fact, both `newSuccess.php` and
 >If you have not added the `job` stylesheet yet, it is time to do so in both
 >templates (`<?php use_stylesheet('job.css') ?>`).
 
-The form itself is rendered in the `_form` ~partial|Partial Templates~. 
-Replace the content of the generated `_form` partial with the following code:
+The form itself is rendered in the `_form` ~partial|Partial Templates~. Replace
+the content of the generated `_form` partial with the following code:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -521,9 +520,8 @@ Replace the content of the generated `_form` partial with the following code:
       </table>
     </form>
 
-The `include_javascripts_for_form()` and `include_stylesheets_for_form()`
-helpers include JavaScript and stylesheet dependencies needed for the form
-widgets.
+The `use_javascripts_for_form()` and `use_stylesheets_for_form()` helpers
+include JavaScript and stylesheet dependencies needed for the form widgets.
 
 >**TIP**
 >Even if the job form does not need any JavaScript or stylesheet file, it is a
@@ -532,10 +530,10 @@ widgets.
 >specific ~stylesheet|Stylesheets~.
 
 The ~`form_tag_for()` helper~ generates a `<form>` ~tag|Forms (HTML)~ for the
-given form and route and changes the ~HTTP methods|HTTP Method~ to
-~`POST`|POST (HTTP Method)~ or ~`PUT`|PUT (HTTP Method)~ depending on whether
-the object is new or not. It also takes care of the `~multipart|Forms
-(Multipart)~` attribute if the form has any file input tags.
+given form and route and changes the ~HTTP methods|HTTP Method~ to ~`POST`|POST
+(HTTP Method)~ or ~`PUT`|PUT (HTTP Method)~ depending on whether the object is
+new or not. It also takes care of the ~`multipart|Forms (Multipart)`~ attribute
+if the form has any file input tags.
 
 Eventually, the `<?php echo $form ?>` renders the form widgets.
 
@@ -596,8 +594,8 @@ All forms have the following life-cycle:
 
 ![Form flow](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
-As we have created a ##ORM## route collection 5 days ago for the `job` module,
-we can simplify the code for the form management methods:
+As we have created a ##ORM## route collection 5 days sooner for the `job`
+module, we can simplify the code for the form management methods:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -650,16 +648,17 @@ we can simplify the code for the form management methods:
       }
     }
 
-When you browse to the `/job/new` page, a new ~form|Forms~ instance is created and passed to the template (`new` action).
+When you browse to the `/job/new` page, a new ~form|Forms~ instance is created
+and passed to the template (`new` action).
 
 When the user submits the form (`create` action), the form is bound (`bind()`
 method) with the user submitted values and the validation is triggered.
 
 Once the form is bound, it is possible to check its validity using the
 `isValid()` method: If the form is valid (returns `true`), the job is saved to
-the database (`$form->save()`), and the user is ~redirected|Redirection~ to
-the job preview page; if not, the `newSuccess.php` template is displayed again
-with the user submitted values and the associated error messages.
+the database (`$form->save()`), and the user is ~redirected|Redirection~ to the
+job preview page; if not, the `newSuccess.php` template is displayed again with
+the user submitted values and the associated error messages.
 
 >**TIP**
 >The `setTemplate()` method changes the ~template|Templates~ used for a given 
@@ -668,17 +667,17 @@ with the user submitted values and the associated error messages.
 >the form with error messages.
 
 The modification of an existing job is quite similar. The only difference
-between the `new` and the `edit` action is that the job object to be modified
-is passed as the first argument of the form constructor. This object will be
-used for default widget values in the template (default values are an object
-for ##ORM## forms, but a plain array for simple forms).
+between the `new` and the `edit` action is that the job object to be modified is
+passed as the first argument of the form constructor. This object will be used
+for default widget values in the template (default values are an object for
+##ORM## forms, but a plain array for simple forms).
 
-You can also define default values for the creation form. One way is to
-declare the values in the database schema. Another one is to pass a
-pre-modified `Job` object to the form constructor.
+You can also define default values for the creation form. One way is to declare
+the values in the database schema. Another one is to pass a pre-modified `Job`
+object to the form constructor.
 
-Change the `executeNew()` method to define `full-time` as the default value
-for the `type` column:
+Change the `executeNew()` method to define `full-time` as the default value for
+the `type` column:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -755,13 +754,12 @@ You can now remove the `token` field from the form:
     }
 
 If you remember the user stories from day 2, a job can be edited only if the
-user knows the associated token. Right now, it is pretty easy to edit or
-delete any job, just by guessing the URL. That's because the edit URL is like
+user knows the associated token. Right now, it is pretty easy to edit or delete
+any job, just by guessing the URL. That's because the edit URL is like
 `/job/ID/edit`, where `ID` is the ~primary key|Primary Key~ of the job.
 
-By default, a ~`sfPropelRouteCollection`~ route generates URLs with the
-primary key, but it can be changed to any unique column by passing the
-`column` option:
+By default, a ~`sfPropelRouteCollection`~ route generates URLs with the primary
+key, but it can be changed to any unique column by passing the `column` option:
 
     [yml]
     # apps/frontend/config/~routing|Routing~.yml
@@ -770,13 +768,13 @@ primary key, but it can be changed to any unique column by passing the
       options:      { model: JobeetJob, column: token }
       requirements: { token: \w+ }
 
-Notice that we have also changed the `token` parameter requirement to match
-any string as the symfony default requirements is `\d+` for the unique key.
+Notice that we have also changed the `token` parameter requirement to match any
+string as the symfony default requirements is `\d+` for the unique key.
 
 Now, all routes related to the jobs, except the `job_show_user` one, embed the
 token. For instance, the route to edit a job is now of the following pattern:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 You will also need to change the "Edit" link in the `showSuccess` template:
 
@@ -788,8 +786,8 @@ The Preview Page
 ----------------
 
 The preview page is the same as the job page display. Thanks to the
-~routing|Routing~, if the user comes with the right token, it will be
-accessible in the `token` request parameter.
+~routing|Routing~, if the user comes with the right token, it will be accessible
+in the `token` request parameter.
 
 If the user comes in with the tokenized URL, we will add an admin bar at the
 top. At the beginning of the `showSuccess` template, add a partial to host the
@@ -835,8 +833,8 @@ Then, create the `_admin` partial:
 
 There is a lot of code, but most of the code is simple to understand.
 
-To make the template more readable, we have added a bunch of shortcut methods
-in the `JobeetJob` class:
+To make the template more readable, we have added a bunch of shortcut methods in
+the `JobeetJob` class:
 
     [php]
 <propel>
@@ -903,8 +901,8 @@ be changed to point to a new `publish` action. Instead of creating a new
       requirements:
         token: \w+
 
-The `object_actions` takes an array of additional actions for the given
-object. We can now change the link of the "Publish" link:
+The `object_actions` takes an array of additional actions for the given object.
+We can now change the link of the "Publish" link:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_admin.php -->
@@ -932,12 +930,12 @@ The astute reader will have noticed that the "Publish" link is submitted with
 the HTTP put method. To simulate the put method, the link is automatically
 converted to a form when you click on it.
 
-And because we have enabled the ~CSRF~ protection, the `link_to()` helper
-embeds a CSRF token in the link and the `checkCSRFProtection()` method of the
-request object checks the validity of it on submission.
+And because we have enabled the ~CSRF~ protection, the `link_to()` helper embeds
+a CSRF token in the link and the `checkCSRFProtection()` method of the request
+object checks the validity of it on submission.
 
-The `executePublish()` method uses a new `publish()` method that can be
-defined as follows:
+The `executePublish()` method uses a new `publish()` method that can be defined
+as follows:
 
     [php]
 <propel>
@@ -958,8 +956,8 @@ You can now test the new publish feature in your browser.
 But we still have something to fix. The non-activated jobs must not be
 accessible, which means that they must not show up on the Jobeet homepage, and
 must not be accessible by their URL. As we have created an
-`addActiveJobsCriteria()` method to restrict a `Criteria` to active jobs, we
-can just edit it and add the new requirements at the end:
+`addActiveJobsCriteria()` method to restrict a `Criteria` to active jobs, we can
+just edit it and add the new requirements at the end:
 </propel>
 <doctrine>
 But we still have something to fix. The non-activated jobs must not be
@@ -994,14 +992,14 @@ can just edit it and add the new requirements at the end:
     }
 </doctrine>
 
-That's all. You can test it now in your browser. All non-activated jobs
-have disappeared from the homepage; even if you know their URLs, they are
-not accessible anymore. They are, however, accessible if one knows the job's
-token URL. In that case, the job preview will show up with the admin bar.
+That's all. You can test it now in your browser. All non-activated jobs have
+disappeared from the homepage; even if you know their URLs, they are not
+accessible anymore. They are, however, accessible if one knows the job's token
+URL. In that case, the job preview will show up with the admin bar.
 
-That's one of the great advantages of the MVC pattern and the refactorization
-we have done along the way. Only a single change in one method was needed to
-add the new requirement.
+That's one of the great advantages of the MVC pattern and the refactorization we
+have done along the way. Only a single change in one method was needed to add
+the new requirement.
 
 >**NOTE**
 <propel>
@@ -1045,12 +1043,11 @@ add the new requirement.
 Final Thoughts
 --------------
 
-This chapter was packed with a lot of new information, but hopefully you
-now have a better understanding of symfony's form framework.
+Today was packed with a lot of new information, but hopefully you now have a
+better understanding of symfony's form framework.
 
-We know that some of you noticed that we forgot something today... We have not
-implemented any test for the new features. Because writing tests is an
-important part of developing an application, this is the first thing we will
-do in the next chapter.
+We know that some of you noticed that we forgot something here... We have not
+implemented any test for the new features. Because writing tests is an important
+part of developing an application, this is the first thing we will do tomorrow.
 
 __ORM__

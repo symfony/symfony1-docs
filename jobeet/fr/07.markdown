@@ -377,7 +377,7 @@ Créez le fichier `_list.php` :
       <?php endforeach; ?>
     </table>
 
-Vous pouvez inclure un partial en utilisant le helper `~include_partial()~` :
+Vous pouvez inclure un partial en utilisant le helper ~`include_partial()`~ :
 
     [php]
     <?php include_partial('job/list', array('jobs' => $jobs)) ?>

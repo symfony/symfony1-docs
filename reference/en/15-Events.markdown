@@ -108,6 +108,7 @@ Events
 
  * [`application`](#chapter_15_application)
    * [`application.log`](#chapter_15_sub_application_log)
+   * [`application.throw_exception`](#chapter_15_sub_application_throw_exception)
  * [`command`](#chapter_15_command)
    * [`command.log`](#chapter_15_sub_command_log)
    * [`command.pre_command`](#chapter_15_sub_command_pre_command)
@@ -119,20 +120,43 @@ Events
    * [`component.method_not_found`](#chapter_15_sub_component_method_not_found)
  * [`context`](#chapter_15_context)
    * [`context.load_factories`](#chapter_15_sub_context_load_factories)
+   * [`context.method_not_found`](#chapter_15_sub_context_method_not_found)
  * [`controller`](#chapter_15_controller)
    * [`controller.change_action`](#chapter_15_sub_controller_change_action)
    * [`controller.method_not_found`](#chapter_15_sub_controller_method_not_found)
    * [`controller.page_not_found`](#chapter_15_sub_controller_page_not_found)
+ * [`debug`](#chapter_15_debug)
+   * [`debug.web.load_panels`](#chapter_15_sub_debug_view_load_panels)
+   * [`debug.web.view.filter_parameter_html`](#chapter_15_sub_debug_web_view_filter_parameter_html)
+ * [`doctrine`](#chapter_15_doctrine)
+   * [`doctrine.configure`](#chapter_15_sub_doctrine_configure)
+   * [`doctrine.filter_model_builder_options`](#chapter_15_sub_doctrine_filter_model_builder_options)
+   * [`doctrine.filter_cli_config`](#chapter_15_sub_doctrine_filter_cli_config)
+   * [`doctrine.configure_connection`](#chapter_15_sub_doctrine_configure_connection)
+   * [`doctrine.admin.delete_object`](#chapter_15_sub_doctrine_delete_object)
+   * [`doctrine.admin.save_object`](#chapter_15_sub_doctrine_save_object)
+   * [`doctrine.admin.build_query`](#chapter_15_sub_doctrine_build_query)
+   * [`doctrine.admin.pre_execute`](#chapter_15_sub_doctrine_pre_execute)
  * [`form`](#chapter_15_form)
    * [`form.post_configure`](#chapter_15_sub_form_post_configure)
    * [`form.filter_values`](#chapter_15_sub_form_filter_values)
    * [`form.validation_error`](#chapter_15_sub_form_validation_error)
    * [`form.method_not_found`](#chapter_15_sub_form_method_not_found)
+ * [`mailer`](#chapter_15_mailer)
+   * [`mailer.configure`](#chapter_15_sub_mailer_configure)
  * [`plugin`](#chapter_15_plugin)
    * [`plugin.pre_install`](#chapter_15_sub_plugin_pre_install)
    * [`plugin.post_install`](#chapter_15_sub_plugin_post_install)
    * [`plugin.pre_uninstall`](#chapter_15_sub_plugin_pre_uninstall)
    * [`plugin.post_uninstall`](#chapter_15_sub_plugin_post_uninstall)
+ * [`propel`](#chapter_15_propel)
+   * [`propel.configure`](#chapter_15_sub_propel_configure)
+   * [`propel.filter_phing_args`](#chapter_15_sub_propel_filter_phing_args)
+   * [`propel.filter_connection_config`](#chapter_15_sub_propel_filter_connection_config)
+   * [`propel.admin.delete_object`](#chapter_15_sub_propel_admin_delete_object)
+   * [`propel.admin.save_object`](#chapter_15_sub_propel_admin_save_object)
+   * [`propel.admin.build_criteria`](#chapter_15_sub_propel_admin_build_criteria)
+   * [`propel.admin.pre_execute`](#chapter_15_sub_propel_admin_pre_execute)
  * [`request`](#chapter_15_request)
    * [`request.filter_parameters`](#chapter_15_sub_request_filter_parameters)
    * [`request.method_not_found`](#chapter_15_sub_request_method_not_found)
@@ -287,6 +311,21 @@ The `context.load_factories` event is notified once per request by the
 `sfContext` object just after all factories have been initialized. This is the
 first event to be notified with all core classes initialized.
 
+### ~`context.method_not_found`~
+
+*Notify method*: `notifyUntil`
+
+*Default notifiers*: `sfContext`
+
+| Parameter   | Description
+| ----------- | -----------
+| `method`    | The name of the called missing method
+| `arguments` | The arguments passed to the method
+
+The `context.method_not_found` event is notified when a method is not defined
+in the `sfContext` class. By listening to this event, a method can be added to
+the class, without using inheritance.
+
 `controller`
 ------------
 
@@ -335,6 +374,124 @@ during the handling of a request.
 You can listen to this event to do something special whenever a 404 page
 occurs, like sending an email, or logging the error. the event.
 
+`debug`
+-------
+
+### ~`debug.web.load_panels`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfWebDebug`
+
+The `debug.web.load_panels` event is notified after the call to the
+`configure` method of the `sfWebDebug` instance. You can use this event to
+manage your own panels.
+
+### `debug.web.view.filter_parameter_html`
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfWebDebugPanelView`
+
+| Parameter   | Description
+| ----------- | -----------
+| `parameter` | The parameter to filter
+
+The `debug.web.view.filter_parameter_html` event filters each parameter
+rendered by the `sfWebDebugPanelView` panel.
+
+`doctrine`
+----------
+
+### ~`doctrine.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.configure` event is notified after the Doctrine plugin has been
+configured.
+
+### ~`doctrine.filter_model_builder_options`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.filter_model_builder_options` event filters the options for the
+Doctrine schema builder.
+
+### ~`doctrine.filter_cli_config`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfDoctrinePluginConfiguration`
+
+The `doctrine.filter_cli_config` event filters the configuration array for the
+Doctrine CLI.
+
+### ~`doctrine.configure_connection`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `Doctrine_Manager` through `sfDoctrineDatabase`
+
+| Parameter    | Description
+| ------------ | -----------
+| `connection` | The `Doctrine_Connection` instance
+| `database`   | The `sfDoctrineDatabase` instance
+
+The `doctrine.configure_connection` event is notified when a Doctrine database
+is initialized for the first time.
+
+### ~`doctrine.admin.delete_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Doctrine object to delete
+
+The `doctrine.admin.delete_object` event is notified when a Doctrine object is
+deleted in an admin generator module.
+
+### ~`doctrine.admin.save_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Doctrine object to delete
+
+The `doctrine.admin.save_object` event is notified when a Doctrine object is
+saved in an admin generator module.
+
+### ~`doctrine.admin.build_query`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: Admin generator module class
+
+The `doctrine.admin.build_query` event is notified when a Doctrine Query is
+created in an admin generator module.
+
+### ~`doctrine.admin.pre_execute`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter        | Description
+| ---------------- | -----------
+| `configuration`  | The admin generator configuration object
+
+The `doctrine.admin.pre_execute` event is notified in the `preExecute()`
+method of admin generator modules.
+
 `form`
 ------
 
@@ -381,6 +538,18 @@ The `form.validation_error` event is notified whenever form validation fails.
 The `form.method_not_found` event is notified when a method is not defined in
 the `sfFormSymfony` class. By listening to this event, a method can be added
 to the class, without using inheritance.
+
+`mailer`
+--------
+
+### ~`mailer.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfMailer`
+
+The `mailer.configure` event is notified after the mailer instance has been
+configured. The mailer instance is the subject of the event.
 
 `plugin`
 --------
@@ -441,6 +610,89 @@ uninstalled.
 
 The `plugin.post_uninstall` event is notified just after a plugin has been
 uninstalled.
+
+`propel`
+--------
+
+### ~`propel.configure`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: `sfPropelPluginConfiguration`
+
+The `propel.configure` event is notified after the Propel plugin has been
+configured.
+
+### ~`propel.filter_phing_args`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfPropelBaseTask`
+
+The `propel.filter_phing_args` event filters the configuration array for the
+Propel CLI.
+
+### ~`propel.filter_connection_config`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: `sfPropelDatabase`
+
+| Parameter    | Description
+| ------------ | -----------
+| `name`       | The name of the connection
+| `database`   | The `sfPropelDatabase` instance
+
+The `propel.filter_connection_config` event is notified when a Propel
+database is initialized for the first time.
+
+### ~`propel.admin.delete_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Propel object to delete
+
+The `propel.admin.delete_object` event is notified when a Propel object is
+deleted in an admin generator module.
+
+### ~`propel.admin.save_object`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter | Description
+| --------- | -----------
+| `object`  | The Propel object to delete
+
+The `propel.admin.save_object` event is notified when a Propel object is saved
+in an admin generator module.
+
+### ~`propel.admin.build_criteria`~
+
+*Notify method*: `filter`
+
+*Default notifiers*: Admin generator module class
+
+The `propel.admin.build_criteria` event is notified when a Propel Criteria is
+created in an admin generator module.
+
+### ~`propel.admin.pre_execute`~
+
+*Notify method*: `notify`
+
+*Default notifiers*: Admin generator module class
+
+| Parameter        | Description
+| ---------------- | -----------
+| `configuration`  | The admin generator configuration object
+
+The `propel.admin.pre_execute` event is notified in the `preExecute()`
+method of admin generator modules.
 
 `request`
 ---------

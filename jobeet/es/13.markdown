@@ -44,18 +44,18 @@ las plantillas. Para Jobeet, se muestran en el `layout.php`:
     // apps/frontend/templates/layout.php
     <?php if ($sf_user->hasFlash('notice')): ?>
       <div class="flash_notice"><?php echo $sf_user->getFlash('notice') ?></div>
-    <?php endif; ?>
+    <?php endif ?>
 
     <?php if ($sf_user->hasFlash('error')): ?>
       <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
-    <?php endif; ?>
+    <?php endif ?>
 
-En una plantilla, el usuario es accesible a través de la variable especial `sf_user`.
+En una plantilla, el usuario es accesible a través de la variable especial `$sf_user`.
 
 >**NOTE**
 >Algunos objetos symfony siempre son accesibles en las plantillas, sin la necesidad
->de explicitamente pasarlos desde la acción: `sf_request`, `sf_user`, y
->`sf_response`.
+>de explicitamente pasarlos desde la acción: `$sf_request`, `$sf_user`, y
+>`$sf_response`.
 
 Atributos de Usuario
 --------------------
@@ -159,7 +159,7 @@ En el layout, agrega el código siguiente antes de que la variable `$sf_content`
           <li>
             <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
           </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
       </ul>
     </div>
 
@@ -188,15 +188,14 @@ El layout usa un nuevo método `getJobHistory()` para obtener el historial job:
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
-            ->execute();
+            ->execute()
+          ;
         }
-        else
-        {
-          return array();
-        }
+        
+        return array();
       }
 </doctrine>
 
@@ -418,7 +417,7 @@ Vamos a ver cómo configurar el nuevo plugin. Como el plugin ofrece varias nueva
     $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
-    $ php symfony doctrine:build --all --and-load
+    $ php symfony doctrine:build --all --and-load --no-confirmation
 </doctrine>
 
 >**TIP**
@@ -486,17 +485,17 @@ Y cuando el usuario no está autenticado, tenemos que ocultar la barra de menú:
     <?php if ($sf_user->isAuthenticated()): ?>
       <div id="menu">
         <ul>
-          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
+          <li><?php echo link_to('Jobs', 'jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', 'jobeet_category') ?></li>
         </ul>
       </div>
-    <?php endif; ?>
+    <?php endif ?>
 
 Cuando el usuario es autenticado, tenemos que añadir un enlace de logout en el menú:
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Logout', '@sf_guard_signout') ?></li>
+    <li><?php echo link_to('Logout', 'sf_guard_signout') ?></li>
 
 >**TIP**
 >Para una lista de todas las rutas previstas por `sfGuardPlugin`, usa la tarea `app:routes`.
@@ -513,7 +512,7 @@ Añadir un enlace en el menú:
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
+    <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
 
 ![Backend menu](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 

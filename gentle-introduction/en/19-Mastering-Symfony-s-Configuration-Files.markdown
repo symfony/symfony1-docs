@@ -51,7 +51,7 @@ Parameter               | Description | Default Value
 `use_database`          | Enables the database manager. Set it to `false` if you don't use a database. | `true`
 `i18n`                  | Enables interface translation (see Chapter 13). Set it to `true` for multilingual applications. | `false`
 `logging_enabled`       | Enables logging of symfony events. Set it to `false` when you want to turn symfony logging off completely. | `true`
-`escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `false`
+`escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `true`
 `cache`                 | Enables template caching (see Chapter 12). Set it to `true` if one of your modules includes `cache.yml` file. The cache filter (`sfCacheFilter`) is enabled only if it is on. | `false` in development, `true` in production
 `web_debug`             | Enables the web debug toolbar for easy debugging (see Chapter 16). Set it to `true` to display the toolbar on every page. | `true` in development, `false` in production
 `check_symfony_version` | Enables the check of the symfony version for every request. Set it to on for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
@@ -159,11 +159,8 @@ Two logging settings (see Chapter 16) are stored in `settings.yml`:
 
 The `settings.yml` file also stores paths to assets. If you want to use another version of the asset than the one bundled with symfony, you can change these path settings:
 
-  * Rich text editor JavaScript files stored in `rich_text_js_dir` (by default, `js/tiny_mce`)
-  * Prototype libraries stored in `prototype_web_dir` (by default, `/sf/prototype`)
   * Files needed by the administration generator stored in `admin_web_dir`
   * Files needed by the web debug toolbar stored in `web_debug_web_dir`
-  * Files needed by the javascript calendar stored in `calendar_web_dir`
 
 #### Default Helpers
 
@@ -177,16 +174,6 @@ Activated modules from plug-ins or from the symfony core are declared in the `en
 
 The character set of the responses is a general setting of the application, because it is used by many components of the framework (templates, output escaper, helpers, and so on). Defined in the `charset` setting, its default (and advised) value is `utf-8`.
 
-#### Miscellaneous Configuration
-
-The `settings.yml` file contains a few more parameters, used internally by symfony for core behaviors. Listing 19-3 lists them as they appear in the configuration file.
-
-Listing 19-3 - Miscellaneous Configuration Settings, in `frontend/config/settings.yml`
-
-    # Remove comments in core framework classes as defined in the core_compile.yml
-    strip_comments:         true
-    # Maximum number of forwards followed by the action before raising an exception
-    max_forwards:           5
 
 >**SIDEBAR**
 >Adding Your application settings
@@ -221,9 +208,9 @@ By default, classes stored in the following directories in your projects benefit
 
 There is no `autoload.yml` file in the default application configuration directory. If you want to modify the framework settings--for instance, to autoload classes stored somewhere else in your file structure--create an empty autoload.yml file and override the settings of `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml` or add your own.
 
-The autoload.yml file must start with an autoload: key and list the locations where symfony should look for classes. Each location requires a label; this gives you the ability to override symfony's entries. For each location, provide a `name` (it will appear as a comment in `config_autoload.yml.php`) and an absolute `path`. Then define if the search must be `recursive`, which directs symfony to look in all the subdirectories for `.php` files, and `exclude` the subdirectories you want. Listing 19-4 shows the locations used by default and the file syntax.
+The autoload.yml file must start with an autoload: key and list the locations where symfony should look for classes. Each location requires a label; this gives you the ability to override symfony's entries. For each location, provide a `name` (it will appear as a comment in `config_autoload.yml.php`) and an absolute `path`. Then define if the search must be `recursive`, which directs symfony to look in all the subdirectories for `.php` files, and `exclude` the subdirectories you want. Listing 19-3 shows the locations used by default and the file syntax.
 
-Listing 19-4 - Default Autoloading Configuration, in `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml`
+Listing 19-3 - Default Autoloading Configuration, in `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml`
 
     autoload:
       # plugins
@@ -290,9 +277,9 @@ Each time the framework uses a path to look for something (from core classes to 
 
 ### The Basic File Structure
 
-The path variables are defined in the `sfProjectConfiguration` and `sfApplicationConfiguration` classes and stored in the `sfConfig` object. Listing 19-5 shows a listing of the path variables and the directory they reference.
+The path variables are defined in the `sfProjectConfiguration` and `sfApplicationConfiguration` classes and stored in the `sfConfig` object. Listing 19-4 shows a listing of the path variables and the directory they reference.
 
-Listing 19-5 - Default File Structure Variables, defined in `sfProjectConfiguration` and `sfApplicationConfiguration`
+Listing 19-4 - Default File Structure Variables, defined in `sfProjectConfiguration` and `sfApplicationConfiguration`
 
     sf_root_dir           # myproject/
     sf_apps_dir           #   apps/
@@ -312,7 +299,6 @@ Listing 19-5 - Default File Structure Variables, defined in `sfProjectConfigurat
     sf_module_cache_dir   #         modules/
     sf_config_dir         #   config/
     sf_data_dir           #   data/
-    sf_doc_dir            #   doc/
     sf_lib_dir            #   lib/
     sf_log_dir            #   log/
     sf_test_dir           #   test/
@@ -336,9 +322,9 @@ For instance, if you want all applications to share a common directory for the t
 
 ### Modifying the Project Web Root
 
-All the paths built in the configuration classes rely on the project root directory, which is determined by the `ProjectConfiguration` file included in the front controller. Usually, the root directory is one level above the `web/` directory, but you can use a different structure. Suppose that your main directory structure is made of two directories, one public and one private, as shown in Listing 19-6. This typically happens when hosting a project on a shared host.
+All the paths built in the configuration classes rely on the project root directory, which is determined by the `ProjectConfiguration` file included in the front controller. Usually, the root directory is one level above the `web/` directory, but you can use a different structure. Suppose that your main directory structure is made of two directories, one public and one private, as shown in Listing 19-5. This typically happens when hosting a project on a shared host.
 
-Listing 19-6 - Example of Custom Directory Structure for a Shared Host
+Listing 19-5 - Example of Custom Directory Structure for a Shared Host
 
     symfony/    # Private area
       apps/
@@ -375,9 +361,9 @@ Each configuration file has a handler. The job of configuration handlers is to m
 
 ### Default Configuration Handlers
 
-The default handler configuration is stored in `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. This file links the handlers to the configuration files according to a file path. Listing 19-7 shows an extract of this file.
+The default handler configuration is stored in `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. This file links the handlers to the configuration files according to a file path. Listing 19-6 shows an extract of this file.
 
-Listing 19-7 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
+Listing 19-6 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
 
     config/settings.yml:
       class:    sfDefineEnvironmentConfigHandler
@@ -418,9 +404,9 @@ Using a handler to deal with a configuration file provides two important benefit
 
 If you feel like writing your own configuration handler, follow the example of the structure used by the framework in the `sfConfig::get('sf_symfony_lib_dir')/config/` directory.
 
-Let's suppose that your application contains a `myMapAPI` class, which provides an interface to a third-party web service delivering maps. This class needs to be initialized with a URL and a user name, as shown in Listing 19-8.
+Let's suppose that your application contains a `myMapAPI` class, which provides an interface to a third-party web service delivering maps. This class needs to be initialized with a URL and a user name, as shown in Listing 19-7.
 
-Listing 19-8 - Example of Initialization of the `myMapAPI` Class
+Listing 19-7 - Example of Initialization of the `myMapAPI` Class
 
     [php]
     $mapApi = new myMapAPI();
@@ -433,9 +419,9 @@ You may want to store these two parameters in a custom configuration file called
       url:  map.api.example.com
       user: foobar
 
-In order to transform these settings into code equivalent to Listing 19-7, you must build a configuration handler. Each configuration handler must extend `sfConfigHandler` and provide an `execute()` method, which expects an array of file paths to configuration files as a parameter, and must return data to be written in a cache file. Handlers for YAML files should extend the `sfYamlConfigHandler` class, which provides additional facilities for YAML parsing. For the `map.yml` file, a typical configuration handler could be written as shown in Listing 19-9.
+In order to transform these settings into code equivalent to Listing 19-7, you must build a configuration handler. Each configuration handler must extend `sfConfigHandler` and provide an `execute()` method, which expects an array of file paths to configuration files as a parameter, and must return data to be written in a cache file. Handlers for YAML files should extend the `sfYamlConfigHandler` class, which provides additional facilities for YAML parsing. For the `map.yml` file, a typical configuration handler could be written as shown in Listing 19-8.
 
-Listing 19-9 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandler.class.php`
+Listing 19-8 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandler.class.php`
 
     [php]
     <?php

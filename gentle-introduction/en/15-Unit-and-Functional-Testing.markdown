@@ -389,9 +389,9 @@ Listing 15-8 - Using Fixture Files in Unit Tests
       $t->is(sfToolkit::isPathAbsolute($case['input']), $case['output'],$case['comment']);
     }
 
-### Unit testing Propel classes
+### Unit testing ORM classes
 
-Testing Propel classes is a bit more involving as the generated Propel objects rely on a long cascade of classes. Moreover, you need to provide a valid database connection to Propel and you also need to feed the database with some test data.
+Testing Propel or Doctrine classes is a bit more involving as the generated objects rely on a long cascade of classes. Moreover, you need to provide a valid database connection to Propel and you also need to feed the database with some test data.
 
 Thankfully, it is quite easy as symfony already provides everything you need:
 
@@ -408,7 +408,7 @@ Listing 15-9 - Testing Propel classes
 
     include dirname(__FILE__).'/../bootstrap/unit.php';
 
-    new sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('frontend', 'test', true));
+    new sfDatabaseManager($configuration);
     $loader = new sfPropelData();
     $loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
 
@@ -418,6 +418,26 @@ Listing 15-9 - Testing Propel classes
     $t->diag('->retrieveByUsername()');
     $user = UserPeer::retrieveByUsername('fabien');
     $t->is($user->getLastName(), 'Potencier', '->retrieveByUsername() returns the User for the given username');
+
+
+A typical Doctrine test file is shown in Listing 15-10.
+    
+Listing 15-10 - Testing Doctrine classes
+
+    [php]
+    <?php
+
+    include dirname(__FILE__).'/../bootstrap/unit.php';
+
+    new sfDatabaseManager($configuration);
+    Doctrine_Core::loadData(sfConfig::get('sf_data_dir').'/fixtures');
+
+    $t = new lime_test(1, new lime_output_color());
+
+    // begin testing your model class
+    $t->diag('->retrieveByUsername()');
+    $user = Doctrine::getTable('User')->findOneByUsername('fabien');
+    $t->is($user->getLastName(), 'Potencier', '->findOneByUsername() returns the User for the given username');
 
 Functional Tests
 ----------------
@@ -430,9 +450,9 @@ You could run your functional tests with a text browser and a lot of regular exp
 
 A functional test traditionally starts with an initialization of a test browser object. This object makes a request to an action and verifies that some elements are present in the response.
 
-For example, every time you generate a module skeleton with the `generate:module` or the `propel:generate-module` tasks, symfony creates a simple functional test for this module. The test makes a request to the default action of the module and checks the response status code, the module and action calculated by the routing system, and the presence of a certain sentence in the response content. For a `foobar` module, the generated `foobarActionsTest.php` file looks like Listing 15-9.
+For example, every time you generate a module skeleton with the `generate:module` or the `propel:generate-module` tasks, symfony creates a simple functional test for this module. The test makes a request to the default action of the module and checks the response status code, the module and action calculated by the routing system, and the presence of a certain sentence in the response content. For a `foobar` module, the generated `foobarActionsTest.php` file looks like Listing 15-11.
 
-Listing 15-9 - Default Functional Test for a New Module, in `tests/functional/frontend/foobarActionsTest.php`
+Listing 15-11 - Default Functional Test for a New Module, in `tests/functional/frontend/foobarActionsTest.php`
 
     [php]
     <?php
@@ -460,9 +480,9 @@ Listing 15-9 - Default Functional Test for a New Module, in `tests/functional/fr
 
 A functional test can contain several requests and more complex assertions; you will soon discover all the possibilities in the upcoming sections.
 
-To launch a functional test, use the `test:functional` task with the symfony command line, as shown in Listing 15-10. This task expects an application name and a test name (omit the `Test.php` suffix).
+To launch a functional test, use the `test:functional` task with the symfony command line, as shown in Listing 15-12. This task expects an application name and a test name (omit the `Test.php` suffix).
 
-Listing 15-10 - Launching a Single Functional Test from the Command Line
+Listing 15-12 - Launching a Single Functional Test from the Command Line
 
     $ php symfony test:functional frontend foobarActions
 
@@ -481,9 +501,9 @@ The generated functional tests for a new module don't pass by default. This is b
 
 ### Browsing with the `sfBrowser` Object
 
-The browser is capable of making GET and POST requests. In both cases, use a real URI as parameter. Listing 15-11 shows how to write calls to the `sfBrowser` object to simulate requests.
+The browser is capable of making GET and POST requests. In both cases, use a real URI as parameter. Listing 15-13 shows how to write calls to the `sfBrowser` object to simulate requests.
 
-Listing 15-11 - Simulating Requests with the `sfBrowser` Object
+Listing 15-13 - Simulating Requests with the `sfBrowser` Object
 
     [php]
     include dirname(__FILE__).'/../../bootstrap/functional.php';
@@ -503,9 +523,9 @@ Listing 15-11 - Simulating Requests with the `sfBrowser` Object
     $b->call('/foobar/add/id/1', 'put');
     $b->call('/foobar/delete/id/1', 'delete');
 
-A typical browsing session contains not only requests to specific actions, but also clicks on links and on browser buttons. As shown in Listing 15-12, the `sfBrowser` object is also capable of simulating those.
+A typical browsing session contains not only requests to specific actions, but also clicks on links and on browser buttons. As shown in Listing 15-14, the `sfBrowser` object is also capable of simulating those.
 
-Listing 15-12 - Simulating Navigation with the `sfBrowser` Object
+Listing 15-14 - Simulating Navigation with the `sfBrowser` Object
 
     [php]
     $b->get('/');                  // Request to the home page
@@ -520,9 +540,9 @@ The browser handles a stack of calls, so the `back()` and `forward()` methods wo
 >**TIP**
 >The browser has its own mechanisms to manage sessions (`sfTestStorage`) and cookies.
 
-Among the interactions that most need to be tested, those associated with forms probably rank first. To simulate form input and submission, you have three choices. You can either make a POST request with the parameters you wish to send, call `click()` with the form parameters as an array, or fill in the fields one by one and click the submit button. They all result in the same POST request anyhow. Listing 15-13 shows an example.
+Among the interactions that most need to be tested, those associated with forms probably rank first. To simulate form input and submission, you have three choices. You can either make a POST request with the parameters you wish to send, call `click()` with the form parameters as an array, or fill in the fields one by one and click the submit button. They all result in the same POST request anyhow. Listing 15-15 shows an example.
 
-Listing 15-13 - Simulating Form Input with the `sfBrowser` Object
+Listing 15-15 - Simulating Form Input with the `sfBrowser` Object
 
     [php]
     // Example template in modules/foobar/templates/editSuccess.php
@@ -551,9 +571,9 @@ Listing 15-13 - Simulating Form Input with the `sfBrowser` Object
 >**NOTE**
 >With the second and third options, the default form values are automatically included in the form submission, and the form target doesn't need to be specified.
 
-When an action finishes by a `redirect()`, the browser doesn't automatically follow the redirection; you must follow it manually with `followRedirect()`, as demonstrated in Listing 15-14.
+When an action finishes by a `redirect()`, the browser doesn't automatically follow the redirection; you must follow it manually with `followRedirect()`, as demonstrated in Listing 15-16.
 
-Listing 15-14 - The Browser Doesn't Automatically Follow Redirects
+Listing 15-16 - The Browser Doesn't Automatically Follow Redirects
 
     [php]
     // Example action in modules/foobar/actions/actions.class.php
@@ -581,9 +601,9 @@ Once it has made a first request, the `sfBrowser` object can give access to the 
 
 ### Using Assertions
 
-Due to the `sfBrowser` object having access to the response and other components of the request, you can do tests on these components. You could create a new `lime_test` object for that purpose, but fortunately `sfTestFunctional` proposes a `test()` method that returns a `lime_test` object where you can call the unit assertion methods described previously. Check Listing 15-15 to see how to do assertions via `sfTestFunctional`.
+Due to the `sfBrowser` object having access to the response and other components of the request, you can do tests on these components. You could create a new `lime_test` object for that purpose, but fortunately `sfTestFunctional` proposes a `test()` method that returns a `lime_test` object where you can call the unit assertion methods described previously. Check Listing 15-17 to see how to do assertions via `sfTestFunctional`.
 
-Listing 15-15 - The Test Browser Provides Testing Abilities with the `test()` Method
+Listing 15-17 - The Test Browser Provides Testing Abilities with the `test()` Method
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -610,9 +630,9 @@ Listing 15-16 - Testing Cookies with `sfBrowser`
     $cookies = $response->getCookies();
     $b->test()->is($cookies['foo'], 'foo=bar');            // Outgoing cookie
 
-Using the `test()` method to test the request elements ends up in long lines. Fortunately, `sfTestFunctional` contains a bunch of proxy methods that help you keep your functional tests readable and short--in addition to returning an `sfTestFunctional` object themselves. For instance, you can rewrite Listing 15-15 in a faster way, as shown in Listing 15-17.
+Using the `test()` method to test the request elements ends up in long lines. Fortunately, `sfTestFunctional` contains a bunch of proxy methods that help you keep your functional tests readable and short--in addition to returning an `sfTestFunctional` object themselves. For instance, you can rewrite Listing 15-15 in a faster way, as shown in Listing 15-18.
 
-Listing 15-17 - Testing Directly with `sfTestFunctional`
+Listing 15-18 - Testing Directly with `sfTestFunctional`
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -640,9 +660,9 @@ One more advantage of proxy methods is that you don't need to specify an output 
 
 In practice, the proxy methods of Listing 15-17 cover most of the usual tests, so you will seldom use the `test()` method on an `sfTestFunctional` object.
 
-Listing 15-14 showed that `sfBrowser` doesn't automatically follow redirections. This has one advantage: You can test a redirection. For instance, Listing 15-18 shows how to test the response of Listing 15-14.
+Listing 15-15 showed that `sfBrowser` doesn't automatically follow redirections. This has one advantage: You can test a redirection. For instance, Listing 15-19 shows how to test the response of Listing 15-14.
 
-Listing 15-18 - Testing Redirections with `sfTestFunctional`
+Listing 15-19 - Testing Redirections with `sfTestFunctional`
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -671,9 +691,9 @@ Listing 15-18 - Testing Redirections with `sfTestFunctional`
 
 Many of the functional tests validate that a page is correct by checking for the presence of text in the content. With the help of regular expressions in the `matches()` method, you can check displayed text, a tag's attributes, or values. But as soon as you want to check something deeply buried in the response DOM, regular expressions are not ideal.
 
-That's why the `sfTestFunctional` object supports a `getResponseDom()` method. It returns a libXML2 DOM object, much easier to parse and test than a flat text. Refer to Listing 15-19 for an example of using this method.
+That's why the `sfTestFunctional` object supports a `getResponseDom()` method. It returns a libXML2 DOM object, much easier to parse and test than a flat text. Refer to Listing 15-20 for an example of using this method.
 
-Listing 15-19 - The Test Browser Gives Access to the Response Content As a DOM Object
+Listing 15-20 - The Test Browser Gives Access to the Response Content As a DOM Object
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -683,7 +703,7 @@ Listing 15-19 - The Test Browser Gives Access to the Response Content As a DOM O
 
 But parsing an HTML document with the PHP DOM methods is still not fast and easy enough. If you are familiar with the CSS selectors, you know that they are an even more powerful way to retrieve elements from an HTML document. Symfony provides a tool class called `sfDomCssSelector` that expects a DOM document as construction parameter. It has a `getValues()` method that returns an array of strings according to a CSS selector, and a `getElements(`) method that returns an array of DOM elements. See an example in Listing 15-20.
 
-Listing 15-20 - The Test Browser Gives Access to the Response Content As an `sfDomCssSelector` Object
+Listing 15-21 - The Test Browser Gives Access to the Response Content As an `sfDomCssSelector` Object
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -693,9 +713,9 @@ Listing 15-20 - The Test Browser Gives Access to the Response Content As an `sfD
     $b->test()->is($c->getValues('form textarea[name="text1"]'), array('foo'));
     $b->test()->is($c->getValues('form input[type="submit"]'), array(''));
 
-In its constant pursuit for brevity and clarity, symfony provides a shortcut for this: the `checkElement()` proxy method of the `response` tester group. This method makes Listing 15-20 look like Listing 15-21.
+In its constant pursuit for brevity and clarity, symfony provides a shortcut for this: the `checkElement()` proxy method of the `response` tester group. This method makes Listing 15-21 look like Listing 15-22.
 
-Listing 15-21 - The Test Browser Gives Access to the Elements of the Response by CSS Selectors
+Listing 15-22 - The Test Browser Gives Access to the Elements of the Response by CSS Selectors
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -715,9 +735,9 @@ The behavior of the `checkElement()` method depends on the type of the second ar
   * If it is a regular expression preceded by `!`, it checks that the first element doesn't match the pattern.
   * For other cases, it compares the first element found by the CSS selector with the second argument as a string.
 
-The method accepts a third optional parameter, in the shape of an associative array. It allows you to have the test performed not on the first element returned by the selector (if it returns several), but on another element at a certain position, as shown in Listing 15-22.
+The method accepts a third optional parameter, in the shape of an associative array. It allows you to have the test performed not on the first element returned by the selector (if it returns several), but on another element at a certain position, as shown in Listing 15-23.
 
-Listing 15-22 - Using the Position Option to Match an Element at a Certain Position
+Listing 15-23 - Using the Position Option to Match an Element at a Certain Position
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -728,18 +748,18 @@ Listing 15-22 - Using the Position Option to Match an Element at a Certain Posit
       end()
     ;
 
-The options array can also be used to perform two tests at the same time. You can test that there is an element matching a selector and how many there are, as demonstrated in Listing 15-23.
+The options array can also be used to perform two tests at the same time. You can test that there is an element matching a selector and how many there are, as demonstrated in Listing 15-24.
 
-Listing 15-23 - Using the Count Option to Count the Number of Matches
+Listing 15-24 - Using the Count Option to Count the Number of Matches
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit?id=1')->
       with('response')->checkElement('form input', true, array('count' => 3));
 
-The selector tool is very powerful. It accepts most of the CSS 3 selectors, and you can use it for complex queries such as those of Listing 15-24.
+The selector tool is very powerful. It accepts most of the CSS 3 selectors, and you can use it for complex queries such as those of Listing 15-25.
 
-Listing 15-24 - Example of Complex CSS Selectors Accepted by `checkElement()`
+Listing 15-25 - Example of Complex CSS Selectors Accepted by `checkElement()`
 
     [php]
     ->checkElement('ul#list li a[href]', 'click me');
@@ -751,9 +771,9 @@ Listing 15-24 - Example of Complex CSS Selectors Accepted by `checkElement()`
 
 ### Testing for errors
 
-Sometimes, your actions or your model throw exceptions on purpose (for example to display a 404 page). Even if you can use a CSS selector to check for a specific error message in the generated HTML code, it's better to use the `throwsException` method to check that an exception has been thrown as show in Listing 15-25.
+Sometimes, your actions or your model throw exceptions on purpose (for example to display a 404 page). Even if you can use a CSS selector to check for a specific error message in the generated HTML code, it's better to use the `throwsException` method to check that an exception has been thrown as show in Listing 15-26.
 
-Listing 15-25 - Testing for Exceptions
+Listing 15-26 - Testing for Exceptions
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -766,9 +786,9 @@ Listing 15-25 - Testing for Exceptions
 
 ### Working in the Test Environment
 
-The `sfTestFunctional` object uses a special front controller, set to the `test` environment. The default configuration for this environment appears in Listing 15-26.
+The `sfTestFunctional` object uses a special front controller, set to the `test` environment. The default configuration for this environment appears in Listing 15-27.
 
-Listing 15-26 - Default Test Environment Configuration, in `frontend/config/settings.yml`
+Listing 15-27 - Default Test Environment Configuration, in `frontend/config/settings.yml`
 
     test:
       .settings:
@@ -780,18 +800,18 @@ Listing 15-26 - Default Test Environment Configuration, in `frontend/config/sett
 
 The cache and the web debug toolbar are set to `false` in this environment. However, the code execution still leaves traces in a log file, distinct from the `dev` and `prod` log files, so that you can check it independently (`myproject/log/frontend_test.log`). In this environment, the exceptions don't stop the execution of the scripts--so that you can run an entire set of tests even if one fails. You can have specific database connection settings, for instance, to use another database with test data in it.
 
-Before using the `sfBrowser` object, you have to initialize it. If you need to, you can specify a hostname for the application and an IP address for the client--that is, if your application makes controls over these two parameters. Listing 15-27 demonstrates how to do this.
+Before using the `sfBrowser` object, you have to initialize it. If you need to, you can specify a hostname for the application and an IP address for the client--that is, if your application makes controls over these two parameters. Listing 15-28 demonstrates how to do this.
 
-Listing 15-27 - Setting Up the Browser with Hostname and IP
+Listing 15-28 - Setting Up the Browser with Hostname and IP
 
     [php]
     $b = new sfBrowser('myapp.example.com', '123.456.789.123');
 
 ### The `test:functional` Task
 
-The `test:functional` task can run one or more functional tests, depending on the number of arguments received. The rules look much like the ones of the `test:unit` task, except that the functional test task always expects an application as first argument, as shown in Listing 15-28.
+The `test:functional` task can run one or more functional tests, depending on the number of arguments received. The rules look much like the ones of the `test:unit` task, except that the functional test task always expects an application as first argument, as shown in Listing 15-29.
 
-Listing 15-28 - Functional Test Task Syntax
+Listing 15-29 - Functional Test Task Syntax
 
     // Test directory structure
     test/
@@ -816,9 +836,9 @@ Test Naming Practices
 
 This section lists a few good practices to keep your tests organized and easy to maintain. The tips concern file organization, unit tests, and functional tests.
 
-As for the file structure, you should name the unit test files using the class they are supposed to test, and name the functional test files using the module or the scenario they are supposed to test. See Listing 15-29 for an example. Your `test/` directory will soon contain a lot of files, and finding a test might prove difficult in the long run if you don't follow these guidelines.
+As for the file structure, you should name the unit test files using the class they are supposed to test, and name the functional test files using the module or the scenario they are supposed to test. See Listing 15-30 for an example. Your `test/` directory will soon contain a lot of files, and finding a test might prove difficult in the long run if you don't follow these guidelines.
 
-Listing 15-29 - Example File Naming Practice
+Listing 15-30 - Example File Naming Practice
 
     test/
       unit/
@@ -833,9 +853,9 @@ Listing 15-29 - Example File Naming Practice
         backend/
           myOtherScenarioTest.php
 
-For unit tests, a good practice is to group the tests by function or method, and start each test group with a `diag()` call. The messages of each unit test should contain the name of the function or method tested, followed by a verb and a property, so that the test output looks like a sentence describing a property of the object. Listing 15-30 shows an example.
+For unit tests, a good practice is to group the tests by function or method, and start each test group with a `diag()` call. The messages of each unit test should contain the name of the function or method tested, followed by a verb and a property, so that the test output looks like a sentence describing a property of the object. Listing 15-31 shows an example.
 
-Listing 15-30 - Example Unit Test Naming Practice
+Listing 15-31 - Example Unit Test Naming Practice
 
     [php]
     // strtolower()
@@ -847,9 +867,9 @@ Listing 15-30 - Example Unit Test Naming Practice
     ok 1 - strtolower() returns a string
     ok 2 - strtolower() transforms the input to lowercase
 
-Functional tests should be grouped by page and start with a request. Listing 15-31 illustrates this practice.
+Functional tests should be grouped by page and start with a request. Listing 15-32 illustrates this practice.
 
-Listing 15-31 - Example Functional Test Naming Practice
+Listing 15-32 - Example Functional Test Naming Practice
 
     [php]
     $browser->
@@ -879,9 +899,9 @@ The unit and functional test tools provided by symfony should suffice in most ca
 
 ### Executing Tests in a Test Harness
 
-The `test:unit` and `test:functional` tasks can launch a single test or a set of tests. But if you call these tasks without any parameter, they launch all the unit and functional tests written in the `test/` directory. A particular mechanism is involved to isolate each test file in an independent sandbox, to avoid contamination risks between tests. Furthermore, as it wouldn't make sense to keep the same output as with single test files in that case (the output would be thousands of lines long), the tests results are compacted into a synthetic view. That's why the execution of a large number of test files uses a test harness, that is, an automated test framework with special abilities. A test harness relies on a component of the lime framework called `lime_harness`. It shows a test status file by file, and an overview at the end of the number of tests passed over the total, as you see in Listing 15-32.
+The `test:unit` and `test:functional` tasks can launch a single test or a set of tests. But if you call these tasks without any parameter, they launch all the unit and functional tests written in the `test/` directory. A particular mechanism is involved to isolate each test file in an independent sandbox, to avoid contamination risks between tests. Furthermore, as it wouldn't make sense to keep the same output as with single test files in that case (the output would be thousands of lines long), the tests results are compacted into a synthetic view. That's why the execution of a large number of test files uses a test harness, that is, an automated test framework with special abilities. A test harness relies on a component of the lime framework called `lime_harness`. It shows a test status file by file, and an overview at the end of the number of tests passed over the total, as you see in Listing 15-33.
 
-Listing 15-32 - Launching All Tests in a Test Harness
+Listing 15-33 - Launching All Tests in a Test Harness
 
     $ php symfony test:all
 
@@ -896,17 +916,17 @@ Listing 15-32 - Launching All Tests in a Test Harness
 
 The tests are executed the same way as when you call them one by one, only the output is made shorter to be really useful. In particular, the final chart focuses on the failed tests and helps you locate them.
 
-You can launch all the tests with one call using the `test:all` task, which also uses a test harness, as shown in Listing 15-33. This is something that you should do before every transfer to production, to ensure that no regression has appeared since the latest release.
+You can launch all the tests with one call using the `test:all` task, which also uses a test harness, as shown in Listing 15-34. This is something that you should do before every transfer to production, to ensure that no regression has appeared since the latest release.
 
-Listing 15-33 - Launching All the Tests of a Project
+Listing 15-34 - Launching All the Tests of a Project
 
     $ php symfony test:all
 
 ### Accessing a Database
 
-Unit tests often need to access a database. A database connection is automatically initialized when you call `sfBrowser::get()` for the first time. However, if you want to access the database even before using `sfBrowser`, you have to initialize a `sfDabataseManager` object manually, as in Listing 15-34.
+Unit tests often need to access a database. A database connection is automatically initialized when you call `sfBrowser::get()` for the first time. However, if you want to access the database even before using `sfBrowser`, you have to initialize a `sfDabataseManager` object manually, as in Listing 15-35.
 
-Listing 15-34 - Initializing a Database in a Test
+Listing 15-35 - Initializing a Database in a Test
 
     [php]
     $databaseManager = new sfDatabaseManager($configuration);
@@ -915,9 +935,9 @@ Listing 15-34 - Initializing a Database in a Test
     // Optionally, you can retrieve the current database connection
     $con = Propel::getConnection();
 
-You should populate the database with fixtures before starting the tests. This can be done via the `sfPropelData` object. This object can load data from a file, just like the `propel:data-load` task, or from an array, as shown in Listing 15-35.
+You should populate the database with fixtures before starting the tests. This can be done via the `sfPropelData` object. This object can load data from a file, just like the `propel:data-load` task, or from an array, as shown in Listing 15-36.
 
-Listing 15-35 - Populating a Database from a Test File
+Listing 15-36 - Populating a Database from a Test File
 
     [php]
     $data = new sfPropelData();
@@ -948,9 +968,9 @@ Then, use the Propel objects as you would in a normal application, according to 
 
 When you enable caching for an application, the functional tests should verify that the cached actions do work as expected.
 
-The first thing to do is enable cache for the test environment (in the `settings.yml` file). Then, if you want to test whether a page comes from the cache or whether it is generated, you should use the `isCached()` test method provided by the `view_cache` tester group. Listing 15-36 demonstrates this method.
+The first thing to do is enable cache for the test environment (in the `settings.yml` file). Then, if you want to test whether a page comes from the cache or whether it is generated, you should use the `isCached()` test method provided by the `view_cache` tester group. Listing 15-37 demonstrates this method.
 
-Listing 15-36 - Testing the Cache with the `isCached()` Method
+Listing 15-37 - Testing the Cache with the `isCached()` Method
 
     [php]
     <?php
@@ -979,9 +999,9 @@ Selenium is not bundled with symfony by default. To install it, you need to crea
 >**CAUTION**
 >Be careful not to transfer the `selenium/` directory to your production server, since it would be accessible by anyone having access to your web document root via the browser.
 
-Selenium tests are written in HTML and stored in the `web/selenium/tests/` directory. For instance, Listing 15-37 shows a functional test where the home page is loaded, the link click me is clicked, and the text "Hello, World" is looked for in the response. Remember that in order to access the application in the `test` environment, you have to specify the `frontend_test.php` front controller.
+Selenium tests are written in HTML and stored in the `web/selenium/tests/` directory. For instance, Listing 15-38 shows a functional test where the home page is loaded, the link click me is clicked, and the text "Hello, World" is looked for in the response. Remember that in order to access the application in the `test` environment, you have to specify the `frontend_test.php` front controller.
 
-Listing 15-37 - A Sample Selenium Test, in `web/selenium/test/testIndex.html`
+Listing 15-38 - A Sample Selenium Test, in `web/selenium/test/testIndex.html`
 
     [php]
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -1004,9 +1024,9 @@ Listing 15-37 - A Sample Selenium Test, in `web/selenium/test/testIndex.html`
 
 A test case is represented by an HTML document containing a table with three columns: command, target, and value. Not all commands take a value, however. In this case, either leave the column blank or use `&nbsp;` to make the table look better. Refer to the Selenium website for a complete list of commands.
 
-You also need to add this test to the global test suite by inserting a new line in the table of the `TestSuite.html` file, located in the same directory. Listing 15-38 shows how.
+You also need to add this test to the global test suite by inserting a new line in the table of the `TestSuite.html` file, located in the same directory. Listing 15-39 shows how.
 
-Listing 15-38 - Adding a Test File to the Test Suite, in `web/selenium/test/TestSuite.html`
+Listing 15-39 - Adding a Test File to the Test Suite, in `web/selenium/test/TestSuite.html`
 
     ...
     <tr><td><a href='./testIndex.html'>My First Test</a></td></tr>

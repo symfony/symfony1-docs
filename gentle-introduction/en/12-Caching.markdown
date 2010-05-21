@@ -22,7 +22,7 @@ The first two types are handled with YAML configuration files. Template fragment
 
 ### Global Cache Settings
 
-For each application of a project, the HTML cache mechanism can be enabled or disabled (the default), per environment, in the `cache` setting of the `settings.yml` file. Listing 12-1 demonstrates enabling the cache.
+For each application of a project, the HTML cache mechanism can be enabled or disabled (the default), per environment, in the `cache` setting of the `settings.yml` file. Listing 12-1 demonstrates enabling the ability to cache. Note this will not cause anything to be cached; to do so you must enable caching in each module/action (see below).
 
 Listing 12-1 - Activating the Cache, in `frontend/config/settings.yml`
 
@@ -252,6 +252,16 @@ The `addCache()` method of the `sfViewCacheManager` object expects a module name
 >           cacheDir:                %SF_TEMPLATE_CACHE_DIR%
 >
 >You can replace the `class` with your own cache storage class or with one of the symfony alternative classes (including `sfAPCCache`, `sfEAcceleratorCache`, `sfMemcacheCache`, `sfSQLiteCache`, and `sfXCacheCache`). The parameters defined under the `param` key are passed to the constructor of the cache class as an associative array. Any view cache storage class must implement all methods found in the abstract `sfCache` class. Refer to the Chapter 19 for more information on this subject.
+>
+> Configuration for a memcache backend using two memcache servers:
+>     view_cache:
+>       class: sfMemcacheCache
+>       param:
+>         servers:
+>           server_1:
+>             host: 192.168.1.10
+>           server_2:
+>             host: 192.168.1.11
 
 ### Using the Super Fast Cache
 
@@ -270,7 +280,7 @@ Alternatively, you can use the `sfSuperCache` symfony plug-in, which automates t
 >
 >In addition to the HTML cache, symfony has two other cache mechanisms, which are completely automated and transparent to the developer. In the production environment, the configuration and the template translations are cached in files stored in the `myproject/cache/config/` and `myproject/cache/i18n/` directories without any intervention.
 >
->PHP accelerators (eAccelerator, APC, XCache, and so on), also called opcode caching modules, increase performance of PHP scripts by caching them in a compiled state, so that the overhead of code parsing and compiling is almost completely eliminated. This is particularly effective for the Propel classes, which contain a great amount of code. These accelerators are compatible with symfony and can easily triple the speed of an application. They are recommended in production environments for any symfony application with a large audience.
+>PHP accelerators (eAccelerator, APC, XCache, and so on), also called opcode caching modules, increase performance of PHP scripts by caching them in a compiled state, so that the overhead of code parsing and compiling is almost completely eliminated. This is particularly effective for the ORMs classes, which contain a great amount of code. These accelerators are compatible with symfony and can easily triple the speed of an application. They are recommended in production environments for any symfony application with a large audience.
 >
 >With a PHP accelerator, you can manually store persistent data in memory, to avoid doing the same processing for each request, with the `sfAPCCache` class if use APC for instance. And if you want to cache the result of a CPU-intensive function, you will probably use the `sfFunctionCache` object. Refer to Chapter 18 for more information about these mechanisms.
 
@@ -337,7 +347,8 @@ Removing cached partials and components is a little trickier. As you can pass th
     <?php include_partial('user/my_partial', array('user' => $user) ?>
 
     // Is identified in the cache as
-    @sf_cache_partial?module=user&action=_my_partial&sf_cache_key=bf41dd9c84d59f3574a5da244626dcc8
+    @sf_cache_partial?module=user&action=_my_partial
+      ➥ &sf_cache_key=bf41dd9c84d59f3574a5da244626dcc8
 
 In theory, you could remove a cached partial with the `remove()` method if you knew the value of the parameters hash used to identify it, but this is very impracticable. Fortunately, if you add a `sf_cache_key` parameter to the `include_partial()` helper call, you can identify the partial in the cache with something that you know. As you can see in Listing 12-10, clearing a single cached partial --for instance, to clean up the cache from the partial based on a modified `User`-- becomes easy.
 
@@ -353,7 +364,8 @@ Listing 12-10 - Clearing Partials from the Cache
     @sf_cache_partial?module=user&action=_my_partial&sf_cache_key=12
 
     // Clear _my_partial for a specific user in the cache with
-    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial&sf_cache_key='.$user->getId());
+    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial
+     ➥ &sf_cache_key='.$user->getId());
 
 To clear template fragments, use the same `remove()` method. The key identifying the fragment in the cache is composed of the same `sf_cache_partial` prefix, the module name, the action name, and the `sf_cache_key` (the unique name of the cache fragment included by the `cache()` helper). Listing 12-11 shows an example.
 
@@ -370,7 +382,8 @@ Listing 12-11 - Clearing Template Fragments from the Cache
     @sf_cache_partial?module=user&action=list&sf_cache_key=users
 
     // Clear it with
-    $cacheManager->remove('@sf_cache_partial?module=user&action=list&sf_cache_key=users');
+    $cacheManager->remove('@sf_cache_partial?module=user&action=list
+     ➥ &sf_cache_key=users');
 
 >**SIDEBAR**
 >Selective Cache Clearing Can damage your Brain
@@ -414,7 +427,8 @@ To remove the cached profile of the user having an `id` of `12` in all languages
 This also works for partials:
 
     [php]
-    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial&sf_cache_key=*');    // Remove for all keys
+    $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial
+     ➥ &sf_cache_key=*'); // Remove for all keys
 
 The `remove()` method accepts two additional parameters, allowing you to define which hosts and vary headers you want to clear the cache for. This is because symfony keeps one cache version for each host and vary headers, so that two applications sharing the same code base but not the same hostname use different caches. This can be of great use, for instance, when an application interprets the subdomain as a request parameter (like `http://php.askeet.com` and `http://life.askeet.com`). If you don't set the last two parameters, symfony will remove the cache for the current host and for the `all` vary header. Alternatively, if you want to remove the cache for another host, call `remove()` as follows:
 
@@ -438,7 +452,8 @@ The solution is to initialize a `sfCache` object by hand, with the same settings
 For instance, if the `backend` application needs to clear the cache of the `user/show` action in the `frontend` application for the user of `id` `12`, it can use the following:
 
     [php]
-    $frontend_cache_dir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'frontend'.DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'template';
+    $frontend_cache_dir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'frontend'.
+     ➥ DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'template';
     $cache = new sfFileCache(array('cache_dir' => $frontend_cache_dir)); // Use the same settings as the ones defined in the frontend factories.yml
     $cache->removePattern('user/show?id=12');
 

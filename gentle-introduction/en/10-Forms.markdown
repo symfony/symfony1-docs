@@ -18,14 +18,14 @@ In symfony, a form is an object defined in the action and passed to the template
     {
       $this->form = new sfForm();
       $this->form->setWidgets(array(
-        'name'    => new sfWidgetFormInput(),
-        'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
+        'name'    => new sfWidgetFormInputText(),
+        'email'   => new sfWidgetFormInputText(array('default' => 'me@example.com')),
         'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
         'message' => new sfWidgetFormTextarea(),
       ));
     }
 
-`sfForm::setWidgets()` expects an associative array of widget name / widget object. `sfWidgetFormInput`, `sfWidgetFormChoice`, and `sfWidgetFormTextarea` are some of the numerous widget classes offered by symfony; you will find a complete list further in this chapter.
+`sfForm::setWidgets()` expects an associative array of widget name / widget object. `sfWidgetFormInputText`, `sfWidgetFormChoice`, and `sfWidgetFormTextarea` are some of the numerous widget classes offered by symfony; you will find a complete list further in this chapter.
 
 The previous example shows two widget options you can use: `default` sets the widget value, and is available for all widgets. `choices` is an option specific to the `choice` widget (which renders as a drop-down list): it defines the available options the user can select.
 
@@ -214,7 +214,7 @@ Here is a list of available widget types, and how they translate into HTML (via 
     [php]
     // Text input
     $form->setWidget('full_name', new sfWidgetFormInput(array('default' => 'John Doe')));
-      <label for="full_name">FullName</label>
+      <label for="full_name">Full Name</label>
       <input type="text" name="full_name" id="full_name" value="John Doe" />
 
     // Textarea
@@ -328,7 +328,7 @@ For instance, if a `Section` has many `Articles`, you should be able to choose a
     $articleForm = new sfForm();
     $articleForm->setWidgets(array(
       'id'        => sfWidgetFormInputHidden(),
-      'title'     => sfWidgetFormInput(),
+      'title'     => sfWidgetFormInputText(),
       'section_id' => sfWidgetFormPropelChoice(array(
         'model'  => 'Section',
         'column' => 'name'
@@ -511,7 +511,7 @@ Since widgets output as regular HTML form fields, getting their value in the act
       // Define the form
       $this->form = new sfForm();
       $this->form->setWidgets(array(
-        'name'    => new sfWidgetFormInput(),
+        'name'    => new sfWidgetFormInputText(),
         'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
         'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
         'message' => new sfWidgetFormTextarea(),
@@ -553,7 +553,7 @@ Symfony provides an automatic way to validate the submitted data against a set o
       // Define the form
       $this->form = new sfForm();
       $this->form->setWidgets(array(
-        'name'    => new sfWidgetFormInput(),
+        'name'    => new sfWidgetFormInputText(),
         'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
         'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
         'message' => new sfWidgetFormTextarea(),
@@ -752,9 +752,9 @@ A typical registration form definition would look like this:
     // Define the form
     $this->form = new sfForm();
     $this->form->setWidgets(array(
-      'login'     => new sfWidgetFormInput(),
-      'password1' => new sfWidgetFormInput(),
-      'password2' => new sfWidgetFormInput()
+      'login'     => new sfWidgetFormInputText(),
+      'password1' => new sfWidgetFormInputText(),
+      'password2' => new sfWidgetFormInputText()
     );
     $this->form->setValidators(array(
       'login'     => new sfValidatorString(), // login is required
@@ -829,6 +829,12 @@ The `sfValidatorChoice` validator is often used to validate a `sfWidgetFormChoic
       'model'  => 'Section',
       'column' => 'name'
     )));
+    
+    // Doctrine choice validator
+    $form->setValidator('section_id', new sfValidatorDoctrineChoice(array(
+      'model'  => 'Section',
+      'column' => 'name'
+    )));
 
 Another useful Model-related validator is the `sfValidatorPropelUnique` validator, which checks that a new value entered via a form doesn't conflict with an existing value in a database column with a unique index. For instance, two users cannot have the same `login`, so when editing a `User` object with a form, you must add a `sfValidatorPropelUnique` validator on this column:
 
@@ -838,6 +844,12 @@ Another useful Model-related validator is the `sfValidatorPropelUnique` validato
       'model'  => 'User', 
       'column' => 'login'
     )));
+    
+    $form->setValidator('nickname', new sfValidatorDoctrineUnique(array(
+      'model'  => 'User', 
+      'column' => 'login'
+    )));
+
 
 To make your forms even more secure and avoid [Cross-Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks, you can enable the CSRF protection:
 
@@ -879,7 +891,7 @@ With all the widget options, validators and form parameters, the contact form de
     $this->form->setIdFormat('my_form_%s');
 
     $this->form->setWidgets(array(
-      'name'    => new sfWidgetFormInput(),
+      'name'    => new sfWidgetFormInputText(),
       'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
       'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
       'message' => new sfWidgetFormTextarea(),
@@ -891,7 +903,7 @@ With all the widget options, validators and form parameters, the contact form de
       'message' => new sfValidatorString(array('min_length' => 4))
     ));
 
-A best practice is to create a form class with the same properties and instantiate it in all the actions using it. For instance, here is how you could create a class for the contact form:
+The best practice is to create a form class with the same properties and instantiate it in all the actions using it. For instance, here is how you could create a class for the contact form:
 
     [php]
     // in lib/form/ContactForm.class.php
@@ -904,7 +916,7 @@ A best practice is to create a form class with the same properties and instantia
         $this->setNameFormat('contact[%s]');
         $this->setIdFormat('my_form_%s');
         $this->setWidgets(array(
-          'name'    => new sfWidgetFormInput(),
+          'name'    => new sfWidgetFormInputText(),
           'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
           'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
           'message' => new sfWidgetFormTextarea(),
@@ -967,7 +979,7 @@ Custom Widget and Validator classes
 A custom widget is simply a class extending `sfWidgetForm`, and providing a `configure()` and a `render()` methods. Check the code of existing widget classes for a deeper understanding of the widgets system. The next listing exposes the code of the `sfWidgetFormInput` widget to illustrate the widget structure:
 
     [php]
-    class sfWidgetFormInput extends sfWidgetForm
+    class sfWidgetFormInputText extends sfWidgetForm
     {
       /**
        * Configures the current widget.
@@ -1061,6 +1073,31 @@ A validator class must extend `sfValidatorBase` and provide a `configure()` and 
 
 Check the symfony API documentation for widget and validator classes names and syntax.
 
+>**SIDEBAR**
+>Use options to pass parameters to the form class
+>
+>A common issue with forms is to be able to use application parameters, such as the user's culture. The fastest but ugly way is to retrieve the user instance through the sfContext instance, using the `sfContext::getInstance()->getUser()` method. However, this solution create a big coupling between the form and the context, making the testing and reusability more difficult. To avoid this problem, you can simply use option to pass the `culture` value to the form :
+>
+>     // from an action
+>     public function executeContact(sfWebRequest $request)
+>     {
+>       $this->form = new ContactForm(array(), array('culture' => $this->getUser()->getCulture()));
+>     }
+>
+>     // from a unit test
+>     $form = new ContactForm(array(), array('culture' => 'en'));
+>
+>     class ContactForm extends sfForm
+>     {
+>       public function configure()
+>       {
+>         /* ... */
+>         $this->setWidget('country', new sfWidgetFormI18NCountry(array('culture' => $this->getOption('culture'))));
+>         /* ... */
+>       }
+>     }
+>
+
 Forms Based on a Model
 ----------------------
 
@@ -1070,7 +1107,7 @@ Forms are the primary way to edit database records in web applications. And most
 
 ### Generating Model Forms
 
-Symfony can deduce the widget types and the validators to use for a model editing form, based on the schema. Take the following schema, for instance:
+Symfony can deduce the widget types and the validators to use for a model editing form, based on the schema. Take the following schema, for instance with the Propel ORM:
 
     [yml]
     // config/schema.yml
@@ -1093,7 +1130,11 @@ Symfony can deduce the widget types and the validators to use for a model editin
 
 A form to edit an `Article` object should use a hidden widget for the `id`, a text widget for the `title`, a string validator for the `title`, etc. Symfony generates the form for you, provided that you call the `propel:build-forms` task:
 
+    // propel
     $ php symfony propel:build-forms
+    
+    // doctrine
+    $ php symfony doctrine:build-forms
 
 For each table in the model, this command creates two files under the `lib/form/` directory: a `BaseXXXForm` class, overridden each time you call the `propel:build-forms` task, and an empty `XXXForm` class, extending the previous one. It is the same system as the Propel model classes generation.
 
@@ -1106,8 +1147,8 @@ The generated `lib/form/base/BaseArticleForm.class.php` contains the translation
       {
         $this->setWidgets(array(
           'id'           => new sfWidgetFormInputHidden(),
-          'title'        => new sfWidgetFormInput(),
-          'slug'         => new sfWidgetFormInput(),
+          'title'        => new sfWidgetFormInputText(),
+          'slug'         => new sfWidgetFormInputText(),
           'content'      => new sfWidgetFormTextarea(),
           'is_published' => new sfWidgetFormInputCheckbox(),
           'author_id'    => new sfWidgetFormPropelChoice(array('model' => 'Author', 'add_empty' => false)),

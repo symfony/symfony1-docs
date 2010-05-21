@@ -112,7 +112,7 @@ HTML, CSS и JavaScript поведением.
     <!-- apps/frontend/templates/layout.php -->
     <div class="search">
       <h2>Ask for a job</h2>
-      <form action="<?php echo url_for('@job_search') ?>" method="get">
+      <form action="<?php echo url_for('job_search') ?>" method="get">
         <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
         <input type="submit" value="search" />
         <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
@@ -195,16 +195,13 @@ AJAX в действии (action)
     // apps/frontend/modules/job/actions/actions.class.php
     public function executeSearch(sfWebRequest $request)
     {
-      if (!$query = $request->getParameter('query'))
-      {
-        return $this->forward('job', 'index');
-      }
+      $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
       $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+      $this->jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery($query);
 </doctrine>
 
       if ($request->isXmlHttpRequest())
@@ -228,16 +225,13 @@ AJAX в действии (action)
     // apps/frontend/modules/job/actions/actions.class.php
     public function executeSearch(sfWebRequest $request)
     {
-      if (!$query = $request->getParameter('query'))
-      {
-        return $this->forward('job', 'index');
-      }
+      $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
       $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+      $this->jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery($query);
 </doctrine>
 
       if ($request->isXmlHttpRequest())
@@ -246,10 +240,8 @@ AJAX в действии (action)
         {
           return $this->renderText('No results.');
         }
-        else
-        {
-          return $this->renderPartial('job/list', array('jobs' => $this->jobs));
-        }
+        
+        return $this->renderPartial('job/list', array('jobs' => $this->jobs));
       }
     }
 

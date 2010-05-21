@@ -20,7 +20,7 @@ Para almacenar los puestos de trabajo, los afiliados, y las categorías, es evid
 Pero como Symfony es un Framework Orientado a Objetos, nos gustaría manipular los objetos cada vez que podamos. Por ejemplo, en lugar de escribir sentencias SQL para recuperar los registros de la base de datos, preferimos más usar los objetos.
 
 La información de la base de datos relacional debe ser mapeada a un modelo de objetos. Esto se puede hacer con una [herramienta ORM](http://en.wikipedia.org/wiki/Object-relational_mapping), o [Mapeador](http://es.wikipedia.org/wiki/Mapeo_objeto-relacional), y afortunadamente, Symfony tiene incluido dos de ellas:
-[Propel](http://propel.phpdb.org/) y [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://www.propelorm.org/) y [Doctrine](http://www.doctrine-project.org/).
 En este tutorial, usaremos ##ORM##.
 
 El ORM necesita una descripción de las tablas y sus relaciones para crear las clases relacionadas. Hay dos maneras de crear este esquema de descripción:
@@ -584,7 +584,7 @@ El archivo `actions/actions.class.php` define todas las **acciones** disponibles
 
 Ahora puedes probar el módulo job en un navegador:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![El módulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

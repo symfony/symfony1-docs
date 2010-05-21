@@ -36,7 +36,7 @@ des enregistrements de la base de données, nous préférons utiliser des objets
 Les informations de base de données relationnelle doivent être mappées sur un modèle objet. Cela
 peut être fait avec un [outil ORM](http://en.wikipedia.org/wiki/Object-relational_mapping)
 et heureusement, symfony est livré avec deux d'entre eux :
-[Propel](http://propel.phpdb.org/) et [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://www.propelorm.org/) et [Doctrine](http://www.doctrine-project.org/).
 Dans ce tutoriel, nous allons utiliser ##ORM##.
 
 L'ORM a besoin d'une description des tables et leurs relations pour créer
@@ -198,7 +198,7 @@ Chaque colonne est décrite avec les informations suivantes :
     `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar(size)`,
     `longvarchar`, `date`, `time`, `timestamp`, `blob`, et `clob`)
   * `required`: Réglez-le à `true` si vous souhaitez que la colonne soit requise
-  * `~index|Database indexes~`: Réglez-le à `true` si vous souhaitez créer un index
+  * ~`index|Database indexes`~: Réglez-le à `true` si vous souhaitez créer un index
     pour la colonne ou à `unique` si vous voulez qu'un index unique soit créé pour
 	la colonne.
   * `primaryKey`: Définit la colonne comme une ~clé primaire|Clé primaire~ pour la table.
@@ -664,7 +664,7 @@ The `actions/actions.class.php` file defines all the available
 
 Vous pouvez tester le module job dans un navigateur :
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![Le module Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 

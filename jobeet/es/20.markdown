@@ -83,6 +83,19 @@ Inicializar un plugin es tan sencillo como crear un nuevo directorio bajo el dir
 
     $ mkdir plugins/sfJobeetPlugin
 
+Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php` file.
+
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+
 >**NOTE**
 >Todos los plugins deben terminar con `Plugin`. También es una buena costumbre usar el prefijo
 >`sf`, aunque no es obligatorio.
@@ -118,6 +131,22 @@ Mueve el modelo, formulario, filtros a `plugins/sfJobeetPlugin/lib/`:
     $ mv lib/form/ plugins/sfJobeetPlugin/lib/
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
 
+<propel>
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+</propel>
+
+<doctrine>
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+</doctrine>
+
+Remove the `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php` file.
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseForm.class.php
+
 <doctrine>
 Después de mover los modelos, formularios y filtros las clases deben ser renombradas, hacerlas abstractas y con el prefijo `Plugin`.
 
@@ -135,14 +164,14 @@ Y el código debe ser actualizado:
     [php]
     abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
     {
-      public function preValidate($event)
+      public function save(Doctrine_Connection $conn = null)
       {
-        $object = $event->getInvoker();
-
-        if (!$object->getToken())
+        if (!$this->getToken())
         {
-          $object->setToken(sha1($object->getEmail().rand(11111, 99999)));
+          $this->setToken(sha1($object->getEmail().rand(11111, 99999)));
         }
+        
+        parent::save($conn);
       }
 
       // ...
@@ -200,13 +229,13 @@ Este directorio contiene los modelos de nivel superior y la base de clases gener
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
     Lo mismo que para la clase `JobeetJob` excepto que esta e la instancia de
     `Doctrine_Table` que obtendrás cuando llames a 
-    `Doctrine::getTable('JobeetJob')`.
+    `Doctrine_Core::getTable('JobeetJob')`.
 
   * `PluginJobeetJobTable` (extiende de `Doctrine_Table`) en
     `lib/model/doctrine/sfJobeetPlugin/JobeetJobTable.class.php`:
     Esta clase contiene todas las funciones específicas para la instancia
     de `Doctrine_Table` que obtendrás cuando llames a 
-    `Doctrine::getTable('JobeetJob')`.
+    `Doctrine_Core::getTable('JobeetJob')`.
 
 Con esta estructura que has generado tienes la posibilidad de personalizar los modelos de un plugin editando la clase de nivel superior `JobeetJob`. Puede personalizar el esquema y añadir columnas, añadir relaciones sobreescribiendo los métodos `setTableDefinition()` y `setUp()`.
 
@@ -313,16 +342,14 @@ Actualiza las acciones `search` y `delete` :
     {
       public function executeSearch(sfWebRequest $request)
       {
-        if (!$query = $request->getParameter('query'))
-        {
-          return $this->forward('sfJobeetJob', 'index');
-        }
+        $this->forwardUnless($query = $request->getParameter('query'), 'sfJobeetJob', 'index');
 
 <propel>
         $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-        $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+        $this->jobs = Doctrine_Core::getTable('JobeetJob')
+          ➥ ->getForLuceneQuery($query);
 </doctrine>
 
         if ($request->isXmlHttpRequest())
@@ -331,10 +358,9 @@ Actualiza las acciones `search` y `delete` :
           {
             return $this->renderText('No results.');
           }
-          else
-          {
-            return $this->renderPartial('sfJobeetJob/list', array('jobs' => $this->jobs));
-          }
+
+          return $this->renderPartial('sfJobeetJob/list',
+             ➥ array('jobs' => $this->jobs));
         }
       }
 
@@ -436,24 +462,6 @@ Ahora, modifica el archivo `routing.yml` para tomar en cuenta estos cambios:
       url:   /
       param: { module: sfJobeetJob, action: index }
 
-Eventualmente, habilita el plugin a mano en `ProjectConfiguration.class.php` ya
-que no fue instalado via la tarea `plugin:install`:
-
-    [php]
-    // config/ProjectConfiguration.class.php
-    class ProjectConfiguration extends sfProjectConfiguration
-    {
-      public function setup()
-      {
-<propel>
-        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</propel>
-<doctrine>
-        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin');
-</doctrine>
-      }
-    }
-    
 Si tratas de navegar por la página web Jobeet ahora, tendrás excepciones diciendo que los módulos no están habilitados. Como los plugins son compartidos entre todas las aplicaciones en un proyecto, necesitas específicamente habilitar el módulo que necesitas para una aplicación determinada en su archivo de configuración `settings.yml`:
 
     [yml]
@@ -583,13 +591,13 @@ Remueve todos los métodos de la clase `myUser` y crear la clase `JobeetUser`:
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
             ->execute();
-        } else {
-          return array();
         }
+        
+        return array();
 </doctrine>
       }
 

@@ -2,18 +2,17 @@ Day 3: The ~Data Model~
 =======================
 
 Those of you itching to open your text editor and lay down some PHP will be
-happy to know today's tutorial will get us into some development. We will
-define the Jobeet data model, use an ORM to interact with the database, and
-build the first module of the application. But as symfony does a lot of the
-work for us, we will have a fully functional web module without writing too
-much PHP code.
+happy to know today will get us into some development. We will define the
+Jobeet data model, use an ORM to interact with the database, and build the first
+module of the application. But as symfony does a lot of the work for us, we will
+have a fully functional web module without writing too much PHP code.
 
 The Relational ~Model~
 ----------------------
 
-The user stories we have written yesterday describe the main objects of our
-project: jobs, affiliates, and categories. Here is the corresponding entity
-relationship diagram:
+The user stories we saw yesterday describe the main objects of our project:
+jobs, affiliates, and categories. Here is the corresponding entity relationship
+diagram:
 
 ![Entity relationship diagram](http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png)
 
@@ -29,19 +28,20 @@ The ~Schema~
 To store the jobs, affiliates, and categories, we obviously need a relational
 database.
 
-But as symfony is an Object-Oriented framework, we like to manipulate ~object|OOP~s
-whenever we can. For example, instead of writing SQL statements to retrieve
-records from the database, we'd rather prefer to use objects.
+But as symfony is an Object-Oriented framework, we like to manipulate
+~object|OOP~s whenever we can. For example, instead of writing SQL statements to
+retrieve records from the database, we'd rather prefer to use objects.
 
-The relational database information must be mapped to an object model. This
-can be done with an [ORM tool](http://en.wikipedia.org/wiki/Object-relational_mapping)
-and thankfully, symfony comes bundled with two of them:
-[Propel](http://propel.phpdb.org/) and [Doctrine](http://www.doctrine-project.org/).
-In this tutorial, we will use ##ORM##.
+The relational database information must be mapped to an object model. This can
+be done with an [ORM
+tool](http://en.wikipedia.org/wiki/Object-relational_mapping) and thankfully,
+symfony comes bundled with two of them: [Propel](http://www.propelorm.org/) and
+[Doctrine](http://www.doctrine-project.org/). In this tutorial, we will use
+##ORM##.
 
-The ORM needs a description of the tables and their relationships to create
-the related classes. There are two ways to create this description schema:
-by introspecting an existing database or by creating it by hand.
+The ORM needs a description of the tables and their relationships to create the
+related classes. There are two ways to create this description schema: by
+introspecting an existing database or by creating it by hand.
 
 <propel>
 >**Note**
@@ -164,8 +164,8 @@ agnostic, let's create the schema file by hand by editing the empty
 >We show you how to configure the database in a later step. If you try and run this
 >task now it won't work as it doesn't know what database to build the schema for.
 
-The schema is the direct translation of the entity relationship diagram in
-the YAML format.
+The schema is the direct translation of the entity relationship diagram in the
+YAML format.
 
 >**SIDEBAR**
 >The ~YAML~ Format
@@ -198,10 +198,11 @@ Each column is described with the following information:
     `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar(size)`,
     `longvarchar`, `date`, `time`, `timestamp`, `blob`, and `clob`)
   * `required`: Set it to `true` if you want the column to be required
-  * `~index|Database indexes~`: Set it to `true` if you want to create an index 
+  * ~`index|Database indexes`~: Set it to `true` if you want to create an index 
     for the column or to `unique` if you want a unique index to be created on 
     the column.
-  * `primaryKey`: Define a column as the ~primary key|Primary Key~ for the table.
+  * `primaryKey`: Define a column as the ~primary key|Primary Key~ for the
+    table.
   * `foreignTable`, `foreignReference`: Define a column to be a 
     ~foreign key|Foreign Key~ to another table.
 
@@ -235,8 +236,8 @@ The ~Database~
 --------------
 
 The symfony framework supports all PDO-supported databases (MySQL, PostgreSQL,
-SQLite, Oracle, MSSQL, ...). [~PDO~](http://www.php.net/PDO) 
-is the ~database abstraction layer|Database Abstraction Layer~ bundled with PHP.
+SQLite, Oracle, MSSQL, ...). [~PDO~](http://www.php.net/PDO) is the ~database
+abstraction layer|Database Abstraction Layer~ bundled with PHP.
 
 Let's use ~MySQL~ for this tutorial:
 
@@ -253,10 +254,9 @@ We need to tell symfony to use this database for the Jobeet project:
     $ php symfony configure:database
       ➥ "mysql:host=localhost;dbname=jobeet" root mYsEcret
 
-The `configure:database` task takes three arguments: the
-[~PDO DSN~](http://www.php.net/manual/en/pdo.drivers.php), the username, and
-the password to access the database. If you don't need a password to access
-your database on the development server, just omit the third argument.
+The `configure:database` task takes three arguments: the [~PDO DSN~](http://www.php.net/manual/en/pdo.drivers.php), the username, and the
+password to access the database. If you don't need a password to access your
+database on the development server, just omit the third argument.
 
 >**NOTE**
 >The `configure:database` ~task|Tasks~ stores the
@@ -339,9 +339,8 @@ The `propel:build --model` task generates PHP files in the `lib/model/`
 directory that can be used to interact with the database.
 
 <propel>
-By browsing the generated files, you have probably noticed that Propel
-generates four classes per ~table|Table (Database)~. For the `jobeet_job` 
-table:
+By browsing the generated files, you have probably noticed that Propel generates
+four classes per ~table|Table (Database)~. For the `jobeet_job` table:
 
   * `JobeetJob`: An object of this class **represents a single 
                  ~record|Database Record~** of the `jobeet_job` table. The 
@@ -402,14 +401,14 @@ for the Jobeet model classes:
 
     $ php symfony propel:build --all --no-confirmation
 
-You will see validators in action at the end of the day and forms will be
-explained in great details on day 10.
+You will see validators in action today and forms will be explained in great
+details on day 10.
 
 The Initial Data
 ----------------
 
-The tables have been created in the database but there is no data in them.
-For any web application, there are three types of data:
+The tables have been created in the database but there is no data in them. For
+any web application, there are three types of data:
 
   * **Initial data**: Initial data are needed for the application to work. For
                       example, Jobeet needs some initial categories. If not,
@@ -426,12 +425,12 @@ For any web application, there are three types of data:
   * **User data**: User data are created by the users during the normal life
                    of the application.
 
-Each time symfony creates the tables in the database, all the data are lost.
-To populate the database with some initial data, we could create a PHP script,
-or execute some SQL statements with the `mysql` program. But as the need is
-quite common, there is a better way with symfony: create YAML files in the
-`data/fixtures/` directory and use the `propel:data-load` task to load them
-into the database.
+Each time symfony creates the tables in the database, all the data are lost. To
+populate the database with some initial data, we could create a PHP script, or
+execute some SQL statements with the `mysql` program. But as the need is quite
+common, there is a better way with symfony: create YAML files in the
+`data/fixtures/` directory and use the `propel:data-load` task to load them into
+the database.
 
 First, create the following ~fixture|Fixtures~ files:
 
@@ -577,8 +576,8 @@ category.
 >column in the job fixture file), you can use the pipe (`|`) to indicate that
 >the string will span several lines.
 
-Although a fixture file can contain objects from one or several models, we
-have decided to create one file per model for the Jobeet fixtures.
+Although a fixture file can contain objects from one or several models, we have
+decided to create one file per model for the Jobeet fixtures.
 
 <propel>
 >**TIP**
@@ -595,12 +594,12 @@ have decided to create one file per model for the Jobeet fixtures.
 >foreign keys are set properly.
 </doctrine>
 
-In a fixture file, you don't need to define all columns values. If not,
-symfony will use the default value defined in the database schema. And as
-symfony uses ##ORM## to load the data into the database, all the built-in
+In a fixture file, you don't need to define all columns values. If not, symfony
+will use the default value defined in the database schema. And as symfony uses
+##ORM## to load the data into the database, all the built-in
 ~behaviors|Behaviors (ORM)~ (like automatically setting the `created_at` or
-`updated_at` columns) and the custom behaviors you might have added to the
-model classes are activated.
+`updated_at` columns) and the custom behaviors you might have added to the model
+classes are activated.
 
 Loading the initial data into the database is as simple as running the
 `propel:data-load` task:
@@ -608,13 +607,12 @@ Loading the initial data into the database is as simple as running the
     $ php symfony propel:data-load
 
 >**TIP**
->The `propel:build --all --and-load` task is a shortcut for the `propel:build --all`
->task followed by the `propel:data-load` task.
+>The `propel:build --all --and-load` task is a shortcut for the `propel:build --all` task followed by the `propel:data-load` task.
 
 <doctrine>
-Run the `doctrine:build --all --and-load` task to make sure everything is generated
-from your schema. This will generate your forms, filters, models, drop your
-database and re-create it with all the tables.
+Run the `doctrine:build --all --and-load` task to make sure everything is
+generated from your schema. This will generate your forms, filters, models, drop
+your database and re-create it with all the tables.
 
     $ php symfony doctrine:build --all --and-load
 </doctrine>
@@ -623,11 +621,11 @@ See it in Action in the Browser
 -------------------------------
 
 We have used the command line interface a lot but that's not really exciting,
-especially for a web project. We now have everything we need to create Web
-pages that interact with the database.
+especially for a web project. We now have everything we need to create Web pages
+that interact with the database.
 
-Let's see how to display the list of jobs, how to edit an existing job, and
-how to delete a job. As explained during day 1, a symfony project is made of
+Let's see how to display the list of jobs, how to edit an existing job, and how
+to delete a job. As explained during the first day, a symfony project is made of
 applications. Each ~application|Application~ is further divided into
 **modules**. A ~module|Module~ is a self-contained set of PHP code that
 represents a feature of the application (the API module for example), or a set
@@ -641,16 +639,15 @@ provides basic manipulation features:
 
 The `propel:generate-module` generates a `job` module in the `frontend`
 application for the `JobeetJob` model. As with most symfony tasks, some files
-and directories have been created for you under the
-`apps/frontend/modules/job/` directory:
+and directories have been created for you under the `apps/frontend/modules/job/`
+directory:
 
  | Directory    | Description
  | ------------ | --------------------
  | `actions/`   | The module actions
  | `templates/` | The module templates
 
-The `actions/actions.class.php` file defines all the available
-**~action|Action~** for the `job` module:
+The `actions/actions.class.php` file defines all the available **~action|Action~** for the `job` module:
 
  | Action name    | Description
  | -------------- | -------------------------------------------------------
@@ -664,7 +661,7 @@ The `actions/actions.class.php` file defines all the available
 
 You can now test the job module in a browser:
 
-     http://jobeet.localhost/frontend_dev.php/job
+     http://www.jobeet.com.localhost/frontend_dev.php/job
 
 ![Job module](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
@@ -685,9 +682,9 @@ record should be defined in the `JobeetCategory` model class:
     }
 
 Now each time symfony needs a text representation of a category, it calls the
-~`__toString()`~ method which returns the category name. As we will need a
-text representation of all model classes at one point or another, let's define
-a `__toString()` method for every model class:
+~`__toString()`~ method which returns the category name. As we will need a text
+representation of all model classes at one point or another, let's define a
+`__toString()` method for every model class:
 </propel>
 <doctrine>
 If you try to edit a job, you will notice the Category id drop down has a list
@@ -696,9 +693,9 @@ of all the category names. The value of each option is gotten from the
 
 Doctrine will try and provide a base ~`__toString()`~ method by guessing a
 descriptive column name like, `title`, `name`, `subject`, etc. If you want
-something custom then you will need to add your own `__toString()` methods
-like below. The `JobeetCategory` model is able to guess the `__toString()`
-method by using the `name` column of the `jobeet_category` table.
+something custom then you will need to add your own `__toString()` methods like
+below. The `JobeetCategory` model is able to guess the `__toString()` method by
+using the `name` column of the `jobeet_category` table.
 </doctrine>
 
     [php]
@@ -731,23 +728,21 @@ method by using the `name` column of the `jobeet_category` table.
       }
     }
 
-You can now create and edit jobs. Try to leave a required field blank, or try
-to enter an invalid date. That's right, symfony has created basic validation
-rules by introspecting the database schema.
+You can now create and edit jobs. Try to leave a required field blank, or try to
+enter an invalid date. That's right, symfony has created basic validation rules
+by introspecting the database schema.
 
 ![validation](http://www.symfony-project.org/images/jobeet/1_4/03/validation.png)
 
 Final Thoughts
 --------------
 
-That's all for today. I have warned you in the introduction. Today, we have
-barely written PHP code but we have a working web module for the job model,
-ready to be tweaked and customized. Remember, no PHP code also means no bugs!
+That's all. I have warned you in the introduction. Today, we have barely written PHP code but we have a working web module for the job model, ready to be tweaked and customized. Remember, no PHP code also means no bugs!
 
-If you still have some energy left, feel free to read the generated code for
-the module and the model and try to understand how it works. If not, don't
-worry and sleep well, as tomorrow, we will talk about one of the most used
-paradigm in web frameworks, the
+If you still have some energy left, feel free to read the generated code for the
+module and the model and try to understand how it works. If not, don't worry and
+sleep well, as tomorrow we will talk about one of the most used paradigm in web 
+frameworks, the 
 [MVC design pattern](http://en.wikipedia.org/wiki/Model-view-controller).
 
 __ORM__

@@ -134,7 +134,7 @@ Reemplaza el layout por defecto de Symfony por el siguiente código:
 
 Una plantilla symfony es sólo un simple archivo PHP. En la plantilla layout, verás llamadas a funciones PHP y referencias a variables PHP. `$sf_content` es la variable más interesante: la define el mismo framework y contiene el código HTML generado por la acción.
 
-Si navegas el módulo `job` (`http://jobeet.localhost/frontend_dev.php/job`), verás que todas las acciones ahora son decoradas por el layout.
+Si navegas el módulo `job` (`http://www.jobeet.com.localhost/frontend_dev.php/job`), verás que todas las acciones ahora son decoradas por el layout.
 
 Las Hojas de Estilo, Imágenes, y JavaScripts
 --------------------------------------------

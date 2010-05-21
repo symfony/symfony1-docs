@@ -190,7 +190,7 @@ For each table that contains some localized data, you should split the table in 
 
 First, create tables in the `schema.yml` file, as shown in Listing 13-6.
 
-Listing 13-6 - Sample Schema for i18n Data, in `config/schema.yml`
+Listing 13-6 - Sample Schema for i18n Data with Propel, in `config/schema.yml`
 
     my_connection:
       my_product:
@@ -206,9 +206,20 @@ Listing 13-6 - Sample Schema for i18n Data, in `config/schema.yml`
 
 Notice the `isI18N` and `i18nTable` attributes in the first table, and the special `culture` column in the second. All these are symfony-specific Propel enhancements.
 
-The symfony automations can make this much faster to write. If the table containing internationalized data has the same name as the main table with `_i18n` as a suffix, and they are related with a column named `id` in both tables, you can omit the `id` and `culture` columns in the `_i18n` table as well as the specific i18n attributes for the main table; symfony will infer them. It means that symfony will see the schema in Listing 13-7 as the same as the one in Listing 13-6.
+Listing 13-7 - Sample Schema for i18n Data with Doctrine, in `config/doctrine/schema.yml`
 
-Listing 13-7 - Sample Schema for i18n Data, Short Version, in `config/schema.yml`
+    Product:
+      actAs:
+        I18n:
+          fields: [name]
+      columns:
+        price: { type: float }
+        name: { type: string(50) }
+
+
+The symfony automations can make this much faster to write. If the table containing internationalized data has the same name as the main table with `_i18n` as a suffix, and they are related with a column named `id` in both tables, you can omit the `id` and `culture` columns in the `_i18n` table as well as the specific i18n attributes for the main table; symfony will infer them. It means that symfony will see the schema in Listing 13-8 as the same as the one in Listing 13-6.
+
+Listing 13-8 - Sample Schema for i18n Data, Short Version, in `config/schema.yml`
 
     my_connection:
       my_product:
@@ -221,9 +232,9 @@ Listing 13-7 - Sample Schema for i18n Data, Short Version, in `config/schema.yml
 
 ### Using the Generated I18n Objects
 
-Once the corresponding object model is built (don't forget to call the `propel:build --model` task after each modification of the `schema.yml`), you can use your `Product` class with i18n support as if there were only one table, as shown in Listing 13-8.
+Once the corresponding object model is built (don't forget to call the `propel:build --model` task after each modification of the `schema.yml`), you can use your `Product` class with i18n support as if there were only one table, as shown in Listing 13-9.
 
-Listing 13-8 - Dealing with i18n Objects
+Listing 13-9 - Dealing with i18n Objects
 
     [php]
     $product = ProductPeer::retrieveByPk(1);
@@ -239,9 +250,9 @@ Listing 13-8 - Dealing with i18n Objects
     echo $product->getName('en');
      => 'Product name'
 
-As for queries with the peer objects, you can restrict the results to objects having a translation for the current culture by using the `doSelectWithI18n` method, instead of the usual `doSelect`, as shown in Listing 13-9. In addition, it will create the related i18n objects at the same time as the regular ones, resulting in a reduced number of queries to get the full content (refer to Chapter 18 for more information about this method's positive impacts on performance).
+As for queries with the peer objects, you can restrict the results to objects having a translation for the current culture by using the `doSelectWithI18n` method, instead of the usual `doSelect`, as shown in Listing 13-10. In addition, it will create the related i18n objects at the same time as the regular ones, resulting in a reduced number of queries to get the full content (refer to Chapter 18 for more information about this method's positive impacts on performance).
 
-Listing 13-9 - Retrieving Objects with an i18n `Criteria`
+Listing 13-10 - Retrieving Objects with an i18n `Criteria`
 
     [php]
     $c = new Criteria();
@@ -259,9 +270,9 @@ The user interface needs to be adapted for i18n applications. Templates must be 
 
 ### Configuring Translation
 
-The templates are not translated by default, which means that you need to activate the template translation feature in the `settings.yml` file prior to everything else, as shown in Listing 13-10.
+The templates are not translated by default, which means that you need to activate the template translation feature in the `settings.yml` file prior to everything else, as shown in Listing 13-11.
 
-Listing 13-10 - Activating Interface Translation, in `frontend/config/settings.yml`
+Listing 13-11 - Activating Interface Translation, in `frontend/config/settings.yml`
 
     all:
       .settings:
@@ -269,16 +280,16 @@ Listing 13-10 - Activating Interface Translation, in `frontend/config/settings.y
 
 ### Using the Translation Helper
 
-Let's say that you want to create a website in English and French, with English being the default language. Before even thinking about having the site translated, you probably wrote the templates something like the example shown in Listing 13-11.
+Let's say that you want to create a website in English and French, with English being the default language. Before even thinking about having the site translated, you probably wrote the templates something like the example shown in Listing 13-12.
 
-Listing 13-11 - A Single-Language Template
+Listing 13-12 - A Single-Language Template
 
     [php]
     Welcome to our website. Today's date is <?php echo format_date(date()) ?>
 
-For symfony to translate the phrases of a template, they must be identified as text to be translated. This is the purpose of the `__()` helper (two underscores), a member of the I18N helper group. So all your templates need to enclose the phrases to translate in such function calls. Listing 13-11, for example, can be modified to look like Listing 13-12 (as you will see in the "Handling Complex Translation Needs" section later in this chapter, there is an even better way to call the translation helper in this example).
+For symfony to translate the phrases of a template, they must be identified as text to be translated. This is the purpose of the `__()` helper (two underscores), a member of the I18N helper group. So all your templates need to enclose the phrases to translate in such function calls. Listing 13-11, for example, can be modified to look like Listing 13-13 (as you will see in the "Handling Complex Translation Needs" section later in this chapter, there is an even better way to call the translation helper in this example).
 
-Listing 13-12 - A Multiple-Language-Ready Template
+Listing 13-13 - A Multiple-Language-Ready Template
 
     [php]
     <?php use_helper('I18N') ?>
@@ -301,9 +312,9 @@ XLIFF is a standard format based on XML. As it is well known, you can use third-
 >**TIP**
 >In addition to the XLIFF standard, symfony also supports several other translation back-ends for dictionaries: gettext, MySQL, and SQLite. Refer to the API documentation for more information about configuring these back-ends.
 
-Listing 13-13 shows an example of the XLIFF syntax with the `messages.fr.xml` file necessary to translate Listing 13-13 into French.
+Listing 13-14 shows an example of the XLIFF syntax with the `messages.fr.xml` file necessary to translate Listing 13-14 into French.
 
-Listing 13-13 - An XLIFF Dictionary, in `frontend/i18n/messages.fr.xml`
+Listing 13-14 - An XLIFF Dictionary, in `frontend/i18n/messages.fr.xml`
 
     [xml]
     <?xml version="1.0" encoding="UTF-8" ?>
@@ -325,9 +336,9 @@ Listing 13-13 - An XLIFF Dictionary, in `frontend/i18n/messages.fr.xml`
 
 The `source-language` attribute must always contain the full ISO code of your default culture. Each translation is written in a `trans-unit` tag with a unique `id` attribute.
 
-With the default user culture (set to `en_US`), the phrases are not translated and the raw arguments of the `__()` calls are displayed. The result of Listing 13-12 is then similar to Listing 13-11. However, if the culture is changed to `fr_FR` or `fr_BE`, the translations from the `messages.fr.xml` file are displayed instead, and the result looks like Listing 13-14.
+With the default user culture (set to `en_US`), the phrases are not translated and the raw arguments of the `__()` calls are displayed. The result of Listing 13-12 is then similar to Listing 13-11. However, if the culture is changed to `fr_FR` or `fr_BE`, the translations from the `messages.fr.xml` file are displayed instead, and the result looks like Listing 13-15.
 
-Listing 13-14 - A Translated Template
+Listing 13-15 - A Translated Template
 
     [php]
     Bienvenue sur notre site web. La date d'aujourd'hui est
@@ -382,9 +393,9 @@ The following are other elements that may require translation:
 
 ### Handling Complex Translation Needs
 
-Translation only makes sense if the `__()` argument is a full sentence. However, as you sometimes have formatting or variables mixed with words, you could be tempted to cut sentences into several chunks, thus calling the helper on senseless phrases. Fortunately, the `__()` helper offers a replacement feature based on tokens, which will help you to have a meaningful dictionary that is easier to handle by translators. As with HTML formatting, you can leave it in the helper call as well. Listing 13-15 shows an example.
+Translation only makes sense if the `__()` argument is a full sentence. However, as you sometimes have formatting or variables mixed with words, you could be tempted to cut sentences into several chunks, thus calling the helper on senseless phrases. Fortunately, the `__()` helper offers a replacement feature based on tokens, which will help you to have a meaningful dictionary that is easier to handle by translators. As with HTML formatting, you can leave it in the helper call as well. Listing 13-16 shows an example.
 
-Listing 13-15 - Translating Sentences That Contain Code
+Listing 13-16 - Translating Sentences That Contain Code
 
     [php]
     // Base example
@@ -405,9 +416,9 @@ Listing 13-15 - Translating Sentences That Contain Code
 
 In this example, the token is `%1%`, but it can be anything, since the replacement function used by the translation helper is `strtr()`.
 
-One of the common problems with translation is the use of the plural form. According to the number of results, the text changes but not in the same way according to the language. For instance, the last sentence in Listing 13-15 is not correct if `count_logged()` returns 0 or 1. You could do a test on the return value of this function and choose which sentence to use accordingly, but that would represent a lot of code. Additionally, different languages have different grammar rules, and the declension rules of plural can be quite complex. As this problem is very common, symfony provides a helper to deal with it, called `format_number_choice()`. Listing 13-16 demonstrates how to use this helper.
+One of the common problems with translation is the use of the plural form. According to the number of results, the text changes but not in the same way according to the language. For instance, the last sentence in Listing 13-15 is not correct if `count_logged()` returns 0 or 1. You could do a test on the return value of this function and choose which sentence to use accordingly, but that would represent a lot of code. Additionally, different languages have different grammar rules, and the declension rules of plural can be quite complex. As this problem is very common, symfony provides a helper to deal with it, called `format_number_choice()`. Listing 13-17 demonstrates how to use this helper.
 
-Listing 13-16 - Translating Sentences Depending on the Value of Parameters
+Listing 13-17 - Translating Sentences Depending on the Value of Parameters
 
     [php]
     <?php echo format_number_choice(
@@ -425,9 +436,9 @@ The message/string choices are separated by the pipe (`|`) character followed by
 
 Any nonempty combinations of the delimiters of square brackets and parentheses are acceptable.
 
-The message will need to appear explicitly in the XLIFF file for the translation to work properly. Listing 13-17 shows an example.
+The message will need to appear explicitly in the XLIFF file for the translation to work properly. Listing 13-18 shows an example.
 
-Listing 13-17 - XLIFF Dictionary for a `format_number_choice()` Argument
+Listing 13-18 - XLIFF Dictionary for a `format_number_choice()` Argument
 
     ...
     <trans-unit id="3">
@@ -451,9 +462,9 @@ Listing 13-17 - XLIFF Dictionary for a `format_number_choice()` Argument
 
 ### Calling the Translation Helper Outside a Template
 
-Not all the text that is displayed in a page comes from templates. That's why you often need to call the `__()` helper in other parts of your application: actions, filters, model classes, and so on. Listing 13-18 shows how to call the helper in an action by retrieving the current instance of the `I18N` object through the context singleton.
+Not all the text that is displayed in a page comes from templates. That's why you often need to call the `__()` helper in other parts of your application: actions, filters, model classes, and so on. Listing 13-19 shows how to call the helper in an action by retrieving the current instance of the `I18N` object through the context singleton.
 
-Listing 13-18 - Calling `__()` in an Action
+Listing 13-19 - Calling `__()` in an Action
 
     [php]
     $this->getContext()->getI18N()->__($text, $args, 'messages');

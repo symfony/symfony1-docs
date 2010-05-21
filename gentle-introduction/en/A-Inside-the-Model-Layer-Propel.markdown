@@ -1,7 +1,7 @@
-Chapter 8 - Inside The Model Layer (Propel)
+Appendix A - Inside The Model Layer (Propel)
 ===========================================
 
-Much of the discussion so far has been devoted to building pages, and processing requests and responses. But the business logic of a web application relies mostly on its data model. Symfony's default model component is based on an object/relational mapping layer. Symfony comes bundles with the two most popular PHP ORMs: [Propel](http://propel.phpdb.org/) and [Doctrine](http://www.doctrine-project.org/). In a symfony application, you access data stored in a database and modify it through objects; you never address the database explicitly. This maintains a high level of abstraction and portability.
+Much of the discussion so far has been devoted to building pages, and processing requests and responses. But the business logic of a web application relies mostly on its data model. Symfony's default model component is based on an object/relational mapping layer. Symfony comes bundles with the two most popular PHP ORMs: [Propel](http://www.propelorm.org/) and [Doctrine](http://www.doctrine-project.org/). In a symfony application, you access data stored in a database and modify it through objects; you never address the database explicitly. This maintains a high level of abstraction and portability.
 
 This chapter explains how to create an object data model, and the way to access and modify the data in Propel. It also demonstrates the integration of Propel in Symfony.
 
@@ -138,7 +138,7 @@ You defined only two tables, and you end up with eight files. There is nothing w
 
 Why keep two versions of the data object model in two different directories?
 
-You will probably need to add custom methods and properties to the model objects (think about the `getName()` method in Listing 8-1). But as your project develops, you will also add tables or columns. Whenever you change the `schema.yml` file, you need to regenerate the object model classes by making a new call to propel-build-model. If your custom methods were written in the classes actually generated, they would be erased after each generation.
+You will probably need to add custom methods and properties to the model objects (think about the `getName()` method in Listing 8-1). But as your project develops, you will also add tables or columns. Whenever you change the `schema.yml` file, you need to regenerate the object model classes by making a new call to propel:build-model. If your custom methods were written in the classes actually generated, they would be erased after each generation.
 
 The `Base` classes kept in the `lib/model/om/` directory are the ones directly generated from the schema. You should never modify them, since every new build of the model will completely erase these files.
 

@@ -3,26 +3,26 @@
 
 昨日は、Zend Lucene ライブラリのおかげで、Jobeet 用のとても強力な検索エンジンを実装しました。
 
-今日は、検索エンジンのレスポンスを強化するために、検索エンジンをライブ検索エンジンに変換する [AJAX](http://en.wikipedia.org/wiki/AJAX) を利用します。
+今日は、検索エンジンのレスポンスを強化するために、検索エンジンをライブ検索エンジンに変換する [AJAX](http://ja.wikipedia.org/wiki/Ajax) を利用します。
 
 JavaScript の有無に関わらずフォームは動作するので、ライブ検索機能は[~控えめな JavaScript~](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript) を利用して実装します。控えめな JavaScript を利用することで HTML、CSS と JavaScript のふるまいの間のコードの関心の分離も可能になります。
 
 ~jQuery~ をインストールする
 ---------------------------
 
-車輪の再発明とブラウザーの間の多くの違いを管理するのを避けて、JavaScript ライブラリの jQuery を使います。symfony フレームワーク自身は任意の JavaScript ライブラリで動作します。
+車輪の再発明とブラウザの間の多くの違いを管理するのを避けて、JavaScript ライブラリの jQuery を使います。symfony フレームワーク自身は任意の JavaScript ライブラリで動作します。
 
 [jQuery](http://jquery.com/) の公式サイトに移動し、最新バージョンをダウンロードし、`.js` ファイルを `web/js/` に設置します。
 
 jQuery をインクルードする
-------------------------
+--------------------------
 
 すべてのページで jQuery が必要なので、`<head>` の前でこれをインクルードするためにレイアウトを更新します。`include_javascripts()` 呼び出しの前に ~`use_javascript()`~ 関数を差し込んでいることに注目してください:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
 
-      <?php use_javascript('jquery-1.2.6.min.js') ?>
+      <?php use_javascript('jquery-1.4.2.min.js') ?>
       <?php include_javascripts() ?>
     </head>
 
@@ -32,12 +32,12 @@ jQuery をインクルードする
 >[~パフォーマンス~上の理由](http://developer.yahoo.com/performance/rules.html#js_bottom)から、`include_javascripts()` ヘルパーの呼び出しを `</body>` 閉じタグの直前に移動させるとよいでしょう。
 
 ~ふるまい|ふるまい (JavaScript)~を追加する
------------------------------------------
+-------------------------------------------
 
 ~ライブ検索~を実装することは、検索ボックスでユーザーが文字を入力するたびに、サーバーの呼び出しが必要であるを意味します;
 サーバーはページ全体をリフレッシュせずページの一部を更新するために必要な情報を返します。
 
-jQuery の背景にある主要な原則は HTML の `on*()` 属性でふるまいを追加する代わりに、ページが完全にロードされた後で ~DOM~ にふるまいを追加することです。この方法によって、ブラウザーで JavaScript のサポートを無効にする場合、ふるまいは何も登録されず、フォームは以前のとおりに動作します。
+jQuery の背景にある主要な原則は HTML の `on*()` 属性でふるまいを追加する代わりに、ページが完全にロードされた後で ~DOM~ にふるまいを追加することです。この方法によって、ブラウザで JavaScript のサポートを無効にする場合、ふるまいは何も登録されず、フォームは以前のとおりに動作します。
 
 最初のステップは検索ボックスでユーザーがキーを入力するときにこれを傍受することです:
 
@@ -68,7 +68,7 @@ jQuery の背景にある主要な原則は HTML の `on*()` 属性でふるま�
       }
     });
 
-AJAX 呼び出しを管理するために、"普通"のものとして同じアクションが呼び出されます。アクションの必要な変更は次のセクションで行われます。
+AJAX 呼び出しを管理するために、「普通」のものとして同じアクションが呼び出されます。アクションの必要な変更は次のセクションで行われます。
 
 最後に大事なことですが、JavaScript が有効な場合、検索ボタンを削除したい場合は次のとおりです:
 
@@ -78,7 +78,7 @@ AJAX 呼び出しを管理するために、"普通"のものとして同じア�
 ユーザーのフィードバック
 -----------------------
 
-~AJAX 呼び出し~を行うとき、ページはすぐに更新されません。ブラウザーはページを更新する前に戻ってくるサーバーの~レスポンス|HTTP レスポンス~を待ちます。一方で、何が起きているのか知らせるためにユーザーに~視覚的なフィードバック~を提供する必要があります。
+~AJAX 呼び出し~を行うとき、ページはすぐに更新されません。ブラウザはページを更新する前に戻ってくるサーバーの~レスポンス|HTTP レスポンス~を待ちます。一方で、何が起きているのか知らせるためにユーザーに~視覚的なフィードバック~を提供する必要があります。
 
 慣習として AJAX 呼び出しの間にローダーのアイコンが表示されます。ローダーの画像を追加してデフォルトでこれを隠すためにレイアウトを更新します:
 
@@ -86,7 +86,7 @@ AJAX 呼び出しを管理するために、"普通"のものとして同じア�
     <!-- apps/frontend/templates/layout.php -->
     <div class="search">
       <h2>Ask for a job</h2>
-      <form action="<?php echo url_for('@job_search') ?>" method="get">
+      <form action="<?php echo url_for('job_search') ?>" method="get">
         <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
         <input type="submit" value="search" />
         <img id="loader" src="/images/loader.gif" style="vertical-align: middle; display: none" />
@@ -144,7 +144,7 @@ AJAX 呼び出しを管理するために、"普通"のものとして同じア�
 アクションにおける AJAX
 -----------------------
 
-JavaScript が有効な場合、jQuery は検索ボックスに入力されたすべてのキーを傍受し、`search` アクションを呼び出します。そうではない場合、ユーザーがフォームを投稿するときに "enter" キーを押すもしくは "search" ボタンをクリックすることで同じ `search` アクションも呼び出されます。ですので、`search` アクションは呼び出しが AJAX 経由か否かを決定する必要があります。AJAX 呼び出しによって~リクエスト|HTTP リクエスト (AJAX)~が行われるときは、リクエストオブジェクトの `isXmlHttpRequest()` メソッドは `true` を返します。
+JavaScript が有効な場合、jQuery は検索ボックスに入力されたすべてのキーを傍受し、`search` アクションを呼び出します。そうではない場合、ユーザーがフォームを投稿するときに "enter" キーを押すもしくは「search」ボタンをクリックすることで同じ `search` アクションも呼び出されます。ですので、`search` アクションは呼び出しが AJAX 経由か否かを決定する必要があります。AJAX 呼び出しによって~リクエスト|HTTP リクエスト (AJAX)~が行われるときは、リクエストオブジェクトの `isXmlHttpRequest()` メソッドは `true` を返します。
 
 >**NOTE**
 >`isXmlHttpRequest()` メソッドは Prototype、MooTools もしくは jQuery のような主要な JavaScript ライブラリすべて動作します。
@@ -153,16 +153,13 @@ JavaScript が有効な場合、jQuery は検索ボックスに入力された�
     // apps/frontend/modules/job/actions/actions.class.php
     public function executeSearch(sfWebRequest $request)
     {
-      if (!$query = $request->getParameter('query'))
-      {
-        return $this->forward('job', 'index');
-      }
+      $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
       $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+      $this->jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery($query);
 </doctrine>
 
       if ($request->isXmlHttpRequest())
@@ -183,16 +180,13 @@ jQuery はページをリロードしませんが、DOM 要素の `#jobs` をレ
     // apps/frontend/modules/job/actions/actions.class.php
     public function executeSearch(sfWebRequest $request)
     {
-      if (!$query = $request->getParameter('query'))
-      {
-        return $this->forward('job', 'index');
-      }
+      $this->forwardUnless($query = $request->getParameter('query'), 'job', 'index');
 
 <propel>
       $this->jobs = JobeetJobPeer::getForLuceneQuery($query);
 </propel>
 <doctrine>
-      $this->jobs = Doctrine::getTable('JobeetJob')->getForLuceneQuery($query);
+      $this->jobs = Doctrine_Core::getTable('JobeetJob')->getForLuceneQuery($query);
 </doctrine>
 
       if ($request->isXmlHttpRequest())
@@ -201,20 +195,18 @@ jQuery はページをリロードしませんが、DOM 要素の `#jobs` をレ
         {
           return $this->renderText('No results.');
         }
-        else
-        {
-          return $this->renderPartial('job/list', array('jobs' => $this->jobs));
-        }
+        
+        return $this->renderPartial('job/list', array('jobs' => $this->jobs));
       }
     }
 
 >**TIP**
 >`renderComponent()` メソッドを使うことでアクションにコンポーネントを返すこともできます。
 
-~AJAX をテストする|機能テスト (Ajax)~
+~AJAX をテストする|機能テスト (AJAX)~
 ------------------------------------
 
-symfony ブラウザーは JavaScript をシミュレートできないので、AJAX 呼び出しをテストする際に symfony を手助けすることが必要です。これは jQuery と他の主要な JavaScript ライブラリはリクエストで送信するヘッダーを手動で追加する必要があることを意味します:
+symfony ブラウザは JavaScript をシミュレートできないので、AJAX 呼び出しをテストする際に symfony を手助けすることが必要です。これは jQuery とほかの主要な JavaScript ライブラリはリクエストで送信するヘッダーを手動で追加する必要があることを意味します:
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -228,7 +220,7 @@ symfony ブラウザーは JavaScript をシミュレートできないので、
       end()
     ;
 
-`setHttpHeader()` メソッドはブラウザーで行われるすぐ次のリクエストに対して ~HTTP ヘッダー~を設定します。
+`setHttpHeader()` メソッドはブラウザで行われるすぐ次のリクエストに対して ~HTTP ヘッダー~を設定します。
 
 また明日
 --------

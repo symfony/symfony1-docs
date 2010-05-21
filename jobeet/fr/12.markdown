@@ -19,8 +19,8 @@ vous souvenez bien, vous devriez vous rappeler comment le faire avec la tâche
     $ php symfony generate:app backend
 
 L'application backend est maintenant disponible à l'adresse
-`http://jobeet.localhost/backend.php/` pour l'environnement de `prod` et
-`http://jobeet.localhost/backend_dev.php/` pour l'environnement de `dev`.
+`http://www.jobeet.com.localhost/backend.php/` pour l'environnement de `prod` et
+`http://www.jobeet.com.localhost/backend_dev.php/` pour l'environnement de `dev`.
 
 >**NOTE**
 >Lorsque vous avez créé l'application frontend, le contrôleur frontal de la production a été
@@ -109,8 +109,8 @@ Backend Look and Feel
 
 D'emblée, vous pouvez utiliser les modules générés :
 
-    http://jobeet.localhost/backend_dev.php/job
-    http://jobeet.localhost/backend_dev.php/category
+    http://www.jobeet.com.localhost/backend_dev.php/job
+    http://www.jobeet.com.localhost/backend_dev.php/category
 
 Les modules admin ont beaucoup plus de fonctionnalités que les modules simples
 que nous avons générés les jours précédents. Sans écrire une seule ligne de PHP,
@@ -127,6 +127,16 @@ chaque module fournit ces fonctionnalités exceptionnelles :
 
 L'admin generator offre toutes les fonctions dont vous avez besoin pour créer
 une interface backend dans un simple package à configurer.
+
+Si vous tentez de consulter les deux modules d'administration générés, vous
+remarquerez qu'aucun style graphique n'est activé pour l'instant alors que le
+générateur d'administration de symfony en fournit un par défaut. Il ne s'agit ni
+d'un bug ni d'un oubli de la part du développeur. En réalité, les ressources web
+du plugin `sfPropelPlugin` ne sont pas encore publiées dans le dossier `web/`.
+Nous devons donc publier ces ressources web dans le répertoire `web/` du projet
+à l'aide de la commande `plugin:publish-assets`:
+
+    $ php symfony plugin:publish-assets
 
 Pour rendre l'expérience utilisateur un peu mieux, nous avons besoin de personnaliser
 le backend par défaut. Nous allons aussi ajouter un menu simple pour le rendre facile
@@ -150,7 +160,7 @@ Remplacez le contenu du fichier `~layout|Layout~.php` par défaut avec le code c
         <div id="container">
           <div id="header">
             <h1>
-              <a href="<?php echo url_for('@homepage') ?>">
+              <a href="<?php echo url_for('homepage') ?>">
                 <img src="/images/logo.jpg" alt="Jobeet Job Board" />
               </a>
             </h1>
@@ -159,10 +169,10 @@ Remplacez le contenu du fichier `~layout|Layout~.php` par défaut avec le code c
           <div id="menu">
             <ul>
               <li>
-                <?php echo link_to('Jobs', '@jobeet_job') ?>
+                <?php echo link_to('Jobs', 'jobeet_job') ?>
               </li>
               <li>
-                <?php echo link_to('Categories', '@jobeet_category') ?>
+                <?php echo link_to('Categories', 'jobeet_category') ?>
               </li>
             </ul>
           </div>
@@ -411,9 +421,9 @@ Faisons de même pour le module `job` pour le rendre plus lisible :
 ### `layout`
 
 La liste peut être affichée avec des ~layout|Layout~s différents. Par défaut, le
-layout est `~tabular|Layout tabular~`, ce qui signifie que chaque valeur de colonne
+layout est ~`tabular|Layout tabular`~, ce qui signifie que chaque valeur de colonne
 est la colonne dans sa propre table. Mais pour le module `job`, il serait préférable
-d'utiliser le layout `~stacked|Layout stacked~`, qui est l'autre layout intégré :
+d'utiliser le layout ~`stacked|Layout stacked`~, qui est l'autre layout intégré :
 
     [yml]
     # apps/backend/modules/job/config/generator.yml
@@ -474,7 +484,7 @@ défaut en ajoutant l'option `sort` :
 ### `max_per_page`
 
 Par défaut, la liste est ~paginée|Pagination~ et chaque page contient 20
-articles. Ceci peut être modifié avec l'option `~max_per_page~` :
+articles. Ceci peut être modifié avec l'option ~`max_per_page`~ :
 
     [yml]
     # apps/backend/modules/job/config/generator.yml
@@ -543,7 +553,7 @@ supplémenaires, symfony va lever une exception en vous invitant à créer une m
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
     }
 
@@ -628,7 +638,7 @@ le lien `extend` :
 
         $this->getUser()->setFlash('notice', 'The selected jobs have been extended successfully.');
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...
@@ -683,7 +693,7 @@ Créez l'action `listDeleteNeverActivated` dans le module `job` :
           $this->getUser()->setFlash('notice', 'No job to delete.');
         }
 
-        $this->redirect('@jobeet_job');
+        $this->redirect('jobeet_job');
       }
 
       // ...

@@ -302,7 +302,7 @@ Le test du lien "Publish" est maintenant plus simple :
     ;
 
 Si vous vous souvenez du chapitre 10, le lien "Publish" a été configuré pour être
-appelé avec la méthode HTTP `~PUT|PUT (Méthode HTTP)~`. Comme les navigateurs
+appelé avec la méthode HTTP ~`PUT|PUT (Méthode HTTP)`~. Comme les navigateurs
 ne comprennent pas les requêtes `PUT`, le helper `link_to()` convertit le lien
 vers un formulaire avec quelques JavaScript. Comme le navigateur de test n'exécute
 pas le code JavaScript, nous avons besoin de forcer la méthode à `PUT` en passant une
@@ -747,7 +747,7 @@ de vieux emplois de la base de données. Cette tâche devra être exécuté rég
         $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
         $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
       }

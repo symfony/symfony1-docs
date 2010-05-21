@@ -1,24 +1,24 @@
 Day 22: The Deployment
 ======================
 
-With the configuration of the cache system yesterday, the Jobeet website is
-ready to be ~deployed|Deployment~ on the production servers.
+With the configuration of the cache system in the 21st day, the Jobeet website
+is ready to be ~deployed|Deployment~ on the production servers.
 
 During twenty-two days, we have developed Jobeet on a development machine, and
-for most of you, it probably means your local machine; except if you develop
-on the production server directly, which is of course a very bad idea. Now, it
-is time to move the website to a production server.
+for most of you, it probably means your local machine; except if you develop on
+the production server directly, which is of course a very bad idea. Now, it is
+time to move the website to a production server.
 
-Today, we will see what needs to be done before going to production, what kind
-of ~deploying strategies|Deploying Strategies~ you can use, and also the tools 
-you need for a successful deployment.
+Now, we will see what needs to be done before going to production, what kind of
+~deploying strategies|Deploying Strategies~ you can use, and also the tools you
+need for a successful deployment.
 
 Preparing the Production ~Server|Web Server~
 --------------------------------------------
 
 Before deploying the project to production, we need to be sure the production
-server is configured correctly. You can re-read day 1, where we explained how to
-configure the web server.
+server is configured correctly. You can re-read day 1, where we explained
+how to configure the web server.
 
 In this section, we assume that you have already installed the web server, the
 database server, and PHP 5.2.4 or later.
@@ -57,12 +57,12 @@ will give you the best improvement for your money.
 >each request.
 
 [~APC~](http://www.php.net/apc) is one of the most popular one, and it is quite
-simple to install it:
+simple to install:
 
     $ pecl install APC
 
-Depending on your Operating System, you will also be able to install it with
-the OS native package manager.
+Depending on your Operating System, you will also be able to install it with the
+OS native package manager.
 
 >**NOTE**
 >Take some time to learn how to
@@ -73,12 +73,12 @@ The symfony Libraries
 
 ### Embedding symfony
 
-One of the great strengths of symfony is that a project is self-contained.
-All the files needed for the project to work are under the main root project
+One of the great strengths of symfony is that a project is self-contained. All
+the files needed for the project to work are under the main root project
 directory. And you can move around the project in another directory without
-changing anything in the project itself as symfony only uses relative paths.
-It means that the directory on the production server does not have to be the
-same as the one on your development machine.
+changing anything in the project itself as symfony only uses relative paths. It
+means that the directory on the production server does not have to be the same
+as the one on your development machine.
 
 The only absolute path that can possibly be found is in the
 `config/ProjectConfiguration.class.php` file; but we took care of it during
@@ -91,36 +91,35 @@ autoloader:
 
 ### ~Upgrading~ symfony
 
-Even if everything is self-contained in a single directory, upgrading symfony
-to a newer release is nonetheless insanely easy.
+Even if everything is self-contained in a single directory, upgrading symfony to
+a newer release is nonetheless insanely easy.
 
-You will want to upgrade symfony to the latest minor release from time to
-time, as we constantly fix bugs and possibly security issues. The good news
-is that all symfony versions are maintained for at least a year and during the
+You will want to upgrade symfony to the latest minor release from time to time,
+as we constantly fix bugs and possibly security issues. The good news is that
+all symfony versions are maintained for at least a year and during the
 maintenance period, we never ever add new features, even the smallest one. So,
 it is always fast, safe, and secure to upgrade from one minor release to
 another.
 
 Upgrading symfony is as simple as changing the content of the
-`lib/vendor/symfony/` directory. If you have installed symfony with the
-archive, remove the current files and replace them with the newest ones.
+`lib/vendor/symfony/` directory. If you have installed symfony with the archive,
+remove the current files and replace them with the newest ones.
 
 If you use ~Subversion~ for your project, you can also link your project to the
 latest symfony 1.4 tag:
 
     $ svn propedit svn:externals lib/vendor/
-      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0/
+      # symfony http://svn.symfony-project.com/tags/RELEASE_1_4_3/
 
-Upgrading symfony is then as simple as changing the tag to the latest
-symfony version.
+Upgrading symfony is then as simple as changing the tag to the latest symfony
+version.
 
 You can also use the 1.4 branch to have fixes in real-time:
 
     $ svn propedit svn:externals lib/vendor/
       # symfony http://svn.symfony-project.com/branches/1.4/
 
-Now, each time you do an `svn up`, you will have the latest symfony 1.4
-version.
+Now, each time you do an `svn up`, you will have the latest symfony 1.4 version.
 
 When upgrading to a new version, you are advised to always clear the cache,
 especially in the production environment:
@@ -132,12 +131,12 @@ especially in the production environment:
 >`symfony cc` by simply removing all the files and directories under the
 >`cache/` directory.
 
-You can even test a new symfony version without replacing the existing
-one. If you just want to test a new release, and want to be able to rollback
-easily, install symfony in another directory (`lib/vendor/symfony_test` for
-instance), change the path in the `ProjectConfiguration` class, clear the
-cache, and you are done. Rollbacking is as simple as removing the directory,
-and change back the path in `ProjectConfiguration`.
+You can even test a new symfony version without replacing the existing one. If
+you just want to test a new release, and want to be able to rollback easily,
+install symfony in another directory (`lib/vendor/symfony_test` for instance),
+change the path in the `ProjectConfiguration` class, clear the cache, and you
+are done. Rollbacking is as simple as removing the directory, and change back
+the path in `ProjectConfiguration`.
 
 Tweaking the ~Configuration~
 ----------------------------
@@ -155,26 +154,27 @@ You can also edit the `databases.yml` configuration file directly.
 
 ### ~Assets~
 
-As Jobeet uses ~plugins|Plugins Assets~ that embed assets, symfony created relative 
-symbolic links in the `web/` directory. The `plugin:publish-assets` task regenerates 
-or creates them if you install plugins without the `plugin:install` task:
+As Jobeet uses ~plugins|Plugins Assets~ that embed assets, symfony created
+relative symbolic links in the `web/` directory. The `plugin:publish-assets`
+task regenerates or creates them if you install plugins without the
+`plugin:install` task:
 
     $ php symfony plugin:publish-assets
 
 ### ~Customizing|Customization~ ~Error Pages~
 
-Before going to production, it is better to customize 
-~default symfony pages|Default symfony Pages~, like the 
-"~Page Not Found|404 Error~" page, or the default exception page.
+Before going to production, it is better to customize ~default symfony
+pages|Default symfony Pages~, like the "~Page Not Found|404 Error~" page, or the
+default exception page.
 
-We have already configured the error page for the `YAML` format during day 15,
-by creating an `error.yaml.php` and an `exception.yaml.php` files in the
-`config/error/` directory. The `error.yaml.php` file is used by symfony 
-in the `prod` environment, whereas `exception.yaml.php` is used in the `dev`
+We have already configured the error page for the `YAML` format during day
+15, by creating an `error.yaml.php` and an `exception.yaml.php` files in the
+`config/error/` directory. The `error.yaml.php` file is used by symfony in the
+`prod` environment, whereas `exception.yaml.php` is used in the `dev`
 environment.
 
-So, to customize the default ~exception|Exception Handling~ page for the HTML 
-~format|Formats~, create two files: `config/error/error.html.php` and 
+So, to customize the default ~exception|Exception Handling~ page for the HTML
+~format|Formats~, create two files: `config/error/error.html.php` and
 `config/error/exception.html.php`.
 
 The `404` page (page not found) can be customized by changing the
@@ -199,8 +199,8 @@ Configuring the directory names can be done in the
 
 ### The ~Web Root Directory~
 
-On some web hosts, you cannot change the web root directory name. Let's say
-that on your web host, it is named `public_html/` instead of `web/`:
+On some web hosts, you cannot change the web root directory name. Let's say that
+on your web host, it is named `public_html/` instead of `web/`:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -212,9 +212,9 @@ that on your web host, it is named `public_html/` instead of `web/`:
       }
     }
 
-The `setWebDir()` method takes the absolute path of the web root directory.
-If you also move this directory elsewhere, don't forget to edit the 
-controller scripts to check that paths to the `config/ProjectConfiguration.class.php` file
+The `setWebDir()` method takes the absolute path of the web root directory. If
+you also move this directory elsewhere, don't forget to edit the controller
+scripts to check that paths to the `config/ProjectConfiguration.class.php` file
 are still valid:
 
     [php]
@@ -223,9 +223,9 @@ are still valid:
 ### The ~Cache~ and ~Log|Logging~ Directory
 
 The symfony framework only writes in two directories: `cache/` and `log/`. For
-~security|Security~ reasons, some web hosts do not set 
-~write permissions|Write Permissions~ in the main directory. If this is the case, 
-you can move these directories elsewhere on the filesystem:
+~security|Security~ reasons, some web hosts do not set ~write permissions|Write
+Permissions~ in the main directory. If this is the case, you can move these
+directories elsewhere on the filesystem:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -246,16 +246,16 @@ Customizing symfony core Objects (aka factories)
 
 During day 16, we talked a bit about the symfony factories. Being able to
 customize the factories means that you can use a custom class for symfony core
-objects instead of the default one. You can also change the default behavior
-of these classes by changing the parameters send to them.
+objects instead of the default one. You can also change the default behavior of
+these classes by changing the parameters send to them.
 
 Let's take a look at some classic customizations you may want to do.
 
 ### ~Cookie|Cookies~ Name
 
-To handle the ~user session|Session~, symfony uses a cookie. This cookie has a 
-default name of `symfony`, which can be changed in `factories.yml`. Under the 
-`all` key, add the following configuration to change the cookie name to 
+To handle the ~user session|Session~, symfony uses a cookie. This cookie has a
+default name of `symfony`, which can be changed in `factories.yml`. Under the
+`all` key, add the following configuration to change the cookie name to
 `jobeet`:
 
     [yml]
@@ -267,10 +267,9 @@ default name of `symfony`, which can be changed in `factories.yml`. Under the
 
 ### ~Session|Session (Storage)~ ~Storage|Storages~
 
-The default session storage class is `sfSessionStorage`. It uses the
-filesystem to store the session information. If you have several web servers,
-you would want to store the sessions in a central place, like a database
-table:
+The default session storage class is `sfSessionStorage`. It uses the filesystem
+to store the session information. If you have several web servers, you would
+want to store the sessions in a central place, like a database table:
 
     [yml]
     # apps/frontend/config/factories.yml
@@ -291,8 +290,8 @@ table:
 
 ### Session Timeout
 
-By default, the user ~session timeout|Session (Timeout)~ if `1800` seconds. 
-This can be changed by editing the `user` entry:
+By default, the user ~session timeout|Session (Timeout)~ if `1800` seconds. This
+can be changed by editing the `user` entry:
 
     [yml]
     # apps/frontend/config/factories.yml
@@ -303,7 +302,7 @@ This can be changed by editing the `user` entry:
 
 ### ~Logging~
 
-By default, there is no logging in the `prod` ~environment|Environments~ because 
+By default, there is no logging in the `prod` ~environment|Environments~ because
 the logger class name is `sfNoLogger`:
 
     [yml]
@@ -344,13 +343,12 @@ When deploying the Jobeet website to the production server, we need to be
 careful not to deploy unneeded files or override files uploaded by our users,
 like the company logos.
 
-In a symfony project, there are three directories to exclude from the
-transfer: `cache/`, `log/`, and `web/uploads/`. Everything else can be
-transfered as is.
+In a symfony project, there are three directories to exclude from the transfer:
+`cache/`, `log/`, and `web/uploads/`. Everything else can be transfered as is.
 
-For security reasons, you also don't want to transfer the "non-production"
-front controllers, like the `frontend_dev.php`, `backend_dev.php` and `frontend_cache.php`
-scripts.
+For security reasons, you also don't want to transfer the "non-production" front
+controllers, like the `frontend_dev.php`, `backend_dev.php` and
+`frontend_cache.php` scripts.
 
 ### Deploying Strategies
 
@@ -359,7 +357,7 @@ server(s). If you can only access the server with a FTP account, the only
 deployment solution possible is to transfer all files every time you deploy.
 
 The simplest way to deploy your website is to use the built-in `project:deploy`
-~task|Tasks~. It uses ~`SSH`~ and ~`rsync`~ to connect and transfer the files 
+~task|Tasks~. It uses ~`SSH`~ and ~`rsync`~ to connect and transfer the files
 from one computer to another one.
 
 Servers for the `project:deploy` task can be configured in the
@@ -373,14 +371,14 @@ Servers for the `project:deploy` task can be configured in the
       user=jobeet
       dir=/var/www/jobeet/
 
-To deploy to the newly configured `production` server, use the
-`project:deploy` task:
+To deploy to the newly configured `production` server, use the `project:deploy`
+task:
 
     $ php symfony project:deploy production
 
 >**NOTE**
->Before running the `project:deploy` task for the first time, you need to connect
->to the server manually to add the key in the known hosts file.
+>Before running the `project:deploy` task for the first time, you need to 
+>connect to the server manually to add the key in the known hosts file.
 
 -
 
@@ -399,9 +397,9 @@ deploy the website, add the `--go` option:
 >connections.
 
 By default, symfony won't transfer the directories we have talked about in the
-previous section, nor it will transfer the `dev` front controller script.
-That's because the `project:deploy` task exclude files and directories are
-configured in the `config/rsync_exclude.txt` file:
+previous section, nor it will transfer the `dev` front controller script. That's
+because the `project:deploy` task exclude files and directories are configured
+in the `config/rsync_exclude.txt` file:
 
     # config/rsync_exclude.txt
     .svn
@@ -424,17 +422,16 @@ For Jobeet, we need to add the `frontend_cache.php` file:
 >You can also create a `config/rsync_include.txt` file to force some files or
 >directories to be transfered.
 
-Even if the `project:deploy` task is very flexible, you might want to
-customize it even further. As deploying can be very different based on your
-server configuration and topology, don't hesitate to extend the default task.
+Even if the `project:deploy` task is very flexible, you might want to customize
+it even further. As deploying can be very different based on your server
+configuration and topology, don't hesitate to extend the default task.
 
-Each time you deploy a website to production, don't forget to at least clear
-the configuration cache on the production server:
+Each time you deploy a website to production, don't forget to at least clear the
+configuration cache on the production server:
 
     $ php symfony cc --type=config
 
-If you have changed some routes, you will also need to clear the routing
-cache:
+If you have changed some routes, you will also need to clear the routing cache:
 
     $ php symfony cc --type=routing
 
@@ -442,8 +439,8 @@ cache:
 >Clearing the cache selectively allows to keep some parts of the cache, such
 >as the template cache.
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
 The deployment of a project is the very last step of the symfony development
 life-cycle. It does not mean that you are done. This is quite the contrary. A
@@ -452,8 +449,8 @@ bugs and you will also want to add new features over time. But thanks to the
 symfony structure and the tools at your disposal, upgrading your website is
 simple, fast, and safe.
 
-Tomorrow is the last day of the Jobeet tutorial. It will be time to
-take a step back and have a look at what you learned during the
-twenty-three days of Jobeet.
+Tomorrow, will be the last day of the Jobeet tutorial. It will be time to take a
+step back and have a look at what you learned during the twenty-three days of
+Jobeet.
 
 __ORM__

@@ -30,11 +30,11 @@
 за Вас, если в соответствующем маршруте указана переменная `sf_format`.
 URL для списка вакансий выглядит следующим образом:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Это равносильно такому URL:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Оба URL равносильны, потому что маршруты созданные классом
 `sfPropelRouteCollection` наследуют переменную `sf_format`, которая содержит
@@ -112,7 +112,7 @@ URL для списка вакансий выглядит следующим о�
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <li class="feed">
-      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+      <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
 Внутренний URI остается таким же, как для списка вакансий, только
@@ -124,7 +124,7 @@ URL для списка вакансий выглядит следующим о�
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+      href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
 В аттрибуте `href` элемента link, используется абсолютный URL, благодаря второму
 параметру переданному помощнику `url_for()`.
@@ -135,18 +135,18 @@ URL для списка вакансий выглядит следующим о�
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
     <title>Jobeet</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-    <link href="<?php echo url_for('@homepage', true) ?>"/>
+    <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+    <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
     </author>
-    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+    <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
 <propel>
 Обратите внимание на использование `U` в качестве аргумента для метода
@@ -221,7 +221,7 @@ URL для списка вакансий выглядит следующим о�
                      alt="<?php echo $job->getCompany() ?> logo" />
                  </a>
                </div>
-             <?php endif; ?>
+             <?php endif ?>
 
              <div>
                <?php echo simple_format_text($job->getDescription()) ?>
@@ -236,8 +236,8 @@ URL для списка вакансий выглядит следующим о�
             <name><?php echo $job->getCompany() ?></name>
           </author>
         </entry>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
+      <?php endforeach ?>
+    <?php endforeach ?>
 
 Метод `getHost()` объекта запроса(`$sf_request`) возвращает имя текущего хоста, которое
 пригодится для создания абсолютной ссылки на логотип компании.
@@ -312,7 +312,7 @@ URL для списка вакансий выглядит следующим о�
                    alt="<?php echo $job->getCompany() ?> logo" />
                </a>
              </div>
-           <?php endif; ?>
+           <?php endif ?>
 
            <div>
              <?php echo simple_format_text($job->getDescription()) ?>
@@ -327,7 +327,7 @@ URL для списка вакансий выглядит следующим о�
           <name><?php echo $job->getCompany() ?></name>
         </author>
       </entry>
-    <?php endforeach; ?>
+    <?php endforeach ?>
 
 Вы можете использовать фрагмент `_list.atom.php` для упрощения шаблона ленты
 вакансий:
@@ -338,22 +338,22 @@ URL для списка вакансий выглядит следующим о�
     <feed xmlns="http://www.w3.org/2005/Atom">
       <title>Jobeet</title>
       <subtitle>Latest Jobs</subtitle>
-      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-      <link href="<?php echo url_for('@homepage', true) ?>"/>
-<propel>
+      <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+      <link href="<?php echo url_for('homepage', true) ?>"/>
+    <propel>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
-</propel>
-<doctrine>
-      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
-</doctrine>
+    </propel>
+    <doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    </doctrine>
       <author>
         <name>Jobeet</name>
       </author>
-      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+      <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
     <?php foreach ($categories as $category): ?>
       <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </feed>
 
 В конечном итоге, создайте шаблон `showSuccess.atom.php`:
@@ -394,9 +394,7 @@ URL для списка вакансий выглядит следующим о�
     {
       public function getLatestPost()
       {
-        $jobs = $this->getActiveJobs(1);
-
-        return $jobs[0];
+        return $this->getActiveJobs(1)->getFirst();
       }
 
       // ...

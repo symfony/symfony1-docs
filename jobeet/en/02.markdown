@@ -1,11 +1,11 @@
 Day 2: The Project
-==================
+===================
 
-We have not written a single line of PHP yet, but yesterday, we setup the
+We have not written a single line of PHP yet, but in day 1, we setup the
 environment, created an empty symfony project, and made sure we started with
 some good security defaults. If you followed along, you have been looking at
-your screen delightedly since then, as it displays the beautiful default
-symfony page for new applications.
+your screen delightedly since then, as it displays the beautiful default symfony
+page for new applications.
 
 ![Congratulation page](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
@@ -13,17 +13,17 @@ But you want more. You want to learn all the nitty gritty details of symfony
 application development. So, let's resume our trip to symfony development
 nirvana.
 
-Today, we will take the time to describe the requirements of the Jobeet
-project with some basic ~mockup|Mockup~s.
+Now, we will take the time to describe the requirements of the Jobeet project
+with some basic ~mockup|Mockup~s.
 
 The Project Pitch
 -----------------
 
 Everybody is talking about the crisis nowadays. Unemployment is rising again.
 
-I know, symfony developers are not really concerned and that's why you want
-to learn symfony in the first place. But it is also quite difficult to find
-good symfony developers.
+I know, symfony developers are not really concerned and that's why you want to
+learn symfony in the first place. But it is also quite difficult to find good
+symfony developers.
 
 Where can you find a symfony developer? Where can you advertise your symfony
 skills?
@@ -39,9 +39,9 @@ out of the box, and of course uses the latest Web 2.0 technologies to enhance
 user experience. It also provides feeds and an API to interact with it
 programatically.
 
-Does it already exist? As a user, you will find a lot of job boards like
-Jobeet on the Internet. But try to find one which is Open-Source, and as
-feature-rich as what we propose here.
+Does it already exist? As a user, you will find a lot of job boards like Jobeet
+on the Internet. But try to find one which is Open-Source, and as feature-rich
+as what we propose here.
 
 >**NOTE**
 >If you are really looking for a symfony job or want to hire a symfony
@@ -70,13 +70,12 @@ The backend application is secured and requires credentials to access.
 
 ### Story F1: On the homepage, the user sees the latest active jobs
 
-When a user comes to the Jobeet website, he sees a list of active jobs.
-The jobs are sorted by category and then by publication date (newer jobs
-first). For each job, only the location, the position, and the company are
-displayed.
+When a user comes to the Jobeet website, he sees a list of active jobs. The jobs
+are sorted by category and then by publication date (newer jobs first). For each
+job, only the location, the position, and the company are displayed.
 
-For each category, the list only shows the first 10 jobs and a link allows
-to list all the jobs for a given category (*Story F2*).
+For each category, the list only shows the first 10 jobs and a link allows to
+list all the jobs for a given category (*Story F2*).
 
 On the homepage, the user can refine the job list (*Story F3*), or post a new
 job (*Story F5*).
@@ -85,8 +84,8 @@ job (*Story F5*).
 
 ### Story F2: A user can ask for all the jobs in a given category
 
-When a user clicks on a category name or on a "more jobs" link on the
-homepage, he sees all the jobs for this category sorted by date.
+When a user clicks on a category name or on a "more jobs" link on the homepage,
+he sees all the jobs for this category sorted by date.
 
 The list is paginated with 20 jobs per page.
 
@@ -121,9 +120,9 @@ A user can post a job. A job is made of several pieces of information:
 
 There is no need to create an account to post a job.
 
-The process is straightforward with only two steps: first, the user fills in
-the form with all the needed information to describe the job, then he
-validates the information by previewing the final job page.
+The process is straightforward with only two steps: first, the user fills in the
+form with all the needed information to describe the job, then he validates the
+information by previewing the final job page.
 
 Even if the user has no account, a job can be modified afterwards thanks to a
 specific URL (protected by a token given to the user when the job is created).
@@ -136,8 +135,8 @@ job for an extra 30 days but only when the job expires in less than 5 days.
 
 ### Story F6: A user applies to become an affiliate
 
-A user needs to apply to become an affiliate and be authorized to use the
-Jobeet API. To apply, he must give the following information:
+A user needs to apply to become an affiliate and be authorized to use the Jobeet
+API. To apply, he must give the following information:
 
   * Name
   * Email
@@ -156,8 +155,8 @@ affiliate token. The list can be returned in the XML, JSON or YAML format.
 
 The list contains the public information available for a job.
 
-The affiliate can also limit the number of jobs to be returned, and refine
-his query by specifying a category.
+The affiliate can also limit the number of jobs to be returned, and refine his
+query by specifying a category.
 
 ### Story B1: An admin configures the website
 
@@ -169,17 +168,17 @@ An admin can edit and remove any posted job.
 
 ### Story B3: An admin manages the affiliates
 
-The admin can create or edit affiliates. He is responsible for activating
-an affiliate and can also disable one.
+The admin can create or edit affiliates. He is responsible for activating an
+affiliate and can also disable one.
 
-When the admin activates a new affiliate, the system creates a unique token
-to be used by the affiliate.
+When the admin activates a new affiliate, the system creates a unique token to
+be used by the affiliate.
 
 Final Thoughts
 --------------
 
-As for any web development, you never start coding the first day. You need
-to gather the requirements first and work on a mockup design. That's what we
-have done today.
+As for any web development, you never start coding the first day. You need to
+gather the requirements first and work on a mockup design. That's what we have
+done here.
 
 __ORM__

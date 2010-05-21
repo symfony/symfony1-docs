@@ -94,7 +94,7 @@ And, of course, if you are a professional web developer, you already know all th
 Fundamental Concepts
 --------------------
 
-Before you get started with symfony, you should understand a few basic concepts. Feel free to skip ahead if you already know the meaning of OOP, ORM, RAD, DRY, KISS, TDD, YAML, and PEAR.
+Before you get started with symfony, you should understand a few basic concepts. Feel free to skip ahead if you already know the meaning of OOP, ORM, RAD, DRY, KISS, TDD, and YAML.
 
 ### PHP
 
@@ -163,7 +163,7 @@ Using this method we are able to control the values returned from an object leve
 
 Out of the box, symfony supports the two most popular open source ORMs in PHP: Propel and Doctrine. Symfony integrates both of them seamlessly. When creating a new symfony project, it's a matter of choice to use Propel or Doctrine.
 
-This book will describe how to use the Propel and Doctrine objects, but for a more complete reference, a visit to the [Propel](http://propel.phpdb.org/trac/) website or the [Doctrine](http://www.doctrine-project.org/) website is recommended.
+This book will describe how to use the Propel and Doctrine objects, but for a more complete reference, a visit to the [Propel](http://www.propelorm.org/) website or the [Doctrine](http://www.doctrine-project.org/) website is recommended.
 
 ### Rapid Application Development (RAD)
 

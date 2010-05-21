@@ -35,7 +35,7 @@
 
 Часть Symfony для работы с моделями может быть реализована с помощью
 <propel>
-[Propel ORM](http://propel.phpdb.org/). На основе
+[Propel ORM](http://www.propelorm.org/). На основе
 </propel>
 <doctrine>
 [Doctrine ORM](http://www.doctrine-project.org/). На основе

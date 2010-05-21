@@ -495,8 +495,8 @@ job используется, когда Вы хотите создать нов
     
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -513,7 +513,7 @@ job используется, когда Вы хотите создать нов
       </table>
     </form>
 
-Хелперы include_javascripts_for_form() и include_stylesheets_for_form() 
+Хелперы use_javascripts_for_form() и use_stylesheets_for_form() 
 подключают соответственно JavaScript и CSS файлы необходимые для виджета
 формы.
 
@@ -525,7 +525,7 @@ job используется, когда Вы хотите создать нов
 Хелпер `form_tag_for` генерирует для передаваемой формы тэг `<form>`, роутинг,
 устанавливает метод ~`POST`|POST (HTTP Method)~ или ~`PUT`|PUT (HTTP Method)~
 в зависимости от того, ноВый это объект или нет. Также хелпер позаботится об
-атрибуте `~multipart|Forms (Multipart)~`, который будет добавлен если 
+атрибуте ~`multipart|Forms (Multipart)`~, который будет добавлен если 
 содержится хотя бы один тэг`input file`.
 
 В конце концов `<?php echo $form ?>` рендерит виджет формы.
@@ -770,7 +770,7 @@ job используется, когда Вы хотите создать нов
 пример, роутинг для редактирования вакансии теперь соответствует следующему
 шаблону:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 Теперь нам нужно будет изменить ссылку на редактирование в шаблоне 
 `showSuccess`:

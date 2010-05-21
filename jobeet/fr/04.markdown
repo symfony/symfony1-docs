@@ -179,7 +179,7 @@ la variable la plus intéressante : elle est définie par le framework lui-même
 contient le code HTML généré par l'action.
 
 Si vous parcourez le module `job`
-(`http://jobeet.localhost/frontend_dev.php/job`), vous verrez que toutes
+(`http://www.jobeet.com.localhost/frontend_dev.php/job`), vous verrez que toutes
 les actions sont décorés par le layout.
 
 Les feuilles de style, les images et les Javascripts
@@ -624,7 +624,7 @@ Ajoutez un slot au layout afin de rendre le titre dynamique :
     <title><?php include_slot('title') ?></title>
 
 Chaque slot est identifié par un nom (ici `title`) et peut être affiché en
-utilisant le helper `~include_slot()~`. Maintenant, au début du template
+utilisant le helper ~`include_slot()`~. Maintenant, au début du template
 `showSuccess.php`, utilisez le helper `slot()` afin de définir le contenu
 du slot pour la page job :
 
@@ -823,7 +823,7 @@ La classe `sfWebRequest` redéfinit les tableaux globaux PHP ~`$_SERVER`~,
 
 Nous avons déjà accédé aux paramètres d'une requête en utilisant la méthode
 `getParameter()`. Elle renvoie une valeur depuis la variable globale `$_GET` ou `$_POST`,
-ou depuis la variable `~PATH_INFO~`.
+ou depuis la variable ~`PATH_INFO`~.
 
 Si vous voulez être sûr qu'un paramètre demandé provienne de l'une de ces variables en
 particulier, vous devez utiliser respectivement la méthode `getGetParameter()`,

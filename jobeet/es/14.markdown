@@ -19,11 +19,11 @@ El formato se puede configurar utilizando el método `setRequestFormat()` del ob
 
 Pero la mayor parte del tiempo, el formato está incluído en la URL. En este caso, Symfony lo establecerá por tí si la variable especial `sf_format` se utiliza en la ruta correspondiente. Para la lista de puestos de trabajo (job), la URL es:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Esta URL es equivalente a:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Ambas URL son equivalentes porque las rutas generadas por la clase 
 `sfPropelRouteCollection` tienen la `sf_format` como extension. Puedes comprobarlo por tí mismo ejecutando la tarea `app:routes`:
@@ -93,7 +93,7 @@ En el pie de página Jobeet, actualiza el enlace para el feed:
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <li class="feed">
-      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+      <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
 El URI interno es el mismo que para la lista `job` con el `sf_format` añadido como una variable.
@@ -103,7 +103,7 @@ Añade una etiqueta `<link>` en la sección head del layout:
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+      href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
 Para el atributo `href` del enlace, se utiliza una URL absoluta gracias al segundo argumento del helper `url_for()`.
 
@@ -113,18 +113,18 @@ Vamos a actualizar el header de la plantilla Atom:
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
     <title>Jobeet</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-    <link href="<?php echo url_for('@homepage', true) ?>"/>
+    <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+    <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
     </author>
-    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+    <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
 <propel>
 Nota la utilización de `U` como argumento para `getCreatedAt()` para obtener la fecha como timestamp. Para obtener la fecha del envío, crea el método `getLatestPost()`:
@@ -195,7 +195,7 @@ Los items del feed se pueden generar con el siguiente código:
                      alt="<?php echo $job->getCompany() ?> logo" />
                  </a>
                </div>
-             <?php endif; ?>
+             <?php endif ?>
 
              <div>
                <?php echo simple_format_text($job->getDescription()) ?>
@@ -210,8 +210,8 @@ Los items del feed se pueden generar con el siguiente código:
             <name><?php echo $job->getCompany() ?></name>
           </author>
         </entry>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
+      <?php endforeach ?>
+    <?php endforeach ?>
 
 El método `getHost()` del objeto request (`$sf_request`) devuelve el actual host, que viene muy bien para crear un vínculo absoluto para el logo de la empresa.
 
@@ -280,7 +280,7 @@ los partial son de un formato específico:
                    alt="<?php echo $job->getCompany() ?> logo" />
                </a>
              </div>
-           <?php endif; ?>
+           <?php endif ?>
 
            <div>
              <?php echo simple_format_text($job->getDescription()) ?>
@@ -295,7 +295,7 @@ los partial son de un formato específico:
           <name><?php echo $job->getCompany() ?></name>
         </author>
       </entry>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     
 Puedes utilizar el partial `_list.atom.php` para simplificar la plantilla del feed de los puestos de trabajo:
 
@@ -305,22 +305,22 @@ Puedes utilizar el partial `_list.atom.php` para simplificar la plantilla del fe
     <feed xmlns="http://www.w3.org/2005/Atom">
       <title>Jobeet</title>
       <subtitle>Latest Jobs</subtitle>
-      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-      <link href="<?php echo url_for('@homepage', true) ?>"/>
+      <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+      <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
       <author>
         <name>Jobeet</name>
       </author>
-      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+      <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
     <?php foreach ($categories as $category): ?>
       <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </feed>
 
 Finalmente, crear la plantilla `showSuccess.atom.php`:
@@ -360,9 +360,7 @@ Para el feed principal, necesitamos la fecha del último puesto de trabajo para 
     {
       public function getLatestPost()
       {
-        $jobs = $this->getActiveJobs(1);
-
-        return $jobs[0];
+        return $this->getActiveJobs(1)->getFirst();
       }
 
       // ...

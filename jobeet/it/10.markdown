@@ -67,7 +67,7 @@ un tag di tipo `<textarea>` (`sfWidgetFormTextarea`) e dovrà essere una stringa
 di non più di 255 caratteri (`sfValidatorString`).
 
 Di default tutti i campi sono obbligatori, visto che il valore impostato per
-l'opzione `~required|Campi di form obbligatori~` è impostata a `true`. Quindi la definizione della validazione
+l'opzione ~`required|Campi di form obbligatori`~ è impostata a `true`. Quindi la definizione della validazione
 per `email` è equivalente a `new sfValidatorEmail(array('required' => true))`.
 
 >**TIP**
@@ -464,8 +464,8 @@ il contenuto generato nel partial `_form' con il codice seguente:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php include_stylesheets_for_form($form) ?>
-    <?php include_javascripts_for_form($form) ?>
+    <?php use_stylesheets_for_form($form) ?>
+    <?php use_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -482,7 +482,7 @@ il contenuto generato nel partial `_form' con il codice seguente:
       </table>
     </form>
 
-Gli helper `include_javascripts_form_form()` e `include_stylesheets_for_form()`
+Gli helper `use_javascripts_form_form()` e `use_stylesheets_for_form()`
 aggiungeranno le dipendenze JavaScript e CSS necessarie per i widget.
 
 >**TIP**
@@ -738,7 +738,7 @@ Ora tutte le rotte correlate al lavoro, eccetto quella `job_show_user`,
 contengono quel token. Per esempio, la rotta per modificare un lavoro ha
 ora il seguente schema:
 
-    http://jobeet.localhost/job/TOKEN/edit
+    http://www.jobeet.com.localhost/job/TOKEN/edit
 
 Inoltre sarà necessario cambiare il link "Edit" nel template `showSuccess`:
 

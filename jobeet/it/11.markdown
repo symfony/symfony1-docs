@@ -299,7 +299,7 @@ Testare il link "Publish" ora è più facile:
     ;
 
 Se ricordate il giorno 10, il link "Publish" è stato configurato per essere
-richiamato col metodo HTTP `~PUT~`. Siccome i browser non capiscono le richieste
+richiamato col metodo HTTP ~`PUT`~. Siccome i browser non capiscono le richieste
 `PUT`, l'helper `link_to()` converte il link in un form con un po' di
 JavaScript. Siccome il browser dei test non esegue JavaScript, abbiamo
 bisogno di forzare il metodo `PUT` passando una terza opzione al metodo
@@ -756,7 +756,7 @@ regolarmente in un cron job.
         $this->logSection('propel', sprintf('Removed %d stale jobs', $nb));
 </propel>
 <doctrine>
-        $nb = Doctrine::getTable('JobeetJob')->cleanup($options['days']);
+        $nb = Doctrine_Core::getTable('JobeetJob')->cleanup($options['days']);
         $this->logSection('doctrine', sprintf('Removed %d stale jobs', $nb));
 </doctrine>
       }

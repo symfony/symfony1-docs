@@ -59,7 +59,7 @@
 
 Вы можете протестировать окружение `cache` в вашем браузере с помощью вызова его контроллера:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >Скрипт контроллера начинается с кода, который проверяет, что он вызван с локального
@@ -348,7 +348,7 @@ CSRF атак, этот ключ уникален для данного поль
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($this->form[$this->form->getCSRFFieldName()]);
+        $this->form->disableLocalCSRFProtection();
       }
     }
 
@@ -358,14 +358,13 @@ CSRF атак, этот ключ уникален для данного поль
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($form[$form->getCSRFFieldName()]);
+        $form->disableLocalCSRFProtection();
 
         // ...
       }
     }
 
-Метод `getCSRFFieldName()` возвращает название поля, которое содержит CSRF-ключ.
-При отключении этого поля, виджет и соответствующий валидатор удаляются.
+The `disableLocalCSRFProtection()` method disables the CSRF token for this form.
 
 Удаление кэша
 -------------
@@ -405,7 +404,7 @@ CSRF атак, этот ключ уникален для данного поль
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect('job_show_user', $job);
+      $this->redirect($this->generateUrl('job_show_user', $job));
     }
 
 Кэш управляется классом `sfViewCacheManager`. Метод `remove()` удаляет кэш,
@@ -446,7 +445,7 @@ CSRF атак, этот ключ уникален для данного поль
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine_Core::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

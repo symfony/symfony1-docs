@@ -158,7 +158,7 @@ structure similar to `c:\dev\sfproject\lib\vendor\symfony`.
 
 #### Installing from Subversion (recommended)
 
-If you use Subversion, it is even better to use the `svn:externals` property
+If your project use Subversion, it is even better to use the `svn:externals` property
 to embed symfony into your project in the `lib/vendor/` directory:
 
     $ svn pe svn:externals lib/vendor/
@@ -247,20 +247,7 @@ On Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project PROJECT_NAME
 
 The `generate:project` task generates the default structure of directories and
-files needed for a symfony project:
-
- | Directory   | Description
- | ----------- | ----------------------------------
- | `apps/`     | Hosts all project applications
- | `cache/`    | The files cached by the framework
- | `config/`   | The project configuration files
- | `data/`     | Data files like initial fixtures
- | `doc/`      | The project documentation files
- | `lib/`      | The project libraries and classes
- | `log/`      | The framework log files
- | `plugins/`  | The installed plugins
- | `test/`     | The unit and functional test files
- | `web/`      | The web root directory (see below)
+files needed for a symfony project.
 
 >**NOTE**
 >Why does symfony generate so many files? One of the main benefits of using
@@ -315,15 +302,7 @@ Now, create the frontend application by running the `generate:app` task:
 
 Based on the application name given as an *argument*, the `generate:app` task
 creates the default directory structure needed for the application under the
-`apps/frontend/` directory:
-
- | Directory    | Description
- | ------------ | -------------------------------------
- | `config/`    | The application configuration files
- | `i18n/`      | Tha application XLIFF files for translation
- | `lib/`       | The application libraries and classes
- | `modules/`   | The application code (MVC)
- | `templates/` | The global template files
+`apps/frontend/` directory.
 
 >**SIDEBAR**
 >Security
@@ -549,6 +528,6 @@ For a real development or on a production server, opt for the archive installati
 
 If you have any problems during installation, you will find many tutorials and answers to frequently asked questions on the symfony website. If necessary, you can submit your problem to the symfony community, and you will get a quick and effective answer.
 
-Once your project is initialised, it is a good habit to start a version-control process.
+Once your project is initialized, it is a good habit to start a version-control process.
 
 Now that you are ready to use symfony, it is time to see how to build a basic web application.

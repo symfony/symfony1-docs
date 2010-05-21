@@ -66,11 +66,11 @@
       <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
     <?php endif; ?>
 
-В шаблонах объект пользователя доступен через специальную переменную `sf_user`.
+В шаблонах объект пользователя доступен через специальную переменную `$sf_user`.
 
 >**NOTE**
 >Некоторые объекты Symfony всегда доступны в шаблонах, без необходимости
->устанавливать их в контроллере: `sf_request`, `sf_user` и `sf_response`.
+>устанавливать их в контроллере: `$sf_request`, `$sf_user` и `$sf_response`.
 
 Атрибуты пользователя
 ---------------------
@@ -188,7 +188,7 @@
           <li>
             <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
           </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
       </ul>
     </div>
 
@@ -217,15 +217,14 @@
 
         if (!empty($ids))
         {
-          return Doctrine::getTable('JobeetJob')
+          return Doctrine_Core::getTable('JobeetJob')
             ->createQuery('a')
             ->whereIn('a.id', $ids)
-            ->execute();
+            ->execute()
+          ;
         }
-        else
-        {
-          return array();
-        }
+        
+        return array();
       }
 </doctrine>
 
@@ -468,10 +467,13 @@ Plugins
       public function setup()
       {
 <propel>
-        $this->enablePlugins('sfPropelPlugin', 'sfGuardPlugin');
+        $this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin'));
 </propel>
 <doctrine>
-        $this->enablePlugins('sfDoctrinePlugin', 'sfDoctrineGuardPlugin');
+        $this->enablePlugins(array(
+          'sfDoctrinePlugin', 
+          'sfDoctrineGuardPlugin'
+        ));
 </doctrine>
       }
     }
@@ -496,7 +498,7 @@ Plugins
     $ php symfony propel:build --all --and-load --no-confirmation
 </propel>
 <doctrine>
-    $ php symfony doctrine:build --all --and-load
+    $ php symfony doctrine:build --all --and-load --no-confirmation
 </doctrine>
 
 >**TIP**
@@ -578,23 +580,17 @@ Plugins
     <?php if ($sf_user->isAuthenticated()): ?>
       <div id="menu">
         <ul>
-<propel>
-          <li><?php echo link_to('Jobs', '@jobeet_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category') ?></li>
-</propel>
-<doctrine>
-          <li><?php echo link_to('Jobs', '@jobeet_job_job') ?></li>
-          <li><?php echo link_to('Categories', '@jobeet_category_category') ?></li>
-</doctrine>
+          <li><?php echo link_to('Jobs', 'jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', 'jobeet_category') ?></li>
         </ul>
       </div>
-    <?php endif; ?>
+    <?php endif ?>
 
 А если он аутентифицирован, то нам нужно добавить в меню ссылку `logout`:
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Logout', '@sf_guard_signout') ?></li>
+    <li><?php echo link_to('Logout', 'sf_guard_signout') ?></li>
 
 >**TIP**
 <propel>
@@ -625,7 +621,7 @@ Plugins
 
     [php]
     // apps/backend/templates/layout.php
-    <li><?php echo link_to('Users', '@sf_guard_user') ?></li>
+    <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
 
 ![Меню бэкэнд-приложения](http://www.symfony-project.org/images/jobeet/1_4/13/menu.png)
 

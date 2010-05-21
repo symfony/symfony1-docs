@@ -195,7 +195,7 @@ méthodes de testeur pour l'objet `sfWebResponse` :
  | `isValid()`        | Vérifie si une réponse est bien formée en XML (vous validez aussi la réponse en plus de son type de document en passant `true` comme argument)
 
 >**NOTE**
->Nous allons décrire plusieurs classes de [testeurs](http://www.symfony-project.org/api/1_4/test)
+>Nous allons décrire plusieurs classes de testeurs 
 >dans les prochains jours (pour les formulaires, l'utilisateur, le cache, ...).
 
 Exécution des tests fonctionnels

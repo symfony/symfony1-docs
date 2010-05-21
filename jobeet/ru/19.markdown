@@ -166,10 +166,8 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
       {
         return $this->getAttribute('first_request', true);
       }
-      else
-      {
-        $this->setAttribute('first_request', $boolean);
-      }
+      
+      $this->setAttribute('first_request', $boolean);
     }
 
 Добавьте маршрут `localized_homepage`:
@@ -202,14 +200,14 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('@localized_homepage');
+        $this->redirect('localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -287,6 +285,23 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
 
     $ php symfony plugin:install sfFormExtraPlugin
 
+Or via Subversion with the following command:
+
+    $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
+
+In order for plugin's classes to be loaded, the `sfFormExtraPlugin` plugin must be activated in the `config/ProjectConfiguration.class.php` file as shown below:
+
+    [php]
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin'
+      ));
+    }
+
 >**NOTE**
 >Плагин `sfFormExtraPlugin` содержит виджеты, которые имеют внешние зависимости,
 >например, от библиотек JavaScript. Вы увидите виджеты для выбора даты, для 
@@ -313,7 +328,7 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('@change_language') ?>">
+        <form action="<?php echo url_for('change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
@@ -369,7 +384,7 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('@change_language') ?>">
+    <form action="<?php echo url_for('change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
@@ -397,7 +412,7 @@ l10n основана на [стандартах ICU](http://www.icu-project.org
 
         $form->process($request);
 
-        return $this->redirect('@localized_homepage');
+        return $this->redirect('localized_homepage');
       }
     }
 
@@ -479,13 +494,13 @@ UTF-8 это кодировка по умолчанию, используема�
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
+            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -636,7 +651,7 @@ Symfony ищет перевод для текущей локали пользо�
 После запуска задачи, откройте XLIFF-файл и добавьте французский перевод:
 
     [xml]
-    <trans-unit id="5">
+    <trans-unit id="6">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
@@ -687,7 +702,7 @@ Symfony ищет перевод для текущей локали пользо�
 Перевод строки похож на другие строки сообщений:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="7">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
     </trans-unit>
@@ -1083,12 +1098,26 @@ Symfony ищет перевод для текущей локали пользо�
 
 Перестройте модель для окружения `test`:
 
-<propel>
-    $ php symfony propel:build-all-load --no-confirmation --env=test
-</propel>
 <doctrine>
-    $ php symfony doctrine:build --all -and-load --no-confirmation --env=test
+Don't forget to update methods in the `lib/test/JobeetTestFunctional.class.php` file in order to care of our modifications concerning the `JobeetCategory`'s internationalization.
+
+    [php]
+    public function getMostRecentProgrammingJob()
+    {
+      $q = Doctrine_Query::create()
+        ->select('j.*')
+        ->from('JobeetJob j')
+        ->leftJoin('j.JobeetCategory c')
+        ->leftJoin('c.Translation t')
+        ->where('t.slug = ?', 'programming');
+
+      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
+
+      return $q->fetchOne();
+    }
 </doctrine>
+
+    $ php symfony propel:build --all -and-load --no-confirmation --env=test
 
 Теперь вы можете запустить все тесты для того, чтобы проверить, что все отлично работает:
 

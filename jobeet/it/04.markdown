@@ -180,7 +180,7 @@ layout ci sono chiamate a funzioni PHP e riferimenti a variabili PHP.
 `$sf_content` è la variabile più interessante: è definita dal framework stesso
 e contiene l'HTML generato dall'azione.
 
-Se navigate il modulo `job` (`http://jobeet.localhost/frontend_dev.php/job`)
+Se navigate il modulo `job` (`http://www.jobeet.com.localhost/frontend_dev.php/job`)
 potete vedere che tutte le azioni sono decorate dal layout.
 
 
@@ -223,7 +223,7 @@ per i fogli di stile.
 Ma come fa l'helper a sapere quali fogli di stile includere?
 
 Lo strato della ~Vista~ può essere configurato modificando il file di configurazione
-dell'applicazione `~view.yml~`. Questo è quello generato di default dal comando
+dell'applicazione ~`view.yml`~. Questo è quello generato di default dal comando
 `generate:app`:
 
     [yml]
@@ -279,7 +279,7 @@ Questo file di configurazione sarà tradotto in:
 >Il file di configurazione `view.yml` definisce anche il ~layout~ usato dall'applicazione.
 >Di default, il nome è `layout`, così symfony decora ogni pagina con il file
 >`layout.php`. Si può anche disabilitare il processo di decorazione una volta per
->tutte, impostando la proprietà `~has_layout~` a `false`.
+>tutte, impostando la proprietà ~`has_layout`~ a `false`.
 
 Funziona già così com'è, ma il file `jobs.css` è necessario solo per l'homepage,
 e il file `job.css` è necessario solo per la pagina del lavoro. Il file `view.yml`
@@ -784,8 +784,8 @@ funzioni e dalle variabili globali di PHP.
 
 ### La richiesta
 
-La classe `sfWebRequest` è un wrapper per le array globali di PHP `~$_SERVER~`,
-`~$_COOKIE~`, `~$_GET~`, `~$_POST~` e `~$_FILES~`
+La classe `sfWebRequest` è un wrapper per le array globali di PHP ~`$_SERVER`~,
+~`$_COOKIE`~, ~`$_GET`~, ~`$_POST`~ e ~`$_FILES`~
 
  Nome del metodo      | Equivalente PHP
  -------------------- | --------------------------------------------------
@@ -807,7 +807,7 @@ La classe `sfWebRequest` è un wrapper per le array globali di PHP `~$_SERVER~`,
 
 Abbiamo già avuto accesso ai parametri della richiesta usando il metodo
 `getParameter()`. Esso restituisce un valore dalla variabile globale `$_GET`
-o `$_POST`, oppure dalla variabile `~PATH_INFO~`.
+o `$_POST`, oppure dalla variabile ~`PATH_INFO`~.
 
 Se si vuole essere certi che un parametro della richiesta venga da una
 particolare di queste variabili, si devono usare rispettivamente i metodi

@@ -33,15 +33,18 @@ Tweaking the Model
 
 In symfony, the model layer has the reputation of being the slowest part. If benchmarks show that you have to optimize this layer, here are a few possible improvements.
 
-### Optimizing Propel Integration
+### Optimizing Propel or Doctrine Integration
 
-Initializing the model layer (the core Propel classes) takes some time, because of the need to load a few classes and construct various objects. However, because of the way symfony integrates Propel, these initialization tasks occur only when an action actually needs the model--and as late as possible. The Propel classes will be initialized only when an object of your generated model is autoloaded. This means pages that don't use the model are not penalized by the model layer.
+Initializing the model layer (the core ORM classes) takes some time, because of the need to load a few classes and construct various objects. However, because of the way symfony integrates the both ORMs, these initialization tasks occur only when an action actually needs the model--and as late as possible. The ORMs classes will be initialized only when an object of your generated model is autoloaded. This means pages that don't use the model are not penalized by the model layer.
 
 If your entire application doesn't require the use of the model layer, you can also save the initialization of the `sfDatabaseManager` by switching the whole layer off in your `settings.yml`:
 
     all:
       .settings:
         use_database: false
+
+        
+####Propel enhancements
 
 The generated model classes (in `lib/model/om/`) are already optimized--they don't contain comments, and they benefit from the autoloading system. Relying on autoloading instead of manually including files means that classes are loaded only if it is really necessary. So in case one model class is not needed, having classes autoloaded will save execution time, while the alternative method of using `include` statements won't. As for the comments, they document the use of the generated methods but lengthen the model files--resulting in a minor overhead on slow disks. As the generated method names are pretty explicit, the comments are turned off by default.
 
@@ -79,8 +82,10 @@ Before explaining the Join methods, let's review what happens when you loop over
 Listing 18-2 - Retrieving Details About a Related Class in a Loop
 
     [php]
-    // In the action
+    // In the action, with Propel
     $this->articles = ArticlePeer::doSelect(new Criteria());
+    // Or with Doctrine
+    $this->articles = Doctrine::getTable('Article')->findAll();
 
     // Database query issued by doSelect()
     SELECT article.id, article.title, article.author_id, ...
@@ -108,6 +113,8 @@ Listing 18-3 - Foreign Key Getters Issue One Database Query
     WHERE  author.id = ?                // ? is article.author_id
 
 So the page of Listing 18-2 will require a total of 11 queries: the one necessary to build the array of `Article` objects, plus the 10 queries to build one `Author` object at a time. This is a lot of queries to display only a list of articles and their author.
+
+####How to optimize your queries with Propel
 
 If you were using plain SQL, you would know how to reduce the number of queries to only one by retrieving the columns of the `article` table and those of the `author` table in the same query. That's exactly what the `doSelectJoinAuthor()` method of the `ArticlePeer` class does. It issues a slightly more complex query than a simple `doSelect()` call, but the additional columns in the result set allow Propel to hydrate both `Article` objects and the related `Author` objects. The code of Listing 18-4 displays exactly the same result as Listing 18-2, but it requires only one database query to do so rather than 11 and therefore is faster.
 
@@ -158,6 +165,26 @@ The peer classes also contain Join methods for `doCount()`. The classes with an 
 >**TIP**
 >Of course, a `doSelectJoinXXX()` call is a bit slower than a call to `doSelect()`, so it only improves the overall performance if you use the hydrated objects afterwards.
 
+#### Optimize your queries with Doctrine
+
+Doctrine comes with its own query language called DQL, for *Doctrine Query Language*. The syntax is very similar to the SQL one, but allows to retrieve objects instead of result set rows. In SQL, you will want to return the columns of the table `article` and `author` in the same query. With the DQL, the solution is quite easy as the only things to do is to add a join statement to the original query, and Doctrine will hydrate your objects instances accordingly. The following code shows how to make a join between the two tables:
+
+    [php]
+    // in the action
+    Doctrine::getTable('Article')
+      ->createQuery('a')
+      ->innerJoin('a.Author') // "a.Author" refers to the relation named "Author"
+      ->execute();
+      
+    // In the template (unchanged)
+    <ul>
+    <?php foreach ($articles as $article): ?>
+      <li><?php echo $article->getTitle() ?>,
+        written by <?php echo $article->getAuthor()->getName() ?></li>
+    <?php endforeach; ?>
+    </ul>
+
+
 ### Avoid Using Temporary Arrays
 
 When using Propel, objects are already hydrated, so there is no need to prepare a temporary array for the template. Developers not used to ORMs usually fall into this trap. They want to prepare an array of strings or integers, whereas the template can rely directly on an existing array of objects. For instance, imagine that a template displays the list of all the titles of the articles present in the database. A developer who doesn't use OOP would probably write code similar to what is shown in Listing 18-6.
@@ -188,6 +215,8 @@ Listing 18-7 - Using an Array of Objects Exempts You from Creating a Temporary A
     [php]
     // In the action
     $this->articles = ArticlePeer::doSelect(new Criteria());
+    // With Doctrine
+    $this->articles = Doctrine::getTable('Article')->findAll();
 
     // In the template
     <ul>
@@ -207,7 +236,7 @@ Listing 18-8 - Using a Custom Method to Prepare a Temporary Array
     // In the template
     <ul>
     <?php foreach ($articles as $article): ?>
-      <li><?php echo $article[0] ?> (<?php echo $article[1] ?> comments)</li>
+      <li><?php echo $article['title'] ?> (<?php echo $article['nb_comments'] ?> comments)</li>
     <?php endforeach; ?>
     </ul>
 
@@ -220,12 +249,13 @@ When you don't really need objects but only a few columns from various tables, a
 Listing 18-9 - Using Direct PDO Access for Optimized Model Methods, in `lib/model/ArticlePeer.php`
 
     [php]
+    // With Propel
     class ArticlePeer extends BaseArticlePeer
     {
       public static function getArticleTitlesWithNbComments()
       {
         $connection = Propel::getConnection();
-        $query = 'SELECT %s as title, COUNT(%s) AS nb FROM %s LEFT JOIN %s ON %s = %sGROUP BY %s';
+        $query = 'SELECT %s as title, COUNT(%s) AS nb_comments FROM %s LEFT JOIN %s ON %s = %sGROUP BY %s';
         $query = sprintf($query,
           ArticlePeer::TITLE, CommentPeer::ID,
           ArticlePeer::TABLE_NAME, CommentPeer::TABLE_NAME,
@@ -239,10 +269,23 @@ Listing 18-9 - Using Direct PDO Access for Optimized Model Methods, in `lib/mode
         $results = array();
         while ($resultset = $statement->fetch(PDO::FETCH_OBJ))
         {
-          $results[] = array($resultset->title, $resultset->nb);
+          $results[] = array('title' => $resultset->title, 'nb_comments' => $resultset->nb_comments);
         }
 
         return $results;
+      }
+    }
+    
+    // With Doctrine
+    class ArticleTable extends Doctrine_Table
+    {
+      public function getArticleTitlesWithNbComments()
+      {
+        return $this->createQuery('a')
+            ->select('a.title, count(*) as nb_comments)
+            ->leftJoin('a.Comments')
+            ->groupBy('a.id')
+            ->fetchArray();
       }
     }
 
@@ -259,11 +302,24 @@ Table queries are often based on non-primary key columns. To improve the speed o
 
 Listing 18-10 - Adding a Single Column Index, in `config/schema.yml`
 
+    [yml]
+    # Propel schema
     propel:
       article:
         id:
         author_id:
         title: { type: varchar(100), index: true }
+    
+    
+    # Doctrine schema
+    Article:
+     columns:
+       author_id: integer
+       title: string(100)
+     indexes:
+       title:
+         fields: [title]
+     
 
 You can use the alternative `index: unique` syntax to define a unique index instead of a classic one. You can also define multiple column indices in `schema.yml` (refer to Chapter 8 for more details about the indexing syntax). You should strongly consider doing this, because it is often a good way to speed up a complex query.
 
@@ -327,7 +383,7 @@ Then instead of outputting a hyperlink this way:
 you should use the fastest version:
 
     [php]
-    <?php echo link_to('my article', '@article_by_id?id='.$article->getId()) ?>
+    <?php echo link_to('my article', 'article_by_id', array('id' => $article->getId())) ?>
 
 The difference starts being noticeable when a page includes a few dozen routed hyperlinks.
 

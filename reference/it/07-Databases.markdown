@@ -102,7 +102,7 @@ I seguenti parametri possono essere personalizzati nella sezione `param`:
  | `debug`      | Opzoni per la classe `DebugPDO`          | n/a                |
 
 La voce `debug` definisce tutte le opzioni descritte nella
-[documentazione](http://propel.phpdb.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)
+[documentazione](http://www.propelorm.org/docs/api/1.4/runtime/propel-util/DebugPDO.html#class_details)
 di Propel. Il seguente YAML mostra le opzioni disponibili:
 
     [yml]

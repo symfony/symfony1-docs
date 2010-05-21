@@ -47,7 +47,7 @@ Eso es todo lo que hay para él. El nuevo entorno `cache` ahora es utilizable. L
 Puede probar el entorno `cache` en tu navegador, llamando su
 controlador:
 
-    http://jobeet.localhost/frontend_cache.php/
+    http://www.jobeet.com.localhost/frontend_cache.php/
 
 >**NOTE**
 >El controlador frontal tiene un script que comienza con un código que garantiza que el
@@ -290,29 +290,29 @@ Después de hacer este cambio, limpiar  el cache y re-intentar el mismo escenari
 La misma configuración debe aplicarse al formulario language ya que figura en el layout y se almacenará en el cache. Como el valor por defecto `sfLanguageForm` es usado, en lugar de crear una nueva clase, sólo para eliminar el token CSRF, vamos a hacerlo de la acción y componente del módulo `sfJobeetLanguage`:
 
     [php]
-    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/components.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/components.class.php
     class sfJobeetLanguageComponents extends sfComponents
     {
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($this->form[$this->form->getCSRFFieldName()]);
+        $this->form->disableLocalCSRFProtection();
       }
     }
 
-    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/actions.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/actions.class.php
     class sfJobeetLanguageActions extends sfActions
     {
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        unset($form[$form->getCSRFFieldName()]);
+        $form->disableLocalCSRFProtection();
 
         // ...
       }
     }
 
-El método `getCSRFFieldName()` devuelve el nombre del campo que contiene el token CSRF. Eliminado este campo, el widget y el correspondiente validador se eliminan.
+The `disableLocalCSRFProtection()` method disables the CSRF token for this form.
 
 Removiendo el Cache
 -------------------
@@ -333,7 +333,7 @@ Pero si deseas actualizar la página web tan pronto como un usuario activa un nu
 la limpieza del cache:
 
     [php]
-    // plugins/sfJobeetJob/modules/sfJobeetJob/actions/actions.class.php
+    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
     public function executePublish(sfWebRequest $request)
     {
       $request->checkCSRFProtection();
@@ -349,7 +349,7 @@ la limpieza del cache:
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect('job_show_user', $job);
+      $this->redirect($this->generateUrl('job_show_user', $job));
     }
 
 El cache es gestionado por la clase `sfViewCacheManager`. El método `remove()` remueve el cache asociado con una URI interna. Para eliminar el cache para todos los posibles parámetros de una variable, utiliza el `*` como valor. El `sf_culture=*` que usamos en código anterior significa que Symfony eliminará del cache la página principal del Inglés y del Francés.
@@ -384,7 +384,7 @@ Vamos a probar la página para la creación de puestos de trabajo:
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine_Core::getTable('CategoryTranslation')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

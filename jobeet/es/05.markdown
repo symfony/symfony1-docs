@@ -221,7 +221,7 @@ Funciona porque todas las variables en la ruta tiene su método correspondiente 
 
 Si hechas una mirada a las URL generadas, no son todavía bastantes amigables como queremos que sean:
 
-    http://jobeet.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
 Tenemos que "slugear" los valores de columna mediante la sustitución de todos los caracteres no ASCII por un `-`. Abre el archivo `JobeetJob` y añade los siguientes métodos para la clase:
 
@@ -285,7 +285,7 @@ Tenemos definidos tres nuevos métodos "virtuales" : `getCompanySlug()`,
 
 Tendrás ahora las URLs esperadas:
 
-    http://jobeet.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
+    http://www.jobeet.com.localhost/frontend_dev.php/job/sensio-labs/paris-france/1/web-developer
 
 Pero esa es sólo la mitad de la historia. La ruta es capaz de generar una URL sobre la base de un objeto, pero también es capaz de encontrar el objeto en relación con una determinada URL. Los objetos pueden ser recuperados con el método `getObject()` de la ruta. Al analizar una petición, el enrutamiento guarda la ruta del objeto coincidentes para que la uses en las acciones. Por lo tanto, cambia el método `executeShow()` para utilizar el objeto route para obtener el objeto `Jobeet`:
 

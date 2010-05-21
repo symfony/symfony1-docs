@@ -96,7 +96,6 @@ de configuration `autoload.yml` de l'application :
     [yml]
     autoload:
       vendor_some_lib:
-        name:      vendor_some_lib
         path:      %SF_LIB_DIR%/vendor/some_lib_dir
         recursive: on
 

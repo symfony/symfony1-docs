@@ -33,11 +33,11 @@ Il più delle volte il formato è integrato nell'URL. In questo caso symfony
 lo imposterà per voi se la variabile speciale ~`sf_format`~ è utilizzata
 nella corrispondente rotta. Per la lista delle offerte l'URL è:
 
-    http://jobeet.localhost/frontend_dev.php/job
+    http://www.jobeet.com.localhost/frontend_dev.php/job
 
 Questo URL è equivalente a:
 
-    http://jobeet.localhost/frontend_dev.php/job.html
+    http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
 Entrambi gli URL sono equivalenti perché le rotte generate dalla classe 
 `sfPropelRouteCollection` hanno `sf_format` come estensione e perché
@@ -104,7 +104,7 @@ le ultime offerte inserite, create il template `indexSuccess.atom.php`:
 >     [php]
 >     $this->setTemplate('foo');
 
-Di default symfony cambia la risposta `~Content-Type~` in accordo al formato, 
+Di default symfony cambia la risposta ~`Content-Type`~ in accordo al formato, 
 per tutti i formati non-HTML il layout viene disabilitato. Per un feed Atom
 symfony cambia il `Content-Type` a `application/atom+xml; charset=utf-8`.
 
@@ -113,7 +113,7 @@ Nel footer di Jobeet aggiornate il link del feed:
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <li class="feed">
-      <a href="<?php echo url_for('@job?sf_format=atom') ?>">Full feed</a>
+      <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
 L'~URI interno~ è lo stesso che per la lista `job` con il `sf_format` aggiunto
@@ -125,7 +125,7 @@ scoperta automatica dei feed da parte del browser:
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
-      href="<?php echo url_for('@job?sf_format=atom', true) ?>" />
+      href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
 Per l'attributo `href` link viene usato un ~URL assoluto~, grazie al secondo
 parametro dell'helper `url_for()`.
@@ -136,18 +136,18 @@ Sostituiamo l'header del template Atom col codice seguente:
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
     <title>Jobeet</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-    <link href="<?php echo url_for('@homepage', true) ?>"/>
+    <link href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>" rel="self"/>
+    <link href="<?php echo url_for('homepage', true) ?>"/>
 <propel>
     <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
 </propel>
 <doctrine>
-    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
 </doctrine>
     <author>
       <name>Jobeet</name>
     </author>
-    <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+    <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
 <propel>
 Notate l'utilizzo di `U` come parametro di `getCreatedAt()` per ottenere la
@@ -222,7 +222,7 @@ I dati del feed possono essere generati con il seguente codice:
                      alt="<?php echo $job->getCompany() ?> logo" />
                  </a>
                </div>
-             <?php endif; ?>
+             <?php endif ?>
 
              <div>
                <?php echo simple_format_text($job->getDescription()) ?>
@@ -237,8 +237,8 @@ I dati del feed possono essere generati con il seguente codice:
             <name><?php echo $job->getCompany() ?></name>
           </author>
         </entry>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
+      <?php endforeach ?>
+    <?php endforeach ?>
 
 Il metodo `getHost()` dell'oggetto request (`$sf_request`) restituisce
 l'host corrente, che torna utile per creare un link assoluto per il
@@ -313,7 +313,7 @@ Come per il formato `html` i ~partial|Partial~ sono specifici per il formato:
                  <img src="http://<?php echo $sf_request->getHost().$job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
                </a>
              </div>
-           <?php endif; ?>
+           <?php endif ?>
 
            <div>
              <?php echo simple_format_text($job->getDescription()) ?>
@@ -339,22 +339,22 @@ delle offerte:
     <feed xmlns="http://www.w3.org/2005/Atom">
       <title>Jobeet</title>
       <subtitle>Latest Jobs</subtitle>
-      <link href="<?php echo url_for('@job?sf_format=atom', true) ?>" rel="self"/>
-      <link href="<?php echo url_for('@homepage', true) ?>"/>
-<propel>
+      <link href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" rel="self"/>
+      <link href="<?php echo url_for('homepage', true) ?>"/>
+    <propel>
       <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', JobeetJobPeer::getLatestPost()->getCreatedAt('U')) ?></updated>
-</propel>
-<doctrine>
-      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
-</doctrine>
+    </propel>
+    <doctrine>
+      <updated><?php echo gmstrftime('%Y-%m-%dT%H:%M:%SZ', Doctrine_Core::getTable('JobeetJob')->getLatestPost()->getDateTimeObject('created_at')->format('U')) ?></updated>
+    </doctrine>
       <author>
         <name>Jobeet</name>
       </author>
-      <id><?php echo sha1(url_for('@job?sf_format=atom', true)) ?></id>
+      <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
     <?php foreach ($categories as $category): ?>
       <?php include_partial('job/list', array('jobs' => $category->getActiveJobs(sfConfig::get('app_max_jobs_on_homepage')))) ?>
-    <?php endforeach; ?>
+    <?php endforeach ?>
     </feed>
 
 Infine create il template `showSuccess.atom.php`:
@@ -395,9 +395,7 @@ per una categoria:
     {
       public function getLatestPost()
       {
-        $jobs = $this->getActiveJobs(1);
-
-        return $jobs[0];
+        return $this->getActiveJobs(1)->getFirst();
       }
 
       // ...

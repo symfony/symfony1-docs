@@ -58,7 +58,7 @@ rendere la scrittura dei test incredibilmente facile.
 >può usare una qualsiasi libreria di test, come l'ottima
 >[PHPUnit](http://www.phpunit.de/).
 
-Il framework di test `~lime~`
+Il framework di test ~`lime`~
 -----------------------------
 
 Tutti i test unitari scritti col framework lime iniziano con lo stesso codice:
@@ -241,7 +241,7 @@ iniziano sempre col nome del metodo da testare.
 >testato, vuol dire solo che ogni linea è stata eseguita, non che tutti
 >i casi limite sono stati testati.
 >
->Poiché `test:coverage` si appoggia a `~XDebug~` per raccogliere le sue informazioni,
+>Poiché `test:coverage` si appoggia a ~`XDebug`~ per raccogliere le sue informazioni,
 >si deve installarlo e abilitarlo in anticipo.
 
 Aggiungere test per nuove feature
@@ -450,7 +450,7 @@ Ora che abbiamo configurato il database, possiamo inizializzarlo usando il task
 >
 >Queste ~impostazioni~ possono essere anche dipendenti dall'ambiente. Questo
 >è vero per la maggior parte dei file di configurazione che abbiamo usato
->finora: `databases.yml`, `~app.yml~`, `~view.yml~` e `~settings.yml~`. In
+>finora: `databases.yml`, ~`app.yml`~, ~`view.yml`~ e ~`settings.yml`~. In
 >tutti questi file, la chiave primaria è l'ambiente, con la chiave `all`
 >che indica le impostazioni per tutti gli ambienti:
 >
@@ -506,7 +506,7 @@ Il task `doctrine:data-load` usa internamente il metodo
 </doctrine>
 
 >**NOTE**
->L'oggetto `~sfConfig~` può essere usato per ottenere il percorso completo di
+>L'oggetto ~`sfConfig`~ può essere usato per ottenere il percorso completo di
 >una sotto-cartella del progetto. Usandolo, si può personalizzare la struttura
 >predefinita delle cartelle.
 

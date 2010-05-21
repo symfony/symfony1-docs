@@ -3,7 +3,7 @@ Web デバッグツールバーの拡張
 
 *Ryan Weaver 著*
 
-symfony の Web ツールバーには、デバッグやパフォーマンス改善に役立つ様々なツールがはじめからそろっています。Web デバッグツールバーの各ツールは *Web デバッグパネル*と呼ばれ、キャッシュ、設定、ロギング、メモリ使用量、symfony のバージョン、処理時間に対応しています。さらに、symfony 1.3 では`ビュー`情報と`メール`デバッグの 2 つの *Web デバッグパネル*が導入されます。
+symfony の Web ツールバーには、デバッグやパフォーマンス改善に役立つさまざまなツールがはじめからそろっています。Web デバッグツールバーの各ツールは *Web デバッグパネル*と呼ばれ、キャッシュ、設定、ロギング、メモリ使用量、symfony のバージョン、処理時間に対応しています。さらに、symfony 1.3 では`ビュー`情報と`メール`デバッグの 2 つの *Web デバッグパネル*が導入されます。
 
 ![Web デバッグツールバー](http://www.symfony-project.org/images/more-with-symfony/web_debug_01.png "symfony 1.3 のデフォルトウィジェットの Web デバッグツールバー")
 
@@ -13,7 +13,7 @@ symfony 1.2 のときのように、開発者は簡単に *Web デバッグパ�
 新しい Web デバッグパネルをつくる
 ----------------------------------
 
-Web デバッグツールバーの個々の部品は *Web デバッグパネルと*呼ばれ、~`sfWebDebugPanel`~ という特殊なクラスを継承します。新しいパネルの作成は実に簡単です。`sfWebDebugPanelDocumentation.class.php` という名前のファイルをプロジェクトディレクトリの `lib/debug/` に作成します （もしこのディレクトリがなければ作成する必要があります)。
+Web デバッグツールバーの個々の部品は *Web デバッグパネルと*呼ばれ、~`sfWebDebugPanel`~ という特殊なクラスを継承します。新しいパネルの作成は実に簡単です。`sfWebDebugPanelDocumentation.class.php` という名前のファイルをプロジェクトディレクトリの `lib/debug/` に作ります （もしこのディレクトリがなければ作る必要があります)。
 
     [php]
     // lib/debug/sfWebDebugPanelDocumentation.class.php
@@ -46,7 +46,7 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
  * ~`sfWebDebugPanel::getPanelContent()`~: パネルのアイコンをクリックしたときに表示される 素の html コンテンツを生成します。
 
 最後に、新しいパネルをツールバーへ含めたいということをアプリケーションに通知します。
-このために、Web デバッグツールバーが可能性のあるパネルを集めているときに通知される `debug.web.load_panels` イベントのリスナーを追加します。まず、イベントを listen するように `config/ProjectConfiguration.class.php` ファイルを設定します:
+このために、Web デバッグツールバーが可能性のあるパネルを集めているときに通知される `debug.web.load_panels` イベントのリスナーを追加します。まず、イベントをリスニングするように `config/ProjectConfiguration.class.php` ファイルを設定します:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -60,7 +60,7 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
       ));
     }
 
-次に、ツールバーにパネルを追加するために `listenToLoadDebugWebPanelEvent()` リスナー関数を `acWebDebugPanelDocumentation.class.php` に追加します
+次に、ツールバーにパネルを追加するために `listenToLoadDebugWebPanelEvent()` リスナーメソッドを `acWebDebugPanelDocumentation.class.php` に追加します
 
 
     [php]
@@ -78,17 +78,17 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
 ![Web デバッグツールバー](http://www.symfony-project.org/images/more-with-symfony/web_debug_02.png "新しいカスタムパネルを追加した Web デバッグツールバー")
 
 >**TIP**
->symfony 1.3 では、url パラメータによりページが読み込まれたときに特定のウェブデバッグパネルを自動的に開く事が出来ます。例えば、`?sfWebDebugPanel=documentation` を url の末尾に追加することで自動的に今つくったドキュメンテーションパネルを開くことが出来ます。これはカスタムパネルを作る時にとても重宝します。
+>symfony 1.3 では、url パラメータによりページが読み込まれたときに特定のウェブデバッグパネルを自動的に開くことができます。たとえば、`?sfWebDebugPanel=documentation` を url の末尾に追加することで自動的に今作ったドキュメンテーションパネルを開くことができます。これはカスタムパネルを作る時にとても重宝します。
 
 
-3 種類のウェブデバッグパネル
+3種類の Web デバッグパネル
 ---------------------------
 
-内部的に、異なった 3 種類のウェブデバッグパネルががあります。
+内部的に、異なった3種類の Web デバッグパネルががあります。
 
 ### *アイコンのみ*のパネル
 
-もっとも基本的なパネルはツールバーにアイコンとテキストを表示するだけのものです。典型的な例は、メモリーの利用量を表示しクリックしても何も起こらない、`メモリー`パネルです。*アイコンのみ*パネルを作るには、単純に `getPanelContent()` で空文字列を返すだけです。パネルの唯一の出力は `getTitle()` メソッドによるものだけです:
+もっとも基本的なパネルはツールバーにアイコンとテキストを表示するだけのものです。典型的な例は、メモリの利用量を表示しクリックしても何も起こらない、`memory` パネルです。*アイコンのみ*パネルを作るには、単純に `getPanelContent()` で空文字列を返すだけです。パネルの唯一の出力は `getTitle()` メソッドによるものだけです:
 
     [php]
     public function getTitle()
@@ -105,12 +105,12 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
 
 ### *リンク*パネルタイプ
 
-*アイコンのみ*パネルの様に、*リンク*パネルはパネルの中身を持ちません。*アイコンのみ*と違うのは、ツールバーの*リンク*パネルをクリックすると `getTitleUrl()` で示された url に遷移します。*リンク*パネルを作るには `getPanelContent()` で空文字列を返して `getTitleUrl()` メソッドをクラスに追加します。
+*アイコンのみ*パネルのように、*リンク*パネルはパネルの中身を持ちません。*アイコンのみ*と違うのは、ツールバーの*リンク*パネルをクリックすると `getTitleUrl()` で示される URL に遷移します。*リンク*パネルを作るには `getPanelContent()` で空文字列を返して `getTitleUrl()` メソッドをクラスに追加します。
 
     [php]
     public function getTitleUrl()
     {
-      // 外部 uri へのリンク
+      // 外部 URI へのリンク
       return 'http://www.symfony-project.org/api/1_3/';
 
       // もしくは、アプリケーションのルート
@@ -158,12 +158,12 @@ Web デバッグツールバーの個々の部品は *Web デバッグパネル�
 
 ### ~`sfWebDebugPanel::getToggler()`~
 
-Web パネルのもっとも基本的な機能の 1 つがトグラーです:
+Web パネルのもっとも基本的な機能の1つがトグラーです:
 ▲▼マークをクリックするとコンテンツの表示/非表示が切り替わります。
 
 ![Web デバッグトグラー](http://www.symfony-project.org/images/more-with-symfony/web_debug_03.png "トグラー動作中の Web デバッグツールバー")
 
-この機能は `getToggler()` 関数をつかってカスタム Web デバッグパネルで簡単に使うことができます。例えば、パネルの中で内容のリストを切り替えたいときには次のようになります:
+この機能は `getToggler()` 関数を使ってカスタム Web デバッグパネルで簡単に使うことができます。たとえば、パネルの中で内容のリストを切り替えたいときには次のようになります:
 
     [php]
     public function getPanelContent()
@@ -178,12 +178,12 @@ Web パネルのもっとも基本的な機能の 1 つがトグラーです:
       return sprintf('<h3>List Items %s</h3>%s',  $toggler, $listContent);
     }
 
-`getToggler` は 2 つの引数を持ちます: 切り替える要素の DOM の `id` と、トグラーリンクの `title` 属性として設定される `title` です。`id` 属性を持った DOM 要素を作成し、トグラーを説明するラベル (例えば "List Items")を設定します。
+`getToggler` は 2 つの引数をもちます: 切り替える要素の DOM の `id` と、トグラーリンクの `title` 属性として設定される `title` です。`id` 属性を持った DOM 要素を作り、トグラーを説明するラベル (たとえば 「List Items」) を設定します。
 
 
 ### ~`sfWebDebugPanel::getToggleableDebugStack()`~
 
-`getToggler()` に似て、`getToggleableDebugStack()` はコンテンツの表示を切り替えるためのクリックできる矢印を表示します。こちらは、デバッグスタックトレースです。この関数はカスタムクラスのログを表示する必要がある時に便利です。例えば、`myCustomClas` というクラスのログを表示したいときには:
+`getToggler()` に似て、`getToggleableDebugStack()` はコンテンツの表示を切り替えるためのクリックできる矢印を表示します。こちらは、デバッグスタックトレースです。この関数はカスタムクラスのログを表示する必要がある時に便利です。たとえば、`myCustomClas` というクラスのログを表示したいときには:
 
 
     [php]
@@ -231,9 +231,9 @@ Web パネルのもっとも基本的な機能の 1 つがトグラーです:
 
 ### ~`sfWebDebugPanel::formatFileLink()`~
 
-symfony 1.3 で Web デバッグツールバーのファイルをクリックして、指定したテキストエディタで開く事が出来るようになりました。より詳しくは、["新しくなった点"](http://www.symfony-project.org/tutorial/1_3/ja/whats-new)を参照してください。
+symfony 1.3 で Web デバッグツールバーのファイルをクリックして、指定したテキストエディタで開く事ができるようになりました。より詳しくは、[「新しい機能のページ」](http://www.symfony-project.org/tutorial/1_3/ja/whats-new)を参照してください。
 
-ファイルパスを特定する機能を有効にするには、`formatFileLink()` を使う必要があります。加えて開くファイル自身の目標とする行数の指定もできます。例えば、下のコードでは `config/ProjectConfiguration.class.php` ファイルの15行目へリンクします。
+ファイルパスを特定する機能を有効にするには、`formatFileLink()` を使う必要があります。加えて開くファイル自身の目標とする行数も指定できます。たとえば、下のコードでは `config/ProjectConfiguration.class.php` ファイルの15行目へリンクします。
 
     [php]
     public function getPanelContent()
@@ -249,7 +249,7 @@ symfony 1.3 で Web デバッグツールバーのファイルをクリックし
     }
 
     
-2 番目の引数 (行番号) と 3 番目の引数 (リンクテキスト) はオプションです。もし"リンクテキスト"引数がなければ、ファイルパスがリンクテキストになります。
+第2引数 (行番号) と第3引数 (リンクテキスト) はオプションです。もし「リンクテキスト」引数がなければ、ファイルパスがリンクテキストになります。
 
 
 >**NOTE**
@@ -260,7 +260,7 @@ Web でバッグツールバーの他の小技
 
 ###デフォルトパネルの削除
 
-デフォルトでは、symfony は自動的に幾つかの Web デバッグパネルをツールバーに追加します。`debug.web.load_panels` イベントを使うことで、これらのデフォルトパネルを簡単に取り除くことができます。前に宣言した同じリスナー関数を使い、内部を `removePanel()` 関数に置き換えます。下のコードは`メモリー`パネルをツールバーから除きます:
+デフォルトでは、symfony は自動的にいくつかの Web デバッグパネルをツールバーに追加します。`debug.web.load_panels` イベントを使うことで、これらのデフォルトパネルを簡単に取り除くことができます。前に宣言した同じリスナー関数を使い、内部を `removePanel()` 関数に置き換えます。下のコードは `memory` パネルをツールバーから除きます:
 
     [php]
     public static function listenToLoadDebugWebPanelEvent(sfEvent $event)
@@ -271,7 +271,7 @@ Web でバッグツールバーの他の小技
 
 ###パネルからリクエストパラメータを利用する
 
-Web デバッグパネルの内部で一般的に必要とされる事の一つがリクエストパラメータです。例えば、`event_id` リクエストパラメータに対応するデータベースの `Event` オブジェクトから情報を表示したい時には次のようになります:
+Web デバッグパネルの内部で一般的に必要とされることの1つがリクエストパラメータです。たとえば、`event_id` リクエストパラメータに対応するデータベースの `Event` オブジェクトから情報を表示したい時には次のようになります:
 
     [php]
     $parameters = $this->webDebug->getOption('request_parameters');
@@ -280,7 +280,7 @@ Web デバッグパネルの内部で一般的に必要とされる事の一つ�
       $event = Doctrine::getTable('Event')->find($parameters['event_id']);
     }
 
-###状況によりパネルを隠す
+### 状況によりパネルを隠す
 
 現在のリクエストによっては、パネルがあまり有用ではないかもしれません。このようなときは、そのパネルを隠すこともできます。以前の例で、`event_id` リクエストパラメータが無かったときは情報を表示しないようにしてみましょう。パネルを隠すには、単に `getTitle()` メソッドで空を返すだけです:
 
@@ -298,4 +298,4 @@ Web デバッグパネルの内部で一般的に必要とされる事の一つ�
 
 あとがき
 --------
-Web デバッグツールバーで開発者は快適になりますが、デフォルトで表示されるのはあらかじめ用意されてる情報だけです。カスタム Web デバッグパネルを追加することで、開発者の工夫次第で Web デバッグツールバーの可能性は広がります。[ac2009WebDebugPlugin](http://www.symfony-project.org/plugins/ac2009WebDebugPlugin) はいくつかのパネルを含むだけです。あなた自身で工夫してみましょう。
+Web デバッグツールバーで開発者は快適になりますが、デフォルトで表示されるのはあらかじめ用意されてる情報だけです。カスタム Web デバッグパネルを追加することで、開発者の工夫しだいで Web デバッグツールバーの可能性は広がります。[ac2009WebDebugPlugin](http://www.symfony-project.org/plugins/ac2009WebDebugPlugin) はいくつかのパネルを含むだけです。あなた自身で工夫してみましょう。

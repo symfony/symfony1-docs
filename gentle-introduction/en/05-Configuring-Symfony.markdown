@@ -31,7 +31,7 @@ Taking these disadvantages into account, symfony uses configuration files only f
 
 ### YAML Syntax and Symfony Conventions
 
-For its configuration, symfony uses the YAML format by default, instead of more traditional INI or XML formats. YAML shows structure through indentation and is fast to write. Its advantages and basic rules were already described in Chapter 1. However, you need to keep a few conventions in mind when writing YAML files. This section introduces several of the most prominent conventions. For a complete dissertation on the topic, visit the YAML [website](http://www.yaml.org/).
+For its configuration, symfony uses the YAML format by default, instead of more traditional INI or XML formats. YAML shows structure through indentation and is fast to write. Its advantages and basic rules were already described in Chapter 1. However, you need to keep a few conventions in mind when writing YAML files. This section introduces several of the most prominent conventions. For a complete dissertation on the topic, read the dedicated chapter on the [reference guide book](http://www.symfony-project.org/reference/1_4/en/02-YAML).
 
 First of all, never use tabs in YAML files; use spaces instead. YAML parsers can't understand files with tabs, so indent your lines with spaces (a double blank is the symfony convention for indentation), as shown in Listing 5-1.
 
@@ -200,6 +200,7 @@ If your application suddenly stops working after a configuration change, you sho
 
         income: 12,345   # Until you convert it, this is still a string
 
+        
 Overview of the Configuration Files
 -----------------------------------
 
@@ -213,7 +214,7 @@ There are a few project configuration files by default. Here are the files that 
   * `databases.yml`: This is where you define the access and connection settings to the database (host, login, password, database name, and so on). Chapter 8 will tell you more about it. It can also be overridden at the application level.
   * `properties.ini`: This file holds a few parameters used by the command line tool, including the project name and the connection settings for distant servers. See Chapter 16 for an overview of the features using this file.
   * `rsync_exclude.txt`, `rsync_include.txt`: This file specifies which directories and files must be excluded and/or included from the synchronization between servers. It is discussed in Chapter 16.
-  * `schema.yml`: This is the data access configuration file used by Propel and Doctrine (symfony's ORM layers). It is used to make the ORM libraries work with the symfony classes and the data of your project. `schema.yml` contains a representation of the project's relational data model.
+  * `schema.yml`: This is the data access configuration file used by Propel and Doctrine (symfony's ORM layers). It is used to make the ORM libraries work with the symfony classes and the data of your project. `schema.yml` contains a representation of the project's relational data model. For Doctrine, this file is created in `config/doctrine/`.
 
 These files are mostly used by external components or by the command line, or they need to be processed even before any YAML parsing program can be loaded by the framework. That's why some of them don't use the YAML format.
 
@@ -256,7 +257,7 @@ The main application configuration is stored in files located in the `myproject/
   * `view.yml`: The structure of the default view (name of the layout, default style sheets and JavaScript files to be included, default content-type, and so on) is set in this file. Chapter 7 will tell you more about this file. These settings can be overridden for each module.
 
 >**TIP**
->All the symfony configuration files are described in great details in the [symfony reference book](http://www.symfony-project.org/doc/1_4/).
+>All the symfony configuration files are described in great details in the [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
 
 #### Internationalization Configuration
 
@@ -581,6 +582,8 @@ Listing 5-20 - Using Constants in YAML Files, Example from `autoload.yml`
         exclude:        [vendor]
 
 The path parameter will take the value returned by `sfConfig::get('sf_symfony_lib_dir')`. If you want one configuration file to rely on another, you need to make sure that the file you rely on is already parsed (look in the symfony source to find out the order in which the configuration files are parsed). `app.yml` is one of the last files parsed, so you may rely on others in it.
+
+All the available constants are described in the [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
 
 ### Using Scriptable Configuration
 

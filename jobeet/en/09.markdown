@@ -1,11 +1,9 @@
 Day 9: The Functional Tests
-===========================
+============================
 
-In the previous chapter, we saw how to unit test our Jobeet classes using the lime testing
-library packaged with symfony.
-
-In this chapter, we will write functional tests for the features we have already
-implemented in the `job` and `category` modules.
+Yesterday, we saw how to unit test our Jobeet classes using the lime testing
+library packaged with symfony. Today, we will write functional tests for the
+features we have already implemented in the `job` and `category` modules.
 
 Functional Tests
 ----------------
@@ -14,15 +12,15 @@ Functional Tests
 from the request made by a browser to the response sent by the server. They
 ~test|Testing~ all the layers of an application: the routing, the model, the
 actions, and the templates. They are very similar to what you probably already
-do manually: each time you add or modify an action, you need to go to the browser
-and check that everything works as expected by clicking on links and checking
-elements on the rendered page. In other words, you run a scenario
+do manually: each time you add or modify an action, you need to go to the
+browser and check that everything works as expected by clicking on links and
+checking elements on the rendered page. In other words, you run a scenario
 corresponding to the use case you have just implemented.
 
 As the process is manual, it is tedious and error prone. Each time you change
 something in your code, you must step through all the scenarios to ensure that
-you did not break something. That's insane. Functional tests in symfony
-provide a way to easily describe scenarios. Each scenario can then be played
+you did not break something. That's insane. Functional tests in symfony provide
+a way to easily describe scenarios. Each scenario can then be played
 automatically over and over again by simulating the experience a user has in a
 browser. Like unit tests, they give you the confidence to code in peace.
 
@@ -37,11 +35,11 @@ The `sfBrowser` class
 
 In symfony, functional tests are run through a special ~browser|Browser~,
 implemented by the
-[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_4/sfBrowser)
-class. It acts as a browser tailored for your application and directly
-connected to it, without the need for a web server. It gives you access to all
-symfony objects before and after each request, giving you the opportunity to
-introspect them and do the checks you want programatically.
+[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_4/sfBrowser) class.
+It acts as a browser tailored for your application and directly connected to it,
+without the need for a web server. It gives you access to all symfony objects
+before and after each request, giving you the opportunity to introspect them and
+do the checks you want programatically.
 
 `sfBrowser` provides methods that simulates navigation done in a classic
 browser:
@@ -86,8 +84,8 @@ Here are some usage examples of the `sfBrowser` methods:
 The `sfTestFunctional` class
 ----------------------------
 
-We have a browser, but we need a way to introspect the symfony objects to do
-the actual testing. It can be done with lime and some `sfBrowser` methods like
+We have a browser, but we need a way to introspect the symfony objects to do the
+actual testing. It can be done with lime and some `sfBrowser` methods like
 `getResponse()` and `getRequest()` but symfony provides a better way.
 
 The test methods are provided by another class,
@@ -96,12 +94,12 @@ that takes a `sfBrowser` instance in its constructor. The `sfTestFunctional`
 class delegates the tests to **~tester|Testers~** objects. Several testers are
 bundled with symfony, and you can also create your own.
 
-As we saw in chapter 8, functional tests are stored under the `test/functional/`
-directory. For Jobeet, tests are to be found in the
-`test/functional/frontend/` sub-directory as each application has its own
-subdirectory. This directory already contains two files:
-`categoryActionsTest.php`, and `jobActionsTest.php` as all tasks that generate
-a module automatically create a basic functional test file:
+As we saw in day 8, functional tests are stored under the `test/functional/`
+directory. For Jobeet, tests are to be found in the `test/functional/frontend/`
+sub-directory as each application has its own subdirectory. This directory
+already contains two files: `categoryActionsTest.php`, and `jobActionsTest.php`
+as all tasks that generate a module automatically create a basic functional test
+file:
 
     [php]
     // test/functional/frontend/categoryActionsTest.php
@@ -124,9 +122,8 @@ a module automatically create a basic functional test file:
     ;
 
 At first sight, the script above may look a bit strange to you. That's because
-methods of `sfBrowser` and `sfTestFunctional` implement a
-[~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface) 
-by always returning `$this`. It allows you to chain method calls for better
+methods of `sfBrowser` and `sfTestFunctional` implement a [~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface) by
+always returning `$this`. It allows you to chain method calls for better
 readability. The above snippet is equivalent to:
 
     [php]
@@ -146,8 +143,8 @@ readability. The above snippet is equivalent to:
     $browser->checkElement('body', '!/This is a temporary page/');
     $browser->end();
 
-Tests are run within a tester block context. A tester block context begins
-with `with('TESTER NAME')->begin()` and ends with `end()`:
+Tests are run within a tester block context. A tester block context begins with
+`with('TESTER NAME')->begin()` and ends with `end()`:
 
     [php]
     $browser->
@@ -166,7 +163,7 @@ The code tests that the request parameter `module` equals `category` and
 
 ### The Request Tester
 
-The **~request tester|HTTP Request (Test)~** provides tester methods to 
+The **~request tester|HTTP Request (Test)~** provides tester methods to
 introspect and test the `sfWebRequest` object:
 
  | Method             | Description
@@ -180,7 +177,7 @@ introspect and test the `sfWebRequest` object:
 
 ### The Response Tester
 
-There is also a **~response tester|HTTP Response (Test)~** class that provides 
+There is also a **~response tester|HTTP Response (Test)~** class that provides
 tester methods against the `sfWebResponse` object:
 
  | Method             | Description
@@ -195,14 +192,14 @@ tester methods against the `sfWebResponse` object:
  | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
 
 >**NOTE**
->We will describe more [testers](http://www.symfony-project.org/api/1_4/test)
->classes in the coming days (for forms, user, cache, ...).
+>We will describe more testers classes in the coming days 
+>(for forms, user, cache, ...).
 
 Running Functional Tests
 ------------------------
 
-As for unit tests, launching functional tests can be done by executing the
-test file directly:
+As for unit tests, launching functional tests can be done by executing the test
+file directly:
 
     $ php test/functional/frontend/categoryActionsTest.php
 
@@ -216,7 +213,7 @@ Test Data
 ---------
 
 As for ##ORM## unit tests, we need to load test data each time we launch a
-functional test. We can reuse the code we have written yesterday:
+functional test. We can reuse the code we have written previously:
 
     [php]
     include(dirname(__FILE__).'/../../bootstrap/functional.php');
@@ -261,8 +258,8 @@ Writing Functional Tests
 Writing functional tests is like playing a scenario in a browser. We already
 have written all the scenarios we need to test as part of the day 2 stories.
 
-First, let's test the Jobeet homepage by editing the `jobActionsTest.php`
-test file. Replace the code with the following one:
+First, let's test the Jobeet homepage by editing the `jobActionsTest.php` test
+file. Replace the code with the following one:
 
 ### Expired jobs are not listed
 
@@ -285,11 +282,11 @@ test file. Replace the code with the following one:
       end()
     ;
 
-As with `lime`, an informational message can be inserted by calling the
-`info()` method to make the output more readable. To verify the exclusion of
-expired jobs from the homepage, we check that the ~CSS selector~ `.jobs
-td.position:contains("expired")` does not match anywhere in the response HTML
-content (remember that in the fixture files, the only expired job we have
+As with `lime`, an informational message can be inserted by calling the `info()`
+method to make the output more readable. To verify the exclusion of expired jobs
+from the homepage, we check that the ~CSS selector~ 
+`.jobs td.position:contains("expired")` does not match anywhere in the response
+HTML content (remember that in the fixture files, the only expired job we have
 contains "expired" in the position). When the second argument of the
 `checkElement()` method is a Boolean, the method tests the existence of nodes
 that match the CSS selector.
@@ -312,8 +309,8 @@ Add the following code at the end of the test file:
         checkElement('.category_programming tr', $max)
     ;
 
-The `checkElement()` method can also check that a CSS selector matches 'n'
-nodes in the document by passing an integer as its second argument.
+The `checkElement()` method can also check that a CSS selector matches 'n' nodes
+in the document by passing an integer as its second argument.
 
 ### A category has a link to the category page only if too many jobs
 
@@ -369,18 +366,17 @@ category (`.category_design .more_jobs` does not exist), and that there is a
       end()
     ;
 
-To test if jobs are actually sorted by date, we need to check that the first
-job listed on the homepage is the one we expect. This can be done by checking
-that the URL contains the expected ~primary key|Primary Key~. As the primary
-key can change between runs, we need to get the ##ORM## object from the
-database first.
+To test if jobs are actually sorted by date, we need to check that the first job
+listed on the homepage is the one we expect. This can be done by checking that
+the URL contains the expected ~primary key|Primary Key~. As the primary key can
+change between runs, we need to get the ##ORM## object from the database first.
 
-Even if the test works as is, we need to refactor the code a bit, as getting
-the first job of the programming category can be reused elsewhere in our
-tests. We won't move the code to the Model layer as the code is test specific.
-Instead, we will move the code to the `JobeetTestFunctional` class we have
-created earlier. This class acts as a Domain Specific ~functional tester
-class|Testers~ for Jobeet:
+Even if the test works as is, we need to refactor the code a bit, as getting the
+first job of the programming category can be reused elsewhere in our tests. We
+won't move the code to the Model layer as the code is test specific. Instead, we
+will move the code to the `JobeetTestFunctional` class we have created earlier.
+This class acts as a Domain Specific ~functional tester class|Testers~ for
+Jobeet:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -449,9 +445,9 @@ You can now replace the previous test code by the following one:
       end()
     ;
 
-To test the job link on the homepage, we simulate a click on the "Web
-Developer" text. As there are many of them on the page, we have explicitly to
-asked the browser to click on the first one (`array('position' => 1)`).
+To test the job link on the homepage, we simulate a click on the "Web Developer"
+text. As there are many of them on the page, we have explicitly to asked the
+browser to click on the first one (`array('position' => 1)`).
 
 Each request parameter is then tested to ensure that the routing has done its
 job correctly.
@@ -636,9 +632,8 @@ Debugging Functional Tests
 --------------------------
 
 Sometimes a functional test fails. As symfony simulates a browser without any
-graphical interface, it can be hard to diagnose the problem. Thankfully,
-symfony provides the `~debug|Debug~()` method to output the response header
-and content:
+graphical interface, it can be hard to diagnose the problem. Thankfully, symfony
+provides the `~debug|Debug~()` method to output the response header and content:
 
     [php]
     $browser->with('response')->debug();
@@ -661,8 +656,8 @@ The task outputs a single line for each test file:
 Tests Harness
 -------------
 
-As you may expect, there is also a task to launch all tests for a project
-(unit and functional):
+As you may expect, there is also a task to launch all tests for a project (unit
+and functional):
 
     $ php symfony test:all
 
@@ -672,17 +667,16 @@ When you have a large suite of tests, it can be very time consuming to launch
 all tests every time you make a change, especially if some tests fail. That's
 because each time you fix a test, you should run the whole test suite again to
 ensure that you have not break something else. But as long as the failed tests
-are not fixed, there is no point in re-executing all other tests. The
-`test:all` tasks have a `--only-failed` option that forces the task to only
-re-execute tests that failed during the previous run:
+are not fixed, there is no point in re-executing all other tests. The `test:all`
+tasks have a `--only-failed` option that forces the task to only re-execute
+tests that failed during the previous run:
 
     $ php symfony test:all --only-failed
 
-The first time you run the task, all tests are run as usual. But for
-subsequent test runs, only tests that failed last time are executed. As you
-fix your code, some tests will pass, and will be removed from subsequent runs.
-When all tests pass again, the full test suite is run... you can then rinse
-and repeat.
+The first time you run the task, all tests are run as usual. But for subsequent
+test runs, only tests that failed last time are executed. As you fix your code,
+some tests will pass, and will be removed from subsequent runs. When all tests
+pass again, the full test suite is run... you can then rinse and repeat.
 
 >**TIP**
 >If you want to integrate your test suite in a continuous integration process,
@@ -691,11 +685,11 @@ and repeat.
 >
 >      $ php symfony test:all --xml=log.xml
 
-See you Tomorrow
-----------------
+Final Thoughts
+--------------
 
-That wraps up our tour of the symfony test tools. You have no excuse anymore
-to not test your applications! With the lime framework and the functional test
+That wraps up our tour of the symfony test tools. You have no excuse anymore to
+not test your applications! With the lime framework and the functional test
 framework, symfony provides powerful tools to help you write tests with little
 effort.
 
@@ -703,7 +697,7 @@ We have just scratched the surface of functional tests. From now on, each time
 we implement a feature, we will also write tests to learn more features of the
 test framework.
 
-Tomorrow, we will talk about yet another great feature of symfony: the form
-framework.
+Tomorrow, we will talk about yet another great feature of symfony: the **form
+framework**.
 
 __ORM__

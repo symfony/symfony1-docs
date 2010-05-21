@@ -20,11 +20,11 @@ Windows と symfony
 
  * IIS 7 は製品の発表以降、Windows Update からのごく少数の修正が必要だっただけであり、とても信頼性のあることが証明されてきました。
 
- * IIS 7 には FastCGI アクセラレーターや Windows OS のネイティブなスレッドモデルを利用するマルチスレッドを持つアプリケーションプールが含まれています。
+ * IIS 7 には FastCGI アクセラレータや Windows OS のネイティブなスレッドモデルを利用するマルチスレッドを持つアプリケーションプールが含まれています。
 
  * PHP の FastCGI の実装は Windows と IIS での伝統的な ISAPI もしくは CGI の PHP のデプロイメントと比べると、実行時におけるパフォーマンスがキャッシュなしで5倍から10倍に改善されています。
 
- * つい最近 Microsoft は PHP 用のキャッシュアクセラレーターを発表しました。執筆の時点 (2009-11-02) で製品候補です。
+ * つい最近 Microsoft は PHP 用のキャッシュアクセラレータを発表しました。執筆の時点 (2009-11-02) で製品候補です。
 
 >**SIDEBAR**
 >このチュートリアルで予定される拡張
@@ -34,12 +34,12 @@ Windows と symfony
 >      [PHP_PDO_MSSQL]
 >      extension=php_pdo_mssql.dll
 >
->現在、コード実行でのベストなパフォーマンスは PHP 5 の Microsoft SQL Server のネイティブドライバーによって得られます。オープンソースの Windows ドライバーはバージョン1.1が入手できます。これは PHP の新しい拡張 DLL として実装されています:
+>現在、コード実行でのベストなパフォーマンスは PHP 5 の Microsoft SQL Server のネイティブドライバによって得られます。オープンソースの Windows ドライバはバージョン1.1が入手できます。これは PHP の新しい拡張 DLL として実装されています:
 >
 >      [PHP_SQLSRV]
 >      extension=php_sqlsrv.dll
 >
->Microsoft SQL Server 2005 もしくは2008のどちらかをデータベースとして使うことができます。計画されるチュートリアルの拡張は無料で利用できるエディション: SQL Server Express の使用もカバーします。
+>Microsoft SQL Server 2005 もしくは2008のどちらかをデータベースとして使うことができます。計画されるチュートリアルの拡張は無料で利用できるエディションの SQL Server Express もカバーします。
 
 ### 32ビットを含め、異なる Windows システムでチュートリアルを遊ぶ方法
 
@@ -74,7 +74,7 @@ Windows クライアント OS でチュートリアルを実行することは�
 
 ### ドキュメントで使われる Web サーバー
 
-IIS 7.0 で使われる Web サーバーは Windows Server 2008 のすべてのエディションに役割として含まれています。十分な機能を持つ Windows Server 2008 サーバーで始めゼロから IIS をインストールします。インストールステップはデフォルトの選択を使います。IIS 7.0 に付属する2つのモジュール: **FastCGI** と **URL Rewrite** を追加するだけです。
+IIS 7.0 で使われる Web サーバーは Windows Server 2008 のすべてのエディションにロールとして含まれています。十分な機能をもつ Windows Server 2008 サーバーで始めゼロから IIS をインストールします。インストールステップはデフォルトの選択を使います。IIS 7.0 に付属する2つのモジュール: **FastCGI** と **URL Rewrite** を追加するだけです。
 
 ### データベース
 
@@ -94,29 +94,29 @@ SQLite は symfony のサンドボックス用にあらかじめ設定された�
 このチュートリアルと同じスクリーンショットを得るには、インターネット上で無料で入手でき、30日の期間利用できる専用の Windows Server を仮想環境で試すことをおすすめします。
 
 >**SIDEBAR**
->無料のWindows Serverトライアルを得るには？
+>無料の Windows Server トライアルを得るには？
 >
 >インターネットにアクセスできる専用サーバーを使うのはもちろん可能です。物理的なサーバーもしくはバーチャルの専用サーバー (VDS) でも完璧に動きます。
 >
 >Windows サーバーの30日トライアルは Ikoula から入手できます。このサイトは開発者とデザイナーのためのサービスの総合リストを提供しています。Microsoft Hyper-V 環境を稼働させている Windows Virtual PC のトライアルは0円から始めることができます。
 >もちろん、Windows Server 2008 Web、Standard、Enterprise もしくは Datacenter エディションでも十分な機能を持つ30日トライアルの仮想マシンを得られます。
 >
->そのためには、http://www.ikoula.com/flex_server にブラウザーでアクセスして "Testez gratuitement" ボタンをクリックします。
+>そのためには、http://www.ikoula.com/flex_server にブラウザでアクセスして「Testez gratuitement」ボタンをクリックします。
 >
->このドキュメントの記述と同じメッセージを得るには、Flex サーバーと一緒に頼んだ OS は: "Windows Server 2008 Enterprise エディション64ビット"です。これは x64 ディストリビューションで、fr-FR と en-US ロケールで配布されています。Windows コントロールパネルから `fr-FR` から `en-US` に切り替えるのは簡単です。とりわけ、この設定は "Keyboards and Languages" タブに存在する "Regional and Language Options" で見つかります。"Install/uninstall languages" をクリックするだけです。
+>このドキュメントの記述と同じメッセージを得るには、Flex サーバーと一緒に頼んだ OS は: 「Windows Server 2008 Enterprise エディション64ビット」です。これは x64 ディストリビューションで、fr-FR と en-US ロケールで配布されています。Windows コントロールパネルから `fr-FR` から `en-US` に切り替えるのは簡単です。とりわけ、この設定は「Keyboards and Languages」タブに存在する「Regional and Language Options」で見つかります。「Install/uninstall languages」をクリックするだけです。
 
 サーバーへの管理者権限が必須です。
 
-リモートワークステーションから作業する場合、読者はリモートデスクトップサービス (以前はターミナルサーバークライアントとして知られていた) を実行しなければなりません。そして読者に管理者権限があることを確認してください。
+リモートワークステーションから作業する場合、読者はリモートデスクトップサービス (以前はターミナルサーバークライアントとして知られていました) を実行しなければなりません。そして読者に管理者権限があることを確認してください。
 
 ここで使われるディストリビューションは次のものです: Windows Server 2008 Service Pack 2
 
 ![winver コマンドでスタートアップ環境を確認する - ここでは英語](http://www.symfony-project.org/images/more-with-symfony/windows_01.png)
 
-グラフィカル環境でインストールされた Windows Server 2008 は Windows Vista のルックアンドフィールと一致します。ディストリビューションのサイズを減らすために同じサービスを持つコマンドラインのみのバージョンの Windows Server 2008 を使うこともできます (6.5 GBの代わりに1.5 GB)。これは攻撃対象領域と適用する必要のあるたくさんの Windows Update パッチも減らします。
+グラフィカル環境でインストールされた Windows Server 2008 は Windows Vista の見た目と一致します。ディストリビューションのサイズを減らすために同じサービスを持つコマンドラインのみのバージョンの Windows Server 2008 を使うこともできます (6.5GBの代わりに1.5 GB)。これは攻撃対象領域と適用する必要のあるたくさんの Windows Update パッチも減らします。
 
 一時検査 - インターネット上の専用サーバー
-----------------------------------------
+-------------------------------------------
 
 サーバーはインターネットから直接アクセスできるので、Windows ファイアウォールがアクティブプロテクションを提供していることを確認するのはよい考えです。確認する例外は次のものだけです:
 
@@ -127,11 +127,11 @@ SQLite は symfony のサンドボックス用にあらかじめ設定された�
 
 ![コントロールパネルから直接ファイアウォールの設定を確認する](http://www.symfony-project.org/images/more-with-symfony/windows_02.png)
 
-それから、すべてのソフトウェアピースが最新の修正、パッチとドキュメントで最新の状態になっていることを確認するために一連のWindows Updateを実行するのはよいことです。
+それから、すべてのソフトウェアピースが最新の修正、パッチとドキュメントで最新の状態になっていることを確認するために一連の Windows Update を実行するのはよいことです。
 
 ![コントロールパネルから直接 Windows Update ステータスをチェックする](http://www.symfony-project.org/images/more-with-symfony/windows_03.png)
 
-準備の最後の段階として、既存の Windows ディストリビューションもしくは IIS コンフィギュレーションでの潜在的なパラメーターの衝突を削除するために、以前役割として Webサーバー を Windows Server にインストールしたのであればアンインストールすることを推奨します。
+準備の最後の段階として、既存の Windows ディストリビューションもしくは IIS コンフィギュレーションでの潜在的なパラメータの衝突を削除するために、以前役割として Webサーバー を Windows Server にインストールしたのであればアンインストールすることを推奨します。
 
 ![サーバーマネージャから、Web サーバーの役割を削除する](http://www.symfony-project.org/images/more-with-symfony/windows_04.png)
 
@@ -140,21 +140,21 @@ PHP をインストールする - わずか数クリック
 
 さて、IIS と PHP は1つの単純なオペレーションでインストールできます。
 
-PHPはWindows Server 2008 の配布物の一部*ではない*ので、最初に Web PI 2.0(Microsoft Web Platform Installer 2.0) をインストールする必要があります。
+PHP は Windows Server 2008 の配布物の一部*ではない*ので、最初に Web PI 2.0 (Microsoft Web Platform Installer 2.0) をインストールする必要があります。
 
 Web PI は Windows/IIS システムで PHP を実行するのに必要なすべての依存ソフトウェアのインストールの面倒を見てくれます。そういうわけで、これは IIS を Web サーバーのための最小限の役割サービスでデプロイし、PHP ランタイムの最小限のオプションも提供します。
 
 ![http://www.microsoft.com/web - ダウンロードする](http://www.symfony-project.org/images/more-with-symfony/windows_05.png)
 
-Web PI 2.0 のインストールはコンフィギュレーションアナライザーを含み、既存のモジュールを確認し、必要なモジュールのアップグレードを提案し、Microsoft Web プラットフォームのリリース前のエクステンションのベータテストも許可します。
+Web PI 2.0 のインストールはコンフィギュレーションアナライザを含み、既存のモジュールを確認し、必要なモジュールのアップグレードを提案し、Microsoft Web プラットフォームのリリース前のエクステンションのベータテストも許可します。
 
 ![Web PI 2.0 - 初見](http://www.symfony-project.org/images/more-with-symfony/windows_06.png)
 
-Web PI 2.0 は PHP 実行環境のワンクリックインストールを提供します。セレクションは PHP の "non-thread safe" Win32 実装をインストールしこれは IIS 7 と FastCGI との兼ね合いでベストです。これは最新のテストされたランタイム、ここでは5.2.11も提示します。これを見つけるには、左の "Frameworks and Runtimes" タブを選ぶだけです:
+Web PI 2.0 は PHP 実行環境のワンクリックインストールを提供します。セレクションは PHP の「スレッドセーフではない」Win32 実装をインストールしこれは IIS 7 と FastCGI との兼ね合いでベストです。これは最新のテストされたランタイム、ここでは5.2.11も提示します。これを見つけるには、左の「Frameworks and Runtimes」タブを選ぶだけです:
 
 ![Web PI 2.0 - フレームワークとランタイムタブ](http://www.symfony-project.org/images/more-with-symfony/windows_07.png)
 
-PHPを選んだ後で、Web PI 2.0 は IIS 7.0 の最小の役割サービスを含む、Web サーバーに保存される `.php` ページを提供するために必要なすべての依存ソフトウェアを自動的に選択します:
+PHP を選んだ後で、Web PI 2.0 は IIS 7.0 の最小の役割サービスを含む、Web サーバーに保存される `.php` ページを提供するために必要なすべての依存ソフトウェアを自動的に選択します:
 
 ![Web PI 2.0 - 自動的に追加される依存ソフトウェア - 1/3.](http://www.symfony-project.org/images/more-with-symfony/windows_08.png)
 
@@ -162,38 +162,38 @@ PHPを選んだ後で、Web PI 2.0 は IIS 7.0 の最小の役割サービスを
 
 ![Web PI 2.0 - 自動的に追加される依存ソフトウェア - 3/3.](http://www.symfony-project.org/images/more-with-symfony/windows_10.png)
 
-次に、Install をクリックし、その次に "I Accept" ボタンをクリックします。IIS コンポーネントのインストールが始まり、平行して、ダウンロードされた PHP [ランタイム](http://windows.php.net)とモジュールが更新されます (たとえば IIS 7.0  FastCGI のための更新)。
+次に、Install をクリックし、その次に「I Accept」ボタンをクリックします。IIS コンポーネントのインストールが始まり、平行して、ダウンロードされた PHP [ランタイム](http://windows.php.net)とモジュールが更新されます (たとえば IIS 7.0 の FastCGI のための更新)。
 
 ![Web PI 2.0 - IIS コンポーネントがインストールされその間に Web からダウンロードされ更新される](http://www.symfony-project.org/images/more-with-symfony/windows_11.png)
 
-最後に、PHPセットアッププログラムが実行され、数分後に次のウィンドウが表示されます:
+最後に、PHP セットアッププログラムが実行され、数分後に次のウィンドウが表示されます:
 
 ![Web PI 2.0 - PHPのインストールが完了](http://www.symfony-project.org/images/more-with-symfony/windows_12.png)
 
-"Finish"をクリックします。
+「Finish」をクリックします。
 
 Windows Server はポート80をリスニングしており応答できるようになっています。
 
-これをブラウザーで確認してみましょう:
+これをブラウザで確認してみましょう:
 
 ![Firefox - IIS 7.0 はポート80でレスポンスする](http://www.symfony-project.org/images/more-with-symfony/windows_13.png)
 
 PHP が正しくインストールされ、IIS から利用できることを確認するために、ポート80の Web サーバーがアクセスできる `C:\inetpub\wwwroot` で小さな `phpinfo.php` ファイルを作ります。
 
-これを行う前に、Windows Explorer でファイルの正しい拡張子を見ることができるように、"登録されている拡張子は表示しない"のチェックが外されていることを確認してください。
+これを行う前に、Windows Explorer でファイルの正しい拡張子を見ることができるように、「登録されている拡張子は表示しない」のチェックが外されていることを確認してください。
 
 ![Windows Explorer - 登録されている拡張子は表示しないのチェックを外す](http://www.symfony-project.org/images/more-with-symfony/windows_14.png)
 
-Windows Explorer を開き、`C:\inetpub\wwwroot` に移動します。右クリックをして"新しいテキストドキュメント"をクリックします。このファイルの名前を `phpinfo.php` に変更していつもの関数呼び出しをコピーします。
+Windows Explorer を開き、`C:\inetpub\wwwroot` に移動します。右クリックをして「新しいテキストドキュメント」をクリックします。このファイルの名前を `phpinfo.php` に変更していつもの関数呼び出しをコピーします。
 
 
 ![Windows Explorer - phpinfo.php を作成する](http://www.symfony-project.org/images/more-with-symfony/windows_15.png)
 
-次に、Web ブラウザーを再度開き、サーバーのURLの末尾に `/phpinfo.php` をつけてアクセスします:
+次に、Web ブラウザを再度開き、サーバーのURLの末尾に `/phpinfo.php` をつけてアクセスします:
 
-![Firefox - phpinfo.phpの実行はOK](http://www.symfony-project.org/images/more-with-symfony/windows_16.png)
+![Firefox - phpinfo.php の実行は OK](http://www.symfony-project.org/images/more-with-symfony/windows_16.png)
 
-最後に、symfonyを問題なくインストールできるか確認するために、[http://sf-to.org/1.3/check.php](`check_configuration.php`)をダウンロードします。
+最後に、symfony を問題なくインストールできるか確認するために、[check_configuration.php](http://sf-to.org/1.3/check.php)をダウンロードします。
 
 ![PHP - check.php をダウンロードする場所](http://www.symfony-project.org/images/more-with-symfony/windows_17.png)
 
@@ -201,7 +201,7 @@ Windows Explorer を開き、`C:\inetpub\wwwroot` に移動します。右クリ
 
 ![PHP - check_configuration.php をコピーしてリネームする](http://www.symfony-project.org/images/more-with-symfony/windows_18.png)
 
-最後に、Web ブラウザーをもう一度開き、サーバーの URL の最後に `/check_configuration.php` をつけます:
+最後に、Web ブラウザをもう一度開き、サーバーの URL の最後に `/check_configuration.php` をつけます:
 
 ![Firefox - check_configuration.php の実行は OK](http://www.symfony-project.org/images/more-with-symfony/windows_19.png)
 
@@ -228,8 +228,8 @@ CLI から PHP を実行する
 
 `MSVCR71.DLL`ファイルを次のディレクトリにコピーします:
 
- * x64システム: `C:\windows\syswow64` ディレクトリ
- * x86システム: `C:\windows\system32` ディレクトリ
+ * x64 システム: `C:\windows\syswow64` ディレクトリ
+ * x86 システム: `C:\windows\system32` ディレクトリ
 
 .Net Framework 1.1 はアンインストールできます。
 
@@ -243,7 +243,7 @@ CLI から PHP を実行する
 symfony サンドボックスのインストールと使い方
 ------------------------------------------
 
-次のパラグラフは ["The Sandbox"](http://www.symfony-project.org/getting-started/1_4/ja/A-Sandbox) ページ"の symfony を始める"から抜粋したものです: "symfony を経験する最速の方法は symfony のサンドボックスをインストールすることです。 サンドボックスはとってもインストールが簡単であらかじめ symfony プロジェクトがパッケージになっており、すでに理にかなったデフォルトで設定されています。これは Web のベストプラクティスを尊重する適切だがわずらわしいインストール作業をしなくても symfony を使って練習するためのすばらしい方法です。"
+次のパラグラフは[「The Sandbox](http://www.symfony-project.org/getting-started/1_3/ja/A-Sandbox) ページ」の 「symfony を始める」から抜粋したものです: 「symfony を経験する最速の方法は symfony のサンドボックスをインストールすることです。 サンドボックスはとってもインストールが簡単であらかじめ symfony プロジェクトがパッケージになっており、すでに理にかなったデフォルトで設定されています。これは Web のベストプラクティスを尊重する適切だがわずらわしいインストール作業をしなくても symfony を使って練習するためのすばらしい方法です。」
 
 サンドボックスは SQLite をデータベースエンジンとして使うようあらかじめ設定されています。Windows では特別にインストールするものはありません: SQLite のサポートは SQLite の PDO エクステンションで直接実装されており PHP のインストール時点で一緒にインストールされます。PHP ランタイムが Microsoft Web PI を通してインストールされたときにすでにこれは完了しています。
 
@@ -253,9 +253,9 @@ SQLite エクステンションが `php.ini` ファイルで正しくインス�
 
 ### ダウンロードし、ディレクトリを作成しすべてのファイルをコピーする
 
-symfony のサンドボックスプロジェクトは"インストールと実行の準備ができており"、`.zip` アーカイブ形式で配布されています。
+symfony のサンドボックスプロジェクトは「インストールと実行の準備ができており」、`.zip` アーカイブ形式で配布されています。
 
-[アーカイブ](http://www.symfony-project.org/get/sf_sandbox_1_3.zip)をダウンロードし、`C:\Users\Administrator`ディレクトリのなかで読み書きできる "downloads" ディレクトリのような一時的な位置に展開します。
+[アーカイブ](http://www.symfony-project.org/get/sf_sandbox_1_3.zip)をダウンロードし、`C:\Users\Administrator`ディレクトリのなかで読み書きできる「downloads」ディレクトリのような一時的な位置に展開します。
 
 ![サンドボックス - アーカイブをダウンロードして展開する](http://www.symfony-project.org/images/more-with-symfony/windows_22.png)
 
@@ -289,33 +289,33 @@ symfony のサンドボックスプロジェクトは"インストールと実�
 
 ![サンドボックス - コマンドラインのテスト - 成功](http://www.symfony-project.org/images/more-with-symfony/windows_25.png)
 
-### Webアプリケーションの作成
+### Web アプリケーションの作成
 
-ローカルサーバーで Web アプリケーションを作るには、IIS 7 マネージャを使います。これは IIS 関連のすべての活動のためのGUI コントロールパネルです。このUIから発動されるすべてのアクションは実際には背後のコマンドラインインターフェイス経由で実行されます。
+ローカルサーバーで Web アプリケーションを作るには、IIS 7 マネージャを使います。これは IIS 関連のすべての活動のための GUI  コントロールパネルです。この UI から発動されるすべてのアクションは実際には背後のコマンドラインインターフェイス経由で実行されます。
 
 IIS マネージャコンソールはスタートメニューのプログラムの管理ツールのインターネット インフォメーション サービス (IIS) マネージャでアクセス可能です。
 
-#### ポート80のインターフェイスを利用できないように "Default Web Site" を再設定する
+#### ポート80のインターフェイスを利用できないように「Default Web Site」を再設定する
 
-symfony のサンドボックスがポート80 (HTTP) でのみ応答するようにすることを望みます。このためには、既存の "Default Web Site" のポートを8080に変更します。
+symfony のサンドボックスがポート80 (HTTP) でのみ応答するようにすることを望みます。このためには、既存の「Default Web Site」のポートを8080に変更します。
 
-![IISマネージャ - "Default Web Site"のバインディングを編集する](http://www.symfony-project.org/images/more-with-symfony/windows_26.png)
+![IIS マネージャ - 「Default Web Site」のバインディングを編集する](http://www.symfony-project.org/images/more-with-symfony/windows_26.png)
 
-Windows ファイアウォールが有効な場合、"Default Web Site" に到達できるようにポート8080用の例外を作らなければならないことがあることにご注意ください。この目的のために、Windows コントロールパネルに移動し、Windows ファイアウォールを選択し、"Windows ファイアウォールによるプログラムの許可"をクリックし、"ポートの追加"をクリックします。作成の後でチェックボックスにチェックして例外を有効にします。
+Windows ファイアウォールが有効な場合、「Default Web Site」に到達できるようにポート8080用の例外を作らなければならないことがあることにご注意ください。この目的のために、Windows コントロールパネルに移動し、Windows ファイアウォールを選択し、「Windows ファイアウォールによるプログラムの許可」をクリックし、「ポートの追加」をクリックします。作成の後でチェックボックスにチェックして例外を有効にします。
 
 ![Windows ファイアウォール - ポート8080の例外を作成する](http://www.symfony-project.org/images/more-with-symfony/windows_27.png)
 
 #### サンドボックス用の新しい Web サイトを追加する
 
-管理ツールから IIS マネージャを開きます。左のペインで、"Sites" のアイコンを選び右クリックします。ポップアップメニューから Add Web Site を選びます。サイトの名前としてたとえば "Symfony Sandbox" を、物理的なパスとして `D:\dev\sfsandbox` を入力し、ほかのフィールドはそのままにします。ダイアルボックスを見ることにあります:
+管理ツールから IIS マネージャを開きます。左のペインで、「Sites」のアイコンを選び右クリックします。ポップアップメニューから Add Web Site を選びます。サイトの名前としてたとえば「Symfony Sandbox」を、物理的なパスとして `D:\dev\sfsandbox` を入力し、ほかのフィールドはそのままにします。ダイアルボックスを見ることにあります:
 
 ![IIS マネージャ - Add Web Site.](http://www.symfony-project.org/images/more-with-symfony/windows_28.png)
 
-OK をクリックします。小さな `x` が Web サイトのアイコンに現れる場合(ビュー/サイト機能のなか)、消すために右ペインの "Restart" をクリックするのをためらわないでください。
+OK をクリックします。小さな `x` が Web サイトのアイコンに現れる場合(ビュー/サイト機能のなか)、消すために右ペインの「Restart」をクリックするのをためらわないでください。
 
 #### Web サイトが応答しているかチェックする
 
-IIS マネージャから、右ペインの "Symfony Sandbox" のサイトを選択し、"Browse *.80 (http)" をクリックします。
+IIS マネージャから、右ペインの「Symfony Sandbox」のサイトを選択し、「Browse *.80 (http)」をクリックします。
 
 ![IISマネージャ - Browse *.80をクリックする](http://www.symfony-project.org/images/more-with-symfony/windows_29.png)
 
@@ -325,11 +325,11 @@ IIS マネージャから、右ペインの "Symfony Sandbox" のサイトを選
 
 ![Internet Explorer - 通常のエラー](http://www.symfony-project.org/images/more-with-symfony/windows_30.png)
 
-ブラウザーの URL バーに `http://localhost`の代わりに`http://localhost/web` を入力します。デフォルトの Internet Explorer では、"Symfony Project Created" が表示されます:
+ブラウザの URL バーに `http://localhost` の代わりに `http://localhost/web` を入力します。デフォルトの Internet Explorer では、「Symfony Project Created」が表示されます:
 
 ![IIS マネージャ - http://localhost/web を入力して成功！](http://www.symfony-project.org/images/more-with-symfony/windows_31.png)
 
-ところで、トップに "Intranet settings are now turned off by default. Intranet settings are less secure than Internet settings. Click for options." という黄色のバーが見えます。このメッセージにおどろかないでください。
+ところで、トップに「Intranet settings are now turned off by default. Intranet settings are less secure than Internet settings. Click for options.」という黄色のバーが見えます。このメッセージにおどろかないでください。
 
 これを恒久的に閉じるには、黄色のバーを右クリックし、適切なオプションを選びます。
 
@@ -343,7 +343,7 @@ symfony サンドボックスで遊び始める前に最後のタスクを実行
 
 ![Internet Explorer - frontend_dev.php pageはlocalhost から OK](http://www.symfony-project.org/images/more-with-symfony/windows_32.png)
 
-Windows Server 2008 でサンドボックスが十分に機能するか確認するために Web デバッグパネルの"configuration"、"logs" と "timers" を調べてみましょう。 
+Windows Server 2008 でサンドボックスが十分に機能するか確認するために Web デバッグパネルの「configuration」、「logs」と「timers」を調べてみましょう。 
 
 ![サンドボックスの使い方: コンフィギュレーション](http://www.symfony-project.org/images/more-with-symfony/windows_33.png)
 
@@ -358,7 +358,7 @@ Windows Server 2008 でサンドボックスが十分に機能するか確認す
 
 実際の開発目的のために symfony プロジェクト環境を作る作業はサンドボックスのインストールのように直感的です。サンドボックスのインストールとデプロイメントと同じように、簡略化された手続きでインストールプロセス全体を見ることになります。
 
-違いはこの "project" セクションでは、インターネットのどこからでも動くように Web アプリケーションのコンフィギュレーションに焦点を合わせることです。
+違いはこの「project」セクションでは、インターネットのどこからでも動くように Web アプリケーションのコンフィギュレーションに焦点を合わせることです。
 
 サンドボックスのように、symfony のプロジェクトは SQLite をデータベースエンジンとして使うようあらかじめ設定されています。これはこの章の前のほうでインストールされ設定されました。
 
@@ -443,19 +443,19 @@ symfony のそれぞれのバージョンは .zip ファイルでダウンロー
 
 ### Web アプリケーションの作成
 
-次の行では "Default Web Site" を再設定する以前のステップの"サンドボックス: Web アプリケーションの作成"を読んだことを前提とします。ですのでポート80のインターフェイスが存在しません。
+次の行では「Default Web Site」を再設定する以前のステップの「サンドボックス: Web アプリケーションの作成」を読んだことを前提とします。ですのでポート80のインターフェイスが存在しません。
 
-#### プロジェクトの新しいWebサイトを追加する
+#### プロジェクトの新しい Web サイトを追加する
 
-管理ツールから IIS マネージャを開きます。左ペインで "Sites" のアイコンを選び右クリックします。ポップアップメニューから "Add Web Site" を選びます。たとえばサイトの名前として "Symfony Project" を、物理パスとして `D:\dev\sfproject` を入力しそのほかのフィールドはそのままにしておきます; 次のダイアログボックスが表示されます:
+管理ツールから IIS マネージャを開きます。左ペインで「Sites」 のアイコンを選び右クリックします。ポップアップメニューから「Add Web Site」を選びます。たとえばサイトの名前として「Symfony Project」を、物理パスとして `D:\dev\sfproject` を入力しそのほかのフィールドはそのままにしておきます。次のダイアログボックスが表示されます:
 
-![IISマネージャ - Web サイトを追加する](http://www.symfony-project.org/images/more-with-symfony/windows_41.png)
+![IIS マネージャ - Web サイトを追加する](http://www.symfony-project.org/images/more-with-symfony/windows_41.png)
 
-OK をクリックします。小さな `x` が Web サイトのアイコンに現れる場合 (ビュー/サイト機能)、これを消すために "Restart" をクリックするのをためらわないでください。
+OK をクリックします。小さな `x` が Web サイトのアイコンに現れる場合 (ビュー/サイト機能)、これを消すために「Restart」をクリックするのをためらわないでください。
 
 #### Web サイトが応答するかチェックする
 
-IIS マネージャから、"Symfony Project" のサイトを選択し、右のペインで "Browse *.80 (http)" をクリックします。
+IIS マネージャから、「Symfony Project」のサイトを選択し、右のペインで「Browse *.80 (http)」をクリックします。
 
 サンドボックスを試したときと同じエラーメッセージが得られます:
 
@@ -463,7 +463,7 @@ IIS マネージャから、"Symfony Project" のサイトを選択し、右の�
 
 Web サーバーはこのディレクトリのコンテンツを表示するように設定されていません。
 
-ブラウザーの URL バーで `http://localhost/web` を入力すると "Symfony Project Created" ページを見ることになります。サンドボックスの初期化の結果には同じページから少しの違いがあります: 画像が存在しません:
+ブラウザの URL バーで `http://localhost/web` を入力すると「Symfony Project Created」 ページを見ることになります。サンドボックスの初期化の結果には同じページから少しの違いがあります: 画像が存在しません:
 
 ![Internet Explorer - 作成された Symfony Project - 画像なし](http://www.symfony-project.org/images/more-with-symfony/windows_42.png)
 
@@ -471,15 +471,15 @@ Web サーバーはこのディレクトリのコンテンツを表示するよ�
 
 ![IIS マネージャ - symfony のバーチャルディレクトリを追加する](http://www.symfony-project.org/images/more-with-symfony/windows_43.png)
 
-期待どおりの通常の画像つきの "symfonyの初期ページ" が表示されます:
+期待どおりの通常の画像つきの「symfony の初期ページ」が表示されます:
 
-![Internet Explorer - symfonyプロジェクトの初期ページ - 画像あり](http://www.symfony-project.org/images/more-with-symfony/windows_44.png)
+![Internet Explorer - symfony プロジェクトの初期ページ - 画像あり](http://www.symfony-project.org/images/more-with-symfony/windows_44.png)
 
-そして最後に、symfony のアプリケーション全体が動いています。Web ブラウザーから、Web アプリケーションの URL、すなわち `http://localhost/web/sfapp_dev.php` を入力します:
+そして最後に、symfony のアプリケーション全体が動いています。Web ブラウザから、Web アプリケーションの URL、すなわち `http://localhost/web/sfapp_dev.php` を入力します:
 
 ![Internet Explorer - localhost から sfapp_dev.php ページは OK](http://www.symfony-project.org/images/more-with-symfony/windows_45.png)
 
-ローカルモードで1つのテストを実行してみましょう: プロジェクトが十分な機能を持つか Web デバッグパネルの "configuration"、"logs" と "timers" を確認します。
+ローカルモードで1つのテストを実行してみましょう: プロジェクトが十分な機能を持つか Web デバッグパネルの「configuration」、「logs」と「timers」を確認します。
 
 ![Internet Explorer - localhost からログページは OK](http://www.symfony-project.org/images/more-with-symfony/windows_46.png)
 
@@ -489,13 +489,14 @@ symfony の一般的なプロジェクトは `http://localhost` もしくは `ht
 
 インターネットからアプリケーションにアクセスできるようにします。
 
-プロジェクトのデフォルトコンフィギュレーションはアプリケーションがリモート位置から実行されるのを防止しています。にもかかわらず、実際には `index.php` と `sfapp_dev.php` ファイルの両方にアクセスするのは OK です。Web ブラウザーからプロジェクトを実行してみましょう。サーバーの外部の IP アドレス (たとえば `94.125.163.150`) と専用の仮想サーバーの FQDN (たとえば `12543hpv163150.ikoula.com`) を使うことで、サーバー内部から両方のアドレスを使うこともできます。これはこれらが `127.0.0.1` にマッピングされていないからです:
+プロジェクトのデフォルトコンフィギュレーションはアプリケーションがリモート位置から実行されるのを防止しています。にもかかわらず、実際には `index.php` と `sfapp_dev.php` ファイルの両方にアクセスするのは OK です。Web ブラウザからプロジェクトを実行してみましょう。サーバーの外部の IP アドレス (たとえば `94.125.163.150`) と専用の仮想サーバーの FQDN (たとえば `12543hpv163150.ikoula.com`) を使うことで、サーバー内部から両方のアドレスを使うこともできます。これはこれらが `127.0.0.1` にマッピングされていないからです:
 
 ![Internet Explorer - インターネットから index.php にアクセスするのは OK](http://www.symfony-project.org/images/more-with-symfony/windows_47.png)
 
 ![Internet Explorer - インターネットからの sfapp_dev.php は OK ではない](http://www.symfony-project.org/images/more-with-symfony/windows_48.png)
 
-前に説明したように、リモート位置からの `index.php` と `sfapp_dev.php` へのアクセスはOKです。しかし、`sfapp_dev.php` の実行は失敗します。これはデフォルトで許可されないからです。これは潜在的に悪意のあるユーザーが、プロジェクトに関する慎重に扱うべき情報を含む開発環境にアクセスするのを防止します。これを動かすために `sfapp_dev.php` ファイルを編集できますが、強く非推奨です。
+前に説明したように、リモート位置からの `index.php` と `sfapp_dev.php` へのアクセスは OK です。しかし、`sfapp_dev.php` の実行は失敗します。これはデフォルトで許可されないからです。これは潜在的に悪意のあるユーザーが、プロジェクトに関する慎重に扱うべき情報を含む開発環境にアクセスするのを防止します。これを動かすために `sfapp_dev.php` ファイルを編集できますが、強く非推奨です。
+前に説明したように、リモート位置からの `index.php` と `sfapp_dev.php` へのアクセスは OK です。しかし、`sfapp_dev.php` の実行は失敗します。これはデフォルトで許可されないからです。これは潜在的に悪意のあるユーザーが、プロジェクトに関する慎重に扱うべき情報を含む開発環境にアクセスするのを防止します。これを動かすために `sfapp_dev.php` ファイルを編集できますが、強く非推奨です。
 
 最後に、"hosts" ファイルを編集することで実際のドメインをシミュレートできます。
 
@@ -503,10 +504,10 @@ symfony の一般的なプロジェクトは `http://localhost` もしくは `ht
 
 Windows x64 OS では、"hosts" ファイルはデフォルトで `C:\Windows\SysWOW64\Drivers\etc` に設置されています。
 
-"hosts"ファイルにはマシンが`localhost`をIPv4では`127.0.0.1`、IPv6では`::1`として解決するようにあらかじめ記述されています。
+`hosts` ファイルにはマシンが `localhost` を IPv4 では `127.0.0.1`、IPv6 では `::1` として解決するようにあらかじめ記述されています。
 
 `sfwebapp.local` のようなフェイクの実際のドメイン名を追加して、ローカルで解決するようにしましょう。
 
-![変更を "hosts" ファイルに適用する](http://www.symfony-project.org/images/more-with-symfony/windows_50.png)
+![変更を hosts ファイルに適用する](http://www.symfony-project.org/images/more-with-symfony/windows_50.png)
 
-これで symfony プロジェクトは Web サーバー内から実行される Web ブラウザーセッションによって DNS なしで Web で動きます。
+これで symfony プロジェクトは Web サーバー内から実行される Web ブラウザセッションによって DNS なしで Web で動きます。

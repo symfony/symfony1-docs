@@ -27,7 +27,7 @@ El Modelo
 
 La parte del Modelo de symfony se puede hacer con la ayuda del
 <propel>
-[ORM Propel](http://propel.phpdb.org/). Basado en la
+[ORM Propel](http://www.propelorm.org/). Basado en la
 </propel>
 <doctrine>
 [ORM Doctrine](http://www.doctrine-project.org/). Basado en la
