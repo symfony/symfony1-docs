@@ -219,7 +219,9 @@ scriviamo alcuni test funzionali per assicurarci di aver fatto bene le cose. Per
 impostazione predefinita, symfony registra un tester `mailer` (~`sfMailerTester`~), che
 facilita il test delle mail nei test funzionali.
 
-First, change the `mailer` factory configuration for the `test` environment if your web server does not have a local SMTP server. We have to replace the current `Swift_SmtpTransport` class by `Swift_MailTransport`:
+Innanzitutto, sostituire la configurazione del factory `mailer` per l'ambiente `test`,
+se il proprio server web non disponde in un server locale SMTP. Occorre sostituire
+la classe `Swift_SmtpTransport` con `Swift_MailTransport`:
 
     [yaml]
     # apps/backend/config/factories.yml
@@ -233,7 +235,8 @@ First, change the `mailer` factory configuration for the `test` environment if y
           transport:
             class:  Swift_MailTransport
 
-Then, add a new `test/fixtures/administrators.yml` file containing the following YAML definition:
+Poi, aggiungere un nuovo file `test/fixtures/administrators.yml`, con le seguenti
+definizioni YAML:
 
     [yaml]
     sfGuardUser:
@@ -245,7 +248,8 @@ Then, add a new `test/fixtures/administrators.yml` file containing the following
         last_name: Potencier
         is_super_admin: true
 
-Finally, replace the `affiliate` functional test file for the backend application with the following code:
+Infine, sostituire il file del test funzionale `affiliate` per l'applicazione di backend
+con il seguente codice:
 
     [php]
     // test/functional/backend/affiliateActionsTest.php
@@ -255,17 +259,10 @@ Finally, replace the `affiliate` functional test file for the backend applicatio
     $browser->loadData();
 
     $browser->
-      info('1 - Authentication')->
-      get('/affiliate')->
-      click('Signin', array(
-        'signin' => array('username' => 'admin', 'password' => 'admin'),
-        array('_with_csrf' => true)
-      ))->
-      with('response')->isRedirected()->
-      followRedirect()->
+      info('1 - When validating an affiliate, an email must be sent with its token')->
 
-      info('2 - When validating an affiliate, an email must be sent with its token')->
-      click('Activate', array(), array('position' => 1))->
+      get('/affiliate/new')->
+      click('activate', array(), array('position' => 1))->
       with('mailer')->begin()->
         checkHeader('Subject', '/Jobeet affiliate token/')->
         checkBody('/Your token is symfony/')->
@@ -277,9 +274,7 @@ Ogni email inviata può essere testata con l'aiuto dei metodi ~`checkHeader()`~ 
 parametro di `checkBody()` possono essere uno dei seguenti:
 
  * una stringa su cui verificare una corrispondenza esatta
-
  * un'espressione regolare su cui verificare il valore
-
  * un'espressione regolare negata (un'espressione regolare che inizia con un `!`) per
    verificare che il valore non corrisponda.
 
@@ -293,7 +288,7 @@ parametro di `checkBody()` possono essere uno dei seguenti:
 -
 
 >**TIP**
->Come altri tester disponibili, è possibile vedere il messaggio "grezzo", chiamando il
+>Come altri tester disponibili, è possibile vedere il messaggio sorgente, chiamando il
 >metodo `debug()`.
 
 
