@@ -257,9 +257,8 @@ The `choice` widget expects at least a `choices` parameter with an associative a
     [php]
     // Dropdown list (select)
     $form->setWidget('country', new sfWidgetFormChoice(array(
-      'choices'   => array('us' => 'USA', 'ca' => 'Canada', 'uk' => 'UK', 'other'),
-      'default'   => 'uk',
-      'add_empty' => 'Select from the list'
+      'choices'   => array('' => 'Select from the list', 'us' => 'USA', 'ca' => 'Canada', 'uk' => 'UK', 'other'),
+      'default'   => 'uk'
     )));
     // symfony renders the widget in HTML as
     <label for="country">Country</label>
@@ -960,8 +959,8 @@ However, widgets and validators are objects in symfony, and offer a clean API to
     // Define the form
     $this->form = new ContactForm();
 
-    // Add an empty option to the list of choices of a 'choice' widget
-    $form->getWidget('language')->setOption('add_empty', 'Please choose a language');
+    // Allow multiple language selections
+    $form->getWidget('language')->setOption('multiple', true);
     // Add a 'gender' list of options widget
     $form->setWidget('gender', new sfWidgetFormChoice(array('expanded' => true, 'choices' => array('m' => 'Male', 'f' => 'Female')), array('class' => 'gender_list')));
     // Change the HTML attributes of the 'subject' widget
