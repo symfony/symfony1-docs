@@ -354,10 +354,11 @@ Date and time widgets output a set of drop-down lists, populated with the availa
 
     [php]
     // Date
+    $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormDate(array(
       'label'   => 'Date of birth',
       'default' => '01/01/1950',  // can be a timestamp or a string understandable by strtotime()
-      'years'   => array(1950, 1951, .., 1990)
+      'years'   => array_combine($years, $years)
     )));
     // symfony renders the widget in HTML as
     <label for="dob">Date of birth</label>
@@ -417,12 +418,13 @@ In multilingual applications, dates must be displayed in a format according to t
 
     [php]
     // Date
+    $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormI18nDate(array(
       'culture'      => $this->getUser()->getCulture(),
       'month_format' => 'name',   // Use any of 'name' (default), 'short_name', and 'number' 
       'label'        => 'Date of birth',
       'default'      => '01/01/1950',
-      'years'        => array(1950, 1951, .., 1990)
+      'years'        => array_combine($years, $years)
     )));
     // For an English-speaking user, symfony renders the widget in HTML as
     <label for="dob">Date of birth</label>
