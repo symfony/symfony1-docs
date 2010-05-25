@@ -119,3 +119,39 @@ Ora, è necessario installare symfony. Poiché il framework symfony ha diverse v
 stabili, si deve scegliere quello che si desidera installare leggendo la
 [Pagina di installazione] (http://www.symfony-project.org/installation) sul
 sito web di symfony.
+
+### Scegliere dove si vuole installare symfony
+
+È possibile installare symfony globalmente sulla macchina, o inserirlo in ciascun
+progetto. Quest'ultimo è l'approccio consigliato, perché in questo modo i progetti saranno
+totalmente indipendenti l'uno dall'altro e l'aggiornamento della singola installazione di
+symfony non influirà su altri progetti. Inoltre in questo modo si è in grado di
+avere progetti che utilizzano diverse versioni di symfony, e aggiornarle una alla volta
+in base alle esigenze.
+
+Come buona pratica, molte persone installano i file del framework symfony nella
+caretella `lib/vendor` del progetto. Quindi, prima, creare questa cartella:
+
+    $ mkdir -p lib/vendor
+
+### Installare symfony
+
+#### Installare da un archivio
+
+Il modo più semplice per installare symfony è quello di scaricare l'archivio per la versione
+scelta dal sito web di symfony. Andare alla pagina di installazione per la
+versione scelta, ad esempio symfony
+[1.4](http://www.symfony-project.org/installation/1_4).
+
+Sotto la sezione "**Source Download**", ci sono gli archivi nei formati `.tgz`
+e `.zip`. Scaricare l'archivio, metterlo dentro la cartella `lib/vendor/` appena creata,
+scompattarlo e rinominare la cartella in `symfony`:
+
+    $ cd lib/vendor
+    $ tar zxpf symfony-1.4.0.tgz
+    $ mv symfony-1.4.0 symfony
+    $ rm symfony-1.4.0.tgz
+
+Sotto Windows, scompattare il file zip utilizzando Windows Explorer.
+Dopo rinominare la cartella in `symfony`. La struttura delle cartelle dovrebbe
+essere simile a `c:\dev\progettosf\lib\vendor\symfony`.
