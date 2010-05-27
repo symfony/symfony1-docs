@@ -342,3 +342,195 @@ linea di comando, possano scrivere al loro interno:
 >`cache/` e `log/`. Il contenuto di queste cartelle dovrebbe essere ignorato
 >dal SCM (ad esempio, per chi usa Subversion modificando la proprietà
 >`svn:ignore`).
+
+Configurazione del web server
+-----------------------------
+
+### Il modo peggiore
+
+Nei capitoli precedenti, è stata creata una cartella che ospita il progetto.
+Se è stata creata sotto la cartella principale web del server
+web, si può già accedere al progetto utilizzando un browser.
+
+Naturalmente, essendo che non c'è bisogno di configurazione, è molto veloce da impostare, ma provando ad
+accedere al file `config/databases.yml` dal browser si capiscono subito le
+conseguenze di una tale configurazione. Se l'utente sa che il sito web è
+sviluppato con symfony, avrà accesso a un sacco di file sensibili. 
+
+**Mai e poi mai usare questa configurazione su un server di produzione**. Leggere la prossima
+sezione per imparare a configurare il server web in modo corretto.
+
+### Il modo corretto
+
+Una buona pratica web è quella di mettere sotto la cartella radice del web solo i file che devono essere
+accessibili da un browser, come ad esempio i fogli di stile, il javascript e
+le immagini. Per impostazione predefinita, si consiglia di tenere questi file nella sotto cartella web/`
+di un progetto symfony.
+
+Se si dà uno sguardo a questa cartella, si troveranno alcune sotto cartelle per
+relative al web (`css/` e `images/`) e i due file di front controller. I
+front controller sono gli unici file PHP che necessitano di essere nella radice della cartella
+web. Tutti gli altri file PHP possono essere nascosti al browser, il che è un bene
+per quanto riguarda la sicurezza.
+
+#### Configurazione del web server
+
+Ora è il momento di cambiare la configurazione di Apache, per rendere il nuovo progetto
+accessibile al mondo.
+
+Individuare ed aprire il file di configurazione `httpd.conf` e aggiungere la seguente
+configurazione alla fine:
+
+    # Assicurarsi di avere solo questa linea nella propria configurazione
+    NameVirtualHost 127.0.0.1:8080
+
+    # Questa è la configurazione per il progetto
+    Listen 127.0.0.1:8080
+
+    <VirtualHost 127.0.0.1:8080>
+      DocumentRoot "/home/sfproject/web"
+      DirectoryIndex index.php
+      <Directory "/home/sfproject/web">
+        AllowOverride All
+        Allow from All
+      </Directory>
+
+      Alias /sf /home/sfproject/lib/vendor/symfony/data/web/sf
+      <Directory "/home/sfproject/lib/vendor/symfony/data/web/sf">
+        AllowOverride All
+        Allow from All
+      </Directory>
+    </VirtualHost>
+
+>**NOTE**
+>L'alias `/sf` consente di accedere alle immagini e ai file javascript necessari
+>per visualizzare correttamente le pagine predefinite di symfony e la barra web per il debug.
+>
+>Su Windows, è necessario sostituire la linea `Alias` con qualcosa del tipo:
+>
+>     Alias /sf "c:\dev\sfproject\lib\vendor\symfony\data\web\sf"
+>
+>E `/home/sfproject/web` dovrebbe essere sostituito con:
+>
+>     c:\dev\sfproject\web
+
+Questa configurazione mette Apache in ascolto sulla porta `8080` della propria macchina, in modo
+che il sito web possa essere accessibile al seguente URL:
+
+    http://localhost:8080/
+
+E' possibile modificare `8080` con un numero qualunque, maggiore di `1024` perché
+questi non richiedono diritti di amministratore.
+
+>**SIDEBAR**
+>Configurare un nome di dominio dedicato
+>
+>Se si è un amministartore della propria macchina, è meglio impostare
+>i virtual host invece di aggiungere una nuova porta ogni volta che si inizia un nuovo
+>progetto. Invece di scegliere una porta e aggiungere una dichiarazione `Listen`,
+>scegliere un nome di dominio (ad esempio il nome di dominio reale con
+>`.localhost` aggiunto alla fine) e aggiungere una dichiarazione `ServerName`:
+>
+>     # Questa è la configurazione per il progetto
+>     <VirtualHost 127.0.0.1:80>
+>       ServerName www.mioprogetto.com.localhost
+>       <!-- stessa configurazione di prima -->
+>     </VirtualHost>
+>
+>Il nome a dominio `www.mioprogetto.com.localhost` utilizzato nella configurazione di Apache
+>deve essere dichiarato localmente. Se si utilizza un sistema Linux, deve essere
+>fatto nel file `/etc/hosts`. Se si utilizza Windows XP, Vista o Win7, questo file si
+>trova nella cartella `C:\WINDOWS\system32\drivers\etc\`.
+>
+>Aggiungere la seguente riga:
+>
+>     127.0.0.1 www.mioprogetto.com.localhost
+
+#### Testare la nuova configurazione
+
+Riavviare Apache e verificare di poter accedere alla nuova applicazione
+aprendo un browser e digitando `http://localhost:8080/index.php/` o
+`http://www.mioprogetto.com.localhost/index.php/` a seconda della configurazione di Apache
+che si è scelto nella sezione precedente.
+
+![Congratulazioni](http://www.symfony-project.org/images/getting-started/1_4/congratulations.png)
+
+>**TIP**
+>Se il modulo `mod_rewrite` di Apache è installato, si può omettere
+>la parte dell'URL `index.php/`. Questo è possibile grazie alle
+>regole di riscrittura che si trovano nel file `web/.htaccess`.
+
+Bisognerebbe anche provare ad accedere all'applicazione nell'ambiente di svilppo
+(vedere la prossima sezione per maggiori informazioni sugli ambienti). Digitare la
+seguente URL:
+
+    http://www.mioprogetto.com.localhost/frontend_dev.php/
+
+Nell'angolo in alto a destra dovrebbe comparire la barra di debug web, comprese delle piccole
+icone che danno prova della corretta configurazione dell'alias `sf/`.
+
+![barra di debug web](http://www.symfony-project.org/images/getting-started/1_4/web_debug_toolbar.png)
+
+>**Note**
+>La configurazione è leggermente diversa se si vuole eseguire symfony su un server IIS in
+>ambiente Windows. Le modalità di configurazione si trovano nel
+>[relativo tutorial](http://www.symfony-project.org/more-with-symfony/1_4/en/11-Windows-and-Symfony).
+
+Usare la Sandbox
+----------------
+
+Se l'obiettivo è quello di provare symfony per qualche ora, continuare a leggere questo
+capitolo perché verrà mostrato il modo più veloce per iniziare.
+
+Il modo più veloce per sperimentare symfony è quello di installare la sandbox di symfony.
+La sandbox è un progetto di simfoni preconfezionato semplicissimo da installare, già
+configurato con alcuni ragionevoli valori predefiniti . E 'un ottimo modo per fare pratica con
+symfony senza avere problemi in una corretta installazione che rispetti la migliori pratiche
+web.
+
+>**CAUTION**
+>Essendo che la sandbox è preconfigurata per usare SQLite come motore per i
+>database, è necessario verificare che il proprio PHP supporti SQLite. Si può anche
+>leggere la sezione "Configurare il database" per capire come cambiare il database usato con la sandbox.
+
+Si può scaricare la sandbox di symfony in formato `.tgz` o `.zip` dalla
+[pagina di installazione](http://www.symfony-project.org/installation/1_4)
+di symfony o ai seguenti URL:
+
+    http://www.symfony-project.org/get/sf_sandbox_1_4.tgz
+
+    http://www.symfony-project.org/get/sf_sandbox_1_4.zip
+
+Scompattare i file da qualche parte sotto la radice della cartella web, e si è
+pronti. Il progetto symfony ora è accessibile chiamando `web/index.php`
+da un browser.
+
+>**CAUTION**
+>Avere tutti i file di symfony sotto la radice della cartella web va bene per
+>fare un po' di prove con symfony sul computer locale, ma diventerebbe una pessima idea per
+>un server in produzione perché potenzialmente rende visibile agli utenti finali
+>il funzionamento interno dell'applicazione.
+
+Si può portare a termine l'installazione leggendo la sezione
+"Configurazione del web server".
+
+>**NOTE**
+>Essendo che la sandbox è solo un normale progetto symfony dove alcuni task sono
+>stati già eseguiti per lo sviluppatore ed è stata modificata qualche configurazione, è abbastanza
+>facile da usare come punto di partenza per un nuovo progetto. Tuttavia, tenere a mente
+>che probabilmente sarà necessario adattare la configurazione; ad esempio
+>modificare le impostazioni relative alla sicurezza (vedere la configurazione di XSS
+>e CSRF in questo capitolo).
+
+Riepilogo
+---------
+
+Per provare e giocare con symfony sul server locale, l'opzione migliore di installazione è sicuramente la sandbox, che contiene un ambiente già preconfigurato di symfony.
+
+Per uno sviluppo reale o su un server di produzione, optare per l'installazione da archivio o il checkout da SVN. Una volta installate le librerie di symfony, sarà necessario inizializzare un progetto e una applicazione. L'ultima fase di installazione dell'applicazione è la configurazione del server, che può essere fatta in molti modi. Symfony funziona bene con l'host virtuale, ed è la soluzione consigliata.
+
+Se si hanno problemi durante l'installazione, si possono trovare molti tutorial e le risposte alle domande più frequenti sul sito web di symfony. Se necessario, è possibile inviare proprio problema alla comunità symfony, sperando di avere una risposta rapida ed efficace.
+
+Una volta che il progetto è inizializzato, è buona abitudine utilizzare un programma per il controllo di versione.
+
+Ora che si è pronti per l'uso di symfony, si può procedere a vedere come creare un'applicazione Web di base.
