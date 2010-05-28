@@ -99,8 +99,11 @@ The admin generator passes some parameters to partials and components:
   * For the `list` page:
 
     * `type`:       `list`
-    * `MODEL_NAME`: The current object instance, where `MODEL_NAME` is the
-                    model class name lowercased.
+    * `MODEL_NAME`: The current object instance, where `MODEL_NAME` is the 
+                    singular name set in the generator options. If no explicit 
+                    value is defined, singular name will default to the
+                    underscored version of the model class name (i.e. CamelCase 
+                    becomes camel_case)
 
 In an `edit` or `new` page, if you want to keep the two column layout (field
 label and widget), the partial or component template should follow this
