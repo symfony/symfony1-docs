@@ -1,4 +1,4 @@
-﻿Chapter 3 - Utilizzare Symfony
+﻿Capitolo 3 - Utilizzare Symfony
 ==============================
 
 Come si è appreso nei capitoli precedenti, il framework symfony è un insieme di file scritti in PHP. Un progetto symfony utilizza questi file, quindi installare symfony vuol dire prendere questi file e renderli disponibili per il progetto.
@@ -45,7 +45,7 @@ necessario digitare alcuni comandi al prompt `cmd`.
 
 ### La configurazione di PHP
 
-Essendo che le configurazioni di PHP possono variare molto da un SO ad un altro,
+Poiché le configurazioni di PHP possono variare molto da un SO ad un altro,
 o anche tra diverse distribuzioni Linux, è necessario controllare che la vostra
 configurazione di PHP soddisfi i requisiti minimi di symfony.
 
@@ -170,7 +170,7 @@ di configurare le fonti esterne di Subversion.
 >Su Windows, si possono usare strumenti come [TortoiseSVN](http://tortoisesvn.net/)
 >per fare tutto senza la necessità di usare la console.
 
-Per un utilizzo conservativo, legare il progetto ad una specifica versione (un tag
+Per un utilizzo conservativo, legare il progetto a una specifica versione (un tag
 subversion):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
@@ -294,7 +294,7 @@ Ora, creare l'applicazione frontend lanciando il task `generate:app`:
     $ php symfony generate:app frontend
 
 >**TIP**
->Essendo che la scorciatoia del file symfony è eseguibile, gli utenti Unix possono sostituire
+>Poiché la scorciatoia del file symfony è eseguibile, gli utenti Unix possono sostituire
 >d'ora in poi, tutte le occorrenze di '`php symfony`' con '`./symfony`'.
 >
 >Su Windows si può copiare il file '`symfony.bat`' nel progetto e usare
@@ -352,7 +352,7 @@ Nei capitoli precedenti, è stata creata una cartella che ospita il progetto.
 Se è stata creata sotto la cartella principale web del server
 web, si può già accedere al progetto utilizzando un browser.
 
-Naturalmente, essendo che non c'è bisogno di configurazione, è molto veloce da impostare, ma provando ad
+Naturalmente, siccome non c'è bisogno di configurazione, è molto veloce da impostare, ma provando ad
 accedere al file `config/databases.yml` dal browser si capiscono subito le
 conseguenze di una tale configurazione. Se l'utente sa che il sito web è
 sviluppato con symfony, avrà accesso a un sacco di file sensibili. 
@@ -378,7 +378,7 @@ per quanto riguarda la sicurezza.
 Ora è il momento di cambiare la configurazione di Apache, per rendere il nuovo progetto
 accessibile al mondo.
 
-Individuare ed aprire il file di configurazione `httpd.conf` e aggiungere la seguente
+Individuare e aprire il file di configurazione `httpd.conf` e aggiungere la seguente
 configurazione alla fine:
 
     # Assicurarsi di avere solo questa linea nella propria configurazione
@@ -489,7 +489,7 @@ symfony senza avere problemi in una corretta installazione che rispetti la migli
 web.
 
 >**CAUTION**
->Essendo che la sandbox è preconfigurata per usare SQLite come motore per i
+>Poiché la sandbox è preconfigurata per usare SQLite come motore per i
 >database, è necessario verificare che il proprio PHP supporti SQLite. Si può anche
 >leggere la sezione "Configurare il database" per capire come cambiare il database usato con la sandbox.
 
@@ -515,7 +515,7 @@ Si può portare a termine l'installazione leggendo la sezione
 "Configurazione del web server".
 
 >**NOTE**
->Essendo che la sandbox è solo un normale progetto symfony dove alcuni task sono
+>Poiché la sandbox è solo un normale progetto symfony dove alcuni task sono
 >stati già eseguiti per lo sviluppatore ed è stata modificata qualche configurazione, è abbastanza
 >facile da usare come punto di partenza per un nuovo progetto. Tuttavia, tenere a mente
 >che probabilmente sarà necessario adattare la configurazione; ad esempio
