@@ -257,9 +257,8 @@ The `choice` widget expects at least a `choices` parameter with an associative a
     [php]
     // Dropdown list (select)
     $form->setWidget('country', new sfWidgetFormChoice(array(
-      'choices'   => array('us' => 'USA', 'ca' => 'Canada', 'uk' => 'UK', 'other'),
-      'default'   => 'uk',
-      'add_empty' => 'Select from the list'
+      'choices'   => array('' => 'Select from the list', 'us' => 'USA', 'ca' => 'Canada', 'uk' => 'UK', 'other'),
+      'default'   => 'uk'
     )));
     // symfony renders the widget in HTML as
     <label for="country">Country</label>
@@ -354,10 +353,11 @@ Date and time widgets output a set of drop-down lists, populated with the availa
 
     [php]
     // Date
+    $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormDate(array(
       'label'   => 'Date of birth',
       'default' => '01/01/1950',  // can be a timestamp or a string understandable by strtotime()
-      'years'   => array(1950, 1951, .., 1990)
+      'years'   => array_combine($years, $years)
     )));
     // symfony renders the widget in HTML as
     <label for="dob">Date of birth</label>
@@ -417,12 +417,13 @@ In multilingual applications, dates must be displayed in a format according to t
 
     [php]
     // Date
+    $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormI18nDate(array(
       'culture'      => $this->getUser()->getCulture(),
       'month_format' => 'name',   // Use any of 'name' (default), 'short_name', and 'number' 
       'label'        => 'Date of birth',
       'default'      => '01/01/1950',
-      'years'        => array(1950, 1951, .., 1990)
+      'years'        => array_combine($years, $years)
     )));
     // For an English-speaking user, symfony renders the widget in HTML as
     <label for="dob">Date of birth</label>
@@ -958,8 +959,8 @@ However, widgets and validators are objects in symfony, and offer a clean API to
     // Define the form
     $this->form = new ContactForm();
 
-    // Add an empty option to the list of choices of a 'choice' widget
-    $form->getWidget('language')->setOption('add_empty', 'Please choose a language');
+    // Allow multiple language selections
+    $form->getWidget('language')->setOption('multiple', true);
     // Add a 'gender' list of options widget
     $form->setWidget('gender', new sfWidgetFormChoice(array('expanded' => true, 'choices' => array('m' => 'Male', 'f' => 'Female')), array('class' => 'gender_list')));
     // Change the HTML attributes of the 'subject' widget
