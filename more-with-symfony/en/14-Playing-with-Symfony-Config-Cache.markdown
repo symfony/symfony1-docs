@@ -266,6 +266,21 @@ application's config cache, so we'll add that to the constructor.
       // ...
     }
 
+The custom configuration handler could be registered either in the constructor
+of the form enhancer class as above or in a config_handlers.yml file located in
+one of your config directory:
+
+    [yml]
+    # config/config_handlers.yml
+    config/forms.yml
+      class: sfSimpleYamlConfigHandler
+      file: %SF_ROOT_DIR%/lib/config/sfSimpleYamlConfigHandler.class.php
+
+>**NOTE**
+>You must specify the full path to your custom configuration handler
+>source files under the `file` entry as the configuration is initialized
+>even befaure the autoloading.
+
 The config cache needs to be told what to do when a certain configuration file
 is requested by the application. For now we've instructed the config cache to
 use `sfSimpleYamlConfigHandler` to process `forms.yml`. This config handler
