@@ -95,6 +95,13 @@ configuration file:
 Each configuration file is defined by a class (`class` entry) and can be
 further customized by defining some parameters under the `param` section.
 
+>**TIP**
+>When adding your own configuration handlers, you must specify both the
+>class name and the full path to your handler source file under the `class`
+>and the `file` entries respectively.
+>This is required as the configuration is initialized before the autoloading
+>mechanism in sfApplicationConfiguration.
+
 The default `config_handlers.yml` file defines the parser classes as follows:
 
  | Configuration File | Config Handler Class               |
