@@ -159,7 +159,7 @@ All the repeated data-access functions and the business logic of the data can be
       return $total;
     }
 
-Using this method we are able to control the values returned from an object level. Imagine if later there is a decision to add some discount logic which affects the total - it can simply be added to the getTotal() method or even to the getPrice() methods of the items and the correct value would be returned.
+Using this method we are able to control the values returned from an object level. Imagine if later there is a decision to add some discount logic which affects the total - it can simply be added to the `getTotal()` method or even to the `getPrice()` methods of the items and the correct value would be returned.
 
 Out of the box, symfony supports the two most popular open source ORMs in PHP: Propel and Doctrine. Symfony integrates both of them seamlessly. When creating a new symfony project, it's a matter of choice to use Propel or Doctrine.
 
@@ -205,6 +205,7 @@ According to the official YAML [website](http://www.yaml.org/), YAML is "a human
 
 This PHP array can be automatically created by parsing the YAML string:
 
+    [yml]
     house:
       family:
         name:     Doe
@@ -223,6 +224,7 @@ This PHP array can be automatically created by parsing the YAML string:
 
 In YAML, structure is shown through indentation, sequence items are denoted by a dash, and key/value pairs within a map are separated by a colon. YAML also has a shorthand syntax to describe the same structure with fewer lines, where arrays are explicitly shown with `[]` and hashes with `{}`. Therefore, the previous YAML data can be written in a shorter way, as follows:
 
+    [yml]
     house:
       family: { name: Doe, parents: [John, Jane], children: [Paul, Mark, Simone] }
       address: { number: 34, street: Main Street, city: Nowheretown, zipcode: "12345" }
