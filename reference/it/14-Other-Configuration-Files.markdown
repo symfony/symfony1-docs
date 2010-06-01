@@ -95,6 +95,13 @@ di configurazione `settings.yml`:
 Ogni file di configurazione è definito da una classe (la entry `class`) e può essere
 ulteriormente personalizzato definendo alcuni parametri sotto la sezione `param`.
 
+>**TIP**
+>Quando si aggiungono i propri gestori di configurazione, occorre specificare
+>sia il nome della classe che il percorso completo del file sorgente del
+>gestore, rispettivamente sotto le voci `class` e `file`.
+>Questo perché la configurazione viene inizializzata prima del meccanismo
+>di autoload in sfApplicationConfiguration.
+
 Il file predefinito `config_handlers.yml` definisce le classi da analizzare come segue:
 
  | File di configurazione | Config classe Handler              |
