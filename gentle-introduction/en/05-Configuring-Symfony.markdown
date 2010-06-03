@@ -1,39 +1,39 @@
-Chapter 5 - Configuring Symfony
+Capitolo 5 - Configurare Symfony
 ===============================
 
-To be simple and easy to use, symfony defines a few conventions, which should satisfy the most common requirements of standard applications without need for modification. However, using a set of simple and powerful configuration files, it is possible to customize almost everything about the way the framework and your application interact with each other. With these files, you will also be able to add specific parameters for your applications.
+Per essere semplice da usare, symfony definisce alcune convenzioni, che devono soddisfare i requisiti più comuni nello sviluppo web senza bisogno di modifiche. Comunque, utilizzando un insieme di semplici e potenti file di configurazione, è possibile personalizzare il modo in cui il framework e la tua applicazione interagiscono fra loro. Con questi file di configurazione, potrai anche aggiungere parametri speciali alla tua applicazione.
 
-This chapter explains how the configuration system works:
+Questo capitolo spiega come funziona il sistema di configurazione:
 
-  * The symfony configuration is kept in files written in YAML, although you can always choose another format.
-  * Configuration files are at the project, application, and module levels in a project's directory structure.
-  * You can define several sets of configuration settings; in symfony, a set of configuration is called an environment.
-  * The values defined in the configuration files are available from the PHP code of your application.
-  * Additionally, symfony authorizes PHP code in YAML files and other tricks to make the configuration system even more flexible.
+* La configurazione di symfony è memorizzata in file scritti in YAML, anche se è sempre possibile scegliere un altro formato.
+* Nella struttura di cartelle del progetto, i file di configurazione si trovano ai livelli progetto, applicazione e modulo.
+* Puoi definire diversi insiemi di impostazioni; in symfony, un insieme di configurazioni è chiamato ambiente.
+* I valori definiti nei file di configurazione sono disponibili al codice PHP della tua applicazione.
+* Inoltre, symfony permette l'utilizzo di codice PHP e altri trucchi all'interno dei file di configurazione YAML, per rendere il sistema di configurazione ancora più flessibile.
 
-The Configuration System
+Il Sistema di Configurazione
 ------------------------
 
-Regardless of purpose, most web applications share a common set of characteristics. For instance, some sections can be restricted to a subset of users, or the pages can be decorated by a layout, or a form can be filled with the user input after a failed validation. A framework defines a structure for emulating these characteristics, and the developer can further tweak them by changing a configuration setting. This strategy saves a lot of development time, since many changes don't require a single line of code, even if there is a lot of code behind. It is also much more efficient, because it ensures such information can be maintained in a single and easily identifiable location.
+A parte lo scopo, la maggior parte delle applicazioni web condivide un insieme di caratteristiche comuni. Ad esempio, qualche sezione puo' avere accesso ristretto ad un certo insieme di utenti, oppure le pagine possono essere decorate da un layout, o ancora la possibilità di avere le form già riempite dopo una validazione fallita. Un framework definisce una struttura per simulare queste caratteristiche, e gli sviluppatori possono ulteriormente modificarle cambiando i file di configurazione. Questa strategia fa risparmiare molto tempo durante lo sviluppo, dato che molti cambiamenti non necessitano di alcuna linea di codice, anche se ce n'è molto dietro. Questo sistema è anche molto efficiente, perché assicura che queste informazioni siano reperibili sempre in un punto unico e facile da trovare.
 
-However, this approach has two serious drawbacks:
+Questo approccio ha però due seri svantaggi:
 
-  * Developers end up writing endlessly complex XML files.
-  * In a PHP architecture, every request takes much longer to process.
+* Gli sviluppatori di solito finiscono per scrivere complessi file XML senza fine.
+* In un'architettura PHP, ogni richiesta necessita di più tempo per essere eseguita.
 
-Taking these disadvantages into account, symfony uses configuration files only for what they are best at doing. As a matter of fact, the ambition of the configuration system in symfony is to be:
+Tenendo conto di questi svantaggi, symfony utilizza file di configurazione solo dove sono veramente necessari. L'ambizione del sistema di configurazione di symfony è di essere:
 
-  * Powerful: Almost every aspect that can be managed using configuration files is managed using configuration files.
-  * Simple: Many aspects of configuration are not shown in a normal application, since they seldom need to be changed.
-  * Easy: Configuration files are easy to read, to modify, and to create by the developer.
-  * Customizable: The default configuration language is YAML, but it can be INI, XML, or whatever format the developer prefers.
-  * Fast: The configuration files are never processed by the application but by the configuration system, which compiles them into a fast-processing chunk of code for the PHP server.
+* Potente: ogni aspetto che possa essere gestito tramite file di configurazione lo è veramente.
+* Semplice: diversi parametri di configurazione non sono mostrati in una normale applicazione, in quanto raramente necessitano di essere modificati.
+* Facile: gli sviluppatori troveranno facile leggere, creare e modificare file di configurazione.
+* Personalizzabile: il linguaggio di configurazione di default è YAML, ma puo' essere INI, XML, o qualsiasi altro formato lo sviluppatore preferisca.
+* Veloce: i file di configurazione non vengono processati dall'applicazione ma dal sistema di configurazione, che li compila velocemente in parti di codice PHP sul server.
 
-### YAML Syntax and Symfony Conventions
+### Sintassi YAML e convenzioni di Symfony
 
-For its configuration, symfony uses the YAML format by default, instead of more traditional INI or XML formats. YAML shows structure through indentation and is fast to write. Its advantages and basic rules were already described in Chapter 1. However, you need to keep a few conventions in mind when writing YAML files. This section introduces several of the most prominent conventions. For a complete dissertation on the topic, read the dedicated chapter on the [reference guide book](http://www.symfony-project.org/reference/1_4/en/02-YAML).
+Per la propria configurazione, symfony utilizza il formato YAML, invece dei più tradizionali INI e XML. YAML mostra la struttura tramite indentazione ed è veloce da scrivere. I vantaggi e le regole di base sono già state mostrate nel Capitolo 1. Comunque, devi tenere a mente qualche convenzione quando vuoi scrivere file di YAML. Questa sezione introduce diverse convenzioni tra le più importanti. Per approfondimenti visita il sito web di YAML [website](http://www.yaml.org/).
 
-First of all, never use tabs in YAML files; use spaces instead. YAML parsers can't understand files with tabs, so indent your lines with spaces (a double blank is the symfony convention for indentation), as shown in Listing 5-1.
+Prima di tutto non sono ammessi caratteri di tabulazione in YAML; occorre usare spazi bianchi. I parser YAML non capiscono le tabulazioni, per cui utilizza spazi bianchi per l'indentazione (la convenzione in symfony è di due spazi bianchi), come mostrato nel Listato 5-1. 
 
 Listing 5-1 - YAML Files Forbid Tabs
 
