@@ -154,8 +154,8 @@ Listing 5-10 - Gli header di categoria esistono solo per una questione di leggib
     all:
       tax: 19.6
 
-  mail:
-    webmaster: webmaster@example.com
+    mail:
+      webmaster: webmaster@example.com
 
 >**SIDEBAR**
 >E se non ti piace YAML...
@@ -170,35 +170,35 @@ I file YAML sono parsati in array o hash PHP, quindi i valori sono usati in vari
 
 Se la tua applicazione smette improvvisamente di funzionare dopo un cambio di configurazione, devi controllare di non aver fatto qualcuno dei più comuni errori di disattenzione con YAML:
 
-* Ti manca uno spazio tra una chiave ed il suo valore:
+  * Ti manca uno spazio tra una chiave ed il suo valore:
 
-  key1:value1 # Manca uno spazio bianco dopo :
+        key1:value1 # Manca uno spazio bianco dopo :
 
-* Le chiavi in una sequenza non sono indentate nella stessa maniera:
+  * Le chiavi in una sequenza non sono indentate nella stessa maniera:
 
-  all:
-    key1: value1
-     key2: value2 # L'indentazione è diversa da quella degli altri  membri della sequenza
-    key3: value3
+        all:
+          key1: value1
+           key2: value2 # L'indentazione è diversa da quella degli altri  membri della sequenza
+	  key3: value3
 
-* C'è un carattere riservato in una chiave o un valore, senza delimitatori di stringa:
+  * C'è un carattere riservato in una chiave o un valore, senza delimitatori di stringa:
 
-message: tell him: go way   # :, [, ], { and } sono riservate in YAML
-message: 'tell him: go way' # sintassi corretta
+        message: tell him: go way   # :, [, ], { and } sono riservate in YAML
+        message: 'tell him: go way' # sintassi corretta
 
-* Stai modificando una linea commentata:
+  * Stai modificando una linea commentata:
 
-# key: value # Questa linea è ignorata perché comincia con #
+        # key: value # Questa linea è ignorata perché comincia con #
 
-* Imposti dei valori con la stessa chiave allo stesso livello:
+  * Imposti dei valori con la stessa chiave allo stesso livello:
 
-key1: value1
-key2: value2
-key1: value3 # key1 è definita due volte, il valore è l'ultimo inserito
+        key1: value1
+        key2: value2
+        key1: value3 # key1 è definita due volte, il valore è l'ultimo inserito
 
-* Pensi che un valore sia un tipo speciale, mentre resta una stringa fino a che non sarà convertita:
+  * Pensi che un valore sia un tipo speciale, mentre resta una stringa fino a che non sarà convertita:
 
-income: 12,345 # Ancora una stringa, fino a che non sarà convertita
+        income: 12,345 # Ancora una stringa, fino a che non sarà convertita
 
 Riepilogo sui file di configurazione
 -----------------------------------
@@ -209,11 +209,11 @@ La configurazione è suddivisa in file, per oggetto. Questi file contengono defi
 
 Ci sono per default pochi file di configurazione per progetto. Di seguito quelli che si trovano nella cartella myproject/config/:
 
-* ProjectConfiguration.class.php: Questo è assolutamente il primo file incluso da ogni richiesta o comando. Contiene i percorsi ai file del framework, e può essere cambiato per usare un'installazione diversa. Vedi il Capitolo 19 per usi avanzati di questo file.
-* databases.yml: Qui è dove definisci l'accesso e la connessione al database (host, login, password, nome del database, e così via). Imparerai di più su questo nel Capitolo 8. Può essere sovrascritto a livello applicazione.
-* properties.ini: Questo file gestisce parametri utilizzati a linea di comando, inclusi il nome del progetto e le impostazioni di connessione a server remoti. Vedi il Capitolo 16 per un sommario delle caratteristiche di utilizzo di questo file.
-* rsync_exclude.txt: Questo file specifica quali cartelle e file devono essere esclusi dalla sincronizzazione tra server. È discusso nel Capitolo 16.
-* `schema.yml`: Si tratta del file di configurazione per l'accesso ai dati usato da Propel e Doctrine (il livello ORM di symfony). Esso è usato per far funzionare le librerie dell'ORM con le classi di symfony e i dati del tuo progetto. schema.yml contiene una rappresentazione del modello relazionale del progetto.
+  * `ProjectConfiguration.class.php`: Questo è assolutamente il primo file incluso da ogni richiesta o comando. Contiene i percorsi ai file del framework, e può essere cambiato per usare un'installazione diversa. Vedi il Capitolo 19 per usi avanzati di questo file.
+  * `databases.yml`: Qui è dove definisci l'accesso e la connessione al database (host, login, password, nome del database, e così via). Imparerai di più su questo nel Capitolo 8. Può essere sovrascritto a livello applicazione.
+  * `properties.ini`: Questo file gestisce parametri utilizzati a linea di comando, inclusi il nome del progetto e le impostazioni di connessione a server remoti. Vedi il Capitolo 16 per un sommario delle caratteristiche di utilizzo di questo file.
+  * `rsync_exclude.txt`: Questo file specifica quali cartelle e file devono essere esclusi dalla sincronizzazione tra server. È discusso nel Capitolo 16.
+  * `schema.yml`: Si tratta del file di configurazione per l'accesso ai dati usato da Propel e Doctrine (il livello ORM di symfony). Esso è usato per far funzionare le librerie dell'ORM con le classi di symfony e i dati del tuo progetto. schema.yml contiene una rappresentazione del modello relazionale del progetto.
 
 Questi file sono usati per lo più da componenti esterni o dalla linea di comando, o devono essere processati prima che il framework carichi il programma di parsing YAML. Ecco perché alcuni di essi non usano il formato YAML.
 
