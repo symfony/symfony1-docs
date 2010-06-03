@@ -560,28 +560,27 @@ To know if the `fake` credit cards are accepted in the current environment, get 
 
 When your need for custom parameters becomes hard to handle with the `app.yml` syntax, you may need to define a syntax of your own. In that case, you can store the configuration in a new file, interpreted by a new configuration handler. Refer to Chapter 19 for more information about configuration handlers.
 
-Tips for Getting More from Configuration Files
-----------------------------------------------
+Suggerimenti per ottenere di più dai file di configurazione
+-----------------------------------------------------------
 
-There are a few last tricks to learn before writing your own YAML files. They will allow you to avoid configuration duplication and to deal with your own YAML formats.
+C'è qualche trucco ancora da imparare prima di scrivere i tuoi file YAML. Ti servirà per evitare duplicazione della configurazione e per gestire i tuoi file YAML.
 
-### Using Constants in YAML Configuration Files
+### Utilizzare costanti nei file YAML
 
-Some configuration settings rely on the value of other settings. To avoid setting the same value twice, symfony supports constants in YAML files. On encountering a setting name (one that can be accessed by `sfConfig::get()`) in capital letters enclosed in `%` signs, the configuration handlers replace them with their current value. See Listing 5-20 for an example.
+Certi parametri di configurazione si basano sul valore di altri. Per evitare di duplicare i valori, symfony supporta le costanti in YAML. Quando il gestore della configurazione incontra un parametro (accessibile tramite tramite `sfConfig::get()`) in maiuscolo e racchiuso tra %, esso lo sostituisce con il suo valore effettivo. Il Listato 5-20 ne mostra un esempio.
 
-Listing 5-20 - Using Constants in YAML Files, Example from `autoload.yml`
+Listato 5-20 - Utilizzo delle costanti in YAML, esempio da `autoload.yml`
 
     autoload:
       symfony:
         name:           symfony
         path:           %SF_SYMFONY_LIB_DIR%
-        recursive:      true
+        recursive:      on
         exclude:        [vendor]
 
-The path parameter will take the value returned by `sfConfig::get('sf_symfony_lib_dir')`. If you want one configuration file to rely on another, you need to make sure that the file you rely on is already parsed (look in the symfony source to find out the order in which the configuration files are parsed). `app.yml` is one of the last files parsed, so you may rely on others in it.
+Il parametro path verrà sostituito con il valore di `sfConfig::get('sf_symfony_lib_dir')`. Se vuoi che un file di configurazione si basi su di un altro, devi essere certo che quello su cui si basa venga parsato per primo (controlla i sorgenti di symfony per verificare l'ordine in cui i file di configurazione vengono parsati). `app.yml` è uno degli ultimi file di cui viene fatto il parsing, per cui si può basare su altri.
 
-All the available constants are described in the [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
-
+Tutte le costanti disponibili sono descritte in  [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
 
 ### Utilizzare codice nella configurazione
 
