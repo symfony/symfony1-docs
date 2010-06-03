@@ -51,29 +51,30 @@ Se i tuoi parametri sono stringhe che cominciano o finiscono con spazi vuoti, co
 
 Listato 5-2 - Stringhe non standard dovrebbero essere incapsulate tra singoli apici
 
-error1: This field is compulsory
-error2: ' This field is compulsory '
-error3: 'Don''t leave this field blank' # i singoli apici devono essere raddoppiati
-error4: 'Enter a # symbol to define an extension number'
-i18n: 'false' # se togliamo gli apici, viene restituito un valore booleano false
+    error1: This field is compulsory
+    error2: '  This field is compulsory  '
+    error3: 'Don''t leave this field blank' # i singoli apici devono essere raddoppiati
+    error4: 'Enter a # symbol to define an extension number'
+    i18n:   'false' # se togliamo gli apici, viene restituito un valore booleano false
+
 
 Puoi definire stringhe lunghe in più righe, ed anche stringhe con più di una linea, con gli header speciali di stringa (> e |) più una indentazione addizionale. Il Listato 5-3 illustra questa convenzione.
 
 Listato 5-3 - Definizione di stringhe lunghe e su più righe
 
-# Folded style, introdotto da >
-# Ogni line break è convertito in uno spazio
-# Questo rende YAML più leggibile.
-accomplishment: >
-Mark set a major league
-home run record in 1998.
+    # Folded style, introdotto da >
+    # Ogni line break è convertito in uno spazio
+    # Questo rende YAML più leggibile.
+    accomplishment: >
+      Mark set a major league
+      home run record in 1998.
 
-# Literal style, introdotto da |
-# Vengono mantenuti i line break
-# L'indentazione non appare nella stringa risultante
-stats: |
-  65 Home Runs
-  0.278 Batting Average
+    # Literal style, introdotto da |
+    # Vengono mantenuti i line break
+    # L'indentazione non appare nella stringa risultante
+    stats: |
+      65 Home Runs
+      0.278 Batting Average
 
 Per definire un valore come array, racchiudi gli elementi tra parentesi quadre, oppure usa la sintassi estesa con i trattini, come mostrato nel Listato 5-4.
 
