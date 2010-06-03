@@ -5,11 +5,11 @@ Per essere semplice da usare, symfony definisce alcune convenzioni, che devono s
 
 Questo capitolo spiega come funziona il sistema di configurazione:
 
-* La configurazione di symfony è memorizzata in file scritti in YAML, anche se è sempre possibile scegliere un altro formato.
-* Nella struttura di cartelle del progetto, i file di configurazione si trovano ai livelli progetto, applicazione e modulo.
-* Puoi definire diversi insiemi di impostazioni; in symfony, un insieme di configurazioni è chiamato ambiente.
-* I valori definiti nei file di configurazione sono disponibili al codice PHP della tua applicazione.
-* Inoltre, symfony permette l'utilizzo di codice PHP e altri trucchi all'interno dei file di configurazione YAML, per rendere il sistema di configurazione ancora più flessibile.
+  * La configurazione di symfony è memorizzata in file scritti in YAML, anche se è sempre possibile scegliere un altro formato.
+  * Nella struttura di cartelle del progetto, i file di configurazione si trovano ai livelli progetto, applicazione e modulo.
+  * Puoi definire diversi insiemi di impostazioni; in symfony, un insieme di configurazioni è chiamato ambiente.
+  * I valori definiti nei file di configurazione sono disponibili al codice PHP della tua applicazione.
+  * Inoltre, symfony permette l'utilizzo di codice PHP e altri trucchi all'interno dei file di configurazione YAML, per rendere il sistema di configurazione ancora più flessibile.
 
 Il Sistema di Configurazione
 ------------------------
@@ -18,16 +18,16 @@ A parte lo scopo, la maggior parte delle applicazioni web condivide un insieme d
 
 Questo approccio ha però due seri svantaggi:
 
-* Gli sviluppatori di solito finiscono per scrivere complessi file XML senza fine.
-* In un'architettura PHP, ogni richiesta necessita di più tempo per essere eseguita.
+  * Gli sviluppatori di solito finiscono per scrivere complessi file XML senza fine.
+  * In un'architettura PHP, ogni richiesta necessita di più tempo per essere eseguita.
 
 Tenendo conto di questi svantaggi, symfony utilizza file di configurazione solo dove sono veramente necessari. L'ambizione del sistema di configurazione di symfony è di essere:
 
-* Potente: ogni aspetto che possa essere gestito tramite file di configurazione lo è veramente.
-* Semplice: diversi parametri di configurazione non sono mostrati in una normale applicazione, in quanto raramente necessitano di essere modificati.
-* Facile: gli sviluppatori troveranno facile leggere, creare e modificare file di configurazione.
-* Personalizzabile: il linguaggio di configurazione di default è YAML, ma puo' essere INI, XML, o qualsiasi altro formato lo sviluppatore preferisca.
-* Veloce: i file di configurazione non vengono processati dall'applicazione ma dal sistema di configurazione, che li compila velocemente in parti di codice PHP sul server.
+  * Potente: ogni aspetto che possa essere gestito tramite file di configurazione lo è veramente.
+  * Semplice: diversi parametri di configurazione non sono mostrati in una normale applicazione, in quanto raramente necessitano di essere modificati.
+  * Facile: gli sviluppatori troveranno facile leggere, creare e modificare file di configurazione.
+  * Personalizzabile: il linguaggio di configurazione di default è YAML, ma puo' essere INI, XML, o qualsiasi altro formato lo sviluppatore preferisca.
+  * Veloce: i file di configurazione non vengono processati dall'applicazione ma dal sistema di configurazione, che li compila velocemente in parti di codice PHP sul server.
 
 ### Sintassi YAML e convenzioni di Symfony
 
@@ -37,15 +37,16 @@ Prima di tutto non sono ammessi caratteri di tabulazione in YAML; occorre usare 
 
 Listato 5-1 - YAML vieta l'utilizzo delle tabulazioni
 
-# Never use tabs
-all:
--> mail:
--> -> webmaster: webmaster@example.com
+    # Mai usare tabs
+    all:
+    -> mail:
+    -> -> webmaster:  webmaster@example.com
 
-# Use blanks instead
-all:
-  mail:
-    webmaster: webmaster@example.com
+    # Usare solo spazi
+    all:
+      mail:
+        webmaster: webmaster@example.com
+
 
 Se i tuoi parametri sono stringhe che cominciano o finiscono con spazi vuoti, contengono caratteri speciali (come # o ,), o sono parole chiave come "true, false" (intese come una stringa), devi incapsulare il valore tra singoli apici, come mostrato nel Listato 5-2.
 
@@ -80,29 +81,29 @@ Per definire un valore come array, racchiudi gli elementi tra parentesi quadre, 
 
 Listato 5-4 - Sintassi di array in YAML
 
-# Sintassi abbreviata per gli array
-players: [ Mark McGwire, Sammy Sosa, Ken Griffey ]
+    # Sintassi abbreviata per gli array
+    players: [ Mark McGwire, Sammy Sosa, Ken Griffey ]
 
-# Sintassi espansa per gli array
-players:
-- Mark McGwire
-- Sammy Sosa
-- Ken Griffey
+    # Sintassi espansa per gli array
+    players:
+      - Mark McGwire
+      - Sammy Sosa
+      - Ken Griffey
 
 Per definire un valore come array associativo, o hash, racchiudi gli elementi tra parentesi graffe e inserisci sempre uno spazio tra la chiave ed il valore nella coppia 'key: value', e separa gli elementi della lista con delle virgole. Puoi anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel Listato 5-5.
 
 Listato 5-5 - Array associativi in YAML
 
-# Sintassi errata: mancano gli spazi dopo i duepunti e la virgola
-mail: {webmaster:webmaster@example.com,contact:contact@example.com}
+    # Sintassi errata: mancano gli spazi dopo i duepunti e la virgola
+    mail: {webmaster:webmaster@example.com,contact:contact@example.com}
 
-# Sintassi abbreviata corretta per gli array associativi
-mail: { webmaster: webmaster@example.com, contact: contact@example.com }
+    # Sintassi abbreviata corretta per gli array associativi
+    mail: { webmaster: webmaster@example.com, contact: contact@example.com }
 
-# Sintassi estesa per gli array associativi
-mail:
-webmaster: webmaster@example.com
-contact: contact@example.com
+    # Sintassi estesa per gli array associativi
+    mail:
+      webmaster: webmaster@example.com
+      contact: contact@example.com
 
 
 Per assegnare un valore booleano, utilizza i valori 'false' e 'true'
@@ -110,48 +111,48 @@ senza apici.
 
 Listato 5-6 - Sintassi YAML per valori booleani
 
-true_value: true
-false_value: false
+    true_value: true
+    false_value: false
 
 Non esitare ad aggiungere commenti (che devono cominciare con il cancelletto #) e spazi aggiuntivi, per rendere ancora più leggibili tuoi file YAML, come mostrato nel Listato 5-7.
 
 Listing 5-7 - Sintassi dei commenti e allineamento dei valori in YAML
 
-# Questa è una linea di commento
-mail:
-  webmaster: webmaster@example.com
-  contact:   contact@example.com
-  admin:     admin@example.com # gli spazi aggiuntivi permettono un migliore allineamento dei valori
+    # Questa è una linea di commento
+    mail:
+      webmaster: webmaster@example.com
+      contact:   contact@example.com
+      admin:     admin@example.com # gli spazi aggiuntivi permettono un migliore allineamento dei valori
 
 In qualche file di configurazione di symfony, ti capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione di default, ereditata da altri file YAML che si trovano nel core, è ripetuta in linee commentate nella tua applicazione per pura informazione. Se vuoi cambiare uno di tali parametri, devi innanzitutto decommentare la linea, come mostrato nel Listato 5-8.
 
 Listato 5-8 - La configurazione di default è mostrata commentata
 
-# La cache è false per default
-settings:
-# cache: false
+    # La cache è false per default
+    settings:
+    # cache: false
 
-# Se vuoi cambiare questa impostazioni, decommenta la linea
-settings:
-cache: true
+    # Se vuoi cambiare questa impostazioni, decommenta la linea
+    settings:
+      cache: true
 
 Qualche volta symfony raggruppa le definizioni dei parametri in categorie. Tutte le impostazioni relative ad una data categoria appaiono indentati sotto il suo header. Strutturare lunghe liste di coppie chiave: valore raggruppandole in categorie aumenta la leggibilità della configurazione. Gli header di categoria cominciano con un punto (.). Il Listato 5-9 mostra un esempio di categorie.
 
 Listato 5-9 - Gli header di categoria sembrano chiavi, ma cominciano con un un punto
 
-all:
-  .general:
-    tax:    19.6
+    all:
+        .general:
+          tax:    19.6
 
-  mail:
-    webmaster: webmaster@example.com
+          mail:
+            webmaster: webmaster@example.com
 
 In questo esempio, mail è una chiave e general è solo un header di categoria. Tutto funziona come se l'header non esistesse, come mostrato nel Listato 5-10. Il parametro tax è effettivamente un figlio diretto della chiave all. Tuttavia l'uso delle categorie aiuta symfony a trattare con gli array che sono sotto la chiave all.
 
 Listing 5-10 - Gli header di categoria esistono solo per una questione di leggibilità, e sono in effetti ignorati
 
-all:
-  tax: 19.6
+    all:
+      tax: 19.6
 
   mail:
     webmaster: webmaster@example.com
