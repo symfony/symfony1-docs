@@ -33,200 +33,197 @@ Tenendo conto di questi svantaggi, symfony utilizza file di configurazione solo 
 
 Per la propria configurazione, symfony utilizza il formato YAML, invece dei più tradizionali INI e XML. YAML mostra la struttura tramite indentazione ed è veloce da scrivere. I vantaggi e le regole di base sono già state mostrate nel Capitolo 1. Comunque, devi tenere a mente qualche convenzione quando vuoi scrivere file di YAML. Questa sezione introduce diverse convenzioni tra le più importanti. Per approfondimenti visita il sito web di YAML [website](http://www.yaml.org/).
 
-Prima di tutto non sono ammessi caratteri di tabulazione in YAML; occorre usare spazi bianchi. I parser YAML non capiscono le tabulazioni, per cui utilizza spazi bianchi per l'indentazione (la convenzione in symfony è di due spazi bianchi), come mostrato nel Listato 5-1. 
+Prima di tutto non sono ammessi caratteri di tabulazione in YAML; occorre usare spazi bianchi. I parser YAML non capiscono le tabulazioni, per cui utilizza spazi bianchi per l'indentazione (la convenzione in symfony è di due spazi bianchi), come mostrato nel Listato 5-1.
 
-Listing 5-1 - YAML Files Forbid Tabs
+Listato 5-1 - YAML vieta l'utilizzo delle tabulazioni
 
-    # Never use tabs
-    all:
-    -> mail:
-    -> -> webmaster:  webmaster@example.com
+# Never use tabs
+all:
+-> mail:
+-> -> webmaster: webmaster@example.com
 
-    # Use blanks instead
-    all:
-      mail:
-        webmaster: webmaster@example.com
+# Use blanks instead
+all:
+  mail:
+    webmaster: webmaster@example.com
 
-If your parameters are strings starting or ending with spaces, 
-contain special characters (such as the "octothorpe" (#) or comma),
-or key words such as "true, false" (where a string is intended) you must
-enclose the value in single quotes, as shown in Listing 5-2.
+Se i tuoi parametri sono stringhe che cominciano o finiscono con spazi vuoti, contengono caratteri speciali (come # o ,), o sono parole chiave come "true, false" (intese come una stringa), devi incapsulare il valore tra singoli apici, come mostrato nel Listato 5-2.
 
-Listing 5-2 - Nonstandard Strings Should Be Enclosed in Single Quotes
+Listato 5-2 - Stringhe non standard dovrebbero essere incapsulate tra singoli apici
 
-    error1: This field is compulsory
-    error2: '  This field is compulsory  '
-    error3: 'Don''t leave this field blank'   # Single quotes must be doubled
-    error4: 'Enter a # symbol to define an extension number'
-    i18n:   'false' # if we left off the quotes here, a boolean false would be returned
+error1: This field is compulsory
+error2: ' This field is compulsory '
+error3: 'Don''t leave this field blank' # i singoli apici devono essere raddoppiati
+error4: 'Enter a # symbol to define an extension number'
+i18n: 'false' # se togliamo gli apici, viene restituito un valore booleano false
 
-You can define long strings in multiple lines, and also multiple-line strings, with the special string headers (`>` and `|`) plus an additional indentation. Listing 5-3 demonstrates this convention.
+Puoi definire stringhe lunghe in più righe, ed anche stringhe con più di una linea, con gli header speciali di stringa (> e |) più una indentazione addizionale. Il Listato 5-3 illustra questa convenzione.
 
-Listing 5-3 - Defining Long and Multiline Strings
+Listato 5-3 - Definizione di stringhe lunghe e su più righe
 
-    # Folded style, introduced by >
-    # Each line break is folded to a space
-    # Makes YAML more readable
-    accomplishment: >
-      Mark set a major league
-      home run record in 1998.
+# Folded style, introdotto da >
+# Ogni line break è convertito in uno spazio
+# Questo rende YAML più leggibile.
+accomplishment: >
+Mark set a major league
+home run record in 1998.
 
-    # Literal style, introduced by |
-    # All line breaks count
-    # Indentation doesn't appear in the resulting string
-    stats: |
-      65 Home Runs
-      0.278 Batting Average
+# Literal style, introdotto da |
+# Vengono mantenuti i line break
+# L'indentazione non appare nella stringa risultante
+stats: |
+  65 Home Runs
+  0.278 Batting Average
 
-To define a value as an array, enclose the elements in square brackets or use the expanded syntax with dashes, as shown in Listing 5-4.
+Per definire un valore come array, racchiudi gli elementi tra parentesi quadre, oppure usa la sintassi estesa con i trattini, come mostrato nel Listato 5-4.
 
-Listing 5-4 - YAML Array Syntax
+Listato 5-4 - Sintassi di array in YAML
 
-    # Shorthand syntax for arrays
-    players: [ Mark McGwire, Sammy Sosa, Ken Griffey ]
+# Sintassi abbreviata per gli array
+players: [ Mark McGwire, Sammy Sosa, Ken Griffey ]
 
-    # Expanded syntax for arrays
-    players:
-      - Mark McGwire
-      - Sammy Sosa
-      - Ken Griffey
+# Sintassi espansa per gli array
+players:
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
 
-To define a value as an associative array, or hash, enclose the elements in curly brackets and always insert a spaces between the key and the value in the `key: value` pair, and any list items separated by commas. You can also use the expanded syntax by adding indentation and a carriage return for every new key, as shown in Listing 5-5.
+Per definire un valore come array associativo, o hash, racchiudi gli elementi tra parentesi graffe e inserisci sempre uno spazio tra la chiave ed il valore nella coppia 'key: value', e separa gli elementi della lista con delle virgole. Puoi anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel Listato 5-5.
 
-Listing 5-5 - YAML Associative Array Syntax
+Listato 5-5 - Array associativi in YAML
 
-    # Incorrect syntax, blanks are missing after the colons and comma
-    mail: {webmaster:webmaster@example.com,contact:contact@example.com}
+# Sintassi errata: mancano gli spazi dopo i duepunti e la virgola
+mail: {webmaster:webmaster@example.com,contact:contact@example.com}
 
-    # Correct shorthand syntax for associative arrays
-    mail: { webmaster: webmaster@example.com, contact: contact@example.com }
+# Sintassi abbreviata corretta per gli array associativi
+mail: { webmaster: webmaster@example.com, contact: contact@example.com }
 
-    # Expanded syntax for associative arrays
-    mail:
-      webmaster: webmaster@example.com
-      contact:   contact@example.com
+# Sintassi estesa per gli array associativi
+mail:
+webmaster: webmaster@example.com
+contact: contact@example.com
 
-To give a Boolean value, you can use the `false` and `true` values, provided they are not enclosed in quotes.
 
-Listing 5-6 - YAML Boolean Values Syntax
+Per assegnare un valore booleano, utilizza i valori 'false' e 'true'
+senza apici.
 
-    true_value:  true
-    false_value: false
+Listato 5-6 - Sintassi YAML per valori booleani
 
-Don't hesitate to add comments (starting with the hash mark, `#`) and extra
-spaces to values to make your YAML files more readable, as shown in Listing 5-7.
+true_value: true
+false_value: false
 
-Listing 5-7 - YAML Comments Syntax and Value Alignment
+Non esitare ad aggiungere commenti (che devono cominciare con il cancelletto #) e spazi aggiuntivi, per rendere ancora più leggibili tuoi file YAML, come mostrato nel Listato 5-7.
 
-    # This is a comment line
-    mail:
-      webmaster: webmaster@example.com
-      contact:   contact@example.com
-      admin:     admin@example.com   # extra spaces allow nice alignment of values
+Listing 5-7 - Sintassi dei commenti e allineamento dei valori in YAML
 
-In some symfony configuration files, you will sometimes see lines that start with a hash mark (and, as such, ignored by the YAML parsers) but look like usual settings lines. This is a symfony convention: the default configuration, inherited from other YAML files located in the symfony core, is repeated in commented lines in your application configuration, for your information. If you want to change the value of such a parameter, you need to uncomment the line first, as shown in Listing 5-8.
+# Questa è una linea di commento
+mail:
+  webmaster: webmaster@example.com
+  contact:   contact@example.com
+  admin:     admin@example.com # gli spazi aggiuntivi permettono un migliore allineamento dei valori
 
-Listing 5-8 - Default Configuration Is Shown Commented
+In qualche file di configurazione di symfony, ti capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione di default, ereditata da altri file YAML che si trovano nel core, è ripetuta in linee commentate nella tua applicazione per pura informazione. Se vuoi cambiare uno di tali parametri, devi innanzitutto decommentare la linea, come mostrato nel Listato 5-8.
 
-    # The cache is off by default
-    settings:
-    # cache: false
+Listato 5-8 - La configurazione di default è mostrata commentata
 
-    # If you want to change this setting, uncomment the line first
-    settings:
-      cache: true
+# La cache è false per default
+settings:
+# cache: false
 
-Symfony sometimes groups the parameter definitions into categories. All settings of a given category appear indented under the category header. Structuring long lists of `key: value` pairs by grouping them into categories improves the readability of the configuration. Category headers start with a dot (`.`). Listing 5-9 shows an example of categories.
+# Se vuoi cambiare questa impostazioni, decommenta la linea
+settings:
+cache: true
 
-Listing 5-9 - Category Headers Look Like Keys, But Start with a Dot
+Qualche volta symfony raggruppa le definizioni dei parametri in categorie. Tutte le impostazioni relative ad una data categoria appaiono indentati sotto il suo header. Strutturare lunghe liste di coppie chiave: valore raggruppandole in categorie aumenta la leggibilità della configurazione. Gli header di categoria cominciano con un punto (.). Il Listato 5-9 mostra un esempio di categorie.
 
-    all:
-      .general:
-        tax:        19.6
+Listato 5-9 - Gli header di categoria sembrano chiavi, ma cominciano con un un punto
 
-      mail:
-        webmaster:  webmaster@example.com
+all:
+  .general:
+    tax:    19.6
 
-In this example, `mail` is a key and `general` is only a category header. Everything works as if the category header didn't exist, as shown in Listing 5-10. The `tax` parameter is actually a direct child of the `all` key. However using categories helps symfony dealing with arrays that are beneath the `all` key.
+  mail:
+    webmaster: webmaster@example.com
 
-Listing 5-10 - Category Headers Are Only There for Readability and Are Actually Ignored
+In questo esempio, mail è una chiave e general è solo un header di categoria. Tutto funziona come se l'header non esistesse, come mostrato nel Listato 5-10. Il parametro tax è effettivamente un figlio diretto della chiave all. Tuttavia l'uso delle categorie aiuta symfony a trattare con gli array che sono sotto la chiave all.
 
-    all:
-      tax:          19.6
+Listing 5-10 - Gli header di categoria esistono solo per una questione di leggibilità, e sono in effetti ignorati
 
-      mail:
-        webmaster:  webmaster@example.com
+all:
+  tax: 19.6
+
+  mail:
+    webmaster: webmaster@example.com
 
 >**SIDEBAR**
->And if you don't like YAML
+>E se non ti piace YAML...
 >
->YAML is just an interface to define settings to be used by PHP code, so the configuration defined in YAML files ends up being transformed into PHP. After browsing an application, check its cached configuration (in `cache/frontend/dev/config/`, for instance). You will see the PHP files corresponding to your YAML configuration. You will learn more about the configuration cache later in this chapter.
+>YAML è solo un'interfaccia per definire impostazioni utilizzate da PHP, per cui le configurazioni YAML finiscono per essere trasformate in PHP. Dopo aver navigato la tua applicazione, controllane la configurazione in cache (ad esempio in cache/frontend/dev/config/). Vedrai file PHP corrispondenti alle configurazioni YAML. Imparerai di più sulla cache di configurazione più avanti in questo capitolo.
 >
->The good news is that if you don't want to use YAML files, you can still do what the configuration files do by hand, in PHP or via another format (XML, INI, and so on). Throughout this book, you will meet alternative ways to define configuration without YAML, and you will even learn to replace the symfony configuration handlers (in Chapter 19). If you use them wisely, these tricks will enable you to bypass configuration files or define your own configuration format.
+>La buona notizia è che se non vuoi usare YAML, puoi fare la stessa cosa a mano in PHP o con altri formati (come XML o INI). Nel corso di questo libro, incontrerai modi alternativi per definire configurazioni senza YAML, ed imparerai anche come sostituire il gestore di configurazioni di symfony (nel Capitolo 19). Se li usi largamente, questi trucchi ti permetteranno di bypassare i file di configurazione o definire il tuo personale formato di configurazione.
 
-### Help, a YAML File Killed My App!
+### Aiuto, un file YAML ha ucciso la mia applicazione!
 
-The YAML files are parsed into PHP hashes and arrays, and then the values are used in various parts of the application to modify the behavior of the view, the controller, or the model. Many times, when there is a problem in a YAML file, it is not detected until the value actually needs to be used. Moreover, the error or exception that is thrown then is usually not clearly related to the YAML configuration file.
+I file YAML sono parsati in array o hash PHP, quindi i valori sono usati in varie parti dell'applicazione per modificare il comportamento delle viste, del controller o del modello. Molte volte, quando c'è un errore in un file YAML, esso non viene riconosciuto fino a che il valore non è effettivamente necessario. Ancora più spesso, l'eccezione che viene generata non si riferisce chiaramente al file YAML.
 
-If your application suddenly stops working after a configuration change, you should check that you didn't make any of the common mistakes of the inattentive YAML coder:
+Se la tua applicazione smette improvvisamente di funzionare dopo un cambio di configurazione, devi controllare di non aver fatto qualcuno dei più comuni errori di disattenzione con YAML:
 
-  * You miss a space between a key and its value:
+* Ti manca uno spazio tra una chiave ed il suo valore:
 
-        key1:value1      # A space is missing after the :
+  key1:value1 # Manca uno spazio bianco dopo :
 
-  * Keys in a sequence are not indented the same way:
+* Le chiavi in una sequenza non sono indentate nella stessa maniera:
 
-        all:
-          key1:  value1
-           key2: value2  # Indentation is not the same as the other sequence members
-          key3:  value3
+  all:
+    key1: value1
+     key2: value2 # L'indentazione è diversa da quella degli altri  membri della sequenza
+    key3: value3
 
-  * There is a reserved YAML character in a key or a value, without string delimiters:
+* C'è un carattere riservato in una chiave o un valore, senza delimitatori di stringa:
 
-        message: tell him: go way    # :, [, ], { and } are reserved in YAML
-        message: 'tell him: go way'  # Correct syntax
+message: tell him: go way   # :, [, ], { and } sono riservate in YAML
+message: 'tell him: go way' # sintassi corretta
 
-  * You are modifying a commented line:
+* Stai modificando una linea commentata:
 
-        # key: value     # Will never be taken into account due to the leading #
+# key: value # Questa linea è ignorata perché comincia con #
 
-  * You set values with the same key name twice at the same level:
+* Imposti dei valori con la stessa chiave allo stesso livello:
 
-        key1: value1
-        key2: value2
-        key1: value3     # key1 is defined twice, the value is the last one defined
+key1: value1
+key2: value2
+key1: value3 # key1 è definita due volte, il valore è l'ultimo inserito
 
-  * You think that the setting takes a special type, while it is always a string, until you convert it:
+* Pensi che un valore sia un tipo speciale, mentre resta una stringa fino a che non sarà convertita:
 
-        income: 12,345   # Until you convert it, this is still a string
+income: 12,345 # Ancora una stringa, fino a che non sarà convertita
 
-        
-Overview of the Configuration Files
+Riepilogo sui file di configurazione
 -----------------------------------
 
-Configuration is distributed into files, by subject. The files contain parameter definitions, or settings. Some of these parameters can be overridden at several levels (project, application, and module); some are specific to a certain level. The next chapters will deal with the configuration files related to their main topic, and Chapter 19 will deal with advanced configuration.
+La configurazione è suddivisa in file, per oggetto. Questi file contengono definizioni di parametri, o impostazioni. Alcuni di tali parametri possono essere sovrascritti a diversi livelli (progetto, applicazione e modulo); altri sono specifici di un certo livello. I prossimi capitoli prenderanno in esame le configurazioni relativamente alle loro finalità principali, mentre il Capitolo 19 esaminerà le configurazioni avanzate.
 
-### Project Configuration
+### Configurazione di progetto
 
-There are a few project configuration files by default. Here are the files that can be found in the `myproject/config/` directory:
+Ci sono per default pochi file di configurazione per progetto. Di seguito quelli che si trovano nella cartella myproject/config/:
 
-  * `ProjectConfiguration.class.php`: This is the very first file included by any request or command. It contains the path to the framework files, and you can change it to use a different installation. See Chapter 19 for advanced usage of this file.
-  * `databases.yml`: This is where you define the access and connection settings to the database (host, login, password, database name, and so on). Chapter 8 will tell you more about it. It can also be overridden at the application level.
-  * `properties.ini`: This file holds a few parameters used by the command line tool, including the project name and the connection settings for distant servers. See Chapter 16 for an overview of the features using this file.
-  * `rsync_exclude.txt`, `rsync_include.txt`: This file specifies which directories and files must be excluded and/or included from the synchronization between servers. It is discussed in Chapter 16.
-  * `schema.yml`: This is the data access configuration file used by Propel and Doctrine (symfony's ORM layers). It is used to make the ORM libraries work with the symfony classes and the data of your project. `schema.yml` contains a representation of the project's relational data model. For Doctrine, this file is created in `config/doctrine/`.
+* ProjectConfiguration.class.php: Questo è assolutamente il primo file incluso da ogni richiesta o comando. Contiene i percorsi ai file del framework, e può essere cambiato per usare un'installazione diversa. Vedi il Capitolo 19 per usi avanzati di questo file.
+* databases.yml: Qui è dove definisci l'accesso e la connessione al database (host, login, password, nome del database, e così via). Imparerai di più su questo nel Capitolo 8. Può essere sovrascritto a livello applicazione.
+* properties.ini: Questo file gestisce parametri utilizzati a linea di comando, inclusi il nome del progetto e le impostazioni di connessione a server remoti. Vedi il Capitolo 16 per un sommario delle caratteristiche di utilizzo di questo file.
+* rsync_exclude.txt: Questo file specifica quali cartelle e file devono essere esclusi dalla sincronizzazione tra server. È discusso nel Capitolo 16.
+* `schema.yml`: Si tratta del file di configurazione per l'accesso ai dati usato da Propel e Doctrine (il livello ORM di symfony). Esso è usato per far funzionare le librerie dell'ORM con le classi di symfony e i dati del tuo progetto. schema.yml contiene una rappresentazione del modello relazionale del progetto.
 
-These files are mostly used by external components or by the command line, or they need to be processed even before any YAML parsing program can be loaded by the framework. That's why some of them don't use the YAML format.
+Questi file sono usati per lo più da componenti esterni o dalla linea di comando, o devono essere processati prima che il framework carichi il programma di parsing YAML. Ecco perché alcuni di essi non usano il formato YAML.
 
-### Application Configuration
+### Configurazione dell'applicazione
 
-The main part of the configuration is the application configuration. It is defined in the front controller (in the `web/` directory) for the main configuration, in YAML files located in the application `config/` directory, in `i18n/` directories for the internationalization files, and in the framework files for invisible--although useful--additional application configuration.
+La maggior parte della configurazione è occupata dall'applicazione. È definita nel front controller (nella cartella web/) per la configurazione principale, in file YAML nella cartella config/ dell'applicazione, in i18n/ per l'internazionalizzazione, ed infine nei file del framework per una invisibile (ma sempre utile) configurazione addizionale dell'applicazione.
 
-#### Front Controller Configuration
+#### Configurazione del front controller
 
-The very first application configuration is actually found in the front controller; that is the very first script executed by a request. Take a look at the default `web/index.php` in Listing 5-11.
+La prima configurazione dell'applicazione in assoluto si trova nel front controller; si tratta del primo script eseguito da una richiesta. Dai un'occhiata al codice di web/index.php mostrato nel Listato 5-11.
 
-Listing 5-11 - The Default Production Front Controller
+Listato 5-11 - Il front controller di default 
 
     [php]
     <?php
@@ -585,32 +582,33 @@ The path parameter will take the value returned by `sfConfig::get('sf_symfony_li
 
 All the available constants are described in the [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
 
-### Using Scriptable Configuration
 
-It may happen that your configuration relies on external parameters (such as a database or another configuration file). To deal with these particular cases, the symfony configuration files are parsed as PHP files before being passed to the YAML parser. It means that you can put PHP code in YAML files, as in Listing 5-21.
+### Utilizzare codice nella configurazione
 
-Listing 5-21 - YAML Files Can Contain PHP
+Potrebbe succedere che la tua configurazione si debba basare su parametri esterni (database od un altro file di configurazione). Per gestire questi casi particolari, viene fatto il parsing dei file di configurazione di symfony da PHP prima che essi vengano passi al parser YAML. Questo significa che i file YAML possono contenere codice PHP, come mostrato nel Listato 5-21.
+
+Listato 5-21 - I file YAML possono contenere codice PHP
 
     all:
       translation:
-        format:  <?php echo (sfConfig::get('sf_i18n') === true ? 'xliff' : null)."\n" ?>
+        format: <?php echo (sfConfig::get('sf_i18n') === true ? 'xliff' : null)."\n" ?>
 
-But be aware that the configuration is parsed very early in the life of a request, so you will not have any symfony built-in methods or functions to help you.
+Ma fai attenzione al fatto che il parsing di questi file viene eseguito molto presto durante il ciclo di vita di una richiesta, per cui non avrai a tua disposizione i metodi o funzioni di symfony.
 
-Also, as the `echo` language construct does not add a carriage return by default, you need to add a "\n" or use the `echoln` helper to keep the YAML format valid.
+Inoltre, siccome il costrutto `echo` non aggiunge un ritorno a capo di default, è necessario aggiungere un "\n" oppure utilizzare l'helper `echoln` per mantenere valido il formato YAML.
 
     all:
       translation:
         format:  <?php echoln(sfConfig::get('sf_i18n') == true ? 'xliff' : 'none') ?>
 
 >**CAUTION**
->In the production environment, the configuration is cached, so the configuration files are parsed (and executed) only once after the cache is cleared.
+>Nell'ambiente di produzione la configurazione è in cache, per cui il parsing (e l'esecuzione) dei file di configurazione avviene esclusivamente dopo che la cache è stata pulita.
 
-### Browsing Your Own YAML File
+### Navigare i tuoi file YAML personali
 
-Whenever you want to read a YAML file directly, you can use the `sfYaml` class. It is a YAML parser that can turn a YAML file into a PHP associative array. Listing 5-22 presents a sample YAML file, and Listing 5-23 shows you how to parse it.
+Ogni qualvolta tu voglia leggere un file YAML direttamente, puoi usare la classe `sfYaml`. Si tratta di un parser YAML che ne trasforma i file in array associativi di PHP. Il Listato 5-22 presenta un file YAML di esempio, mentre il Listato 5-23 mostra come farne il parsing.
 
-Listing 5-22 - Sample `test.yml` File
+Listato 5-22 - File di esempio `test.yml`
 
     house:
       family:
@@ -623,7 +621,7 @@ Listing 5-22 - Sample `test.yml` File
         city:     Nowheretown
         zipcode:  12345
 
-Listing 5-23 - Using the `sfYaml` Class to Turn a YAML File into an Associative Array
+Listato 5-23 - Utilizzo della classe `sfYaml` per trasformare il file precedente in array associativo
 
     [php]
     $test = sfYaml::load('/path/to/test.yml');
@@ -652,9 +650,9 @@ Listing 5-23 - Using the `sfYaml` Class to Turn a YAML File into an Associative 
       )
     )
 
-Summary
--------
+Riepilogo
+---------
 
-The symfony configuration system uses the YAML language to be simple and readable. The ability to deal with multiple environments and to set parameters through a definition cascade offers versatility to the developer. Some of the configuration can be accessed from within the code via the `sfConfig` object, especially the application settings stored in the `app.yml` file.
+Il sistema di configurazione di symfony utilizza il linguaggio YAML per poter essere semplice e leggibile. La capacità di gestire ambienti multipli e di definire insiemi di parametri tramite cascata offre grande versatilità allo sviluppatore. Alcuni dei parametri sono accessibili via codice tramite l'oggetto `sfConfig`, specialmente quelli specifici dell'applicazione memorizzati nel file `app.yml`.
 
-Yes, symfony does have a lot of configuration files, but this approach makes it more adaptable. Remember that you don't need to bother with them unless your application requires a high level of customization.
+È vero, symfony ha molti file di configurazione, ma questo approccio lo rende molto adattabile. Ricorda che non hai bisogno di annoiarti con essi se non hai bisogno di un alto livello di personalizzazione.
