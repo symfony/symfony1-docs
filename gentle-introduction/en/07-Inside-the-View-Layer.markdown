@@ -19,7 +19,8 @@ Listing 7-1 - A Sample indexSuccess.php Template
     [php]
     <h1>Welcome</h1>
     <p>Welcome back, <?php echo $name ?>!</p>
-    <ul>What would you like to do?
+    <h2>What would you like to do?</h2>
+    <ul>
       <li><?php echo link_to('Read the last articles', 'article/read') ?></li>
       <li><?php echo link_to('Start writing a new one', 'article/write') ?></li>
     </ul>
@@ -172,7 +173,8 @@ Listing 7-6 - The Layout, the View Configuration, and the Template Assembled
       <body>
         <h1>Welcome</h1>
         <p>Welcome back, <?php echo $name ?>!</p>
-        <ul>What would you like to do?
+        <h2>What would you like to do?</h2>
+        <ul>
           <li><?php echo link_to('Read the last articles', 'article/read') ?></li>
           <li><?php echo link_to('Start writing a new one', 'article/write') ?></li>
         </ul>
