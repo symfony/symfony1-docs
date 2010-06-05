@@ -62,11 +62,12 @@ ORM потребует от вас описания таблиц и связей
     propel:
       jobeet_category:
         id:           ~
-        name:         { type: varchar(255), required: true }
+        name:         { type: varchar(255), required: true, index: unique }
 
       jobeet_job:
         id:           ~
-        category_id:  { type: integer, foreignTable: jobeet_category, foreignReference: id, required: true }
+        category_id:  { type: integer, foreignTable: jobeet_category,
+          ➥ foreignReference: id, required: true }
         type:         { type: varchar(255) }
         company:      { type: varchar(255), required: true }
         logo:         { type: varchar(255) }
@@ -92,8 +93,12 @@ ORM потребует от вас описания таблиц и связей
         created_at:   ~
 
       jobeet_category_affiliate:
-        category_id:  { type: integer, foreignTable: jobeet_category, foreignReference: id, required: true, primaryKey: true, onDelete: cascade }
-        affiliate_id: { type: integer, foreignTable: jobeet_affiliate, foreignReference: id, required: true, primaryKey: true, onDelete: cascade }
+        category_id:  { type: integer, foreignTable: jobeet_category,
+          ➥ foreignReference: id, required: true, primaryKey: true,
+          ➥ onDelete: cascade }
+        affiliate_id: { type: integer, foreignTable: jobeet_affiliate,
+          ➥ foreignReference: id, required: true, primaryKey: true,
+          ➥ onDelete: cascade }
 </propel>
 <doctrine>
 Базы данных у нас пока нет, так что займёмся созданием файла схемы вручную,
@@ -101,109 +106,53 @@ ORM потребует от вас описания таблиц и связей
 
     [yml]
     # config/doctrine/schema.yml
-    ---
     JobeetCategory:
-      actAs:
-        Timestampable: ~
+      actAs: { Timestampable: ~ }
       columns:
-        name:
-          type: string(255)
-          notnull:  true
+        name: { type: string(255), notnull: true, unique: true }
 
     JobeetJob:
-      actAs:
-        Timestampable: ~
+      actAs: { Timestampable: ~ }
       columns:
-        category_id:
-          type: integer
-          notnull:  true
-        type:
-          type: string(255)
-        company:
-          type: string(255)
-          notnull:  true
-        logo:
-          type: string(255)
-        url:
-          type: string(255)
-        position:
-          type: string(255)
-          notnull:  true
-        location:
-          type: string(255)
-          notnull:  true
-        description:
-          type: string(4000)
-          notnull:  true
-        how_to_apply:
-          type: string(4000)
-          notnull:  true
-        token:
-          type: string(255)
-          notnull:  true
-          unique: true
-        is_public:
-          type: boolean
-          notnull:  true
-          default:  1
-        is_activated:
-          type: boolean
-          notnull:  true
-          default:  0
-        email:
-          type: string(255)
-          notnull:  true
-        expires_at:
-          type: timestamp
-          notnull:  true
+        category_id:  { type: integer, notnull: true }
+        type:         { type: string(255) }
+        company:      { type: string(255), notnull: true }
+        logo:         { type: string(255) }
+        url:          { type: string(255) }
+        position:     { type: string(255), notnull: true }
+        location:     { type: string(255), notnull: true }
+        description:  { type: string(4000), notnull: true }
+        how_to_apply: { type: string(4000), notnull: true }
+        token:        { type: string(255), notnull: true, unique: true }
+        is_public:    { type: boolean, notnull: true, default: 1 }
+        is_activated: { type: boolean, notnull: true, default: 0 }
+        email:        { type: string(255), notnull: true }
+        expires_at:   { type: timestamp, notnull: true }
       relations:
-        JobeetCategory:
-          onDelete: CASCADE
-          local:  category_id
-          foreign:  id
-        Affiliates:
-          class:  JobeetAffiliate
-          local:  category_id
-          foreign:  affiliate_id
-          refClass: JobeetCategoryAffiliate
-          foreignAlias: Affiliates
+        JobeetCategory: { onDelete: CASCADE, local: category_id, foreign: id, foreignAlias: JobeetJobs } 
 
     JobeetAffiliate:
-      actAs:
-        Timestampable: ~
+      actAs: { Timestampable: ~ }
       columns:
-        url:
-          type: string(255)
-          notnull:  true
-        email:
-          type: string(255)
-          notnull:  true
-          unique: true
-        token:
-          type: string(255)
-          notnull:  true
-        is_active:
-          type: boolean
-          notnull:  true
-          default:  0
+        url:       { type: string(255), notnull: true }
+        email:     { type: string(255), notnull: true, unique: true }
+        token:     { type: string(255), notnull: true }
+        is_active: { type: boolean, notnull: true, default: 0 }
+      relations:
+        JobeetCategories:
+          class: JobeetCategory
+          refClass: JobeetCategoryAffiliate
+          local: affiliate_id
+          foreign: category_id
+          foreignAlias: JobeetAffiliates
 
     JobeetCategoryAffiliate:
       columns:
-        category_id:
-          type: integer
-          primary:  true
-        affiliate_id:
-          type: integer
-          primary:  true
+        category_id:  { type: integer, primary: true }
+        affiliate_id: { type: integer, primary: true }
       relations:
-        JobeetCategory:
-          onDelete: CASCADE
-          local:  category_id
-          foreign:  id
-        JobeetAffiliate:
-          onDelete: CASCADE
-          local:  affiliate_id
-          foreign:  id
+        JobeetCategory:  { onDelete: CASCADE, local: category_id, foreign: id }
+        JobeetAffiliate: { onDelete: CASCADE, local: affiliate_id, foreign: id }
 </doctrine>
 
 >**TIP**
