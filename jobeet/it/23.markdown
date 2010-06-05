@@ -292,8 +292,8 @@ in questo tutorial:
  * [`plugin:install`](#chapter_13_plugin)
  * [`plugin:publish-assets`](#chapter_20_sub_le_risorse)
  * [`project:deploy`](#chapter_22_sub_strategie_di_rilascio)
- * [`propel:build-all`](#chapter_03_l_orm)
- * [`propel:build-all-load`](#chapter_07_aggiornare_il_database)
+ * [`propel:build --all`](#chapter_03_l_orm)
+ * [`propel:build --all --and-load`](#chapter_07_aggiornare_il_database)
 <propel>
  * [`propel:build-forms`](#chapter_10_form_propel)
 </propel>
