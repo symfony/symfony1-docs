@@ -393,5 +393,5 @@ Vous pouvez au besoin restreindre les noms de langues listées au moyen de l'opt
 Le widget `sfWidgetFormI18nChoiceTimezone` permet de présenter à 'lutilisateur une liste déroulante widget contenant une liste de fuseau d'horaire.
 
     [php]
-    $this->widgetSchema['timezone'] = new sfWidgetFormI18nChoiceTimzione();
+    $this->widgetSchema['timezone'] = new sfWidgetFormI18nChoiceTimezone();
 
