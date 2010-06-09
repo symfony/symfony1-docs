@@ -15,7 +15,7 @@ La rotta per la categoria
 
 Prima di tutto abbiamo bisogno di aggiungere una rotta per definire un URL
 carino per la pagina delle categorie.
-Aggiungete questo all'inizio del file che si occupa del routing:
+Aggiungere questo all'inizio del file che si occupa del routing:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -28,7 +28,7 @@ Aggiungete questo all'inizio del file che si occupa del routing:
 >**TIP**
 >Ogni volta che si parte a implementare una nuova feature, è buona norma
 >pensare prima all'argomento ~URL~, creando la rotta associata. Ed è
->obbligatorio, se avete rimosso le regole predefinite di ~routing~.
+>obbligatorio, se le regole predefinite di ~routing~ sono state rimosse.
 
 Una rotta può usare una qualsiasi colonna del suo oggetto correlato
 come parametro. Può anche usare un altro valore, se c'è un metodo
@@ -148,7 +148,7 @@ che non esiste ancora in `JobeetJobTable`.
       }
     }
 
-Come potete vedere abbiamo eseguito la rifattorizzazione di tutto il codice di 
+Come si può vedere, abbiamo eseguito la rifattorizzazione di tutto il codice di 
 `JobeetJobPeer` per introdurre un nuovo metodo condiviso `addActiveJobsCriteria()`
 per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </propel>
@@ -189,7 +189,7 @@ per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.o
       }
     }
 
-Come potete vedere, abbiamo eseguito la rifattorizzazione di tutto il codice di 
+Come si può vedere, abbiamo eseguito la rifattorizzazione di tutto il codice di 
 `JobeetJobTable` per introdurre un nuovo metodo condiviso `addActiveJobsQuery()`,
 per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </doctrine>

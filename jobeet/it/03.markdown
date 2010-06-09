@@ -38,7 +38,7 @@ record dal database, preferiamo utilizzare gli oggetti.
 Le informazioni del database relazionale devono essere mappate da un modello a
 oggetti. Questo può essere fatto con un [ORM](http://it.wikipedia.org/wiki/Object-relational_mapping)
 e fortunatamente symfony viene distribuito con due soluzioni di questo tipo:
-[Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/).
+[Propel](http://propel.phpdb.org/) e [Doctrine](http://www.doctrine-project.org/).
 In questo tutorial useremo ##ORM##.
 
 L'ORM ha bisogno della descrizione delle tabelle e delle loro relazioni
@@ -156,7 +156,7 @@ di esso (come realizzarlo), creeremo lo schema a mano modificando un file vuoto
 </doctrine>
 
 >**TIP**
->Se avete deciso di creare le tabelle scrivendo il codice SQL, sappiate che
+>Se si è deciso di creare le tabelle scrivendo il codice SQL, occorre sapere che
 >si può generare il corrispondente file di configurazione `schema.yml` 
 >utilizzando il task `propel:build-schema`.
 >
@@ -185,9 +185,9 @@ formato YAML.
 >YAML ha anche una sintassi ridotta per descrivere la stessa struttura con meno
 >linee, dove gli array sono espressi con `[]` e gli hash con `{}`.
 >
->Se non avete familiarità con YAML, è il momento di iniziare a usarlo, visto
+>Se non si ha familiarità con YAML, è il momento di iniziare a usarlo, visto
 >che il framework symfony lo utilizza ampiamente per i suoi file di configurazione.
-> Un buon punto di inizio è il componente YAML di symfony
+>Un buon punto di inizio è il componente YAML di symfony
 >[documentazione](http://components.symfony-project.org/yaml/documentation).
 >
 >C'è una cosa importante da ricordare quando si modifica un file
@@ -202,7 +202,7 @@ colonne. Ogni colonna è descritta con le seguenti informazioni:
     `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar(size)`,
      `longvarchar`, `date`, `time`, `timestamp`, `blob` e `clob`)
   * `required`: Impostarlo a `true` se la colonna è obbligatoria (not null)
-  * ~`index|Indici del database`~: Impostarlo a `true` se si vuole creare un indice per 
+  * `~index|Indici del database~`: Impostarlo a `true` se si vuole creare un indice per 
      la colonna o a `unique` se si vuole una chiave univoca per la colonna.
   * `primaryKey`: Definisce una colonna come ~chiave primaria|Chiave primaria~ per la tabella.
   * `foreignTable`, `foreignReference`: Definisce una colonna come
@@ -344,7 +344,7 @@ Il task `propel:build --model` genera i file PHP all'interno della cartella
 `lib/model`, che può essere utilizzata per interagire con il database.
 
 <propel>
-Curiosando tra i file generati, probabilmente noterete che Propel genera quattro
+Curiosando tra i file generati, probabilmente si noterà che Propel genera quattro
 classi per ogni ~tabella|Tabella (Database)~. Per la tabella `jobeet_job`:
 
   * `JobeetJob`: Un oggetto di questa classe **rappresenta un singolo
@@ -363,7 +363,7 @@ classi per ogni ~tabella|Tabella (Database)~. Per la tabella `jobeet_job`:
      classe `JobeetJobPeer`.
 </propel>
 <doctrine>
-Curiosando tra i file generati, probabilmente noterete che Doctrine genera tre
+Curiosando tra i file generati, probabilmente si noterà che Doctrine genera tre
 classi per ogni tabella. Per la tabella `jobeet_job`:
 
   * `JobeetJob`: Un oggetto di questa classe rappresenta un singolo record della
@@ -687,14 +687,14 @@ disponibili per il modulo `job`:
 
 Ora si può provare il modulo `job` in un browser:
 
-     http://www.jobeet.com.localhost/frontend_dev.php/job
+     http://jobeet.localhost/frontend_dev.php/job
 
 ![Modulo Job](http://www.symfony-project.org/images/jobeet/1_4/03/job.png)
 
 <propel>
 Se si prova a modificare un lavoro, si avrà un'eccezione, perché symfony ha bisogno di una
 rappresentazione testuale di una categoria. La rappresentazione testuale di un oggetto
-PHP può essere definita col metodo magico ~`__toString()`~. La
+PHP può essere definita col metodo magico `~__toString()~`. La
 rappresentazione testuale di una categoria andrebbe definita nella
 classe del modello `JobeetCategory`:
 
@@ -716,7 +716,7 @@ nell'altro, definiamo un metodo `__toString()` per ogni classe del modello:
 <doctrine>
 Se si prova a modificare un lavoro, si noterà che il menù a tendina della categoria
 ha una lista di tutti i nomi delle categorie. Il valore di ciascuna opzione è
-preso dal metodo ~`__toString()`~. Doctrine proverà e fornirà un metodo base
+preso dal metodo `~__toString()~`. Doctrine proverà e fornirà un metodo base
 `__toString()` cercando di indovinare un nome di colonna descrittivo come `title`,
 `name`, `subject`, ecc. Se si vuole personalizzare, bisognerà aggiungere il proprio
 metodo `__toString()`, come sotto.
@@ -742,7 +742,7 @@ metodo `__toString()`, come sotto.
       }
     }
 
-Ora potete creare e modificare i lavori. Provate a lasciare vuoto un campo richiesto, o
+Ora si possono creare e modificare i lavori. Si provi a lasciare vuoto un campo richiesto o
 a immettere una data non valida. Tutto bene, symfony ha creato delle regole di
 validazione di base, partendo dallo schema del database.
 

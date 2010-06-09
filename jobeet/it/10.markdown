@@ -67,11 +67,11 @@ un tag di tipo `<textarea>` (`sfWidgetFormTextarea`) e dovrà essere una stringa
 di non più di 255 caratteri (`sfValidatorString`).
 
 Di default tutti i campi sono obbligatori, visto che il valore impostato per
-l'opzione ~`required|Campi di form obbligatori`~ è impostata a `true`. Quindi la definizione della validazione
+l'opzione `~required|Campi di form obbligatori~` è impostata a `true`. Quindi la definizione della validazione
 per `email` è equivalente a `new sfValidatorEmail(array('required' => true))`.
 
 >**TIP**
->Potete fondere un form in un altro usando il metodo `mergeForm()` o incorporarne
+>Si può fondere un form in un altro usando il metodo `mergeForm()` o incorporarne
 >uno usando il metodo `embedForm()`:
 >
 >     [php]
@@ -81,10 +81,10 @@ per `email` è equivalente a `new sfValidatorEmail(array('required' => true))`.
 Form ##ORM##
 ------------
 
-La maggior parte delle volte un form deve essere serializzato per il database.
-Siccome symfony conosce già tutto riguardo al modello del database può generare
-in modo automatico dei form basati su queste informazioni. Infatti quando
-avete lanciato il task `propel:build --all` durante il giorno 3 symfony ha chiamato
+La maggior parte delle volte, un form deve essere serializzato per il database.
+Siccome symfony conosce già tutto riguardo al modello del database, può generare
+in modo automatico dei form basati su queste informazioni. Infatti, quando
+è stato lanciato il task `propel:build --all` durante il giorno 3, symfony ha chiamato
 automaticamente anche il task `propel:build --forms`:
 
     $ php symfony propel:build --forms
@@ -92,7 +92,7 @@ automaticamente anche il task `propel:build --forms`:
 Il task `propel:build --forms` genera le classi dei form nella cartella `lib/form/`.
 L'organizzazione di questi file generati è simile a quella di `lib/model/`. Ogni
 classe del modello ha una relativa classe per un form (per esempio `JobeetJob` 
-ha `JobeetJobForm`) che è vuota di default visto che eredita la struttura dalla
+ha `JobeetJobForm`) che inizialmente è vuota, visto che eredita la struttura dalla
 classe base dei form:
 
     [php]
@@ -112,12 +112,12 @@ classe base dei form:
 <propel>
 >**TIP**
 >Curiosando all'interno dei file generati nella sotto-cartella `lib/form/base/`
->potrete vedere molti esempi di utilizzo di widget e validatori inclusi in symfony.
+>si possono vedere molti esempi di utilizzo di widget e validatori inclusi in symfony.
 </propel>
 <doctrine>
 >**TIP**
 >Curiosando all'interno dei file generati nella sotto-cartella `lib/form/doctrine/base/`
->potrete vedere molti esempi di utilizzo di widget e validatori inclusi in symfony.
+>si possono vedere molti esempi di utilizzo di widget e validatori inclusi in symfony.
 </doctrine>
 
 -
@@ -297,12 +297,12 @@ creato da un widget diverso in accordo ad alcune opzioni di configurazione
  * Lista di checkbox: `array('multiple' => true, 'expanded' => true)`
 
 >**NOTE**
->Se volete che una voce dell'elenco dei radiobutton sia selezionata di default
->(`full-time` per esempio), potete cambiare il valore di default nello schema
-> del database.
+>Se si vuole che una voce dell'elenco dei radiobutton sia preselezionata
+>(`full-time` per esempio), si può cambiare il valore predefinito nello schema
+>del database.
 
-Anche se pensate che nessuno possa inviare un valore non valido, un hacker potrebbe
-bypassare facilmente le opzioni del widget, usando tool come [curl](http://curl.haxx.se/) 
+Anche se si ritiene che nessuno possa inviare un valore non valido, un hacker potrebbe
+bypassare facilmente le opzioni del widget, usando strumenti come [curl](http://curl.haxx.se/) 
 o la [Web Developer Toolbar](http://chrispederick.com/work/web-developer/) di Firefox.
 Cambiamo il validatore per restringere le possibilità di scelta:
 
@@ -357,7 +357,7 @@ Abbiamo anche bisogno di cambiare il validatore di default:
  * Aggiorna la colonna `logo` con il nome generato
 
 >**NOTE**
->Avete bisogno di creare la cartella dei loghi (`web/uploads/jobs/`) e verificare
+>Occorre creare la cartella dei loghi (`web/uploads/jobs/`) e verificare
 >che essa sia scrivibile dal server web.
 
 Visto che il validatore salverà il percorso relativo all'immagine nel database,
@@ -372,7 +372,7 @@ cambiamo il percorso utilizzato nel template `showSuccess`:
 >validatore e il risultato sovrascriverà il nome file di default del `logo`.
 >Al metodo viene passato l'oggetto `sfValidatedFile` come parametro.
 
-Come già potete sovrascrivere l'etichetta generata per ogni campo, potete anche
+Come si può già sovrascrivere l'etichetta generata per ogni campo, si può anche
 definire un ~messaggio d'aiuto|Form (Aiuto)~. Aggiungiamone uno per la colonna `is_public`,
 per spiegare meglio il suo significato:
 
@@ -456,16 +456,16 @@ e `editSuccess.php` sono abbastanza simili:
     <?php include_partial('form', array('form' => $form)) ?>
 
 >**NOTE**
->Se non avete ancora aggiunto il foglio di stile `job`, è ora di farlo
+>Se non si è ancora aggiunto il foglio di stile `job`, è ora di farlo
 >in entrambi i template (`<?php use_stylesheet('job.css') ?>`).
 
-Il form stesso è visualizzato nel ~partial|Partial~ `_form`. Sostituite
+Il form stesso è visualizzato nel ~partial|Partial~ `_form`. Sostituire
 il contenuto generato nel partial `_form' con il codice seguente:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
-    <?php use_stylesheets_for_form($form) ?>
-    <?php use_javascripts_for_form($form) ?>
+    <?php include_stylesheets_for_form($form) ?>
+    <?php include_javascripts_for_form($form) ?>
 
     <?php echo form_tag_for($form, '@job') ?>
       <table id="job_form">
@@ -482,13 +482,13 @@ il contenuto generato nel partial `_form' con il codice seguente:
       </table>
     </form>
 
-Gli helper `use_javascripts_form_form()` e `use_stylesheets_for_form()`
+Gli helper `include_javascripts_form_form()` e `include_stylesheets_for_form()`
 aggiungeranno le dipendenze JavaScript e CSS necessarie per i widget.
 
 >**TIP**
 >Anche se il form per il lavoro non necessita di alcun file JavaScript o CSS, è
 >una buona abitudine mantenere questi helper "giusto nel caso". Potranno essere
->d'aiuto se in seguito deciderete di cambiare un widget con uno che necessita di
+>d'aiuto se in seguito si decide di cambiare un widget con uno che necessita di
 >JavaScript o di un ~foglio di stile|Fogli di stile~ specifico.
 
 L'helper ~`form_tag_for()`~ genera un ~tag|Form (HTML)~ `<form>` per il form e la rotta dati
@@ -738,7 +738,7 @@ Ora tutte le rotte correlate al lavoro, eccetto quella `job_show_user`,
 contengono quel token. Per esempio, la rotta per modificare un lavoro ha
 ora il seguente schema:
 
-    http://www.jobeet.com.localhost/job/TOKEN/edit
+    http://jobeet.localhost/job/TOKEN/edit
 
 Inoltre sarà necessario cambiare il link "Edit" nel template `showSuccess`:
 
