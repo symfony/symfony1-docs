@@ -178,8 +178,10 @@ utente:
       {
         return $this->getAttribute('first_request', true);
       }
-      
-      $this->setAttribute('first_request', $boolean);
+      else
+      {
+        $this->setAttribute('first_request', $boolean);
+      }
     }
 
 Aggiungiamo una rotta `localized_homepage`:
@@ -213,14 +215,14 @@ richiesta di una sessione:
           $culture = $this->getUser()->getCulture();
         }
 
-        $this->redirect('localized_homepage');
+        $this->redirect('@localized_homepage');
       }
 
 <propel>
       $this->categories = JobeetCategoryPeer::getWithJobs();
 </propel>
 <doctrine>
-      $this->categories = Doctrine_Core::getTable('JobeetCategory')->getWithJobs();
+      $this->categories = Doctrine::getTable('JobeetCategory')->getWithJobs();
 </doctrine>
     }
 
@@ -304,28 +306,11 @@ Installiamo il plugin con il task `plugin:install`:
 
     $ php symfony plugin:install sfFormExtraPlugin
 
-Or via Subversion with the following command:
-
-    $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
-
-In order for plugin's classes to be loaded, the `sfFormExtraPlugin` plugin must be activated in the `config/ProjectConfiguration.class.php` file as shown below:
-
-        [php]
-        // config/ProjectConfiguration.class.php
-        public function setup()
-        {
-          $this->enablePlugins(array(
-            'sfDoctrinePlugin', 
-            'sfDoctrineGuardPlugin',
-            'sfFormExtraPlugin'
-          ));
-        }
-
 >**NOTE**
 >`sfFormExtraPlugin` contiene widget che richiedono dipendenze esterne, 
->come librerie JavaScript. Troverete un widget per un selezionatore di
+>come librerie JavaScript. C'è un widget per un selezionatore di
 >date in formato grafico, uno per un editor visuale e molto altro.
->Leggete la documentazione, perché vi troverete molte cose utili.
+>Consultare la documentazione, perché vi si possono trovare molte cose utili.
 
 Il plugin `sfFormExtraPlugin` fornisce un form `sfFormLanguage` per
 gestire la scelta della lingua. Si può aggiungere il form delle lingue
@@ -348,7 +333,7 @@ nel layout in questo modo:
           array('languages' => array('en', 'fr'))
           )
         ?>
-        <form action="<?php echo url_for('change_language') ?>">
+        <form action="<?php echo url_for('@change_language') ?>">
           <?php echo $form ?><input type="submit" value="ok" />
         </form>
       </div>
@@ -407,7 +392,7 @@ un partial: un trattino basso (`_`) seguito dal nome del component:
 
     [php]
     // apps/frontend/modules/language/templates/_language.php
-    <form action="<?php echo url_for('change_language') ?>">
+    <form action="<?php echo url_for('@change_language') ?>">
       <?php echo $form ?><input type="submit" value="ok" />
     </form>
 
@@ -436,7 +421,7 @@ E creiamo l'azione corrispondente:
 
         $form->process($request);
 
-        return $this->redirect('localized_homepage');
+        return $this->redirect('@localized_homepage');
       }
     }
 
@@ -521,13 +506,13 @@ Ecco come usare l'helper `__()` per il footer di Jobeet:
             <a href=""><?php echo __('About Jobeet') ?></a>
           </li>
           <li class="feed">
-            <?php echo link_to(__('Full feed'), 'job', array('sf_format' => 'atom')) ?>
+            <?php echo link_to(__('Full feed'), '@job?sf_format=atom') ?>
           </li>
           <li>
             <a href=""><?php echo __('Jobeet API') ?></a>
           </li>
           <li class="last">
-            <?php echo link_to(__('Become an affiliate'), 'affiliate_new') ?>
+            <?php echo link_to(__('Become an affiliate'), '@affiliate_new') ?>
           </li>
         </ul>
         <?php include_component('language', 'language') ?>
@@ -689,7 +674,7 @@ Dopo aver fatto girare il task, apriamo il file XLIFF per aggiungere la
 traduzione Francese:
 
     [xml]
-    <trans-unit id="6">
+    <trans-unit id="5">
       <source>and %count% more...</source>
       <target>et %count% autres...</target>
     </trans-unit>
@@ -745,12 +730,12 @@ La ~serie|Serie (I18n)~ può descrivere qualsiasi serie di numeri:
 La traduzione della stringa è simile a quella di altre stringhe:
 
     [xml]
-    <trans-unit id="7">
+    <trans-unit id="6">
       <source>[0]No job in this category|[1]One job in this category|(1,+Inf]%count% jobs in this category</source>
       <target>[0]Aucune annonce dans cette catégorie|[1]Une annonce dans cette catégorie|(1,+Inf]%count% annonces dans cette catégorie</target>
     </trans-unit>
 
-Ora che sapete come internazionalizzare ogni tipo di stringa, aggiungete
+Ora che si è in grado di internazionalizzare ogni tipo di stringa, aggiungere
 le chiamate a `__()` a tutti i template dell'applicazione di frontend. Non
 internazionalizzeremo l'applicazione di backend.
 
@@ -1150,28 +1135,9 @@ le fixture che abbiamo definito sopra in
 `test/fixtures/categories.yml`.
 </doctrine>
 
-<doctrine>
-Don't forget to update methods in the `lib/test/JobeetTestFunctional.class.php` file in order to care of our modifications concerning the `JobeetCategory`'s internationalization.
-
-    [php]
-    public function getMostRecentProgrammingJob()
-    {
-      $q = Doctrine_Query::create()
-        ->select('j.*')
-        ->from('JobeetJob j')
-        ->leftJoin('j.JobeetCategory c')
-        ->leftJoin('c.Translation t')
-        ->where('t.slug = ?', 'programming');
-
-      $q = Doctrine_Core::getTable('JobeetJob')->addActiveJobsQuery($q);
-
-      return $q->fetchOne();
-    }
-</doctrine>
-
 Ricostruiamo il modello per l'ambiente `test`:
 
-    $ php symfony propel:build --all --no-confirmation --env=test
+    $ php symfony propel:build --all --and-load --no-confirmation --env=test
 
 Ora possiamo lanciare tutti i test per verificare che girino bene:
 
