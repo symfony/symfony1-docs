@@ -56,14 +56,14 @@ il `dev` front controller `web/frontend_dev.php` in `web/frontend_cache.php`:
     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'cache', true);
     sfContext::createInstance($configuration)->dispatch();
 
-È tutto quello che dovete fare. Il nuovo ambiente `cache` è utilizzabile. 
+È tutto quello che occorre fare. Il nuovo ambiente `cache` è utilizzabile. 
 L'unica differenza è il secondo parametro del metodo `getApplicationConfiguration()`,
 che rappresenta il nome dell'ambiente, `cache`.
 
 Si può testare l'ambiente `cache` nel browser, richiamando il suo front
 controller:
 
-    http://www.jobeet.com.localhost/frontend_cache.php/
+    http://jobeet.localhost/frontend_cache.php/
 
 >**NOTE**
 >Lo script del front controller inizia con una parte di codice che si assicura
@@ -90,8 +90,8 @@ l'impostazione `cache` mentre la ~web debug toolbar|Web debug toolbar~ è stata 
 l'impostazione `web_debug`.
 
 <propel>
-Siccome vogliamo anche il ~log|Log~ delle query SQL, abbiamo bisogno di cambiare la
-configurazione del database. Modificate `databases.yml` e aggiungete la seguente
+Siccome vogliamo anche il ~log|Log~ delle query SQL, occorre cambiare la
+configurazione del database. Modificare `databases.yml` e aggiungere la seguente
 configurazione all'inizio del file:
 
     [yml]
@@ -108,11 +108,11 @@ occorre cancellarla prima di poter vedere i cambiamenti nel browser:
 
     $ php symfony cc
 
-Ora, se si aggiorna la pagina nel browseri, la web debug toolbar dovrebbe essere 
+Ora, se si aggiorna la pagina nel browser, la web debug toolbar dovrebbe essere 
 presente nell'angolo in alto a destra della pagina, come succede per l'ambiente
 `dev`.
 
-Configurazione della Cache
+Configurazione della cache
 --------------------------
 
 La cache dei template di symfony può essere configurata attraverso il file 
@@ -155,11 +155,11 @@ Create un file `cache.yml` per il modulo `sfJobeetJob`:
 
 >**TIP**
 >Il file di configurazione `cache.yml` ha le stesse proprietà di ogni altro file di
->configurazione, come `view.yml`. Significa, per esempio, che potete abilitare la
->cache per tutte le azioni di un modulo utilizzando la chiave speciale `all`.
+>configurazione, come `view.yml`. Significa, per esempio, che si può abilitare la
+>cache per tutte le azioni di un modulo, utilizzando la chiave speciale `all`.
 
-Se aggiornate la pagina nel browser, vedrete che symfony ha decorato la pagina
-con un box che indica i contenuti inseriti in cache:
+Aggiornando la pagina nel browser, si vedrà che symfony ha decorato la pagina
+con un box indicante i contenuti inseriti in cache:
 
 ![Cache pulita](http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png)
 
@@ -184,7 +184,7 @@ future symfony invierà la risposta in cache senza richiamare il controllore:
 
 ![Flusso della cache di una paginaw](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
-Questo ha un grosso impatto sulle ~performance|Performance~, come potete constatare personalmente
+Questo ha un grosso impatto sulle ~performance|Performance~, come si può constatare personalmente
 usando strumenti come [JMeter](http://jakarta.apache.org/jmeter/).
 
 >**NOTE**
@@ -212,18 +212,18 @@ tutte le azioni del modulo `sfJobeetJob`.
 Pulire la Cache
 ---------------
 
-Se volete pulire la cache delle pagine potete usare il task `cache:clear`:
+Se si vuole pulire la cache delle pagine, si può usare il task `cache:clear`:
 
     $ php symfony cc
     
-Il task `cache:clear` pulisce tutte le cache di symfony salvate nella cartella
+Il task `cache:clear` pulisce tutta la cache di symfony salvata nella cartella
 `cache/`. Inoltre ha delle opzioni per pulire in modo selettivo alcune parti della
 cache. Per eliminare solamente la cache dei template per l'ambiente `cache`
 utilizzate i parametri `--type` e `--env` options:
 
     $ php symfony cc --type=template --env=cache
 
-Invece di pulire la cache ogni volta che fate delle modifiche potete disabilitare
+Invece di pulire la cache ogni volta che si fanno delle modifiche, si può disabilitare
 la cache aggiungendo ogni query string nell'URL o utilizzando il pulsante 
 "Ignore cache" della web debug toolbar:
 
@@ -232,9 +232,9 @@ la cache aggiungendo ogni query string nell'URL o utilizzando il pulsante
 Cache dell'azione
 -----------------
 
-A volte non potete inserire in cache una pagina intera, ma il template
-dell'~azione|Azione~ può comunque essere inserito. Guardiamola diversamente, potete
-inserire tutto in cache tranne che il layout.
+A volte non si può inserire in cache una pagina intera, ma il template
+dell'~azione|Azione~ può comunque essere inserito. Guardandola diversamente, si può
+inserire in cache tutto tranne che il layout.
 
 Per l'applicazione Jobeet, non possiamo mettere in cache l'intera pagina,
 perché c'è la barra della cronologia degli ultimi annunci consultati.
@@ -253,10 +253,10 @@ conseguenza:
     all:
       with_layout: false
 
-Cambiando l'impostazione di `with_layout` a `false` avrete disabilitato la cache 
+Cambiando l'impostazione di `with_layout` a `false`, si disabilita la cache 
 del layout.
 
-Pulite la cache:
+Pulire la cache:
 
     $ php symfony cc
 
@@ -273,8 +273,8 @@ Cache di ~Partial~ e ~Component~
 --------------------------------
 
 Per i siti web altamente dinamici a volte è impossibile inserire in cache l'intero
-template dell'azione. Per questi casi avete bisogno di configurare la cache a un
-livello di granularità maggiore. Fortunatamente anche partial e component possono
+template dell'azione. Per questi casi occorre di configurare la cache a un
+livello di granularità maggiore. Fortunatamente, anche partial e component possono
 essere inseriti in cache.
 
 ![Cache di partial](http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png)
@@ -289,7 +289,7 @@ modulo `sfJobeetLanguage`:
 
 Configurare la cache per un partial o un component è semplice quanto aggiungere
 una riga con il suo nome. L'opzione `with_layout` non viene presa in considerazione
-per questo tipo di cache visto che non nè avrebbe alcun senso:
+per questo tipo di cache, visto che non avrebbe alcun senso:
 
 ![Flusso della cache di Partial e Component](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png)
 
@@ -370,29 +370,31 @@ togliere solo il token CSRF, facciamolo dall'azione e dal component
 del modulo `sfJobeetLanguage`:
 
     [php]
-    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/components.class.php
+    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/components.class.php
     class sfJobeetLanguageComponents extends sfComponents
     {
       public function executeLanguage(sfWebRequest $request)
       {
         $this->form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        $this->form->disableLocalCSRFProtection();
+        unset($this->form[$this->form->getCSRFFieldName()]);
       }
     }
 
-    // plugins/sfJobeetPlugin/modules/sfJobeetLanguage/actions/actions.class.php
+    // plugins/sfJobeetJob/modules/sfJobeetLanguage/actions/actions.class.php
     class sfJobeetLanguageActions extends sfActions
     {
       public function executeChangeLanguage(sfWebRequest $request)
       {
         $form = new sfFormLanguage($this->getUser(), array('languages' => array('en', 'fr')));
-        $form->disableLocalCSRFProtection();
+        unset($form[$form->getCSRFFieldName()]);
 
         // ...
       }
     }
 
-The `disableLocalCSRFProtection()` method disables the CSRF token for this form.
+`getCSRFFieldName()` restituisce il nome del campo che contiene il token
+CSRF. Togliendo questo campo, il widget e il validatore associato vengono
+rimossi.
 
 ~Rimuovere la cache~
 --------------------
@@ -418,7 +420,7 @@ nuovo lavoro, basta modificare il metodo `executePublish()` del modulo
 `sfJobeetJob` aggiungendo una pulizia manuale della cache:
 
     [php]
-    // plugins/sfJobeetPlugin/modules/sfJobeetJob/actions/actions.class.php
+    // plugins/sfJobeetJob/modules/sfJobeetJob/actions/actions.class.php
     public function executePublish(sfWebRequest $request)
     {
       $request->checkCSRFProtection();
@@ -434,7 +436,7 @@ nuovo lavoro, basta modificare il metodo `executePublish()` del modulo
 
       $this->getUser()->setFlash('notice', sprintf('Your job is now online for %s days.', sfConfig::get('app_active_days')));
 
-      $this->redirect($this->generateUrl('job_show_user', $job));
+      $this->redirect('job_show_user', $job);
     }
 
 La cache è gestita dalla classe `sfViewCacheManager`. Il metodo `remove()`
@@ -477,7 +479,7 @@ Testiamo la pagina di creazione di un lavoro:
       createJob(array('category_id' => $browser->getProgrammingCategory()->getId()), true)->
 </propel>
 <doctrine>
-      createJob(array('category_id' => Doctrine_Core::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
+      createJob(array('category_id' => Doctrine::getTable('JobeetCategory')->findOneBySlug('programming')->getId()), true)->
 </doctrine>
 
       get('/fr/')->

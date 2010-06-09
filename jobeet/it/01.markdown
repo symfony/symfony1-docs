@@ -58,7 +58,7 @@ cose gli esempi sono molto meno utili visto che non possono essere usati come pu
 di partenza. Questo è male! Perché? Perché la sicurezza, la validazione, la gestione 
 degli errori e i test (solo per dirne alcuni) permettono di scrivere codice corretto.
 
-In questo libro non vedrete mai frasi come quelle viste in precedenza: scriveremo test, 
+In questo libro non si vedranno mai frasi come quelle viste in precedenza: scriveremo test, 
 gestiremo errori, valideremo il codice e state pure certi che realizzeremo un'applicazione
 sicura. Questo è dovuto al fatto che symfony si occupa del codice ma anche di
 utilizzare le best practice e di mostrare come sviluppare in modo professionale
@@ -70,15 +70,15 @@ Validazione, gestione degli errori, sicurezza e test sono argomenti di prima cla
 in symfony perciò non servirà molto tempo per spiegarli. Questa è solo una delle molteplici
 ragioni per usare un framework per realizzare progetti reali.
 
-Tutto il codice che leggerete in questo libro potrete usarlo per un progetto reale.
-Vi incoraggiamo a riutilizzare parti del codice o a "rubare" intere porzioni.
+Tutto il codice che si leggerà in questo libro potrà essere usato per un progetto reale.
+Incoraggiamo a riutilizzare parti del codice o a "rubare" intere porzioni.
 
 
 Cosa facciamo oggi?
 -------------------
 
 Oggi non scriveremo codice PHP. Ma anche senza scrivere una sola riga di codice
-inizierete a capire i benefici derivanti dall'utilizzo di un framework come symfony
+si inizieranno a capire i benefici derivanti dall'utilizzo di un framework come symfony
 già dall'avvio di un nuovo progetto.
 
 L'obiettivo di questo capitolo è quello di impostare l'ambiente di sviluppo e visualizzare
@@ -110,10 +110,10 @@ di `cmd`.
 
 >**Note**
 >I comandi della shell Unix possono tornare utili in un sistema Windows.
->Se vi può essere utile usare comandi come `tar`, `gzip` o `grep` su Windows
->potete installare [Cygwin](http://cygwin.com/). La documentazione ufficiale
->è un po' frammentata, quindi una buona guida all'installazione la potete trovare
->[qui](http://www.soe.ucsc.edu/~you/notes/cygwin-install.html).
+>Per poter usare comandi come `tar`, `gzip` o `grep` su Windows
+>si può installare [Cygwin](http://cygwin.com/). La documentazione ufficiale
+>è un po' frammentata, quindi ecco una buona
+>[guida](http://www.soe.ucsc.edu/~you/notes/cygwin-install.html) all'installazione.
 >I più avventurosi potrebbero voler provare
 >[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx)
 >di Microsoft.
@@ -271,8 +271,8 @@ Su Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
 >**TIP**
->Se siete curiosi e volete sapere cosa può fare per voi questa linea di comando,
->digitate `symfony` per ottenere la lista di tutte le opzioni e dei task disponibili:
+>Se si è curiosi di sapere cosa può fare questa linea di comando,
+>digitare `symfony` per ottenere la lista di tutte le opzioni e dei task disponibili:
 >
 >    $ php lib/vendor/symfony/data/bin/symfony
 >
@@ -385,10 +385,10 @@ nella cartella `apps/frontend`:
 >  * `--escaping-strategy`: Abilita l'escape dell'output per prevenire gli attacchi ~XSS~
 >  * `--csrf-secret`: Abilita i token di sessione per i form per prevenire gli attacchi ~CSRF~
 >
->Se non sapete nulla a proposito di 
+>Se non si sa nulla a proposito di 
 >[XSS](http://it.wikipedia.org/wiki/Cross-site_scripting) o
->[CSRF](http://it.wikipedia.org/wiki/CSRF), prendetevi il tempo per sapere qualcosa in più
->su queste vulnerabilità della sicurezza.
+>[CSRF](http://it.wikipedia.org/wiki/CSRF), sarebbe opportuno informarsi
+>su queste vulnerabilità di sicurezza.
 
 ### Permessi per le cartelle
 
@@ -428,24 +428,24 @@ Setup del server web: la via sicura
 
 Una buona pratica web è quella di mettere nella cartella principale web solamente i
 file che devono essere utilizzati da un browser web come fogli di stile, JavaScript
-e immagini. Come da default vi suggeriamo di salvare questi file dentro la sotto-cartella
+e immagini. Come da impostazione predefinita, suggeriamo di salvare questi file dentro la sotto-cartella
 `web` del progetto symfony.
 
-Se date uno sguardo a questa cartella troverete alcune sotto-cartelle per i ~materiali~
+Dando uno sguardo a questa cartella, si troveranno alcune sotto-cartelle per i ~materiali~
 web (`css/` e `images/`) e i due file dei front controller. Questi sono gli unici
 file PHP che necessitano di essere nella cartella principale web. Tutti gli altri
 file PHP possono essere nascosti al browser, questa è una buona idea in
 termini di ~sicurezza~.
 
-### Configurazione del Web Server
+### Configurazione del server web
 
 Ora è il momento di modificare la configurazione di ~Apache~ per rendere il nuovo
 progetto accessibile a tutti.
 
-Trovate e aprite il file di configurazione `httpd.conf` e aggiungete le seguenti 
+Trovare e aprire il file di configurazione `httpd.conf` e aggiungere le seguenti 
 configurazioni alla fine:
 
-    # Assicuratevi di avere questa linea una sola volta nel file
+    # Assicurarsi di avere questa linea una sola volta nel file
     NameVirtualHost 127.0.0.1:8080
 
     # Questa è la configurazione per Jobeet
@@ -470,7 +470,7 @@ configurazioni alla fine:
 >necessari per la corretta visualizzazione delle ~pagine di default di symfony~
 >e della web debug toolbar.
 >
->Su ~Windows~ dovrete sostituire la riga dell'`Alias` con qualcosa come:
+>Su ~Windows~ occorre sostituire la riga dell'`Alias` con qualcosa come:
 >
 >     Alias /sf "c:\development\symfony\data\web\sf"
 >
@@ -483,16 +483,16 @@ quindi il sito Jobeet sarà accessibile dal seguente URL:
 
     http://~localhost~:8080/
 
-Potete cambiare `8080` con qualsiasi numero, preferendo comunque numeri maggiori
+Si può cambiare `8080` con qualsiasi numero, preferendo comunque numeri maggiori
 di `1024`, visto che non richiedono privilegi amministrativi.
 
 >**SIDEBAR**
 >Configurare un ~nome a dominio~ dedicato per Jobeet
 >
->Se avete i privilegi amministrativi sulla macchina su cui lavorate, è meglio
->impostare dei ~virtual host~ piuttosto che aggiungere una nuova porta ogni volta
->che iniziate un nuovo progetto. Invece che selezionare una porta e aggiungere
->una direttiva di tipo `Listen`, scegliete un nome a dominio e aggiungete
+>Se si disponde di privilegi amministrativi sulla macchina su cui si lavora, è meglio
+>impostare dei ~virtual host~, piuttosto che aggiungere una nuova porta ogni volta
+>che si nizia un nuovo progetto. Invece che selezionare una porta e aggiungere
+>una direttiva di tipo `Listen`, scegliere un nome a dominio e aggiungere
 >una direttiva di tipo `ServerName`:
 >
 >     # Questa è la configurazione per Jobeet
@@ -502,17 +502,17 @@ di `1024`, visto che non richiedono privilegi amministrativi.
 >     </VirtualHost>
 >
 >Il nome a dominio `jobeet.localhost`, usato nella configurazione di Apache,
->deve essere dichiarato localmente. Se utilizzate un sistema Linux,
->questo va fatto nel file `/etc/hosts`. Se usate Windows XP,
+>deve essere dichiarato localmente. Se si utilizza un sistema Linux,
+>questo va fatto nel file `/etc/hosts`. Se si usa Windows XP,
 >questo file è posizionato nella cartella `C:\WINDOWS\system32\drivers\etc\`.
 >
->Aggiungi la seguente riga:
+>Aggiungere la seguente riga:
 >
 >     127.0.0.1         jobeet.localhost
 
 ### Provare la nuova configurazione
 
-Riavviate Apache e verificate di avere accesso alla nuova applicazione aprendo
+Riavviare Apache e verificare di avere accesso alla nuova applicazione, aprendo
 il browser e digitando `http://localhost:8080/index.php/` o 
 `http://jobeet.localhost/index.php/` in base alla configurazione di Apache 
 selezionata nella sezione precedente.
@@ -520,16 +520,16 @@ selezionata nella sezione precedente.
 ![Congratulazioni](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
 >**TIP**
->Se avete il modulo di Apache ~`mod_rewrite`~ installato, potete
+>Se si ha il modulo di Apache `~mod_rewrite~` installato, si può
 >rimuovere la parte /index.php/ da tutti gli URL. Questo è possibile
 >grazie alle regole di riscrittura configurate nel file `web/.~htaccess~`.
 
-Potete anche provare ad accedere all'applicazione nell'ambiente di sviluppo.
-Digitate il seguente URL:
+Si può anche provare ad accedere all'applicazione nell'ambiente di sviluppo.
+Digitare il seguente URL:
 
     http://jobeet.localhost/frontend_dev.php/
 
-La web debug toolbar dovrebbe apparire nell'angolo in alto a destra, incluse delle piccole icone
+La web debug toolbar dovrebbe apparire nell'angolo in alto a destra, con delle piccole icone
 a riprova del fatto che la configurazione dell'alias `sf/` è corretta.
 
 ![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
@@ -542,14 +542,14 @@ a riprova del fatto che la configurazione dell'alias `sf/` è corretta.
 Gli ~ambienti~
 --------------
 
-Se date un'occhiata alla cartella `web/`, troverete due file PHP:
+Se si dà un'occhiata alla cartella `web/`, si troveranno due file PHP:
 `index.php` e `frontend_dev.php`. Questi file sono chiamati **front
 controller**: tutte le richieste all'applicazione vengono fatte tramite loro. Ma perché
 abbiamo due front controller se abbiamo definito una sola applicazione?
 
 Entrambi i file puntano alla stessa applicazione, ma per diversi ambienti.
 Mentre sviluppate un'applicazione, escluso quando si sviluppa direttamente 
-sul server di produzione, avete bisogno di diversi **ambienti**:
+sul server di produzione, occorrono diversi **ambienti**:
 
   * L'**ambiente di sviluppo**: È l'ambiente usato dai **web
     developer** quando lavorano sull'applicazione, per aggiungere nuove feature,
@@ -576,16 +576,16 @@ richiesta corrente all'interno del browser:
 
 ![Un'eccezione nell'ambiente di sviluppo](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
 
-Ma nell'ambiente di produzione la cache deve essere abilitata, e
+Ma nell'ambiente di produzione la cache deve essere abilitata e
 l'applicazione deve mostrare messaggi di errore personalizzati,
 piuttosto che semplici eccezioni. In questo modo l'ambiente di
-produzione deve essere ottimizzato per le performance e per
+produzione deve essere ottimizzato per le prestazioni e per
 la user experience dell'utente finale.
 
 ![Un'eccezione nell'ambiente di produzione](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
 
 >**TIP**
->Se aprite i file dei front controller, potrete notare che il contenuto
+>Se si aprono i file dei front controller, si può notare che il contenuto
 >è lo stesso, tranne per l'impostazione dell'ambiente:
 >
 >     [php]
@@ -597,7 +597,7 @@ la user experience dell'utente finale.
 >     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
 >     sfContext::createInstance($configuration)->dispatch();
 
-La barra degli strumenti web per il debug è un ottimo esempio dell'utilizzo
+La web debug toolbar è un ottimo esempio dell'utilizzo
 di un ambiente. La ~web debug toolbar~ è presente su tutte le pagine nell'ambiente
 di sviluppo e dà accesso a molte informazioni, cliccando sulle varie linguette: la
 configurazione attuale dell'applicazione, i log per la richiesta corrente,
@@ -624,7 +624,7 @@ Ipotizziamo che si disponga già di un accesso a un server Subversion
 e di un accesso HTTP a esso.
 
 >**TIP**
->Se non avete un server Subversion a disposizione, potete creare un
+>Se non si ha un server Subversion a disposizione, si può creare un
 >repository in modo gratuito su [Google Code](http://code.google.com/hosting/)
 >o anche cercare "free subversion repository" su Google per avere
 >molte più opzioni.
