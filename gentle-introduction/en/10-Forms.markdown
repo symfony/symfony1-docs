@@ -286,7 +286,7 @@ The `choice` widget expects at least a `choices` parameter with an associative a
 
     // List of Radio buttons
     $form->setWidget('gender', new sfWidgetFormChoice(array(
-      'expanded' => 'true,
+      'expanded' => true,
       'choices'  => array('m' => 'Male', 'f' => 'Female'),
       'class'    => 'gender_list'
     )));

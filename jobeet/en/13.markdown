@@ -308,7 +308,7 @@ symfony forwards the request to the `login` action configured in `settings.yml`:
         login_action: login
 
 >**NOTE**
->It is not possible to secure the login action to avoid infinite recursion.
+>It is not possible to secure the login action. This is to avoid infinite recursion.
 
 -
 

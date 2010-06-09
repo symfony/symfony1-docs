@@ -282,7 +282,7 @@ Listing 18-9 - Using Direct PDO Access for Optimized Model Methods, in `lib/mode
       public function getArticleTitlesWithNbComments()
       {
         return $this->createQuery('a')
-            ->select('a.title, count(*) as nb_comments)
+            ->select('a.title, count(*) as nb_comments')
             ->leftJoin('a.Comments')
             ->groupBy('a.id')
             ->fetchArray();

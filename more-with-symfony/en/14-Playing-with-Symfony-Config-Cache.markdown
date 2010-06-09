@@ -279,7 +279,7 @@ one of your config directory:
 >**NOTE**
 >You must specify the full path to your custom configuration handler
 >source files under the `file` entry as the configuration is initialized
->even befaure the autoloading.
+>even before the autoloading.
 
 The config cache needs to be told what to do when a certain configuration file
 is requested by the application. For now we've instructed the config cache to
