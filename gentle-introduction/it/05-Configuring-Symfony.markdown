@@ -1,5 +1,5 @@
 Capitolo 5 - Configurare Symfony
-===============================
+================================
 
 Per essere semplice da usare, symfony definisce alcune convenzioni, che devono soddisfare i requisiti più comuni nello sviluppo web senza bisogno di modifiche. Comunque, utilizzando un insieme di semplici e potenti file di configurazione, è possibile personalizzare il modo in cui il framework e la tua applicazione interagiscono fra loro. Con questi file di configurazione, potrai anche aggiungere parametri speciali alla tua applicazione.
 
@@ -12,7 +12,7 @@ Questo capitolo spiega come funziona il sistema di configurazione:
   * Inoltre, symfony permette l'utilizzo di codice PHP e altri trucchi all'interno dei file di configurazione YAML, per rendere il sistema di configurazione ancora più flessibile.
 
 Il Sistema di Configurazione
-------------------------
+----------------------------
 
 A parte lo scopo, la maggior parte delle applicazioni web condivide un insieme di caratteristiche comuni. Ad esempio, qualche sezione puo' avere accesso ristretto ad un certo insieme di utenti, oppure le pagine possono essere decorate da un layout, o ancora la possibilità di avere le form già riempite dopo una validazione fallita. Un framework definisce una struttura per simulare queste caratteristiche, e gli sviluppatori possono ulteriormente modificarle cambiando i file di configurazione. Questa strategia fa risparmiare molto tempo durante lo sviluppo, dato che molti cambiamenti non necessitano di alcuna linea di codice, anche se ce n'è molto dietro. Questo sistema è anche molto efficiente, perché assicura che queste informazioni siano reperibili sempre in un punto unico e facile da trovare.
 
@@ -409,7 +409,7 @@ Ciò significa che una proprietà può essere definita diverse volte, e l'effett
   6. Default
 
 La cache di configurazione
------------------------
+--------------------------
 
 Fare il parsing di file YAML e avere a che fare con la cascata di configurazioni comporta un grande carico di lavoro per ogni richiesta. Symfony possiede un meccanismo di cache integrato pensato per accelerare le richieste. 
 
@@ -439,7 +439,7 @@ C'è un'importante conseguenza di questo meccanismo. Se cambi la configurazione 
     $ php symfony cache:clear
 
 Accedere alla configurazione dal codice
--------------------------------------
+---------------------------------------
 
 Tutti i file di configurazione sono alla fine trasformati in PHP, e molte delle impostazioni che contengono sono utilizzate dal framework senza ulteriori interventi. Comunque, ti potrebbe capitare di dover accedere ad alcune impostazioni direttamente dal tuo codice (in azioni, template, classi e così via). Le impostazioni definite in settings.yml, app.yml, e module.yml sono disponibili attraverso una classe speciale chiamata sfConfig. 
 
