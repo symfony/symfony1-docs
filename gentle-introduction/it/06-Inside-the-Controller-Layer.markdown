@@ -39,7 +39,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
 
 ### Il front controller di default
 
-Il front controller di default, chiamato `index.php` e posizionato nella directory `web/` del progetto, è un semplice file PHP come si può vedere nel Listing 6-1.
+Il front controller di default, chiamato `index.php` e posizionato nella directory `web/` del progetto, è un semplice file PHP come si può vedere nel Listato 6-1.
 
 Listing 6-1 - Il front controller di default per l'ambiente di produzione
 
@@ -65,9 +65,9 @@ e questo URL visualizzerà la stessa pagina nell'ambiente di sviluppo:
 
     http://localhost/frontend_dev.php/mymodule/index
 
-Creare un nuovo ambientr è semplice quanto creare un nuovo front controller. Per esempio, potrebbe essere necessario avere un ambiente di staging per permettere ai clienti di testare l'applicazione prima di andare in produzione. Per creare questo ambiente di staging basta copiare `web/frontend_dev.php` in `web/frontend_staging.php` e cambiare il valore del secondo argomento della chiamata a `ProjectConfiguration::getApplicationConfiguration()` in `staging`. Ora in tutti i file di configurazione è possibile aggiungere una nuova sezione `staging:` per impostare valori specifici per questo ambiente, come mostrato nel Listing 6-2.
+Creare un nuovo ambiente è semplice quanto creare un nuovo front controller. Per esempio, potrebbe essere necessario avere un ambiente di staging per permettere ai clienti di testare l'applicazione prima di andare in produzione. Per creare questo ambiente di staging basta copiare `web/frontend_dev.php` in `web/frontend_staging.php` e cambiare il valore del secondo argomento della chiamata a `ProjectConfiguration::getApplicationConfiguration()` in `staging`. Ora in tutti i file di configurazione è possibile aggiungere una nuova sezione `staging:` per impostare valori specifici per questo ambiente, come mostrato nel Listato 6-2.
 
-Listing 6-2 - Sample `app.yml` with Specific Settings for the Staging Environment
+Listing 6-2 - Esempio di `app.yml` con impostazioni specifiche per l'ambiente di staging
 
     staging:
       mail:
@@ -78,22 +78,22 @@ Listing 6-2 - Sample `app.yml` with Specific Settings for the Staging Environmen
         webmaster:    webmaster@mysite.com
         contact:      contact@mysite.com
 
-If you want to see how the application reacts in this new environment, call the related front controller:
+Per vedere come l'applicazione reagisce in questo ambiente basta chiamare il front controller relativo:
 
     http://localhost/frontend_staging.php/mymodule/index
 
-Actions
--------
+Azioni
+------
 
-The actions are the heart of an application, because they contain all the application's logic. They call the model and define variables for the view. When you make a web request in a symfony application, the URL defines an action and the request parameters.
+Le azioni sono il cuore di un'applicazione, questo perchè contengono tutta la logica dell'applicazione stessa. Si occupano di chiamare il modello e di definire le variabili per la vista. Facendo una richiesta web ad un'applicazione symfony l'URL definisce un'azione ed i parametri della richiesta.
 
-### The Action Class
+### La classe dell'azione
 
-Actions are methods named `executeActionName` of a class named `moduleNameActions` inheriting from the `sfActions` class, and grouped by modules. The action class of a module is stored in an `actions.class.php` file, in the module's `actions/` directory.
+Le azioni sono metodi chiamati `executeActionName` di una classe denominata `moduleNameActions` che eredita dalla classe `sfActions` e raggruppati in moduli. La classe azione di un modulo è memorizzata nel file `actions.class.php` nella directory `actions/` del modulo stesso.
 
-Listing 6-3 shows an example of an `actions.class.php` file with only an `index` action for the whole `mymodule` module.
+Listato 6-3 mostra un esempio di file `actions.class.php` con una sola azione `index` per l'intero modulo `mymodule`.
 
-Listing 6-3 - Sample Action Class, in `apps/frontend/modules/mymodule/actions/actions.class.php`
+Listing 6-3 - Classe di azione d'esempio, in `apps/frontend/modules/mymodule/actions/actions.class.php`
 
     [php]
     class mymoduleActions extends sfActions
@@ -105,15 +105,15 @@ Listing 6-3 - Sample Action Class, in `apps/frontend/modules/mymodule/actions/ac
     }
 
 >**CAUTION**
->Even if method names are not case-sensitive in PHP, they are in symfony. So don't forget that the action methods must start with a lowercase `execute`, followed by the exact action name with the first letter capitalized.
+>Anche se i nomi dei metodi non sono case-sensitive in PHP, questi lo sono in symfony. Perciò è importante non dimenticare che i metodi delle azioni devono iniziare con un `execute` minuscolo seguito dallo stesso identico nome dell'azione con la prima lettera maiuscola.
 
-In order to request an action, you need to call the front controller script with the module name and action name as parameters. By default, this is done by appending the couple `module_name`/`action_name` to the script. This means that the action defined in Listing 6-4 can be called by this URL:
+Per poter richiedere un'azione è necessario invocare lo script del front controller passando come parametri i nomi di un modulo e di un'azione. L'impostazione predefinita non fa altro che appendere la coppia `module_name`/`action_name` allo script. Questo significa che l'azione definita nel Listato 6-4 può essere richiamata con questo URL:
 
     http://localhost/index.php/mymodule/index
 
-Adding more actions just means adding more `execute` methods to the `sfActions` object, as shown in Listing 6-4.
+Aggiungere nuove azioni significa aggiungere ulteriori metodi `execute` all'oggetto `sfActions` come mostrato nel Listato 6-4.
 
-Listing 6-4 - Action Class with Two Actions, in `frontend/modules/mymodule/actions/actions.class.php`
+Listing 6-4 - Classe azione con due azioni, in `frontend/modules/mymodule/actions/actions.class.php`
 
     [php]
     class mymoduleActions extends sfActions
@@ -129,26 +129,26 @@ Listing 6-4 - Action Class with Two Actions, in `frontend/modules/mymodule/actio
       }
     }
 
-If the size of an action class grows too much, you probably need to do some refactoring and move some code to the model layer. Actions should often be kept short (not more than a few lines), and all the business logic should usually be in the model.
+Se la dimensione di una classe azione tende a crescere troppo, molto probabilmente, necessita di un po' di refactoring per spostare del codice verso lo strato del modello. Le azioni dovrebbero essere mantenute sempre brevi (non più di alcune righe), mentre tutta la business logic dovrebbe essere nel modello.
 
-Still, the number of actions in a module can be important enough to lead you to split it in two modules.
+Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato da spingervi a separarlo in due moduli.
 
 >**SIDEBAR**
 >Symfony coding standards
 >
->In the code examples given in this book, you probably noticed that the opening and closing curly braces (`{` and `}`) occupy one line each. This standard makes the code easier to read.
+>Negli esempi di codice di questo libro, sarà balzato agli occhi il fatto che le parentesi grafe (`{` e `}`) occupano una riga ciascuna. Questo standard permette una più semplice lettura del codice.
 >
->Among the other coding standards of the framework, indentation is always done by two blank spaces; tabs are not used. This is because tabs have a different space value according to the text editor you use, and because code with mixed tab and blank indentation is impossible to read.
+>Tra gli altri coding standard del framework ricordiamo l'indentazione che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perchè le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
 >
->Core and generated symfony PHP files do not end with the usual `?>` closing tag. This is because it is not really needed, and because it can create problems in the output if you ever have blanks after this tag.
+>I file PHP del core e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perchè non è realmente necessario e perchè potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
 >
->And if you really pay attention, you will see that a line never ends with a blank space in symfony. The reason, this time, is more prosaic: lines ending with blanks look ugly in Fabien's text editor.
+>Prestando davvero molta attenzione sarà facile vedere come una riga di codice non finisca mai con uno spazio vuoto in symfony. La ragione questa volta è molto più banale: le righe che terminano con spazi vuoti si vedono molto male nell'editor di testo di Fabien.
 
-### Alternative Action Class Syntax
+### Sintassi alternativa per le classi azione
 
-An alternative action syntax is available to dispatch the actions in separate files, one file per action. In this case, each action class extends `sfAction` (instead of `sfActions`) and is named `actionNameAction`. The actual action method is simply named `execute`. The file name is the same as the class name. This means that the equivalent of Listing 6-4 can be written with the two files shown in Listings 6-5 and 6-6.
+Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del Listato 6-4 può essere scritto con i due file dei Listati 6-5 e 6-6.
 
-Listing 6-5 - Single Action File, in `frontend/modules/mymodule/actions/indexAction.class.php`
+Listing 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAction.class.php`
 
     [php]
     class indexAction extends sfAction
@@ -159,7 +159,7 @@ Listing 6-5 - Single Action File, in `frontend/modules/mymodule/actions/indexAct
       }
     }
 
-Listing 6-6 - Single Action File, in `frontend/modules/mymodule/actions/listAction.class.php`
+Listing 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAction.class.php`
 
     [php]
     class listAction extends sfAction
@@ -170,11 +170,11 @@ Listing 6-6 - Single Action File, in `frontend/modules/mymodule/actions/listActi
       }
     }
 
-### Retrieving Information in the Action
+### Recuperare informazioni nell'azione
 
-The action class offers a way to access controller-related information and the core symfony objects. Listing 6-7 demonstrates how to use them.
+La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller ed agli oggetti del core di symfony. Il Listato 6-7 mostra come utilizzarli.
 
-Listing 6-7 - `sfActions` Common Methods
+Listing 6-7 - Metodi comuni `sfActions`
 
     [php]
     class mymoduleActions extends sfActions
@@ -201,42 +201,42 @@ Listing 6-7 - `sfActions` Common Methods
     }
 
 >**SIDEBAR**
->The context singleton
+>Il singleton context
 >
->You already saw, in the front controller, a call to `sfContext::createInstance()`. In an action, the `getContext()` method returns the same singleton. It is a very useful object that stores a reference to all the symfony core objects related to a given request, and offers an accessor for each of them:
+>Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` ritorna lo stesso singleton. Questo è un oggetto molto utile che contiene una referenza a tutti gli oggetti del core di symfony associati ad una richiesta mettendo a disposizione una via di accesso ad ognuno di loro:
 >
->`sfController`: The controller object (`->getController()`)
+>`sfController`: L'oggetto controllore (`->getController()`)
 >
->`sfRequest`: The request object (`->getRequest()`)
+>`sfRequest`: L'oggetto richiesta (`->getRequest()`)
 >
->`sfResponse`: The response object (`->getResponse()`)
+>`sfResponse`: L'oggetto risposta (`->getResponse()`)
 >
->`sfUser`: The user session object (`->getUser()`)
+>`sfUser`: L'oggetto della sessione utente (`->getUser()`)
 >
->`sfRouting`: The routing object (`->getRouting()`)
+>`sfRouting`: L'oggetto delle rotte (`->getRouting()`)
 >
->`sfMailer`: The mailer object (`->getMailer()`)
+>`sfMailer`: L'oggetto mailer (`->getMailer()`)
 >
->`sfI18N`: The internationalization object (`->getI18N()`)
+>`sfI18N`: L'oggetto dell'internazionalizzazione (`->getI18N()`)
 >
->`sfLogger`: The logger object (`->getLogger()`)
+>`sfLogger`: L'oggetto logger (`->getLogger()`)
 >
->`sfDatabaseConnection`: The database connection (`->getDatabaseConnection()`)
+>`sfDatabaseConnection`: La connessione al database (`->getDatabaseConnection()`)
 >
->All these core objects are availables through the `sfContext::getInstance()` singleton from any part of the code. However, it's a really bad practice because this will create some hard dependencies making your code really hard to test, reuse and maintain. You will learn in this book how to avoid the usage of `sfContext::getInstance()`. 
+>Tutti questi oggetti del core sono disponibili tramite il singleton `sfContext::getInstance()` in ogni parte del codice. Tuttavia è una pratica disdicevole perchè crea dipendenze così forti in grado di rendere il codice davvero difficile da testare, riutilizzare e mantenere. In questo libro si potrà imparare come evitare l'utilizzo di `sfContext::getInstance()`.
 
-### Action Termination
+### Terminare l'azione
 
-Various behaviors are possible at the conclusion of an action's execution. The value returned by the action method determines how the view will be rendered. Constants of the `sfView` class are used to specify which template is to be used to display the result of the action.
+Alla fine dell'esecuzione di un'azione si possono assumere diversi comportamenti. Il valore ritornato dal metodo dell'azione determina come la vista verrà generata. Le costanti della classe `sfView` vengono utilizzate per specificate quale template utilizzare per mostrare il risultato dell'azione.
 
-If there is a default view to call (this is the most common case), the action should end as follows:
+Se esiste una vista predefinita da invocare (questo è il caso più comune), l'azione dovrebbe terminare come segue:
 
     [php]
     return sfView::SUCCESS;
 
-Symfony will then look for a template called `actionNameSuccess.php`. This is defined as the default action behavior, so if you omit the `return` statement in an action method, symfony will also look for an `actionNameSuccess.php` template. Empty actions will also trigger that behavior. See Listing 6-8 for examples of successful action termination.
+Symfony cercherà quindi un template chiamato `actionNameSuccess.php`. Questo è definito come comportamento predefinito, quindi anche omettendo la direttiva `return` nel metodo di un'azione symfony cercherà ancora un template `actionNameSuccess.php`. Le azioni vuote scatenano lo stesso comportamento. Nel Listato 6-8 alcuni esempi di corretta conclusione delle azioni.
 
-Listing 6-8 - Actions That Will Call the `indexSuccess.php` and `listSuccess.php` Templates
+Listing 6-8 - Azioni che invocano i template `indexSuccess.php` e `listSuccess.php`
 
     [php]
     public function executeIndex()
@@ -248,28 +248,28 @@ Listing 6-8 - Actions That Will Call the `indexSuccess.php` and `listSuccess.php
     {
     }
 
-If there is an error view to call, the action should end like this:
+Se esiste una vista di errore da invocare, l'azione dovrebbe concludersi così:
 
     [php]
     return sfView::ERROR;
 
-Symfony will then look for a template called `actionNameError.php`.
+Symfony cercherà quindi un template chiamato `actionNameError.php`.
 
-To call a custom view, use this ending:
+Per chiamare una vista personalizzata usare questo finale:
 
     [php]
     return 'MyResult';
 
-Symfony will then look for a template called `actionNameMyResult.php`.
+Symfony cercherà quindi un template chiamato `actionNameMyResult.php`.
 
-If there is no view to call--for instance, in the case of an action executed in a batch process--the action should end as follows:
+Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un'azione venga eseguita in un processo batch--l'azione dovrebbe chiudersi come segue:
 
     [php]
     return sfView::NONE;
 
-No template will be executed in that case. It means that you can bypass completely the view layer and set the response HTML code directly from an action. As shown in Listing 6-9, symfony provides a specific `renderText()` method for this case. This can be useful when you need extreme responsiveness of the action, such as for Ajax interactions, which will be discussed in Chapter 11.
+Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista ed impostare il codice HTML di risposts direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
 
-Listing 6-9 - Bypassing the View by Echoing the Response and Returning `sfView::NONE`
+Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfView::NONE`
 
     [php]
     public function executeIndex()
@@ -285,9 +285,9 @@ Listing 6-9 - Bypassing the View by Echoing the Response and Returning `sfView::
       return $this->renderText("<html><body>Hello, World!</body></html>");
     }
 
-In some cases, you need to send an empty response but with some headers defined in it (especially the `X-JSON` header). Define the headers via the `sfResponse` object, discussed in the next chapter, and return the `sfView::HEADER_ONLY` constant, as shown in Listing 6-10.
+In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo succesivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel Listato 6-10.
 
-Listing 6-10 - Escaping View Rendering and Sending Only Headers
+Listing 6-10 - Evitare la creazione della vista inviando solamente le intestazioni
 
     [php]
     public function executeRefresh()
@@ -298,7 +298,7 @@ Listing 6-10 - Escaping View Rendering and Sending Only Headers
       return sfView::HEADER_ONLY;
     }
 
-If the action must be rendered by a specific template, ignore the `return` statement and use the `setTemplate()` method instead.
+Se l'azione dev'essere presentata da un template specifico ignorare la dichiarazione `return` utilizzando invece il metodo `setTemplate()`.
 
     [php]
     public function executeIndex()
@@ -306,20 +306,20 @@ If the action must be rendered by a specific template, ignore the `return` state
       $this->setTemplate('myCustomTemplate');
     }
     
-With this code, symfony will look for a `myCustomTemplateSuccess.php` file, instead of `indexSuccess.php`.
+Con questo codice symfony cercherà un file `myCustomTemplateSuccess.php` invece che `indexSuccess.php`.
 
-### Skipping to Another Action
+### Saltare ad un'altra azione
 
-In some cases, the action execution ends by requesting a new action execution. For instance, an action handling a form submission in a POST request usually redirects to another action after updating the database.
+In alcuni casi l'esecuzione di un'azione termina richiedendo l'esecuzione di un'altra azione. Per esempio, un'azione che gestisce l'invio di un form tramite una richiesta POST generalmente redireziona ad un'altra azione dopo aver aggiornato il database.
 
-The action class provides two methods to execute another action:
+La classe azione mette a disposizione due metodi per eseguire un'altra azione:
 
-  * If the action forwards the call to another action:
+  * Se l'azione inoltra la chiamata ad un'altra azione:
 
         [php]
         $this->forward('otherModule', 'index');
 
-  * If the action results in a web redirection:
+  * Se l'azione termina con una redirezione web:
 
         [php]
         $this->redirect('otherModule/index');
@@ -327,15 +327,15 @@ The action class provides two methods to execute another action:
 
 
 >**NOTE**
->The code located after a forward or a redirect in an action is never executed. You can consider that these calls are equivalent to a `return` statement. They throw an `sfStopException` to stop the execution of the action; this exception is later caught by symfony and simply ignored.
+>Il codice situato dopo un forward o un redirect in un'azione non viene mai eseguito. Chiamate di questo tipo possono essere considerate come un `return`. Essi sollevano un `sfStopException` per bloccare l'esecuzione di un'azione; questa eccezione è colta successivamente da symfony e semplicemente ignorata.
 
-The choice between a redirect or a forward is sometimes tricky. To choose the best solution, keep in mind that a forward is internal to the application and transparent to the user. As far as the user is concerned, the displayed URL is the same as the one requested. In contrast, a redirect is a message to the user's browser, involving a new request from it and a change in the final resulting URL.
+La scelta tra un redirect ed un forward a volte può essere difficoltosa. Per scegliere la soluzione migliore va ricordato che un forward è interno all'applicazione e totalmente trasparente per l'utente. Fintanto che l'utente è interessato l'URL visualizzato sarà uguale a quello richiesto. Al contrario un redirect è un messaggio al browser dell'utente e coinvolge una nuova richiesta da esso con conseguente cambio di URL finale.
 
-If the action is called from a submitted form with `method="post"`, you should **always** do a redirect. The main advantage is that if the user refreshes the resulting page, the form will not be submitted again; in addition, the back button works as expected by displaying the form and not an alert asking the user if he wants to resubmit a POST request.
+Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario ricorrere **sempre** ad un redirect. Il vantaggio principale è che se l'utente rinfresca la pagina con la risposta il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
 
-There is a special kind of forward that is used very commonly. The `forward404()` method forwards to a "page not found" action. This method is often called when a parameter necessary to the action execution is not present in the request (thus detecting a wrongly typed URL). Listing 6-11 shows an example of a `show` action expecting an `id` parameter.
+Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra ad un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il Listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
 
-Listing 6-11 - Use of the `forward404()` Method
+Listing 6-11 - Utilizzo del metodo `forward404()`
 
     [php]
     public function executeShow(sfWebRequest $request)
@@ -353,46 +353,47 @@ Listing 6-11 - Use of the `forward404()` Method
     }
 
 >**TIP**
->If you are looking for the error 404 action and template, you will find them in the `$sf_symfony_ lib_dir/controller/default/` directory. You can customize this page by adding a new `default` module to your application, overriding the one located in the framework, and by defining an `error404` action and an error404Success template inside. Alternatively, you can set the `error_404_module` and `error_404_action` constants in the `settings.yml` file to use an existing action.
+>Se siete in cerca dell'azione e del template per l'errore 404 sappiate che si trova nella directory `$sf_symfony_ lib_dir/controller/default/`. 
+>If you are looking for the error 404 action and template, you will find them in the `$sf_symfony_ lib_dir/controller/default/` directory. È possibile personalizzare questa pagina creando un nuovo modulo `default` all'applicazione, facendo l'override di quella proposta dal framework, e definendo al suo interno un'azione `error404` ed un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
-Experience shows that, most of the time, an action makes a redirect or a forward after testing something, such as in Listing 6-12. That's why the `sfActions` class has a few more methods, named `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, and `redirectUnless()`. These methods simply take an additional parameter representing a condition that triggers the execution if tested true (for the `xxxIf()` methods) or false (for the `xxxUnless()` methods), as illustrated in Listing 6-12.
+L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo percui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
 
-Listing 6-12 - Use of the `forward404If()` Method
+Listing 6-12 - Utilizzo del metodo `forward404If()`
 
     [php]
-    // This action is equivalent to the one shown in Listing 6-11
+    // Questa azione è equivalente a quella presentata nel Listato 6-11
     public function executeShow(sfWebRequest $request)
     {
       $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
       $this->forward404If(!$article);
     }
 
-    // So is this one
+    // Allo stesso modo questa
     public function executeShow(sfWebRequest $request)
     {
       $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
       $this->forward404Unless($article);
     }
 
-Using these methods will not only keep your code short, but it will also make it more readable.
+Utilizzare questi metodi oltre a mantenere il codice compatto permette di renderlo più leggibile.
 
 >**TIP**
->When the action calls `forward404()` or its fellow methods, symfony throws an `sfError404Exception` that manages the 404 response. This means that if you need to display a 404 message from somewhere where you don't want to access the controller, you can just throw a similar exception.
+>Quando un'azione invoca `forward404()` o gli altri metodi dello stesso tipo, symfony lancia una `sfError404Exception` in grado di gestire la risposta 404. Questo significa che nel caso in cui fosse necessario visualizzare un messaggio 404 da qualche parte senza necessariamente accedere al controllore è possibile farlo lanciando un'eccezione simile.
 
-### Repeating Code for Several Actions of a Module
+### Ripetere codice per diversa azioni di un modulo
 
-The convention to name actions `executeActionName()` (in the case of an `sfActions` class) or `execute()` (in the case of an `sfAction` class) guarantees that symfony will find the action method. It gives you the ability to add other methods of your own that will not be considered as actions, as long as they don't start with `execute`.
+La convenzione per la nominazione delle azioni come `executeActionName()` (nel caso delle classi `sfActions`) o `execute()` (nel caso delle classi `sfAction`) garantisce che symfony possa trovare il metodo dell'azione. Permette anche di aggiungere altri metodi che non verranno considerati come azioni a patto che non inizino con `execute`.
 
-There is another useful convention for when you need to repeat several statements in each action before the actual action execution. You can then extract them into the `preExecute()` method of your action class. You can probably guess how to repeat statements after every action is executed: wrap them in a `postExecute()` method. The syntax of these methods is shown in Listing 6-13.
+Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esezione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel Listato 6-13.
 
-Listing 6-13 - Using `preExecute()`, `postExecute()`, and Custom Methods in an Action Class
+Listing 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizzati nella classe azione
 
     [php]
     class mymoduleActions extends sfActions
     {
       public function preExecute()
       {
-        // The code inserted here is executed at the beginning of each action call
+        // Il codice inserito qui viene eseguito all'inizio di ogni azione
         ...
       }
 
@@ -404,73 +405,73 @@ Listing 6-13 - Using `preExecute()`, `postExecute()`, and Custom Methods in an A
       public function executeList($request)
       {
         ...
-        $this->myCustomMethod();  // Methods of the action class are accessible
+        $this->myCustomMethod();  // I metodi della classe azione sono accessibili
       }
 
       public function postExecute()
       {
-        // The code inserted here is executed at the end of each action call
+        // Il codice inserito qui viene eseguito alla fine di ogni azione
         ...
       }
 
       protected function myCustomMethod()
       {
-        // You can also add your own methods, as long as they don't start with "execute"
-        // In that case, it's better to declare them as protected or private
+        // È possibile aggiungere i propri metodi, ammesso che non inizino con "execute"
+        // In questo caso è consigliabile dichiararli come protected o private
         ...
       }
     }
 
 >**TIP**
->As the pre/post execute methods are called for **each** actions of the current module, be sure you really need the execute this code for **all** your actions, to avoid unwanted side-effects.
+>Dato che i metodi pre/post esecuzione vengono invocati per **ogni** azione del modulo corrente è necessario assicurarsi di aver realmente bisogno di eseguire questo codice per **tutte** le azioni per evitare inattesi side-effect.
 
-Accessing the Request
----------------------
+Accedere alla richiesta
+-----------------------
 
-The first argument passed to any action method is the request object, called `sfWebRequest` in symfony. You're already familiar with the `getParameter('myparam')` method, used to retrieve the value of a request parameter by its name. Table 6-1 lists the most useful `sfWebRequest` methods.
+Il primo argomento passato ad ogni metodo di un'azione è l'oggetto della richiesta che in symfony si chiama `sfWebRequest`. Si è gia visto il metodo  `getParameter('myparam')` usato per recuperare il valore di un parametro della richiesta usando il suo nome. La Tabella 6-1 elenca i metodi  `sfWebRequest` più utili.
 
-Table 6-1 - Methods of the `sfWebRequest` Object
+Table 6-1 - Metodi dell'oggetto `sfWebRequest`
 
-Name                             | Function                               |  Sample Output
+Nome                             | Funzione                               |  Output d'esempio
 -------------------------------- | -------------------------------------- | -----------------------------------------------------------------------
-**Request Information**          |                                        |
-`isMethod($method)`              | Is it a post or a get?                 | true or false
-`getMethod()`                    | Request method name                    | `'POST'`
-`getHttpHeader('Server')`        | Value of a given HTTP header           | `'Apache/2.0.59 (Unix) DAV/2 PHP/5.1.6'`
-`getCookie('foo')`               | Value of a named cookie                | `'bar'`
-`isXmlHttpRequest()`*            | Is it an Ajax request?                 | `true`
-`isSecure()`                     | Is it an SSL request?                  | `true`
-**Request Parameters**           |                                        |
-`hasParameter('foo')`            | Is a parameter present in the request? | `true`
-`getParameter('foo')`            | Value of a named parameter             | `'bar'`
-`getParameterHolder()->getAll()` | Array of all request parameters        |
-**URI-Related Information**      |                                        |
-`getUri()`                       | Full URI                               | `'http://localhost/frontend_dev.php/mymodule/myaction'`
+**Informazioni della richiesta** |                                        |
+`isMethod($method)`              | È una post o una get?                  | true o false
+`getMethod()`                    | Nome del metodo della richiesta        | `'POST'`
+`getHttpHeader('Server')`        | Valore di un'intestazione HTTP         | `'Apache/2.0.59 (Unix) DAV/2 PHP/5.1.6'`
+`getCookie('foo')`               | Valore di un cookie                    | `'bar'`
+`isXmlHttpRequest()`*            | È una richiesta Ajax?                  | `true`
+`isSecure()`                     | È una richiesta SSL?                   | `true`
+**Parametri della richiesta**    |                                        |
+`hasParameter('foo')`            | Questo parametro è nella richiesta?    | `true`
+`getParameter('foo')`            | Valore di un parametro                 | `'bar'`
+`getParameterHolder()->getAll()` | Array  dei parametri della richiesta   |
+**Informazioni relative URI**    |                                        |
+`getUri()`                       | URI completo                           | `'http://localhost/frontend_dev.php/mymodule/myaction'`
 `getPathInfo()`                  | Path info                              | `'/mymodule/myaction'`
 `getReferer()`**                 | Referrer                               | `'http://localhost/frontend_dev.php/'`
 `getHost()`                      | Host name                              | `'localhost'`
-`getScriptName()`                | Front controller path and name         | `'frontend_dev.php'`
-**Client Browser Information**   |                                        |
-`getLanguages()`                 | Array of accepted languages            | `Array( ` ` [0] => fr ` ` [1] => fr_FR ` ` [2] => en_US ` ` [3] => en )`
-`getCharsets()`                  | Array of accepted charsets             | `Array( ` ` [0] => ISO-8859-1 ` ` [1] => UTF-8 ` ` [2] => * )`
-getAcceptableContentTypes()      | Array of accepted content types        | `Array( [0] => text/xml [1] => text/html`
+`getScriptName()`                | Front controller path e nome           | `'frontend_dev.php'`
+**Informazioni Client Browser**  |                                        |
+`getLanguages()`                 | Array delle lingue accettate           | `Array( ` ` [0] => fr ` ` [1] => fr_FR ` ` [2] => en_US ` ` [3] => en )`
+`getCharsets()`                  | Array dei charsets accettati           | `Array( ` ` [0] => ISO-8859-1 ` ` [1] => UTF-8 ` ` [2] => * )`
+getAcceptableContentTypes()      | Array dei content type accettati       | `Array( [0] => text/xml [1] => text/html`
 
-`*` *Works with prototype, Prototype, Mootools, and jQuery*
+`*` *Funziona con prototype, Prototype, Mootools e jQuery*
 
-`**` *Sometimes blocked by proxies*
+`**` *A volte bloccato dai proxy*
 
-You don't have to worry about whether your server supports the `$_SERVER` or the `$_ENV` variables, or about default values or server-compatibility issues--the `sfWebRequest` methods do it all for you. Besides, their names are so evident that you will no longer need to browse the PHP documentation to find out how to get information from the request.
+Non sarà necessario preoccuparsi del fatto che i propri server supportino le variabili `$_SERVER` o `$_ENV`, oppure dei valori predefiniti o di problemi di compatibilità a livello server--i metodi `sfWebRequest` si occuperanno di tutto. Inoltre i loro nomi sono così espliciti da fare in modo che non sia più necessario controllare la documentazione di PHP per vedere come recuperare dei dati dalla richiesta.
 
-User Session
-------------
+Sessione utente
+---------------
 
-Symfony automatically manages user sessions and is able to keep persistent data between requests for users. It uses the built-in PHP session-handling mechanisms and enhances them to make them more configurable and easier to use.
+Symfony gestisce automaticamente le sessioni utente ed è in grado di mantenere dati in modo persistente tra le varie richieste degli utenti. Utilizza i meccanismi di gestione delle sessioni inclusi in PHP e li migliora per renderli più configurabili e facili da usare.
 
-### Accessing the User Session
+### Accedere alla sessione utente
 
-The session object for the current user is accessed in the action with the `getUser()` method and is an instance of the `sfUser` class. This class contains a parameter holder that allows you to store any user attribute in it. This data will be available to other requests until the end of the user session, as shown in Listing 6-14. User attributes can store any type of data (strings, arrays, and associative arrays). They can be set for every individual user, even if that user is not identified.
+L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente come mostrato nel Listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente anche nel caso in qui questo non fosse identificato.
 
-Listing 6-14 - The `sfUser` Object Can Hold Custom User Attributes Existing Across Requests
+Listing 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati tra le richieste
 
     [php]
     class mymoduleActions extends sfActions
@@ -479,23 +480,23 @@ Listing 6-14 - The `sfUser` Object Can Hold Custom User Attributes Existing Acro
       {
         $nickname = $request->getParameter('nickname');
 
-        // Store data in the user session
+        // Memorizza dati nella sessione utente
         $this->getUser()->setAttribute('nickname', $nickname);
       }
 
       public function executeSecondPage()
       {
-        // Retrieve data from the user session with a default value
+        // Recupera dati dalla sessione utente con un valore predefinito
         $nickname = $this->getUser()->getAttribute('nickname', 'Anonymous Coward');
       }
     }
 
 >**CAUTION**
->You can store objects in the user session, but it is strongly discouraged. This is because the session object is serialized between requests. When the session is deserialized, the class of the stored objects must already be loaded, and that's not always the case. In addition, there can be "stalled" objects if you store Propel or Doctrine objects.
+>È possibile memorizzare oggetti nella sessione utente ma è una pratica fermamente sconsigliata. Questo perchè l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti" nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
 
-Like many getters in symfony, the `getAttribute()` method accepts a second argument, specifying the default value to be used when the attribute is not defined. To check whether an attribute has been defined for a user, use the `hasAttribute()` method. The attributes are stored in a parameter holder that can be accessed by the `getAttributeHolder()` method. It allows for easy cleanup of the user attributes with the usual parameter holder methods, as shown in Listing 6-15.
+Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo argomento per specificare il valore predefinito da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri a cui si può accedere con il metodo `getAttributeHolder()`. Permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri come mostrato nel Listato 6-15.
 
-Listing 6-15 - Removing Data from the User Session
+Listing 6-15 - Rimozione di dati dalla sessione utente
 
     [php]
     class mymoduleActions extends sfActions
@@ -511,52 +512,52 @@ Listing 6-15 - Removing Data from the User Session
       }
     }
 
-The user session attributes are also available in the templates by default via the `$sf_user` variable, which stores the current `sfUser` object, as shown in Listing 6-16.
+Gli attributi della sessione utente sono disponibili anche nei template tramite la variabile `$sf_user` che contiene l'attuale oggetto `sfUser` come mostrato nel Listato 6-16.
 
-Listing 6-16 - Templates Also Have Access to the User Session Attributes
+Listing 6-16 - Anche i template hanno accesso agli attributi della sessione utente
 
     [php]
     <p>
       Hello, <?php echo $sf_user->getAttribute('nickname') ?>
     </p>
 
-### Flash Attributes
+### Attributi flash
 
-A recurrent problem with user attributes is the cleaning of the user session once the attribute is not needed anymore. For instance, you may want to display a confirmation after updating data via a form. As the form-handling action makes a redirect, the only way to pass information from this action to the action it redirects to is to store the information in the user session. But once the confirmation message is displayed, you need to clear the attribute; otherwise, it will remain in the session until it expires.
+Un problema ricorrente con gli attributi utente riguarda la pulizia della sessione stessa una volta che l'attributo non sia più necessario. Per esempio, si potrebbe voler mostrare una conferma dopo l'aggiornamento di alcuni dati tramite un form. Dato che l'azione che si occupa di gestire il form esegue un redirect l'unico modo per passare informazioni da questa azione a quella in cui si è rediretti è quello di memorizzare queste informazioni nella sessione utente. Una volta che il messaggio di conferma è stato visualizzato è necessario rimuovere l'attributo altrimenti rimarrà nella sessione fino a quando non sarà scaduta.
 
-The flash attribute is an ephemeral attribute that you can define and forget, knowing that it will disappear after the very next request and leave the user session clean for the future. In your action, define the flash attribute like this:
+L'attributo flash è un attributo effimero che può essere definito e dimenticao consci del fatto che scomparirà dopo la successiva richiesta lasciando così la sessione utente pulita per il futuro. Nell'azione un attributo flash si definisce così:
 
     [php]
     $this->getUser()->setFlash('notice', $value);
 
-The template will be rendered and delivered to the user, who will then make a new request to another action. In this second action, just get the value of the flash attribute like this:
+Il template verrà restituito e consegnato all'utente, che farà poi una nuova richiesta ad un'altra azione. In questa seconda azione basta semplicemente recuperare il valore dell'attributo flash in questo modo:
 
     [php]
     $value = $this->getUser()->getFlash('notice');
 
-Then forget about it. After delivering this second page, the `notice` flash attribute will be flushed. And even if you don't require it during this second action, the flash will disappear from the session anyway.
+Poi ci si può dimenticare di questo. Dopo la consegna di questa seconda pagina l'attributo flash `notice` verrà eliminato. Ed anche se non fosse necessario durante questa seconda azione, il flash verrebbe comunque eliminato dalla sessione.
 
-If you need to access a flash attribute from a template, use the `$sf_user` object:
+Per accedere ad un attributo flash in un template utilizzare l'oggetto `$sf_user`:
 
     [php]
     <?php if ($sf_user->hasFlash('notice')): ?>
       <?php echo $sf_user->getFlash('notice') ?>
     <?php endif; ?>
 
-or just:
+o semplicemente:
 
     [php]
     <?php echo $sf_user->getFlash('notice') ?>
 
-Flash attributes are a clean way of passing information to the very next request.
+Gli attributi flash sono un modo pulito per passare informazioni alla richiesta successiva.
 
-### Session Management
+### Gestione delle sessioni
 
-Symfony's session-handling feature completely masks the client and server storage of the session IDs to the developer. However, if you want to modify the default behaviors of the session-management mechanisms, it is still possible. This is mostly for advanced users.
+La funzionalità di gestione delle sessioni di symfony maschera completamente la memorizzazione degli ID di sessione lato client e lato server nei confronti dello sviluppatore. Tuttavia nel caso in cui si volesse modificare il comportamento predefinito dei meccanismi di gestione delle sessioni si sappia che è comunque possibile. Questa è una cosa principalmente per utenti avanzati.
 
-On the client side, sessions are handled by cookies. The symfony session cookie is called `symfony`, but you can change its name by editing the `factories.yml` configuration file, as shown in Listing 6-17.
+Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificanfo il file di configurazione `factories.yml` come mostrato nel Listato 6-17.
 
-Listing 6-17 - Changing the Session Cookie Name, in `apps/frontend/config/factories.yml`
+Listing 6-17 - Modificare il nome del cookie di sessione, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -565,15 +566,15 @@ Listing 6-17 - Changing the Session Cookie Name, in `apps/frontend/config/factor
           session_name: my_cookie_name
 
 >**TIP**
->The session is started (with the PHP function `session_start()`) only if the `auto_start` parameter is set to true in `factories.yml` (which is the case by default). If you want to start the user session manually, disable this setting of the storage factory.
+>La sessione viene avviata (tramite la funzione PHP `session_start()`) solo se il parametro `auto_start` è impostato a true in `factories.yml` (è il valore predefinito). Se si volesse far partire la sessione utente in modo manuale basterebbe disabilitare questa impostazione dello storage factory.
 
-Symfony's session handling is based on PHP sessions. This means that if you want the client-side management of sessions to be handled by URL parameters instead of cookies, you just need to change the `use_trans_sid` setting in your php.ini. Be aware that this is not recommended.
+La gestione delle sessioni di symfony è basata sulle sessioni di PHP. Questo significa che nel caso in cui si volesse far gestire le sessioni lato client dai parametri URL invece che dai cookie, basterebbe cambiar l'impostazione `use_trans_sid` nel file php.ini. Questa è un'impostazione non raccomandata.
 
     session.use_trans_sid = 1
 
-On the server side, symfony stores user sessions in files by default. You can store them in your database by changing the value of the `class` parameter in `factories.yml`, as shown in Listing 6-18.
+Lato server symfony memorizza le sessioni utente su file come comportamento predefinito. È possibile memorizzarle sul database cambiando il valore del parametro `class` nel file `factories.yml` come mostrato nel Listato 6-18.
 
-Listing 6-18 - Changing the Server Session Storage, in `apps/frontend/config/factories.yml`
+Listing 6-18 - Cambiare server session storage, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -586,64 +587,64 @@ Listing 6-18 - Changing the Server Session Storage, in `apps/frontend/config/fac
           db_data_col: sess_data            # Name of the column storing the session data
           db_time_col: sess_time            # Name of the column storing the session timestamp
 
-The `database` setting defines the database connection to be used. Symfony will then use `databases.yml` (see Chapter 8) to determine the connection settings (host, database name, user, and password) for this connection.
+L'impostazione `database` definisce quale connessione al database utilizzare. Symfony userà così `databases.yml` (vedere Capitolo 8) per determinare i parametri di connessione (host, nome database, utente e password).
 
-The available session storage classes are `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage`, and `sfPDOSessionStorage`; the latter is preferred. To disable session storage completely, you can use the `sfNoStorage` class.
+La classi disponibili per il session storage sono `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage` e `sfPDOSessionStorage`; l'ultima è quella da preferire. Per disabilitare totalmente il session storage si può utilizzaree la classe `sfNoStorage`.
 
-Session expiration occurs automatically after 30 minutes. This default setting can be modified for each environment in the same `factories.yml` configuration file, but this time in the `user` factory, as shown in Listing 6-19.
+Le sessioni scadono automaticamente dopo 30 minuti. Questa impostazione predefinita può essere modificata per ogni ambiente nello stesso file di configurazione `factories.yml`, questa volta però nel factory `user` come mostrato nel Listato 6-19.
 
-Listing 6-19 - Changing Session Lifetime, in `apps/frontend/config/factories.yml`
+Listing 6-19 - Modificare la durata delle sessioni, in `apps/frontend/config/factories.yml`
 
     all:
       user:
         class:       myUser
         param:
-          timeout:   1800           # Session lifetime in seconds
+          timeout:   1800           # Durata delle sessioni in secondi
 
-To learn more about factories, refer to Chapter 19.
+Per conoscere più a fondo i factory fare riferimento al Capitolo 19.
 
-Action Security
----------------
+Sicurezza delle azioni
+----------------------
 
-The ability to execute an action can be restricted to users with certain privileges. The tools provided by symfony for this purpose allow the creation of secure applications, where users need to be authenticated before accessing some features or parts of the application. Securing an application requires two steps: declaring the security requirements for each action and logging in users with privileges so that they can access these secure actions.
+L'abilità di eseguire un'azione può essere ristretta a utenti con specifici privilegi. Gli strumenti messi a disposizione da symfony per questo scopo permettono la creazione di applicazioni sicure, dove gli utenti devono essere autenticati prima di poter accedere alle funzionalità o a parti dell'applicazione. Mettere in sicurezza un'applicazione richiede due fasi: dichiarare i requisiti di sicurezza per ogni azione ed autenticare gli utenti con determinati privilegi in modo da permettergli l'accesso a queste azioni sicure.
 
-### Access Restriction
+### Restrizioni d'accesso
 
-Before being executed, every action passes by a special filter that checks if the current user has the privileges to access the requested action. In symfony, privileges are composed of two parts:
+Prima di essere eseguita ogni azione passa attraverso un filtro speciale che controlla se l'utente corrente è in possesso dei privilegi per accedere all'azione richiesta. In symfony i privilegi sono composti da due parti:
 
-  * Secure actions require users to be authenticated.
-  * Credentials are named security privileges that allow organizing security by group.
+  * Le azioni sicure richiedono che l'utente si autenticato.
+  * Le credenziali sono determinati privilegi di sicurezza che permettono l'organizzazione della sicurezza in gruppi.
 
-Restricting access to an action is simply made by creating and editing a YAML configuration file called `security.yml` in the module `config/` directory. In this file, you can specify the security requirements that users must fulfill for each action or for `all` actions. Listing 6-20 shows a sample `security.yml`.
+Restringere l'accesso ad un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella directory `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il Listato 6-20 mostra un file `security.yml` d'esempio.
 
-Listing 6-20 - Setting Access Restrictions, in `apps/frontend/modules/mymodule/config/security.yml`
+Listing 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mymodule/config/security.yml`
 
     read:
-      is_secure:   false       # All users can request the read action
+      is_secure:   false       # Tutti gli utenti possono richiedere l'azione di lettura
 
     update:
-      is_secure:   true        # The update action is only for authenticated users
+      is_secure:   true        # L'azione di update è disponibile solo a utenti autenticati
 
     delete:
-      is_secure:   true        # Only for authenticated users
-      credentials: admin       # With the admin credential
+      is_secure:   true        # Solo per utenti autenticati
+      credentials: admin       # Con credenziali admin
 
     all:
-      is_secure:  false        # false is the default value anyway
+      is_secure:  false        # false è comunque il valore predefinito
 
-Actions are not secure by default, so when there is no `security.yml` or no mention of an action in it, actions are accessible by everyone. If there is a `security.yml`, symfony looks for the name of the requested action and, if it exists, checks the fulfillment of the security requirements. What happens when a user tries to access a restricted action depends on his credentials:
+Le azioni non sono sicure in modo predefinito, quindi quando non è presente un `security.yml` o non viene menzionata nessuna azione in esso, le azioni sono accessibili a tutti. Nel caso in cui esista un `security.yml`, symfony cerca il nome dell'azione richiesta e, se esiste, verifica il soddisfacimento dei requisiti di sicurezza. Ciò che accade quando un utente prova ad accedere ad un'azione sicura dipende dalle sue credenziali:
 
-  * If the user is authenticated and has the proper credentials, the action is executed.
-  * If the user is not identified, he will be redirected to the default login action.
-  * If the user is identified but doesn't have the proper credentials, he will be redirected to the default secure action, shown in Figure 6-1.
+  * Se l'utente è autenticato e detiene le credenziali corrette, l'azione viene eseguita.
+  * Se l'utente non viene riconosciuto viene rediretto all'azione di login predefinita.
+  * Se l'utente viene riconosciuto ma non detiene le sufficienti credenziali viene rediretto all'azione secure predefinita, mostrata in Figura 6-1.
 
-The default login and secure pages are pretty simple, and you will probably want to customize them. You can configure which actions are to be called in case of insufficient privileges in the application `settings.yml` by changing the value of the properties shown in Listing 6-21.
+Le pagine predefinite di login e secure sono molto semplici, molto probabilmente si avrà la necessità di personalizzarle. È possibile configurare quali azioni chiamare in caso di privilegi insufficienti nell'applicazione nel file `settings.yml` cambiando il valore delle proprietà mostrate nel Listato 6-21.
 
-Figure 6-1 - The default secure action page
+Figure 6-1 - La pagina secure predefinita
 
-![The default secure action page](http://www.symfony-project.org/images/book/1_4/F0601.jpg "The default secure action page")
+![La pagina secure predefinita](http://www.symfony-project.org/images/book/1_4/F0601.jpg "La pagina secure predefinita")
 
-Listing 6-21 - Default Security Actions Are Defined in `apps/frontend/config/settings.yml`
+Listing 6-21 - Le azioni di sicurezza predefinite sono definite in in `apps/frontend/config/settings.yml`
 
     all:
       .actions:
@@ -653,11 +654,11 @@ Listing 6-21 - Default Security Actions Are Defined in `apps/frontend/config/set
         secure_module: default
         secure_action: secure
 
-### Granting Access
+### Assegnare l'accesso
 
-To get access to restricted actions, users need to be authenticated and/or to have certain credentials. You can extend a user's privileges by calling methods of the `sfUser` object. The authenticated status of the user is set by the `setAuthenticated()` method and can be checked with `isAuthenticated()`. Listing 6-22 shows a simple example of user authentication.
+Per accedere ad azione riservate gli utenti devono essere autenticati e/o possedere alcune credenziali. Estendere i privilegi di un utente è permesso dai metodi dell'oggetto `sfUser`. Lo stato di autenticazione di un utente è impostato dal metodo `setAuthenticated()` e può essere verificato con `isAuthenticated()`. Il Listato 6-22 mostra un semplice esempio di autenticazione.
 
-Listing 6-22 - Setting the Authenticated Status of a User
+Listing 6-22 - Impostare lo stato di autenticazione di un utente
 
     [php]
     class myAccountActions extends sfActions
@@ -676,9 +677,9 @@ Listing 6-22 - Setting the Authenticated Status of a User
       }
     }
 
-Credentials are a bit more complex to deal with, since you can check, add, remove, and clear credentials. Listing 6-23 describes the credential methods of the `sfUser` class.
+Le credenziali sono leggermente più complesse da utilizzare dato che si possono compiere diverse azioni su di esse come la verifica, aggiunta, rimozione e reset. Il Listato 6-23 descrive i metodi della classe `sfUser`.
 
-Listing 6-23 - Dealing with User Credentials in an Action
+Listing 6-23 - Lavorare con le credenziali utente nell'azione
 
     [php]
     class myAccountActions extends sfActions
@@ -687,32 +688,32 @@ Listing 6-23 - Dealing with User Credentials in an Action
       {
         $user = $this->getUser();
 
-        // Add one or more credentials
+        // Aggiungere una o più credenziali
         $user->addCredential('foo');
         $user->addCredentials('foo', 'bar');
 
-        // Check if the user has a credential
+        // Verificare che l'utente abbia una credenziale
         echo $user->hasCredential('foo');                      =>   true
 
-        // Check if the user has both credentials
+        // Verificare che l'utente abbia entrambe le credenziali
         echo $user->hasCredential(array('foo', 'bar'));        =>   true
 
-        // Check if the user has one of the credentials
+        // Verificare che l'utente abbia una delle credenziali
         echo $user->hasCredential(array('foo', 'bar'), false); =>   true
 
-        // Remove a credential
+        // Rimuovere una credenziale
         $user->removeCredential('foo');
         echo $user->hasCredential('foo');                      =>   false
 
-        // Remove all credentials (useful in the logout process)
+        // Rimuovere tutte le credenziali (utile nel processo di logout)
         $user->clearCredentials();
         echo $user->hasCredential('bar');                      =>   false
       }
     }
 
-If a user has the `foo` credential, that user will be able to access the actions for which the `security.yml` requires that credential. Credentials can also be used to display only authorized content in a template, as shown in Listing 6-24.
+Se un utente ha la credenziale `foo`, questo sarà in grado di accedere alle azioni per le quali il `security.yml` richiede tale credenziale. Le credenziali possono anche essere utilizzate per mostrare nei template contenuti solo agli autorizzati come mostrato nel Listato 6-24.
 
-Listing 6-24 - Dealing with User Credentials in a Template
+Listing 6-24 - Lavorare con le credenziali utenti in un template
 
     [php]
     <ul>
@@ -723,16 +724,16 @@ Listing 6-24 - Dealing with User Credentials in a Template
       <?php endif; ?>
     </ul>
 
-As for the authenticated status, credentials are often given to users during the login process. This is why the `sfUser` object is often extended to add login and logout methods, in order to set the security status of users in a central place.
+Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente durante il processo di login. Ecco perchè l'oggetto `sfUser` viene spesso esteso per aggiungere i metodi di login e logout in modo da impostare lo stato di sicurezza in un posto centralizzato.
 
 >**TIP**
->Among the symfony plug-ins, the [`sfGuardPlugin`](http://www.symfony-project.org/plugins/sfGuardPlugin) and [`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin) extend the session class to make login and logout easy. Refer to Chapter 17 for more information.
+>Tra i plugin di symfony [`sfGuardPlugin`](http://www.symfony-project.org/plugins/sfGuardPlugin) e [`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin) estendono la classe della sessione per semplificare login e logout. Fare riferimento al Capitolo 17 per maggiori informazioni.
 
-### Complex Credentials
+### Credenziali complesse
 
-The YAML syntax used in the `security.yml` file allows you to restrict access to users having a combination of credentials, using either AND-type or OR-type associations. With such a combination, you can build a complex workflow and user privilege management system--for instance, a content management system (CMS) back-office accessible only to users with the admin credential, where articles can be edited only by users with the `editor` credential and published only by the ones with the `publisher` credential. Listing 6-25 shows this example.
+La sintassi YAML utilizzata nel file `security.yml` permette di restringere l'accesso agli utenti in possesso di una combinazione di credenziali utilizzando associazioni di tipo AND o OR. Con la combinazione di queste si può costruire un complesso workflow e sistema di gestione dei privilegi--per esempio il back-office di un content management system (CMS) accessibile solo agli utenti con credenziali amministrative, dove gli articoli possono essere editati solo da utenti con la credenziale `editor` e pubblicati solo da quelli con la credenziale `publisher`. Il Listato 6-25 mostra quest'esempio.
 
-Listing 6-25 - Credentials Combination Syntax
+Listing 6-25 - Sintassi per la combinazione di credenziali
 
     editArticle:
       credentials: [ admin, editor ]              # admin AND editor
@@ -743,7 +744,7 @@ Listing 6-25 - Credentials Combination Syntax
     userManagement:
       credentials: [[ admin, superuser ]]         # admin OR superuser
 
-Each time you add a new level of square brackets, the logic swaps between AND and OR. So you can create very complex credential combinations, such as this:
+Ogni volta che si aggiunge un livello di parentesi quadre l'operatore logico cambia da AND a OR. In questo modo si possono creare combinazioni di credenziali molto complesse, come questa:
 
     credentials: [[root, [supplier, [owner, quasiowner]], accounts]]
                  # root OR (supplier AND (owner OR quasiowner)) OR accounts
