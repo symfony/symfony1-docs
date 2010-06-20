@@ -3,8 +3,8 @@ Capitolo 6 - All'interno dello strato controllore
 
 Il controllore in symfony è lo strato che contiene il codice che collega la business logic alla presentazione, esso è diviso in diversi componenti che si usano per diversi scopi:
 
-  * Il fronto controller è il punto d'accesso univoco all'applicazione. Si occupa di caricare la configurazione e determina l'azione da eseguire.
-  * Le azioni contengono la logica dell'applicazione. Verificano l'integrità della richiesta e preparano i dati necessati allo strato di presentazione.
+  * Il front controller è il punto d'accesso univoco all'applicazione. Si occupa di caricare la configurazione e determina l'azione da eseguire.
+  * Le azioni contengono la logica dell'applicazione. Verificano l'integrità della richiesta e preparano i dati necessari allo strato di presentazione.
   * Richiesta, risposta e oggetti di sessione permettono l'accesso ai parametri della richiesta, alle intestazioni della risposta ed ai dati persistenti dell'utente. Vengono usati molto spesso nello strato controllore.
   * I filtri sono porzioni di codice eseguito ad ogni richiesta, prima o dopo l'azione. Per esempio i filtri di sicurezza e validazione sono usati comunemente nelle applicazioni web. Si può facilmente estendere il framework creando i propri filtri.
 
@@ -13,7 +13,7 @@ Questo capitolo descrive tutti questi componenti, non fatevi intimidire dal loro
 Il Front Controller
 -------------------
 
-Tutte le richieste web vengono gestite da un singolo fron controller, che rappresenta l'unico punto d'accesso per l'intera applicazione in un ambiente.
+Tutte le richieste web vengono gestite da un singolo front controller, che rappresenta l'unico punto d'accesso per l'intera applicazione in un ambiente.
 
 Quando il front controller riceve una richiesta utilizza il sistema delle rotte per identificare il nome di un'azione ed il nome di un modulo partendo dall'URL inserito (o cliccato) dall'utente. Per esempio, l'URL della richiesta seguente richiama lo script `index.php` (il front controller) e verrà interpretato come una chiamata all'azione `myAction` del modulo `mymodule`:
 
@@ -85,7 +85,7 @@ Per vedere come l'applicazione reagisce in questo ambiente basta chiamare il fro
 Azioni
 ------
 
-Le azioni sono il cuore di un'applicazione, questo perchè contengono tutta la logica dell'applicazione stessa. Si occupano di chiamare il modello e di definire le variabili per la vista. Facendo una richiesta web ad un'applicazione symfony l'URL definisce un'azione ed i parametri della richiesta.
+Le azioni sono il cuore di un'applicazione, questo perché contengono tutta la logica dell'applicazione stessa. Si occupano di chiamare il modello e di definire le variabili per la vista. Facendo una richiesta web ad un'applicazione symfony l'URL definisce un'azione ed i parametri della richiesta.
 
 ### La classe dell'azione
 
@@ -136,11 +136,11 @@ Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato
 >**SIDEBAR**
 >Symfony coding standards
 >
->Negli esempi di codice di questo libro, sarà balzato agli occhi il fatto che le parentesi grafe (`{` e `}`) occupano una riga ciascuna. Questo standard permette una più semplice lettura del codice.
+>Negli esempi di codice di questo libro, sarà balzato agli occhi il fatto che le parentesi graffe (`{` e `}`) occupano una riga ciascuna. Questo standard permette una più semplice lettura del codice.
 >
 >Tra gli altri coding standard del framework ricordiamo l'indentazione che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perchè le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
 >
->I file PHP del core e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perchè non è realmente necessario e perchè potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
+>I file PHP del core e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perché non è realmente necessario e perché potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
 >
 >Prestando davvero molta attenzione sarà facile vedere come una riga di codice non finisca mai con uno spazio vuoto in symfony. La ragione questa volta è molto più banale: le righe che terminano con spazi vuoti si vedono molto male nell'editor di testo di Fabien.
 
@@ -223,7 +223,7 @@ Listing 6-7 - Metodi comuni `sfActions`
 >
 >`sfDatabaseConnection`: La connessione al database (`->getDatabaseConnection()`)
 >
->Tutti questi oggetti del core sono disponibili tramite il singleton `sfContext::getInstance()` in ogni parte del codice. Tuttavia è una pratica disdicevole perchè crea dipendenze così forti in grado di rendere il codice davvero difficile da testare, riutilizzare e mantenere. In questo libro si potrà imparare come evitare l'utilizzo di `sfContext::getInstance()`.
+>Tutti questi oggetti del core sono disponibili tramite il singleton `sfContext::getInstance()` in ogni parte del codice. Tuttavia è una pratica disdicevole perché crea dipendenze così forti in grado di rendere il codice davvero difficile da testare, riutilizzare e mantenere. In questo libro si potrà imparare come evitare l'utilizzo di `sfContext::getInstance()`.
 
 ### Terminare l'azione
 
@@ -267,7 +267,7 @@ Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un
     [php]
     return sfView::NONE;
 
-Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista ed impostare il codice HTML di risposts direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
+Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista ed impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
 
 Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfView::NONE`
 
@@ -285,7 +285,7 @@ Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfVi
       return $this->renderText("<html><body>Hello, World!</body></html>");
     }
 
-In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo succesivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel Listato 6-10.
+In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo successivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel Listato 6-10.
 
 Listing 6-10 - Evitare la creazione della vista inviando solamente le intestazioni
 
@@ -356,7 +356,7 @@ Listing 6-11 - Utilizzo del metodo `forward404()`
 >Se siete in cerca dell'azione e del template per l'errore 404 sappiate che si trova nella directory `$sf_symfony_ lib_dir/controller/default/`. 
 >If you are looking for the error 404 action and template, you will find them in the `$sf_symfony_ lib_dir/controller/default/` directory. È possibile personalizzare questa pagina creando un nuovo modulo `default` all'applicazione, facendo l'override di quella proposta dal framework, e definendo al suo interno un'azione `error404` ed un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
-L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo percui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
+L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
 
 Listing 6-12 - Utilizzo del metodo `forward404If()`
 
@@ -382,9 +382,9 @@ Utilizzare questi metodi oltre a mantenere il codice compatto permette di render
 
 ### Ripetere codice per diversa azioni di un modulo
 
-La convenzione per la nominazione delle azioni come `executeActionName()` (nel caso delle classi `sfActions`) o `execute()` (nel caso delle classi `sfAction`) garantisce che symfony possa trovare il metodo dell'azione. Permette anche di aggiungere altri metodi che non verranno considerati come azioni a patto che non inizino con `execute`.
+La convenzione per la denominazione delle azioni come `executeActionName()` (nel caso delle classi `sfActions`) o `execute()` (nel caso delle classi `sfAction`) garantisce che symfony possa trovare il metodo dell'azione. Permette anche di aggiungere altri metodi che non verranno considerati come azioni a patto che non inizino con `execute`.
 
-Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esezione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel Listato 6-13.
+Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esecuzione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel Listato 6-13.
 
 Listing 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizzati nella classe azione
 
@@ -492,7 +492,7 @@ Listing 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati
     }
 
 >**CAUTION**
->È possibile memorizzare oggetti nella sessione utente ma è una pratica fermamente sconsigliata. Questo perchè l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti" nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
+>È possibile memorizzare oggetti nella sessione utente ma è una pratica fermamente sconsigliata. Questo perché l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti" nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
 
 Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo argomento per specificare il valore predefinito da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri a cui si può accedere con il metodo `getAttributeHolder()`. Permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri come mostrato nel Listato 6-15.
 
@@ -555,7 +555,7 @@ Gli attributi flash sono un modo pulito per passare informazioni alla richiesta 
 
 La funzionalità di gestione delle sessioni di symfony maschera completamente la memorizzazione degli ID di sessione lato client e lato server nei confronti dello sviluppatore. Tuttavia nel caso in cui si volesse modificare il comportamento predefinito dei meccanismi di gestione delle sessioni si sappia che è comunque possibile. Questa è una cosa principalmente per utenti avanzati.
 
-Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificanfo il file di configurazione `factories.yml` come mostrato nel Listato 6-17.
+Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificando il file di configurazione `factories.yml` come mostrato nel Listato 6-17.
 
 Listing 6-17 - Modificare il nome del cookie di sessione, in `apps/frontend/config/factories.yml`
 
@@ -749,96 +749,97 @@ Ogni volta che si aggiunge un livello di parentesi quadre l'operatore logico cam
     credentials: [[root, [supplier, [owner, quasiowner]], accounts]]
                  # root OR (supplier AND (owner OR quasiowner)) OR accounts
 
-Filters
--------
+Filtri
+------
 
-The security process can be understood as a filter by which all requests must pass before executing the action. According to some tests executed in the filter, the processing of the request is modified--for instance, by changing the action executed (`default`/`secure` instead of the requested action in the case of the security filter). Symfony extends this idea to filter classes. You can specify any number of filter classes to be executed before the action execution or before the response rendering, and do this for every request. You can see filters as a way to package some code, similar to `preExecute()` and `postExecute()`, but at a higher level (for a whole application instead of for a whole module).
+Il processo di sicurezza può essere interpretato come un filtro dal quale devono passare tutte le richieste prima di eseguire l'azione associata. In funzione di alcuni test eseguiti nel filtro l'esecuzione della richiesta viene modificata--per esempio, cambiando l'azione eseguita (`default`/`secure` invece dell'azione richiesta nel caso in cui il filtro di sicurezza lo richieda). Symfony estende quest'idea alle classi di filtri. Si può specificare un numero qualsiasi di filtri da eseguire prima dell'esecuzione dell'azione o prima di restituire la risposta, ripetendolo per ogni richiesta. I filtri possono essere visti come un modo per impacchettare del codice, come si fa con `preExecute()` and `postExecute()`, ma ad un livello più alto (per l'intera applicazione invece che per un singolo modulo).
 
-### The Filter Chain
+### La catena dei filtri
 
-Symfony actually sees the processing of a request as a chain of filters. When a request is received by the framework, the first filter (which is always the `sfRenderingFilter`) is executed. At some point, it calls the next filter in the chain, then the next, and so on. When the last filter (which is always `sfExecutionFilter`) is executed, the previous filter can finish, and so on back to the rendering filter. Figure 6-3 illustrates this idea with a sequence diagram, using an artificially small filter chain (the real one contains more filters).
+Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La Figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola ed ipotetica catena di filtri (quella reale ne contiene molti di più).
 
-Figure 6-3 - Sample filter chain
+Figure 6-3 - Catena di filtri d'esempio
 
-![Sample filter chain](http://www.symfony-project.org/images/book/1_4/F0603.png "Sample filter chain")
+![Catena di filtri d'esempio](http://www.symfony-project.org/images/book/1_4/F0603.png "Catena di filtri d'esempio")
 
-This process justifies the structure of the filter classes. They all extend the `sfFilter` class, and contain one `execute()` method, expecting a `$filterChain` object as parameter. Somewhere in this method, the filter passes to the next filter in the chain by calling `$filterChain->execute()`. See Listing 6-26 for an example. So basically, filters are divided into two parts:
+Questo processo giustifica la struttura delle classi dei filtri. Tutte quante estendono la classe `sfFilter` e contengono un metodo `execute()` che si aspetta un oggetto di tipo `$filterChain` come parametro. Ad un certo punto in questo in questo metodo il filtro passa il controllo al filtro successivo invocando`$filterChain->execute()`.
+Confrontare il Listato 6-26 per un esempio. Quindi i filtri sono divisi principalmente in due parti:
 
-  * The code before the call to `$filterChain->execute()` executes before the action execution.
-  * The code after the call to `$filterChain->execute()` executes after the action execution and before the rendering.
+  * Il codice prima della chiamata a `$filterChain->execute()` viene eseguito prima dell'esecuzione dell'azione.
+  * Il codice dopo la chiamata a `$filterChain->execute()` viene eseguito dopo l'esecuzione dell'azione e prima del rendering.
 
-Listing 6-26 - Filter Class Struture
+Listing 6-26 - Struttura di una classe filtro
 
     [php]
     class myFilter extends sfFilter
     {
       public function execute ($filterChain)
       {
-        // Code to execute before the action execution
+        // Codice da eseguire prima dell'esecuzione dell'azione
         ...
 
-        // Execute next filter in the chain
+        // Esegue il prossimo filtro della catena
         $filterChain->execute();
 
-        // Code to execute after the action execution, before the rendering
+        // Codice da eseguire dopo l'esecuzione dell'azione e prima del rendering
         ...
       }
     }
 
-The default filter chain is defined in an application configuration file called `filters.yml`, and is shown in Listing 6-27. This file lists the filters that are to be executed for every request.
+La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml`, e viene mostrato nel Listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
 
-Listing 6-27 - Default Filter Chain, in `frontend/config/filters.yml`
+Listing 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
 
-    # Generally, you will want to insert your own filters here
+    # Generalmente, si vorranno inserire i propri filtri qui
 
     cache:     ~
     execution: ~
 
-These declarations have no parameter (the tilde character, `~`, means "null" in YAML), because they inherit the parameters defined in the symfony core. In the core, symfony defines `class` and `param` settings for each of these filters. For instance, Listing 6-28 shows the default parameters for the `rendering` filter.
+Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel core di symfony. Nel core symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il Listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
 
-Listing 6-28 - Default Parameters of the rendering Filter, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
+Listing 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
 
     rendering:
-      class: sfRenderingFilter   # Filter class
-      param:                     # Filter parameters
+      class: sfRenderingFilter   # Classe filtro
+      param:                     # Parametri dei filtri
         type: rendering
 
-By leaving the empty value (`~`) in the application `filters.yml`, you tell symfony to apply the filter with the default settings defined in the core.
+Lasciando il valore nullo (`~`) nel file `filters.yml` dell'applicazione, si comunica a symfony l'intenzione di volere applicare il filtro con le impostazioni predefinite dal core.
 
-You can customize the filter chain in various ways:
+La catena dei filtri può essere personalizzata in varie maniere:
 
-  * Disable some filters from the chain by adding an `enabled: false` parameter. For instance, to disable the `security` filter, write:
+  * Disabilitare alcuni filtri dalla catena aggiungendo il parametro `enabled: false`. Se per esempio si volesse disabilitare il filtro `security` basterebbe scrivere:
 
         security:
           enabled: false
 
-  * Do not remove an entry from the `filters.yml` to disable a filter; symfony would throw an exception in this case.
-  * Add your own declarations somewhere in the chain (usually after the `security` filter) to add a custom filter (as discussed in the next section). Be aware that the `rendering` filter must be the first entry, and the `execution` filter must be the last entry of the filter chain.
-  * Override the default class and parameters of the default filters (notably to modify the security system and use your own security filter).
+  * Non va rimossa la dichiarazione dal file `filters.yml` per disabilitare un filtro; symfony solleverebbe un'eccezione in questo caso.
+  * Aggiungere le proprie dichiarazioni in un certo punto della catena (di solito dopo il filtro `security`) per includere un filtro personalizzato (come vedremo nella prossima sezione). Prestare attenzione al fatto che il filtro `rendering` sia sempre in prima posizione, così come il filtro  `execution` sia in ultima posizione nella catena dei filtri.
+  * Fare l'override della classe predefinita e dei parametri dei filtri predefiniti (in particolare per modificare il sistema di sicurezza ed utilizzare i propri filtri).
 
-### Building Your Own Filter
+### Costruire i propri filtri
 
-It is pretty simple to build a filter. Create a class definition similar to the one shown in Listing 6-26, and place it in one of the project's `lib/` folders to take advantage of the autoloading feature.
+Costruire un proprio filtro è una cosa piuttosto semplice. Creare una classe definita in modo simile a quanto mostrato nel Listato 6-26 e posizionarla in una delle directory `lib/` del progetto per sfruttare i vantaggi dell'autoloading.
 
-As an action can forward or redirect to another action and consequently relaunch the full chain of filters, you might want to restrict the execution of your own filters to the first action call of the request. The `isFirstCall()` method of the `sfFilter` class returns a Boolean for this purpose. This call only makes sense before the action execution.
+Dato che un'azione può fare il forward o il redirect ad un'altra azione e conseguentemente rilanciare l'intera catena di filtri potrebbe essere necessario limitare l'esecuzione dei propri filtri solamente alla prima azione chiamata dalla richiesta. Il metodo `isFirstCall()` della classe `sfFilter` restituisce un Booleano per questo scopo. Questa chiamata ha senso solamente prima dell'esecuzione dell'azione.
 
-These concepts are clearer with an example. Listing 6-29 shows a filter used to auto-log users with a specific `MyWebSite` cookie, which is supposedly created by the login action. It is a rudimentary but working way to implement the "remember me" feature offered in login forms.
+Questi concetti saranno più chiari con un esempio. Il Listato 6-29 mostra un filtro utilizzato per l'auto-login degli utenti con un cookie specifico `MyWebSite` che supponiamo sia creato dall'azione di login. È un modo tanto rudimentale quanto funzionante per implementare la funzionalità "remember me" offerta nei moduli di login.
 
-Listing 6-29 - Sample Filter Class File, Saved in `apps/frontend/lib/rememberFilter.class.php`
+Listing 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
     {
       public function execute($filterChain)
       {
-        // Execute this filter only once
+        // Esegue questo filtro solo una volta
         if ($this->isFirstCall())
         {
-          // Filters don't have direct access to the request and user objects.
-          // You will need to use the context object to get them
+          // I filtri non hanno accesso diretto agli oggetti richiesta e utente
+          // Sarà necessario ricorrere all'utilizzo dell'oggetto context
           $request = $this->getContext()->getRequest();
           $user    = $this->getContext()->getUser();
 
@@ -849,29 +850,29 @@ Listing 6-29 - Sample Filter Class File, Saved in `apps/frontend/lib/rememberFil
           }
         }
 
-        // Execute next filter
+        // Esegue il filtro successivo
         $filterChain->execute();
       }
     }
 
-In some cases, instead of continuing the filter chain execution, you will need to forward to a specific action at the end of a filter. `sfFilter` doesn't have a `forward()` method, but `sfController` does, so you can simply do that by calling the following:
+In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potrebbe essere necessario il forward ad una specifica azione alla fine del filtro. `sfFilter` non ha un metodo `forward()`, tuttavia `sfController` lo ha, quindi questo può essere fatto semplicemente chiamando:
 
     [php]
     return $this->getContext()->getController()->forward('mymodule', 'myAction');
 
 >**NOTE**
->The `sfFilter` class has an `initialize()` method, executed when the filter object is created. You can override it in your custom filter if you need to deal with filter parameters (defined in `filters.yml`, as described next) in your own way.
+>La classe `sfFilter` ha un metodo `initialize()` eseguito alla creazione dell'oggetto filtro. È possibile eseguire l'override del metodo nei filtri personalizzati ne caso in cui fosse necessario lavorare con i parametri dei filtri (definiti in `filters.yml`, come si vedrà in seguito) in modo personale.
 
-### Filter Activation and Parameters
+### Attivazione dei filtri e parametri
 
-Creating a filter file is not enough to activate it. You need to add your filter to the filter chain, and for that, you must declare the filter class in the `filters.yml`, located in the application or in the module `config/` directory, as shown in Listing 6-30.
+Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella directory `config/` dell'applicazione o del modulo, come mostrato nel Listato 6-30.
 
-Listing 6-30 - Sample Filter Activation File, Saved in `apps/frontend/config/filters.yml`
+Listing 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
 
-    remember:                 # Filters need a unique name
+    remember:                 # I filtri hanno bisogno di nomi univoci
       class: rememberFilter
       param:
         cookie_name: MyWebSite
@@ -880,9 +881,9 @@ Listing 6-30 - Sample Filter Activation File, Saved in `apps/frontend/config/fil
     cache:     ~
     execution: ~
 
-When activated, the filter is executed for each request. The filter configuration file can contain one or more parameter definitions under the `param` key. The filter class has the ability to get the value of these parameters with the `getParameter()` method. Listing 6-31 demonstrates how to get a filter parameter value.
+Quando attivo il filtro viene eseguito per ogni singola richiesta. Il file di configurazione di un filtro può contenere una o più definizioni di parametri sotto la chiave `param`. La classe filtro è in grado di recuperare il valore di questi parametri con il metodo `getParameter()`. Il Listato 6-31 dimostra come recuperare il valore di un parametro di un filtro.
 
-Listing 6-31 - Getting the Parameter Value, in `apps/frontend/lib/rememberFilter.class.php`
+Listing 6-31 - Recuperare il valore di un parametro, in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
@@ -900,26 +901,26 @@ Listing 6-31 - Getting the Parameter Value, in `apps/frontend/lib/rememberFilter
       }
     }
 
-The `condition` parameter is tested by the filter chain to see if the filter must be executed. So your filter declarations can rely on an application configuration, just like the one in Listing 6-30. The remember filter will be executed only if your application `app.yml` shows this:
+Il parametro `condition` viene verificato dalla catena dei filtri per capire se il filtro in questione debba essere eseguito. Quindi le dichiarazioni dei filtri possono contare su una configurazione dell'applicazione proprio uguale a quella del Listato 6-30. Il filtro remember verrà eseguito solamente se nell'applicazione il file `app.yml` contiene questo:
 
     all:
       enable_remember_me: true
 
-### Sample Filters
+### Filtri d'esempio
 
-The filter feature is useful to repeat code for every action. For instance, if you use a distant analytics system, you probably need to put a code snippet calling a distant tracker script in every page. You could put this code in the global layout, but then it would be active for all of the application. Alternatively, you could place it in a filter, such as the one shown in Listing 6-32, and activate it on a per-module basis.
+La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel Listato 6-32, ed attivato per ogni singolo modulo che lo richieda.
 
-Listing 6-32 - Google Analytics Filter
+Listing 6-32 - Filtro Google Analytics
 
     [php]
     class sfGoogleAnalyticsFilter extends sfFilter
     {
       public function execute($filterChain)
       {
-        // Nothing to do before the action
+        // Niente da fare prima dell'azione
         $filterChain->execute();
 
-        // Decorate the response with the tracker code
+        // Completa la risposta con il codice del tracker
         $googleCode = '
     <script src="http://www.google-analytics.com/urchin.js"  type="text/javascript">
     </script>
@@ -931,11 +932,11 @@ Listing 6-32 - Google Analytics Filter
        }
     }
 
-Be aware that this filter is not perfect, as it should not add the tracker on responses that are not HTML.
+Attenzione però, questo filtro non è perfetto dato che non dovrebbe aggiungere il codice del tracker nelle risposte non HTML.
 
-Another example would be a filter that switches the request to SSL if it is not already, to secure the communication, as shown in Listing 6-33.
+Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste ad SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel Listato 6-33.
 
-Listing 6-33 - Secure Communication Filter
+Listing 6-33 - Filtro per comunicazione sicura
 
     [php]
     class sfSecureFilter extends sfFilter
@@ -954,20 +955,20 @@ Listing 6-33 - Secure Communication Filter
         }
         else
         {
-          // The request is already secure, so we can continue
+          // La richiesta è già sicura, si può continuare
           $filterChain->execute();
         }
       }
     }
 
-Filters are used extensively in plug-ins, as they allow you to extend the features of an application globally. Refer to Chapter 17 to learn more about plug-ins.
+I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di estendere le funzionalità di un'applicazione in modo completo. Fare riferimento al Capitolo 17 per saperne di più sui plugin.
 
-Module Configuration
---------------------
+Configurazione dei moduli
+-------------------------
 
-A few module behaviors rely on configuration. To modify them, you must create a `module.yml` file in the module's `config/` directory and define settings on a per-environment basis (or under the `all:` header for all environments). Listing 6-34 shows an example of a `module.yml` file for the `mymodule` module.
+Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella directory `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il Listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
 
-Listing 6-34 - Module Configuration, in `apps/frontend/modules/mymodule/config/module.yml`
+Listing 6-34 - Configurazione di un modulo, in `apps/frontend/modules/mymodule/config/module.yml`
 
     all:                  # For all environments
       enabled:            true
@@ -975,17 +976,17 @@ Listing 6-34 - Module Configuration, in `apps/frontend/modules/mymodule/config/m
       view_class:         sfPHP
       partial_view_class: sf
 
-The enabled parameter allows you to disable all actions of a module. All actions are redirected to the `module_disabled_module`/`module_disabled_action` action (as defined in `settings.yml`).
+Il parametro `enabled` permette di disabilitare tutte le azioni di un modulo. Tutte le azioni verranno redirette all'azione `module_disabled_module`/`module_disabled_action` (come definito in `settings.yml`).
 
-The `is_internal` parameter allows you to restrict the execution of all actions of a module to internal calls. For example, this is useful for mail actions that you must be able to call from another action, to send an e-mail message, but not from the outside.
+Il parametro `is_internal` permette di limitare l'esecuzione di tutte le azioni di un modulo solamente a chiamate interne. Per esempio questo è utile per azioni riguardanti le email che devono poter essere invocate da altre azioni, per mandare messaggi e-mail, ma non dall'esterno.
 
 The `view_class` parameter defines the view class. It must inherit from `sfView`. Overriding this value allows you to use other view systems, with other templating engines, such as Smarty.
 
-The `partial_view_class` parameter defines the view class used for partials of this module. It must inherit from `sfPartialView`.
+Il parametro `partial_view_class` definisce la classe della vista utilizzata per i partial del modulo in questione. Deve ereditare da `sfPartialView`.
 
-Summary
--------
+Sommario
+--------
 
-In symfony, the controller layer is split into two parts: the front controller, which is the unique entry point to the application for a given environment, and the actions, which contain the page logic. An action has the ability to determine how its view will be executed, by returning one of the `sfView` constants. Inside an action, you can manipulate the different elements of the context, including the request object (`sfRequest`) and the current user session object (`sfUser`).
+In symfony lo strato del controllore è diviso in due parti: il front controller, l'unico punto d'accesso per l'applicazione in un dato ambiente, e le azioni che contengono la logica delle pagine. Un'azione ha l'abilità di determinare come verrà eseguita la sua vista restituendo una delle costanti `sfView`. All'interno di un'azione si possono manipolare i diversi elementi del context, inclusi l'oggetto della richiesta (`sfRequest`) e l'oggetto della sessione utente corrente (`sfUser`).
 
-Combining the power of the session object, the action object, and the security configuration, symfony provides a complete security system, with access restriction and credentials. And if the `preExecute()` and `postExecute()` methods are made for reusability of code inside a module, the filters authorize the same reusability for all the applications by making controller code executed for every request.
+Combinando assieme la potenza dell'oggetto sessione, l'oggetto azione, le configurazioni di sicurezza, symfony mette a disposizione un completo sistema di sicurezza con restrizione sull'accesso e sistema di credenziali associato. Se i metodi `preExecute()` e `postExecute()` sono stati pensati per il riutilizzo del codice all'interno di un modulo, i filtri permettono lo stesso grado di riutilizzo per tutte le applicazioni facendo eseguire codice del controllore per ogni singola richiesta.
