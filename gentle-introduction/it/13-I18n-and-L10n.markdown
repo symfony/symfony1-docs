@@ -319,7 +319,7 @@ Listato 13-8 - Schema di esempio per dati i18n, versione breve, in `config/schem
         _attributes: { phpName: ProductI18n }
         name:        varchar(50)
 
-### Usare gli oggetti i18m generati
+### Usare gli oggetti i18n generati
 
 Una volta costruiti i corrispondente oggetti del modello (non dimenticare di richiamare
 il task `propel:build --model` dopo ogni modifica a `schema.yml`), si può usare la classe
