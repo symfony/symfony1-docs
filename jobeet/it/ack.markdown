@@ -48,7 +48,7 @@ aiuto, avete la possibilità di scegliere tra Propel e Doctrine come ORM
 per symfony e comunque godervi lo stesso libro.
 
 **Pascal Borreli**, un chiacchierone sul canale francese di symfony su
-IRC ed il membro della comunità di symfony più amichevole, ha letto il
+IRC e il membro della comunità di symfony più amichevole, ha letto il
 libro capitolo dopo capitolo alla velocità della luce. Il suo continuo
 supporto e le sue parole gentili mi hanno tenuto di buon umore nello
 scrivere il libro dall'inizio alla fine.

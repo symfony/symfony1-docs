@@ -107,6 +107,19 @@ Bootstrapping a plugin is as simple as creating a new directory under
 Then, activate the `sfJobeetPlugin` in `config/ProjectConfiguration.class.php`
 file.
 
+<propel>
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfPropelPlugin', 
+        'sfGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+</propel>
+<doctrine>
     [php]
     public function setup()
     {
@@ -117,6 +130,7 @@ file.
         'sfJobeetPlugin'
       ));
     }
+</doctrine>
 
 >**NOTE**
 >All plugins must end with the `Plugin` suffix. It is also a good habit to 

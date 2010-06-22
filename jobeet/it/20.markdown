@@ -1,4 +1,4 @@
-﻿Giorno 20: I Plugin
+﻿Giorno 20: I plugin
 ===================
 
 Ieri avete imparato a internazionalizzare e localizzare gli applicativi symfony. 
@@ -45,7 +45,7 @@ Sono del tutto simili ai plugin privati. L'unica differenza è che
 chiunque può installarli per i propri progetti. Si vedrà più avanti come
 pubblicare e ospitare un plugin pubblico su un sito web con symfony.
 
-### Un Modo Diverso di Organizzare il Codice
+### Un modo diverso di organizzare il codice
 
 Esiste un altro modo per pensare e utilizzare i plugin. Dimenticatevi
 riusabilità e condivisione. I plugin possono essere usati come un modo diverso per
@@ -54,7 +54,7 @@ cartella `lib/model/`, i template nella cartella `templates/`, ...; i
 file possono essere organizzati per funzionalità: tutti i file relativi ai posti di lavoro assieme (il modello,
 i form e i template), tutti i file CMS assieme e così via.
 
-La Struttura in File del Plugin
+La struttura in file del plugin
 -------------------------------
 
 Un plugin è solo una cartella con file organizzati secondo una ~struttura|Struttura~ 
@@ -81,19 +81,47 @@ verrà utilizzata è la seguente:
           templates/
       web/                                    // Asset come JS, CSS e immagini
 
-Il Plugin Jobeet
+Il plugin Jobeet
 ----------------
 
-Inizializzare un plugin è semplice come creare una nuova cartella sotto
+Inizializzare un plugin è semplice, basta creare una nuova cartella sotto
 `plugins/`. Per Jobeet, creiamo una cartella `sfJobeetPlugin`:
 
     $ mkdir plugins/sfJobeetPlugin
+
+Occorre quindi attivare `sfJobeetPlugin` in `config/ProjectConfiguration.class.php`.
+
+<propel>
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfPropelPlugin', 
+        'sfGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+</propel>
+<doctrine>
+    [php]
+    public function setup()
+    {
+      $this->enablePlugins(array(
+        'sfDoctrinePlugin', 
+        'sfDoctrineGuardPlugin',
+        'sfFormExtraPlugin',
+        'sfJobeetPlugin'
+      ));
+    }
+</doctrine>
+
 
 >**NOTE**
 >Tutti i plugin devono terminare con `Plugin`. È anche buona abitudine mettere come
 >~prefisso|Prefisso~ `sf`, per quanto non obbligatorio.
 
-### Il Modello
+### Il modello
 
 Innanzitutto, spostate il file `config/schema.yml` in `plugins/sfJobeetPlugin/config/`:
 
@@ -127,7 +155,7 @@ Ecco un esempio in cui si spostano le classi `JobeetAffiliate` e
 
     $ mv plugins/sfJobeetPlugin/lib/model/doctrine/JobeetAffiliate.class.php plugins/sfJobeetPlugin/lib/model/doctrine/PluginJobeetAffiliate.class.php
 
-Ed il codice che dovrebbe essere aggiornato:
+E il codice che dovrebbe essere aggiornato:
 
     [php]
     abstract class PluginJobeetAffiliate extends BaseJobeetAffiliate
@@ -295,7 +323,7 @@ per controllare che ogni cosa funzioni correttamente:
 
     $ php symfony test:all
 
-### I Controllori e le Viste
+### I controllori e le viste
 
 Il prossimo passo logico è quello di spostare i moduli nel plugin. Per
 evitare collisioni con il nome del modulo, è buona abitudine aggiungere
@@ -470,57 +498,25 @@ di cui si necessita in un determinato applicativo, andando nel file di configura
 L'ultimo passo della migrazione è mettere a posto i test funzionali in cui
 facciamo riferimento al nome del modulo
 
->**SIDEBAR**
->Attivazione Plugin
->
->Un plugin per essere disponibile in un progetto, deve essere abilitato nella
->classe `ProjectConfiguration`.
->
->Questo passo non è necessario con la configurazione predefinita, perché symfony ha
->un approccio in stile "black-list", che abilita tutti i plugin a eccezione di alcuni di essi:
->
->     [php]
->     // config/ProjectConfiguration.class.php
->     public function setup()
->     {
->       $this->enableAllPluginsExcept(array('sfDoctrinePlugin', 'sfCompat10Plugin'));
->     }
->
->Questo tipo di approccio è necessario per mantenere la compatibilità verso il basso
->con le vecchie versioni di symfony, ma è meglio avere un approccio di tipo "white-list" e usare
->al suo posto il metodo `enablePlugins()`:
->
->     [php]
->     // config/ProjectConfiguration.class.php
->     public function setup()
->     {
-<propel>
->       $this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
-</propel>
-<doctrine>
->       $this->enablePlugins(array('sfDoctrinePlugin', 'sfGuardPlugin', 'sfFormExtraPlugin', 'sfJobeetPlugin'));
-</doctrine>
->     }
-
-### I Task
+### I task
 
 I Task possono essere spostati nel plugin abbastanza facilmente:
 
     $ mv lib/task plugins/sfJobeetPlugin/lib/
 
-### I File i18n
+### I file i18n
 
 Un plugin può anche contenere dei file XLIFF:
 
     $ mv apps/frontend/i18n plugins/sfJobeetPlugin/
 
-### Le Rotte
+### Le rotte
 
 Un plugin può anche contenere regole di rotta:
 
     $ mv apps/frontend/config/routing.yml plugins/sfJobeetPlugin/config/
 
-### Le Risorse
+### Le risorse
 
 Anche se è poco intuitivo, un plugin può contenere anche risorse web
 come immagini, fogli di stile e JavaScript. Poiché non vogliamo distribuire il
@@ -533,7 +529,7 @@ mediante la creazione di collegamenti simbolici su sistema Unix e copiando i fil
 
     $ php symfony plugin:publish-assets
 
-### L'Utente
+### L'utente
 
 Spostare i metodi della classe `myUser` che hanno a che fare con la cronologia dei posti di lavoro è un po' più
 complicato. Si potrebbe creare una classe `JobeetUser` e fare ereditare `myUser` da
@@ -645,7 +641,7 @@ prossimo ascoltatore registrato (registered listener) o lancerà una eccezione.
 Il metodo `getSubject()` restituisce la notifica di un evento, che in questo
 caso è il corrente oggetto `myUser`.
 
-### La Struttura Predefinita contro l'Architettura dei Plugin
+### La struttura predefinita contro l'architettura dei plugin
 
 Utilizzando l'architettura dei plugin, si è in grado di organizzare il codice in un altro
 modo:
@@ -661,11 +657,11 @@ ha realizzato un pacchetto per risolverlo utilizzando un plugin di symfony. Per 
 di symfony, andare nella
 [sezione plugin](http://www.symfony-project.org/plugins/) del sito web di symfony.
 
-Essendo un plugin auto-contenuto in una cartella, vi sono diverse modi per l'installazione :
+Essendo un plugin auto-contenuto in una cartella, ci sono diversi modi per l'installazione :
 
   * Utilizzando il task `plugin:install` (funziona solo se lo sviluppatore del plugin ha
-    creato il pacchetto (package) del plugin e lo ha caricato nel sito web di symfony)
-  * Scaricando il pacchetto e manualmente scompattare l'archivio sotto la cartella `plugins/`
+    creato il pacchetto del plugin e l'ha caricato nel sito web di symfony)
+  * Scaricando il pacchetto e scompattando a mano l'archivio sotto la cartella `plugins/`
     (è anche necessario che lo sviluppatore abbia caricato un pacchetto)
   * Creando un `svn:externals` in `plugins/` per il plugin (funziona solo se
     lo sviluppatore del plugin ospita il suo plugin utilizzando Subversion)
@@ -675,10 +671,10 @@ di installare la versione più recente in base alla version del progetto symfony
 effettuare facilmente l'aggiornamento alla versione stabile più recente e gestire facilmente le dipendenze
 tra i plugin.
 
-Contribuire con un Plugin
+Contribuire con un plugin
 -------------------------
 
-### Creare il pacchetto per un Plugin
+### Creare il pacchetto per un plugin
 
 Per creare il pacchetto per un plugin, è necessario aggiungere alcuni file obbligatori
 alla struttura delle cartelle del plugin. In primo luogo, creare un file `README` nella radice della cartella del plugin
@@ -690,7 +686,7 @@ file sarà utilizzato nel sito web di symfony come pezzo principale per la docum
 [symfony plugin dingus](http://www.symfony-project.org/plugins/markdown_dingus).
 
 >**SIDEBAR**
->Plugin di Task per lo Sviluppo
+>Plugin di task per lo sviluppo
 >
 >Se vi trovate a creare spesso plugin privati e/o pubblici,
 >considerate di utilizzare alcuni dei task presenti in
@@ -714,7 +710,7 @@ Questo file `package.xml` segue la
 >**NOTE**
 >Il modo migliore per imparare la sintassi del file `package.xml` è sicuramente quello di copiarne uno
 >tra quelli presenti nei
->[plugin esistenti](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.3/package.xml).
+>[plugin esistenti](http://svn.symfony-project.com/plugins/sfGuardPlugin/branches/1.4/package.xml).
 
 Il file `package.xml` è costituito da più parti, come si può vedere in questo esempio:
 
@@ -853,7 +849,7 @@ e anche nel
       </release>
     </changelog>
   
-### Ospitare un Plugin nel sito web di symfony
+### Ospitare un plugin nel sito web di symfony
 
 Se si sviluppa un plugin utile e si desidera condividerlo con la comunità di symfony,
 [creare un account symfony](http://www.symfony-project.org/user/new)
@@ -862,7 +858,7 @@ se non se ne ha già uno, quindi creare un
 
 Con questo account si diventerà automaticamente l'amministratore del plugin e si
 vedrà una scheda "admin" nell'interfaccia. In questa scheda si trova tutto ciò che
-occorre per gestire i plugin e caricare i pacchetti (packages).
+occorre per gestire i plugin e caricare i pacchetti.
 
 >**NOTE**
 >Le [FAQ sui plugin](http://www.symfony-project.org/plugins/FAQ) contengono
