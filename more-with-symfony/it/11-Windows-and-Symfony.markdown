@@ -632,7 +632,7 @@ Nelle righe seguenti, si suppone che sia stato letto "Sandbox: creazione
 dell'applicazione web" per riconfiguare il "Sito web predefinito", in modo
 che non possa interferire con la porta 80.
 
-#### Aggiungere un nuovo sito web ad un progetto
+#### Aggiungere un nuovo sito web a un progetto
 
 Aprire il gestore di IIS da Administration Tools. Sul pannello di sinistra, selezionare l'icona
 "Sites", cliccare sul tasto destro. Selezionare "Add Web Site" dal menu popup. Inserire, ad
@@ -715,7 +715,7 @@ Ora si è in grado di simulare un dominio reale modificando il file "hosts".
 Questo file esegue la risoluzione del nome locale FQDN senza bisogno di
 installare il servizio DNS su Windows. Il servizio DNS è disponibile in tutte
 le edizioni di Windows Server 2008 R2 e anche in Windows Server 2008 Standard,
-Enterprise ed edizioni Datacenter.
+Enterprise e edizioni Datacenter.
 
 Sui sistemi operativi Windows x64, il file "hosts" in modalità predefinita è
 posizionato in:

@@ -53,7 +53,7 @@ Le principali limitazioni sono:
 
  * niente flash dinamico o JavaScript durante il caricamento. Per offrire funzionalità
    dinamiche, l'applicazione dovrà aspettare che l'utente interagisca con la pagine cliccando su un 
-   link od un bottone.
+   link o un bottone.
 
 #### Dentro un Box del profilo
 
@@ -63,7 +63,7 @@ del profilo.
 
 #### Aggiunta alla scheda informazioni
 
-Alcune informazioni statiche, associate ad uno specifico utente o ad una applicazione, possono
+Alcune informazioni statiche, associate a uno specifico utente o a una applicazione, possono
 essere mostrate in una scheda informazioni del profilo utente. Subito sotto l'età, 
 l'indirizzo e il curriculum.
 
@@ -142,7 +142,7 @@ Il passo successivo è collegare l'utente Facebook's con un utente `sfGuard`. Qu
 delle principali funzionalità del plugin `sfFacebookConnectPlugin` che ho realizzato e che ha
 ricevuto il contributo di altri sviluppatori symfony. Una volta che il plugin è stato installato,
 bisognerà fare un semplice, ma necessario passo di configurazione. Bisogna configurare la chiave API,
-la "application secret" e l'ID dell'applicazione all'interno del file `app.yml`:
+il segreto e l'ID dell'applicazione all'interno del file `app.yml`:
 
     [yml]
     # valori predefiniti
@@ -182,25 +182,25 @@ il valore del parametro `app_url` sarà `/my-app`.
 
 ### Configurare un sito per Facebook Connect
 
-Se il progetto è un sito che usa Facebook Connect website, i parametri di configurazione
-possono essere utilizzati, per la maggior parte delle volte, con i valori standard:
+Se il progetto è un sito che usa Facebook Connect, i parametri di configurazione
+possono essere utilizzati, per la maggior parte delle volte, con i valori predefiniti:
 
  * `redirect_after_connect` abilita il comportamento che l'applicazione utilizzerà dopo
-   che un utente ha cliccato sul pulsante "Connect with Facebook". Se non impostato il 
+   che un utente ha cliccato sul pulsante "Connect with Facebook". Se non impostato, il 
    plugin riproduce il comportamento del metodo `sfGuardPlugin` dopo la registrazione.
 
- * `js_framework` può essere utilizzato per specificare qual'è il framework JS da usare. È
-   particolarmente raccomandato l'uso di un framework JavaScript come jQuery su un sito Facebook Connect
+ * `js_framework` può essere utilizzato per specificare qual framework JS usare. È
+   particolarmente raccomandato l'uso di un framework JavaScript come jQuery su un sito Facebook Connect,
    in quanto il JavaScript utilizzato da Facebook Connect è pesante e può causare, se non istanziato al momento giusto, 
-   errori fatali (!) ad IE6.
+   errori fatali (!) a IE6.
 
  * `user_permissions` è un array di permessi che sarà associato al nuovo utente 
    Facebook Connect.
 
 ### Connettere sfGuard a Facebook
 
-La connessione tra un utente Facebook e un utente di `sfGuardPlugin` è fatta abbastanza
-logicamente usando una colonna `facebook_uid` nella tabella `Profile`. Il plugin
+La connessione tra un utente Facebook e un utente di `sfGuardPlugin` è fatta, abbastanza
+logicamente, usando una colonna `facebook_uid` nella tabella `Profile`. Il plugin
 presuppone che il legame tra l'utente `sfGuardUser` e il suo profilo sia fatto utilizzando
 il metodo `getProfile()`. Questo è il comportamento predefinito di
 `sfPropelGuardPlugin`, ma deve essere configurato come tale in
@@ -257,13 +257,13 @@ Per Doctrine:
 
 
 >**TIP**
-> Che cosa succede se il progetto utilizza Doctrine e la `foreignAlias` non è nel `Profile`. In
-> questo caso il plugin non funzionerà. Ma un semplice metodo `getProfile()` nella
-> classe `sfGuardUser.class.php` che punta alla tabella `Profile`, risolverà il problema!
+>Che cosa succede se il progetto utilizza Doctrine e la `foreignAlias` non è nel `Profile`? In
+>questo caso il plugin non funzionerà. Ma un semplice metodo `getProfile()` nella
+>classe `sfGuardUser.class.php`, che punta alla tabella `Profile`, risolverà il problema!
 
 Bisogna notare che la colonna `facebook_uid` deve essere di tipo `varchar`, perché i nuovi
 profili su Facebook sono rappresentati da `uid` superiore a `10^15`. Meglio andare sul sicuro con una
-colonna `varchar` indicizzata che provare ad utilizzare un tipo `bigint` che può avere comportamenti 
+colonna `varchar` indicizzata che provare a utilizzare un tipo `bigint` che può avere comportamenti 
 differenti sui vari ORM.
 
 Le altre due colonne sono meno importanti: `email` ed `email_hash` sono solo
@@ -289,7 +289,7 @@ Mentre, se si tratta di una applicazione Facebook, le scelte possibili sono due:
  * Lasciare a Facebook il compito di visualizzare l'applicazione, trasparentemente, 
    al suo interno usando FBML.
 
-Facebook incoraggia i programmatori ad usare la seconda soluzione, denominata "embed trasparente" o 
+Facebook incoraggia i programmatori a usare la seconda soluzione, denominata "embed trasparente" o 
 "applicazione FBML". Infatti, ha alcune caratteristiche interessanti:
 
  * Nessun Iframe, che è sempre complicato da gestire, in quanto è necessario ricordarsi 
@@ -315,7 +315,7 @@ Ma l'utilizzo di FBML ha anche alcuni svantaggi notevoli:
 
 Allora, qual è la scelta consigliata? La buona notizia è che con symfony e il plugin
 `sfFacebookConnectPlugin` non bisogna scegliere nulla! È possibile scrivere
-applicazioni agnostiche e passare indifferentemente da un iframe ad una applicazione embedded
+applicazioni agnostiche e passare indifferentemente da un iframe a una applicazione embedded
 per un sito con Facebook Connect utilizzando lo stesso codice. Ciò è possibile
 perché tecnicamente la differenza principale è in realtà nel layout... che è
 molto facile modificare in symfony. Ecco gli esempi dei due differenti
@@ -361,22 +361,22 @@ Per passare da un layout all'altro, basta aggiungere al file `actions.class.php`
       }
     }
 
->**NOTA**
+>**NOTE**
 >C'è una piccola differenza tra FBML e XFBML che non dipende però dal layout:
 >i tag FBML possono essere chiusi, mentre quelli XFBML no. Quindi è importante
 >correggere i tag seguenti:
 >
->      [html]
->      <fb:profile-pic uid="12345" size="normal" width="400" />
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400" />
 >
 >con:
 >
->      [html]
->      <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
 
 Naturalmente, per fare ciò l'applicazione deve essere configurata anche per
 Facebook Connect nelle impostazioni dello sviluppatore, anche se è
-destinata esclusivamente ad usare FBML. Ma l'enorme vantaggio di fare questo è
+destinata esclusivamente a usare FBML. Ma l'enorme vantaggio di fare questo è
 la possibilità di provare l'applicazione anche a livello locale. Se si sta creando una
 applicazione Facebook e si è pianificato l'utilizzo dei tag FBML, che è quasi inevitabile,
 l'unica soluzione per vedere il risultato è quello di mettere online il codice e vedere il
@@ -384,7 +384,7 @@ risultato direttamente in Facebook! Fortunatamente, grazie a Facebook Connect, i
 tag XFBML possono essere visualizzati al di fuori di facebook.com. E come è stato appena descritto,
 l'unica differenza tra FBML e tag XFBML è nel layout del template.
 Pertanto, questa soluzione permette di visualizzare i tag FBML localmente, sempre che si sia 
-connessi ad Internet. Inoltre, con un ambiente di sviluppo visibile
+connessi a Internet. Inoltre, con un ambiente di sviluppo visibile
 su Internet, come ad esempio un server o un semplice computer con la porta 80 aperta e 
 raggiungibile dall'esterno, la maggior parte delle funzionalità saranno effettivamente 
 utilizzabili, grazie a Facebook Connect.
@@ -410,21 +410,21 @@ fatto copiando i cookie di autenticazione da Facebook al sito attraverso l'apert
 sul sito web di un IFrame che punta a una pagina di Facebook, che, a sua volta, apre un
 IFrame verso il sito. Per fare questo, Facebook Connect ha bisogno di avere accesso al 
 sito web, e ciò rende impossibile l'utilizzo o il test Facebook Connect su un
-server locale od in una rete Intranet. Il punto di ingresso è il file `xd_receiver.htm`
+server locale o in una rete Intranet. Il punto di ingresso è il file `xd_receiver.htm`
 che il plugin `sfFacebookConnectPlugin` prevede, ma è importante ricordarsi di usare il
 task `plugin:publish-assets` per pubblicarlo e renderlo accessibile.
 
 Una volta fatto questo, la libreria ufficiale di Facebook è in grado di utilizzare la 
-sessione di Facebook. Quello che il plugin `sfFacebookConnectPlugin` fa oltre a questo, 
-è quello di creare un utente `sfGuard` collegato alla sessione di Facebook per integrarsi con
+sessione di Facebook. Quello che il plugin `sfFacebookConnectPlugin` fa, oltre a questo, 
+è creare un utente `sfGuard` collegato alla sessione di Facebook, per integrarsi con
 il sito di symfony esistente. Questo è il motivo per cui il plugin reindirizza di default verso
 la rotta `sfFacebookConnectAuth/signIn` una volta che il pulsante di Facebook Connect è stato
 cliccato e la sessione Facebook Connect è stata convalidata. Il plugin cerca per prima cosa
-un utente esistente con lo stesso UID di Facebook, o con lo stesso hash dell'e-mail (vedi 
+un utente esistente con lo stesso UID di Facebook o con lo stesso hash dell'e-mail (vedi 
 "Connettere gli utenti esistenti con il loro account di Facebook" alla fine dell'articolo) 
-e se non viene trovato nulla, viene creato un nuovo utente.
+e, se non viene trovato nulla, viene creato un nuovo utente.
 
-Un'altra strategia comune è quella di creare l'utente reindirizzandolo ad una
+Un'altra strategia comune è quella di creare l'utente reindirizzandolo a una
 specifica  form di registrazione. Dove, usando la sessione di Facebook si
 possono pre-compilare alcune informazioni delle form, come viene fatto ad
 esempio aggiungendo il seguente codice nel metodo di configurazione della form
@@ -499,7 +499,7 @@ il caso del JavaScript di Facebook Connect quando viene caricato senza fare atte
 completo caricamento del documento. 
 Fortunatamente questo bug può essere risolto con symfony utilizzando gli slot. Infatti è possibile utilizzare
 uno slot per inserire lo script di Facebook Connect ogni volta che è necessario nel template, e caricarlo 
-nel layout alla fine del documento, prima della chiusura del tag `</ body>`:
+nel layout alla fine del documento, prima della chiusura del tag `</body>`:
 
     [php]
     // in un template che usa i tag XFBML o il bottone per Facebook Connect
@@ -526,10 +526,10 @@ al meglio le funzionalità di symfony.
 
 Un aspetto molto importante della filosofia symfony è dato dalla possibilità di fare debug
 velocemente e di assicurarsi, tramite test funzionali, il corretto funzionamento dell'applicazione.
-Utilizzando Facebook questo può rivelarsi complesso in quanto è necessaria una connessione ad Internet
+Utilizzando Facebook questo può rivelarsi complesso in quanto è necessaria una connessione a Internet
 per comunicare con il server di Facebook, inoltre la porta 80 della nostra macchina di sviluppo deve essere 
 raggiungibile da remoto al fine di poter scambiare i cookie di autenticazione.
-Inoltre c'è un altro vincolo: una applicazione Facebook Connect può essere collegata ad un solo host. 
+Inoltre c'è un altro vincolo: una applicazione Facebook Connect può essere collegata a un solo host. 
 Questo è un problema spinoso se l'applicazione è sviluppata su una macchina, testata su un'altra, 
 messa in pre-produzione su un terzo server e utilizzata, infine, su un quarto. 
 In tal caso la soluzione più semplice è quella di creare effettivamente una applicazione per ogni server 
@@ -542,7 +542,7 @@ posto dell'ambiente `dev` uno nuovo chiamato `preprod`:
     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'preprod', true);
 
 Poi bisognerà modificare il file `app.yml` per configurare le differenti applicazioni Facebook 
-inserendo i corretti parametri associati ad ogni ambiente:
+inserendo i corretti parametri associati a ogni ambiente:
 
     [yml]
     prod:
@@ -609,7 +609,7 @@ in un iframe, una importante problematica da gestire è il routing:
  * Per una applicazione FBML, i link all'interno dell'applicazione devono puntare al corretto routing
    `/app-name/symfony-route`;
 
- * per una applicazione contenuta in un IFrame, è importante che sia passata ad ogni pagina
+ * per una applicazione contenuta in un IFrame, è importante che sia passata a ogni pagina
    l'informazione riguardante la sessione di Facebook.
 
 Per risolvere questo problema, il plugin `sfFacebookConnectPlugin`, espone uno speciale helper, 
@@ -617,7 +617,7 @@ chiamato `fb_url_for()`, che fa entrambe le cose.
 
 ### Redirezionare all'interno di una applicazione FBML
 
-Gli sviluppatori symfony sono abituati a fare un redirect subito dopo ad una azione di POST, 
+Gli sviluppatori symfony sono abituati a fare un redirect subito dopo a una azione di POST, 
 è una buona pratica nello sviluppo web per evitare possibili doppi POST. Fare una redirezione in
 una applicazione FBML tuttavia non funziona tanto semplicemente, bisogna infatti usare un tag FBML 
 speciale chiamato `<fb:redirect>` per dire a Facebook di eseguire la redirezione. Per utilizzare
@@ -662,17 +662,17 @@ fare in due modi:
    utenti, oppure dopo che un nuovo utente è stato creato, usando il
    metodo `registerUsers` di `sfFacebookConnect`:
 
-    [php]
-    sfFacebookConnect::registerUsers(array($sfGuardUser)); 
+        [php]
+        sfFacebookConnect::registerUsers(array($sfGuardUser)); 
 
 Considerazioni finali
 ---------------------
 
 Spero che questo articolo sia riuscito nel suo scopo: aiutare
-ad iniziare lo sviluppo di un'applicazione per Facebook usando symfony
+a iniziare lo sviluppo di un'applicazione per Facebook usando symfony
 e far capire come sfruttare symfony durante lo sviluppo su Facebook. Comunque, il
 plugin `sfFacebookConnectPlugin` non sostituisce le API di Facebook e
-per imparare ad usare a pieno la potenza della piattaforma di sviluppo di
+per imparare a usare a pieno la potenza della piattaforma di sviluppo di
 Facebbok occorre visitare il suo [sito](http://developers.facebook.com/).
 
 Un ringraziamento alla comunità di symfony per la sua qualità e la sua
@@ -680,4 +680,4 @@ generosità, specialmente a quelli che hanno già contribuito a
 `sfFacebookConnectPlugin` con commenti e patch: Damien Alexandre, Thomas Parisot,
 Maxime Picaud, Alban Creton e tutti quelli che potrei aver dimenticato
 (scusatemi). Se vi sembra che manchi qualcosa nel plugin, non esitate
-ad inviare una patch :-)
+a inviare una patch :-)

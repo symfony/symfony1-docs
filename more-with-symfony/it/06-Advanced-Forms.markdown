@@ -454,7 +454,7 @@ del form.
 >**NOTE**
 >Il codice delle azioni non è stato volutamente mostrato qui, perché ha bisogno
 >di un'attenzione particolare. Si dia un'occhiata al file con le azioni
->`apps/frontend/modules/product/actions/actions.class.php`. Assomiglia ad un
+>`apps/frontend/modules/product/actions/actions.class.php`. Assomiglia a un
 >normale CRUD e può essere generato automaticamente attraverso il task 
 >`doctrine:generate-module`.
 
@@ -498,7 +498,7 @@ sono i seguenti. Altri si possono trovare guardando le [API di symfony 1.3](http
    usando l'oggetto validator del campo stesso.
 
  * `sfFormField->renderRow()`: Onnicomprensivo: visualizza l'etichetta, il campo
-   del form, l'errore e il messaggio di aiuto, dentro ad un codice wrapper XHTML.
+   del form, l'errore e il messaggio di aiuto, dentro a un codice wrapper XHTML.
 
 >**NOTE**
 >In realtà, ogni funzione di visualizzazione della classe `sfFormField`, utilizza
@@ -553,7 +553,7 @@ visualizzare come ogni altro campo.
 Salvare gli oggetti dei form
 ----------------------------
 
-In molte circostanze, un form si riferisce direttamente ad una o più tabelle di
+In molte circostanze, un form si riferisce direttamente a una o più tabelle di
 un database ed esegue le modifiche ai dati di tali tabelle, in base ai valori
 inviati. Symfony genera automaticamente, per ciascun modello dello schema,
 un oggetto form, che estende `sfFormDoctrine` o `sfFormPropel` a seconda dell'ORM.
@@ -720,7 +720,7 @@ valori. La logica del validatore stesso è abbastanza semplice:
    i valori puliti.
 
 >**TIP**
->Poiché il validatore personalizzato in questa situazione è destinato ad essere
+>Poiché il validatore personalizzato in questa situazione è destinato a essere
 >utilizzato come post-validatore, il metodo `doClean()` si aspetta un array dei
 >valori uniti e restituisce un array di valori puliti. I validatori personalizzati,
 >tuttavia, possono essere facilmente creati per singoli campi. In tal caso, il
@@ -915,7 +915,7 @@ il seguente codice alla classe `BaseForm`:
 Personalizzazione dello stile grafico quando un elemento del form ha un errore
 ------------------------------------------------------------------------------
 
-Come esercizio conclusivo, si può passare ad un argomento un po' più leggero,
+Come esercizio conclusivo, si può passare a un argomento un po' più leggero,
 relativo alla grafica degli elementi di un form. Si supponga, per esempio, che
 la grafica per la pagina `Product` includa uno stile speciale per i campi che
 che falliscono la validazione.
@@ -923,7 +923,7 @@ che falliscono la validazione.
 ![Il form Product con errori](http://www.symfony-project.org/images/more-with-symfony/advanced_forms_02.png "Form Product con stili per gli errori")
 
 Si supponga che il grafico abbia già implementato il foglio di stile che applicherà
-la grafica per l'errore ad ogni campo `input` dentro a un `div`, con la classe
+la grafica per l'errore a ogni campo `input` dentro a un `div`, con la classe
 `form_error_row`. Come si può aggiungere facilmente la classe `form_row_error`
 ai campi con errori?
 

@@ -29,8 +29,8 @@ il framework stesso.
 
 ### Supporto
 
-Ogni sviluppatore, specialmente se si inizia ad utilizzare il framework
-da zero, si troverà ad un certo punto a non avere idea di come affrontare
+Ogni sviluppatore, specialmente se si inizia a utilizzare il framework
+da zero, si troverà a un certo punto a non avere idea di come affrontare
 qualche problema. Ci si blocca in un punto in cui non si capisce quale possa
 essere il modo migliore di procedere.
 Fortunatamente symfony ha una comunità molto amichevole, in grado di fornire
@@ -124,7 +124,7 @@ un'invasione del canale. Questo non è apprezzato e sarà difficile ottenere
 una risposta alla propria domanda.
 
 Quando si fa una domanda su IRC bisogna prestare molta attenzione alle risposte
-che si ricevono. Bisogna essere reattivi ad ogni domanda aggiuntiva che si riceve
+che si ricevono. Bisogna essere reattivi a ogni domanda aggiuntiva che si riceve
 riguardo al problema. Considerare il fatto che a volte gli utenti del
 canale IRC potrebbero criticare l'intero approccio al problema.
 A volte potrebbero aver ragione, a volte potrebbero aver torto, considerando
@@ -173,24 +173,24 @@ funzionalità che si trovano nelle applicazioni web odierne.
 Oltre a partecipare alla comunità attraverso i canali digitali come descritto
 in precedenza, è possibile comunicare con la comunità alle conferenze e in
 occasione di altri eventi. La maggioranza delle conferenze legate a PHP e anche 
-alcune di quelle dedicate ad un pubblico più ampio del solo PHP, vedono alcuni 
+alcune di quelle dedicate a un pubblico più ampio del solo PHP, vedono alcuni 
 membri della comunità di symfony come partecipanti, oppure come relatori. Grazie 
 al lavoro di questi membri della comunità alle conferenze è possibile ricevere
 aiuto e imparare cose nuove. Esistono eventi completamente dedicati a symfony.
 Alcuni esempi lampanti sono [Symfony Live](http://www.symfony-live.com/), 
 [Symfony Day](http://www.symfonyday.com/) e [SymfonyCamp](http://www.symfonycamp.com/). 
 Tutti questi eventi hanno alle spalle un'azienda, ma gran parte del lavoro è frutto
-degli sforzi della comunità, partecipando ad eventi del genere è possibile 
-imparare molto riguardo symfony, oltre ad entrare in contatto con i principali
+degli sforzi della comunità, partecipando a eventi del genere è possibile 
+imparare molto riguardo symfony, oltre a entrare in contatto con i principali
 membri della comunità che possono essere particolarmente d'aiuto quando si hanno
-dei problemi. Avendo l'opportunità di partecipare ad un evento del genere, è
+dei problemi. Avendo l'opportunità di partecipare a un evento del genere, è
 davvero consigliato farlo.
 
 Parallelamente alle conferenze di cui si è appena parlato, esiste anche un
 numero sempre maggiore di gruppi di utenti symfony in tutto il mondo. Questi 
 gruppi di utenti di solito non hanno aziende alle spalle, sono solo gruppi di
 utenti che si incontrano ad appuntamenti fissi in una zona specifica. È molto
-semplice partecipare ad uno di questi incontri, l'unico sforzo è quello di 
+semplice partecipare a uno di questi incontri, l'unico sforzo è quello di 
 presentarsi. Questi incontri permettono di creare una rete di persone che 
 utilizzano symfony, che possono aiutare nei problemi relativi a symfony, 
 che possono avere delle offerte lavorative, o conoscere uno sviluppatore 
@@ -231,12 +231,12 @@ contributo.
 Come già visto in precedenza, i forum e le mailinglist sono posti dove ricevere
 supporto. Ricevere risposte alle proprie domande, suggerimenti su come risolvere
 problemi, o feedback su un'approccio particolare utilizzato per il proprio
-progetto. Anche se si è appena iniziato ad utilizzare symfony, man mano che
+progetto. Anche se si è appena iniziato a utilizzare symfony, man mano che
 viene accumulata dell'esperienza, si sarà in grado di rispondere alle domande più semplici
 di altri utenti agli inizi. Quando si diventerà più esperti si potranno rispondere a 
 domande più complesse e partecipare ad argomenti di ogni tipo. Anche dare 
 qualche semplice indicazione o suggerimento, può aiutare le persone a trovare le
-soluzioni ai loro problemi. Essendo già iscritti ad una mailinglist, mettere a
+soluzioni ai loro problemi. Essendo già iscritti a una mailinglist, mettere a
 disposizione la propria esperienza è un piccolo impegno che può aiutare gli
 altri.
 
@@ -255,7 +255,7 @@ canale ogni minuto, permette agli altri utenti di mettervi in luce menzionando
 il vostro nickname. Gran parte dei client IRC notifica il fatto che qualcuno ha
 chiamato il vostro nick in modo che voi possiate rispondere. Questo permette di
 essere più facilmente rintracciabili dalla comunità, se si pensa che la persona
-sappia rispondere ad una certa domanda. Quindi anche quando non si fa niente si può
+sappia rispondere a una certa domanda. Quindi anche quando non si fa niente si può
 riuscire comunque a fare qualcosa di utile: essere disponibili.
 
 ### Contribuire al codice
@@ -298,7 +298,7 @@ core team nel riprodurre il bug, o per far capire quali parti di symfony sono
 affette da esso.
 
 Nel riquadro "Ticket Properties" fare molta attenzione a selezionare la versione
-corretta di symfony su cui la patch si basa. Quando ad essere coinvolti sono 
+corretta di symfony su cui la patch si basa. Quando a essere coinvolti sono 
 più componenti, selezionare quello maggiormente coinvolto e assicurarsi di 
 segnalare nel campo "Full Description" quali altre parti sono interessate dal
 problema.
@@ -342,8 +342,8 @@ Uno dei punti di forza di symfony è la documentazione. Il core team ha scritto
 molta della documentazione su come utilizzare symfony, ma una grossa fetta è
 disponibile anche grazie alla comunità. Ci sono anche sforzi congiunti tra il core
 team e la comunità, come per esempio il lavoro sul tutorial Jobeet. La
-documentazione aiuta i nuovi sviluppatori ad imparare ad utilizzare symfony,
-oltre ad essere una guida sempre presente per gli sviluppatori più esperti; è 
+documentazione aiuta i nuovi sviluppatori a imparare a utilizzare symfony,
+oltre a essere una guida sempre presente per gli sviluppatori più esperti; è 
 quindi molto importante avere documentazione di qualità. Dare il proprio 
 contributo alla documentazione di symfony può essere fatto in molti modi.
 
@@ -375,7 +375,7 @@ symfony. Inoltre è importante non aggiungere cose all'infuori di blog
 Le persone che si trovano a loro agio con la scrittura possono dedicarsi a farlo
 su un gradino superiore. Esistono diverse riviste di PHP in tutto il mondo, così
 come molte riviste di computer che permettono di proporre degli articoli. Articoli
-per questo tipo di pubblicazioni sono spesso ad un livello più avanzato, più 
+per questo tipo di pubblicazioni sono spesso a un livello più avanzato, più 
 strutturati e di maggiore qualità rispetto a quella media dei post sui blog, ma
 sono letti anche da molte più persone.
 
@@ -438,7 +438,7 @@ per molti tipi di pubblico. Per esempio:
 
 In funzione del posto e del pubblico con cui ci si relaziona, sarà necessario
 adattare la propria presentazione. Mentre il management non sarà molto interessato
-in tutti i dettagli tecnici, il pubblico ad una conferenza riguardante symfony
+in tutti i dettagli tecnici, il pubblico a una conferenza riguardante symfony
 non necessiterà di una introduzione di base al framework. Bisogna riservare il tempo
 necessario per analizzare il giusto argomento e per preparare la presentazione. 
 Cercare di ottenere una revisione delle slide da parte di qualche altro e, se 
@@ -493,7 +493,7 @@ guidati dalla comunità.
 La già citata
 [mailinglist della comunità symfony](http://groups.google.com/group/symfony-community) 
 è il posto migliore dove cercare un gruppo di utenti esistente nella propria area,
-o per dar vita ad un nuovo gruppo. Sono presenti membri e organizzatori di
+o per dar vita a un nuovo gruppo. Sono presenti membri e organizzatori di
 gruppi di utenti locali di symfony che possono offrire il loro aiuto per 
 avviare un nuovo gruppo e per organizzarlo al meglio.
 
@@ -534,8 +534,8 @@ trovare la propria via nella comunità.
 La [mailinglist symfony-community](http://groups.google.com/group/symfony-community)
 è una mailinglist dove i membri possono esaminare idee per impegni nella
 comunità, partecipare ad attività in via di realizzazione ed entrare in contatto con 
-tutto ciò che è relativo alla comunità. Per partecipare ad una di queste 
-iniziative, basta rispondere ad una delle discussioni disponibili. Se si ha 
+tutto ciò che è relativo alla comunità. Per partecipare a una di queste 
+iniziative, basta rispondere a una delle discussioni disponibili. Se si ha 
 qualche nuova idea che può rivelarsi utile, è possibile pubblicarla sulla
 mailinglist. Se ci sono domande sulla comunità, o sui vari modi  per entrare in
 contatto con essa, questo è il posto giusto dove farle.
@@ -551,7 +551,7 @@ tutti quelli che vogliano partecipare attivamente alla comunità di symfony.
 
 ### Comunità esterne
 
-L'invito è quello di non fermarsi ad essere coinvolti solo nella comunità di 
+L'invito è quello di non fermarsi a essere coinvolti solo nella comunità di 
 symfony come proposto in quest'articolo. Esistono molte altre iniziative nel 
 mondo, avviate attorno a symfony da utenti del framework. Di seguito diamo 
 particolare attenzione a due iniziative molto utili per le persone che lavorano 
@@ -564,7 +564,7 @@ le persone e le aziende che lavorano con symfony e i progetti realizzati con
 symfony. Il sito permette alle aziende di pubblicare offerte di lavoro e 
 permette agli utenti di ricercare utenti, aziende e progetti nel proprio paese.
 
-Il sito oltre ad essere ottimo per entrare in contatto con alti utenti di
+Il sito oltre a essere ottimo per entrare in contatto con alti utenti di
 symfony o cercare un lavoro, presenta un archivio di applicazioni che rendono
 l'idea di cosa si possa realizzare con symfony. Esiste un'enorme varietà in 
 termini di applicazioni elencati sul sito stesso, che rendono molto piacevole 
@@ -587,7 +587,7 @@ discussioni, inserimento di notizie e di annunci di lavoro. Molti argomenti hann
 un gruppo su LinkedIn e 
 [symfony non fa eccezione](http://www.linkedin.com/groups?gid=29205&trk=myg_ugrp_ovr)
 (è richiesto il login). Usando questo gruppo relativo a symfony, è possibile 
-discutere di argomenti relativi ad esso, seguire le notizie, pubblicare offerte
+discutere di argomenti relativi a esso, seguire le notizie, pubblicare offerte
 di lavoro per sviluppatori symfony, trainer, consulenti e architetti.
 
 Conclusioni

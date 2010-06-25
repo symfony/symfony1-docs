@@ -368,13 +368,13 @@ To switch automatically between both, simply add this to you
 >in the layout: FBML tags can be closed, not XFBML ones. So just replace
 >tags like:
 >
->      [html]
->      <fb:profile-pic uid="12345" size="normal" width="400" />
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400" />
 >
 >by:
 >
->      [html]
->      <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
+>     [html]
+>     <fb:profile-pic uid="12345" size="normal" width="400"></fb:profile-pic>
 
 Of course, to do this the application needs to be configured also as a
 Facebook Connect application in the developer's settings, even if the application is
@@ -661,8 +661,8 @@ or to communicate in their feed. This can be achieved in two ways:
    least every night to register newly created users, or after a new user is
    created, using the `registerUsers` method of `sfFacebookConnect`:
 
-      [php]
-      sfFacebookConnect::registerUsers(array($sfGuardUser));
+        [php]
+        sfFacebookConnect::registerUsers(array($sfGuardUser));
 
 Going further
 -------------

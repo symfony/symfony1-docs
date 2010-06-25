@@ -571,7 +571,7 @@ prima di implementarle in un evento.
 >     [php]
 >     $manager = Doctrine_Manager::getInstance();
 
-Ora si può iniziare ad utilizzare l'API per cancellare le entrate nella cache:
+Ora si può iniziare a utilizzare l'API per cancellare le entrate nella cache:
 
     [php]
     $cacheDriver->delete('users_index');
@@ -602,7 +602,7 @@ fare questo grazie all'implementazione di un evento `postSave()` nella
 definizione della classe del modello `User`.
 
 Ci si ricorda della classe `User` di cui si è parlato in precedenza? Ora bisogna
-aggiungere del codice ad essa, quindi la si apre nell'editor e aggiungendo il
+aggiungere del codice a essa, quindi la si apre nell'editor e aggiungendo il
 seguente metodo `postSave()`:
 
     [php]

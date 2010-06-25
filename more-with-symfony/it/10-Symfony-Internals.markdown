@@ -3,7 +3,7 @@ Symfony all'interno
 
 *di Geoffrey Bachelet*
 
-Vi siete mai chiesti cosa accade ad una richiesta HTTP quando raggiunge una
+Vi siete mai chiesti cosa accade a una richiesta HTTP quando raggiunge una
 applicazione symfony? Se sì, allora siete nel posto giusto. Questo capitolo
 spiegherà nel dettaglio come symfony processa ogni richiesta al fine di creare
 e restituire la risposta. Naturalmente, descrivere solo tale processo sarebbe
@@ -63,7 +63,7 @@ e lo sviluppatore ha la possibilità di interagire con questo processo attravers
 L'inizializzazione dei plugin è abbastanza semplice. Per ciascun plugin, symfony
 cerca una classe `${plugin}Configuration` (ad esempio `sfGuardPluginConfiguration`)
 e se la trova crea una istanza. In caso contrario, è usato `sfPluginConfigurationGeneric`.
-È possibile agganciarsi ad una configurazione di plugin, attraverso due metodi:
+È possibile agganciarsi a una configurazione di plugin, attraverso due metodi:
 
  * `${plugin}Configuration::configure()`, prima che sia stato fatto l'autoloading
  * `${plugin}Configuration::initialize()`, dopo l'autoloading
@@ -271,7 +271,7 @@ aggiungere parametri personalizzati globali per tutti i template.
 ### Utilizzare l'evento `template.filter_parameters`
 
 Si supponga di decidere che ogni singolo template che si usa, debba avere accesso
-ad un particolare oggetto, per esempio un oggetto helper.  Si potrebbe quindi
+a un particolare oggetto, per esempio un oggetto helper.  Si potrebbe quindi
 aggiungere il seguente codice a `ProjectConfiguration`: 
 
     [php]
@@ -289,7 +289,7 @@ aggiungere il seguente codice a `ProjectConfiguration`:
       return $parameters;
     }
 
-Ora ogni template ha accesso ad una istanza di `MyHelperObject` attraverso
+Ora ogni template ha accesso a una istanza di `MyHelperObject` attraverso
 `$my_helper_object`.
 
 ### Riepilogo di `sfContext`
@@ -414,7 +414,7 @@ il quale, come `actionExists()`, è un facade per il metodo
 In ultimo, l'istanza del controllore è aggiunta all'`action stack`.
 
 >**NOTE**
->La pila dell'azione è del tipo FIFO (First In First Out, il primo ad entrare è
+>La pila dell'azione è di tipo FIFO (First In First Out, il primo a entrare è
 >il primo ad uscire) e detiene tutte le azioni eseguite durante la richiesta.
 >Ogni oggetto passa per un
 >oggetto `sfActionStackEntry`. È sempre possibile accedere alla pila con
