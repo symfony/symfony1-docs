@@ -1,10 +1,10 @@
 ﻿Capitolo 7 - All'interno dello strato vista
 ===========================================
 
-La vista è la responsabile per la visualizzazione dell'output relativo ad una particolare azione. In symfony, la vista è costituita da più parti, di cui ogni singolo elemento è stato progettato per essere facilmente modificato da chi di solito lavora con esso.
+La vista è la responsabile per la visualizzazione dell'output relativo a una particolare azione. In symfony, la vista è costituita da più parti, di cui ogni singolo elemento è stato progettato per essere facilmente modificato da chi di solito lavora con esso.
 
-* I web designer in genere lavorano sui template (la presentazione dei dati dell'azione corrente) e sul layout (che contiene il codice comune a tutte le pagine). Questi sono scritti in HTML con l'inclusione di piccoli pezzi in PHP, che sono per lo più chiamate ad helper.
-* Gli sviluppatori, avendo in mente la riutilizzabilità, di solito inseriscono i frammenti di codice in partial o component. Usano gli slot per agire su più di una zona del layout. Anche i web designer possono lavorare su questi frammenti di template.
+* I web designer in genere lavorano sui template (la presentazione dei dati dell'azione corrente) e sul layout (che contiene il codice comune a tutte le pagine). Questi sono scritti in HTML con l'inclusione di piccoli pezzi in PHP, che sono per lo più chiamate a helper.
+* Gli sviluppatori, avendo in mente la riusabilità, di solito inseriscono i frammenti di codice in partial o component. Usano gli slot per agire su più di una zona del layout. Anche i web designer possono lavorare su questi frammenti di template.
 * L'attenzione degli sviluppatori va anche sul file di configurazione view in YAML (impostando le proprietà della risposta e degli altri elementi dell'interfaccia) e sull'oggetto response. Quando si ha a che fare con variabili nei template, i rischi di cross-site scripting non devono essere ignorati e una buona comprensione delle tecniche di escapizzazione dell'output è richiesta per trattare in modo sicuro i dati dell'utente.
 
 Ma qualunque sia il proprio ruolo è, si troveranno utili strumenti per accelerare il noioso lavoro della visualizzazione dei risultati dell'azione. Questo capitolo comprende tutti questi strumenti.
@@ -73,7 +73,7 @@ Listato 7-3 - Dichiarare l'utilizzo di un helper
     <p><?php echo auto_link_text($description) ?></p>
 
 >**TIP**
->Quando si ha necessità di dichiarare più di un gruppo di helper, aggiungere più argomenti alla chiamata `use_helper()`. Ad esempio, per caricare entrambi i gruppi di helper `Text` e `Javascript` in un template, chiamare `<?php use_helper('Text', 'Javascript') ?>`.
+>Quando si ha necessità di dichiarare più di un gruppo di helper, aggiungere più parametri alla chiamata `use_helper()`. Ad esempio, per caricare entrambi i gruppi di helper `Text` e `Javascript` in un template, chiamare `<?php use_helper('Text', 'Javascript') ?>`.
 
 Alcuni helper sono disponibili per impostazione predefinita su ogni template, senza la necessità di dichiararli. Sono quelli che appartengono ai seguenti gruppi di helper:
 
@@ -84,14 +84,14 @@ Alcuni helper sono disponibili per impostazione predefinita su ogni template, se
   * `Partial`: Helper che permettono l'inclusione di frammenti di template
   * `Cache`: Manipolazione di frammenti di codice presenti nella cache
 
-L'elenco degli helper standard, caricato in modalità predefinita per ogni template, è configurabile nel file `settings.yml`. Quindi, ad esempio se non si dovessero utilizzare gli helper del gruppo `Cache`, o se si dovessero sempre utilizzare quelli del gruppo `Text`, si può modificare di conseguenza l'impostazione `standard_helpers`. Ciò permetterà di accelerare leggermente l'applicazione. Non è possibile rimuovere i primi quattro gruppi di helper della lista precedente (`Helper`, `Tag`, `Url` e `Asset`), perché essi sono obbligatori affichè il motore di template funzioni correttamente. Di conseguenza, essi non compaiono neppure nella lista degli helper standard. 
+L'elenco degli helper standard, caricato in modalità predefinita per ogni template, è configurabile nel file `settings.yml`. Quindi, ad esempio se non si dovessero utilizzare gli helper del gruppo `Cache`, o se si dovessero sempre utilizzare quelli del gruppo `Text`, si può modificare di conseguenza l'impostazione `standard_helpers`. Ciò permetterà di accelerare leggermente l'applicazione. Non è possibile rimuovere i primi quattro gruppi di helper della lista precedente (`Helper`, `Tag`, `Url` e `Asset`), perché essi sono obbligatori affiché il motore di template funzioni correttamente. Di conseguenza, essi non compaiono neppure nella lista degli helper standard. 
 
 >**TIP**
 >Se si dovesse utilizzare un helper fuori dal template, è possibile caricare un gruppo di helper da qualsiasi parte chiamando `sfProjectConfiguration::getActive()->loadHelpers($helpers)`, dove `$helpers` è il nome del gruppo di helper o un di nomi di gruppi di helper. Ad esempio, se si vuole usare `auto_link_text()` in una azione, bisogna prima chiamare `sfProjectConfiguration::getActive()->loadHelpers('Text')`.
 
 #### Helper utilizzati frequentemente
 
-Nei capitoli successivi verranno mostrati in dettaglio alcuni helper, in relazione con le caratteristiche prese in esame. Il Listato 7-4 dà un breve elenco degli helper predefiniti che vengono utilizzati di frequente, assieme al codice HTML che ritornano.
+Nei capitoli successivi verranno mostrati in dettaglio alcuni helper, in relazione con le caratteristiche prese in esame. Il Listato 7-4 dà un breve elenco degli helper predefiniti che vengono utilizzati di frequente, assieme al codice HTML che restituiscono.
 
 Listato 7-4 - Gli helper predefiniti più comuni
 
@@ -121,11 +121,11 @@ Symfony ha molti helper per vari diversi utilizzi, ma se non si trova quello di 
 Le funzioni per gli helper (normali funzioni PHP che restituiscono codice HTML) devono essere salvate in un file chiamato `FooBarHelper.php`, dove `FooBar` è il nome del gruppo di helper. Salvare il file nella cartella `apps/frontend/lib/helper/` (o in qualunque cartella `helper/`  creata dentro una delle cartelle `lib/` del progetto) in modo che possa essere trovata automaticamente dall'helper per l'inclusione `use_helper('FooBar')`.
 
 >**TIP**
->Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helperal posto del suo. Ma attenzione: essendo che il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non verranno resi disponibili.
+>Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helper al posto del suo. Ma attenzione: essendo che il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non verranno resi disponibili.
 
 ### Layout della pagina
 
-Il template mostrato nel Listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` ed i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout, o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
+Il template mostrato nel Listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout, o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
 
 >**TIP**
 >Per maggiori informazioni sul decorator e gli altri design pattern, vedere *Patterns of Enterprise Application Architecture* di Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).
@@ -154,7 +154,7 @@ Listatog 7-5 - Layout predefinito, in `myproject/apps/frontend/templates/layout.
       </body>
     </html>
 
-Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempionel Listato 7-1 la view elaborata è simile a quanto si vede nel Listato 7-6.
+Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempio nel Listato 7-1 la view elaborata è simile a quanto si vede nel Listato 7-6.
 
 Listato 7-6 - Il Layout, la configurazione View e il template assemblato.
 
@@ -235,7 +235,7 @@ Proprio come i template, i partial sono file che si trovano nella cartella `temp
 
 Un template può includere partial se è nello stesso modulo , in un altro modulo, o nella cartella `templates/` globale. Includere un partial usando un helper `include_partial()` e specificare il nome del modulo e del partial come parametro (omettendo la sottolineatura e il `.php` finale), come descritto nel Listato 7-7.
 
-Listing 7-7 - Includere un partial in un template del modulo `miomodulo`
+Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
 
     [php]
     // Include il partial frontend/modules/miomodulo/templates/_miopartial1.php 
@@ -248,10 +248,10 @@ Listing 7-7 - Includere un partial in un template del modulo `miomodulo`
     <?php include_partial('foobar/miopartial2') ?>
 
     // Include il partial frontend/templates/_mypartial3.php
-    // E' considerato parte del modulo 'global'
+    // È considerato parte del modulo 'global'
     <?php include_partial('global/miopartial3') ?>
 
-I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché  i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come argomento. Ad esempio, se si vuole che un partial abbia accesso ad una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo argomento della chiamata `include_partial()`, come mostrato nei Listati 7-8, 7-9 e 7-10.
+I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché  i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come parametro. Ad esempio, se si vuole che un partial abbia accesso a una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo parametro della chiamata `include_partial()`, come mostrato nei Listati 7-8, 7-9 e 7-10.
 
 Listato 7-8 - L'azione definisce una variabile, in `miomodulo/actions/actions.class.php`
 
@@ -279,7 +279,7 @@ Listato 7-10 - Il partial ora può usare la variabile, in `miomodulo/templates/_
 >Tutti gli helper fin'ora sono stati chiamati da `<?php echo nomeFunzione() ?>`. L'helper partial, però, è chiamato semplicemente da `<?php include_partial() ?>`, senza `echo`, in modo che abbia un comportamento simile al normale comando PHP `include()`. Se si ha bisogno di una funzione che restituisca il contenuto di un partial senza visualizzarlo, utilizzare `get_partial()`. Tutti gli helper `include_` descritti in questo capitolo hanno una controparte `get_` che può essere chiamata insieme al comando `echo`.
 
 >**TIP**
->Invece di visualizzare un template, una azione può restituire un partial o un component. I metodi `renderPartial()` e `renderComponent()` della classe dell'azione promuovono la riusabilità del codice. Inoltre sfruttano la possibilità dei partial di essere messi in cache (vedere il Capitolo 12). Le variabili definite nell'azioneverranno passate automaticamente al partial/component, a meno che non si definisca un array associativo di varibili come secondo paramentro del metodo.
+>Invece di visualizzare un template, una azione può restituire un partial o un component. I metodi `renderPartial()` e `renderComponent()` della classe dell'azione promuovono la riusabilità del codice. Inoltre sfruttano la possibilità dei partial di essere messi in cache (vedere il Capitolo 12). Le variabili definite nell'azione verranno passate automaticamente al partial/component, a meno che non si definisca un array associativo di varibili come secondo paramentro del metodo.
 >
 >     [php]
 >     public function executeFoo()
@@ -301,7 +301,7 @@ Listato 7-10 - Il partial ora può usare la variabile, in `miomodulo/templates/_
 
 Nel Capitolo 2, il primo script di esempio è stato spezzato in due parti per separare la logica dalla presentazione. Proprio come il pattern MVC si applica alle azioni e ai template, può essere necessario dividere un partial in una parte di logica e in una parte di presentazione. In tal caso, è necessario utilizzare un componente. 
 
-Un componente è come una azione, salvo il fatto che è molto più veloce. La logica di un componente è all'interno di una classe che eredita da `sfComponents`, situata in un file `actions/components.class.php`.  La sua presentazione è è messa in un partial. I metodi di una classe `sfComponents` iniziano con la parola `execute`, proprio come le azioni e possono passare variabili ai loro controparti della presentazione nello stesso modo con cui le azioni passano variabili. I partial che vengono utilizzati come presentazione per componenti sono nominati con lo stesso nome del componente (senza l'`execute`, ma con una sottolinatura iniziale). La Tabella 7-1 compara le convenzioni per i nomi per azioni e componenti.
+Un componente è come una azione, salvo il fatto che è molto più veloce. La logica di un componente è all'interno di una classe che eredita da `sfComponents`, situata in un file `actions/components.class.php`.  La sua presentazione è è messa in un partial. I metodi di una classe `sfComponents` iniziano con la parola `execute`, proprio come le azioni e possono passare variabili ai loro controparti della presentazione nello stesso modo con cui le azioni passano variabili. I partial che vengono utilizzati come presentazione per componenti sono nominati con lo stesso nome del componente (senza l'`execute`, ma con una sottolineatura iniziale). La Tabella 7-1 compara le convenzioni per i nomi per azioni e componenti.
 
 Table 7-1 - Convenzioni per i nomi di azioni e componenti
 
@@ -315,7 +315,7 @@ Nomi dei file con la presentazione   | `miaAzioneSuccess.php` | `_mioComponente.
 >**TIP**
 >Così come è possibile separare i file delle azioni, la classe `sfComponents` ha una controparte `sfComponent` che permette ai singoli file dei componenti lo stesso tipo di sintassi. 
 
-Per esempio, supponiamo di avere una barra laterale che mostra le ultime notizie di un dato soggetto, a seconda del profilo dell'utente, che viene riutilizzato in diverse pagine. Le query necessarie a ottenere le notizie sono troppo complesse per apparire in una semplice partial, quindi hanno bisogno di essere spostate in un qualcosa simile ad una azione, un componente. La figura 7-3 mostra questo esempio
+Per esempio, supponiamo di avere una barra laterale che mostra le ultime notizie di un dato soggetto, a seconda del profilo dell'utente, che viene riutilizzato in diverse pagine. Le query necessarie a ottenere le notizie sono troppo complesse per apparire in una semplice partial, quindi hanno bisogno di essere spostate in un qualcosa simile a una azione, un componente. La figura 7-3 mostra questo esempio
 
 Per questo esempio, mostrato nei Listati 7-11 e 7-12, il componente verrà tenuto nel proprio modulo (chiamato `novita`), ma si possono mischiare componenti e azioni in un singolo modulo se questo ha senso da un punto di vista funzionale.
 
@@ -446,7 +446,7 @@ Il codice tra gli helper slot è eseguito nel contesto del template, quindi ha a
 
 Gli slot sono molto utili per definire zone che devono mostrare dei contenuti contestuali. Possono anche essere usati per aggiungere codice HTML al layout solo per certe azioni. Ad esempio, un template che mostra l'elenco delle ultime news potrebbe volere aggiungere un link a un feed RSS nella zona `<head>` del layout. Questo si può ottenere semplicemente aggiungendo uno slot 'feed'` nel layout e sovrascrivendolo nel template dell'elenco.
 
-Se il contenuto dello slot è molto corto, per esempio come nel caso di uno slot `titolo`, si può semplicemente passare il contenuto come secondo argomento del metodo `slot()` come mostrato nel Listato 7-17.
+Se il contenuto dello slot è molto corto, per esempio come nel caso di uno slot `titolo`, si può semplicemente passare il contenuto come secondo parametro del metodo `slot()`, come mostrato nel Listato 7-17.
 
 Listato 7-17 - Usare lo `slot()` per definire un contenuto corto
 
@@ -458,7 +458,7 @@ Listato 7-17 - Usare lo `slot()` per definire un contenuto corto
 >
 >Le persone che lavorano sui template in genere sono dei web designer che possono non conoscere symfony molto bene e possono avere difficoltà a trovare i frammenti dei template, dal momento che possono essere sparsi in tutta l'applicazione. Queste brevi linee guida, renderanno più comodo il dover lavorare con il sistema dei template di symfony.
 >
->Prima di tutto, anche se un progetto symfony contiene molte cartelle, tutti i file dei layout, dei template e dei frammenti di template risiedono in cartelle chiamate `templates/`. Quindi per quello che può interessare ad un web designer, la struttura di un progetto può essere ridotta a qualcosa di questo tipo:
+>Prima di tutto, anche se un progetto symfony contiene molte cartelle, tutti i file dei layout, dei template e dei frammenti di template risiedono in cartelle chiamate `templates/`. Quindi per quello che può interessare a un web designer, la struttura di un progetto può essere ridotta a qualcosa di questo tipo:
 >
 >
 >     mioprogetto/
@@ -476,9 +476,9 @@ Listato 7-17 - Usare lo `slot()` per definire un contenuto corto
 >
 >Tutte le altre cartelle possono essere ignorate.
 >
->Quando si trova un `include_partial()`, i web designer devono sapere che solo il primo argomento è importante. Il pattern di questo argomento è `nome_modulo/nome_partial` e ciò significa che il codice di presentazione si trova in `modules/nome_modulo/templates/_nome_partial.php`.
+>Quando si trova un `include_partial()`, i web designer devono sapere che solo il primo parametro è importante. Il pattern di questo parametro è `nome_modulo/nome_partial` e ciò significa che il codice di presentazione si trova in `modules/nome_modulo/templates/_nome_partial.php`.
 >
->Per l'helper `include_component()`, il nome del modulo e il nome del partial sono i primi due argomenti. Per il resto, un'idea generale su cosa sono gli helper e su quali helper sono più utili nei template dovrebbe essere sufficiente per iniziare a progettare template per le applicazioni symfony.
+>Per l'helper `include_component()`, il nome del modulo e il nome del partial sono i primi due parametri. Per il resto, un'idea generale su cosa sono gli helper e su quali helper sono più utili nei template dovrebbe essere sufficiente per iniziare a progettare template per le applicazioni symfony.
 
 Configurazione della vista
 --------------------------
@@ -585,7 +585,7 @@ Listato 7-20 - Le azioni hanno accesso ai metodi dell'oggetto `sfResponse`
       }
     }
 
-Oltre ai metodi setter che sono stati mostrati, la classe `sfResponse` ha getter che ritornano il valore corrente degli attributi della response.
+Oltre ai metodi setter che sono stati mostrati, la classe `sfResponse` ha getter che restituiscono il valore corrente degli attributi della response.
 
 I setter dell'header sono molto potenti in symfony. Gli header sono inviati il più tardi possibile (in `sfRenderingFilter`), in modo che possano venire modificati come si vuole. Forniscono anche utili scorciatoie. Ad esempio, se non si specifica un charset quando si chiama `setContentType()`, symfony aggiunge automaticamente il charset predefinito, definito nel file `settings.yml`.
 
@@ -594,7 +594,7 @@ I setter dell'header sono molto potenti in symfony. Gli header sono inviati il p
     echo $response->getContentType();
      => 'text/xml; charset=utf-8'
 
-Il codice di stato delle risposte di symfony è compatibile con la specifica HTTP. Le eccezioni restituiscono uno stato 500, le pagine non trovate restituiscono 404, le pagine normali restituiscono uno satto 200, le pagine non modificate possono essere ridotte ad un semplice header con il codice di stato 304 (vedere il Capitolo 12 per maggiori dettagli) e così via. Ma è possibile sovrascrivere questi valori predefiniti impostando il proprio codice di stato nell'azione con il metodo response `setStatusCode()`.  È possibile specificare un codice personalizzato e un messaggio personalizzato, o semplicemente un codice personalizzato, nel qual caso, symfony aggiunge un messaggio generico per questo codice.
+Il codice di stato delle risposte di symfony è compatibile con la specifica HTTP. Le eccezioni restituiscono uno stato 500, le pagine non trovate restituiscono 404, le pagine normali restituiscono uno stato 200, le pagine non modificate possono essere ridotte a un semplice header con il codice di stato 304 (vedere il Capitolo 12 per maggiori dettagli) e così via. Ma è possibile sovrascrivere questi valori predefiniti impostando il proprio codice di stato nell'azione con il metodo response `setStatusCode()`.  È possibile specificare un codice personalizzato e un messaggio personalizzato, o semplicemente un codice personalizzato, nel qual caso, symfony aggiunge un messaggio generico per questo codice.
 
     [php]
     $response->setStatusCode(404, 'Questa pagina non esiste');
@@ -665,12 +665,12 @@ Listato 7-24 - La definizione di title in `view.yml`
 
     indexSuccess:
       metas:
-        title: Tre piccoli porcellini
+        title: I tre porcellini
 
 Listato 7-25 - La definizione di title nell'azione (permette la creazione titoli dinamici)
 
     [php]
-    $this->getResponse()->setTitle(sprintf('%d piccoli porcellini', $number));
+    $this->getResponse()->setTitle(sprintf('%d porcellini', $number));
 
 Nella sezione `<head>` della pagina finale, la definizione del title imposta il tag `<meta name="title">` se l'helper `include_metas()` è presente e il tag `<title>` se l'helper `include_title()` è presente. Se sono presenti entrambi (come nel layout predefinito del Listato 7-5), il titolo compare due volte nel sorgente della pagina (vedere il Listato 7-6), ma questo non crea nessun problema.
 
@@ -702,9 +702,9 @@ Listato 7-26 - Inclusione dei file
     <?php use_stylesheet('miostile2') ?>
     <?php use_javascript('mioscript') ?>
 
-In ogni caso, l'argomento è un nome di un file. Se il file ha una estensione logica ((`.css` per un foglio di stile e `.js` per un file JavaScript), si può ometterla. Se il file ha una collocazione logica (`/css/` per un foglio di stile e `/js/` per un file JavaScript), si può omettere anche quella. Symfony è abbastanza intelligente da aggiungere la corretta estensione o locazione.
+In ogni caso, il parametro è un nome di un file. Se il file ha una estensione logica ((`.css` per un foglio di stile e `.js` per un file JavaScript), si può ometterla. Se il file ha una collocazione logica (`/css/` per un foglio di stile e `/js/` per un file JavaScript), si può omettere anche quella. Symfony è abbastanza intelligente da aggiungere la corretta estensione o locazione.
 
-Come le difinizioni di meta e title, le definizioni per includere i file richiedono l'utilizzo degli helper `include_javascripts()` e `include_stylesheets()` nel template o nel layout dove devono essere inclusi. Quest osignifica che le precedenti impostazioni visualizzeranno il codice HTML del Listato 7-27.
+Come le definizioni di meta e title, le definizioni per includere i file richiedono l'utilizzo degli helper `include_javascripts()` e `include_stylesheets()` nel template o nel layout dove devono essere inclusi. Questo significa che le precedenti impostazioni visualizzeranno il codice HTML del Listato 7-27.
 
 Listato 7-27 - Risultato dell'inclusione dei file
 
@@ -724,7 +724,7 @@ Listato 7-28 - Esempio di `view.yml` nell'applicazione
     default:
       stylesheets: [main]
 
-Listing 7-29 - Sample Module `view.yml`
+Listato 7-29 - Sample Module `view.yml`
 
     indexSuccess:
       stylesheets: [special]
@@ -739,7 +739,7 @@ Listato 7-30 - Visualizzazione della vista `indexSuccess`
     <link rel="stylesheet" type="text/css" media="screen" href="/css/additional.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/special.css" />
 
-Quando si ha bisogno di rimuovere un file definito ad un livello più alto, basta aggiungere un segno meno (`-`) davanti al nome del file nella definizione di livello inferiore, come mostrato nel Listato 7-31.
+Quando si ha bisogno di rimuovere un file definito a un livello più alto, basta aggiungere un segno meno (`-`) davanti al nome del file nella definizione di livello inferiore, come mostrato nel Listato 7-31.
 
 Listato 7-31 - Esempio con `view.yml` nel modulo. Viene rimossa un file definito nel livello applicazione
 
@@ -796,7 +796,7 @@ Listato 7-34 - Inclusione di un foglio di stile con Style Sheet con nome inalter
     // La vista risultante
     <link rel="stylesheet" type="text/css" href="main" />
 
-Per specificare il media relativo ad una inclusione di un foglio di stile, si possono cambiare le opzioni predefinite del tag per i fogli di stile, come mostrato nel Listato 7-35.
+Per specificare il media relativo a una inclusione di un foglio di stile, si possono cambiare le opzioni predefinite del tag per i fogli di stile, come mostrato nel Listato 7-35.
 
 Listato 7-35 - Inclusione di un foglio di stile specificando il media
 
@@ -820,7 +820,7 @@ Listato 7-35 - Inclusione di un foglio di stile specificando il media
 >**SIDEBAR**
 >Nota relativa all'inclusione di file usando il file view.yml
 >
->La pratica migliore è quella di definire i file predefiniti per i fogli di stile e i javascript nel file view.yml del progetto e includere specifici fogli di stile o file javascript nei template, utilizzando gli appositi helper. In questo modo, non è necessario rimuovere o sostituire file già inclusi, cosa che in alcuni casi può diventare un problema.
+>La pratica migliore è quella di definire i file predefiniti per i fogli di stile e i JavaScript nel file view.yml del progetto e includere specifici fogli di stile o file JavaScript nei template, utilizzando gli appositi helper. In questo modo, non è necessario rimuovere o sostituire file già inclusi, cosa che in alcuni casi può diventare un problema.
 
 #### Configurazione del layout
 
@@ -868,9 +868,7 @@ Listato 7-37 - Rimozione del layout
 Escapizzazione dell'output
 --------------------------
 
-Quando vengono inseriti dati dinamici in un template, bisogna essere sicuri dell'integrità dei dati. Per esempio, se i dati provengono da form compilati da utenti anonimi, c'è il rischio che possano includere script maligni che hanno lo scopo di lanciare attacchi di tipo cross-site scripting (XSS). 
-
-When you insert dynamic data in a template, you must be sure about the data integrity. For instance, if data comes from forms filled in by anonymous users, there is a risk that it may include malicious scripts intended to launch cross-site scripting (XSS) attacks. Bisogna essere in grado di fare l'escape dei dati visualizzati, in modo che qualunque tag HTML possa contenere diventi inerte.
+Quando vengono inseriti dati dinamici in un template, bisogna essere sicuri dell'integrità dei dati. Per esempio, se i dati provengono da form compilati da utenti anonimi, c'è il rischio che possano includere script maligni che hanno lo scopo di lanciare attacchi di tipo cross-site scripting (XSS). Bisogna essere in grado di fare l'escape dei dati visualizzati, in modo che qualunque tag HTML possa contenere diventi inerte.
 
 Come esempio, supponiamo che un utente compili un campo input con il seguente valore:
 
@@ -882,7 +880,7 @@ Se si fa un echo di questo valore senza precauzioni, su ogni browser verrà eseg
     [php]
     &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
-Si può eseguire l'escape dell'output manualmente racchiudendo ogni valore insicuro con la chiamata a `htmlspecialchars()`, ma questo approccio può diventare molto ripetitivo e soggetto ad errori. Quindi symfony fornisce un sistema speciale, chiamato escapizzazione dell'output, che escapizza automaticamente ogni variabile in output nel template. É attivato in modalità predefinita nel `settings.yml` dell'applicazione.
+Si può eseguire l'escape dell'output manualmente racchiudendo ogni valore insicuro con la chiamata a `htmlspecialchars()`, ma questo approccio può diventare molto ripetitivo e soggetto a errori. Quindi symfony fornisce un sistema speciale, chiamato escapizzazione dell'output, che escapizza automaticamente ogni variabile in output nel template. É attivato in modalità predefinita nel `settings.yml` dell'applicazione.
 
 ### Attivazione dell'escapizzazione dell'output
 
@@ -908,7 +906,7 @@ Con l'escapizzazione dell'output a on, facendo l'echo di questa variabile nel te
     echo $test;
      => &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
-Inoltre, ogni template ha accesso ad una variabile $sf_data` che è un contenitore di oggetti che fa riferimento a tutte le variabili escapizzate. Quindi si può anche visualizzare la variabile test in questo modo:
+Inoltre, ogni template ha accesso a una variabile $sf_data` che è un contenitore di oggetti che fa riferimento a tutte le variabili escapizzate. Quindi si può anche visualizzare la variabile test in questo modo:
 
     [php]
     echo $sf_data->get('test');
@@ -994,7 +992,7 @@ Listato 7-40 - I metodi degli oggetti escapizzati accettano un parametro aggiunt
 Se si a a che fare con oggetti nei template, sarà necessario usare spesso il trucco del parametro aggiuntivo, dal momento che è il modo più veloce per ottenere i dati grezzi in una chiamata al metodo.
 
 >**CAUTION**
->Anche le normali varibili di symfony sono escapizzate quando si imposta ad on l'escapizzazione dell'output. Quindi bisogna tener presente che `$sf_user`, `$sf_request`, `$sf_param` e `$sf_context` funzionano ancora, ma i loro metodi restituiscono dati escapizzati, a meno che non si aggiunga `ESC_RAW` come argomento finale alle loro chiamate di metodi.
+>Anche le normali variabili di symfony sono escapizzate quando si imposta a `on` l'escapizzazione dell'output. Quindi bisogna tener presente che `$sf_user`, `$sf_request`, `$sf_param` e `$sf_context` funzionano ancora, ma i loro metodi restituiscono dati escapizzati, a meno che non si aggiunga `ESC_RAW` come parametro finale alle loro chiamate di metodi.
 
 -
 

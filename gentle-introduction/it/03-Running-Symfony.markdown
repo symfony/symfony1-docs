@@ -17,7 +17,7 @@ Prerequisiti
 ------------
 
 Prima di installare symfony, è necessario controllare che il computer abbia tutto
-installato e configurato corretamente. E' bene prendersi il tempo per leggere con calma questo
+installato e configurato correttamente. È bene prendersi il tempo per leggere con calma questo
 capitolo e seguire tutti i passaggi necessari per verificare la configurazione, in quanto
 può evitare possibili problemi successivi.
 
@@ -31,7 +31,7 @@ successivo.
 
 ### CLI - Interfaccia a riga di comando
 
-Il framework symfony viene distribuito con un tool a riga di comando che consente di
+Il framework symfony viene distribuito con uno strumento a riga di comando che consente di
 automatizzare molto lavoro per voi. Se si è utenti della famiglia Unix, ci si sentirà a
 casa. Se si lavora con un sistema Windows si lavorerà bene ugualmente, ma sarà
 necessario digitare alcuni comandi al prompt `cmd`.
@@ -45,11 +45,11 @@ necessario digitare alcuni comandi al prompt `cmd`.
 
 ### La configurazione di PHP
 
-Poiché le configurazioni di PHP possono variare molto da un SO ad un altro,
+Poiché le configurazioni di PHP possono variare molto da un SO a un altro,
 o anche tra diverse distribuzioni Linux, è necessario controllare che la vostra
 configurazione di PHP soddisfi i requisiti minimi di symfony.
 
-In primo luogo, assicurarsi di avere installato ome minimo PHP 5.2.4 utilizzando la
+In primo luogo, assicurarsi di avere installato come minimo PHP 5.2.4 utilizzando la
 funzione PHP `phpinfo()` o eseguendo `php -v` da linea di comando. Bisogna tenere
 presente che su alcune configurazioni, è possibile avere installate due diverse versioni
 di PHP: una per la linea di comando, e un'altra per il web.
@@ -175,8 +175,8 @@ subversion):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
-Ogni volta che esce una nuova release (annunciata sul
-[blog](http://www.symfony-project.org/blog/) di symfony), bisogna cambiare la URL
+Ogni volta che esce un nuovo rilascio (annunciato sul
+[blog](http://www.symfony-project.org/blog/) di symfony), bisogna cambiare l'URL
 alla nuova versione.
 	
 Se si vuole seguire la strada meno conservativa ed essere aggiornati alle ultime
@@ -184,7 +184,7 @@ modifiche, usare il ramo 1.4:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Usare il ramo vuold dire che il progetto beneficia dei bug fixe automaticamente
+Usare il ramo vuol dire che il progetto beneficia dei bug fix automaticamente
 ogni volta che viene eseguito un `svn update`.
 
 #### Verificare l'installazione
@@ -277,10 +277,10 @@ La configurazione del database utilizzando Doctrine è semplice come usare il ta
 
     $ php symfony configure:database "mysql:host=localhost;dbname=nomedb" root mYsEcret
 
-Il task `configure:database` prende tre argomenti: il
+Il task `configure:database` accetta tre parametri: il
 [~DSN PDO~](http://www.php.net/manual/en/pdo.drivers.php), il nome utente e
 la password per accedere al database. Se non si ha bisogno di una password per accedere
-al database sul server di sviluppo, basta omettere il terzo argomento.
+al database sul server di sviluppo, basta omettere il terzo parametro.
 
 >**TIP**
 >Se si vuole utilizzare Propel invece di Doctrine, aggiungere `--orm=Propel` quando si crea
@@ -302,7 +302,7 @@ Ora, creare l'applicazione frontend lanciando il task `generate:app`:
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
 
-Sulla base del nome dell'applicazione dato come *argomento*, il task generate:app`
+Sulla base del nome dell'applicazione dato come *parametro*, il task generate:app`
 crea la struttura predefinita di cartelle necessarie per l'applicazione, nella
 cartella `apps/frontend/`.
 
@@ -363,7 +363,7 @@ sezione per imparare a configurare il server web in modo corretto.
 ### Il modo corretto
 
 Una buona pratica web è quella di mettere sotto la cartella radice del web solo i file che devono essere
-accessibili da un browser, come ad esempio i fogli di stile, il javascript e
+accessibili da un browser, come ad esempio i fogli di stile, i JavaScript e
 le immagini. Per impostazione predefinita, si consiglia di tenere questi file nella sotto cartella web/`
 di un progetto symfony.
 
@@ -403,7 +403,7 @@ configurazione alla fine:
     </VirtualHost>
 
 >**NOTE**
->L'alias `/sf` consente di accedere alle immagini e ai file javascript necessari
+>L'alias `/sf` consente di accedere alle immagini e ai file JavaScript necessari
 >per visualizzare correttamente le pagine predefinite di symfony e la barra web per il debug.
 >
 >Su Windows, è necessario sostituire la linea `Alias` con qualcosa del tipo:
@@ -419,13 +419,13 @@ che il sito web possa essere accessibile al seguente URL:
 
     http://localhost:8080/
 
-E' possibile modificare `8080` con un numero qualunque, maggiore di `1024` perché
+È possibile modificare `8080` con un numero qualunque, maggiore di `1024` perché
 questi non richiedono diritti di amministratore.
 
 >**SIDEBAR**
 >Configurare un nome di dominio dedicato
 >
->Se si è un amministartore della propria macchina, è meglio impostare
+>Se si è un amministratore della propria macchina, è meglio impostare
 >i virtual host invece di aggiungere una nuova porta ogni volta che si inizia un nuovo
 >progetto. Invece di scegliere una porta e aggiungere una dichiarazione `Listen`,
 >scegliere un nome di dominio (ad esempio il nome di dominio reale con
@@ -483,7 +483,7 @@ Se l'obiettivo è quello di provare symfony per qualche ora, continuare a legger
 capitolo perché verrà mostrato il modo più veloce per iniziare.
 
 Il modo più veloce per sperimentare symfony è quello di installare la sandbox di symfony.
-La sandbox è un progetto di simfoni preconfezionato semplicissimo da installare, già
+La sandbox è un progetto di simfony preconfezionato semplicissimo da installare, già
 configurato con alcuni ragionevoli valori predefiniti . E 'un ottimo modo per fare pratica con
 symfony senza avere problemi in una corretta installazione che rispetti la migliori pratiche
 web.

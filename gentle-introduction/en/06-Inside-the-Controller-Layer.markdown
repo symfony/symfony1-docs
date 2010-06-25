@@ -974,7 +974,7 @@ Listing 6-34 - Module Configuration, in `apps/frontend/modules/mymodule/config/m
       view_class:         sfPHP
       partial_view_class: sf
 
-The enabled parameter allows you to disable all actions of a module. All actions are redirected to the `module_disabled_module`/`module_disabled_action` action (as defined in `settings.yml`).
+The `enabled` parameter allows you to disable all actions of a module. All actions are redirected to the `module_disabled_module`/`module_disabled_action` action (as defined in `settings.yml`).
 
 The `is_internal` parameter allows you to restrict the execution of all actions of a module to internal calls. For example, this is useful for mail actions that you must be able to call from another action, to send an e-mail message, but not from the outside.
 
