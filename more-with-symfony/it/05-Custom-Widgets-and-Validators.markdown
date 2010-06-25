@@ -157,7 +157,7 @@ opzioni standard che quindi è come se fossero opzioni riservate:
 
  * `label`: L'etichetta predefinita del widget
 
-Il metodo `render()` genera il codice HTML corrispondente ad un menu a tendina. Il
+Il metodo `render()` genera il codice HTML corrispondente a un menu a tendina. Il
 metodo chiama la funzione predefinita `renderContentTag()` che viene in aiuto nella
 visualizzazione dei tag HTML.
 
@@ -203,7 +203,7 @@ Il validatore `sfValidatorTrilean` definisce tre opzioni nel metodo `configure()
 Ogni opzione è un insieme di valori validi. Siccome questi sono definiti come
 opzioni, lo sviluppatore può personalizzare i valori a seconda delle specifiche.
 
-Il metodo `doClean()` verifica se il valore corrisponde ad un insieme di valori
+Il metodo `doClean()` verifica se il valore corrisponde a un insieme di valori
 validi e restituisce il valore "pulito". Se il valore non viene trovato, il metodo
 lancerà un `sfValidatorError`, che è l'errore standard di validazione nel
 framework dei form.
@@ -440,7 +440,7 @@ con la longitudine e la latitudine forniti dal servizio di geocoding di Google.
 L'oggetto JavaScript ha alcuni metodi interessanti:
 
  * `init()`: il metodo in cui sono inizializzate tutte le variabili e gli eventi
-   vengono legati ad input diversi
+   vengono legati a input diversi
 
  * `lookupCallback()`: un metodo *statico* usato dal metodo geocoder per
    cercare l'indirizzo fornito dall'utente

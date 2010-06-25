@@ -63,7 +63,7 @@ Scrivere un proprio task
 
 Iniziare a scrivere task con symfony è questione di pochi minuti. Tutto ciò che 
 c'è da fare è creare il task, dargli un nome, aggiungerci della logica, e voilà
-siete pronti ad eseguire il vostro primo task personalizzato. Creiamo un 
+siete pronti a eseguire il vostro primo task personalizzato. Creiamo un 
 semplicissimo task *Hello, World!*, per esempio in `lib/task/sayHelloTask.class.php`:
 
     [php]
@@ -212,12 +212,12 @@ Ogni task di symfony ha un insieme di opzioni e parametri di default:
 
 Il sistema dei task di symfony comprende due opzioni molto speciali quali 
 `application` e `env`. L'opzione `application` è necessaria quando di ha bisogno
-di accedere ad un'istanza di `sfApplicationConfiguration` oltre che al solo
+di accedere a un'istanza di `sfApplicationConfiguration` oltre che al solo
 `sfProjectConfiguration`. Questo è il caso, per esempio, di quando si vogliono
-generare URLs dato che il routing è generalmente associato ad una specifica 
+generare URLs dato che il routing è generalmente associato a una specifica 
 applicazione.
 
-Quando un'opzione `application` viene passata ad un task, symfony la riconosce
+Quando un'opzione `application` viene passata a un task, symfony la riconosce
 automaticamente e crea l'oggetto `sfApplicationConfiguration` corrispondente 
 invece che l'oggetto di default `sfProjectConfiguration`. Ricordate che è 
 possibile impostare un valore di default per questa opzione, salvandovi quindi
@@ -512,7 +512,7 @@ Accedere al Sistema I18N
 ------------------------
 
 Non tutti i factory sono così facilmente accessibili come il mailer e il
-routing. Se occorre accedere ad uno di essi, non è molto difficile
+routing. Se occorre accedere a uno di essi, non è molto difficile
 istanziarli. Ad esempio, se si desidera internazionalizzare i task,
 si avrà bisogno di accedere al sottosistema i18n di symfony. Lo si può
 fare facilmente usando `sfFactoryConfigHandler`:
@@ -534,7 +534,7 @@ fare facilmente usando `sfFactoryConfigHandler`:
     }
 
 Vediamo che sta succedendo. Innanzitutto, stiamo usando una semplice tecnica
-di cache, per evitare di ricostruire il componente i18n ad ogni chiamata.
+di cache, per evitare di ricostruire il componente i18n a ogni chiamata.
 Poi, usando `sfFactoryConfigHandler`, recuperiamo la configurazione del
 componente per poterlo istanziare. Infine impostiamo la configurazione della
 cultura. Il task ora ha accesso all'internazionalizzazione:
@@ -709,8 +709,8 @@ astrazione espone i seguenti metodi:
 * `sfFilesystem::remove()`, per cancellare un file o una cartella
 * `sfFilesystem::chmod()`, per cambiare i permessi di un file o di una cartella
 * `sfFilesystem::rename()`, per rinominare un file o una cartella
-* `sfFilesystem::symlink()`, per creare un collegamento ad una cartella
-* `sfFilesystem::relativeSymlink()`, per creare un collegamento relativo ad una cartella
+* `sfFilesystem::symlink()`, per creare un collegamento a una cartella
+* `sfFilesystem::relativeSymlink()`, per creare un collegamento relativo a una cartella
 * `sfFilesystem::mirror()`, per fare il mirror di un intero albero di cartelle
 * `sfFilesystem::execute()`, per eseguire un comando arbitrario
 

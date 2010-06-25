@@ -176,7 +176,7 @@ standardizzazione di Java. Laurent acquisisce una posizione internazionale nel
 soluzione di portale eCommerce altamente scalabile co-sviluppato con CompuServe,
 targeting Telcos e Hosters. Ritornato in Microsoft Francia nel 2004, intraprende
 una nuova attività diretta a hoster e comunità web, e dopo 6 anni è tuttora
-su questa attività, aiutando top hoster in Francia ad utilizzare con profitto
+su questa attività, aiutando top hoster in Francia a utilizzare con profitto
 soluzioni e prodotti basati su Windows e più recentemente indirizzandosi sul
 segmento a basso costo di cui si fa pioniere a livello mondiale in Francia.
 

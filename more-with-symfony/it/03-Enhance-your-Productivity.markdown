@@ -66,7 +66,7 @@ sottocartelle e file) nel progetto appena creato:
 ### `runTask()`
 
 Il metodo `runTask()` esegue un task. Prende il nome del task e una stringa
-che rappresenta i parametri e le opzioni che si desiderano passare ad esso
+che rappresenta i parametri e le opzioni che si desiderano passare a esso
 come parametri:
 
     [php]
@@ -178,7 +178,7 @@ digitazione. Vediamo come ridurre questa quantità al minimo indispensabile.
 
 ### Scegliere un programma IDE
 
-Usare un IDE aiuta lo sviluppatore ad essere più produttivo in molti modi.
+Usare un IDE aiuta lo sviluppatore a essere più produttivo in molti modi.
 
 In primo luogo, i più moderni IDE forniscono il completamento del codice. Questo
 significa che è sufficiente digitare i primi caratteri del nome di un metodo; ma
@@ -350,7 +350,7 @@ per aggiungerle nella casella di ricerca del browser.
 
 >**NOTE**
 >Nel [blog](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api) di symfony,
->si può dare un'occhiata ad uno screencast che mostra come il motore di ricerca
+>si può dare un'occhiata a uno screencast che mostra come il motore di ricerca
 >delle API si symfony ben si integri con Firefox.
 
 ### Cheat Sheet
@@ -375,7 +375,7 @@ si possono scaricare molti [cheat sheets](http://trac.symfony-project.org/wiki/C
 Le migliori risposte relative alle domande sulla configurazione, si trovano
 sulla guida di riferimento a symfony. Questo è un libro che bisogna tenersi
 vicini quando si sviluppa con symfony. È il modo più veloce per
-trovare ogni configurazione disponibile, grazie ad un indice dei contenuti
+trovare ogni configurazione disponibile, grazie a un indice dei contenuti
 molto dettagliato, un indice dei termini, dei riferimenti incrociati all'interno
 dei capitoli, tabelle e molto altro ancora.
 

@@ -3,7 +3,7 @@ Utilizzo avanzato delle rotte
 
 *di Ryan Weaver*
 
-Nel core, il framework delle rotte è la mappa che collega ogni url ad una specifica
+Nel core, il framework delle rotte è la mappa che collega ogni url a una specifica
 ubicazione interna di un progetto symfony e viceversa. Si possono facilmente
 creare dei meravigliosi URL che rimangono completamente indipendenti dalla
 logica dell'applicazione. Grazie ai progressi che ha compiuto nelle sue versioni
@@ -369,7 +369,7 @@ Come si comporta veramente la rotta personalizzata? Ora la classe
 ### Sfruttare la rotta personalizzata
 
 Ora che il parametro `client_id` corretto viene restituito da `acClientObjectRoute`,
-abbiamo accesso ad esso tramite l'oggetto richiesta. Per esempio, l'azione `page/show`
+abbiamo accesso a esso tramite l'oggetto richiesta. Per esempio, l'azione `page/show`
 potrebbe utilizzare il `client_id` per trovare il giusto oggetto `Page`:
 
     [php]
@@ -581,7 +581,7 @@ per ciascuna rotta di una specifica applicazione:
 ### Sostituire le rotte con una collezione di rotte
 
 Fortunatamente, symfony fornisce un modo molto più semplice per specificare
-tutte le rotte che appartengono ad un tradizionale CRUD. Sostituire l'intero
+tutte le rotte che appartengono a un tradizionale CRUD. Sostituire l'intero
 contenuto del file `routing.yml` con questa semplice rotta.
 
     [yml]

@@ -176,7 +176,7 @@ come inviare le email ed è configurata tramite il parametro ~`delivery_strategy
 e possono sopperire a tutte le comuni necessità:
 
  * `realtime`:       I messaggi sono spediti in tempo reale.
- * `single_address`: I messaggi sono spediti ad un singolo indirizzo di posta elettronica.
+ * `single_address`: I messaggi sono spediti a un singolo indirizzo di posta elettronica.
  * `spool`:          I messaggi sono salvati in una lista.
  * `none`:           I messaggi sono semplicemente ignorati.
 
@@ -191,11 +191,11 @@ la prossima sezione per maggiori informazioni su come configurare il transport d
 
 ### La strategia di ~`single_address`~
 
-Con la strategia di `single_address`, tutti i messaggi sono inviati ad un unico indirizzo
+Con la strategia di `single_address`, tutti i messaggi sono inviati a un unico indirizzo
 di posta elettronica configurato tramite il parametro `delivery_address`.
 
 Questa strategia è molto comoda nell'ambiente di sviluppo per evitare di inviare messaggi
-ad utenti reali, ma permette ad uno sviluppatore di controllare comunque come viene
+a utenti reali, ma permette a uno sviluppatore di controllare comunque come viene
 visualizzata in un client di posta elettronica.
 
 >**TIP**

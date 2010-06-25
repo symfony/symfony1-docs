@@ -187,7 +187,7 @@ dell'applicazione:
     }
 
 Ora che si è in grado di isolare le variabili dei form poco prima che vengano
-passate ad un template o a un partial, si ha tutto il necessario per terminare
+passate a un template o a un partial, si ha tutto il necessario per terminare
 il lavoro. Il compito finale è quello di applicare ciò che è stato configurato
 nello YAML.
 

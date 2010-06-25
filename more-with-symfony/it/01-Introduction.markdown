@@ -24,7 +24,7 @@ Perché un altro libro?
 Ultimamente sono stati già pubblicati due libri su symfony 1.3 e 1.4 :
 "[Practical symfony](http://books.sensiolabs.com/book/9782918390169)" e
 "[The symfony reference guide](http://books.sensiolabs.com/book/9782918390145)".
-Il primo è un ottimo modo per iniziare ad imparare symfony, visto che è possibile
+Il primo è un ottimo modo per iniziare a imparare symfony, visto che è possibile
 iniziare dalle basi del framework, attraverso lo sviluppo di un progetto reale
 con un tutorial passo-passo. Il secondo è una guida di riferimento che contiene
 praticamente ogni configurazione relativa a symfony e che può tornare utile
@@ -36,7 +36,7 @@ aiutare tutti quelli che hanno già sviluppato diversi piccoli progetti con il
 framework. Se avete sempre voluto sapere come symfony funziona sotto al cofano
 o se volete estendere il framework in diversi modi, per farlo rispondere alle
 vostre esigenze, questo libro fa per voi. "Di più con symfony" è completamente
-dedicato a portare le conoscenze di symfony ad un livello superiore.
+dedicato a portare le conoscenze di symfony a un livello superiore.
 
 Dato che il libro è costituito da una serie di tutorial riguardanti argomenti
 diversi, è possibile leggere i vari capitoli in qualsiasi ordine, in base a ciò

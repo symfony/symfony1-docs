@@ -141,7 +141,7 @@ una stringa vuota. L'unico output prodotto dal pannello proviene dal metodo
 
 Come il pannello *solo-icona*, un pannello *collegamento* non ha contenuto.
 Tuttavia, diversamente dal pannello *solo-icona*, il clic sul pannello
-*collegamento* porterà ad un url specificato tramite il metodo `getTitleUrl()`
+*collegamento* porterà a un url specificato tramite il metodo `getTitleUrl()`
 del pannello. Per creare un pannello *collegamento*, si imposti
 `getPanelContent()` per restituire una stringa vuota e si aggiunga un metodo
 `getTitleUrl()` alla classe.
@@ -149,10 +149,10 @@ del pannello. Per creare un pannello *collegamento*, si imposti
     [php]
     public function getTitleUrl()
     {
-      // link ad un uri esterno
+      // link a un uri esterno
       return 'http://www.symfony-project.org/api/1_3/';
 
-      // o link ad una rotta dell'applicazione
+      // o link a una rotta dell'applicazione
       return url_for('homepage');
     }
 
@@ -303,7 +303,7 @@ ulteriori informazioni si veda l'articolo
 symfony 1.3.
 
 Per attivare questa caratteristica per un particolare percorso di file, si
-deve usare `formatFileLink()`. Oltre al file stesso, si può puntare ad una
+deve usare `formatFileLink()`. Oltre al file stesso, si può puntare a una
 riga specifica. Ad esempio, il codice seguente punterà alla riga 15 del
 file `config/ProjectConfiguration.class.php`:
 
@@ -330,7 +330,7 @@ il collegamento, al suo posto verrà mostrato il percorso del file.
 >chiave `sf_file_link_format` in `settings.yml` oppure tramite l'impostazione
 >`file_link_format` in
 >[xdebug](http://xdebug.org/docs/stack_trace#file_link_format). Quest'ultimo
->modo assicura che il progetto non sia legato ad uno specifico IDE.
+>modo assicura che il progetto non sia legato a uno specifico IDE.
 
 Altri Trucchi per la Web Debug Toolbar
 --------------------------------------
@@ -357,7 +357,7 @@ Il codice seguente rimuoverà il pannello `memory` dalla toolbar:
 
 Una delle esigenze più comuni dentro un pannello di debug, è quella di
 accedere ai parametri della richiesta. Se ad esempio si vogliono
-mostrare informazioni sul database riguardo ad un oggetto `Event` del
+mostrare informazioni sul database riguardo a un oggetto `Event` del
 database, che si basa su un parametro di richiesta `event_id`:
 
     [php]
