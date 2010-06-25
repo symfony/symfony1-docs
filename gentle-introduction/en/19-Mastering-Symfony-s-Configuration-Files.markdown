@@ -33,7 +33,7 @@ You can override the default pages in two ways:
 Two other pages bear a symfony look and feel, and they also need to be customized before deployment to production. These pages are not in the `default` module, because they are called when symfony cannot run properly. Instead, you will find these default pages in the `sfConfig::get('sf_symfony_lib_dir')/exception/data/` directory:
 
   * `error.html.php`: Page called when an internal server error occurs in the production environment. In other environments (where debug is set to `true`), when an error occurs, symfony displays the full execution stack and an explicit error message (see Chapter 16 for details).
-  * `unavailable.php`: Page called when a user requests a page while the application is disabled (with the `disable` task). It is also called while the cache is being cleared (that is, between a call to the `php symfony cache:clear` task and the end of this task execution). On systems with a very large cache, the cache-clearing process can take several seconds. Symfony cannot execute a request with a partially cleared cache, so requests received before the end of the process are redirected to this page.
+  * `unavailable.php`: Page called when a user requests a page while the application is disabled (with the `project:disable` task). It is also called while the cache is being cleared (that is, between a call to the `cache:clear` task and the end of this task execution). On systems with a very large cache, the cache-clearing process can take several seconds. Symfony cannot execute a request with a partially cleared cache, so requests received before the end of the process are redirected to this page.
 
 To customize these pages, simply create `error/error.html.php` and `unavailable.php` in your project or application's `config/` directory. Symfony will use these templates instead of its own.
 
@@ -54,7 +54,7 @@ Parameter               | Description | Default Value
 `escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `true`
 `cache`                 | Enables template caching (see Chapter 12). Set it to `true` if one of your modules includes `cache.yml` file. The cache filter (`sfCacheFilter`) is enabled only if it is on. | `false` in development, `true` in production
 `web_debug`             | Enables the web debug toolbar for easy debugging (see Chapter 16). Set it to `true` to display the toolbar on every page. | `true` in development, `false` in production
-`check_symfony_version` | Enables the check of the symfony version for every request. Set it to on for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
+`check_symfony_version` | Enables the check of the symfony version for every request. Set it to `true` for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
 `check_lock`            | Enables the application lock system, triggered by the `cache:clear` and `project:disable` tasks (see the previous section). Set it to `true` to have all requests to disabled applications redirected to the `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php` page. | `false`
 `compressed`            | Enables PHP response compression. Set it to `true` to compress the outgoing HTML via the PHP compression handler. | `false`
 
