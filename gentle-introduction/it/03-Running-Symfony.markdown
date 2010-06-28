@@ -3,7 +3,7 @@
 
 Come si è appreso nei capitoli precedenti, il framework symfony è un insieme di file scritti in PHP. Un progetto symfony utilizza questi file, quindi installare symfony vuol dire prendere questi file e renderli disponibili per il progetto.
 
-Symfony richiede almeno PHP 5.2.4. Per verificare qual'è la versione installata, aprire una linea di comando e digitare:
+Symfony richiede almeno PHP 5.2.4. Per verificare qual è la versione installata, aprire una linea di comando e digitare:
 
     $ php -v
 
