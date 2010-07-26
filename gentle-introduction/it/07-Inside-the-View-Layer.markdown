@@ -5,7 +5,7 @@ La vista è la responsabile per la visualizzazione dell'output relativo a una pa
 
 * I web designer in genere lavorano sui template (la presentazione dei dati dell'azione corrente) e sul layout (che contiene il codice comune a tutte le pagine). Questi sono scritti in HTML con l'inclusione di piccoli pezzi in PHP, che sono per lo più chiamate a helper.
 * Gli sviluppatori, avendo in mente la riusabilità, di solito inseriscono i frammenti di codice in partial o component. Usano gli slot per agire su più di una zona del layout. Anche i web designer possono lavorare su questi frammenti di template.
-* L'attenzione degli sviluppatori va anche sul file di configurazione view in YAML (impostando le proprietà della risposta e degli altri elementi dell'interfaccia) e sull'oggetto response. Quando si ha a che fare con variabili nei template, i rischi di cross-site scripting non devono essere ignorati e una buona comprensione delle tecniche di escapizzazione dell'output è richiesta per trattare in modo sicuro i dati dell'utente.
+* L'attenzione degli sviluppatori va anche sul file di configurazione view in YAML (impostando le proprietà della risposta e degli altri elementi dell'interfaccia) e sull'oggetto response. Quando si ha a che fare con variabili nei template, i rischi di cross-site scripting non devono essere ignorati e una buona comprensione delle tecniche di escape dell'output è richiesta per trattare in modo sicuro i dati dell'utente.
 
 Ma qualunque sia il proprio ruolo è, si troveranno utili strumenti per accelerare il noioso lavoro della visualizzazione dei risultati dell'azione. Questo capitolo comprende tutti questi strumenti.
 
@@ -26,7 +26,7 @@ Listato 7-1 - Un template di esempio indexSuccess.php
       <li><?php echo link_to('Iniziare a scriverne uno nuovo', 'articolo/write') ?></li>
     </ul>
 
-Come spiegato nel capitolo 4, nei template è preferibile la sintassi alternativa di PHP, in modo da renderli più leggibili anche per chi non è uno sviluppatore di PHP. Nei template si consiglia di utilizzare il minimo indispensabile di codice PHP, essendo che questi file sono quelli usati per progettare la grafica dell'applicazione e spesso sono creati e mantenuti da un altro gruppo, specializzato nella presentazione, ma non nella logica dell'applicazione. Mantenere la logica all'interno dell'azione rende anche più facile avere template diversi per una singola azione, senza alcuna duplicazione del codice.
+Come spiegato nel capitolo 4, nei template è preferibile la sintassi alternativa di PHP, in modo da renderli più leggibili anche per chi non è uno sviluppatore di PHP. Nei template si consiglia di utilizzare il minimo indispensabile di codice PHP, poiché questi file sono quelli usati per progettare la grafica dell'applicazione e spesso sono creati e mantenuti da un altro gruppo, specializzato nella presentazione, ma non nella logica dell'applicazione. Mantenere la logica all'interno dell'azione rende anche più facile avere template diversi per una singola azione, senza alcuna duplicazione del codice.
 
 ### Gli helper
 
@@ -114,14 +114,14 @@ Listato 7-4 - Gli helper predefiniti più comuni
 
 Ci sono molti altri helper in symfony, ci vorrebbe un libro intero per descriverli tutti. Il migliore riferimento per gli helper è la [documentazione delle API](http:// www.symfony-project.org/api/1_4/) online, dove sono ben documentati tutti gli helper, con la loro sintassi, le opzioni e gli esempi.
 
-#### Aggiungere i proprio helper
+#### Aggiungere i propri helper
 
-Symfony ha molti helper per vari diversi utilizzi, ma se non si trova quello di cui si ha bisogno nella documentazione delle API documentation, probabilmente si vorrà crearne uno nuovo. Questo è un compito molto semplice.
+Symfony ha molti helper per vari diversi utilizzi, ma se non si trova quello di cui si ha bisogno nella documentazione delle API, probabilmente si vorrà crearne uno nuovo. Questo è un compito molto semplice.
 
 Le funzioni per gli helper (normali funzioni PHP che restituiscono codice HTML) devono essere salvate in un file chiamato `FooBarHelper.php`, dove `FooBar` è il nome del gruppo di helper. Salvare il file nella cartella `apps/frontend/lib/helper/` (o in qualunque cartella `helper/`  creata dentro una delle cartelle `lib/` del progetto) in modo che possa essere trovata automaticamente dall'helper per l'inclusione `use_helper('FooBar')`.
 
 >**TIP**
->Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helper al posto del suo. Ma attenzione: essendo che il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non verranno resi disponibili.
+>Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helper al posto del suo. Ma attenzione: poiché il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non verranno resi disponibili.
 
 ### Layout della pagina
 
@@ -239,7 +239,7 @@ Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
 
     [php]
     // Include il partial frontend/modules/miomodulo/templates/_miopartial1.php 
-    // Essendo che il template e il partial sono nello stesso modulo,
+    // Poiché il template e il partial sono nello stesso modulo,
     // si può omettere il nome del modulo
     <?php include_partial('miopartial1') ?>
 
@@ -251,7 +251,7 @@ Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
     // È considerato parte del modulo 'global'
     <?php include_partial('global/miopartial3') ?>
 
-I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché  i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come parametro. Ad esempio, se si vuole che un partial abbia accesso a una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo parametro della chiamata `include_partial()`, come mostrato nei Listati 7-8, 7-9 e 7-10.
+I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come parametro. Ad esempio, se si vuole che un partial abbia accesso a una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo parametro della chiamata `include_partial()`, come mostrato nei Listati 7-8, 7-9 e 7-10.
 
 Listato 7-8 - L'azione definisce una variabile, in `miomodulo/actions/actions.class.php`
 
@@ -880,15 +880,15 @@ Se si fa un echo di questo valore senza precauzioni, su ogni browser verrà eseg
     [php]
     &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
-Si può eseguire l'escape dell'output manualmente racchiudendo ogni valore insicuro con la chiamata a `htmlspecialchars()`, ma questo approccio può diventare molto ripetitivo e soggetto a errori. Quindi symfony fornisce un sistema speciale, chiamato escapizzazione dell'output, che escapizza automaticamente ogni variabile in output nel template. É attivato in modalità predefinita nel `settings.yml` dell'applicazione.
+Si può eseguire l'escape dell'output manualmente racchiudendo ogni valore insicuro con la chiamata a `htmlspecialchars()`, ma questo approccio può diventare molto ripetitivo e soggetto a errori. Quindi symfony fornisce un sistema speciale, chiamato escape dell'output, che esegue l'escape automaticamente ogni variabile in output nel template. É attivato in modalità predefinita nel `settings.yml` dell'applicazione.
 
-### Attivazione dell'escapizzazione dell'output
+### Attivazione dell'escape dell'output
 
-L'escapizzazione dell'output è configurata globalmente per una applicazione nel file `settings.yml`. Due parametri controllano il modo con il quale lavoro l'escapizzatore dell'output: la strategia stabilisce come le variabili vengono rese disponibili alla vista e il metodo è la funzione di escapizzazione predefinita applicata ai dati.
+L'escape dell'output è configurata globalmente per una applicazione nel file `settings.yml`. Due parametri controllano il modo funziona l'escape dell'output: la strategia stabilisce come le variabili vengono rese disponibili alla vista e il metodo è la funzione di escape predefinita applicata ai dati.
 
-In sostanza, tutto quelllo che bisogna fare per attivare l'escapizzazione dell'output è impostare il parametro `escaping_strategy` a `true` (che è il valore predefinito), come mostrato nel Listato 7-38.
+In sostanza, tutto quelllo che bisogna fare per attivare l'escape dell'output è impostare il parametro `escaping_strategy` a `true` (che è il valore predefinito), come mostrato nel Listato 7-38.
 
-Listato 7-38 - Attivazione dell'escapizzazione dell'output, in `frontend/config/settings.yml`
+Listato 7-38 - Attivazione dell'escape dell'output, in `frontend/config/settings.yml`
 
     all:
       .settings:
@@ -900,22 +900,22 @@ Questo, per impostazione predefinita, aggiungerà `htmlspecialchars()` nell'outp
     [php]
     $this->test = '<script>alert(document.cookie)</script>';
 
-Con l'escapizzazione dell'output a on, facendo l'echo di questa variabile nel template verranno mostrati i dati escapizzati:
+Con l'escape dell'output a on, facendo l'echo di questa variabile nel template verranno mostrati i dati sott escape:
 
     [php]
     echo $test;
      => &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
-Inoltre, ogni template ha accesso a una variabile $sf_data` che è un contenitore di oggetti che fa riferimento a tutte le variabili escapizzate. Quindi si può anche visualizzare la variabile test in questo modo:
+Inoltre, ogni template ha accesso a una variabile $sf_data` che è un contenitore di oggetti che fa riferimento a tutte le variabili sotto escape. Quindi si può anche visualizzare la variabile test in questo modo:
 
     [php]
     echo $sf_data->get('test');
     => &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
 >**TIP**
->L'oggetto $sf_data object implementa l'interfaccia Array, quindi invece di usare `$sf_data->get('miavariabile')`, si possono recuperare i valori escapizzati chiamando `$sf_data['myvariable']`. Ma non è un array reale, quindi le funzioni tipo `print_r()` non funzioneranno come ci si attende.
+>L'oggetto $sf_data object implementa l'interfaccia Array, quindi invece di usare `$sf_data->get('miavariabile')`, si possono recuperare i valori sotto escape chiamando `$sf_data['myvariable']`. Ma non è un array reale, quindi le funzioni tipo `print_r()` non funzioneranno come ci si attende.
 
-`$sf_data` fornisce anche l'accesso ai dati non escapizzati, detti anche raw. Questo è utile quando una variabile memorizza codice HTML che deve essere interpretato dal browser, a condizione che vi "fidiate" di questa variabile. Chiamare il metodo `getRaw()` quando si vogliono visualizzare dati raw.
+`$sf_data` fornisce anche l'accesso ai dati non sotto escape, detti anche "raw". Questo è utile quando una variabile memorizza codice HTML che deve essere interpretato dal browser, a condizione che vi "fidiate" di questa variabile. Richiamare il metodo `getRaw()` quando si vogliono visualizzare dati raw.
 
     [php]
     echo $sf_data->getRaw('test');
@@ -927,7 +927,7 @@ Quando `escaping_strategy` è `false`, `$sf_data` è comunque disponibile, ma re
 
 ### Helper per l'escape
 
-Gli helper per l'escaping sono funzioni che restituiscono una versione escapizzata del loro input. Possono essere forniti come predefiniti `escaping_method` nel file `settings.yml` o per specificare un metodo di escape per uno specifico valore nella vista. Sono disponibili i seguenti helper per l'escape:
+Gli helper per l'escape sono funzioni che restituiscono una versione sotto escape del loro input. Possono essere forniti come predefiniti `escaping_method` nel file `settings.yml` o per specificare un metodo di escape per uno specifico valore nella vista. Sono disponibili i seguenti helper per l'escape:
 
   * `ESC_RAW`: Non fa l'escape del valore.
   * `ESC_SPECIALCHARS`: Applica la funzione PHP `htmlspecialchars()` all'input.
@@ -937,9 +937,9 @@ Gli helper per l'escaping sono funzioni che restituiscono una versione escapizza
 
 ### Fare l'escape di array e oggetti
 
-L'escape dell'output funziona non solo per le stringhe, ma anche per gli array e gli oggetti. Tutti i valori che sono oggetti o array passeranno il loro stato escapizzato ai loro figli. Assumendo che la strategia sia impostata a `true`, il Listato 7-39 mostra l'escapizzazione a cascata.
+L'escape dell'output funziona non solo per le stringhe, ma anche per gli array e gli oggetti. Tutti i valori che sono oggetti o array passeranno il loro stato di escape ai loro figli. Assumendo che la strategia sia impostata a `true`, il Listato 7-39 mostra l'escape a cascata.
 
-Listato 7-39 - L'escapizzazione funziona anche per gli array e gli oggetti
+Listato 7-39 - L'escape funziona anche per gli array e gli oggetti
 
     [php]
     // Definizione della classe
@@ -966,7 +966,7 @@ Listato 7-39 - L'escapizzazione funziona anche per gli array e gli oggetti
     <?php echo $test_object->testSpecialChars('&') ?>
      => &lt;&amp;&gt;
 
-È un dato di fatto, che le variabili nel template non sono del tipo ci si potrebbe aspettare. Il sistema di escapizzazione dell'output le "decora" e le trasforma in oggetti speciali:
+È un dato di fatto, che le variabili nel template non sono del tipo ci si potrebbe aspettare. Il sistema di escape dell'output le "decora" e le trasforma in oggetti speciali:
 
     [php]
     <?php echo get_class($test_array) ?>
@@ -976,9 +976,9 @@ Listato 7-39 - L'escapizzazione funziona anche per gli array e gli oggetti
 
 Questo spiega perché alcune normali funzioni PHP (come `array_shift()`, `print_r()` e altre) non funzionano più con gli array esacpizzati. Ma questi possono essere acceduti utilizzando `[]`, essere attraversati usando `foreach` e restituire il corretto risultato con `count()`. E in ogni caso nei template i dati dovrebbero essere a sola lettura, quindi la maggior parte degli accessi verrà fatta utilizzando metodi che funzionano correttamente.
 	 
-C'è ancora un modo per recuperare i dati raw attraverso l'oggetto `$sf_data`. Inoltre, i metodi di oggetti escapizzati vengono alterati per accettare un parametro aggiuntivo: un metodo di escape. Così si può scegliere un metodo alternativo per fare l'escape ogni volta che si visualizza una variabile in un template, oppure optare per l'helper `ESC_RAW` per disattivare l'escape. Vedere il Listato 7-40 come esempio.
+C'è ancora un modo per recuperare i dati raw attraverso l'oggetto `$sf_data`. Inoltre, i metodi di oggetti sotto escape vengono alterati per accettare un parametro aggiuntivo: un metodo di escape. Così si può scegliere un metodo alternativo per fare l'escape ogni volta che si visualizza una variabile in un template, oppure optare per l'helper `ESC_RAW` per disattivare l'escape. Vedere il Listato 7-40 come esempio.
 
-Listato 7-40 - I metodi degli oggetti escapizzati accettano un parametro aggiuntivo
+Listato 7-40 - I metodi degli oggetti sotto escape accettano un parametro aggiuntivo
 
     [php]
     <?php echo $test_object->testSpecialChars('&') ?>
@@ -992,7 +992,7 @@ Listato 7-40 - I metodi degli oggetti escapizzati accettano un parametro aggiunt
 Se si a a che fare con oggetti nei template, sarà necessario usare spesso il trucco del parametro aggiuntivo, dal momento che è il modo più veloce per ottenere i dati grezzi in una chiamata al metodo.
 
 >**CAUTION**
->Anche le normali variabili di symfony sono escapizzate quando si imposta a `on` l'escapizzazione dell'output. Quindi bisogna tener presente che `$sf_user`, `$sf_request`, `$sf_param` e `$sf_context` funzionano ancora, ma i loro metodi restituiscono dati escapizzati, a meno che non si aggiunga `ESC_RAW` come parametro finale alle loro chiamate di metodi.
+>Anche le normali variabili di symfony subiscono l'escape quando si imposta a `true` l'escape dell'output. Quindi bisogna tener presente che `$sf_user`, `$sf_request`, `$sf_param` e `$sf_context` funzionano ancora, ma i loro metodi restituiscono dati sotto escape, a meno che non si aggiunga `ESC_RAW` come parametro finale alle loro chiamate di metodi.
 
 -
 
@@ -1002,4 +1002,4 @@ Se si a a che fare con oggetti nei template, sarà necessario usare spesso il tr
 Riepilogo
 ---------
 
-Sono disponibili molti tipi di strumenti per manipolare il livello di presentazione. I template vengono generati in pochi secondi, grazie agli helper. I layout, i partial e i componenti sono utili per la modularità e la riusabilità. La configurazione della vista sfrutta la velocità dello YAML per gestire (soprattutto) gli header delle pagine. La configurazione a cascata esime dal definire una impostazione per ciascuna vista. Per ogni modifica della presentazione che dipende da dati dinamici, l'azione ha accesso all'oggetto `sfResponse`. La vista è al sicuro da attacchi XSS, grazie al sistema di escapizzazione dell'output.
+Sono disponibili molti tipi di strumenti per manipolare il livello di presentazione. I template vengono generati in pochi secondi, grazie agli helper. I layout, i partial e i componenti sono utili per la modularità e la riusabilità. La configurazione della vista sfrutta la velocità dello YAML per gestire (soprattutto) gli header delle pagine. La configurazione a cascata esime dal definire una impostazione per ciascuna vista. Per ogni modifica della presentazione che dipende da dati dinamici, l'azione ha accesso all'oggetto `sfResponse`. La vista è al sicuro da attacchi XSS, grazie al sistema di escape dell'output.

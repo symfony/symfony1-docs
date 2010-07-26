@@ -5,8 +5,8 @@ Il controllore in symfony è lo strato che contiene il codice che collega la bus
 
   * Il front controller è il punto d'accesso univoco all'applicazione. Si occupa di caricare la configurazione e determina l'azione da eseguire.
   * Le azioni contengono la logica dell'applicazione. Verificano l'integrità della richiesta e preparano i dati necessari allo strato di presentazione.
-  * Richiesta, risposta e oggetti di sessione permettono l'accesso ai parametri della richiesta, alle intestazioni della risposta ed ai dati persistenti dell'utente. Vengono usati molto spesso nello strato controllore.
-  * I filtri sono porzioni di codice eseguito ad ogni richiesta, prima o dopo l'azione. Per esempio i filtri di sicurezza e validazione sono usati comunemente nelle applicazioni web. Si può facilmente estendere il framework creando i propri filtri.
+  * Richiesta, risposta e oggetti di sessione permettono l'accesso ai parametri della richiesta, alle intestazioni della risposta e ai dati persistenti dell'utente. Vengono usati molto spesso nello strato controllore.
+  * I filtri sono porzioni di codice eseguito a ogni richiesta, prima o dopo l'azione. Per esempio i filtri di sicurezza e validazione sono usati comunemente nelle applicazioni web. Si può facilmente estendere il framework creando i propri filtri.
 
 Questo capitolo descrive tutti questi componenti, non fatevi intimidire dal loro numero. Per una pagina semplice molto probabilmente basterà scrivere poche righe di codice nella classe dell'azione, tutto qui. Gli altri componenti del controllore vengono utilizzati solo in situazioni particolari.
 
@@ -15,7 +15,7 @@ Il Front Controller
 
 Tutte le richieste web vengono gestite da un singolo front controller, che rappresenta l'unico punto d'accesso per l'intera applicazione in un ambiente.
 
-Quando il front controller riceve una richiesta utilizza il sistema delle rotte per identificare il nome di un'azione ed il nome di un modulo partendo dall'URL inserito (o cliccato) dall'utente. Per esempio, l'URL della richiesta seguente richiama lo script `index.php` (il front controller) e verrà interpretato come una chiamata all'azione `myAction` del modulo `mymodule`:
+Quando il front controller riceve una richiesta utilizza il sistema delle rotte per identificare il nome di un'azione e il nome di un modulo partendo dall'URL inserito (o cliccato) dall'utente. Per esempio, l'URL della richiesta seguente richiama lo script `index.php` (il front controller) e verrà interpretato come una chiamata all'azione `myAction` del modulo `mymodule`:
 
     http://localhost/index.php/mymodule/myAction
 
@@ -26,10 +26,10 @@ Se non si è interessati a conoscere gli internals di symfony, questo è tutto c
 Il front controller si occupa di distribuire le richieste, questo però significa qualcosa di più della semplice determinazione dell'azione da eseguire. Infatti esegue il codice comune a tutte le azioni, incluso il seguente:
 
   1. Carica la classe con la configurazione del progetto e le librerie di symfony.
-  2. Crea la configurazione dell'applicazione ed il contesto di symfony.
-  3. Carica ed inizializza le classi del core del framework.
+  2. Crea la configurazione dell'applicazione e il contesto di symfony.
+  3. Carica e inizializza le classi del core del framework.
   4. Carica la configurazione.
-  5. Interpreta l'URL della richiesta per determinare l'azione da eseguire ed i parametri della richiesta. 
+  5. Interpreta l'URL della richiesta per determinare l'azione da eseguire e i parametri della richiesta. 
   6. Se l'azione non esiste redirige all'azione d'errore 404.
   7. Attiva i filtri (per esempio se la richiesta richiede autenticazione).
   8. Esegue i filtri, primo passaggio.
@@ -39,7 +39,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
 
 ### Il front controller di default
 
-Il front controller di default, chiamato `index.php` e posizionato nella directory `web/` del progetto, è un semplice file PHP come si può vedere nel Listato 6-1.
+Il front controller di default, chiamato `index.php` e posizionato nella cartella `web/` del progetto, è un semplice file PHP come si può vedere nel Listato 6-1.
 
 Listing 6-1 - Il front controller di default per l'ambiente di produzione
 
@@ -85,11 +85,11 @@ Per vedere come l'applicazione reagisce in questo ambiente basta chiamare il fro
 Azioni
 ------
 
-Le azioni sono il cuore di un'applicazione, questo perché contengono tutta la logica dell'applicazione stessa. Si occupano di chiamare il modello e di definire le variabili per la vista. Facendo una richiesta web ad un'applicazione symfony l'URL definisce un'azione ed i parametri della richiesta.
+Le azioni sono il cuore di un'applicazione, questo perché contengono tutta la logica dell'applicazione stessa. Si occupano di chiamare il modello e di definire le variabili per la vista. Facendo una richiesta web a un'applicazione symfony l'URL definisce un'azione e i parametri della richiesta.
 
 ### La classe dell'azione
 
-Le azioni sono metodi chiamati `executeActionName` di una classe denominata `moduleNameActions` che eredita dalla classe `sfActions` e raggruppati in moduli. La classe azione di un modulo è memorizzata nel file `actions.class.php` nella directory `actions/` del modulo stesso.
+Le azioni sono metodi chiamati `executeActionName` di una classe denominata `moduleNameActions` che eredita dalla classe `sfActions` e raggruppati in moduli. La classe azione di un modulo è memorizzata nel file `actions.class.php` nella cartella `actions/` del modulo stesso.
 
 Listato 6-3 mostra un esempio di file `actions.class.php` con una sola azione `index` per l'intero modulo `mymodule`.
 
@@ -138,7 +138,7 @@ Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato
 >
 >Negli esempi di codice di questo libro, sarà balzato agli occhi il fatto che le parentesi graffe (`{` e `}`) occupano una riga ciascuna. Questo standard permette una più semplice lettura del codice.
 >
->Tra gli altri coding standard del framework ricordiamo l'indentazione che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perchè le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
+>Tra gli altri coding standard del framework ricordiamo l'indentazione che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perché le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
 >
 >I file PHP del core e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perché non è realmente necessario e perché potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
 >
@@ -172,7 +172,7 @@ Listing 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAct
 
 ### Recuperare informazioni nell'azione
 
-La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller ed agli oggetti del core di symfony. Il Listato 6-7 mostra come utilizzarli.
+La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del core di symfony. Il Listato 6-7 mostra come utilizzarli.
 
 Listing 6-7 - Metodi comuni `sfActions`
 
@@ -203,7 +203,7 @@ Listing 6-7 - Metodi comuni `sfActions`
 >**SIDEBAR**
 >Il singleton context
 >
->Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` ritorna lo stesso singleton. Questo è un oggetto molto utile che contiene una referenza a tutti gli oggetti del core di symfony associati ad una richiesta mettendo a disposizione una via di accesso ad ognuno di loro:
+>Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` ritorna lo stesso singleton. Questo è un oggetto molto utile che contiene una referenza a tutti gli oggetti del core di symfony associati a una richiesta mettendo a disposizione una via di accesso a ognuno di loro:
 >
 >`sfController`: L'oggetto controllore (`->getController()`)
 >
@@ -267,7 +267,7 @@ Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un
     [php]
     return sfView::NONE;
 
-Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista ed impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
+Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
 
 Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfView::NONE`
 
@@ -308,13 +308,13 @@ Se l'azione dev'essere presentata da un template specifico ignorare la dichiaraz
     
 Con questo codice symfony cercherà un file `myCustomTemplateSuccess.php` invece che `indexSuccess.php`.
 
-### Saltare ad un'altra azione
+### Saltare a un'altra azione
 
-In alcuni casi l'esecuzione di un'azione termina richiedendo l'esecuzione di un'altra azione. Per esempio, un'azione che gestisce l'invio di un form tramite una richiesta POST generalmente redireziona ad un'altra azione dopo aver aggiornato il database.
+In alcuni casi l'esecuzione di un'azione termina richiedendo l'esecuzione di un'altra azione. Per esempio, un'azione che gestisce l'invio di un form tramite una richiesta POST generalmente redireziona a un'altra azione dopo aver aggiornato il database.
 
 La classe azione mette a disposizione due metodi per eseguire un'altra azione:
 
-  * Se l'azione inoltra la chiamata ad un'altra azione:
+  * Se l'azione inoltra la chiamata a un'altra azione:
 
         [php]
         $this->forward('otherModule', 'index');
@@ -329,11 +329,11 @@ La classe azione mette a disposizione due metodi per eseguire un'altra azione:
 >**NOTE**
 >Il codice situato dopo un forward o un redirect in un'azione non viene mai eseguito. Chiamate di questo tipo possono essere considerate come un `return`. Essi sollevano un `sfStopException` per bloccare l'esecuzione di un'azione; questa eccezione è colta successivamente da symfony e semplicemente ignorata.
 
-La scelta tra un redirect ed un forward a volte può essere difficoltosa. Per scegliere la soluzione migliore va ricordato che un forward è interno all'applicazione e totalmente trasparente per l'utente. Fintanto che l'utente è interessato l'URL visualizzato sarà uguale a quello richiesto. Al contrario un redirect è un messaggio al browser dell'utente e coinvolge una nuova richiesta da esso con conseguente cambio di URL finale.
+La scelta tra un redirect e un forward a volte può essere difficoltosa. Per scegliere la soluzione migliore va ricordato che un forward è interno all'applicazione e totalmente trasparente per l'utente. Fintanto che l'utente è interessato l'URL visualizzato sarà uguale a quello richiesto. Al contrario un redirect è un messaggio al browser dell'utente e coinvolge una nuova richiesta da esso con conseguente cambio di URL finale.
 
-Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario ricorrere **sempre** ad un redirect. Il vantaggio principale è che se l'utente rinfresca la pagina con la risposta il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
+Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario ricorrere **sempre** a un redirect. Il vantaggio principale è che se l'utente rinfresca la pagina con la risposta il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
 
-Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra ad un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il Listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
+Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra a un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il Listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
 
 Listing 6-11 - Utilizzo del metodo `forward404()`
 
@@ -353,8 +353,8 @@ Listing 6-11 - Utilizzo del metodo `forward404()`
     }
 
 >**TIP**
->Se siete in cerca dell'azione e del template per l'errore 404 sappiate che si trova nella directory `$sf_symfony_ lib_dir/controller/default/`. 
->If you are looking for the error 404 action and template, you will find them in the `$sf_symfony_ lib_dir/controller/default/` directory. È possibile personalizzare questa pagina creando un nuovo modulo `default` all'applicazione, facendo l'override di quella proposta dal framework, e definendo al suo interno un'azione `error404` ed un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
+>Se siete in cerca dell'azione e del template per l'errore 404, sappiate che si trova nella cartella `$sf_symfony_ lib_dir/controller/default/`. 
+>È possibile personalizzare questa pagina creando un nuovo modulo `default` nell'applicazione, sovrascrivendo quella proposta dal framework e definendo al suo interno un'azione `error404` e un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
 L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
 
@@ -428,7 +428,7 @@ Listing 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizza
 Accedere alla richiesta
 -----------------------
 
-Il primo argomento passato ad ogni metodo di un'azione è l'oggetto della richiesta che in symfony si chiama `sfWebRequest`. Si è gia visto il metodo  `getParameter('myparam')` usato per recuperare il valore di un parametro della richiesta usando il suo nome. La Tabella 6-1 elenca i metodi  `sfWebRequest` più utili.
+Il primo argomento passato a ogni metodo di un'azione è l'oggetto della richiesta che in symfony si chiama `sfWebRequest`. Si è gia visto il metodo  `getParameter('myparam')` usato per recuperare il valore di un parametro della richiesta usando il suo nome. La Tabella 6-1 elenca i metodi  `sfWebRequest` più utili.
 
 Table 6-1 - Metodi dell'oggetto `sfWebRequest`
 
@@ -530,14 +530,14 @@ L'attributo flash è un attributo effimero che può essere definito e dimenticao
     [php]
     $this->getUser()->setFlash('notice', $value);
 
-Il template verrà restituito e consegnato all'utente, che farà poi una nuova richiesta ad un'altra azione. In questa seconda azione basta semplicemente recuperare il valore dell'attributo flash in questo modo:
+Il template verrà restituito e consegnato all'utente, che farà poi una nuova richiesta a un'altra azione. In questa seconda azione basta semplicemente recuperare il valore dell'attributo flash in questo modo:
 
     [php]
     $value = $this->getUser()->getFlash('notice');
 
 Poi ci si può dimenticare di questo. Dopo la consegna di questa seconda pagina l'attributo flash `notice` verrà eliminato. Ed anche se non fosse necessario durante questa seconda azione, il flash verrebbe comunque eliminato dalla sessione.
 
-Per accedere ad un attributo flash in un template utilizzare l'oggetto `$sf_user`:
+Per accedere a un attributo flash in un template utilizzare l'oggetto `$sf_user`:
 
     [php]
     <?php if ($sf_user->hasFlash('notice')): ?>
@@ -606,7 +606,7 @@ Per conoscere più a fondo i factory fare riferimento al Capitolo 19.
 Sicurezza delle azioni
 ----------------------
 
-L'abilità di eseguire un'azione può essere ristretta a utenti con specifici privilegi. Gli strumenti messi a disposizione da symfony per questo scopo permettono la creazione di applicazioni sicure, dove gli utenti devono essere autenticati prima di poter accedere alle funzionalità o a parti dell'applicazione. Mettere in sicurezza un'applicazione richiede due fasi: dichiarare i requisiti di sicurezza per ogni azione ed autenticare gli utenti con determinati privilegi in modo da permettergli l'accesso a queste azioni sicure.
+L'abilità di eseguire un'azione può essere ristretta a utenti con specifici privilegi. Gli strumenti messi a disposizione da symfony per questo scopo permettono la creazione di applicazioni sicure, dove gli utenti devono essere autenticati prima di poter accedere alle funzionalità o a parti dell'applicazione. Mettere in sicurezza un'applicazione richiede due fasi: dichiarare i requisiti di sicurezza per ogni azione e autenticare gli utenti con determinati privilegi in modo da permettergli l'accesso a queste azioni sicure.
 
 ### Restrizioni d'accesso
 
@@ -615,7 +615,7 @@ Prima di essere eseguita ogni azione passa attraverso un filtro speciale che con
   * Le azioni sicure richiedono che l'utente si autenticato.
   * Le credenziali sono determinati privilegi di sicurezza che permettono l'organizzazione della sicurezza in gruppi.
 
-Restringere l'accesso ad un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella directory `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il Listato 6-20 mostra un file `security.yml` d'esempio.
+Restringere l'accesso a un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella cartella `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il Listato 6-20 mostra un file `security.yml` d'esempio.
 
 Listing 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mymodule/config/security.yml`
 
@@ -632,7 +632,7 @@ Listing 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mym
     all:
       is_secure:  false        # false è comunque il valore predefinito
 
-Le azioni non sono sicure in modo predefinito, quindi quando non è presente un `security.yml` o non viene menzionata nessuna azione in esso, le azioni sono accessibili a tutti. Nel caso in cui esista un `security.yml`, symfony cerca il nome dell'azione richiesta e, se esiste, verifica il soddisfacimento dei requisiti di sicurezza. Ciò che accade quando un utente prova ad accedere ad un'azione sicura dipende dalle sue credenziali:
+Le azioni non sono sicure in modo predefinito, quindi quando non è presente un `security.yml` o non viene menzionata nessuna azione in esso, le azioni sono accessibili a tutti. Nel caso in cui esista un `security.yml`, symfony cerca il nome dell'azione richiesta e, se esiste, verifica il soddisfacimento dei requisiti di sicurezza. Ciò che accade quando un utente prova ad accedere a un'azione sicura dipende dalle sue credenziali:
 
   * Se l'utente è autenticato e detiene le credenziali corrette, l'azione viene eseguita.
   * Se l'utente non viene riconosciuto viene rediretto all'azione di login predefinita.
@@ -724,7 +724,7 @@ Listing 6-24 - Lavorare con le credenziali utenti in un template
       <?php endif; ?>
     </ul>
 
-Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente durante il processo di login. Ecco perchè l'oggetto `sfUser` viene spesso esteso per aggiungere i metodi di login e logout in modo da impostare lo stato di sicurezza in un posto centralizzato.
+Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente durante il processo di login. Ecco perché l'oggetto `sfUser` viene spesso esteso per aggiungere i metodi di login e logout in modo da impostare lo stato di sicurezza in un posto centralizzato.
 
 >**TIP**
 >Tra i plugin di symfony [`sfGuardPlugin`](http://www.symfony-project.org/plugins/sfGuardPlugin) e [`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin) estendono la classe della sessione per semplificare login e logout. Fare riferimento al Capitolo 17 per maggiori informazioni.
@@ -752,11 +752,11 @@ Ogni volta che si aggiunge un livello di parentesi quadre l'operatore logico cam
 Filtri
 ------
 
-Il processo di sicurezza può essere interpretato come un filtro dal quale devono passare tutte le richieste prima di eseguire l'azione associata. In funzione di alcuni test eseguiti nel filtro l'esecuzione della richiesta viene modificata--per esempio, cambiando l'azione eseguita (`default`/`secure` invece dell'azione richiesta nel caso in cui il filtro di sicurezza lo richieda). Symfony estende quest'idea alle classi di filtri. Si può specificare un numero qualsiasi di filtri da eseguire prima dell'esecuzione dell'azione o prima di restituire la risposta, ripetendolo per ogni richiesta. I filtri possono essere visti come un modo per impacchettare del codice, come si fa con `preExecute()` and `postExecute()`, ma ad un livello più alto (per l'intera applicazione invece che per un singolo modulo).
+Il processo di sicurezza può essere interpretato come un filtro dal quale devono passare tutte le richieste prima di eseguire l'azione associata. In funzione di alcuni test eseguiti nel filtro l'esecuzione della richiesta viene modificata--per esempio, cambiando l'azione eseguita (`default`/`secure` invece dell'azione richiesta nel caso in cui il filtro di sicurezza lo richieda). Symfony estende quest'idea alle classi di filtri. Si può specificare un numero qualsiasi di filtri da eseguire prima dell'esecuzione dell'azione o prima di restituire la risposta, ripetendolo per ogni richiesta. I filtri possono essere visti come un modo per impacchettare del codice, come si fa con `preExecute()` and `postExecute()`, ma a un livello più alto (per l'intera applicazione invece che per un singolo modulo).
 
 ### La catena dei filtri
 
-Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La Figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola ed ipotetica catena di filtri (quella reale ne contiene molti di più).
+Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La Figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola e ipotetica catena di filtri (quella reale ne contiene molti di più).
 
 Figure 6-3 - Catena di filtri d'esempio
 
@@ -818,13 +818,13 @@ La catena dei filtri può essere personalizzata in varie maniere:
 
   * Non va rimossa la dichiarazione dal file `filters.yml` per disabilitare un filtro; symfony solleverebbe un'eccezione in questo caso.
   * Aggiungere le proprie dichiarazioni in un certo punto della catena (di solito dopo il filtro `security`) per includere un filtro personalizzato (come vedremo nella prossima sezione). Prestare attenzione al fatto che il filtro `rendering` sia sempre in prima posizione, così come il filtro  `execution` sia in ultima posizione nella catena dei filtri.
-  * Fare l'override della classe predefinita e dei parametri dei filtri predefiniti (in particolare per modificare il sistema di sicurezza ed utilizzare i propri filtri).
+  * Fare l'override della classe predefinita e dei parametri dei filtri predefiniti (in particolare per modificare il sistema di sicurezza e utilizzare i propri filtri).
 
 ### Costruire i propri filtri
 
-Costruire un proprio filtro è una cosa piuttosto semplice. Creare una classe definita in modo simile a quanto mostrato nel Listato 6-26 e posizionarla in una delle directory `lib/` del progetto per sfruttare i vantaggi dell'autoloading.
+Costruire un proprio filtro è una cosa piuttosto semplice. Creare una classe definita in modo simile a quanto mostrato nel Listato 6-26 e posizionarla in una delle cartelle `lib/` del progetto per sfruttare i vantaggi dell'autoloading.
 
-Dato che un'azione può fare il forward o il redirect ad un'altra azione e conseguentemente rilanciare l'intera catena di filtri potrebbe essere necessario limitare l'esecuzione dei propri filtri solamente alla prima azione chiamata dalla richiesta. Il metodo `isFirstCall()` della classe `sfFilter` restituisce un Booleano per questo scopo. Questa chiamata ha senso solamente prima dell'esecuzione dell'azione.
+Dato che un'azione può fare il forward o il redirect a un'altra azione e conseguentemente rilanciare l'intera catena di filtri potrebbe essere necessario limitare l'esecuzione dei propri filtri solamente alla prima azione chiamata dalla richiesta. Il metodo `isFirstCall()` della classe `sfFilter` restituisce un Booleano per questo scopo. Questa chiamata ha senso solamente prima dell'esecuzione dell'azione.
 
 Questi concetti saranno più chiari con un esempio. Il Listato 6-29 mostra un filtro utilizzato per l'auto-login degli utenti con un cookie specifico `MyWebSite` che supponiamo sia creato dall'azione di login. È un modo tanto rudimentale quanto funzionante per implementare la funzionalità "remember me" offerta nei moduli di login.
 
@@ -855,7 +855,7 @@ Listing 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFi
       }
     }
 
-In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potrebbe essere necessario il forward ad una specifica azione alla fine del filtro. `sfFilter` non ha un metodo `forward()`, tuttavia `sfController` lo ha, quindi questo può essere fatto semplicemente chiamando:
+In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potrebbe essere necessario il forward a una specifica azione alla fine del filtro. `sfFilter` non ha un metodo `forward()`, tuttavia `sfController` lo ha, quindi questo può essere fatto semplicemente chiamando:
 
     [php]
     return $this->getContext()->getController()->forward('mymodule', 'myAction');
@@ -865,7 +865,7 @@ In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potre
 
 ### Attivazione dei filtri e parametri
 
-Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella directory `config/` dell'applicazione o del modulo, come mostrato nel Listato 6-30.
+Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella cartella `config/` dell'applicazione o del modulo, come mostrato nel Listato 6-30.
 
 Listing 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/frontend/config/filters.yml`
 
@@ -908,7 +908,7 @@ Il parametro `condition` viene verificato dalla catena dei filtri per capire se 
 
 ### Filtri d'esempio
 
-La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel Listato 6-32, ed attivato per ogni singolo modulo che lo richieda.
+La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel Listato 6-32, e attivato per ogni singolo modulo che lo richieda.
 
 Listing 6-32 - Filtro Google Analytics
 
@@ -934,7 +934,7 @@ Listing 6-32 - Filtro Google Analytics
 
 Attenzione però, questo filtro non è perfetto dato che non dovrebbe aggiungere il codice del tracker nelle risposte non HTML.
 
-Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste ad SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel Listato 6-33.
+Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste a SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel Listato 6-33.
 
 Listing 6-33 - Filtro per comunicazione sicura
 
@@ -966,7 +966,7 @@ I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di 
 Configurazione dei moduli
 -------------------------
 
-Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella directory `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il Listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
+Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella cartella `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il Listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
 
 Listing 6-34 - Configurazione di un modulo, in `apps/frontend/modules/mymodule/config/module.yml`
 

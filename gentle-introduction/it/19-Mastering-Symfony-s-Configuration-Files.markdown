@@ -1,7 +1,7 @@
 Capitolo 19 - Padroneggiare i file di configurazione di symfony
 ===============================================================
 
-Ora che si conocsce symfony molto bene, si è già in grado di scavare nel suo codice per
+Ora che si conosce symfony molto bene, si è già in grado di scavare nel suo codice per
 capire le sue impostazioni fondamentali e scoprire nuove abilità nascoste. Ma prima di
 estendere le classi di symfony per soddisfare i propri requisiti, meglio dare un'occhiata
 più da vicino ad alcuni file di configurazione. Molte caratteristiche sono già costruite
@@ -24,75 +24,114 @@ definito in questo file è accessibile all'interno del codice PHP tramite la cla
 esempio, se si vuole ottenere il parametro `cache`, basta richiamare
 `sfConfig::get('sf_cache')`.
 
+### Moduli e azioni predefiniti
 
+Symfony fornisce delle pagine predefinite per situazioni speciali. In caso di errore del
+routing, symfony esegue un'azione del modulo `default`, che si trova nella cartella
+`sfConfig::get('sf_symfony_lib_dir')/controller/default/`. Il file `settings.yml`
+definisce quale azione eseguire, a seconda dell'errore:
 
+  * `error_404_module` ed `error_404_action`: Azione richiamata quando l'URL inserito
+    dall'utente non corrisponde ad alcuna rotta o quando capita una `sfError404Exception`.
+    Il valore predefinito è `default/error404`.
+  * `login_module` e `login_action`: Azione richiamata quando un utente non autenticato
+    tenta di accedere a una pagina definita come `secure` in `security.yml` (si veda il
+    Capitolo 6 per maggiori dettagli). Il valore predefinito è `default/login`.
+  * `secure_module` e `secure_action`: Azione richiamata quando un utente non ha le
+    credenziali necessarie per un'azione. Il valore predefinito è `default/secure`.
+  * `module_disabled_module` e `module_disabled_action`: Azione richiamata quando un
+    utente richiede un modulo dichiarato come disabilitato in `module.yml`. Il valore
+    predefinito è `default/disabled`.
 
+Prima di mettere in produzione un'applicazione, si dovrebbero personalizzare queste
+azioni, perché il template del modulo `default` include il logo di symfony. Si veda la
+Figura 19-1 per una schermata di una di queste pagine, la pagina di errore 404.
 
+Figura 19-1 - Pagina di errore 404 predefinita
 
-### Default Modules and Actions
+![Pagina di errore 404 predefinita](http://www.symfony-project.org/images/book/1_4/F1901.jpg "Pagina di errore 404 predefinita")
 
-Symfony provides default pages for special situations. In the case of a routing error, symfony executes an action of the `default` module, which is stored in the `sfConfig::get('sf_symfony_lib_dir')/controller/default/` directory. The `settings.yml` file defines which action is executed depending on the error:
+Si possono sovrascrivere le pagine predefinite in due modi:
 
-  * `error_404_module` and `error_404_action`: Action called when the URL entered by the user doesn't match any route or when an `sfError404Exception` occurs. The default value is `default/error404`.
-  * `login_module` and `login_action`: Action called when a nonauthenticated user tries to access a page defined as `secure` in `security.yml` (see Chapter 6 for details). The default value is `default/login`.
-  * `secure_module` and `secure_action`: Action called when a user doesn't have the credentials required for an action. The default value is `default/secure`.
-  * `module_disabled_module` and `module_disabled_action`: Action called when a user requests a module declared as disabled in `module.yml`. The default value is `default/disabled`.
+  * Creando un proprio modulo default nella cartella `modules/` della propria applicaizone,
+    ridefinendo tutte le azioni definite in `settings.yml` (`index`, `error404`, `login`,
+    `secure`, `disabled`) e i relativi template (`indexSuccess.php`, `error404Success.php`,
+    `loginSuccess.php`, `secureSuccess.php`, `disabledSuccess.php`).
+  * Cambiando le impostazioni per il modulo e le azioni predefinite in `settings.yml`,
+    indicando le pagine della propria applicazione.
 
-Before deploying an application to production, you should customize these actions, because the `default` module templates include the symfony logo on the page. See Figure 19-1 for a screenshot of one of these pages, the error 404 page.
+Altre due pagine hanno un aspetto che richiama symfony e quindi hanno bisogno di essere
+personalizzate prima di andare in produzione. Queste pagine non sono nel modulo `default`,
+perché sono richiamate quando symfony non riesce a essere eseguito correttamente. Si
+possono trovare queste pagine nella cartella
+`sfConfig::get('sf_symfony_lib_dir')/exception/data/`:
 
-Figure 19-1 - Default 404 error page
+  * `error.html.php`: Pagina richiamata quando si verifica un errore interno del server in
+    ambiente di produzione. In altri ambienti (quando debug è impostato a `true`), in caso
+    di errore, symfony mostra l'intera pila di esecuzione con un messaggio di errore
+    esplicito (si veda il Capitolo 16 per maggiori dettagli).
+  * `unavailable.php`: Pagina richiamata quando un utente richiede una pagina mentre
+     l'applicazione è disabilitata (tramite il task `project:disable`). Viene anche
+     richiamata quando la cache è in fase di pulizia (cioè tra la chiamata al task
+     `cache:clear` e la fine dell'esecuzione del task stesso). Su un sistema con una
+     cache molto grande, il processo di pulizia della cache potrebbe richiedere diversi
+     secondi. Symfony non può soddisfare una richiesta con una cache pulita solo in parte,
+     quindi le richieste ricevute prima della fine del processo sono redirette a questa
+     pagina.
 
-![Default 404 error page](http://www.symfony-project.org/images/book/1_4/F1901.jpg "Default 404 error page")
-
-You can override the default pages in two ways:
-
-  * You can create your own default module in the application's `modules/` directory, override all the actions defined in the `settings.yml` file (`index`, `error404`, `login`, `secure`, `disabled`) and all the related templates (`indexSuccess.php`, `error404Success.php`, `loginSuccess.php`, `secureSuccess.php`, `disabledSuccess.php`).
-  * You can change the default module and action settings of the `settings.yml` file to use pages of your application.
-
-Two other pages bear a symfony look and feel, and they also need to be customized before deployment to production. These pages are not in the `default` module, because they are called when symfony cannot run properly. Instead, you will find these default pages in the `sfConfig::get('sf_symfony_lib_dir')/exception/data/` directory:
-
-  * `error.html.php`: Page called when an internal server error occurs in the production environment. In other environments (where debug is set to `true`), when an error occurs, symfony displays the full execution stack and an explicit error message (see Chapter 16 for details).
-  * `unavailable.php`: Page called when a user requests a page while the application is disabled (with the `disable` task). It is also called while the cache is being cleared (that is, between a call to the `php symfony cache:clear` task and the end of this task execution). On systems with a very large cache, the cache-clearing process can take several seconds. Symfony cannot execute a request with a partially cleared cache, so requests received before the end of the process are redirected to this page.
-
-To customize these pages, simply create `error/error.html.php` and `unavailable.php` in your project or application's `config/` directory. Symfony will use these templates instead of its own.
+Per personalizzare queste pagine, basta creare i file `error/error.html.php` e
+`unavailable.php` nella cartella `config/` della propria applicazione. Symfony userà
+questi template al posto dei suoi.
 
 >**NOTE**
->To have requests redirected to the `unavailable.php` page when needed, you need to set the `check_lock` setting to `true` in the application `settings.yml`. The check is deactivated by default, because it adds a very slight overhead for every request.
+>Per rimandare le richieste alla pagina `unavailable.php` quando necessario, occorre
+>impostare `check_lock` a `true` in `settings.yml`. Il controllo è disattivato per
+>impostazione predefinita, poiché aggiunge un piccolo overhead a ogni richiesta.
 
-### Optional Feature Activation
+### Attivazione di caratteristiche opzionali
 
-Some parameters of the `settings.yml` file control optional framework features that can be enabled or disabled. Deactivating unused features boosts performances a bit, so make sure to review the settings listed in Table 19-1 before deploying your application.
+Alcuni parametri di `settings.yml` controllano delle caratteristiche opzionali del
+framework, che possono essere abilitate o disabilitate. Disattivare le caratteristiche
+inutilizzate aumenta un po' le prestazioni, quindi ci si dovrebbe assicurare di
+rivedere le impostazioni elencati nella Tabella 19-1, prima di mandare in produzione
+l'applicazione.
 
-Table 19-1 - Optional Features Set Through `settings.yml`
+Tabella 19-1 - Caratteristiche opzionali configurabili in `settings.yml`
 
-Parameter               | Description | Default Value
------------------------ | ----------- | -------------
-`use_database`          | Enables the database manager. Set it to `false` if you don't use a database. | `true`
-`i18n`                  | Enables interface translation (see Chapter 13). Set it to `true` for multilingual applications. | `false`
-`logging_enabled`       | Enables logging of symfony events. Set it to `false` when you want to turn symfony logging off completely. | `true`
-`escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `true`
-`cache`                 | Enables template caching (see Chapter 12). Set it to `true` if one of your modules includes `cache.yml` file. The cache filter (`sfCacheFilter`) is enabled only if it is on. | `false` in development, `true` in production
-`web_debug`             | Enables the web debug toolbar for easy debugging (see Chapter 16). Set it to `true` to display the toolbar on every page. | `true` in development, `false` in production
-`check_symfony_version` | Enables the check of the symfony version for every request. Set it to on for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
-`check_lock`            | Enables the application lock system, triggered by the `cache:clear` and `project:disable` tasks (see the previous section). Set it to `true` to have all requests to disabled applications redirected to the `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php` page. | `false`
-`compressed`            | Enables PHP response compression. Set it to `true` to compress the outgoing HTML via the PHP compression handler. | `false`
+Parametro           | Descrizione                                    | Valore predefinito
+------------------- | ---------------------------------------------- | ------------------
+`use_database`      | Abilita la gestione del database. Impostare a `false` se non si usa un database. | `true`
+`i18n`              | Abilita la traduzione dell'interfaccia (si veda il Capitolo 13). Impostare a `true` per applicazioni multi-lingua. | `false`
+`logging_enabled`   | Abilita il log degli eventi di symfony. Impostare a `false` se si vogliono disabilitare i log. | `true`
+`escaping_strategy` | Abilita l'escape dell'output (si veda il Capitolo 7). Impostare a `true` se si vuole l'escape dei dati passati ai template. | `true`
+`cache`             | Abilita template caching (see Capitolo 12). Impostare a `true` se almeno un modulo include il file `cache.yml`. Il filtro della cache (`sfCacheFilter`) è abilitato. | `false` in sviluppo, `true` in produzione
+`web_debug`         | Abilita la web debug toolbar per facilitare il debug (si veda il Capitolo 16). Impostare a `true` per mostrare toolbar su ogni pagina. | `true` in sviluppo, `false` in produzione
+`check_symfony_version` | Abilita la verifica della versione di symfony a ogni richiesta. Impostare a `true` per pulire la cache automaticamente dopo un aggiornamento di symfony. Lasciare a `false` se si pulisce la cache a mano dopo un aggiornamento. | `false`
+`check_lock`        | Abilita il sistema di blocco dell'applicazione, attivato dai task `cache:clear` e `project:disable` (vedere la sezione precedente). Impostare a `true` per fare in modo che tutte le richieste ad applicazioni disabilitate siano rinviate alla pagina `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php`. | `false`
+`compressed`        | Abilita la compressione della risposta in PHP. Impostare a `true` per comprimere il codice HTML in uscita tramite il gestore di compressione di PHP. | `false`
 
-### Feature Configuration
+### Configurazione delle caratteristiche
 
-Symfony uses some parameters of `settings.yml` to alter the behavior of built-in features such as form validation, cache, and third-party modules.
+Symfony usa alcuni parametri di `settings.yml` per modificare il comportamento di
+caratteristiche predefinite, come la validazione di form, la cache e moduli di terze
+parti.
 
-#### Output Escaping Settings
+#### Impostazioni dell'escape dell'output
 
-Output escaping settings control the way the variables are accessible in the template (see Chapter 7). The `settings.yml` file includes two settings for this feature:
+Le impostazioni di escape dell'output controllano il modo in cui il template accede alle
+variabili (vedere Capitolo 7). Il file `settings.yml` include due impostazioni per questa
+caratteristica:
 
-  * The `escaping_strategy` setting can take the value `true`, or `false`.
-  * The `escaping_method` setting can be set to `ESC_RAW`, `ESC_SPECIALCHARS`, `ESC_ENTITIES`, `ESC_JS`, or `ESC_JS_NO_ENTITIES`.
+  * L'impostazione `escaping_strategy` accetta i valori `true` o `false`.
+  * L'impostazione `escaping_method` accetta i valori `ESC_RAW`, `ESC_SPECIALCHARS`,
+    `ESC_ENTITIES`, `ESC_JS` o `ESC_JS_NO_ENTITIES`.
 
-#### Routing Settings
+#### Impostazioni del routing
 
-The routing settings (see Chapter 9) are defined in `factories.yml`, under the `routing` key. Listing 19-1 show the default routing configuration.
+Le impostazioni del routing (vedere Capitolo 9) sono definite in `factories.yml`, sotto
+la chiave `routing`. Il Listato 19-1 mostra la configurazione predefinita del routing.
 
-Listing 19-1 - Routing Configuration Settings, in `frontend/config/factories.yml`
+Listato 19-1 - Impostazioni di configurazione del routing, in `frontend/config/factories.yml`
 
     routing:
       class: sfPatternRouting
@@ -114,34 +153,71 @@ Listing 19-1 - Routing Configuration Settings, in `frontend/config/factories.yml
             lifetime:                  31556926
             prefix:                    %SF_APP_DIR%
 
-  * The `suffix` parameter sets the default suffix for generated URLs. The default value is a period (`.`), and it corresponds to no suffix. Set it to `.html`, for instance, to have all generated URLs look like static pages.
-  * When a routing rule doesn't define the `module` or the `action` parameter, values from the `factories.yml` are used instead:
-    * `default_module`: Default `module` request parameter. Defaults to the `default` module.
-    * `default_action`: Default `action` request parameter. Defaults to the `index` action.
-  * By default, route patterns identify named wildcards by a colon (`:`) prefix. But if you want to write your rules in a more PHP-friendly syntax, you can add the dollar (`$`) sign in the `variable_prefixes` array. That way, you can write a pattern like '/article/$year/$month/$day/$title' instead of '/article/:year/:month/:day/:title'.
-  * The pattern routing will identify named wildcards between separators. The default separators are the slash and the dot, but you can add more if you want in the `segment_separators` parameter. For instance, if you add the dash (`-`), you can write a pattern like '/article/:year-:month-:day/:title'.
-  * The pattern routing uses its own cache, in production mode, to speed up conversions between external URLs and internal URIs. By default, this cache uses the filesystem, but you can use any cache class, provided that you declare the class and its settings in the `cache` parameter. See Chapter 15 for the list of available cache storage classes. To deactivate the routing cache in production, set the `debug` parameter to `true`.
+  * Il parametro `suffix` imposta il suffisso predefinito per gli URL generati. Il valore
+    predefinito è un punto (`.`) e corrisponde a nessun suffisso. Impostare a `.html`, ad
+    esempio, per far sembrare statici tutti gli URL generati.
+  * Quando una regole di routing rule non definisce il parametro `module` o `action`,
+    vengono usati i valori di `factories.yml`:
+    * `default_module`: Parametro `module` predefinito. Il valore predefinito è `default`.
+    * `default_action`: Parametro `action` predefinito. Il valore predefinito è `index`.
+  * Per impostazione predefinita, gli schemi del routing identificano i segnaposto tramite
+    un prefisso due-punti (`:`). Ma se si vogliono scrivere regole in una sintassi più
+    familiare per PHP, si può aggiungere il simbolo del dollaro (`$`) in
+    `variable_prefixes`. In questo modo, si possono scrivere schemi come
+    '/article/$year/$month/$day/$title' invece di '/article/:year/:month/:day/:title'.
+  * Lo schema del routing identifica i segnaposto tra i separatori. I separatori
+    predefiniti sono la barra e il punto, ma se ne possono aggiungere altri nel parametro
+    `segment_separators`. Ad esempio, se si aggiunge il trattino (`-`), si possono
+    scrivere schemi come '/article/:year-:month-:day/:title'.
+  * Lo schema del routing usa una sua cache, in produzione, per accelerare la conversione
+    tra URL esterni e interni. Per impostazione predefinita, questa cache usa il
+    filesystem, ma si può usare qualsiasi classe di cache, a patto di dichiarare tale
+    classe e le sue impostazioni nel parametro `cache`. Vedere il Capitolo 15 per la lista
+    delle classi disponibili. Per disattivare la cache del routing in produzione,
+    impostare il parametro `debug` a `true`.
 
-These are only the settings for the `sfPatternRouting` class. You can use another class for your application routing, either your own or one of symfony's routing factories (`sfNoRouting` and `sfPathInfoRouting`). With either of these two factories, all external URLs look like 'module/action?key1=param1'. No customization possible--but it's fast. The difference is that the first uses PHP's `GET`, and the second uses `PATH_INFO`. Use them mainly for backend interfaces.
+Queste sono solo le impostazioni per la classe `sfPatternRouting`. Si può usare un'altra
+classe per il routing, una propria oppure uno dei factory di symfony (`sfNoRouting` e
+`sfPathInfoRouting`). Con uno di questi due, tutti gli URL esterni appaiono come
+'module/action?key1=param1'. Non si può personalizzare, ma è veloce. La differenze è che
+il primo usa `GET` di PHP e il secondo usa `PATH_INFO`. Meglio usarli solo per interfacce
+di amministrazione.
 
-There is one additional parameter related to routing, but this one is stored in `settings.yml`:
+Ci sono altri parametri legati al routing, ma questo si trova in `settings.yml`:
 
-  * `no_script_name` enables the front controller name in generated URLs. The `no_script_name` setting can be on only for a single application in a project, unless you store the front controllers in various directories and alter the default URL rewriting rules. It is usually on for the production environment of your main application and off for the others.
+  * `no_script_name` abilita il nome del front controller negli URL generati.
+     L'impostazione `no_script_name` può essere attiva solo per una singola applicazione
+     a progetto, a meno che non si pongano i front controller in cartelle diverse e si
+     alterino le regole predefinite di routing. Di solita si attiva per l'ambiente di
+     produzione dell'applicazione principale e si disattiva per le altre.
 
-#### Form Validation Settings
+#### Impostazioni di validazione dei form
 
 >**NOTE**
->The features described in this section are deprecated since symfony 1.1 and only work if you enable the `sfCompat10` plugin.
+>Le caratteristiche descritte in questa sezione sono deprecate da symfony 1.1 e
+>funzionano solo abilitando il plugin `sfCompat10`.
 
-Form validation settings control the way error messages output by the `Validation` helpers look (see Chapter 10). These errors are included in `<div>` tags, and they use the `validation_error_ class` setting as a `class` attribute and the `validation_error_id_prefix` setting to build up the `id` attribute. The default values are `form_error` and `error_for_`, so the attributes output by a call to the `form_error()` helper for an input named `foobar` will be `class="form_error" id="error_for_foobar"`.
+Le impostazioni di validazione dei form controllano il modo in cui i messaggi di errore
+sono mostrati dagli helper `Validation` (vedere Capitolo 10). Questi errori sono inseriti
+in tag `<div>` usano `validation_error_ class` come attributo `class` e
+`validation_error_id_prefix` per costruire l'attributo `id`. I valori predefiniti sono
+`form_error` e `error_for_`, quindi gli attributi mostrati da una chiamata all'helper
+`form_error()` per un input di nome `pippo` saranno `class="form_error" id="error_for_pippo"`.
 
-Two settings determine which characters precede and follow each error message: `validation_error_prefix` and `validation_error_suffix`. You can change them to customize all error messages at once.
+Due impostazioni determinano quali caratteri precedono e seguono ogni messaggio di
+errore: `validation_error_prefix` e `validation_error_suffix`. Possono essere modicati
+per personalizzare tutti i messaggi di errore.
 
-#### Cache Settings
+#### Impostazioni della cache
 
-Cache settings are defined in `cache.yml` for the most part, except for two in `settings.yml`: `cache` enables the template cache mechanism, and `etag` enables ETag handling on the server side (see Chapter 15). You can also specify which storage to use for two all cache systems (the view cache, the routing cache, and the i18n cache) in `factories.yml`. Listing 19-2 show the default view cache factory configuration.
+Le impostazioni della cache sono definiti per la maggior parte in `cache.yml`, tranne per
+due impostazioni in `settings.yml`: `cache` abilita la cache e `etag` abilita la gestione
+di ETag sul server (vedere Capitolo 15). Si può anche specificare quale sistema di
+memorizzazione usare per tutte le cache (della vista, del routing e di i18n) in
+`factories.yml`. Il Listato 19-2 mostra la configurazione predefinita della cache della
+vista.
 
-Listing 19-2 - View Cache Configuration Settings, in `frontend/config/factories.yml`
+Listato 19-2 - Impostazioni della cache della vista, in `frontend/config/factories.yml`
 
     view_cache:
       class: sfFileCache
@@ -151,53 +227,87 @@ Listing 19-2 - View Cache Configuration Settings, in `frontend/config/factories.
         lifetime:                  86400
         prefix:                    %SF_APP_DIR%/template
 
-The `class` can be any of `sfFileCache`, `sfAPCCache`, `sfEAcceleratorCache`, `sfXCacheCache`, `sfMemcacheCache`, and `sfSQLiteCache`. It can also be your own custom class, provided it extends `sfCache` and provides the same generic methods for setting, retrieving and deleting a key in the cache. The factory parameters depend on the class you choose, but there are constants:
+La voce `class` può essere una tra `sfFileCache`, `sfAPCCache`, `sfEAcceleratorCache`,
+`sfXCacheCache`, `sfMemcacheCache` e `sfSQLiteCache`. Può anche essere una classe
+personalizzata, a patto che estenda `sfCache` e fornisca gli stessi metodi generici per
+impostare, recuperare e cancellare una chiave nella cache. I parametri del factory
+dipendono dalla classe scelta, ma ci sono alcune costanti:
 
-  * `lifetime` defines the number of seconds after which a cache part is removed
-  * `prefix` is a prefix added to every cache key (use the environment in the prefix to use different cache depending on the environment). Use the same prefix for two applications if you want their cache to be shared.
+  * `lifetime` definisce il numero di secondo dopo i quali una parte di cache va rimossa
+  * `prefix` è un prefisso aggiunto a ogni chiave della cache (usare l'ambiente nel
+    prefisso per avere cache diverse in base all'ambiente). Usare lo stesso prefisso per
+    due applicazioni, se si vuole che condividano la cache.
 
-Then, for each particular factory, you have to define the location of the cache storage.
+Poi, per ogni particolare factory, occorre definire la locazione della memorizzazione
+della cache.
 
- * for `sfFileCache`, the `cache_dir` parameter locates the absolute path to the cache directory
- * `sfAPCCache`, `sfEAcceleratorCache`, and `sfXCacheCache` don't take any location parameter, since they use PHP native functions for communicating with APC, EAccelerator or the XCache cache systems
- * for `sfMemcacheCache`, enter the hostname of the Memcached server in the `host` parameter, or an array of hosts in the `servers` parameter
- * for `sfSQLiteCache`, the absolute path to the SQLite database file should be entered in the `database` parameter
+ * per `sfFileCache`, il parametro `cache_dir` individua il percorso assoluto della
+   cartella della cache
+ * `sfAPCCache`, `sfEAcceleratorCache` e `sfXCacheCache` non hanno parametri di locazione,
+   perché usano funzioni native di PHP per comunicare con APC, EAccelerator o  XCache
+ * per `sfMemcacheCache`, inserire il nome dell'host del server Memcached nel
+   parametro `host` oppure un array di host nel parametro `servers`
+ * per `sfSQLiteCache`, inserire il percorso assoluto del file del database SQLite nel
+   parametro `database`
 
-For additional parameters, check the API documentation of each cache class.
+Per ulteriori parametri, controllare la documentazione delle API per ogni classe.
 
-The view is not the only component to be able to use a cache. Both the `routing` and the `I18N` factories offer a `cache` parameter in which you can set any cache factory, just like the view cache. For instance, Listing 19-1 shows of the routing uses the file cache for its speedup tactics by default, but you can change it to whatever you want.
+La vista non è l'unica parte a poter usare una cache. Sia il factory `routing` che quello
+`I18N` offrono un parametro `cache`, in cui si può impostare un factory cache, proprio
+come per la vista. Ad esempio, il Listato 19-1 mostra come il routing usi la cache
+dei file per accelerare, ma la si può cambiare.
 
-#### Logging Settings
+#### Impostazioni di log
 
-Two logging settings (see Chapter 16) are stored in `settings.yml`:
+Ci sono due impostazioni di log (vedere Capitolo 16) in `settings.yml`:
 
-  * `error_reporting` specifies which events are logged in the PHP logs. By default, it is set to `E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR` for the production environment (so the logged events are `E_PARSE`, `E_COMPILE_ERROR`, `E_ERROR`, `E_CORE_ERROR`, and `E_USER_ERROR`) and to `E_ALL | E_STRICT` for the development environment.
-  * The `web_debug` setting activates the web debug toolbar. Set it to `true` only in the development and test environments.
+  * `error_reporting` specifica quali eventi inserire nei log di PHP. La sua impostazione
+    predefinita è `E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR` per
+    l'ambiente di produzione (quindi gli eventi che vanno in log sono `E_PARSE`,
+    `E_COMPILE_ERROR`, `E_ERROR`, `E_CORE_ERROR` e `E_USER_ERROR`) e `E_ALL | E_STRICT`
+    per l'ambiente di sviluppo.
+  * L'impostazione `web_debug` attiva la web debug toolbar. Impostare a `true` solo per
+    ambiente di sviluppo e di test.
 
-#### Paths to Assets
+#### Percorsi delle risorse
 
-The `settings.yml` file also stores paths to assets. If you want to use another version of the asset than the one bundled with symfony, you can change these path settings:
+Il file `settings.yml` memorizza anche dei percorsi per le risorse. Se si vuole usare una
+versione diversa di una risorsa distribuita con symfony, si possono cambiare questi
+percorsi:
 
-  * Files needed by the administration generator stored in `admin_web_dir`
-  * Files needed by the web debug toolbar stored in `web_debug_web_dir`
+  * I file necessari al generatore di amministrazione, in `admin_web_dir`
+  * I file necessari alla web debug toolbar, in `web_debug_web_dir`
 
-#### Default Helpers
+#### Helper predefiniti
 
-Default helpers, loaded for every template, are declared in the `standard_helpers` setting (see Chapter 7). By default, these are the `Partial`, `Cache`, and `Form` helper groups. If you use a helper group in all templates of an application, adding its name to the `standard_helpers` setting saves you the hassle of declaring it with `use_helper()` on each template.
+Gli helper predefiniti, caricati per ogni template, sono dichiarati nell'impostazione
+`standard_helpers` (vedere Capitolo 7). I predefiniti sono i gruppi `Partial` e `Cache`.
+Se si usano altri gruppi di helper in tutti i template di un'applicazione, aggiungere i
+loro nomi all'impostazione `standard_helpers` fa risparmiare la dichiarazione ripetuta di
+`use_helper()` in ogni template.
 
-#### Activated Modules
+#### Moduli attivati
 
-Activated modules from plug-ins or from the symfony core are declared in the `enabled_modules` parameter. Even if a plug-in bundles a module, users can't request this module unless it is declared in `enabled_modules`. The `default` module, which provides the default symfony pages (congratulations, page not found, and so on), is the only enabled module by default.
+I moduli attivati dai plugin o da symfony sono dichiarati nel parametro `enabled_modules`.
+Anche se un plugin ha un modulo, questo non può essere usato a meno di non essere
+dichiarati in `enabled_modules`. Il modulo `default`, che fornisce alcune pagine
+predefinite di symfony (congratulazioni, pagina non trovata, ecc.), è l'unico modulo
+già abilitato.
 
-#### Character Set
+#### Set di caratteri
 
-The character set of the responses is a general setting of the application, because it is used by many components of the framework (templates, output escaper, helpers, and so on). Defined in the `charset` setting, its default (and advised) value is `utf-8`.
-
+Il set di caratteri della risposta è un'impostazione generale dell'applicazione, perché è
+usata da diversi componenti del framework (template, escape dell'output, helper, ecc.).
+Definito nell'impostazione `charset`, il valore predefinito (e consigliato) è `utf-8`.
 
 >**SIDEBAR**
->Adding Your application settings
+>Aggiungere le proprie impostazioni
 >
->The `settings.yml` file defines symfony settings for an application. As discussed in Chapter 5, when you want to add new parameters, the best place to do so is in the `frontend/config/app.yml` file. This file is also environment-dependent, and the settings it defines are available through the sfConfig class with the `app_` prefix.
+>Il file `settings.yml` definisce le impostazioni di symfony per un'applicazione. Come
+>discusso nel Capitolo 5, quando si vogliono aggiungere nuovi parametri, il posto migliore
+>per farlo è il file `frontend/config/app.yml`. Questo file è anche dipendente
+>dall'ambiente e le impostazioni che vi sono definite sono disponibili tramite la classe
+>`sfConfig` col prefisso `app_`.
 >
 >
 >     all:
@@ -207,29 +317,52 @@ The character set of the responses is a general setting of the application, beca
 >         americanexpress:  true     # app_creditcards_americanexpress
 >
 >
->You can also write an `app.yml` file in the project configuration directory, and this provides a way to define custom project settings. The configuration cascade also applies to this file, so the settings defined in the application `app.yml` file override the ones defined at the project level.
+>Si può mettere un file `app.yml` anche nella cartella di configurazione del progetto e
+>definire quindi impostazioni personalizzate per il progetto. La configurazione a cascata
+>si applica anche a questo file, quindi le impostazioni definite in `app.yml`
+>dell'applicazione sovrascrivono qelle definite a livello di progett.
 
-Extending the Autoloading Feature
----------------------------------
+Estendere l'autocaricamento
+---------------------------
 
-The autoloading feature, briefly explained in Chapter 2, exempts you from requiring classes in your code if they are located in specific directories. This means that you can just let the framework do the job for you, allowing it to load only the necessary classes at the appropriate time, and only when needed.
+L'autocaricamento, spiegato brevemente nel Capitolo 2, evita di dover richiedere ogni
+volta le classi, se sono inserite in cartelle specifiche. Questo vuol dire che si può
+lasciare che il framework faccia il lavoro per noi, consentendogli di caricare solo le
+classi necessarie nel momento opportuno e solo quando necessario.
 
-The `autoload.yml` file lists the paths in which autoloaded classes are stored. The first time this configuration file is processed, symfony parses all the directories referenced in the file. Each time a file ending with `.php` is found in one of these directories, the file path and the class names found in this file are added to an internal list of autoloading classes. This list is saved in the cache, in a file called `config/config_autoload.yml.php`. Then, at runtime, when a class is used, symfony looks in this list for the class path and includes the `.php` file automatically.
+Il file `autoload.yml` elenca i percorsi in cui le classi autocaricate risiedono. La
+prima volta che questo file viene processato, symfony analizza tutte le cartelle. Ogni
+volta che trova un file con estensione `.php` in una di queste cartelle, il percorso del
+file e il nome della classe sono aggiunti a una lista interna di classi autocaricate.
+Questa lista è salvata in cache, in un file chiamato `config/config_autoload.yml.php`.
+Quindi, durante l'esecuzione, quando si usa una classe, symfony cerca il percorso in
+questa lista e include automaticamente il file `.php`.
 
-Autoloading works for all `.php` files containing classes and/or interfaces.
+L'autocaricamento funziona per tutti i file `.php` che contengono classi o interfacce.
 
-By default, classes stored in the following directories in your projects benefit from the autoloading automatically:
+Per impostazione predefinita, le classi che si trovano nelle seguenti cartelle del
+progetto beneficiano automaticamente dell'autocaricamento:
 
-  * `myproject/lib/`
-  * `myproject/lib/model`
-  * `myproject/apps/frontend/lib/`
-  * `myproject/apps/frontend/modules/mymodule/lib`
+  * `progetto/lib/`
+  * `progetto/lib/model`
+  * `progetto/apps/frontend/lib/`
+  * `progetto/apps/frontend/modules/mymodule/lib`
 
-There is no `autoload.yml` file in the default application configuration directory. If you want to modify the framework settings--for instance, to autoload classes stored somewhere else in your file structure--create an empty autoload.yml file and override the settings of `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml` or add your own.
+Non c'è un file `autoload.yml` nella cartella di configurazione predefinita di
+un'applicazione. Se si vogliono modificare le impostazioni del framework, ad esempio per
+caricare automaticamente classi che si trovano altrove, basta creare un file `autoload.yml`
+vuoto e sovrascrivere le impostazioni di
+`sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml` o aggiungere le proprie.
 
-The autoload.yml file must start with an autoload: key and list the locations where symfony should look for classes. Each location requires a label; this gives you the ability to override symfony's entries. For each location, provide a `name` (it will appear as a comment in `config_autoload.yml.php`) and an absolute `path`. Then define if the search must be `recursive`, which directs symfony to look in all the subdirectories for `.php` files, and `exclude` the subdirectories you want. Listing 19-3 shows the locations used by default and the file syntax.
+Il file `autoload.yml` deve iniziare con la chiave `autoload:` ed elencare i posti in cui
+symfony deve cercare le classi. Ogni posto richiede un'etichetta. Questo dà la
+possibilità di sovrascrivere le voci di symfony. Per ogni posto, fornire un nome `name`
+(apparirà come commento in `config_autoload.yml.php`) e un percorso assoluto `path`.
+Quindi definire se la ricerca debba essere `recursive` (ricorsiva), cioè se symfony deve
+cercare nelle sottocartelle, oppure `exclude` (escludere alcune sottocartelle). Il
+Listato 19-3 mostra i posti predefiniti e la sintassi del file.
 
-Listing 19-3 - Default Autoloading Configuration, in `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml`
+Listato 19-3 - Configurazione predefinita di autocaricamento, in `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml`
 
     autoload:
       # plugins
@@ -268,9 +401,16 @@ Listing 19-3 - Default Autoloading Configuration, in `sfConfig::get('sf_symfony_
         prefix:         1
         recursive:      true
 
-A rule path can contain wildcards and use the file path parameters defined in the configuration classes (see the next section). If you use these parameters in the configuration file, they must appear in uppercase and begin and end with `%`.
+I percorsi possono contenere caratteri jolly e usare i parametri dei percorsi dei file
+definiti nelle classi di configurazione (vedere la prossima sezione). Se si usano questi
+parametri nel file di configurazione, devono essere scritti in maiuscolo e racchiusi tra
+simboli di percentuale `%`.
 
-Editing your own `autoload.yml` will add new locations to symfony's autoloading, but you may want to extend this mechanism and add your own autoloading handler to symfony's handler. As symfony uses the standard `spl_autoload_register()` function to manage class autoloading, you can register more callbacks in the application configuration class:
+Modificando il proprio `autoload.yml`, si aggiungeranno nuovi posti all'autocaricamento di
+symfony, ma si potrebbe voler estendere questo meccanismo per aggiungere i propri gestori
+di autocaricamento al gestore di symfony. Poiché symfony usa la funzione standard
+`spl_autoload_register()` per gestire l'autocaricamento, si possono registrare ulteriori
+callback nella classe di configurazione dell'applicazione:
 
     [php]
     class frontendConfiguration extends sfApplicationConfiguration
@@ -279,28 +419,43 @@ Editing your own `autoload.yml` will add new locations to symfony's autoloading,
       {
         parent::initialize(); // load symfony autoloading first
 
-        // insert your own autoloading callables here
+        // inserire qui le proprie funzioni o metodi di autocaricamento
         spl_autoload_register(array('myToolkit', 'autoload'));
       }
     }
 
-When the PHP autoloading system encounters a new class, it will first try the symfony autoloading method (and use the locations defined in `autoload.yml`). If it doesn't find a class definition, all the other callables registered with `spl_autoload_register()` will be called, until the class is found. So you can add as many autoloading mechanisms as you want--for instance, to provide a bridge to other framework components (see Chapter 17).
+Quando il sistema di autocaricamento di PHP incontra una nuova classe, prova prima il
+metodo di autocaricamento di symfony (e usa i posti definiti in `autoload.yml`). Se non
+trova una definizione di classe, tutti gli altri callable registrati con
+`spl_autoload_register()` saranno richiamati, finché la classe non viene trovata. Quindi
+si possono aggiungere quanti meccanismi di autocaricamento si vuole, ad esempio per
+fornire sistemi di aggancio con componenti di altri framework (vedere Capitolo 17).
 
-Custom File Structure
----------------------
+Struttura dei file personalizzata
+---------------------------------
 
-Each time the framework uses a path to look for something (from core classes to templates, plug-ins, configurations, and so on), it uses a path variable instead of an actual path. By changing these variables, you can completely alter the directory structure of a symfony project, and adapt to the file organization requirements of any client.
+Ogni volta che il framework usa un percorso per cercare qualcosa (classi, template,
+plugin, configurazioni, ecc.), usa una variabile invece di un percorso reale.
+Cambiando queste variabili, si può alterare completamente la struttura di cartelle di
+un progetto symfony e adattarsi ai requisiti di organizzazione dei file di qualsiasi
+cliente.
 
 >**CAUTION**
->Customizing the directory structure of a symfony project is possible but not necessarily a good idea. One of the strengths of a framework like symfony is that any web developer can look at a project built with it and feel at home, because of the respect for conventions. Make sure you consider this issue before deciding to use your own directory structure.
+>Personalizzare la struttura di cartella di un progetto è possibile, ma non sempre è una
+>buona idea. Uno dei punti di forza di un framework come symfony sta nel fatto che ogni
+>sviluppatore può guardare un progetto già fatto e trovarlo familiare, perché le
+>convenzioni sono state rispettate. Assicurarsi di considerare bene questo aspetto, prima
+>di decidere di personalizzare la struttura delle cartelle.
 
-### The Basic File Structure
+### La struttura di base dei file
 
-The path variables are defined in the `sfProjectConfiguration` and `sfApplicationConfiguration` classes and stored in the `sfConfig` object. Listing 19-4 shows a listing of the path variables and the directory they reference.
+Le variabili dei percorsi sono definiti nelle classi `sfProjectConfiguration` e
+`sfApplicationConfiguration` e memorizzate nell'oggetto `sfConfig`. Il Listato 19-4 mostra
+un elenco di variabili di percorsi e le relative cartelle.
 
-Listing 19-4 - Default File Structure Variables, defined in `sfProjectConfiguration` and `sfApplicationConfiguration`
+Listato 19-4 - Variabili predefinite della struttura dei file, definite in `sfProjectConfiguration` e `sfApplicationConfiguration`
 
-    sf_root_dir           # myproject/
+    sf_root_dir           # progetto/
     sf_apps_dir           #   apps/
     sf_app_dir            #     frontend/
     sf_app_config_dir     #       config/
@@ -325,42 +480,66 @@ Listing 19-4 - Default File Structure Variables, defined in `sfProjectConfigurat
     sf_web_dir            #   web/
     sf_upload_dir         #     uploads/
 
-Every path to a key directory is determined by a parameter ending with `_dir`. Always use the path variables instead of real (relative or absolute) file paths, so that you will be able to change them later, if necessary. For instance, when you want to move a file to the `uploads/` directory in an application, you should use `sfConfig::get('sf_upload_dir')` for the path instead of `sfConfig::get('sf_root_dir').'/web/uploads/'`.
+Ogni percorso a una cartella è determinato da un parametro che finisce con `_dir`. Usare
+sempre le variabili invece dei percorsi veri (relativi o assoluti) dei file, in modo da
+poterli cambiare successivamente, se necessario. Ad esempio, se si vuole spostare un file
+nella cartella `uploads/`, usare `sfConfig::get('sf_upload_dir')` e non
+`sfConfig::get('sf_root_dir').'/web/uploads/'`.
 
-### Customizing the File Structure
+### Personalizzare la struttura dei file
 
-You will probably need to modify the default project file structure if you develop an application for a client who already has a defined directory structure and who is not willing to change it to comply with the symfony logic. By overriding the `sf_XXX_dir` variables with `sfConfig`, you can make symfony work for a totally different directory structure than the default structure. The best place to do this is in the application `ProjectConfiguration` class for project directories, or `XXXConfiguration` class for applications directories.
+Se si deve sviluppare un'applicazione per un cliente che ha già una struttura definita,
+probabilmente si dovrà modificare la struttura predefinita del progetto. Ridefinendo le
+variabili `sf_XXX_dir` con `sfConfig`, si può far funzionare symfony in una struttura
+completamente diversa. Il posto migliore dove farlo è nella classe `ProjectConfiguration`
+dell'applicazione oppure nella classe `XXXConfiguration`, per le cartelle delle
+applicazioni.
 
-For instance, if you want all applications to share a common directory for the template layouts, add this line to the `setup()` method of the `ProjectConfiguration` class to override the `sf_app_template_dir` settings:
+Per esempio, se si vuole che tutte le applicazioni condividano una sola cartella per
+i template del layout, basta aggiungere questa riga nel metodo `setup()` della classe
+`ProjectConfiguration` per ridefinire le impostazioni di `sf_app_template_dir`:
 
     [php]
     sfConfig::set('sf_app_template_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'templates');
 
->**Note**
->Even if you can change your project directory structure by calling `sfConfig::set()`, it's better to use the dedicated methods defined by the project and application configuration classes if possible as they take care of changing all the related paths. For example, the `setCacheDir()` method changes the following constants: `sf_cache_dir`, `sf_app_base_cache_dir`, `sf_app_cache_dir`, `sf_template_cache_dir`, `sf_i18n_cache_dir`, `sf_config_cache_dir`, `sf_test_cache_dir`, and `sf_module_cache_dir`.
+>**NOTE**
+>Anche se si può cambiare la struttura delle cartelle del progetto con `sfConfig::set()`,
+>è meglio usare i metodi dedicati definiti dalle classi di configurazione del progetto e
+>dell'applicazione, se possibile, perché questi si occupano di cambiare tutti i percorsi
+>correlati. Per esempio, il metodo `setCacheDir()` cambia le seguenti costanti:
+>`sf_cache_dir`, `sf_app_base_cache_dir`, `sf_app_cache_dir`, `sf_template_cache_dir`,
+>`sf_i18n_cache_dir`, `sf_config_cache_dir`, `sf_test_cache_dir` e `sf_module_cache_dir`.
 
-### Modifying the Project Web Root
+### Cambiare la cartella radice del progetto
 
-All the paths built in the configuration classes rely on the project root directory, which is determined by the `ProjectConfiguration` file included in the front controller. Usually, the root directory is one level above the `web/` directory, but you can use a different structure. Suppose that your main directory structure is made of two directories, one public and one private, as shown in Listing 19-5. This typically happens when hosting a project on a shared host.
+Tutti i percorsi costruiti nelle classi di configurazione si basano sulla cartella radice
+del progetto, che è stabilita dal file `ProjectConfiguration` incluso dal front
+controller. Di solito la cartella radice è un livello sopra la cartella `web/`, ma si
+potrebbe usare una struttura diversa. Si supponga che la propria struttura principale di
+cartella sia costituita da due cartelle, una pubblica e l'altra privata, come mostrato nel
+Listato 19-5. Questo succede solitamente per progetti su host condivisi.
 
-Listing 19-5 - Example of Custom Directory Structure for a Shared Host
+Listato 19-5 - Esempio di struttura di cartelle personalizzata per un host condiviso
 
-    symfony/    # Private area
+    symfony/    # Area privata
       apps/
       config/
       ...
-    www/        # Public area
+    www/        # Area pubblica
       images/
       css/
       js/
       index.php
 
-In this case, the root directory is the `symfony/` directory. So the `index.php` front controller simply needs to include the `config/ProjectConfiguration.class.php` file as follows for the application to work:
+In questo caso, la cartella radice è la cartella `symfony/`. Quindi il front controller
+`index.php` deve solo includere il file `config/ProjectConfiguration.class.php`, come
+segue, per far funzionare l'applicazione:
 
     [php]
     require_once(dirname(__FILE__).'/../symfony/config/ProjectConfiguration.class.php');
 
-In addition, use the `setWebDir()` method to change the public area from the usual `web/` to `www/`, as follows:
+Inoltre, usare il metodo `setWebDir()` per cambiare l'area pubblica dal solito `web/` a
+`www/`, come segue:
 
     [php]
     class ProjectConfiguration extends sfProjectConfiguration
@@ -373,16 +552,21 @@ In addition, use the `setWebDir()` method to change the public area from the usu
       }
     }
 
-Understanding Configuration Handlers
-------------------------------------
+Capire i gestori di configurazione
+----------------------------------
 
-Each configuration file has a handler. The job of configuration handlers is to manage the configuration cascade, and to do the translation between the configuration files and the optimized PHP code executable at runtime.
+Ogni file di configurazione ha un gestore. Il compito dei gestori di configurazione è
+quello di gestire la configurazione a cascata e di fare la traduzione tra i file di
+configurazione e il codice PHP ottimizzato eseguibile a runtime.
 
-### Default Configuration Handlers
+### Gestori di configurazione predefiniti
 
-The default handler configuration is stored in `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. This file links the handlers to the configuration files according to a file path. Listing 19-6 shows an extract of this file.
+Il gestore di configurazione predefinito è memorizzato in
+`sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. Questo file
+collega i gestori ai file di configurazione, secondo un percorso di file. Il Listato 19-6
+mostra un estratto di questo file.
 
-Listing 19-6 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
+Listato 19-6 - Estratto di `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
 
     config/settings.yml:
       class:    sfDefineEnvironmentConfigHandler
@@ -403,44 +587,69 @@ Listing 19-6 - Extract of `sfConfig::get('sf_symfony_lib_dir')/config/config/con
         prefix: mod_
         module: yes
 
-For each configuration file (`config_handlers.yml` identifies each file by a file path with wildcards), the handler class is specified under the `class` key.
+Per ogni file di configurazione (`config_handlers.yml` identifica ogni file in base a un
+percorso di file con caratteri jolly), la classe gestore è specificata sotto la chiave
+`class`.
 
-The settings of configuration files handled by `sfDefineEnvironmentConfigHandler` can be made available directly in the code via the `sfConfig` class, and the param key contains a prefix value.
+Le impostazioni dei file di configurazione gestiti da `sfDefineEnvironmentConfigHandler`
+possono essere rese disponibili direttamente nel codice, tramite la classe `sfConfig`, e
+il parametro `key` contiene il valore del prefisso.
 
-You can add or modify the handlers used to process each configuration file--for instance, to use INI or XML files instead of YAML files.
+Si possono aggiungere o modificare i gestori usati per processare ogni file di
+configurazione, ad esempio per usare file INI o XML invece di file YAML.
 
 >**NOTE**
->The configuration handler for the `config_handlers.yml` file is `sfRootConfigHandler` and, obviously, it cannot be changed.
+>Il gestore di configurazione per il file `config_handlers.yml` è `sfRootConfigHandler` e
+>ovviamente non può essere modificato.
 
-If you ever need to modify the way the configuration is parsed, create an empty `config_handlers.yml` file in your application's `config/` folder and override the `class` lines with the classes you wrote.
+Se si dovesse aver bisogno di cambiare il modo in cui la configurazione viene analizzata,
+si può creare un file vuoto `config_handlers.yml` nella cartella `config/`
+dell'applicazione e sovrascrivere le righe `class` con le proprie classi.
 
-### Adding Your Own Handler
+### Aggiungere il proprio gestore
 
-Using a handler to deal with a configuration file provides two important benefits:
+L'utilizzo di un gestore che si occupi di file di configurazione fornisce due importanti
+vantaggi:
 
-  * The configuration file is transformed into executable PHP code, and this code is stored in the cache. This means that the configuration is parsed only once in production, and the performance is optimal.
-  * The configuration file can be defined at different levels (project and application) and the final parameter values will result from a cascade. So you can define parameters at a project level and override them on a per-application basis.
+  * Il file di configurazione viene trasformato in un file di codice PHP e questo codice
+    viene memorizzato nella cache. Questo vuol dire che la configurazione viene analizzata
+    soloa una volta, in produzione, è le prestazioni sono ottimizzate.
+  * Il file di configurazione può essere definito a diversi livelli (progetto e
+    applicazione) e i valori finali dei parametri risulteranno da una cascata. Quindi si
+    possono definire parametri a livello di progetto e sovrascriverli in base alle
+    applicazioni.
 
-If you feel like writing your own configuration handler, follow the example of the structure used by the framework in the `sfConfig::get('sf_symfony_lib_dir')/config/` directory.
+Se ci si sente di scrivere un proprio gestore di configurazione, seguire l'esempio della
+struttura usata dal framework nella cartella `sfConfig::get('sf_symfony_lib_dir')/config/`.
 
-Let's suppose that your application contains a `myMapAPI` class, which provides an interface to a third-party web service delivering maps. This class needs to be initialized with a URL and a user name, as shown in Listing 19-7.
+Supponiamo di avere nella propria applicazione una classe `myMapAPI`, che fornisce
+un'interfaccia verso servizi di mappe di terze parti. Questa classe ha bisogno di essere
+inizializzata con un URL e un nome utente, come mostrato nel Listato 19-7.
 
-Listing 19-7 - Example of Initialization of the `myMapAPI` Class
+Listato 19-7 - Esempio di inizializzazione della classe `myMapAPI`
 
     [php]
     $mapApi = new myMapAPI();
     $mapApi->setUrl($url);
     $mapApi->setUser($user);
 
-You may want to store these two parameters in a custom configuration file called `map.yml`, located in the application config/ directory. This configuration file might contain the following:
+Si potrebbe voler memorizzare questi due parametri in un file di configurazione
+personalizzato chiamato `map.yml`, situato nella cartella `config/` dell'applicazione.
+Il file potrebbe avere i seguenti contenuti:
 
     api:
       url:  map.api.example.com
-      user: foobar
+      user: pippo
 
-In order to transform these settings into code equivalent to Listing 19-7, you must build a configuration handler. Each configuration handler must extend `sfConfigHandler` and provide an `execute()` method, which expects an array of file paths to configuration files as a parameter, and must return data to be written in a cache file. Handlers for YAML files should extend the `sfYamlConfigHandler` class, which provides additional facilities for YAML parsing. For the `map.yml` file, a typical configuration handler could be written as shown in Listing 19-8.
+Per poter trasformare queste impostazioni nel codice del Listato 19-7, occorre costruire
+un gestore di configurazione. Ogni gestore di configurazione deve iniziare con
+`sfConfigHandler` e fornire un metodo `execute()`, che accetta come parametro un array di
+percorsi di file di configurazione e deve restituire i dati da scrivere nel file di cache.
+I gestori di file YAML dovrebbero estendere la classe `sfYamlConfigHandler`, che fornisce
+strutture aggiuntive per l'analisi del codice YAML. Per il file `map.yml`, un tipico
+gestore di configurazione potrebbe essere scritto come nel Listato 19-8.
 
-Listing 19-8 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandler.class.php`
+Listato 19-8 - Un gestore di configurazione personalizzato, in `frontend/lib/myMapConfigHandler.class.php`
 
     [php]
     <?php
@@ -449,7 +658,7 @@ Listing 19-8 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandl
     {
       public function execute($configFiles)
       {
-        // Parse the yaml
+        // Analizza lo yaml
         $config = $this->parseYamls($configFiles);
 
         $data  = "<?php\n";
@@ -469,45 +678,73 @@ Listing 19-8 - A Custom Configuration Handler, in `frontend/lib/myMapConfigHandl
       }
     }
 
-The `$configFiles` array that symfony passes to the `execute()` method will contain a path to all the `map.yml` files found in the `config/` folders. The `parseYamls()` method will handle the configuration cascade.
+L'array `$configFiles` che symfony passa al metodo `execute()` conterrà un percorso verso
+tutti i file `map.yml` trovati nelle cartelle `config/`. Il metodo `parseYamls()`
+gestirà la configurazione a cascata.
 
-In order to associate this new handler with the `map.yml` file, you must create a `config_handlers.yml` configuration file with the following content:
+Per poter associare questo nuovo gestore con il file `map.yml`, si deve creare un file di
+configurazione `config_handlers.yml`, con il seguente contenuto:
 
     config/map.yml:
       class: myMapConfigHandler
 
 >**NOTE**
->The `class` must either be autoloaded (that's the case here) or defined in the file whose path is written in a `file` parameter under the `param` key.
+>La classe definita in `class` deve essere autocaricata (come in questo caso) oppure
+>definita nel file il cui percorso è definito nel parametro `file`, sotto la voce `param`.
 
-As with many other symfony configuration files, you can also register a configuration handler directly in your PHP code:
+Come per molti altri file di configurazione di symfony, si può anche registrare un gestore
+di configurazione direttamente nel codice PHP:
 
     sfContext::getInstance()->getConfigCache()->registerConfigHandler('config/map.yml', 'myMapConfigHandler', array());
 
-When you need the code based on the `map.yml` file and generated by the `myMapConfigHandler` handler in your application, call the following line:
+Quando, nella propria applicazione, si ha bisogno del codice basato sul file `map.yml`
+generato dal gestore `myMapConfigHandler`, basta usare il seguente codice:
 
     [php]
-    include(sfContext::getInstance()->getConfigCache()->checkConfig('config/map.yml'));
+    include sfContext::getInstance()->getConfigCache()->checkConfig('config/map.yml');
 
-When calling the `checkConfig()` method, symfony looks for existing `map.yml` files in the configuration directories and processes them with the handler specified in the `config_handlers.yml` file, if a `map.yml.php` does not already exist in the cache or if the `map.yml` file is more recent than the cache.
+Quando il metodo `checkConfig()` viene richiamato, symfony cerca dei file `map.yml`
+esistenti nelle cartelle di configurazione e li processa col gestore specificato nel file
+`config_handlers.yml`, se non esiste già un `map.yml.php` in cache, oppure se il file
+`map.yml` è più recente di quello in cache.
 
 >**TIP**
->If you want to handle environments in a YAML configuration file, the handler can extend the `sfDefineEnvironmentConfigHandler` class instead of `sfYamlConfigHandler`. Instead of calling the `parseYaml()` method to retrieve the configuration, you should call the `getConfiguration()` method: `$config = $this->getConfiguration($configFiles)`.
+>Se si vogliono gestire gli ambienti in un file di configurazione YAML, il gestore può
+>estendere la classe `sfDefineEnvironmentConfigHandler`, invece di `sfYamlConfigHandler`.
+>Invece di richiamare il metodo `parseYaml()` per recuperare la configurazione, si deve
+>richiamare il metodo `getConfiguration()`:
+>`$config = $this->getConfiguration($configFiles)`.
 
 -
 
 >**SIDEBAR**
->Using Existing configuration handlers
+>Usare i gestore di configurazione esistenti
 >
->If you just need to allow users to retrieve values from the code via `sfConfig`, you can use the `sfDefineEnvironmentConfigHandler` configuration handler class. For instance, to have the `url` and `user` parameters available as `sfConfig::get('map_url')` and `sfConfig::get('map_user')`, define your handler as follows:
+>Se si ha solo bisogno di consentire agli utenti di recuperare dei valori dal codice
+>tramite `sfConfig`, si può usare la classe di gestione della configurazione
+>`sfDefineEnvironmentConfigHandler`. Ad esempio, per rendere disponibili i parametri
+>`url` e `user` come `sfConfig::get('map_url')` e `sfConfig::get('map_user')`, definire il
+>proprio gestore come segue:
 >
+>     [yml]
 >     config/map.yml:
 >       class: sfDefineEnvironmentConfigHandler
 >       param:
 >         prefix: map_
 >
->Be careful not to choose a prefix already used by another handler. Existing prefixes are `sf_`, `app_`, and `mod_`.
+>Si faccia attenzione a non usare un prefisso già usato da altri gestori. Prefissi già
+>usati sono `sf_`, `app_` e `mod_`.
 
-Summary
--------
+Riepilogo
+---------
 
-The configuration files can heavily modify the way the framework works. Because symfony relies on configuration even for its core features and file loading, it can adapt to many more environments than just the standard dedicated host. This great configurability is one of the main strengths of symfony. Even if it sometimes frightens newcomers, who see in configuration files a lot of conventions to learn, it allows symfony applications to be compatible with a very large number of platforms and environments. Once you become a master of symfony's configuration, no server will ever refuse to run your applications!
+I file di configurazione possono modificare pesantemente il modo in cui funziona il
+framework. Poiché symfony si basa sulla configurazione anche per le proprie
+caratteristiche basilari e per caricare i file, esso può adattarsi a molti più ambienti
+di quelli predefiniti. Questa grande configurabilità è uno dei maggiori punti di forza di
+symfony. Anche se a volte spaventa i nuovi arrivati, che vedono nei file di
+configurazione un sacco di convenzioni da imparare, essa consente alle applicazioni
+symfony di essere compatibili con un grandissimo numero di piattaforme e di ambienti.
+Una volta in grado di padroneggiare la configurazione di symfony, nessun server potrà
+rifiutarsi di eseguire le nostre applicazioni!
+ 

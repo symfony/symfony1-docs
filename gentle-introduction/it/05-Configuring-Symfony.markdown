@@ -14,7 +14,7 @@ Questo capitolo spiega come funziona il sistema di configurazione:
 Il Sistema di configurazione
 ----------------------------
 
-A parte lo scopo, la maggior parte delle applicazioni web condivide un insieme di caratteristiche comuni. Ad esempio, qualche sezione può avere accesso ristretto a un certo insieme di utenti, oppure le pagine possono essere decorate da un layout, o ancora la possibilità di avere le form già riempite dopo una validazione fallita. Un framework definisce una struttura per simulare queste caratteristiche, e gli sviluppatori possono ulteriormente modificarle cambiando i file di configurazione. Questa strategia fa risparmiare molto tempo durante lo sviluppo, dato che molti cambiamenti non necessitano di alcuna linea di codice, anche se ce n'è molto dietro. Questo sistema è anche molto efficiente, perché assicura che queste informazioni siano reperibili sempre in un punto unico e facile da trovare.
+A parte lo scopo, la maggior parte delle applicazioni web condivide un insieme di caratteristiche comuni. Ad esempio, qualche sezione può avere accesso ristretto a un certo insieme di utenti, oppure le pagine possono essere decorate da un layout, o ancora la possibilità di avere le form già riempite dopo una validazione fallita. Un framework definisce una struttura per simulare queste caratteristiche e gli sviluppatori possono ulteriormente modificarle cambiando i file di configurazione. Questa strategia fa risparmiare molto tempo durante lo sviluppo, dato che molti cambiamenti non necessitano di alcuna linea di codice, anche se ce n'è molto dietro. Questo sistema è anche molto efficiente, perché assicura che queste informazioni siano reperibili sempre in un punto unico e facile da trovare.
 
 Questo approccio ha però due seri svantaggi:
 
@@ -90,7 +90,7 @@ Listato 5-4 - Sintassi di array in YAML
       - Sammy Sosa
       - Ken Griffey
 
-Per definire un valore come array associativo, o hash, racchiudi gli elementi tra parentesi graffe e inserisci sempre uno spazio tra la chiave e il valore nella coppia 'key: value', e separa gli elementi della lista con delle virgole. Puoi anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel Listato 5-5.
+Per definire un valore come array associativo, o hash, racchiudi gli elementi tra parentesi graffe e inserisci sempre uno spazio tra la chiave e il valore nella coppia 'key: value' e separa gli elementi della lista con delle virgole. Puoi anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel Listato 5-5.
 
 Listato 5-5 - Array associativi in YAML
 
@@ -149,7 +149,7 @@ Listato 5-9 - Gli header di categoria sembrano chiavi, ma cominciano con un un p
 
 In questo esempio, mail è una chiave e general è solo un header di categoria. Tutto funziona come se l'header non esistesse, come mostrato nel Listato 5-10. Il parametro tax è effettivamente un figlio diretto della chiave all. Tuttavia l'uso delle categorie aiuta symfony a trattare con gli array che sono sotto la chiave all.
 
-Listato 5-10 - Gli header di categoria esistono solo per una questione di leggibilità, e sono in effetti ignorati
+Listato 5-10 - Gli header di categoria esistono solo per una questione di leggibilità e sono in effetti ignorati
 
     all:
       tax: 19.6
@@ -162,7 +162,7 @@ Listato 5-10 - Gli header di categoria esistono solo per una questione di leggib
 >
 >YAML è solo un'interfaccia per definire impostazioni utilizzate da PHP, per cui le configurazioni YAML finiscono per essere trasformate in PHP. Dopo aver navigato la tua applicazione, controllane la configurazione in cache (ad esempio in cache/frontend/dev/config/). Vedrai file PHP corrispondenti alle configurazioni YAML. Imparerai di più sulla cache di configurazione più avanti in questo capitolo.
 >
->La buona notizia è che se non vuoi usare YAML, puoi fare la stessa cosa a mano in PHP o con altri formati (come XML o INI). Nel corso di questo libro, incontrerai modi alternativi per definire configurazioni senza YAML, e imparerai anche come sostituire il gestore di configurazioni di symfony (nel Capitolo 19). Se li usi largamente, questi trucchi ti permetteranno di bypassare i file di configurazione o definire il tuo personale formato di configurazione.
+>La buona notizia è che se non vuoi usare YAML, puoi fare la stessa cosa a mano in PHP o con altri formati (come XML o INI). Nel corso di questo libro, incontrerai modi alternativi per definire configurazioni senza YAML e imparerai anche come sostituire il gestore di configurazioni di symfony (nel Capitolo 19). Se li usi largamente, questi trucchi ti permetteranno di bypassare i file di configurazione o definire il tuo personale formato di configurazione.
 
 ### Aiuto, un file YAML ha ucciso la mia applicazione!
 
@@ -252,7 +252,7 @@ La configurazione dell'applicazione principale è memorizzata in file che si tro
   * factories.yml: symfony definisce le proprie classi per gestire le viste, la richiesta, la risposta, le sessioni e così via. Se invece vuoi utilizzare le tue classi personali, questo file è i posto in cui definirle (maggiori informazioni nel Capitolo 17). 
   * filters.yml: I filtri sono porzioni di codice eseguiti per ogni richiesta. Qui è dove definisci quali filtri devono essere processati, e può essere sovrascritto in ogni modulo. Il Capitolo 6 fornisce maggiori dettagli sui filtri. 
   * routing.yml: Le regole di routing, che permettono di trasformare una URL illeggibile in una più "intelligente", sono definite in questo file. Per nuove applicazioni, esistono poche regole di default. Il Capitolo 9 è dedicato ai link e al routing.
-  * settings.yml: Le impostazioni principali di un'applicazione symfony sono definiti in questo file. Qui è dove specifichi se la tua applicazione è internazionalizzata, qual'è la lingua di default, il timeout per le richieste e se la cache è attiva o meno. Cambiando una linea di questo file puoi "spegnere" la tua applicazione, per poterla aggiornare o manutenere. Le impostazioni più comuni e il loro utilizzo sono approfonditi nel Capitolo 19. 
+  * settings.yml: Le impostazioni principali di un'applicazione symfony sono definiti in questo file. Qui è dove specifichi se la tua applicazione è internazionalizzata, qual è la lingua di default, il timeout per le richieste e se la cache è attiva o meno. Cambiando una linea di questo file puoi "spegnere" la tua applicazione, per poterla aggiornare o manutenere. Le impostazioni più comuni e il loro utilizzo sono approfonditi nel Capitolo 19. 
   * view.yml: La struttura della vista di default (nome del layout, fogli di stile e JavaScript da includere di default, content-type di default e così via) è definita in questo file. Il Capitolo 7 approfondirà questo file. Queste impostazioni possono essere sovrascritte in ogni modulo. 
 
 >**TIP**
@@ -281,7 +281,7 @@ Per default un modulo non ha una configurazione specifica. Ma, qualora necessari
 
 Come puoi immaginare, le impostazioni di un modulo devono essere nella cartella myproject/apps/frontend/modules/mymodule/config/. I file interessati sono i seguenti: 
 
-  * generator.yml: Per i moduli generati secondo una tabella di database (scaffolding e amministrazione), questo file descrive il modo in cui le righe e campi devono essere visualizzati, e quali tipi di interazioni sono proposti all'utente (filtri, ordinamenti, pulsanti e cosi' via). Il Capitolo 14 approfondira' l'argomento. 
+  * generator.yml: Per i moduli generati secondo una tabella di database (scaffolding e amministrazione), questo file descrive il modo in cui le righe e campi devono essere visualizzati e quali tipi di interazioni sono proposti all'utente (filtri, ordinamenti, pulsanti e cosi' via). Il Capitolo 14 approfondira' l'argomento. 
   * module.yml: Questo file contiene parametri specifici a un modulo (equivalente a app.yml, ma a livello modulo) e la configurazione dell'azione. Il Capitolo 6 fornisce maggiori dettagli in merito.
   * security.yml: Questo file permette di impostare restrizioni per le azioni. Qui puoi impostare il fatto che una certa pagina sia visibile solo agli utenti registrati, oppure a un sottoinsieme di utenti con permessi speciali. Il Capitolo 6 fornisce maggiori dettagli in merito. 
   * view.yml: Questo file contiene le configurazioni delle viste di una o tutte le azioni di un modulo. Permette l'override di view.yml  del livello applicazione, ed è descritto nel Capitolo 7. 
@@ -293,14 +293,14 @@ La maggior parte dei file di configurazione dei moduli offrono la possibilità d
 >
 >Ti potresti sentire travolto dal numero di file di configurazione presenti nell'applicazione. Ma ricorda:
 >
->La maggior parte delle volte non avrai bisogno di cambiare la configurazione, perché le convenzioni stabilite per default soddisfano i requisiti più comuni. Ogni file di configurazione corrisponde a una particolare funzione, e il prossimo capitolo le affronterà dettagliatamente il loro utilizzo una alla volta. Quando ti focalizzi su di un singlo file, puoi capire chiaramente cosa fa e come è organizzato. Per lo sviluppo web professionale, la configurazione di default è spesso non completamente adatta. I file di configurazione permettono di modificare facilmente i meccanismi di symfony senza scrivere codice. Immagina l'ammontare di codice PHP necessario per raggiungere lo stesso livello di controllo. Se tutti parametri fossero all'interno di un unico file, non solo esso sarebbe illeggibile, ma non ci potrebbe nemmeno essere la possibilità di fare override di parametri a divresi livelli (v. la sezione "Configurazione a cascata" più avanti in questo capitolo). 
+>La maggior parte delle volte non avrai bisogno di cambiare la configurazione, perché le convenzioni stabilite per default soddisfano i requisiti più comuni. Ogni file di configurazione corrisponde a una particolare funzione e il prossimo capitolo le affronterà dettagliatamente il loro utilizzo una alla volta. Quando ti focalizzi su di un singlo file, puoi capire chiaramente cosa fa e come è organizzato. Per lo sviluppo web professionale, la configurazione di default è spesso non completamente adatta. I file di configurazione permettono di modificare facilmente i meccanismi di symfony senza scrivere codice. Immagina l'ammontare di codice PHP necessario per raggiungere lo stesso livello di controllo. Se tutti parametri fossero all'interno di un unico file, non solo esso sarebbe illeggibile, ma non ci potrebbe nemmeno essere la possibilità di fare override di parametri a divresi livelli (v. la sezione "Configurazione a cascata" più avanti in questo capitolo). 
 >
->Il sistema di configurazione è uno dei punti di forza di symfony, perché lo rende utilizzabile per qualsiasi tipo di applicazione web, e non solamente per quelle per le quali era stato pensato inizialmente. 
+>Il sistema di configurazione è uno dei punti di forza di symfony, perché lo rende utilizzabile per qualsiasi tipo di applicazione web e non solamente per quelle per le quali era stato pensato inizialmente. 
 
 Ambienti
 --------
 
-Durante lo sviluppo di un'applicazione, avrai probabilmente bisogno di mantenere in parallelo diversi insiemi di configurazioni. Ad esempio avrai bisogno di avere disponibili le impostazioni di connessione al tuo database di test per lo sviluppo, e di avere allo stesso tempo quelli reali per la produzione. Per soddisfare tale fabbisogno, symfony offre diversi ambienti. 
+Durante lo sviluppo di un'applicazione, avrai probabilmente bisogno di mantenere in parallelo diversi insiemi di configurazioni. Ad esempio avrai bisogno di avere disponibili le impostazioni di connessione al tuo database di test per lo sviluppo e di avere allo stesso tempo quelli reali per la produzione. Per soddisfare tale fabbisogno, symfony offre diversi ambienti. 
 
 ### Cosa è un ambiente?
 
@@ -327,7 +327,7 @@ Se il tuo web server ha il mod_rewrite abilitato, puoi anche utilizzare le regol
 >**SIDEBAR**
 >Ambienti e server
 >
->Non confondere le nozioni di ambiente e server. In symfony, diversi ambienti sono diverse configurazioni, e corrispondono a diversi front controller (gli script che gestiscono le richieste). Server diversi corrispondono a diversi nomi a dominio nelle URL. 
+>Non confondere le nozioni di ambiente e server. In symfony, diversi ambienti sono diverse configurazioni e corrispondono a diversi front controller (gli script che gestiscono le richieste). Server diversi corrispondono a diversi nomi a dominio nelle URL. 
 >
 >     http://localhost/frontend_dev.php/mymodule/index
 >            _________ _______________
@@ -378,7 +378,7 @@ Listato 5-12 - Struttura dei file di configurazione di symfony
     all:
       ...
 
-In più, il framework stesso definisce dei valori di default in file che non sono situati nell'albero del progetto, bensì nella cartella `sfConfig::get('sf_symfony_lib_dir')/config/config/` dell'installazione di symfony. Questa configurazione è mostrata nel Listato 5-13, e tali impostazioni sono ereditate da tutte le applicazioni. 
+In più, il framework stesso definisce dei valori di default in file che non sono situati nell'albero del progetto, bensì nella cartella `sfConfig::get('sf_symfony_lib_dir')/config/config/` dell'installazione di symfony. Questa configurazione è mostrata nel Listato 5-13 e tali impostazioni sono ereditate da tutte le applicazioni. 
 
 Listato 5-13 - La configurazione di default, in `sfConfig::get('sf_symfony_lib_dir')/config/config/settings.yml`
 
@@ -399,7 +399,7 @@ Listato 5-14 - Configurazione di default, ripetuta per informazione, in frontend
     #    default_action:         index
     #    ...
 
-Ciò significa che una proprietà può essere definita diverse volte, e l'effettivo valore è il risultato di una cascata di definizioni. Il valore di un parametro definito in un ambiente specifico ha la precedenza sullo stesso valore definito per tutti gli ambienti, che a sua volta ha la precedenza su quello definito per default. Un parametro definito a livello modulo ha la precedenza sullo stesso definito a livello applicazione, che a sua volta ha la precedenza su quello definito a livello progetto. Tutto ciò è mostrato nella seguente lista di priorità: 
+Ciò significa che una proprietà può essere definita diverse volte e l'effettivo valore è il risultato di una cascata di definizioni. Il valore di un parametro definito in un ambiente specifico ha la precedenza sullo stesso valore definito per tutti gli ambienti, che a sua volta ha la precedenza su quello definito per default. Un parametro definito a livello modulo ha la precedenza sullo stesso definito a livello applicazione, che a sua volta ha la precedenza su quello definito a livello progetto. Tutto ciò è mostrato nella seguente lista di priorità: 
 
   1. Modulo
   2. Applicazione
@@ -441,7 +441,7 @@ C'è un'importante conseguenza di questo meccanismo. Se cambi la configurazione 
 Accedere alla configurazione dal codice
 ---------------------------------------
 
-Tutti i file di configurazione sono alla fine trasformati in PHP, e molte delle impostazioni che contengono sono utilizzate dal framework senza ulteriori interventi. Comunque, ti potrebbe capitare di dover accedere ad alcune impostazioni direttamente dal tuo codice (in azioni, template, classi e così via). Le impostazioni definite in settings.yml, app.yml, e module.yml sono disponibili attraverso una classe speciale chiamata sfConfig. 
+Tutti i file di configurazione sono alla fine trasformati in PHP e molte delle impostazioni che contengono sono utilizzate dal framework senza ulteriori interventi. Comunque, ti potrebbe capitare di dover accedere ad alcune impostazioni direttamente dal tuo codice (in azioni, template, classi e così via). Le impostazioni definite in settings.yml, app.yml e module.yml sono disponibili attraverso una classe speciale chiamata sfConfig. 
 
 ### la classe sfConfig
 
@@ -459,7 +459,7 @@ Inoltre è anche possibile definire, o sovrascrivere, di un parametro:
 
 Il nome del parametro è una concatenazione di diversi elementi, separati da un trattino basso, nel seguente ordine:
 
-  * Un prefisso relativo al nome del file di configurazione (`sf_` per `settings.yml`, `app_` per `app.yml`, e `mod_` per `module.yml`)
+  * Un prefisso relativo al nome del file di configurazione (`sf_` per `settings.yml`, `app_` per `app.yml` e `mod_` per `module.yml`)
   * La chiave del genitore, se definita, in minuscolo 
   * Il nome della chiave, in minuscolo 
 
@@ -580,7 +580,7 @@ Listato 5-20 - Utilizzo delle costanti in YAML, esempio da `autoload.yml`
         recursive:      on
         exclude:        [vendor]
 
-Il parametro path verrà sostituito con il valore di `sfConfig::get('sf_symfony_lib_dir')`. Se vuoi che un file di configurazione si basi su di un altro, devi essere certo che quello su cui si basa venga parsato per primo (controlla i sorgenti di symfony per verificare l'ordine in cui i file di configurazione vengono parsati). `app.yml` è uno degli ultimi file di cui viene fatto il parsing, per cui si può basare su altri.
+Il parametro `path` verrà sostituito con il valore di `sfConfig::get('sf_symfony_lib_dir')`. Se vuoi che un file di configurazione si basi su di un altro, devi essere certo che quello su cui si basa venga parsato per primo (controlla i sorgenti di symfony per verificare l'ordine in cui i file di configurazione vengono parsati). `app.yml` è uno degli ultimi file di cui viene fatto il parsing, per cui si può basare su altri.
 
 Tutte le costanti disponibili sono descritte in  [symfony reference book](http://www.symfony-project.org/reference/1_4/en/).
 

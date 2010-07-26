@@ -33,7 +33,7 @@ You can override the default pages in two ways:
 Two other pages bear a symfony look and feel, and they also need to be customized before deployment to production. These pages are not in the `default` module, because they are called when symfony cannot run properly. Instead, you will find these default pages in the `sfConfig::get('sf_symfony_lib_dir')/exception/data/` directory:
 
   * `error.html.php`: Page called when an internal server error occurs in the production environment. In other environments (where debug is set to `true`), when an error occurs, symfony displays the full execution stack and an explicit error message (see Chapter 16 for details).
-  * `unavailable.php`: Page called when a user requests a page while the application is disabled (with the `disable` task). It is also called while the cache is being cleared (that is, between a call to the `php symfony cache:clear` task and the end of this task execution). On systems with a very large cache, the cache-clearing process can take several seconds. Symfony cannot execute a request with a partially cleared cache, so requests received before the end of the process are redirected to this page.
+  * `unavailable.php`: Page called when a user requests a page while the application is disabled (with the `project:disable` task). It is also called while the cache is being cleared (that is, between a call to the `cache:clear` task and the end of this task execution). On systems with a very large cache, the cache-clearing process can take several seconds. Symfony cannot execute a request with a partially cleared cache, so requests received before the end of the process are redirected to this page.
 
 To customize these pages, simply create `error/error.html.php` and `unavailable.php` in your project or application's `config/` directory. Symfony will use these templates instead of its own.
 
@@ -54,7 +54,7 @@ Parameter               | Description | Default Value
 `escaping_strategy`     | Enables the output escaping feature (see Chapter 7). Set it to `true` if you want data passed to your templates to be escaped. | `true`
 `cache`                 | Enables template caching (see Chapter 12). Set it to `true` if one of your modules includes `cache.yml` file. The cache filter (`sfCacheFilter`) is enabled only if it is on. | `false` in development, `true` in production
 `web_debug`             | Enables the web debug toolbar for easy debugging (see Chapter 16). Set it to `true` to display the toolbar on every page. | `true` in development, `false` in production
-`check_symfony_version` | Enables the check of the symfony version for every request. Set it to on for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
+`check_symfony_version` | Enables the check of the symfony version for every request. Set it to `true` for automatic cache clearing after a framework upgrade. Leave it set to `false` if you always clear the cache after an upgrade. | `false`
 `check_lock`            | Enables the application lock system, triggered by the `cache:clear` and `project:disable` tasks (see the previous section). Set it to `true` to have all requests to disabled applications redirected to the `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php` page. | `false`
 `compressed`            | Enables PHP response compression. Set it to `true` to compress the outgoing HTML via the PHP compression handler. | `false`
 
@@ -164,7 +164,7 @@ The `settings.yml` file also stores paths to assets. If you want to use another 
 
 #### Default Helpers
 
-Default helpers, loaded for every template, are declared in the `standard_helpers` setting (see Chapter 7). By default, these are the `Partial`, `Cache`, and `Form` helper groups. If you use a helper group in all templates of an application, adding its name to the `standard_helpers` setting saves you the hassle of declaring it with `use_helper()` on each template.
+Default helpers, loaded for every template, are declared in the `standard_helpers` setting (see Chapter 7). By default, these are the `Partial` and `Cache` helper groups. If you use a helper group in all templates of an application, adding its name to the `standard_helpers` setting saves you the hassle of declaring it with `use_helper()` on each template.
 
 #### Activated Modules
 
@@ -178,7 +178,7 @@ The character set of the responses is a general setting of the application, beca
 >**SIDEBAR**
 >Adding Your application settings
 >
->The `settings.yml` file defines symfony settings for an application. As discussed in Chapter 5, when you want to add new parameters, the best place to do so is in the `frontend/config/app.yml` file. This file is also environment-dependent, and the settings it defines are available through the sfConfig class with the `app_` prefix.
+>The `settings.yml` file defines symfony settings for an application. As discussed in Chapter 5, when you want to add new parameters, the best place to do so is in the `frontend/config/app.yml` file. This file is also environment-dependent, and the settings it defines are available through the `sfConfig` class with the `app_` prefix.
 >
 >
 >     all:
@@ -206,9 +206,9 @@ By default, classes stored in the following directories in your projects benefit
   * `myproject/apps/frontend/lib/`
   * `myproject/apps/frontend/modules/mymodule/lib`
 
-There is no `autoload.yml` file in the default application configuration directory. If you want to modify the framework settings--for instance, to autoload classes stored somewhere else in your file structure--create an empty autoload.yml file and override the settings of `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml` or add your own.
+There is no `autoload.yml` file in the default application configuration directory. If you want to modify the framework settings--for instance, to autoload classes stored somewhere else in your file structure--create an empty `autoload.yml` file and override the settings of `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml` or add your own.
 
-The autoload.yml file must start with an autoload: key and list the locations where symfony should look for classes. Each location requires a label; this gives you the ability to override symfony's entries. For each location, provide a `name` (it will appear as a comment in `config_autoload.yml.php`) and an absolute `path`. Then define if the search must be `recursive`, which directs symfony to look in all the subdirectories for `.php` files, and `exclude` the subdirectories you want. Listing 19-3 shows the locations used by default and the file syntax.
+The `autoload.yml` file must start with an `autoload:` key and list the locations where symfony should look for classes. Each location requires a label; this gives you the ability to override symfony's entries. For each location, provide a `name` (it will appear as a comment in `config_autoload.yml.php`) and an absolute `path`. Then define if the search must be `recursive`, which directs symfony to look in all the subdirectories for `.php` files, and `exclude` the subdirectories you want. Listing 19-3 shows the locations used by default and the file syntax.
 
 Listing 19-3 - Default Autoloading Configuration, in `sfConfig::get('sf_symfony_lib_dir')/config/config/autoload.yml`
 
@@ -413,7 +413,7 @@ Listing 19-7 - Example of Initialization of the `myMapAPI` Class
     $mapApi->setUrl($url);
     $mapApi->setUser($user);
 
-You may want to store these two parameters in a custom configuration file called `map.yml`, located in the application config/ directory. This configuration file might contain the following:
+You may want to store these two parameters in a custom configuration file called `map.yml`, located in the application `config/` directory. This configuration file might contain the following:
 
     api:
       url:  map.api.example.com
@@ -467,7 +467,7 @@ As with many other symfony configuration files, you can also register a configur
 When you need the code based on the `map.yml` file and generated by the `myMapConfigHandler` handler in your application, call the following line:
 
     [php]
-    include(sfContext::getInstance()->getConfigCache()->checkConfig('config/map.yml'));
+    include sfContext::getInstance()->getConfigCache()->checkConfig('config/map.yml');
 
 When calling the `checkConfig()` method, symfony looks for existing `map.yml` files in the configuration directories and processes them with the handler specified in the `config_handlers.yml` file, if a `map.yml.php` does not already exist in the cache or if the `map.yml` file is more recent than the cache.
 
@@ -481,6 +481,7 @@ When calling the `checkConfig()` method, symfony looks for existing `map.yml` fi
 >
 >If you just need to allow users to retrieve values from the code via `sfConfig`, you can use the `sfDefineEnvironmentConfigHandler` configuration handler class. For instance, to have the `url` and `user` parameters available as `sfConfig::get('map_url')` and `sfConfig::get('map_user')`, define your handler as follows:
 >
+>     [yml]
 >     config/map.yml:
 >       class: sfDefineEnvironmentConfigHandler
 >       param:

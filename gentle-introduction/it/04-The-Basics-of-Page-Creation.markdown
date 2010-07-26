@@ -1,7 +1,7 @@
 Capitolo 4 - Le basi per la creazione delle pagine
 ==================================================
 
-Curiosamente, il primo tutorial che i programmatori seguono quando devono imparare una nuovo linguaggio o un framework è quello che permette di visualizzare "Buongiorno, mondo!" sullo schermo. E' strano pensare al computer come un qualcosa che può salutare il mondo intero, dal momento che ogni tentativo nel campo dell'intelligenza artificiale ha finora ottenuto scarse capacità di conversazione. Ma symfony non è più stupido di qualsiasi altro programma, e la prova è che è possibile creare una pagina che dice "Buongiorno, `<Il Tuo Nome>`".
+Curiosamente, il primo tutorial che i programmatori seguono quando devono imparare una nuovo linguaggio o un framework è quello che permette di visualizzare "Buongiorno, mondo!" sullo schermo. È strano pensare al computer come un qualcosa che può salutare il mondo intero, dal momento che ogni tentativo nel campo dell'intelligenza artificiale ha finora ottenuto scarse capacità di conversazione. Ma symfony non è più stupido di qualsiasi altro programma, e la prova è che è possibile creare una pagina che dice "Buongiorno, `<Il Tuo Nome>`".
 
 Questo capitolo spiegherà come creare un modulo, che è un elemento strutturale che raggruppa le pagine. Si potrà anche imparare a creare una pagina, che è divisa in una azione e un template, a causa dell'utilizzo del pattern MVC. Collegamenti e form sono le interazioni web di base; si vedrà come inserirli in un template e gestirli in un'azione.
 
@@ -40,7 +40,7 @@ Listato 4-1 - L'azione predefinita generata in `actions/actions.class.php`
     }
 
 >**NOTE**
->Se si guarda nel file `actions.class.php`, si troveranno altre righe, compresi molti commenti. Questo perché symfony consiglia l'uso dei commenti PHP per documentare i progetti e predispone ciascun file con classi ad essere compatibile con lo [strumento phpDocumentor](http://www.phpdoc.org/).
+>Se si guarda nel file `actions.class.php`, si troveranno altre righe, compresi molti commenti. Questo perché symfony consiglia l'uso dei commenti PHP per documentare i progetti e predispone ciascun file con classi a essere compatibile con lo [strumento phpDocumentor](http://www.phpdoc.org/).
 
 Per ogni nuovo modulo, symfony crea una azione `index` predefinita. Questa si compone di un metodo azione chiamato `executeIndex` e un file template chiamato `indexSuccess.php`. Il significato del prefisso `execute` e del suffisso `Success` verrà spiegato rispettivamente nei Capitoli 6 e 7. Nel frattempo, si può considerare che questa nomenclatura è una convenzione. Si può vedere la pagina corrispondente (riprodotta in Figura 4-1) aprendo il seguente URL:
 
@@ -82,7 +82,7 @@ Ora, se si accede al seguente URL:
 
     http://localhost/frontend_dev.php/contenuto/show
 
-symfony si lamenterà per il fatto che manca il template `showSuccess.php`. E' normale; in symfony, una pagina è sempre costituita da un'azione e da un template.
+symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È normale; in symfony, una pagina è sempre costituita da un'azione e da un template.
 
 >**CAUTION**
 >Le URL (non i nomi dominio) sono case-sensitive e quindi lo sono anche in symfony (anche se i nomi del metodi in PHP sono case-insensitive). Questo significa che symfony restituirà un errore 404 se si prova a visualizzare `sHow` con il browser.
@@ -292,6 +292,6 @@ Si potrebbe avere già capito che questo può essere scritto in una sola riga. C
 Riepilogo
 ---------
 
-In symfony, le pagine sono formate da una azione (un metodo nel file `actions/actions.class.php` file prefissato con `execute`) e un template (un file nella cartella `templates/`, che generalmente termina con `Success.php`). Queste sono raggruppate in moduli, in base alla loro funzione nell'applicazione. La scrittura dei template è facilitata dagli helper: sono funzioni fornite da symfony che restituiscono codice HTML. Ed è necessario pensare all'URL come ad una parte della risposta, che può essere formattata in base alle proprie necessità, proprio per questo si dovrebbe evitare di utilizzare qualsiasi riferimento diretto all'URL nei nomi delle azioni o nel recupero dei parametri della richiesta.
+In symfony, le pagine sono formate da una azione (un metodo nel file `actions/actions.class.php` file prefissato con `execute`) e un template (un file nella cartella `templates/`, che generalmente termina con `Success.php`). Queste sono raggruppate in moduli, in base alla loro funzione nell'applicazione. La scrittura dei template è facilitata dagli helper: sono funzioni fornite da symfony che restituiscono codice HTML. Ed è necessario pensare all'URL come a una parte della risposta, che può essere formattata in base alle proprie necessità, proprio per questo si dovrebbe evitare di utilizzare qualsiasi riferimento diretto all'URL nei nomi delle azioni o nel recupero dei parametri della richiesta.
 
 Una volta che questi principi di base vengono compresi, si può già procedere con la scrittura di una completa applicazione web con symfony. Ma sarebbe un lavoro più lungo di quanto dovrebbe, dal momento che quasi tutte le attività che si dovranno realizzare nel corso dello sviluppo dell'applicazione vengono facilitate in un modo o nell'altro da qualche caratteristica peculiare di symfony ... ed è per questo che il libro non si ferma qua.
