@@ -469,8 +469,8 @@ configuration at the end:
 >
 >     c:\dev\sfprojects\jobeet\web
 
-This configuration makes Apache listen to port `8080` on your machine, so the
-website will be accessible at the following URL:
+This configuration makes Apache listen to port `8080` on your machine, so,
+after restarting apache, the website will be accessible at the following URL:
 
     http://~localhost~:8080/
 
