@@ -141,7 +141,7 @@ Non bisogna dimenticare di eliminare periodicamente la cartella `log/` delle app
 
     $ php symfony log:clear
 
-Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni ed uno `storico` (numero di copie di backup) di `10`, come mostrato nel Listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup, e il backup più vecchio viene cancellato.
+Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni e uno `storico` (numero di copie di backup) di `10`, come mostrato nel Listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup, e il backup più vecchio viene cancellato.
 
 Listato 16-7 - Avviare la rotazione dei log
 
@@ -158,10 +158,10 @@ Non importa quanto si sia abili a programmare, perché si fanno sempre degli err
 
 Symfony ha una modalità di debug che facilita lo sviluppo e il debug delle applicazioni. Quando è abilitata, succedono le cose seguenti:
 
-  * La configurazione viene verificata ad ogni richiesta, così la modifica di un qualunque file di configurazione ha un effetto immediato, senza che ci sia la necessità di cancellare la cache della configurazione.
+  * La configurazione viene verificata a ogni richiesta, così la modifica di un qualunque file di configurazione ha un effetto immediato, senza che ci sia la necessità di cancellare la cache della configurazione.
   * I messaggi di errore visualizzano l'intero stack trace in modo chiaro, in modo che si possa trovare velocemente la causa del problema.
   * Sono disponibili più strumenti per il debug (ad esempio i dettagli delle query al database).
-  * E' anche attivata la modalità di debug per Propel/Doctrine, quindi per qualunque errore in una chiamata ad un oggetto Propel/Doctrine verrà mostrata una catena dettagliata con le chiamate dell'architettura Propel/Doctrine.
+  * È anche attivata la modalità di debug per Propel/Doctrine, quindi per qualunque errore in una chiamata a un oggetto Propel/Doctrine verrà mostrata una catena dettagliata con le chiamate dell'architettura Propel/Doctrine.
 
 Al contrario, quando la modalità debug è disattivata, l'elaborazione viene gestita nel modo seguente:
 
@@ -188,7 +188,7 @@ Listato 16-8 - Esempio di front controller con la modalità di debug attivata, i
 
 Quando si verifica un'eccezione nella modalità di debug, symfony mostra un'utile informazione dull'eccezione che contiene tutto quello di cui si ha bisogno per trovare la causa del problema.
 
-I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in Figura 16-1. E' possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati gli argomenti che sono stati passati ai metodi.
+I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in Figura 16-1. È possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati gli argomenti che sono stati passati ai metodi.
 
 >**NOTE**
 >Symfony si basa proprio sulle eccezioni PHP per la segnalazione degli errori. Ad esempio, l'errore 404 può essere lanciato da un `sfError404Exception`.
@@ -221,7 +221,7 @@ Listato 16-9 - Esempio di configurazione di Xdebug
     ;xdebug.show_local_vars=1
     ;xdebug.max_nesting_level=100
 
-Bisogna riavviare il web server perchè la modalità Xdebug venga attivata.
+Bisogna riavviare il web server perché la modalità Xdebug venga attivata.
 
 >**CAUTION**
 >Non dimenticarsi di disabilitare la modalità Xdebug nella piattaforma di produzione. Non facendolo, si rallenta di molto l'esecuzione di ogni pagina.
@@ -300,7 +300,7 @@ Figura 16-6 - L'icona con l'orologio mostra il tempo di esecuzione per categoria
 >     // Recupera il risultato (e ferma il cronometro se non è giù stato fermato)
 >     $elapsedTime = $timer->getElapsedTime();
 >
->Il vantaggio di dare un nome ad ogni timer è che si può chiamare più volte per accumulare conteggi. Per esempio, se il cronometro `mioTimer` viene utilizzato in un metodo che viene chiamato due volte ad ogni richiesta, la seconda chiamata al metodo `getTimer('mioTimer')` farà ripartire il cronometro dal punto calcolato quando `addTime()` era stato chiamato l'ultima volta, per cui i tempi si sommano a quelli precedenti. Chiamando `getCalls()` sull'oggetto timer si ottiene il numero di volte in cui è stato lanciato il cronometro e questo dato viene visualizzato anche nella barra web di debug.
+>Il vantaggio di dare un nome a ogni timer è che si può chiamare più volte per accumulare conteggi. Per esempio, se il cronometro `mioTimer` viene utilizzato in un metodo che viene chiamato due volte a ogni richiesta, la seconda chiamata al metodo `getTimer('mioTimer')` farà ripartire il cronometro dal punto calcolato quando `addTime()` era stato chiamato l'ultima volta, per cui i tempi si sommano a quelli precedenti. Chiamando `getCalls()` sull'oggetto timer si ottiene il numero di volte in cui è stato lanciato il cronometro e questo dato viene visualizzato anche nella barra web di debug.
 >
 >     [php]
 >     // Recupera il numero di chiamate a timer
@@ -315,7 +315,7 @@ Figura 16-6 - L'icona con l'orologio mostra il tempo di esecuzione per categoria
 
 ### Debug manuale
 
-E' bello avere l'accesso ai messaggi di debug del framework, ma è ancora meglio essere in grado di accedere ai propri messaggi. Symfony fornisce scorciatoie, accessibili sia dalle azioni che dai modelli, per aiutare a traccaire eventi e/o valori durante l'esecuzione della richiesta.
+È bello avere l'accesso ai messaggi di debug del framework, ma è ancora meglio essere in grado di accedere ai propri messaggi. Symfony fornisce scorciatoie, accessibili sia dalle azioni che dai modelli, per aiutare a traccaire eventi e/o valori durante l'esecuzione della richiesta.
 
 I messaggi di log personalizzati vengono salvati nel file di log di symfony e compaiono nella barra web per il debug. (Il Listato 16-5 fornisce un esempio della sintassi per un messaggio di log personalizzato. Un messaggio personalizzato è un buon modo per controllare il valore di una variabile da un template, ad esempio. Il Listato 16-11 mostra come usare la barra web per il debug per avere il feedback da un template (da una azione invece, si può utilizzare `$this->logMessage()`).
 
@@ -455,7 +455,7 @@ Nel processo di sviluppo delle applicazioni, gli sviluppatori devono spesso affr
 
 ### Sintassi del file per le fixture
 
-Symfony è in grado di leggere file di dati che seguono una sintassi molto semplice chiamata YAML, a condizione che si trovino sotto la cartella `data/fixtures/`. I file con le fixture sono organizzati per classi ed ogni sezione di una classe inizia con il nome della classe come intestazione. Per ciascuna classe, i record etichettati con una stringa univoca sono definiti da una serie di coppie `nomecampo: valore`.
+Symfony è in grado di leggere file di dati che seguono una sintassi molto semplice chiamata YAML, a condizione che si trovino sotto la cartella `data/fixtures/`. I file con le fixture sono organizzati per classi e ogni sezione di una classe inizia con il nome della classe come intestazione. Per ciascuna classe, i record etichettati con una stringa univoca sono definiti da una serie di coppie `nomecampo: valore`.
 Il Listato 16-15 mostra un esempio di un file di dati per popolare il database.
 
 Listato 16-15 - Esempio di un file fixture, in `data/fixtures/import_data.yml`
@@ -499,7 +499,7 @@ Nella chiamata è possibile specificare un'altra cartella per le fixture. In que
 
 ### Utilizzo di tabelle collegate
 
-Si è imparato come aggiungere record ad una singola tabella, ma come si fa ad aggiungere record con chiavi esterne ad un'altra tabella? Dal momento che la chiave primaria non è inclusa nei dati delle fixture, c'è bisogno di un modo alternativo per relazionare dei record con altri.
+Si è imparato come aggiungere record a una singola tabella, ma come si fa ad aggiungere record con chiavi esterne a un'altra tabella? Dal momento che la chiave primaria non è inclusa nei dati delle fixture, c'è bisogno di un modo alternativo per relazionare dei record con altri.
 
 Torniamo all'esempio del Capitolo 8, dove la tabella `blog_article` è collegata alla tabella `blog_comment`, come mostrato in Figura 16-8.
 
@@ -509,7 +509,7 @@ Figura 16-8 - Esempio di un modello relazionale di database
 
 Questo è un esempio di come le etichette date ai record siano effettivamente utili. Per aggiungere un campo `Comment` all'articolo `first_post`, si possono semplicemente aggiungere le righe mostrate nel Listato 16-16 al file di dati `import_data.yml`.
 
-Listing 16-16 - Aggiungere un record ad una tabella collegata, in `data/fixtures/import_data.yml`
+Listing 16-16 - Aggiungere un record a una tabella collegata, in `data/fixtures/import_data.yml`
 
     Comment:
       first_comment:
@@ -517,14 +517,14 @@ Listing 16-16 - Aggiungere un record ad una tabella collegata, in `data/fixtures
         author:       Anonymous
         content:      La tua prosa è troppo prolissa. Scrivere frasi più brevi.
 
-Il task `propel:data-load` riconosce l'etichetta che è stata data precedentemente ad un articolo nel file `import_data.yml` e prende la chiave primaria del corrispondente record di `Article` per impostare il campo `article_id`. Non si vedranno mai gli ID dei record, è sufficiente collegarli alle loro etichette.
+Il task `propel:data-load` riconosce l'etichetta che è stata data precedentemente a un articolo nel file `import_data.yml` e prende la chiave primaria del corrispondente record di `Article` per impostare il campo `article_id`. Non si vedranno mai gli ID dei record, è sufficiente collegarli alle loro etichette.
 		
 L'unico vincolo per i record collegati è che gli oggetti chiamati in una chiave esterna devono essere definiti in precedenza nel file; il che è come si farebbe se si definissero uno per uno. I file di dati vengono analizzati dall'alto verso il basso e l'ordine in cui sono scritti i record è importante.
 
 Questo metodo funziona anche per le relazioni molti a molti, dove due classi sono collegate attraverso una terza classe. Ad esempio, un `Article` può avere molti `Authors` e un `Author` può avere molti `Articles`. Di solito per fare questo si utilizza la classe `ArticleAuthor`, corrispondente a una tabella `article_author` con una colonna `article_id` e una colonna `author_id`.
 Il Listato 16-17 mostra come scrivere un file fixture per definire relazioni molti a molti con questo modello. Notare il nome della tabella in plurale che è stato usato qui. Questo è ciò che fa scattare la voglia di avere una classe intermedia.
 
-Listato 16-17 - Aggiungere un record ad una tabella collegata con una relazione molti a molti, in `data/fixtures/import_data.yml`
+Listato 16-17 - Aggiungere un record a una tabella collegata con una relazione molti a molti, in `data/fixtures/import_data.yml`
 
     Author:
       first_author:
@@ -551,9 +551,9 @@ Symfony offre comandi manuali per sincronizzare due versioni di un sito web. Que
 
 ### L'utilizzo di `rsync` per il trasferimento incrementale di file
 
-L'invio della cartella principale di un progetto tramite FTP va bene per il primo trasferimento, ma quando si ha bisogno di caricare un aggiornamento dell'applicazione, in cui sono cambiati solo alcuni file, l'FTP non è l'ideale. È necessario trasferire nuovamente l'intero progetto, il che è uno spreco di tempo e di larghezza di banda. In alternativa si può passare alla directory in cui si sa che alcuni file sono stati modificati e trasferire solo quelli con certe date di modifica. Questo è un lavoro che richiede tempo, ed è suscettibile di errori. Inoltre, il sito web può diventare non disponibile o restituire errori durante il tempo del trasferimento. 
+L'invio della cartella principale di un progetto tramite FTP va bene per il primo trasferimento, ma quando si ha bisogno di caricare un aggiornamento dell'applicazione, in cui sono cambiati solo alcuni file, l'FTP non è l'ideale. È necessario trasferire nuovamente l'intero progetto, il che è uno spreco di tempo e di larghezza di banda. In alternativa si può passare alla directory in cui si sa che alcuni file sono stati modificati e trasferire solo quelli con certe date di modifica. Questo è un lavoro che richiede tempo ed è suscettibile di errori. Inoltre, il sito web può diventare non disponibile o restituire errori durante il tempo del trasferimento. 
 
-La soluzione supportata da symfony è la sincronizzazione rsync attraverso SSH. [Rsync] (http://samba.anu.edu.au/rsync/) è una utility a riga di comando che consente il trasferimento incrementale di file in modo veloce, ed è open source. Con il trasferimento incrementale, solo i dati modificati verranno inviati. Se un file non è stato modificato, non sarà inviato all'host. Se un file è stato modificato solo in parte, sarà inviata solo la parte cambiata. Il vantaggio principale è che la sincronizzazione con rsync trasferire solo una piccola quantità di dati ed è molto veloce.
+La soluzione supportata da symfony è la sincronizzazione rsync attraverso SSH. [Rsync] (http://samba.anu.edu.au/rsync/) è una utility a riga di comando che consente il trasferimento incrementale di file in modo veloce ed è open source. Con il trasferimento incrementale, solo i dati modificati verranno inviati. Se un file non è stato modificato, non sarà inviato all'host. Se un file è stato modificato solo in parte, sarà inviata solo la parte cambiata. Il vantaggio principale è che la sincronizzazione con rsync trasferire solo una piccola quantità di dati ed è molto veloce.
 
 Symfony aggiunge l'SSH ad rsync per mettere in sicurezza il trasferimento dei dati. Sempre più host commerciali supportano un tunnel SSH per mettere in sicurezza l'upload dei file sui loro server e questa è una buona pratica per evitare problemi di sicurezza.
 
@@ -612,8 +612,8 @@ Non dimenticarsi di cancellare la cache nel server di produzione dopo la sincron
 
 Quando si sincronizza il progetto symfony con un host di produzione, alcuni file e cartelle non dovrebbero essere trasferiti: 
 
-  * Tutte le cartelle del controllo di versione (`.svn/`, `CVS/` e così via) ed il loro contenuto, sono necessari solo per lo sviluppo.
-  * Il front controller dell'ambiente di sviluppo non deve essere disponibile all'utente finale. Gli strumenti per il debug e i log disponibili quando si usa l'applicazione attraverso questo front controller rallentano l'applicazione e forniscono informazioni sulle variabili delle azioni. E' qualcosa da tenere lontano dal pubblico dominio.
+  * Tutte le cartelle del controllo di versione (`.svn/`, `CVS/` e così via) e il loro contenuto, sono necessari solo per lo sviluppo.
+  * Il front controller dell'ambiente di sviluppo non deve essere disponibile all'utente finale. Gli strumenti per il debug e i log disponibili quando si usa l'applicazione attraverso questo front controller rallentano l'applicazione e forniscono informazioni sulle variabili delle azioni. È qualcosa da tenere lontano dal pubblico dominio.
   * Le cartelle `cache/` e `log/` del progetto nel server host non devono essere cancellate ogni volta che si fa una sincronizzazione. Queste cartelle devono essere ignorate. Se si ha una cartella `stats/`, anche questa probabilmente dovrebbe essere trattata allo stesso modo.
   * I file caricati  dagli utenti non dovrebbero essere trasferiti. Una delle buone pratiche per i progetti symfony è di memorizzare i file caricati nella cartella `web/uploads/`. Questo permette di escludere tutti questi file dalla sincronizzazione indicando una sola cartella.
 
@@ -681,6 +681,6 @@ Il task `project:enable` riabilita l'applicazione e cancella la cache.
 Riepilogo
 ---------
 
-Combinando i log di PHP con quelli di symfony, è possibile monitorare ed eseguire il debug dell'applicazione facilmente. Durante lo sviluppo, la modalità di debug, le eccezioni, e la barra web di debug aiutano ad individuare i problemi. Per facilitare il debug è anche possibile inserire messaggi personalizzati nei file di log o nella barra degli strumenti.
+Combinando i log di PHP con quelli di symfony, è possibile monitorare ed eseguire il debug dell'applicazione facilmente. Durante lo sviluppo, la modalità di debug, le eccezioni, e la barra web di debug aiutano a individuare i problemi. Per facilitare il debug è anche possibile inserire messaggi personalizzati nei file di log o nella barra degli strumenti.
 
 L'interfaccia a riga di comando fornisce un gran numero di strumenti che facilitano la gestione delle applicazioni, durante le fasi di sviluppo e di produzione. Tra gli altri, i task per il popolamento dei dati e quello per la sincronizzazione fanno risparmiare molto tempo.

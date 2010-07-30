@@ -824,7 +824,7 @@ Si può usare il file `schema.sql` direttamente per costruire le tabelle. Ad ese
     $ mysqladmin -u root -p create blog
     $ mysql -u root -p blog < data/sql/schema.sql
 
-L'SQL generato è utile anche per ricostruire il database in un altro ambiente o per passare ad un altro DBMS.
+L'SQL generato è utile anche per ricostruire il database in un altro ambiente o per passare a un altro DBMS.
 
 >**TIP**
 >La riga di comando offre anche un task per popolare il database con i dati caricati da un file di testo. Vedere il capitolo 16 per maggiori informazioni sul task `doctrine:data-load` e i file delle fixture in YAML.
