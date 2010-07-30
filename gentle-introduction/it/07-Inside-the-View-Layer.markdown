@@ -7,7 +7,7 @@ La vista è la responsabile per la visualizzazione dell'output relativo a una pa
 * Gli sviluppatori, avendo in mente la riusabilità, di solito inseriscono i frammenti di codice in partial o component. Usano gli slot per agire su più di una zona del layout. Anche i web designer possono lavorare su questi frammenti di template.
 * L'attenzione degli sviluppatori va anche sul file di configurazione view in YAML (impostando le proprietà della risposta e degli altri elementi dell'interfaccia) e sull'oggetto response. Quando si ha a che fare con variabili nei template, i rischi di cross-site scripting non devono essere ignorati e una buona comprensione delle tecniche di escape dell'output è richiesta per trattare in modo sicuro i dati dell'utente.
 
-Ma qualunque sia il proprio ruolo è, si troveranno utili strumenti per accelerare il noioso lavoro della visualizzazione dei risultati dell'azione. Questo capitolo comprende tutti questi strumenti.
+Ma qualunque sia il proprio ruolo, si troveranno utili strumenti per accelerare il noioso lavoro della visualizzazione dei risultati dell'azione. Questo capitolo comprende tutti questi strumenti.
 
 
 I template
@@ -659,7 +659,7 @@ Come bonus, l'header HTTP della response è anche gestito dall'impostazione `htt
 
 #### Configurazione del title
 
-Il titolo della pagina è una parte chiave per l'indicizzazione dei motori di ricerca. E' anche molto utile con i moderni browser che forniscono la navigazione con i tab. In HTML, il titolo è sia un tag che una informazione meta della pagina, quindi il file `view.yml` vede la chiave `title:` come un figlio della chiave `metas:`. Il Listato 7-24 mostra la definizione di title in `view.yml` e il Listato 7-25 mostra la definizione nell'azione.
+Il titolo della pagina è una parte chiave per l'indicizzazione dei motori di ricerca. È anche molto utile con i moderni browser che forniscono la navigazione con i tab. In HTML, il titolo è sia un tag che una informazione meta della pagina, quindi il file `view.yml` vede la chiave `title:` come un figlio della chiave `metas:`. Il Listato 7-24 mostra la definizione di title in `view.yml` e il Listato 7-25 mostra la definizione nell'azione.
 
 Listato 7-24 - La definizione di title in `view.yml`
 

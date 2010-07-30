@@ -55,7 +55,7 @@ permette universalmente, senza pagamento di diritti e senza
 limiti di durata di utilizzare il lavoro secondo le condizioni
 qui specificate. Con "documento", nel seguito ci si riferisce a
 qualsiasi manuale o opera. Ogni fruitore è un destinatario
-della licenza ed è ad esso che si fa riferimento. Si conviene
+della licenza ed è a esso che si fa riferimento. Si conviene
 che la licenza viene accettata se si copia, modifica o
 distribuisce il lavoro in una maniera tale da richiedere il
 permesso secondo le leggi sul copyright.
@@ -113,7 +113,7 @@ copia non "trasparente" viene detta "opaca".
 
 Esempi di formati adatti per copie trasparenti sono l'ASCII
 puro senza marcatori, il formato di ingresso per Texinfo, il
-formato di ingresso per LaTeX, SGML o XML accoppiati ad una DTD
+formato di ingresso per LaTeX, SGML o XML accoppiati a una DTD
 pubblica e disponibile, e i formati conformi agli standard HTML
 semplice, Postscript e PDF progettati per essere modificati
 manualmente. Esempio di formati immagine trasparenti includono
@@ -264,7 +264,7 @@ del documento come figurano nella pagina del titolo, quindi
 aggiungere un elemento che descriva la versione modificata
 come detto in precedenza.
 J. Conservare l'indirizzo in rete riportato nel documento, se
-c'è, al fine del pubblico accesso ad una copia trasparente,
+c'è, al fine del pubblico accesso a una copia trasparente,
 e possibilmente l'indirizzo in rete per le precedenti
 versioni su cui ci si è basati. Questi possono essere
 collocati nella sezione "Storia". Si può omettere un
@@ -438,7 +438,7 @@ La cessazione dei diritti come specificato in questa sezione non provoca
 la cessazione delle licenze di terze parti che abbiano ricevuto copie o
 diritti secondo questa licenza. Se i diritti sono cessati e non sono
 stati ristabiliti in via permanente, la ricezione di una copia dello
-stesso materiale, in tutto o in parte, non dà alcun diritto ad
+stesso materiale, in tutto o in parte, non dà alcun diritto a
 utilizzarlo.
 
 10. REVISIONI FUTURE DI QUESTA LICENZA
@@ -452,7 +452,7 @@ per affrontare nuovi problemi e concetti. Si veda
 http://www.gnu.org/copyleft/ .
 
 Ad ogni versione della licenza viene dato un numero che la
-distingue. Se il documento specifica che si riferisce ad una
+distingue. Se il documento specifica che si riferisce a una
 versione particolare della licenza "o ogni versione
 successiva", si ha la possibilità di seguire termini e
 condizioni sia della versione specificata che di ogni versione
@@ -499,7 +499,7 @@ Agosto 2009, da parte di una MMC qualificata a cambiare questa licenza.
 APPENDICE: Come usare questa licenza per i vostri documenti
 -----------------------------------------------------------
 
-Per applicare questa licenza ad un documento che si è scritto,
+Per applicare questa licenza a un documento che si è scritto,
 si includa una copia della licenza nel documento e si inserisca
 la seguente nota di copyright appena dopo la pagina del titolo:
 

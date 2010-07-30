@@ -43,7 +43,7 @@ Listato 8-2 - Il metodo accessor maschera la logica dei dati
 
 C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo dello strato di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL. 
 
-Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio ad un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione. 
+Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione. 
 
 Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony, ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
 
@@ -53,7 +53,7 @@ Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazi
 Lo schema del database di symfony
 ---------------------------------
 
-Allo scopo di creare il modello a oggetti dei dati che symfony andrà ad usare, bisogna tradurre tutti i modelli relazionali del database in un modello dati a oggetti. L'ORM ha bisogno di una descrizione del modello relazionale per fare la mappatura e questo è chiamato schema. In uno schema si definiscono le tabelle, le relazioni e le caratteristiche delle colonne.
+Allo scopo di creare il modello a oggetti dei dati che symfony userà, bisogna tradurre tutti i modelli relazionali del database in un modello dati a oggetti. L'ORM ha bisogno di una descrizione del modello relazionale per fare la mappatura e questo è chiamato schema. In uno schema si definiscono le tabelle, le relazioni e le caratteristiche delle colonne.
 
 La sintassi di symfony per gli schemi utilizza il formato YAML. I file `schema.yml` devono essere messi nella cartella `mioprogetto/config/doctrine`
 
@@ -98,7 +98,7 @@ Listato 8-3 - Esempio di file `schema.yml`
           onDelete: CASCADE
           foreignAlias: Comments
 
-Notare che il nome del database (`blog`) non compare nel file `schema.yml`. Il database invece è descritto con un nome di connessione (`doctrine` in questo esempio). Questo perché le impostazioni di connessione effettive possono dipendere dall'ambiente in cui l'applicazione è in esecuzione. Per esempio, quando si esegue l'applicazione nell'ambiente di sviluppo, si accede ad un database di sviluppo (può essere `blog_dev`), ma con lo stesso schema del database di produzione. Le impostazioni di connessione saranno specificate nel file `databases.yml`, descritto più avanti in questo capitolo nella sezione "Connessioni del database". Lo schema non contiene nessuna impostazione di connessione, solo un nome di connessione, per mantenere l'astrazione del database.
+Notare che il nome del database (`blog`) non compare nel file `schema.yml`. Il database invece è descritto con un nome di connessione (`doctrine` in questo esempio). Questo perché le impostazioni di connessione effettive possono dipendere dall'ambiente in cui l'applicazione è in esecuzione. Per esempio, quando si esegue l'applicazione nell'ambiente di sviluppo, si accede a un database di sviluppo (può essere `blog_dev`), ma con lo stesso schema del database di produzione. Le impostazioni di connessione saranno specificate nel file `databases.yml`, descritto più avanti in questo capitolo nella sezione "Connessioni del database". Lo schema non contiene nessuna impostazione di connessione, solo un nome di connessione, per mantenere l'astrazione del database.
 
 ### Sintassi di base dello schema
 
@@ -186,7 +186,7 @@ Listato 8-6 - Nella classe della tabella sono disponibili dei metodi pubblici pe
 Accesso ai dati
 ---------------
 
-In symfony si accede ai dati attraverso oggetti. Se si è abituati al modello relazionale e ad usare l'SQL per recuperare e modificare i dati, i metodi a oggetti del modello potranno sembrare complicati inizialmente. Ma una volta che si prova la potenza dell'accesso ai dati tramite interfaccia orientata agli oggetti, probabilmente ci si troverà a proprio agio.
+In symfony si accede ai dati attraverso oggetti. Se si è abituati al modello relazionale e a usare l'SQL per recuperare e modificare i dati, i metodi a oggetti del modello potranno sembrare complicati inizialmente. Ma una volta che si prova la potenza dell'accesso ai dati tramite interfaccia orientata agli oggetti, probabilmente ci si troverà a proprio agio.
 
 Ma prima, vediamo di essere sicuri di condividere lo stesso vocabolario. Il modello dei dati relazionale e a oggetti utilizza concetti simili, ma ciascuno ha una propria nomenclatura:
 
@@ -275,7 +275,7 @@ Chiamando il costruttore `new`, viene creato un nuovo oggetto, ma non un nuovo r
     [php]
     $articolo->save();
 
-L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$articolo` viene anche salvato l'oggetto `$commento` ad esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database , quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$articolo->getId()`.
+L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$articolo` viene anche salvato l'oggetto `$commento` a esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database , quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$articolo->getId()`.
 
 >**TIP**
 >Si può controllare se un oggetto è nuovo, chiamando `isNew()`. Se si vuole sapere se un oggetto è stato modificato per eventualmente evitare il salvataggio, basta chiamare il metodo `isModified()`.
