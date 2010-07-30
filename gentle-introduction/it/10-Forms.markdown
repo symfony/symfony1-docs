@@ -1,19 +1,19 @@
-Chapter 10 - I Form
-==================
+Chapter 10 - I form
+===================
 
 La visualizzazione degli input di un form, la validazione dei dati inseriti in un form e tutta la casistica particolare del trattamento dei form è uno dei compiti più complessi nello sviluppo web. Fortunatamente, symfony fornisce un'interfaccia semplice verso un potente sottosistema dedicato ai form, e facilita la creazione e la manipolazione con poche linee di codice di form di qualsiasi livello di complessità.
 
 Visualizzazione di un form
------------------
+--------------------------
 
 Un semplice form di contatto con dei campi nome, email, oggetto e messaggio tipicamente appare come segue:
 
 ![Form di contatto](http://www.symfony-project.org/images/forms_book/en/01_07.png)
 
-In symfony un form è un oggetto definito nell'action e passato al template. Prima di visualizzare un form, si devono definire i campi che esso contiene, ossia quelli che con la terminologia propria di symfony vengono chiamati "widget". Il modo più semplice per farlo è di creare un nuovo oggetto "sfForm" nell'opportuno metodo dell'action.
+In symfony un form è un oggetto definito nell'azione e passato al template. Prima di visualizzare un form, si devono definire i campi che esso contiene, ossia quelli che con la terminologia propria di symfony vengono chiamati "widget". Il modo più semplice per farlo è di creare un nuovo oggetto `sfForm` nell'opportuno metodo dell'action.
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     public function executeContact($request)
     {
       $this->form = new sfForm();
@@ -25,15 +25,15 @@ In symfony un form è un oggetto definito nell'action e passato al template. Pri
       ));
     }
 
-`sfForm::setWidgets()` si attende un array associativo di nomi di widtget / oggetti widget. `sfWidgetFormInputText`, `sfWidgetFormChoice`, e `sfWidgetFormTextarea` sono alcune delle numerose classi di widget offerte da symfony; se ne può trovare una lista completa più avanti in questo capitolo.
+`sfForm::setWidgets()` si aspetta un array associativo di nomi di widtget / oggetti widget. `sfWidgetFormInputText`, `sfWidgetFormChoice` e `sfWidgetFormTextarea` sono alcune delle numerose classi di widget offerte da symfony; se ne può trovare una lista completa più avanti in questo capitolo.
 
-L'esempio precedente mostra due opzioni dei widget che è possibile usare: "default" imposta il valore da assegnare al widget, ed è disponibile per tutti i tipi di widget. "choices" è invece un'opzione specifica dei widget di tipo "choice" (che viene visualizzato come una lista a discesa): essa definisce le opzioni selezionabili dall'utente.
+L'esempio precedente mostra due opzioni dei widget che è possibile usare: `default` imposta il valore da assegnare al widget ed è disponibile per tutti i tipi di widget. `choices`è invece un'opzione specifica dei widget di tipo `choice` (che viene visualizzato come una lista a discesa): essa definisce le opzioni selezionabili dall'utente.
 
-Dunque l'azione "foo/contact" definisce un oggetto form, che rende disponibile al template "contactSuccess" in una variabile "$form".  Il template può usare questo oggetto per generare le varie parti del form in HTML. Il modo più semplice per farlo è una chiamata del tipo "echo $form", che costruisce tutti i campi come controlli del form con etichette. Si può anche usare l'oggetto form per generare il tag form:
+Dunque l'azione `pippo/contact` definisce un oggetto form, che rende disponibile al template `contactSuccess` in una variabile `$form`.  Il template può usare questo oggetto per generare le varie parti del form in HTML. Il modo più semplice per farlo è una chiamata del tipo `echo $form`, che costruisce tutti i campi come controlli del form con etichette. Si può anche usare l'oggetto form per generare il tag form:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
       <table>
         <?php echo $form ?>
         <tr>
@@ -47,7 +47,7 @@ Dunque l'azione "foo/contact" definisce un oggetto form, che rende disponibile a
 Con i parametri passati a setWidgets(), symfony ha informazioni sufficienti per mostrare il form correttamente. L'HTML risultante, corrispondente allo screenshot visto in precedenza, appare come segue:
 
     [php]
-    <form action="/frontend_dev.php/foo/contact" method="POST">
+    <form action="/frontend_dev.php/pippo/contact" method="POST">
       <table>
         <tr>
           <th><label for="name">Name</label></th>
@@ -79,16 +79,16 @@ Con i parametri passati a setWidgets(), symfony ha informazioni sufficienti per 
       </table>
     </form>
 
-Ogni widget viene convertito nella riga di una tabella contenente un tag <label> e un tag di input del form. Symfony deduce il nome della label dal nome del widget, convertendo l'iniziale in maiuscolo (il nome del widget "subject" dà la label "Subject"). Per quanto riguarda il tag di input, esso dipende dal tipo di widget. Symfony aggiunge un attributo "id" ad ogni widget, basandolo sul suo nome. Infine, la resa del form è sempre conforme alle specifiche XHTML.
+Ogni widget viene convertito nella riga di una tabella contenente un tag <label> e un tag di input del form. Symfony deduce il nome della label dal nome del widget, convertendo l'iniziale in maiuscolo (il nome del widget `subject` dà la label `Subject`). Per quanto riguarda il tag di input, esso dipende dal tipo di widget. Symfony aggiunge un attributo `id` ad ogni widget, basandolo sul suo nome. Infine, la resa del form è sempre conforme alle specifiche XHTML.
 
 Personalizzare la visualizzazione del form
-----------------------------
+------------------------------------------
 
-L'uso di "echo $form" è ottimo per la prototipazione, ma probabilmente si desidera controllare esattamente il codice HTML risultante. L'oggetto form contiene un array di campi, e la chiamata "echo $form" di fatto itera attraverso i campi e li genera uno per uno. Per avere un controllo ulteriore, è possibile iterare manualmente attraverso i campi, e richiamare "renderRow()" per ogni campo. Il listato che segue produce esattamente lo stesso codice HTML del precedente, ma il template scrive ogni campo individualmente:
+L'uso di `echo $form` è ottimo per la prototipazione, ma probabilmente si desidera controllare esattamente il codice HTML risultante. L'oggetto form contiene un array di campi, e la chiamata `echo $form` di fatto itera attraverso i campi e li genera uno per uno. Per avere un controllo ulteriore, è possibile iterare manualmente attraverso i campi, e richiamare `renderRow()` per ogni campo. Il listato che segue produce esattamente lo stesso codice HTML del precedente, ma il template scrive ogni campo individualmente:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
       <table>
         <?php echo $form['name']->renderRow() ?>
         <?php echo $form['email']->renderRow() ?>
@@ -102,13 +102,13 @@ L'uso di "echo $form" è ottimo per la prototipazione, ma probabilmente si desid
       </table>
     </form>
 
-Generare i campi uno alla volta permette di cambiare l'ordine nel quale essi sono visualizzati, e inoltre di personalizzare il loro aspetto. "renderRow()" aspetta una lista di attributi HTML come primo argomento, così è possibile definire una classe, un id o l'handler JavaScript di un evento per ogni istanza. Il secondo argomento di "render Row()" è una label opzionale che sovrascrive quella dedotta dal nome del widget. Segue un esempio di personalizzazione del form di contatto:
+Generare i campi uno alla volta permette di cambiare l'ordine nel quale essi sono visualizzati, e inoltre di personalizzare il loro aspetto. `renderRow()` si aspetta una lista di attributi HTML come primo parametro, così è possibile definire una classe, un id o l'handler JavaScript di un evento per ogni istanza. Il secondo parametro di `render Row()` è una label opzionale che sovrascrive quella dedotta dal nome del widget. Segue un esempio di personalizzazione del form di contatto:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
       <table>
-        <?php echo $form['name']->renderRow(array('size' => 25, 'class' => 'foo'), 'Your Name') ?>
+        <?php echo $form['name']->renderRow(array('size' => 25, 'class' => 'pippo'), 'Your Name') ?>
         <?php echo $form['email']->renderRow(array('onclick' => 'this.value = "";'), 'Your Email') ?>
         <?php echo $form['message']->renderRow() ?>
         <tr>
@@ -119,11 +119,11 @@ Generare i campi uno alla volta permette di cambiare l'ordine nel quale essi son
       </table>
     </form>
 
-A volte può essere necessario produrre le label e l'input di ogni campo in una lista con tag <li> anziché in una tabella con tag <tr>. Un campo "row" è costituito da una label, un messaggio di errore opzionale (aggiunto dal sistema di validazione spiegato nel seguito di questo capitolo), un testo di help e un widget (si noti che il widget può consistere di più di un controllo form). Così com'è possibile produrre i vari campi di un form uno per uno, è anche possibile rendere le varie parti di un form indipendentemente. Anziché usare renderRow(), si può scegliere di usare render() (per il widget), renderError(), renderLabel e renderHelp(). Ad esempio, se si desidera generare tutto il form con tag <li>, si scriva il template come segue:
+A volte può essere necessario produrre le label e l'input di ogni campo in una lista con tag `<li>` anziché in una tabella con tag `<tr>`. Un campo "riga" è costituito da una label, un messaggio di errore opzionale (aggiunto dal sistema di validazione spiegato nel seguito di questo capitolo), un testo di help e un widget (si noti che il widget può consistere di più di un controllo form). Così com'è possibile produrre i vari campi di un form uno per uno, è anche possibile rendere le varie parti di un form indipendentemente. Anziché usare renderRow(), si può scegliere di usare render() (per il widget), `renderError()`, `renderLabel` e `renderHelp()`. Ad esempio, se si desidera generare tutto il form con tag `<li>`, si scriva il template come segue:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
       <ul>
         <?php foreach ($form as $field): ?>
         <li>
@@ -140,7 +140,7 @@ A volte può essere necessario produrre le label e l'input di ogni campo in una 
 L'HTML generato è il seguente:
 
     [php]
-    <form action="/frontend_dev.php/foo/contact" method="POST">
+    <form action="/frontend_dev.php/pippo/contact" method="post">
       <ul>
         <li>
           <label for="name">Name</label>
@@ -169,11 +169,11 @@ L'HTML generato è il seguente:
     </form>
 
 >**TIP**
->Una "field row" è la rappresentazione di tutti gli elementi di un campo form (label, messaggio di errore, testo di help, form input) usando un formattatore. Per default, symfony usa un formattatore "tabella", e questo è il motivo per cui renderRow() restituisce un insieme di tag <tr>, <th> e <td>. Alternativamente, è possibile ottenere lo stesso codice HTML di cui sopra semplicemente specificando il formattatore alternativo "list" per il form, come segue:
+>Il campo di una riga è la rappresentazione di tutti gli elementi di un campo form (label, messaggio di errore, testo di help, form input) usando un formattatore. Per default, symfony usa un formattatore "tabella", e questo è il motivo per cui `renderRow()` restituisce un insieme di tag `<tr>`, `<th>` e `<td>`. Alternativamente, è possibile ottenere lo stesso codice HTML di cui sopra semplicemente specificando il formattatore alternativo "list" per il form, come segue:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
       <ul>
         <?php echo $form->renderUsing('list') ?>
         <li>
@@ -185,31 +185,31 @@ L'HTML generato è il seguente:
 -
 
 >**TIP**
->Fare riferimento alla documentazione delle API per la classe sfWidgetFormSchemaFormatter per imparare come creare un proprio formattatore.
+>Fare riferimento alla documentazione delle API per la classe `sfWidgetFormSchemaFormatter` per imparare come creare un proprio formattatore.
 
-I Form Widgets
-------------
+I widget dei form
+-----------------
 
-Ci sono molti form widgets disponibili per comporre i propri form. Tutti i widget accettano come minimo l'opzione "default".
+Ci sono molti widget di form disponibili per comporre i propri form. Tutti i widget accettano come minimo l'opzione `default`.
 
 Per un widget è anche possibile definire la label e tutti gli attributi HTML, quando si crea il form:
 
     [php]
     $this->form = new sfForm();
     $this->form->setWidgets(array(
-      'name'    => new sfWidgetFormInput(array('label' => 'Your Name'), array('size' => 25, 'class' => 'foo')),
+      'name'    => new sfWidgetFormInput(array('label' => 'Your Name'), array('size' => 25, 'class' => 'pippo')),
       'email'   => new sfWidgetFormInput(array('default' => 'me@example.com', 'label' => 'Your Email'), array('onclick' => 'this.value = "";')),
       'subject' => new sfWidgetFormChoice(array('choices' => array('Subject A', 'Subject B', 'Subject C'))),
       'message' => new sfWidgetFormTextarea(array(), array('rows' => '20', 'cols' => 5)),
     ));
 
-Symfony usa questi parametri per mostrare il widget, ma è ancora possibile sovrascriverli passando dei parametri personalizzati a renderRow() nel template.
+Symfony usa questi parametri per mostrare il widget, ma è ancora possibile sovrascriverli passando dei parametri personalizzati a `renderRow()` nel template.
 
->**TIP**: Come alternativa alla chiamata di setWidgets() con un array associativo, è possibile chiamare più volte setWidget($nome, $widget).
+>**TIP**: Come alternativa alla chiamata di `setWidgets()` con un array associativo, è possibile chiamare più volte `setWidget($nome, $widget)`.
 
-### I Widget standard
+### I widget standard
 
-Nel seguito viene presentata una lista dei tipi di widget disponibili, e di come essi vengono tradotti in HTML attraverso renderRow():
+Nel seguito viene presentata una lista dei tipi di widget disponibili, e di come essi vengono tradotti in HTML attraverso `renderRow()`:
 
     [php]
     // Text input
@@ -242,19 +242,19 @@ Ci sono altre opzioni disponibili per ogni widget: fare riferimento alla documen
 
 ### Widget di tipo lista
 
-Ogni volta che gli utenti devono fare una scelta tra una lista di valori, e se essi possono selezionare una o più opzioni in questa lista, un singolo widget risponde a tutte le esigenze: il widget "choice". 
-In base alle impostazioni di due parametri opzionali ("multiple" e "expanded"), questo widget genera l'HTML in maniera differente:
+Ogni volta che gli utenti devono fare una scelta tra una lista di valori, e se essi possono selezionare una o più opzioni in questa lista, un singolo widget risponde a tutte le esigenze: il widget `choice`. 
+In base alle impostazioni di due parametri opzionali (`multiple` e `expanded`), questo widget genera l'HTML in maniera differente:
 
-                      | multiple=false       | multiple=true
-                      | (default)            |
-      ----------------|----------------------|---------------------
-      expanded=false  |    Dropdown list     |    Dropdown box
-      (default)       |    (`<select>`)      | (`<select multiple>`)
-      ----------------|----------------------|----------------------
+                      | multiple=false        | multiple=true
+                      | (default)             |
+      ----------------|-----------------------|---------------------
+      expanded=false  |    Dropdown list      |    Dropdown box
+      (default)       |    (`<select>`)       | (`<select multiple>`)
+      ----------------|-----------------------|----------------------
       expanded=true   | Lista di Radiobuttons | Lista di checkboxes
-                      |                      |
+                      |                       |
 
-Il widget "choice" si attende come minimo un parametro "choices" costituito da un array associativo che definisca il valore e il testo di ogni opzione. Segue un esempio per ogni sintassi:
+Il widget `choice` si attende come minimo un parametro `choices` costituito da un array associativo che definisca il valore e il testo di ogni opzione. Segue un esempio per ogni sintassi:
 
     [php]
     // Dropdown list (select)
@@ -312,34 +312,34 @@ Il widget "choice" si attende come minimo un parametro "choices" costituito da u
       <li><input type="checkbox" name="interests[]" id="interests_1" value="1"><label for="interests_1">Altro</label></li>
     </ul>
 
->**Tip**: Si noti che symfony definisce automaticamente un attributo 'id' per ogni input del form, basato su una combinazione del nome e del valore del widget. E' possibile sovrascrivere l'attributo 'id' widget per widget, o alternativamente settare una regola globale per l'intero form usando il metodo 'setIdFormat()':
+>**Tip**: Si noti che symfony definisce automaticamente un attributo `id` per ogni input del form, basato su una combinazione del nome e del valore del widget. È possibile sovrascrivere l'attributo `id` widget per widget, o alternativamente impostare una regola globale per l'intero form usando il metodo 'setIdFormat()':
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     $this->form = new sfForm();
     $this->form->setIdFormat('my_form_%s');
 
 ### I widget per le Foreign Keys
 
-Quando si editano gli oggetti del modello attraverso un form, si presenta sempre una particolare lista di scelte: la lista di oggetti che possono essere messi in relazione con quello corrente. Questo accade quando i modelli sono in relazione molti-a-uno o molti-a-molti. Fortunatamente, il plugin 'sfPropelPlugin' distribuito insieme a symfony offre un widget `sfWidgetFormPropelChoice` utile proprio in questi casi (e naturalmente 'sfDoctrinePlugin' offre un analogo widget `sfWidgetFormDoctrineChoice`).
+Quando si modificano gli oggetti del modello attraverso un form, si presenta sempre una particolare lista di scelte: la lista di oggetti che possono essere messi in relazione con quello attuale. Questo accade quando i modelli sono in relazione uno-a-molti o molti-a-molti. Fortunatamente, il plugin `sfPropelPlugin` distribuito insieme a symfony, offre un widget `sfWidgetFormPropelChoice` utile proprio in questi casi (e naturalmente `sfDoctrinePlugin` offre un analogo widget `sfWidgetFormDoctrineChoice`).
 
-Ad esempio, se una 'Sezione' ha molti 'Articoli', si dovrebbe essere in grado di scelte una sezione tra quelle esistenti quando si edita un articolo. Per fare questo, un "FormArticolo" dovrebbe usare il widget `sfWidgetFormPropelChoice`:
+Ad esempio, se una `Section` ha molti `Articles`, si dovrebbe essere in grado di scelte una sezione tra quelle esistenti quando si edita un articolo. Per fare questo, un `ArticleForm` dovrebbe usare il widget `sfWidgetFormPropelChoice`:
 
     [php]
-    $formArticolo = new sfForm();
-    $formArticoli->setWidgets(array(
+    $articleForm = new sfForm();
+    $articleForm->setWidgets(array(
       'id'        => sfWidgetFormInputHidden(),
-      'titolo'     => sfWidgetFormInputText(),
-      'id_sezione' => sfWidgetFormPropelChoice(array(
-        'model'  => 'Sezione',
-        'column' => 'nome'
+      'title'     => sfWidgetFormInputText(),
+      'section_id' => sfWidgetFormPropelChoice(array(
+        'model'  => 'Section',
+        'column' => 'name'
       )
     )));
 
-Questo mostra una lista delle sezioni esistenti... purché si sia definito un metodo '__toString()' nella classe del modello "Sezione". Questo perché symfony prima richiama gli oggetti 'Sezione' disponibili, e popola un widget 'choice' con essi tentando di convertirli in stringa con __toString(). Il modello "Sezione" dunque dovrebbe definire almeno il seguente metodo:
+Questo mostra una lista delle sezioni esistenti... purché si sia definito un metodo `__toString()` nella classe del modello `Section`. Questo perché symfony prima richiama gli oggetti `Section` disponibili, e popola un widget `choice` con essi, tentando di convertirli in stringa con `__toString()`. Il modello `Section` dunque dovrebbe definire almeno il seguente metodo:
 
     [php]
-    // in lib/model/Sezione.php
+    // in lib/model/Section.php
     public function __toString()
     {
       return $this->getName();
@@ -347,14 +347,14 @@ Questo mostra una lista delle sezioni esistenti... purché si sia definito un me
 
 Il widget `sfWidgetFormPropelChoice` è un'estensione del widget `sfWidgetFormChoice`, così è possibile usare l'opzione 'multiple' per trattare le relazioni molti-a-molti, e l'opzione 'expanded' per cambiare il modo in cui il widget è reso.
 
-Se si desidera ordinare la lista di scelte in un modo particolare, o filtrarle in modo da mostrare solo una porzione delle scelte disponibili, è possibile usare l'opzione 'criteria' per passare un oggetto 'Criteria' al widget. Doctrine supporta lo stesso tipo di personalizzazione: è possibile passare un oggetto 'Doctrine_Queryì al widget con l'opzione 'query'.
+Se si desidera ordinare la lista di scelte in un modo particolare o filtrarle in modo da mostrare solo una porzione delle scelte disponibili, è possibile usare l'opzione `criteria` per passare un oggetto `Criteria` al widget. Doctrine supporta lo stesso tipo di personalizzazione: è possibile passare un oggetto `Doctrine_Query` al widget con l'opzione `query`.
 
-### I Widgets per le date
+### I widget per le date
 
-I widget Date e tine restituiscono un insieme di liste drop-down, popolate con i valori disponibili per il giorno, il mese, l'anno, l'ora o il minuto.
+I widget per data e ora restituiscono un insieme di liste drop-down, popolate con i valori disponibili per il giorno, il mese, l'anno, l'ora o il minuto.
 
     [php]
-    // Date
+    // Data
     $years = range(1950, 1990);
     $form->setWidget('ddn', new sfWidgetFormDate(array(
       'label'   => 'Data di nascita',
@@ -385,7 +385,7 @@ I widget Date e tine restituiscono un insieme di liste drop-down, popolate con i
       <option value="1990">1990</option>
     </select>
     
-    // Time
+    // Ora
     $form->setWidget('start', new sfWidgetFormTime(array('default' => '12:00')));
     // symfony rende il widget in HTML come segue:
     <label for="start">Start</label>
@@ -405,20 +405,20 @@ I widget Date e tine restituiscono un insieme di liste drop-down, popolate con i
       <option value="59">59</option>
     </select>
 
-    // Date e time
+    // Data e ora
     $form->setWidget('end', new sfWidgetFormDateTime(array('default' => '01/01/2008 12:00')));
     // symfony rende il widget in HTML come 5 liste dropdown per mese, giorno,anno, ora e minuto
 
 Naturalmente, si può personalizzare il formato della data per mostrarla in stile Europeo anziché Internazionale (`%day%/%month%/%year%` invece di `%month%/%day%/%year%`), si può scegliere l'orario a 12 ore anziché 24, si possono definire valori personalizzati per la prima opzione di ogni dropdown box, e si possono definire limiti per i possibili valori. Ancora una volta, si rimanda alla documentazione delle API per maggiori dettagli riguardo le opzioni di questi widget.
 
-I widget Date sono un buon esempio della potenza dei widget in symfony. Un widget non è semplicemente l'input di un form. Esso può essere una combinazione di più input, che symfony può rendere e leggere in maniera trasparente.
+I widget data sono un buon esempio della potenza dei widget in symfony. Un widget non è semplicemente l'input di un form. Esso può essere una combinazione di più input, che symfony può rendere e leggere in maniera trasparente.
 
-### I widget I18n (Internationalization)
+### I widget I18n
 
-Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il Capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa licalizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla 'culture' dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un 'month_format' per visualizzare una lista drop-down con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
+Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il Capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa localizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla `culture` dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un `month_format` per visualizzare una lista drop-down con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
 
     [php]
-    // Date
+    // Data
     $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormI18nDate(array(
       'culture'      => $this->getUser()->getCulture(),
@@ -450,11 +450,12 @@ Nelle applicazioni multilingua, le date devono essere mostrare in un formato che
     </select> /
     <select id="dob_year" name="dob[year]">...</select>
 
-Dei widget simili esistono per time (`sfWidgetFormI18nTime`) e datetime `sfWidgetFormI18nDateTime`).
+Dei widget simili esistono per ora (`sfWidgetFormI18nTime`) e data/ora `sfWidgetFormI18nDateTime`).
 
-Ci sono due liste drop-down che appaiono in molti form e che dipendono anch'essi dalla cultura: i selettori country e language. Symfony fornisce due widget specifici per questi scopi. Non sarà necessario definire le 'choices' in questi widget, in quanto symfony le popolerà con una lista di nazioni e linguaggi nel linguaggio dell'utente (purché l'utente parli una delle 250 lingue supportate da symfony).
+Ci sono due liste drop-down che appaiono in molti form e che dipendono anch'essi dalla cultura: i selettori di paese e di lingua. Symfony fornisce due widget specifici per questi scopi. Non sarà necessario definire le 'choices' in questi widget, in quanto symfony le popolerà con una lista di nazioni e lingue nella lingua dell'utente (purché l'utente parli una delle 250 lingue supportate da symfony).
 
-    // Country list
+    [php]
+    // Elenco di paesi
     $form->setWidget('country', new sfWidgetFormI18nCountryChoice(array('default' => 'UK')));
     // Per un utente di lingua inglese, symfony rende il widget in HTML come segue:
     <label for="country">Country</label>
@@ -466,7 +467,7 @@ Ci sono due liste drop-down che appaiono in molti form e che dipendono anch'essi
       <option value="ZWD">Zimbabwe</option>
     </select>
 
-    // Language list
+    // Elenco di lingue
     $form->setWidget('language', new sfWidgetFormI18nLanguageChoice(array(
       'languages' => array('en', 'fr', 'de'),  // optional restricted list of languages
       'default'   => 'en'
@@ -480,7 +481,7 @@ Ci sono due liste drop-down che appaiono in molti form e che dipendono anch'essi
       <option value="fr">French</option>
     </select>
 
-### I widget di tipo File
+### I widget di tipo file
 
 Trattare con gli input di tipo file non è più complicato che trattare con gli altri widget:
 
@@ -492,23 +493,23 @@ Trattare con gli input di tipo file non è più complicato che trattare con gli 
     <input id="picture" type="file" name="picture"/>
     // Ogni volta che un form contiene un file widget, renderFormTag() restituisce un tag <form> con l'opzione multipart
     
-    // Editable input file
-    $form->setWidget('picture', new sfWidgetFormInputFileEditable(array('default' => '/images/foo.png')));
+    // Input file modificabile
+    $form->setWidget('picture', new sfWidgetFormInputFileEditable(array('default' => '/images/pippo.png')));
     // symfony rende il widget in HTML come un file input tag, insieme a una preview del file corrente
 
->**TIP**: Esistono molti widget addizionali forniti da plugin di terze parti. E' possibile trovare un widget rich text editor, un widget calendario, o altri widget 'rich UI' per varie librerie JavaScript. Sfoglia il [Plugins repository] (http://www.symfony-project.org/plugins/) per ulteriori dettagli.
+>**TIP**: Esistono molti widget addizionali forniti da plugin di terze parti. È possibile trovare un widget editor visuale, un widget calendario o altri widget 'rich UI' per varie librerie JavaScript. Consultare l'elenco dei [plugin](http://www.symfony-project.org/plugins/) per ulteriori dettagli.
 
-Trattare le richieste dei Form
-------------------------------
+Gestire le richieste dei form
+-----------------------------
 
-Quando gli utenti riempiono un form e lo inviano, il web application server deve recuperare i dati dalla richiesta e fare alcune cose con essi. La classe 'sfForm' fornisce tutti i metodi necessari per fare questo in un paio di linee di codice. 
+Quando gli utenti riempiono un form e lo inviano, il server deve recuperare i dati dalla richiesta e fare alcune cose con essi. La classe `sfForm` fornisce tutti i metodi necessari per fare questo in un paio di linee di codice. 
 
-### Trattamento semplice dei Form
+### Gestione semplice dei Form
 
-Dato che i widget restituiscono dei campi form HTML regolari, ricevere il loro valore nell'azione che tratta l'invio dei form è semplice quanto testare i relativi parametri della richiesta. Per il form di contatto di esempio, l'azione potrebbe essere scritta come segue:
+Dato che i widget restituiscono dei campi form HTML regolari, ricevere il loro valore nell'azione che tratta l'invio dei form è semplice: basta testare i relativi parametri della richiesta. Per il form di contatto di esempio, l'azione potrebbe essere scritta come segue:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     public function executeContact($request)
     {
       // Definizione del form
@@ -520,37 +521,37 @@ Dato che i widget restituiscono dei campi form HTML regolari, ricevere il loro v
         'messaggio' => new sfWidgetFormTextarea(),
       ));
 
-      // Trattamento della richiesta
+      // Gestione della richiesta
       if ($request->isMethod('post'))
       {
         // Gestisce l'invio del form
         $name = $request->getParameter('nome');
         // Fa quello che deve fare...
         // ...
-        $this->redirect('foo/bar');
+        $this->redirect('pippo/bar');
       }
     }
 
-Se il metodo della richiesta è 'GET', questa azione termina con un `sfView::SUCCESS`, quindi rende il template 'contactSuccess' per mostrare il form. Se il metodo della richiesta è 'POST', l'azione gestisce l'invio del form e reindirizza a un'altra azione. Perché questo funzioni, l'azione target del tag <form> dev'essere la stessa che sta mostrando il form. Questo spiega perché negli esempi precedenti è stato usato 'foo/contact' come target del form:
+Se il metodo della richiesta è `GET`, questa azione termina con un `sfView::SUCCESS`, quindi rende il template `contactSuccess` per mostrare il form. Se il metodo della richiesta è `POST`, l'azione gestisce l'invio del form e reindirizza a un'altra azione. Perché questo funzioni, l'azione target del tag `<form>` deve essere la stessa che sta mostrando il form. Questo spiega perché negli esempi precedenti è stato usato `pippo/contact` come target del form:
 
     [php]
-    // in modules/foo/templates/contactSuccess.php
-    <?php echo $form->renderFormTag('foo/contact') ?>
+    // in modules/pippo/templates/contactSuccess.php
+    <?php echo $form->renderFormTag('pippo/contact') ?>
     ...
 
-### Trattamento dei form con validazione dei dati
+### Gestione dei form con validazione dei dati
 
 In pratica, gestire l'invio dei form non si riduce a ricevere i valori inseriti dall'utente. In molti casi il controller dell'applicazione deve:
 
  1. Controllare che i dati siano conformi a un insieme di regole predefinite (campi richiesti, formato delle email, ecc.)
- 2. Opzionalmente trasformare alcuni dati di input per renderli comprensibili (togliere gli spazi bianchi, conertire le date in formato PHP, ecc.)
+ 2. Opzionalmente trasformare alcuni dati di input per renderli comprensibili (togliere gli spazi bianchi, convertire le date in formato PHP, ecc.)
  3. Se i dati non sono validi, mostrare nuovamente il form, con messaggi di errore dove necessario
- 4. Se i dati sono corretti, fare quanto serve con essi, quindi fare un redirect a un'altra azione.
+ 4. Se i dati sono corretti, fare quanto serve con essi, quindi rinviare a un'altra azione.
 
-Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli con un insieme di regole predefinite. Prima definisce un insieme di validatori per ogni campo. Quindi, quando il form è inviato, collega l'oggetto form con i valori inseriti dall'utente (ad esempio, richiama i valori inseriti e li inserisce nel form). Infine, chiede al form di controllare che i dati siano validi. L'esempio che segue mostra come verificare che il valore recuperato dal widget 'email' sia in effetti un indirizzo email, e che il 'messaggio' abbia una dimensione minima di 4 caratteri:
+Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli con un insieme di regole predefinite. Prima definisce un insieme di validatori per ogni campo. Quindi, quando il form è inviato, collega l'oggetto form con i valori inseriti dall'utente (ad esempio, richiama i valori inseriti e li inserisce nel form). Infine, chiede al form di controllare che i dati siano validi. L'esempio che segue mostra come verificare che il valore recuperato dal widget `email` sia in effetti un indirizzo email, e che `message` abbia una dimensione minima di 4 caratteri:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     public function executeContact($request)
     {
       // Define the form
@@ -568,7 +569,7 @@ Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli c
         'message' => new sfValidatorString(array('min_length' => 4))
       ));
 
-      // Trattamento della richiesta
+      // Gestione della richiesta
       if ($request->isMethod('post'))
       {
         $this->form->bind(/* user submitted data */);
@@ -577,33 +578,33 @@ Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli c
           // Gestisce l'invio del form
           // ...
 
-          $this->redirect('foo/bar');
+          $this->redirect('pippo/bar');
         }
       }
     }
 
-'setValidators()' usa una sintassi simile al metodo 'setWidgets()'. 'sfValidatorEmail' e 'sfValidatorString' sono due delle numerose classi di validazione di symfony, elencate più avanti in questo capitolo. Naturalmente, 'sfForm' fornisce anche un metodo 'setValidator()' per aggiungere dei validatori uno per uno.
+`setValidators()` usa una sintassi simile al metodo `setWidgets()`. `sfValidatorEmail` e `sfValidatorString` sono due delle numerose classi di validazione di symfony, elencate più avanti in questo capitolo. Naturalmente, `sfForm` fornisce anche un metodo `setValidator()` per aggiungere dei validatori uno per uno.
 
 Per inserire i dati della richiesta nel form e collegarli, si usa il metodo 'sfForm::bind()'. Un form deve essere collegato con qualche dato per controllare la loro validità.
 
-'isValid()' controlla che tutti i validatori registrati siano superati. In questo caso, 'isValid()' restituisce 'true', e l'azione può procedere con la submission del form. Se il form non è valido, l'azione termina con il default 'sfView::SUCCESS' e mostra nuovamente il fom. Il form però non viene mostrato con i valori di default come la prima volta: gli input del form sono riempiti con i dati inseriti in precedenza dall'utente, e dei messaggi di errori appaiono dove i validatori non sono stati superati.
+'isValid()' controlla che tutti i validatori registrati siano superati. In questo caso, `isValid()` restituisce `true`, e l'azione può procedere con la submission del form. Se il form non è valido, l'azione termina con il default `sfView::SUCCESS` e mostra nuovamente il fom. Il form però non viene mostrato con i valori di default come la prima volta: gli input del form sono riempiti con i dati inseriti in precedenza dall'utente, e dei messaggi di errori appaiono dove i validatori non sono stati superati.
 
-![Invalid form](http://www.symfony-project.org/images/forms_book/en/02_01.png)
+![Form non valido](http://www.symfony-project.org/images/forms_book/en/02_01.png)
 
->**TIP**: Il processo di validazione non si ferma quando il form incontra un campo non valido. 'isValid()' processa tutti i dati del form e controlla tutti i campi alla ricerca di errori, per evitare di mostrare nuovi messaggi di errori quando l'errore corregge i suoi errori e invia il form nuovamente.
+>**TIP**: Il processo di validazione non si ferma quando il form incontra un campo non valido. `isValid()` processa tutti i dati del form e controlla tutti i campi alla ricerca di errori, per evitare di mostrare nuovi messaggi di errori quando l'errore corregge i suoi errori e invia il form nuovamente.
 
 ### Utilizzo di dati form puliti
 
-Nell'elenco precedente, non abbiamo definito i dati della richiesta ricevuti dal form durante il processo di binding. Il problema è che la richiesta non contiene solo i dati del form. Essa contiene anche headers, cookies, parametri passati come argomenti GET, e tutto questo potrebbe inquinare il processo di binding. Una buona pratica è di passare solo i dati del form al metodo 'bind()'.
+Nell'elenco precedente, non abbiamo definito i dati della richiesta ricevuti dal form durante il processo di bind. Il problema è che la richiesta non contiene solo i dati del form. Essa contiene anche header, cookie, parametri passati come argomenti `GET`, e tutto questo potrebbe inquinare il processo di bind. Una buona pratica è di passare solo i dati del form al metodo `bind()`.
 
-Fortunatamente, symfony offre un modo per denominare tutti gli input del form usando un array. Si può definire il formato dell'attributo nome con il metodo 'serNameFormat()' nell'azione quando si definisce il form, come segue:
+Fortunatamente, symfony offre un modo per denominare tutti gli input del form usando un array. Si può definire il formato dell'attributo nome con il metodo `setNameFormat()` nell'azione quando si definisce il form, come segue:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form->setNameFormat('contact[%s]');
 
-In questo modo tutti gli input vengono generati con un nome del tipo 'form[WIDGET_NAME]' anziché semplicemente 'WIDGET_NAME':
+In questo modo tutti gli input vengono generati con un nome del tipo `form[NOME_WIDGET]` anziché semplicemente `NOME_WIDGET`:
 
     [php]
     <label for="contact_name">Name</label>
@@ -622,11 +623,11 @@ In questo modo tutti gli input vengono generati con un nome del tipo 'form[WIDGE
     <label for="contact_message">Message</label>
     <textarea rows="4" cols="30" name="contact[message]" id="contact_message"></textarea>
 
-L'azione può adesso recuperare il parametro 'contact' della richiesta in una singola variabile:
+L'azione può adesso recuperare il parametro `contact` della richiesta in una singola variabile:
 
     [php]
-    // in modules/foo/actions/actions.class.php
-    // Deal with the request
+    // in modules/pippo/actions/actions.class.php
+    // Gestione della richiesta
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('contact'));
@@ -641,16 +642,16 @@ L'azione può adesso recuperare il parametro 'contact' della richiesta in una si
 
         // Fa qualcosa...
         // ...
-        $this->redirect('foo/bar');
+        $this->redirect('pippo/bar');
       }
     }
 
-Quando il metodo 'bind()' riceve un array di parametri, symfony automaticamente evita di inserire dei campi addizionali dal lato client. Questa caratteristica di sicurezza fa sì che la validazione del form fallisca se l'array dei parametri 'contact' contiene un campo che non appare nella definizione originale del form.
+Quando il metodo `bind()` riceve un array di parametri, symfony automaticamente evita di inserire dei campi addizionali dal lato client. Questa caratteristica di sicurezza fa sì che la validazione del form fallisca se l'array dei parametri `contact` contiene un campo che non appare nella definizione originale del form.
 
-Si noterà un'ulteriore differenza nel codice dell'azione appena vista rispetto a quello visto precedentemente. L'azione usa l'array di valori passato dall'oggetto form ('$form->getValues()') piuttosto di quelli provenienti dalla richiesta. Questo perché i validatori hanno la capacità di filtrare l'input e pulirlo, cosicché è sempre meglio fare affidamento sui dati recuperati dall'oggetto form (attraverso 'getValues()' o 'getValue()' piuttosto che su quelli provenienti direttamente dalla richiesta. Per campi compositi (come quelli dei widget date), i dati restituiti da 'getValues()' sono già ricomposti nei nomi originali:
+Si noterà un'ulteriore differenza nel codice dell'azione appena vista rispetto a quello visto precedentemente. L'azione usa l'array di valori passato dall'oggetto form (`$form->getValues()`) piuttosto di quelli provenienti dalla richiesta. Questo perché i validatori hanno la capacità di filtrare l'input e pulirlo, cosicché è sempre meglio fare affidamento sui dati recuperati dall'oggetto form (attraverso `getValues()` o `getValue()` piuttosto che su quelli provenienti direttamente dalla richiesta. Per campi compositi (come quelli dei widget data), i dati restituiti da `getValues()` sono già ricomposti nei nomi originali:
 
     [php]
-    // I controlli form di un widget 'date'...
+    // I controlli form di un widget data...
     <label for="contact_dob">Date of birth</label>
     <select id="contact_dob_month" name="contact[dob][month]">...</select> /
     <select id="contact_dob_day" name="contact[dob][day]">...</select> /
@@ -665,11 +666,11 @@ Si noterà un'ulteriore differenza nel codice dell'azione appena vista rispetto 
     $contact = $this->form->getValues();
     $dateOfBirth = $contact['dob'];
 
-Dunque è meglio prendere l'abitudine di usare sempre una sintassi di tipo array per i propri campi form (usando 'setNameFormat()') e di usare sempre l'output pulito del form (usando 'getValues()').
+Dunque è meglio prendere l'abitudine di usare sempre una sintassi di tipo array per i propri campi form (usando `setNameFormat()`) e di usare sempre l'output pulito del form (usando `getValues()`).
 
 ### Personalizzare la visualizzazione dei messaggi di errore
 
-Da dove vengono i messaggi di errore mostrati nello screenshot precedente? Ebbene, un widget è fatto di quattro componenti, e il messaggio di errore è uno di questi. Infatti il formatter (table) di default rende la riga di un campo come segue:
+Da dove vengono i messaggi di errore mostrati nella schermata precedente? Ebbene, un widget è fatto di quattro componenti e il messaggio di errore è uno di questi. Infatti il formatter predefinito (table) rende la riga di un campo come segue:
 
     [php]
     <?php if ($field->hasError()): ?>
@@ -698,7 +699,7 @@ Usando uno qualsiasi dei metodi visti sopra, si può personalizzare dove e come 
 
 ### Personalizzare i validatori
 
-In un form tutti i campi devono avere un validatore e per default tutti i campi sono richiesti. Se si deve settare un campo come opzionale, bisogna passare l'opzione 'required' al validatore settandola su 'false'. Ad esempio, la lista che segue mostra come rendere il campo 'name' richiesto e il campo 'email' opzionale:
+In un form tutti i campi devono avere un validatore e per default tutti i campi sono richiesti. Se si deve impostare un campo come opzionale, bisogna passare l'opzione `required` al validatore impostandola su 'false'. Ad esempio, la lista che segue mostra come rendere il campo `name` richiesto e il campo 'email' opzionale:
 
     [php]
     $this->form->setValidators(array(
@@ -708,7 +709,7 @@ In un form tutti i campi devono avere un validatore e per default tutti i campi 
       'message' => new sfValidatorString(array('min_length' => 4))
     ));
 
-Si può applicare più di un validatore a un singolo campo. Ad esempio, si può voler controllare che il campo 'email' soddisfi sia il validatore 'sfValidatorEmail' che quello 'sfValidatorString' con una dimensione minima di 4 caratteri. In tal caso, si usa il validatore 'sfValidatorAnd' per combinare i due validatori, passandogli come argomenti i due validatori 'sfValidatorEmail' e 'sfValidatorString':
+Si può applicare più di un validatore a un singolo campo. Ad esempio, si può voler controllare che il campo `email` soddisfi sia il validatore `sfValidatorEmail` che quello `sfValidatorString` con una dimensione minima di 4 caratteri. In tal caso, si usa il validatore `sfValidatorAnd` per combinare i due validatori, passandogli come argomenti i due validatori `sfValidatorEmail` e `sfValidatorString`:
 
     [php]
     $this->form->setValidators(array(
@@ -721,12 +722,12 @@ Si può applicare più di un validatore a un singolo campo. Ad esempio, si può 
       'message' => new sfValidatorString(array('min_length' => 4))
     ));
 
-Se entrambi i validatori sono validi, il campo 'email' viene dichiarato valido. Similmente, si può usare il validatore 'sfValidatorOr' per combinare più validatori. È sufficiente che uno di essi sia valido perché il campo sia dichiarato valido.
+Se entrambi i validatori sono validi, il campo 'email' viene dichiarato valido. Similmente, si può usare il validatore `sfValidatorOr` per combinare più validatori. È sufficiente che uno di essi sia valido perché il campo sia dichiarato valido.
 
-Ogni validatore invalido risulta in un messaggio di errore nel campo. Questi messaggi di errore sono in inglese, ma è possibile usare gli helper di internazionalizzazione di symfony. Se un progetto usa altri linguaggi, è possibile tradurre facilmente i messaggi di errore con un dizionario i18n. Alternativamente, ogni validatore prevede un terzo argomento per personalizzare i suoi messaggi di errore. Ogni validatore ha almeno due messaggi di errore: il messaggio 'required' e quello 'invalid'. Alcuni validatori possono mostrare messaggi di errore per uno scopo differente, e supportano sempre l'overriding dei messaggi di errore attraverso il loro terzo argomento:
+Ogni validatore invalido risulta in un messaggio di errore nel campo. Questi messaggi di errore sono in inglese, ma è possibile usare gli helper di internazionalizzazione di symfony. Se un progetto usa altri linguaggi, è possibile tradurre facilmente i messaggi di errore con un dizionario i18n. Alternativamente, ogni validatore prevede un terzo parametro per personalizzare i suoi messaggi di errore. Ogni validatore ha almeno due messaggi di errore: il messaggio `required` e quello `invalid`. Alcuni validatori possono mostrare messaggi di errore per uno scopo differente, e supportano sempre l'override dei messaggi di errore attraverso il loro terzo parametro:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     $this->form->setValidators(array(
       'name'    => new sfValidatorString(),
       'email'   => new sfValidatorEmail(array(), array(
@@ -744,14 +745,14 @@ Naturalmente, questi messaggi personalizzati vengono resi nei template attravers
 
 ### Applicare un validatore a più campi
 
-La sintassi usata sopra per definire i validatori in un form non consente di verificare che due campi siamo validi *contemporaneamente*. Ad esempio, in un form di registrazione, ci sono spesso due campi 'password' che devono corrispondere, altrimenti la registrazione viene rifiutata. Ogni campo password non è valido per sè stesso, ma solo se associato con l'altro campo. 
+La sintassi usata sopra per definire i validatori in un form non consente di verificare che due campi siamo validi *contemporaneamente*. Ad esempio, in un form di registrazione, ci sono spesso due campi `password` che devono corrispondere, altrimenti la registrazione viene rifiutata. Ogni campo password non è valido per sè stesso, ma solo se associato con l'altro campo. 
 
-Questo spiega perché sia possibile impostare un validatore 'multiplo' attraverso 'setPostValidator()' per settare i validatori che lavorano su diversi valori. Il post-validator è eseguito dopo tutti gli altri validatori e riceve un array di valori ripuliti. Se si necessita di validare i dati grezzi provenienti dagli input del form, si può invece usare il metodo 'setPreValidator()'.
+Questo spiega perché sia possibile impostare un validatore 'multiplo' attraverso `setPostValidator()` per impostare i validatori che lavorano su diversi valori. Il post-validatore è eseguito dopo tutti gli altri validatori e riceve un array di valori ripuliti. Se si necessita di validare i dati grezzi provenienti dagli input del form, si può invece usare il metodo `setPreValidator()`.
 
 Una tipica definizione di un form di registrazione potrebbe apparire come segue:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new sfForm();
     $this->form->setWidgets(array(
@@ -766,15 +767,15 @@ Una tipica definizione di un form di registrazione potrebbe apparire come segue:
     ));
     $this->form->setPostValidators(new sfValidatorSchemaCompare('password1', '==', 'password2'));
 
-Il validatore 'sfValidatorSchemaCompare' è uno speciale validatore multiplo che riceve tutti i valori ripuliti e può prendere due di essi per una comparazione. Naturalmente è possibile definire più di un post-validator usando i validatori 'sfValidatorAnd' e 'sfValidatorOr'.
+Il validatore `sfValidatorSchemaCompare` è uno speciale validatore multiplo che riceve tutti i valori ripuliti e può prendere due di essi per una comparazione. Naturalmente è possibile definire più di un post-validatore usando i validatori `sfValidatorAnd` e `sfValidatorOr`.
 
 Validatori
 ----------
 
-Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un array di opzioni e un array di errori come argomenti, dei quali è necessario personalizzare almeno i messaggi di errore 'required' e 'invalid'.
+Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un array di opzioni e un array di errori come argomenti, dei quali è necessario personalizzare almeno i messaggi di errore `required` e `invalid`.
 
     [php]
-    // validatore String
+    // validatore stringa
     $form->setValidator('message', new sfValidatorString(array(
       'min_length' => 4,
       'max_length' => 50,
@@ -784,7 +785,7 @@ Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un 
       'max_length' => 'Inserire un messaggio più sintetico',
     )));
     
-    // validatore Number
+    // validatore numero
     $form->setValidator('age', new sfValidatorNumber(array( // usare 'sfValidatorInteger' se si desiderano solo valori interi
       'min'  => 18,
       'max'  => 99.99,
@@ -794,55 +795,55 @@ Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un 
       'max' => 'Ti stai prendendo gioco di me? Le persone sopra i 100 anni non usano Internet',
     )));
     
-    // validatore Email
+    // validatore email
     $form->setValidator('email', new sfValidatorEmail());
     
     // validatore URL
     $form->setValidator('website', new sfValidatorUrl());
     
-    // validatore di Espressioni Regolari
+    // validatore di espressioni regolari
     $form->setValidator('IP', new sfValidatorRegex(array(
       'pattern' => '^[0-9]{3}\.[0-9]{3}\.[0-9]{2}\.[0-9]{3}$'
     )));
 
-Sebbene alcuni controlli form (come le liste drop-down, le checkboxes, i gruppi di radio-button) restringano le scelte possibili, un utente malevolo può sempre tentare di intaccare i form manipolando la pagina con Firebug o invando un'interrogazione con un linguaggio di scripting. Di conseguenza si dovrebbero validare anche i campi che accettano un array limitato di valori:
+Sebbene alcuni controlli form (come le liste drop-down, i checkbox, i gruppi di radio-button) restringano le scelte possibili, un utente malevolo può sempre tentare di intaccare i form manipolando la pagina con Firebug o inviando un'interrogazione con un linguaggio di scripting. Di conseguenza si dovrebbero validare anche i campi che accettano un array limitato di valori:
 
     [php]
-    // validatore Boolean
+    // validatore booleano
     $form->setValidator('has_signed_terms_of_service', new sfValidatorBoolean());
     
-    // validatore Choice (per restringere i valori a una lista)
+    // validatore scelta (per restringere i valori a una lista)
     $form->setValidator('subject', new sfValidatorChoice(array(
       'choices' => array('Subject A', 'Subject B', 'Subject C')
     )));
     
-    // validatore Multiple-Choice
+    // validatore scelta multipla
     $form->setValidator('languages', new sfValidatorChoice(array(
       'multiple' => true,
       'choices' => array('en' => 'English', 'fr' => 'French', 'other')
     )));
 
-Esistono dei validatori per scelte I18n delle liste di nazioni (`sfValidatorI18nChoiceCountry`) e di lingue `sfValidatorI18nChoiceLanguage`). Questi validatori accettano una lista ristretta di nazioni e linguaggi se si desidera limitare le opzioni possibili.
+Esistono dei validatori per scelte I18n delle liste di paesi (`sfValidatorI18nChoiceCountry`) e di lingue `sfValidatorI18nChoiceLanguage`). Questi validatori accettano una lista ristretta di paesi e lingue, se si desidera limitare le opzioni possibili.
 
-Il validatore 'sfValidatorChoice' è usato spesso per validare un widget `sfWidgetFormChoice`. E dato che è possibile usare il widget `sfWidgetFormChoice` per colonne di tipo foreign key, symfony fornisce anche un validatore per controllare che il valore della foreign key esista nella tabella collegata:
+Il validatore `sfValidatorChoice` è usato spesso per validare un widget `sfWidgetFormChoice`. Dato che è possibile usare il widget `sfWidgetFormChoice` per chiavi esterne, symfony fornisce anche un validatore per controllare che il valore della chiave esista nella tabella collegata:
 
     [php]
-    // Propel choice validator
+    // Validatore Propel
     $form->setValidator('section_id', new sfValidatorPropelChoice(array(
       'model'  => 'Section',
       'column' => 'name'
     )));
     
-    // Doctrine choice validator
+    // Validatore Doctrine
     $form->setValidator('section_id', new sfValidatorDoctrineChoice(array(
       'model'  => 'Section',
       'column' => 'name'
     )));
 
-Un altro utile validatore legato al Modello è `sfValidatorPropelUnique`, che controlla che un nuovo valore inserito tramite un form non sia in conflitto con un valore esistente in una colonna del database con indice 'unique'. Ad esempio, due utenti non possono avere la stessa 'login', così editango un oggetto 'User' con un form, bisogna aggiungere un validatore `sfValidatorPropelUnique` su questa colonna:
+Un altro utile validatore legato al Modello è `sfValidatorPropelUnique`, che controlla che un nuovo valore inserito tramite un form non sia in conflitto con un valore esistente in una colonna del database con indice `unique`. Ad esempio, due utenti non possono avere lo stesso `login`, così modificando un oggetto `User` con un form, bisogna aggiungere un validatore `sfValidatorPropelUnique` su questa colonna:
 
     [php]
-    // Propel unique validator
+    // Validatore Propel unique
     $form->setValidator('nickname', new sfValidatorPropelUnique(array(
       'model'  => 'User', 
       'column' => 'login'
@@ -857,10 +858,10 @@ Un altro utile validatore legato al Modello è `sfValidatorPropelUnique`, che co
 Per rendere i propri form ancora più sicuri ed evitare attacchi [Cross-Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery), si può abilitare la protezione CSRF:
 
     [php]
-    // CSRF protection - settare la chiave segreta a una stringa casuale che nessuno conosca
+    // CSRF protection - impostare la chiave segreta a una stringa casuale che nessuno conosca
     $form->addCSRFProtection('flkd445rvvrGV34G');
 
->**TIP**: È possibile settare la chiave CSRF per l'intero sito nel file 'settings.yml':
+>**TIP**: È possibile impostare la chiave CSRF per l'intero sito nel file 'settings.yml':
 
     [yml]
     # in apps/myapp/config/settings.yml
@@ -879,15 +880,15 @@ I validatori multipli operano sull'intero form, anziché su un singolo input. Se
     $form->setOption('allow_extra_fields', false);
     $form->setOption('filter_extra_fields', true);
 
-Modi alternativi di usare un Form
+Modi alternativi di usare un form
 ---------------------------------
 
 ### Classi Form
 
-Con tutte le opzioni dei widget, i validatori e i parametri dei form, la definizione del form dei contatti scritta nella classe actions appare piuttosto confusa:
+Con tutte le opzioni dei widget, i validatori e i parametri dei form, la definizione del form dei contatti scritta nella classe delle azioni appare piuttosto confusa:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new sfForm();
     $this->form->setNameFormat('contact[%s]');
@@ -906,7 +907,7 @@ Con tutte le opzioni dei widget, i validatori e i parametri dei form, la definiz
       'message' => new sfValidatorString(array('min_length' => 4))
     ));
 
-La migliore prassi consiste nel creare una classe form con le stesse proprietà ed istanziarla in tutte le azioni. Ad esempio, ecco come creare una classe per il form dei contatti:
+La migliore prassi consiste nel creare una classe form con le stesse proprietà e istanziarla in tutte le azioni. Ad esempio, ecco come creare una classe per il form dei contatti:
 
     [php]
     // in lib/form/ContactForm.class.php
@@ -939,29 +940,29 @@ La migliore prassi consiste nel creare una classe form con le stesse proprietà 
 Ora definire un oggetto per il form dei contatti nell'azione è molto semplice:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new ContactForm();
 
-### Alterare un oggetto Form
+### Alterare un oggetto form
 
-Quando si usa la definizione di una classe form, il form è definito al di fuori dell'azione. Questo rende l'assegnamento dinamico dei valori di default abbastanza difficoltoso. Ecco perché l'oggetto form riceve un array di valori di default come primo argomento:
+Quando si usa la definizione di una classe form, il form è definito al di fuori dell'azione. Questo rende l'assegnamento dinamico dei valori predefiniti abbastanza difficoltoso. Ecco perché l'oggetto form riceve un array di valori predefiniti come primo parametro:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new ContactForm(array('email' => 'me@example.com'));
 
-È anche possibile sovrascrivere i widget esistenti o le impostazioni dei validatori richiamando 'setWidget()' o 'setValidator()' su un nome di campo esistente.
+È anche possibile sovrascrivere i widget esistenti o le impostazioni dei validatori richiamando `setWidget()` o `setValidator()` su un nome di campo esistente.
 
 Del resto i widget e i validatori sono oggetti in symfony, e offrono un'API molto pulita per modificare le loro proprietà:
 
     [php]
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new ContactForm();
 
-    // Permettere la selezione di linguaggi multipli
+    // Permettere la selezione più lingue
     $form->getWidget('language')->setOption('multiple', true);
     // Aggiungere un widget 'genere'
     $form->setWidget('genere', new sfWidgetFormChoice(array('expanded' => true, 'choices' => array('m' => 'Male', 'f' => 'Female')), array('class' => 'gender_list')));
@@ -976,10 +977,10 @@ Del resto i widget e i validatori sono oggetti in symfony, e offrono un'API molt
     // Rendere il campo 'name' opzionale
     $form->getValidator('name')->setOption('required', false);
 
-Classi Widget e Validator personalizzate
+Classi widget e validator personalizzate
 ----------------------------------------
 
-Un widget personalizzato è semplicemente una classe che estende 'sfWidgetForm', e fornisce dei metodi 'configure()' e 'render()'. Si scorra il codice delle classi widget esistenti per una comprensione approfondita del sistema dei widget. Il listato che segue mostra il codice del widget 'sfWidgetFormInput' per illustrare la struttura del widget:
+Un widget personalizzato è semplicemente una classe che estende `sfWidgetForm`, e fornisce dei metodi `configure()` e `render()`. Si scorra il codice delle classi widget esistenti per una comprensione approfondita del sistema dei widget. Il listato che segue mostra il codice del widget `sfWidgetFormInput` per illustrare la struttura del widget:
 
     [php]
     class sfWidgetFormInputText extends sfWidgetForm
@@ -1019,7 +1020,7 @@ Un widget personalizzato è semplicemente una classe che estende 'sfWidgetForm',
       }
     }
 
-Una classe validator estende 'sfValidatorBase' e fornisce dei metodi 'configure()' e 'doClean()'. Perché 'doClean()' e non 'validate()'? Perché i validatori fanno due cose: essi controllano che l'input soddisfi un insieme di regole, e opzionalmente puliscono l'input (ad esempio forzando il tipo, eseguendo un trimming, convertendo date da stringhe a timestamp, ecc.). Così il metodo 'doClean()' deve restituire l'input pulito, o sollevare un'eccezione 'sfValidatorError' se l'input non soddisfa una qualsiasi delle regole del validatore. Di seguito viene mostrato questo concetto, con il codice del validatore 'sfValidatorInteger'.
+Una classe validator estende `sfValidatorBase` e fornisce dei metodi `configure()` e `doClean()`. Perché `doClean()` e non `validate()`? Perché i validatori fanno due cose: essi controllano che l'input soddisfi un insieme di regole, e opzionalmente puliscono l'input (ad esempio forzando il tipo, eseguendo un trim, convertendo date da stringhe a timestamp, ecc.). Così il metodo `doClean()` deve restituire l'input pulito, o sollevare un'eccezione `sfValidatorError` se l'input non soddisfa una qualsiasi delle regole del validatore. Di seguito viene mostrato questo concetto, con il codice del validatore `sfValidatorInteger`.
 
     [php]
     class sfValidatorInteger extends sfValidatorBase
@@ -1077,9 +1078,9 @@ Una classe validator estende 'sfValidatorBase' e fornisce dei metodi 'configure(
 Si veda la documentazione dell'API di symfony per i nomi e la sintassi delle classi widget e validator.
 
 >**SIDEBAR**
->Usare le opzioni per passare perametri alla classe form
+>Usare le opzioni per passare parametri alla classe form
 >
->Un problema comune coi form è di usare i parametri dell'applicazione, come ad esempio la culture dell'utente. La via più veloce ma peggiore è di richiamare l'instanza dell'utente attraverso l'instanza sfContext, usando il metodo 'sfContext::getInstance()->getUser()'. Tuttavia questa soluzione lega fortemente il form al contesto, rendendo il testing e la riusabilità più difficoltosi. Per evitare questo problema, si può usare semplicemente l'opzione di passare il valore 'culture' al form:
+>Un problema comune coi form è di usare i parametri dell'applicazione, come ad esempio la cultura dell'utente. La via più veloce, ma peggiore, è richiamare l'instanza dell'utente attraverso l'instanza `sfContext`, usando il metodo `sfContext::getInstance()->getUser()`. Tuttavia questa soluzione lega fortemente il form al context, rendendo i test e la riusabilità più difficoltosi. Per evitare questo problema, si può usare semplicemente l'opzione di passare il valore `culture` al form:
 
 >
 >     // da un'azione
@@ -1105,13 +1106,13 @@ Si veda la documentazione dell'API di symfony per i nomi e la sintassi delle cla
 Form basati su un Modello
 -------------------------
 
-I form sono il modo principale per modificare i record di un database nelle applicazioni web. E molti form nelle applicazioni symfony permettono di editare un oggetto Model. Del resto le informazioni necessarie per costruire un form per editare un modello esistono già: esse sono nello schema. Così symfony fornisce un form generator per gli oggetti del modello, che rende la creazione di form un gioco da ragazzi.
+I form sono il modo principale per modificare i record di un database nelle applicazioni web. Molti form nelle applicazioni symfony permettono di editare un oggetto del Modello. Del resto le informazioni necessarie per costruire un form per editare un modello esistono già: sono nello schema. Così symfony fornisce un generatore di form per gli oggetti del Modello, che rende la creazione di form un gioco da ragazzi.
 
 >**Note**: Caratteristiche simili a quelle descritte nel seguito esistono per Doctrine.
 
-### Generare i Form dal Modello
+### Generare i form dal Modello
 
-Symfony può dedurre i tipi di widget e i validatori da usare per un form, basandosi sullo schema. Si prenda as esempio lo schema seguente, con l'ORM Propel:
+Symfony può dedurre i tipi di widget e i validatori da usare per un form, basandosi sullo schema. Si prenda ad esempio lo schema seguente, con l'ORM Propel:
 
     [yml]
     // config/schema.yml
@@ -1132,7 +1133,7 @@ Symfony può dedurre i tipi di widget e i validatori da usare per un form, basan
         email:        { type: varchar(255), required: true, index: unique }
         active:       boolean
 
-Un form per editare un oggetto 'Article' dovrebbe usare un widget nascosto per l'id, un widget testo per 'title', un validatore stringa per 'title', ecc. Symfony genera il form automaticamente, semplicemente richiamando il task 'propel:build-forms':
+Un form per editare un oggetto `Article` dovrebbe usare un widget nascosto per l'id, un widget testo per `title`, un validatore stringa per `title`, ecc. Symfony genera il form automaticamente, semplicemente richiamando il task `propel:build-forms`:
 
     // propel
     $ php symfony propel:build-forms
@@ -1140,9 +1141,9 @@ Un form per editare un oggetto 'Article' dovrebbe usare un widget nascosto per l
     // doctrine
     $ php symfony doctrine:build-forms
 
-Per ogni tabella nel modello, questo comando crea due file nella cartella 'lib/form/': una classe 'BaseXXXForm', sovrascritta ogni volta che si richiama il task 'propel:build-form', a una classe 'XXXForm' vuota, che estende la precedente. E' lo stesso sistema usato dalla generazione delle classi modello di Propel.
+Per ogni tabella nel modello, questo comando crea due file nella cartella `lib/form/`: una classe `BaseXXXForm`, sovrascritta ogni volta che si richiama il task `propel:build-form`, a una classe `XXXForm` vuota, che estende la precedente. È lo stesso sistema usato dalla generazione delle classi modello di Propel.
 
-Il file 'lib/form/base/BaseArticleForm.class.php' generato contiene la traduzione in widget e validatori delle colonne definite per la tabella 'article' in 'schema.yml':
+Il file `lib/form/base/BaseArticleForm.class.php` generato contiene la traduzione in widget e validatori delle colonne definite per la tabella `article` in `schema.yml`:
 
     [php]
     class BaseArticleForm extends BaseFormPropel
@@ -1180,13 +1181,13 @@ Il file 'lib/form/base/BaseArticleForm.class.php' generato contiene la traduzion
       }
     }
 
-Si noti che, anche se la colonna 'id' è un Integer, symfony controlla che l'id presentato esista nella tabella usando un validatore 'sfValidatorPropelChoice'. Il generatore di form setta sempre le regole di validazione più restrittive, per assicurare i dati più puliti al database.
+Si noti che, anche se la colonna `id` è un intero, symfony controlla che l'id presentato esista nella tabella usando un validatore `sfValidatorPropelChoice`. Il generatore di form imposta sempre le regole di validazione più restrittive, per assicurare i dati più puliti al database.
 
-### Usare i Model Form
+### Usare i form del Modello
 
-È possibile personalizzare le classi dei form generati per l'intero progetto aggiungendo del codice al metodo 'ArticleForm::configure()' inizialmente vuoto.
+È possibile personalizzare le classi dei form generati per l'intero progetto aggiungendo del codice al metodo `ArticleForm::configure()`, inizialmente vuoto.
 
-Segue un esempio di manipolazione del model form in un'azione. In questo form, il validatore 'slug' è modificato per rendere il campo opzionale, e il widget 'author_id' è personalizzato per mostrare solo un sottoinsieme degli autori: solo quelli attivi.
+Segue un esempio di manipolazione del model form in un'azione. In questo form, il validatore `slug` è modificato per rendere il campo opzionale, e il widget `author_id` è personalizzato per mostrare solo un sottoinsieme degli autori: solo quelli attivi.
 
     [php]
     // in lib/form/ArticleForm.class.php
@@ -1196,7 +1197,7 @@ Segue un esempio di manipolazione del model form in un'azione. In questo form, i
       $this->getValidator('slug')->setOption('required', false);
     }
 
-    // in modules/foo/actions/actions.class.php
+    // in modules/pippo/actions/actions.class.php
     public function executeEditArticle($request)
     {
       $c = new Criteria();
@@ -1219,15 +1220,15 @@ Segue un esempio di manipolazione del model form in un'azione. In questo form, i
       }
     }
 
-Invece di settare dei valori di default attraverso un array associativo, i Model form usano un oggetto Model per inizializzare i valori del widget. Per mostrare un form vuoto, è sufficiente passare un nuovo oggetto Model.
+Invece di impostare dei valori predefiniti attraverso un array associativo, i form del Modello usano un oggetto del Modello per inizializzare i valori del widget. Per mostrare un form vuoto, è sufficiente passare un nuovo oggetto del Modello.
 
-La gestione dell'invio dei form è grandemente semplificata dal fatto che l'oggetto form contiene un oggetto Model incapsulato. Richiamando '$this->form->save()' in un form valido l'oggetto 'Article' incapsulato viene aggiornato con i valori puliti e il suo metodo 'save()' viene innescato, purché l'oggetto relativo esista.
+La gestione dell'invio dei form è grandemente semplificata dal fatto che l'oggetto form contiene un oggetto del Modello incapsulato. Richiamando `$this->form->save()` in un form valido, l'oggetto `Article` incapsulato viene aggiornato con i valori puliti e il suo metodo `save()` viene innescato, purché l'oggetto relativo esista.
 
->**TIP**: Il codice per l'azione richiesto per trattare con un form è praticamente sempre lo stesso, ma questa non è una ragione per copiarlo da un modulo all'altro. Symfony fornisce un generatore di moduli che crea tutto il codice per le azioni e i template per manipolare un oggetto Model attraverso i form di symfony.
+>**TIP**: Il codice per l'azione richiesto per trattare con un form è praticamente sempre lo stesso, ma questa non è una ragione per copiarlo da un modulo all'altro. Symfony fornisce un generatore di moduli che crea tutto il codice per le azioni e i template per manipolare un oggetto del Modello attraverso i form di symfony.
 
 Conclusione
 -----------
 
-Il componente form di symfony è in sè già un intero framework. Esso facilita la visualizzazione dei form nella View attraverso widgets, facilita la validazione e la manipolazione dei form nel Controller attraverso i validatori, a facilita la modifica degli oggetti Model attraverso i Model form. Nonostante sia progettato con una chiara separazione MVC, il sub-framework dei form è sempre facile da usare. Nella maggior parte dei casi, la generazione del codice riduce la personalizzazione dei propri form a poche linee di codice.
+Il componente form di symfony è in sé già un intero framework. Esso facilita la visualizzazione dei form nella Vista attraverso i widget, facilita la validazione e la manipolazione dei form nel Controller attraverso i validatori, a facilita la modifica degli oggetti del Modello attraverso i form del Modello. Nonostante sia progettato con una chiara separazione MVC, il sub-framework dei form è sempre facile da usare. Nella maggior parte dei casi, la generazione del codice riduce la personalizzazione dei propri form a poche linee di codice.
 
-C'è molto di più nelle classi form di symfony rispetto a quanto questo capitolo ha esposto. Infatti esiste un [intero libro](http://www.symfony-project.org/book/forms/1_4/en/) che descrive le loro caratteristiche con l'uso di esempi. E se il form framework non offre i widget o i validatori di cui si ha bisogno, esso è progettato in modo da essere estensibile con la scrittura di una singola classe per fare esattamente quello che serve.
+C'è molto di più nelle classi form di symfony rispetto a quanto questo capitolo ha esposto. Infatti esiste un [intero libro](http://www.symfony-project.org/book/forms/1_4/it/) che descrive le loro caratteristiche con l'uso di esempi. E se il form framework non offre i widget o i validatori di cui si ha bisogno, esso è progettato in modo da essere estensibile con la scrittura di una singola classe per fare esattamente quello che serve.

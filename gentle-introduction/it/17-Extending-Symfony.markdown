@@ -1,4 +1,4 @@
-Capitolo 17 - Estendere Symfony
+Capitolo 17 - Estendere symfony
 ===============================
 
 A volte è necessario modificare il comportamento di symfony. Può accadere di dover modificare il modo in cui una certa classe si comporta o aggiungere delle caratteristiche personalizzate e ciò avverrà inevitabilmente perché ogni cliente ha esigenze specifiche che nessun framework può prevedere. In realtà, questa situazione è così comune che symfony fornisce un meccanismo per estendere classi esistenti in fase di runtime, al di là della semplice ereditarietà delle classi. È anche possibile sostituire le classi del core di symfony modificando le impostazioni di fabbrica. Una volta si è scrita una estensione, si può facilmente pacchettizzarla come plug-in, in modo che possa essere riutilizzata in altre applicazioni, o da altri utenti di symfony.
@@ -10,7 +10,7 @@ PHP non supporta l'ereditarietà multipla, il che significa che non è possibile
 
 ### Capire gli eventi
 
-Alcune classi di symfony "notificano un evento al dispatcher" in vari momenti della loro vita. Per esempio, quando l'utente cambia la cultura, l'oggetto utente notifica che si è verificato un evento `change_culture`. E' come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Potete fare quello che volete a questo riguardo".
+Alcune classi di symfony "notificano un evento al dispatcher" in vari momenti della loro vita. Per esempio, quando l'utente cambia la cultura, l'oggetto utente notifica che si è verificato un evento `change_culture`. È come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Potete fare quello che volete a questo riguardo".
 
 Si può decidere di fare qualcosa di speciale quando un evento viene generato. Per esempio, è possibile salvare la cultura utente in una tabella di database ogni volta che si verifica l'evento `change_culture`. Per fare ciò, è necessario *registrare un ascoltatore di eventi*, in altri termini è necessario dichiarare una funzione che verrà chiamata al verificarsi dell'evento. Il Listato 17-1 mostra come registrare un ascoltatore per l'evento `change_culture` dell'utente.
 
@@ -39,7 +39,7 @@ Una volta che la funzione è registrata con il dispatcher di eventi, aspetta fin
 
 L'oggetto evento memorizza le informazioni sugli eventi notificati. L'evento notificante può essere recuperato grazie al metodo `getSubject()` e i parametri dell'evento sono accessibili mediante l'oggetto evento come array (per esempio, `$event['culture']` può essere utilizzato per recuperare il parametro `culture` passato da` sfUser` quando viene notificato `user.change_culture`).
 
-Per concludere, il sistema degli eventi permette di aggiungere capacità ad una classe esistente o modificare i suoi metodi in fase di runtime, senza usare l'ereditarietà.
+Per concludere, il sistema degli eventi permette di aggiungere capacità a una classe esistente o modificare i suoi metodi in fase di runtime, senza usare l'ereditarietà.
 
 ### Notificare un ascoltatore di eventi
 
@@ -82,11 +82,11 @@ Listato 17-2 - Notificare un ascoltatore di eventi
       }
     }
 
-Il metodo `notify()` del dispatcher di eventi si aspetta un oggetto `sfEvent` come argomento; è l'oggetto stesso che viene passato agli ascoltatori di eventi. Questo oggetto porta sempre un riferimento al notificatore (è per questo che l'istanza dell'evento viene inizializzata con `this`) ed un identificativo di evento. Facoltativamente, accetta un array associativo di parametri, dando agli ascoltatori un modo per interagire con la logica del notificante.
+Il metodo `notify()` del dispatcher di eventi si aspetta un oggetto `sfEvent` come argomento; è l'oggetto stesso che viene passato agli ascoltatori di eventi. Questo oggetto porta sempre un riferimento al notificatore (è per questo che l'istanza dell'evento viene inizializzata con `this`) e un identificativo di evento. Facoltativamente, accetta un array associativo di parametri, dando agli ascoltatori un modo per interagire con la logica del notificante.
 
 ### Notifica di un evento al dispatcher finché un ascoltatore lo prende in carico
 
-Usando il metodo `notify()`, si è sicuri che tutti gli ascoltatori registrati sull'evento da notificare vengono eseguiti. Tuttavia, in alcuni casi è necessario consentire ad un ascoltatore di fermare l'evento e prevenire che ulteriori ascoltatori possano fare notifiche su di esso. In questo caso, si dovrebbe usare `notifyUntil()` al posto di `notify()`. Il dispatcher eseguirà tutti gli ascoltatori fino a quando uno di questi ritorna `true` e quindi fermerà la notifica degli eventi. In altre parole, `notifyUntil()` è come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Se qualcuno se ne occupa, allora non lo dirò a nessun altro". Il Listato 17-3 mostra come usare questa tecnica in combinazione con un metodo magico `__call()` per aggiungere metodi a una classe esistente in fase di runtime.
+Usando il metodo `notify()`, si è sicuri che tutti gli ascoltatori registrati sull'evento da notificare vengono eseguiti. Tuttavia, in alcuni casi è necessario consentire a un ascoltatore di fermare l'evento e prevenire che ulteriori ascoltatori possano fare notifiche su di esso. In questo caso, si dovrebbe usare `notifyUntil()` al posto di `notify()`. Il dispatcher eseguirà tutti gli ascoltatori fino a quando uno di questi ritorna `true` e quindi fermerà la notifica degli eventi. In altre parole, `notifyUntil()` è come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Se qualcuno se ne occupa, allora non lo dirò a nessun altro". Il Listato 17-3 mostra come usare questa tecnica in combinazione con un metodo magico `__call()` per aggiungere metodi a una classe esistente in fase di runtime.
 
 Listato 17-3 - Notifica di un evento finché l'ascoltatore restituisce true
 
@@ -112,7 +112,7 @@ Listato 17-3 - Notifica di un evento finché l'ascoltatore restituisce true
 
 Un ascoltatore di eventi registrato sull'evento `rest_request.method_not_found`, può verificare la richiesta `$method` e decidere di gestirla, o passare al prossimo ascoltatore di eventi callable. Nel Listato 17-4, si può vedere come una classe creata da altri può aggiungere dei metodi `put()` e `delete()` alla classe `sfRestRequest` in fase di runtime con questo trucco.
 
-Listato 17-4 - Gestire un evento del tipo "notificare finchè"
+Listato 17-4 - Gestire un evento del tipo "notificare finché"
 
     [php]
     class frontendConfiguration extends sfApplicationConfiguration
@@ -162,9 +162,9 @@ Listato 17-4 - Gestire un evento del tipo "notificare finchè"
       }
     }
 
-In pratica, `notifyUntil()` aggiunge funzionalità di ereditarietà multipla, o meglio mixin (l'aggiunta di metodi da parte di classi esterne rispetto ad una classe esistente), al PHP. Quindi ora si possono "iniettare" nuovi metodi agli oggetti che non si possono estendere atrtaverso l'ereditarietà. E questo avviene a runtime. Non si è più limitati dalle capacità orientate agli oggetti di PHP quando si utilizza symfony.
+In pratica, `notifyUntil()` aggiunge funzionalità di ereditarietà multipla, o meglio mixin (l'aggiunta di metodi da parte di classi esterne rispetto a una classe esistente), al PHP. Quindi ora si possono "iniettare" nuovi metodi agli oggetti che non si possono estendere atrtaverso l'ereditarietà. E questo avviene a runtime. Non si è più limitati dalle capacità orientate agli oggetti di PHP quando si utilizza symfony.
 
->**TIP**: Essendo che il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo ad essere registrato, è il primo ad essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi ad una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
+>**TIP**: Essendo che il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo ad essere registrato, è il primo ad essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi a una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
 
 ### Cambiare il valore di ritorno di un metodo
 
@@ -382,7 +382,7 @@ Alcuni di questi plugin sono stati creati dalla comunità, mentre altri provengo
 
   * `sfFeed2Plugin`: Automatizza la manipolazione dei feed RSS e Atom
   * `sfThumbnailPlugin`: Crea miniature, ad esempio per le immagini caricate da web
-  * `sfMediaLibraryPlugin`: Permette il caricamento e la gestione di file, ed include una estensione per un editor di testo avanzato che permette la creazione di immagini all'interno di un testo con formattazione grafica
+  * `sfMediaLibraryPlugin`: Permette il caricamento e la gestione di file e include una estensione per un editor di testo avanzato che permette la creazione di immagini all'interno di un testo con formattazione grafica
   * `sfGuardPlugin`: Fornisce funzionalità per la gestione degli utenti, come autenticazione, autorizzazione di accesso e altre che si collocano sopra le funzionalità di sicurezza predefinite di symfony
   * `sfSuperCachePlugin`: Scrive le pagine della cartella cache, sotto la cartella radice principale per il web, per consentire al server web di accedervi il più velocemente possibile
   * `sfErrorLoggerPlugin`: Salva nel database ogni errore 404 e 500 e fornisce un modulo amministrativo per visualizzare questi errori
@@ -476,10 +476,10 @@ Listato 17-15 - Attivazione del modulo di un plugin, in `frontend/config/setting
       .settings:
         enabled_modules:  [default, sfMyPluginModule]
 
-Questo per evitare una situazione in cui il modulo di un plugin è erroneamente reso disponibile per una applicazione che non lo richiede, che potrebbe aprire un buco nella sicurezza. Pensiamo ad un plug-in che fornisce i moduli `frontend` e `backend`. Sarà necessario abilitare il modulo `frontend` solo nell'applicazione `frontend` e il modulo `backend` solo nell'applicazione `backend`. Questo è il motivo per cui i moduli dei plug-in, nella modalità predefinita non sono attivati.
+Questo per evitare una situazione in cui il modulo di un plugin è erroneamente reso disponibile per una applicazione che non lo richiede, che potrebbe aprire un buco nella sicurezza. Pensiamo a un plug-in che fornisce i moduli `frontend` e `backend`. Sarà necessario abilitare il modulo `frontend` solo nell'applicazione `frontend` e il modulo `backend` solo nell'applicazione `backend`. Questo è il motivo per cui i moduli dei plug-in, nella modalità predefinita non sono attivati.
 
 >**TIP**
->Il modulo default è l'unico modulo che viene abilitato in modalità predefinita. In realtà non è un vero modulo di plugin, perché risiede nel framework, in `sfConfig::get('sf_symfony_lib_dir')/controller/default/`. E' il modulo che fornisce le pagine di congratulazioni e le pagine di errore predefinite per gli errori 404 e la richiesta credenziali. Se non si desidera utilizzare le pagine predefinite di symfony, è sufficiente rimuovere il modulo dall'impostazione `enabled_modules`.
+>Il modulo default è l'unico modulo che viene abilitato in modalità predefinita. In realtà non è un vero modulo di plugin, perché risiede nel framework, in `sfConfig::get('sf_symfony_lib_dir')/controller/default/`. È il modulo che fornisce le pagine di congratulazioni e le pagine di errore predefinite per gli errori 404 e la richiesta credenziali. Se non si desidera utilizzare le pagine predefinite di symfony, è sufficiente rimuovere il modulo dall'impostazione `enabled_modules`.
 
 #### Visualizzare l'elenco dei plugin installati
 
@@ -576,7 +576,7 @@ Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin
   * Gli helper vengono trovati automaticamente quando si chiama `use_helper()` nei template. Essi devono essere in una sotto cartella `helper/` di una delle cartelle `lib/` del plugin.
   * Se si usa Propel, le classi del modello in `myplugin/lib/model/` specializzano le classi del modello generate dal generatore di Propel (in `myplugin/lib/model/om/` and `myplugin/lib/model/map/`) . Essi sono, ovviamente, caricate automaticamente. Bisogna essere a conoscenza che non è possibile sovrascrivere le classi del modello generato di un plug-in, nelle cartelle del proprio progetto.
   * Se si usa Doctrine, l'ORM genera le classi base dei plugin in `myplugin/lib/model/Plugin*. class.php` e le classi reali in `lib/model/myplugin/`. Questo significa che si possono sovrascrivere facilmente le classi del modello nella propria applicazione.
-  * I task sono immediatamente disponibili per la riga di comando di symfony non appena il plug-in viene installato. Un plugin può aggiungere nuovi task o sovrascriverne uno esistente. E' buona pratica usare il nome del plugin come spazio dei nomi per il task. Digitare `php symfony` per visualizzare l'elenco dei task disponibili, inclusi quelli aggiunti dai plugin.
+  * I task sono immediatamente disponibili per la riga di comando di symfony non appena il plug-in viene installato. Un plugin può aggiungere nuovi task o sovrascriverne uno esistente. È buona pratica usare il nome del plugin come spazio dei nomi per il task. Digitare `php symfony` per visualizzare l'elenco dei task disponibili, inclusi quelli aggiunti dai plugin.
   * I moduli forniscono nuove azioni accessibili dall'esterno, a condizione che li si dichiari impostandoli in `enabled_modules` nell'applicazione.
   * Le risorse web (immagini, script, fogli di stile, ecc) sono messe a disposizione del server. Quando si installa un plug-in tramite la riga di comando, symfony crea un link simbolico alla cartella `web/` del progetto, se il sistema lo consente, o copia il contenuto della cartella `web/` del modulo nel progetto. Se il plugin è installato da un archivio o un repository di controllo della versione, è necessario copiare la cartella `web/` del plugin a mano (come dovrebbe indicare il file `README` incluso nel plug-in).
 		  
@@ -730,7 +730,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 
 ### Come scrivere un plugin
 
-Solo i plugin pacchettizzati con PEAR possono essere installati con il task `plugin:install`. E' bene ricordare che tali plugin possono essere distribuiti attraverso la sezione plugin di symfony, un canale PEAR, o un semplice file per il download. Quindi se si vuole scrivere un plugin, è meglio pubblicarlo come pacchetto PEAR che come semplice file di archivio. Inoltre, i plugin che utilizzano PEAR sono più facili da aggiornare, possono dichiarare dipendenze e fare il deploy in automatico delle risorse nella cartella `web/`.
+Solo i plugin pacchettizzati con PEAR possono essere installati con il task `plugin:install`. È bene ricordare che tali plugin possono essere distribuiti attraverso la sezione plugin di symfony, un canale PEAR, o un semplice file per il download. Quindi se si vuole scrivere un plugin, è meglio pubblicarlo come pacchetto PEAR che come semplice file di archivio. Inoltre, i plugin che utilizzano PEAR sono più facili da aggiornare, possono dichiarare dipendenze e fare il deploy in automatico delle risorse nella cartella `web/`.
 
 #### Organizzazione dei file
 
@@ -778,7 +778,7 @@ Per la creazione, la posizione della cartella del plugin (`sfEsempioPlugin/` nel
 
 #### Creazione del file package.xml
 
-Il prossimo passo nella creazione del plugin è quello di aggiungere un file package.xml nella radice della cartella con il plugin. Il file `package.xml` segue la sintassi di PEAR. Dare un'occhiata ad un tipico `package.xml` di un plugin di symfony nel Listato 17-23.
+Il prossimo passo nella creazione del plugin è quello di aggiungere un file package.xml nella radice della cartella con il plugin. Il file `package.xml` segue la sintassi di PEAR. Dare un'occhiata a un tipico `package.xml` di un plugin di symfony nel Listato 17-23.
 
 Listato 17-23 - Esempio di file `package.xml` per un plugin di symfony
 
@@ -893,7 +893,7 @@ I plug-in sono progettati per funzionare con un dato insieme di versioni di PHP,
 
 È sempre necessario dichiarare le dipendenze da PHP, PEAR e symfony, almeno quelle corrispondenti alla propria installazione, come requisito minimo. Se non si sa cosa mettere, aggiungere un requisito per PHP 5.2.4, PEAR 1.4, e symfony 1.3.
 
-Si raccomanda inoltre di aggiungere un numero massimo di versione symfony per ogni plugin. Ciò causerà un messaggio di errore quando si tenta di utilizzare un plugin con una versione più avanzata del framework e questo obbligherà l'autore del plugin ad assicurarsi che il plug-in funzioni correttamente con questa versione prima del nuovo rilascio. E' meglio avere una segnalazione e scaricare un aggiornamento piuttosto che avere un plugin che fallisce silenziosamente.
+Si raccomanda inoltre di aggiungere un numero massimo di versione symfony per ogni plugin. Ciò causerà un messaggio di errore quando si tenta di utilizzare un plugin con una versione più avanzata del framework e questo obbligherà l'autore del plugin ad assicurarsi che il plug-in funzioni correttamente con questa versione prima del nuovo rilascio. È meglio avere una segnalazione e scaricare un aggiornamento piuttosto che avere un plugin che fallisce silenziosamente.
 
 Se si specificano plugin come dipendenze, gli utenti saranno in grado di installare il plugin e tutte le sue dipendenze con un singolo comando:
 
