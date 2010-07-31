@@ -1,5 +1,5 @@
 第9章 - リンクとルーティングシステム
-====================================
+==================================
 
 リンクと URL は Web アプリケーションのフレームワークにおいて特別な扱いをする価値があります。アプリケーション唯一のエントリーポイント (フロントコントローラー) とヘルパーを利用することで URL の動作方法とそれらの表現方法を完全に分離できるようになります。この機能はルーティング (routing) と呼ばれます。ルーティングはアプリケーションをガジェットよりもユーザーフレンドリーでセキュアにするための便利なツールです。この章では symfony のアプリケーションで URL を扱うために知る必要があることをすべてお伝えします。
 
@@ -17,8 +17,7 @@
 ### サーバーへの命令としてのURL
 
 URL はユーザーが望むアクションを成立させるためにブラウザーからの情報をサーバーに運びます。たとえば、つぎの例のように、伝統的な URL はリクエストを完了させるために必要なスクリプトへのファイルパスとパラメーターを含みます:
-
-    http://www.example.com/web/controller/article.php?id=123456&format_code=6532
+      http://www.example.com/web/controller/article.php?id=123456&format_code=6532
 
 この URL はアプリケーションのアーキテクチャとデータベースに関する情報を運びます。通常、開発者はインターフェイス内のアプリケーションのインフラを隠します(たとえば、開発者は "QZ7.65" よりも "個人のプロファイルページ" のようなページタイトルを選びます)。アプリケーション内部への重要な手がかりをURLに露出することはこの努力に相反することで重大な欠陥を晒すことになります。
 
@@ -27,7 +26,7 @@ URL はユーザーが望むアクションを成立させるためにブラウ�
 
 図9-1 - URL は検索結果などの多くの場所で表示される
 
-![URL は検索結果などの多くの場所で表示される](http://github.com/masakielastic/symfonybook-ja/raw/master/images/F0901.png "URLは検索結果などの多くの場所で表示される")
+![URL は検索結果などの多くの場所で表示される](http://www.symfony-project.org/images/book/1_4/F0901.png "URLは検索結果などの多くの場所で表示される")
 
   * URL の1つを変更しなければならない場合 (たとえば、スクリプト名もしくはパラメーターの1つが修正される場合)、この URL へのすべてのリンクも同様に変更しなければなりません。コントローラー構造の修正作業は重量級で高くつくので、アジャイル開発において理想的ではありません。
 
@@ -45,15 +44,16 @@ symfony がフロントコントローラーのパラダイムを利用しない
 
 これは symfony のアプリケーションで実現可能です。エンドユーザーに表示される URL はリクエストを実行するために必要なサーバーへの命令とは無関係だからです。代わりに、リクエストされるリソースに URLを関連づけして、自由に形式を整えることができます。たとえば、symfony はつぎの URL を理解しこの章の最初の URL のように同じページを表示できます:
 
-    http://www.example.com/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/articles/finance/2010/activity-breakdown.html
 
 恩恵は計り知れません:
 
   * URL は実際に何かを意味するので、これはユーザーがリンクの背後にあるページのなかに望むものが含まれるかどうかを判断するための助けになります。リンクは返すリソースの詳細内容を追加できます。これはとりわけ検索エンジンの結果に対して役立ちます。加えて、URL は時にページタイトルの参照なしに表示されるので (URL をメールのメッセージにコピーするときを考えてください)、この場合、その URL はそれ自身が何らかの意味を持たなければなりません。ユーザーフレンドリーな URL の例に関しては図9-2をご覧ください。
+  * 技術的な実装はユーザーからは見えません。ユーザーにはどのスクリプトが使われているのか分からず、`id` のようなパラメーターを推測することはできません。アプリケーションの、潜在的なセキュリティリスクに対しての脆弱度は低下します。さらに、ユーザー体験を全く変更せずに、URL の裏側の処理を完全に変更してしまうこともできます。ユーザーは、404 エラーやリダイレクトを目にすることはありません。
 
 図9-2 - 刊行日のように、URL はページに関する追加情報を運ぶ
 
-![刊行日のように、URL はページに関する追加情報を運ぶ](http://github.com/masakielastic/symfonybook-ja/raw/master/images/F0902.png "刊行日のように、URL はページに関する追加情報を運ぶ")
+![刊行日のように、URL はページに関する追加情報を運ぶ](http://www.symfony-project.org/images/book/1_4/F0902.png "刊行日のように、URL はページに関する追加情報を運ぶ")
 
   * 紙のドキュメントに書かれている URL は入力しやすく覚えやすいものにすべきです。あなたの名刺に会社の Web サイトが`http://www.example.com/controller/web/index.jsp?id=ERD4`と記載されていたら、多くの訪問者を得ることはないでしょう。
   * URLは、  直感的な方法でアクションを実行するもしくは情報を読みとるために、独自のコマンドラインになることができます。このような機能を提供するアプリケーションによってパワーユーザーは作業をより速くできるようになります。
@@ -83,10 +83,10 @@ symfony は外部 URL と内部 URI を切り離します。これら2つを対�
     <module>/<action>[?param1=value1][&param2=value2][&param3=value3]...
 
     // 内部 URI の例で、エンドユーザーに決して表示されない
-    article/permalink?year=2006&subject=finance&title=activity-breakdown
+    article/permalink?year=2010&subject=finance&title=activity-breakdown
 
     // 外部 URL の例で、エンドユーザーに表示される
-    http://www.example.com/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/articles/finance/2010/activity-breakdown.html
 
 ルーティングシステムを定義するには `routing.yml`という名前の特別な設定ファイルを使います。リスト9-2で示されているルールを考えます。このルールは `articles/*/*/*` のようなパターンを定義し、ワイルドカードとマッチする内容の一部を命名します。
 
@@ -101,18 +101,15 @@ symfony のアプリケーションに送信されるすべてのリクエスト
 リスト9-3 - ルーティングシステムはやってくるリクエスト URL を解釈する
 
     // ユーザーがつぎの外部 URL を入力する(クリックする)
-    http://www.example.com/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/articles/finance/2010/activity-breakdown.html
 
     // フロントコントローラーはリクエスト URL が article_by_title ルールにマッチするか調べる
     // ルーティングシステムはつぎのリクエストパラメーターを作成する
       'module'  => 'article'
       'action'  => 'permalink'
       'subject' => 'finance'
-      'year'    => '2006'
+      'year'    => '2010'
       'title'   => 'activity-breakdown'
-
->**TIP**
->外部 URL の `.html` 拡張子はシンプルな飾りつけでルーティングシステムは無視します。その唯一の利点は動的なページを静的なページに見えるようにすることです。この章の後のほうにある"ルーティングの設定"でこの拡張子を有効にする方法を見ることになります。
 
 リクエストは `article` モジュールの `permalink`アクションに渡されます。アクションは表示する記事を決定するためにリクエストパラメーターで求められたすべての情報を格納します。
 
@@ -122,21 +119,21 @@ symfony のアプリケーションに送信されるすべてのリクエスト
 
     [php]
     // url_for() ヘルパーは内部 URI を外部 URL に変換する
-    <a href="<?php echo url_for('article/permalink?subject=finance&year=2006&title=activity-breakdown') ?>">ここをクリック</a>
-
+    <a href="<?php echo url_for('article/permalink?subject=finance&year=2010&title=activity-breakdown') ?>">ここをクリック</a>
+    
     // ヘルパーは URI が article_by_title ルールにマッチすることを見る
     // ルーティングシステムはそれから外部 URL を作成する
-     => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">ここをクリック</a>
+     => <a href="http://www.example.com/articles/finance/2010/activity-breakdown.html">ここをクリック</a>
 
     // link_to() ヘルパーは直接ハイパーリンクを出力し
     // PHP と HTML を混在させることを回避する
     <?php echo link_to(
       'ここをクリック',
-      'article/permalink?subject=finance&year=2006&title=activity-breakdown') ?>
+      'article/permalink?subject=finance&year=2010&title=activity-breakdown') ?>
     ) ?>
 
     // 内部では、link_to() は url_for() を呼び出すので結果はつぎのものと同じ
-    => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">ここをクリック</a>
+    => <a href="http://www.example.com/articles/finance/2010/activity-breakdown.html">ここをクリック</a>
 
 ルーティングは2通りのメカニズムであり、すべてのリンクの形式を整える`link_to()`ヘルパーを使う場合のみに機能します。
 
@@ -145,25 +142,25 @@ URL を書き換える
 
 ルーティングシステムに深く関わるまえに、1つのことをあきらかにする必要があります。以前のセクションで示された例において、内部 URI のフロントコントローラー (`index.php` もしくは `frontend_dev.php`) の説明をしていません。フロントコントローラーは、アプリケーションの要素ではありませんが、環境を決定します。ですのですべてのリンクは環境に依存しなければならず、フロントコントローラー名は内部 URL に決して現れることはありません。
 
-生成された URL の例にはスクリプト名が存在しません。デフォルトの運用環境では生成URLはスクリプト名を含まないからです。`settings.yml` ファイルの `no_script_name` パラメーターは生成URLのなかでフロントコントローラー名の表示を正確にコントロールします。リスト9-5で示されるように、このパラメーターを `off` に設定すれば、リンクヘルパーによる URL の出力はすべてのリンクにフロントコントローラーの名前を記載します。
+生成された URL の例にはスクリプト名が存在しません。デフォルトの運用環境では生成URLはスクリプト名を含まないからです。`settings.yml` ファイルの `no_script_name` パラメーターは生成URLのなかでフロントコントローラー名の表示を正確にコントロールします。リスト9-5で示されるように、このパラメーターを `false` に設定すれば、リンクヘルパーによる URL の出力はすべてのリンクにフロントコントローラーの名前を記載します。
 
 リスト9-5 - URL 内部でフロントコントローラーの名前を表示する (`apps/frontend/settings.yml`)
 
     prod:
       .settings
-        no_script_name:  off
+        no_script_name:  false
 
 生成 URL はつぎのように示されます:
 
-    http://www.example.com/index.php/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/index.php/articles/finance/2010/activity-breakdown.html
 
-運用環境を除いたすべての環境において、`no_script_name` パラメーターはデフォルトでは `off`に設定されます。たとえば、開発環境のアプリケーションをブラウザーで見るとき、フロントコントローラー名はつねに URL に表示されます。
+運用環境を除いたすべての環境において、`no_script_name` パラメーターはデフォルトでは `false`に設定されます。たとえば、開発環境のアプリケーションをブラウザーで見るとき、フロントコントローラー名はつねに URL に表示されます。
 
-    http://www.example.com/frontend_dev.php/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/frontend_dev.php/articles/finance/2010/activity-breakdown.html
 
 運用環境において、`no_script_name` パラメーターは `on` に設定されるので、URL はルーティング情報だけを示し、よりユーザーフレンドリーです。技術的な情報は現れません。
 
-    http://www.example.com/articles/finance/2006/activity-breakdown.html
+    http://www.example.com/articles/finance/2010/activity-breakdown.html
 
 しかしながら、アプリケーションはどのフロントコントローラーが呼び出されるのかをどのように知るのでしょうか？それは URL の書き換えが行われる場所です。URL のなかに何も存在しないときに、Web サーバーが任意のスクリプトを呼び出すために設定できます。
 
@@ -174,10 +171,14 @@ Apache において、これはいったん `mod_rewrite` 拡張機能を有効�
     <IfModule mod_rewrite.c>
       RewriteEngine On
 
+      # no_script_nameがうまく動作しない場合は、以下の行のコメントを
+      # 解除する
+      #RewriteBase /
+
       # 拡張子 .something をもつすべてのファイルをスキップする
-      RewriteCond %{REQUEST_URI} \..+$
-      RewriteCond %{REQUEST_URI} !\.html$
-      RewriteRule .* - [L]
+      #RewriteCond %{REQUEST_URI} \..+$
+      #RewriteCond %{REQUEST_URI} !\.html$
+      #RewriteRule .* - [L]
 
       # .html バージョンがここ (キャッシュ) であるか確認する
       RewriteRule ^$ index.html [QSA]
@@ -188,7 +189,7 @@ Apache において、これはいったん `mod_rewrite` 拡張機能を有効�
       RewriteRule ^(.*)$ index.php [QSA,L]
     </IfModule>
 
-Web サーバーは受けとった URL の形式を検査します。URL がサフィックスを含まず、かつ利用可能なページのキャッシュバージョンが存在しない場合、リクエストは `index.php` に渡されます (12章でキャッシュを説明します)。
+Web サーバーは受けとった URL の形式を検査します。URL がサフィックスを含まず(デフォルトでコメントアウト)、かつ利用可能なページのキャッシュバージョンが存在しない場合、リクエストは `index.php` に渡されます (12章でキャッシュを説明します)。
 
 しかしながら、symfony プロジェクトの `web/` ディレクトリはプロジェクトのすべてのアプリケーションと環境のあいだで共有されます。これは通常の場合 `web` ディレクトリにあるフロントコントローラーが複数存在することを意味します。たとえば、`frontend` アプリケーションと `backend` アプリケーション、と `dev` 環境と `prod` 環境を持つプロジェクトは4つのフロントコントローラーのスクリプトを `web/` ディレクトリに含みます:
 
@@ -197,7 +198,7 @@ Web サーバーは受けとった URL の形式を検査します。URL がサ�
     backend.php       // prodのbackend
     backend_dev.php   // devのbackend
 
-mod_rewrite の設定はデフォルトのスクリプトの名前だけを指定します。すべてのアプリケーションと環境に対して `no_script_name` を `on` にセットする場合、すべての URL は `prod` 環境の `frontend` アプリケーションへのリクエストとして解釈されます。これが任意のプロジェクトに対して URL の書き換えを利用できる1つの環境を持つアプリケーションを1つだけ持つことができる理由です。
+`mod_rewrite` の設定はデフォルトのスクリプトの名前だけを指定します。すべてのアプリケーションと環境に対して `no_script_name` を `true` にセットする場合、すべての URL は `prod` 環境の `frontend` アプリケーションへのリクエストとして解釈されます。これが任意のプロジェクトに対して URL の書き換えを利用できる1つの環境を持つアプリケーションを1つだけ持つことができる理由です。
 
 >**TIP**
 >スクリプトの名前を持たないアプリケーションを複数持つ方法が1つあります。Webroot でサブディレクトリを作り、フロントコントローラーをこれらの内部に移動させます。`ProjectConfiguration` ファイルへのパスを変更し、それぞれのアプリケーションに対して必要な `.htaccess`  ファイルの URL 書き換え設定を作ります。
@@ -283,7 +284,8 @@ mod_rewrite の設定はデフォルトのスクリプトの名前だけを指�
     <?php echo link_to('カートに追加する', 'shoppingCart/add?id=100', array(
       'popup' => array('popupWindow', 'width=310,height=400,left=320,top=0')
     )) ?>
-     => <a onclick="window.open(this.href,'popupWindow','width=310,height=400,left=320,top=0');return false;"
+     => <a onclick="window.open(this.href,'popupWindow',
+           'width=310,height=400,left=320,top=0');return false;"
            href="/fo_dev.php/shoppingCart/add/id/100.html">カートに追加する</a>
 
 これらのオプションを結びつけることができます。
@@ -301,7 +303,7 @@ symfony は `link_to()` ヘルパー、もしくは `button_to()` ヘルパー�
 リスト9-11 -リンク呼び出しを POST リクエストにする
 
     [php]
-    <?php echo link_to('ショッピングカートに移動する', 'shoppingCart/add?id=100', 'post=true') ?>
+    <?php echo link_to('go to shopping cart', 'shoppingCart/add?id=100', array('post' => true)) ?>
      => <a onclick="f = document.createElement('form'); document.body.appendChild(f);
                     f.method = 'POST'; f.action = this.href; f.submit();return false;"
            href="/shoppingCart/add/id/100.html">ショッピングカートに移動する</a>
@@ -345,15 +347,6 @@ GET 変数として表現されるリクエストパラメーターを持つ URL
 >7章でアセットヘルパーの `image_tag()`、`stylesheet_tag()` と `javascript_include_tag()` を紹介しました。これらのヘルパーによって画像、スタイルシート、JavaScript ファイルをレスポンスに含めることができます。これらのアセットへのパスはルーティングルールによって処理されません。これらは Web 用の公開ディレクトリの元に実際に設置されたレスポンスにリンクするからです。
 >
 >アセットのためにファイルの拡張子を記載する必要はありません。symfony は自動的に `.png`、`.js`、もしくは `.css` の拡張子を画像、JavaScript もしくはスタイルシートのヘルパー呼び出しに追加します。また、symfony は `web/images/` ディレクトリ、`web/js/` ディレクトリと `web/css/` ディレクトリでこれらのアセットを自動的に探します。もちろん、特定のファイルフォーマットもしくは特定の場所からのファイルを含めたい場合、正式なファイル名もしくはファイルパスを引数として使います。
->`alt_title` は両方の属性を同じ値に設定するので、`alt` と `title` の両方の属性を指定することに悩む必要はありません。これはクロスブラウザー用のツールチップに便利です。symfony 1.2 に関してバリデーターを利用して見つからないタグの検索を楽にするために `alt` 属性はファイルの名前から自動的に推測されないことに注意してください (これを再度有効にするには、`sf_compat_10` を`on` に切り替えます)。
->
->     [php]
->     <?php echo image_tag('test', 'alt=Test') ?>
->     <?php echo image_tag('test.gif', 'title=Test') ?>
->     <?php echo image_tag('/my_images/test.gif', 'alt_title=Test') ?>
->      => <img href="/images/test.png" alt="Test" />
->         <img href="/images/test.gif" title="Test" />
->         <img href="/my_images/test.gif" alt="Test" title="Test" />
 >
 >画像のサイズを修正するには `size` 属性を使います。これは `x` で区切られたピクセル単位の幅、高さを必要とします。
 >
@@ -416,10 +409,8 @@ GET 変数として表現されるリクエストパラメーターを持つ URL
       url:   /
       param: { module: default, action: index }
 
-    default_symfony:
-      url:   /symfony/:action/*
-      param: { module: default }
-
+    # generic rules
+    # please, remove them by adding more specific rules
     default_index:
       url:   /:module
       param: { action: index }
@@ -435,10 +426,10 @@ GET 変数として表現されるリクエストパラメーターを持つ URL
   * マッチするパターン (`url` キー)
   * リクエストパラメーターの値の配列 (`param` キー)
 
-パターンはワイルドカード (アスタリスクの `*` で表現される) と名前つきのワイルドカード (コロン、`:`で始まる) を含むことができます。名前つきのワイルドカードへのマッチはリクエストパラメーターの値になります。たとえば、リスト9-15で定義された `default` ルールは `/foo/bar` といった URL にマッチし、`module` パラメーターを`foo`に、`action` パラメーターを `bar` に設定します。そして `default_symfony` ルールにおいて、`symfony` はキーワードで、`action` は名前つきのワイルドカードパラメーターです。
+パターンはワイルドカード (アスタリスクの `*` で表現される) と名前つきのワイルドカード (コロン、`:`で始まる) を含むことができます。名前つきのワイルドカードへのマッチはリクエストパラメーターの値になります。たとえば、リスト9-15で定義された `default` ルールは `/foo/bar` といった URL にマッチし、`module` パラメーターを`foo`に、`action` パラメーターを `bar` に設定します。
 
 >**NOTE**
->**symfony 1.1 の新しい機能** 名前つきのワイルドカードはスラッシュもしくはドットで分離できるので、つぎのようなパターンを書けます:
+>名前つきのワイルドカードはスラッシュもしくはドットで分離できるので、つぎのようなパターンを書けます:
 >
 >     my_rule:
 >       url:   /foo/:bar.:format
@@ -514,7 +505,7 @@ URL が複数のルールにマッチするとき、制約もしくは要件を�
 >`permalink` アクションはタイトルからリクエストされた記事を決定する必要があるので、モデルは適切なメソッドを提供しなければなりません。
 >
 >     [php]
->     public function executePermalink(sfWebRequest $request)
+>     public function executePermalink($request)
 >     {
 >       $article = ArticlePeer::retrieveBySlug($request->getParameter('slug');
 >       $this->forward404Unless($article);  // 記事がスラッグにマッチしない場合404を表示する
@@ -570,93 +561,62 @@ URL が複数のルールにマッチするとき、制約もしくは要件を�
 
     // つぎのように書くこともできる
     <?php echo link_to('my article', '@article_by_id?id='.$article->getId()) ?>
+    // 最も速い書き方(余分なパースが不要):
+    <?php echo link_to('my article', 'article_by_id', array('id' => $article->getId())) ?>
 
 このトリックに関してよい点とわるい点があります、よい点はつぎのとおりです:
 
   * 内部URIの整形が速く行われます。symfony はリンクにマッチするルールを見つけるためにすべてのルールを探す必要がないからです。ルーティングされたハイパーリンクをたくさん持つページにおいて、モジュール/アクションの組の代わりにルールラベルを使う場合、速度の押し上げは顕著です。
   * ルールラベルを使うことはアクションの背後にあるロジックを抽象化するための助けになります。アクション名を変更するが URL はそのままにする場合、`routing.yml` ファイルのなかで変更を行うだけで十分です。すべての`link_to()` 呼び出しはさらに変更しなくても機能します。
   * 呼び出しロジックはルールの名前で明確になります。モジュールとアクションが明確な名前を持つ場合でも、`article/display` よりも `@display_article_by_slug` を呼び出したほうがベターです。
+  * routing.yml ファイルを見れば、どのアクションが有効なのかは分かります。
 
-一方で、わるい点は、新しいハイパーリンクを追加することが自明ではなくなることです。アクションに対してどのラベルが使われているのか解明するために `routing.yml` ファイルにつねに参照する必要があるからです。
+一方で、わるい点は、新しいハイパーリンクを追加することが自明ではなくなることです。アクションに対してどのラベルが使われているのか解明するために `routing.yml` ファイルをつねに参照する必要があるからです。大規模なプロジェクトでは、最終的にはルーティングのルールが多数になり、`routing.yml` をメンテナンスすることが難しくなってきます。このような場合は、アプリケーションをいくつかのプラグインにパッケージ分割します。各プラグインはアプリケーションの特定の機能のみを定義します。
 
-最良の選択はプロジェクト次第です。結局は、あなた次第です。
+しかしながら、経験上、長い目で見るとルーティングルールを使うことは最善の選択です。
 
 >**TIP**
->テストの間 (`dev` 環境)、 ブラウザーの任意のリクエストに対してどのルールがマッチしたのかチェックしたい場合、Web デバッグツールバーの「logs and msgs」セクションを展開し、「matched route XXX.」と書かれている行を探してください。Web デバッグモードに関する詳細な情報は16章で知ることになります。
-
--
-
->**NOTE**
->**symfony 1.1 の新しい機能** 運用モードでは外部 URL と内部 URI の間の変換がキャッシュされるので、ルーティングオペレーションはずっと速くなります。
-
-### .html拡張子を追加する
-
-つぎの2つのURLを比較してください:
-
-    http://myapp.example.com/article/Finance_in_France
-    http://myapp.example.com/article/Finance_in_France.html
-
-同じページであっても、ユーザー (とロボット) は URL なのでこれを違うものとして見るかも知れません。2番目の URL は静的なページの深くてよく整理された Web ディレクトリを呼び出します。静的なページは検索エンジンがインデックスを作成する方法を理解している Web サイトの種類のものです。
-
-リスト9-22で示されるように、サフィックスをルーティングシステムによって生成されたすべての外部 URL に追加するには、`settings.yml` ファイルの `suffix` の値を変更します。
-
-リスト9-22 - すべての URL に対してサフィックスを設定する (`frontend/config/settings.yml`)
-
-    prod:
-      routing:
-        param:
-          suffix: .html
-
-デフォルトのサフィックスはピリオド (`.`) に設定されます。このことはあなたが接尾辞を指定しないかぎりルーティングシステムは接尾辞を追加しないことを意味します。 
-
-時に、唯一のルーティングルールのためにサフィックスを指定する必要があります。その場合、リスト9-23で示されるように、接尾辞を `routing.yml` ファイルの `url:` の関連行に直接書きます。グローバルな接尾辞は無視されます。
-
-リスト9-23 - URL に対してサフィックスを設定する (`frontend/config/routing.yml`)
-
-    article_list:
-      url:          /latest_articles
-      param:        { module: article, action: list }
-
-    article_list_feed:
-      url:          /latest_articles.rss
-      param:        { module: article, action: list, type: feed }
+>テストの間 (`dev` 環境)、 ブラウザーの任意のリクエストに対してどのルールがマッチしたのかチェックしたい場合、Web デバッグツールバーの「logs and」セクションを展開し、「matched route XXX.」と書かれている行を探してください。Web デバッグモードに関する詳細な情報は16章で知ることになります。
 
 ### routing.yml なしでルールを作成する
 
-たいていの設定ファイルにあてはまることですが、`routing.yml` ファイルはルーティングルールを定義するための解決方法ですが、唯一の方法ではありません。アプリケーションの`config.php`ファイル、もしくはフロントコントローラースクリプトのなかで、しかし`dispatch()`を呼び出すまえに、ルールをPHPで定義できます。なぜなら、このメソッドは現在のルーティングルールにしたがって実行するアクションを決定するからです。ルールをPHPで定義することは、設定もしくはほかのパラメーターに依存する、動的なルールを作成することを許可することを意味します。
+たいていの設定ファイルにあてはまることですが、`routing.yml` ファイルはルーティングルールを定義するための解決方法ですが、唯一の方法ではありません。`dispatch()` を呼び出すまえに、ルールをPHPで定義できます。なぜなら、`dispatch()` メソッドは現在のルーティングルールにしたがって実行するアクションを決定するからです。ルールをPHPで定義できるので、設定もしくはほかのパラメーターに依存する、動的なルールを作成できます。
 
-ルーティングルールを扱うオブジェクトは `sfPatternRouting` ファクトリです。`sfContext::getInstance()->getRouting()` を求めることでコードのすべての部分から利用できます。このオブジェクトの `prependRoute()` メソッドは `routing.yml` のなかで定義された既存のルールの上に新しいルールを追加します。このメソッドは4つのパラメーターを必要とします。このパラメーターはルールを定義するために必要なものと同じです: ルートのラベル、パターン、デフォルト値の連想配列、と要件のための別の連想配列です。たとえば、リスト9-18で示される `routing.yml` ルールの定義はリスト9-24で示される PHP コードと同等です。
+ルーティングルールを扱うオブジェクトは `sfPatternRouting` ファクトリです。`sfContext::getInstance()->getRouting()` を求めることでコードのすべての部分から利用できます。このオブジェクトの `prependRoute()` メソッドは `routing.yml` のなかで定義された既存のルールの上に新しいルールを追加します。このメソッドは4つのパラメーターを必要とします。このパラメーターはルールを定義するために必要なものと同じです: ルートのラベル、パターン、デフォルト値の連想配列、と要件のための別の連想配列です。たとえば、リスト9-18で示される `routing.yml` ルールの定義はリスト9-22で示される PHP コードと同等です。
 
->**NOTE**
->**symfony 1.1 の新しい機能**: ルーティングクラスは `factories.yml` 設定ファイルで設定可能です (デフォルトのルーティングクラスを変更するには、17章を参照)。この章では `sfPatternRouting` クラスを説明します。このクラスはデフォルトで設定されるルーティングルールです。
-
-リスト9-24 - ルールを PHP で定義する
+リスト9-22 - ルールを PHP で定義する
 
     [php]
     sfContext::getInstance()->getRouting()->prependRoute(
       'article_by_id',                                  // ルートの名前
-      '/article/:id',                                   // ルートパターン
-      array('module' => 'article', 'action' => 'read'), // デフォルト値
-      array('id' => '\d+'),                             // 要件
+      new sfRoute('/article/:id', array('module' => 'article', 'action' => 'read'), array('id' => '\d+')),                         // ルートオブジェクト
     );
 
-Singleton の `sfPatternRouting` は手動でルートを扱うために便利なほかのメソッド、`clearRoutes()`、`hasRoutes()` などを持ちます。もっと学ぶには API ドキュメント ([http://www.symfony-project.org/api/1_2/](http://www.symfony-project.org/api/1_2/)) を参照してください。
+`sfRoute` クラスのコンストラクタは 3 つの引数をとります: パターン、デフォルト値の連想配列、要件を指定する連想配列です。
+
+`sfPatternRouting` は手動でルートを扱うために便利なほかのメソッド、`clearRoutes()`、`hasRoutes()` などを持ちます。もっと学ぶには API ドキュメント ([http://www.symfony-project.org/api/1_4/)) を参照してください。
 
 >**TIP**
 >いったんこの本で説明された概念を十分に理解し始めたら、オンラインの API ドキュメント、もっとよいのは symfony のソースを眺めることで、フレームワークの理解を深めることができます。この本では symfony の調整方法とパラメーターのすべては説明されていません。しかしながら、オンラインドキュメントは無制限です。
 
+
+-
+
+>**NOTE**
+>ルーティングクラスは、`factories.yml` コンフィギュレーションファイルで設定できます。(デフォルトのルーティングクラスを変更するには、17 章を参照してください。) この章では、デフォルトでルーティングクラスに設定されている`sfPatternRouting`クラスについて説明します。
+
 アクションのなかでルートを処理する
 -------------------------------
 
-現在のルート情報を読みとりたい場合、たとえば「back to page xxx」リンクを用意するには、`sfPatternRouting` オブジェクトのメソッドを使います。リスト9-25で示されるように、`getCurrentInternalUri()` メソッドによって返される URI は、`link_to()` ヘルパーの呼び出しで使われます。
+現在のルート情報を読みとりたい場合、たとえば「back to page xxx」リンクを用意するには、`sfPatternRouting` オブジェクトのメソッドを使います。リスト9-23で示されるように、`getCurrentInternalUri()` メソッドによって返される URI は、`link_to()` ヘルパーの呼び出しで使われます。
 
-リスト9-25 - 現在のルート情報を読みとるために `sfRouting` オブジェクトを使う
+リスト9-23 - 現在のルート情報を読みとるために `sfRouting` オブジェクトを使う
 
     [php]
     // つぎのような URL を求める場合
     http://myapp.example.com/article/21
 
-    $routing = sfContext::getInstance()->getRouting();
+    $routing = $this->getContext()->getRouting();
 
     // つぎの article/read アクションを使う
     $uri = $routing->getCurrentInternalUri();
@@ -673,9 +633,9 @@ Singleton の `sfPatternRouting` は手動でルートを扱うために便利�
     $module = $request->getParameter('module');
     $action = $request->getParameter('action');
 
-テンプレートのなかの `url_for()` ヘルパーのように内部 URI を外部 URL に変換する必要がある場合、リスト9-26で示されている `sfController` オブジェクトの `genUrl()` メソッドを使います。
+テンプレートのなかの `url_for()` ヘルパーのように内部 URI を外部 URL に変換する必要がある場合、リスト9-24で示されている `sfController` オブジェクトの `genUrl()` メソッドを使います。
 
-リスト9-26 - 内部URIを変換するために `sfController` オブジェクトを使う
+リスト9-24 - 内部URIを変換するために `sfController` オブジェクトを使う
 
     [php]
     $uri = 'article/read?id=21';
