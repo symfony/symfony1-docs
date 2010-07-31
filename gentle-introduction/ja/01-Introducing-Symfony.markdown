@@ -10,7 +10,7 @@ symfony とは
 
 symfony は、Web アプリケーションの開発を最適化するためにいくつかの重要な特徴を通して設計された完全なフレームワークです。初心者のために、symfony は Web アプリケーションのビジネスルール、サーバーのロジック、そしてプレゼンテーションのビューを分離します。symfony は複雑な Web アプリケーションの開発期間を短くすることを目的とした多くのツールとクラスを搭載しています。加えて、開発者がアプリケーションだけに集中できるように symfony は共通のタスクを自動化します。これらの利点の最終結果は新しいアプリケーションを作るたびに車輪を再発明する (reinvent the wheel) 必要がないことを意味します！
 
-symfony は完全な PHP 5 で書かれました。symfony は現実の世界のさまざまなプロジェクトで徹底的にテストされ、高度な要件が求められる電子商取引のWebサイトでも実際に利用されています。symfony は MySQL、PostgreSQL、Oracle、Microsoft SQL Server を含む利用可能なほとんどのデータベースエンジンと互換性があります。symfony は Unix 系や Windows プラットフォームで動作します。つぎのセクションで機能を詳しく見ることにします。
+symfony は完全な PHP で書かれました。symfony は現実の世界のさまざまなプロジェクト([answers](http://sf-to.org/answers)、[delicious](http://sf-to.org/delicious)、[dailymotion](http://sf-to.org/dailymotion))で徹底的にテストされ、高度な要件が求められる電子商取引のWebサイトでも実際に利用されています。symfony は MySQL、PostgreSQL、Oracle、Microsoft SQL Server を含む利用可能なほとんどのデータベースエンジンと互換性があります。symfony は Unix 系や Windows プラットフォームで動作します。つぎのセクションで機能を詳しく見ることにします。
 
 ### symfony の機能
 
