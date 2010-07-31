@@ -416,7 +416,7 @@ Listing 13-16 - Translating Sentences That Contain Code
 
 In this example, the token is `%1%`, but it can be anything, since the replacement function used by the translation helper is `strtr()`.
 
-One of the common problems with translation is the use of the plural form. According to the number of results, the text changes but not in the same way according to the language. For instance, the last sentence in Listing 13-15 is not correct if `count_logged()` returns 0 or 1. You could do a test on the return value of this function and choose which sentence to use accordingly, but that would represent a lot of code. Additionally, different languages have different grammar rules, and the declension rules of plural can be quite complex. As this problem is very common, symfony provides a helper to deal with it, called `format_number_choice()`. Listing 13-17 demonstrates how to use this helper.
+One of the common problems with translation is the use of the plural form. According to the number of results, the text changes but not in the same way according to the language. For instance, the last sentence in Listing 13-16 is not correct if `count_logged()` returns 0 or 1. You could do a test on the return value of this function and choose which sentence to use accordingly, but that would represent a lot of code. Additionally, different languages have different grammar rules, and the declension rules of plural can be quite complex. As this problem is very common, symfony provides a helper to deal with it, called `format_number_choice()`. Listing 13-17 demonstrates how to use this helper.
 
 Listing 13-17 - Translating Sentences Depending on the Value of Parameters
 
