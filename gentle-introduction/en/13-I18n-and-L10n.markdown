@@ -312,7 +312,7 @@ XLIFF is a standard format based on XML. As it is well known, you can use third-
 >**TIP**
 >In addition to the XLIFF standard, symfony also supports several other translation back-ends for dictionaries: gettext, MySQL, and SQLite. Refer to the API documentation for more information about configuring these back-ends.
 
-Listing 13-14 shows an example of the XLIFF syntax with the `messages.fr.xml` file necessary to translate Listing 13-14 into French.
+Listing 13-14 shows an example of the XLIFF syntax with the `messages.fr.xml` file necessary to translate Listing 13-13 into French.
 
 Listing 13-14 - An XLIFF Dictionary, in `frontend/i18n/messages.fr.xml`
 
