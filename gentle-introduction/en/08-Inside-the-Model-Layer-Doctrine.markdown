@@ -559,7 +559,7 @@ If some of the generated methods in the `Base` classes don't fit your requiremen
 
 For instance, the `$article->getComments()` method returns a collection of `Comment` objects, in no particular order. If you want to have the results ordered by creation date, with the latest comment coming first, then create the `getComments()` method, as shown in Listing 8-23.
 
-Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
+Listing 8-23 - Overriding Existing Model Methods, in `lib/model/doctrine/Article.php`
 
     [php]
     public function getComments()
