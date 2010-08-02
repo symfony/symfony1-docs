@@ -1,5 +1,5 @@
 第10章 - フォーム
-================
+=================
 
 フォームへ入力した値の表示、フォームへ送信したデータのバリデーション、およびフォームに関連するすべての特殊なケースの扱いは、Web 開発における最も複雑な作業の 1 つです。幸い、symfony にはとても強力なフォームサブフレームワークを扱う単純なインターフェイスがあり、数行のコードでフォームをデザインし、単純なものから複雑なものまで、さまざまなフォームを扱うことができます。
 
@@ -442,9 +442,9 @@ symfony では、フォームはオブジェクトで、アクションで定義
     <select id="dob_month" name="dob[month]">
       <option value=""/>
       <option selected="selected" value="1">Janvier</option>
-      <option value="2">Février</option>
+      <option value="2">Fevrier</option>
       ...
-      <option value="12">Décembre</option>
+      <option value="12">Decembre</option>
     </select> /
     <select id="dob_year" name="dob[year]">...</select>
 
@@ -977,7 +977,7 @@ symfony には非常に多くのバリデーターがあります。各バリデ
 カスタムウィジェットクラスとカスタムバリデータークラス
 ------------------------------------------------------
 
-カスタムウィジェットは、単純に `sfWidgetForm` を継承するクラスで、`configure()` メソッドと `render()` メソッドを定義します。ウィジェットシステムについて理解を深めるには、既存のウィジェットクラスのコードを確認すると良いでしょう。ウィジェットの構造を説明するために、`sfWidgetFormInput` ウィジェットのコードを次のリストに示します:
+カスタムウィジェットは、単純に `sfWidgetForm` を継承するクラスで、`configure()` メソッドと `render()` メソッドを定義します。ウィジェットシステムについて理解を深めるには、既存のウィジェットクラスのコードを確認すると良いでしょう。ウィジェットの構造を理解するために、`sfWidgetFormInput` ウィジェットのコードを次のリストに示します:
 
     [php]
     class sfWidgetFormInputText extends sfWidgetForm
@@ -1017,7 +1017,7 @@ symfony には非常に多くのバリデーターがあります。各バリデ
       }
     }
 
-A validator class must extend `sfValidatorBase` and provide a `configure()` and a `doClean()` methods. Why `doClean()` and not `validate()`? Because validators do two things: they check that the input fulfills a set of rules, and they optionally clean the input (for instance by forcing the type, trimming, converting date strings to timestamp, etc.). So the `doClean()` method must return the cleaned input, or throw a `sfValidatorError` exception if the input doesn't satisfy any of the validator rules. Here is an illustration of this concept, with the code of the `sfValidatorInteger` validator.
+バリデータークラスは `sfValidatorBase` を継承し、`configure()` メソッドと `doClean()` メソッドを定義する必要があります。なぜ `validate()` ではなく `doClean()` なのでしょうか? バリデーターには、次の 2 つの役割があります: 入力されたデータが定義したルールを満たすかどうか確認すること、および入力データのクリーンアップ(たとえば、型の変換、空白のトリム、日付文字列をタイムスタンプへ変換など)です。ですので、`doClean()` メソッドは入力データをクリーンアップして返すか、バリデーターで定義したルールを満たさない場合は `sfValidatorError` 例外をスローします。次のコードは `sfValidatorInteger` バリデーターで、この概念の実装が分かります。
 
     [php]
     class sfValidatorInteger extends sfValidatorBase
@@ -1072,20 +1072,20 @@ A validator class must extend `sfValidatorBase` and provide a `configure()` and 
       }
     }
 
-Check the symfony API documentation for widget and validator classes names and syntax.
+ウィジェットクラスおよびバリデータークラスとその構文については、symfony API ドキュメントを参照してください。
 
 >**SIDEBAR**
->Use options to pass parameters to the form class
+>フォームクラスへパラメーターを渡すオプションの使い方
 >
->A common issue with forms is to be able to use application parameters, such as the user's culture. The fastest but ugly way is to retrieve the user instance through the sfContext instance, using the `sfContext::getInstance()->getUser()` method. However, this solution create a big coupling between the form and the context, making the testing and reusability more difficult. To avoid this problem, you can simply use option to pass the `culture` value to the form :
+>フォームでよく問題になるのは、たとえばユーザーのカルチャーのようなアプリケーション実行時のパラメーターをフォームに渡すことです。最も簡単な（しかし推奨されない）方法は、`sfContext::getInstance()->getUser()` メソッドを使って sfContext からユーザーインスタンスを取得します。しかし、この方法ではフォームとコンテキストとのカップリングが発生し、テストや再利用が困難になります。こういった問題を回避するために、単純にオプションを使って `culture` という値をフォームへ渡します:
 >
->     // from an action
+>     // アクション内
 >     public function executeContact(sfWebRequest $request)
 >     {
 >       $this->form = new ContactForm(array(), array('culture' => $this->getUser()->getCulture()));
 >     }
 >
->     // from a unit test
+>     // テスト内
 >     $form = new ContactForm(array(), array('culture' => 'en'));
 >
 >     class ContactForm extends sfForm
@@ -1099,16 +1099,16 @@ Check the symfony API documentation for widget and validator classes names and s
 >     }
 >
 
-Forms Based on a Model
+モデルベースのフォーム
 ----------------------
 
-Forms are the primary way to edit database records in web applications. And most forms in symfony applications allow the editing of a Model object. But the information necessary to build a form to edit a model already exists: it is in the schema. So symfony provides a form generator for model objects, that makes the creation of model-editing forms a snap.
+ウェブアプリケーションにおいて、データベースのレコードを編集するにはフォームを使うのが最も一般的でしょう。symfony アプリケーションでは、ほとんどのフォームでモデルオブジェクトの編集ができます。モデルを編集するためのフォームを構築するのに必要な情報は、実はすでに存在しています。つまり、スキーマからフォームを作ります。symfony にはモデルオブジェクト用のフォームジェネレーターがあり、簡単にモデル編集用のフォームを作れます。
 
->**Note**: Similar features to the ones described below exist for Doctrine.
+>**Note**: 以下で説明するのとほとんど同じ機能が Doctrine でも提供されています。
 
-### Generating Model Forms
+### モデルフォームの生成
 
-Symfony can deduce the widget types and the validators to use for a model editing form, based on the schema. Take the following schema, for instance with the Propel ORM:
+symfony では、スキーマに基づいて、モデル編集用フォームで使われるウィジェットの種類やバリデーターが決定されます。ORM に Propel を使っている場合、例として次のようなスキーマがあるとしましょう:
 
     [yml]
     // config/schema.yml
@@ -1129,17 +1129,17 @@ Symfony can deduce the widget types and the validators to use for a model editin
         email:        { type: varchar(255), required: true, index: unique }
         active:       boolean
 
-A form to edit an `Article` object should use a hidden widget for the `id`, a text widget for the `title`, a string validator for the `title`, etc. Symfony generates the form for you, provided that you call the `propel:build-forms` task:
+`Article` オブジェクトを編集するフォームでは、隠しウィジェットの `id`、テキストウィジェットの `title`、`title` 用の文字列バリデーターなどが使われます。`propel:build-forms` タスクを実行すると、symfony によりフォームが生成されます:
 
-    // propel
+    // Propel
     $ php symfony propel:build-forms
     
-    // doctrine
+    // Doctrine
     $ php symfony doctrine:build-forms
 
-For each table in the model, this command creates two files under the `lib/form/` directory: a `BaseXXXForm` class, overridden each time you call the `propel:build-forms` task, and an empty `XXXForm` class, extending the previous one. It is the same system as the Propel model classes generation.
+このコマンドを実行すると、`lib/form/` ディレクトリに、モデルの各テーブルに対して 2 つのファイルが作られます: `propel:build-forms` を呼び出すたびに書き換えられる `BaseXXXForm` クラスと、`BaseXXXForm` を継承していて中身は空の `XXXForm` クラスです。これは、Propel のモデル生成と同じ仕組みです。
 
-The generated `lib/form/base/BaseArticleForm.class.php` contains the translation into widgets and validators of the columns defined for the `article` table in the `schema.yml`:
+生成された `lib/form/base/BaseArticleForm.class.php` ファイルには、`schema.yml` の `article` テーブルに対して定義されたカラムから自動生成されたウィジェットとバリデーターがあります:
 
     [php]
     class BaseArticleForm extends BaseFormPropel
@@ -1177,16 +1177,16 @@ The generated `lib/form/base/BaseArticleForm.class.php` contains the translation
       }
     }
 
-Notice that even though the `id` column is an Integer, symfony checks that the submitted id exists in the table using a `sfValidatorPropelChoice` validator. The form generator always sets the strongest validation rules, to ensure the cleanest data in the database.
+`id` カラムは整数型ですが、symfony では送信された id がテーブルに存在するかどうかを `sfValidatorPropelChoice` バリデーターで検証していることに注意してください。フォームジェネレーターでは、常に最も厳しいバリデーションルールが設定されるので、データベースのデータがクリーンに保たれることを保証します。
 
-### Using Model Forms
+### モデルフォームを使う
 
-You can customize generated form classes for your entire project by adding code to the empty `ArticleForm::configure()` method.
+空の `ArticleForm::configure()` メソッドにコードを追加して、生成されたフォームクラスをプロジェクト用にカスタマイズできます。
 
-Here is an example of model form handling in an action. In this form, the `slug` validator is modified to make it optional, and the `author_id` widget is customized to display only a subset of authors - the 'active' ones.
+以下にモデルフォームをアクションで処理する例を示します。このフォームでは `slug` のバリデーターが変更され、任意になっています。また、`author_id` ウィジェットをカスタマイズしてアクティブな著者のみを表示するようにしています。
 
     [php]
-    // in lib/form/ArticleForm.class.php
+    // lib/form/ArticleForm.class.php内
     public function configure()
     {
       $this->getWidget('author_id')->setOption('criteria', $this->getOption('criteria'));
@@ -1216,15 +1216,15 @@ Here is an example of model form handling in an action. In this form, the `slug`
       }
     }
 
-Instead of setting default values through an associative array, Model forms use a Model object to initialize the widget values. To display an empty form, just pass a new Model object.
+モデルフォームでは、デフォルト値を連想配列で設定する代わりに、モデルオブジェクトを使ってウィジェットの値を初期化します。空のフォームを表示したい場合は、単に新しいモデルオブジェクトをインスタンス化してフォームへ渡します。
 
-The form submission handling is greatly simplified by the fact that the form object has an embedded Model object. Calling `$this->form->save()` on a valid form updates the embedded `Article` object with the cleaned values and triggers the `save()` method on the `Article` object, as well as on the related objects if they exist.
+フォームオブジェクトにモデルオブジェクトが埋め込まれているため、フォーム送信の処理はとても単純化されています。バリデーションが成功したフォームで `$this->form->save()` を実行すると、フォームに埋め込まれている `Article` オブジェクトがクリーンアップされた値で更新され、`Article` オブジェクトの `save()` メソッドが呼び出されます。他に関連するオブジェクトがあれば、同様に処理されます。
 
->**TIP**: The action code required to deal with a form is pretty much always the same, but that's not a reason to copy it from one module to the other. Symfony provides a module generator that creates the whole action and template code to manipulate a Model object through symfony forms.
+>**TIP**: フォームを処理するのに必要なアクションのコードは、毎回ほぼ同じです。しかし、だからといってモジュールごとにコードをコピーしてはいけません。symfony には、モデルオブジェクトを処理するフォームのアクションやテンプレートのすべてを生成するモジュールジェネレーターがあるので、これを使うようにしましょう。
 
-Conclusion
-----------
+結論
+----
 
-The symfony form component is an entire framework on its own. It facilitates the display of forms in the view through widgets, it facilitates validation and handling of forms in the controller through validators, and it facilitates the edition of Model objects through Model forms. Although designed with a clear MVC separation, the form sub-framework is always easy to use. Most of the time, code generation will reduce your custom form code to a few lines.
+symfony のフォームフレームワークは、それ自身が 1 つのフレームワークです。フォームフレームワークは、ビューではウィジェットを使ってフォームの表示を行い、コントローラーではバリデーターを使ってバリデーションとフォームの処理を行い、モデルフォームではモデルオブジェクトの編集を行います。MVC に基づいて設計されていますが、フォームサブフレームワークを使うことは難しくありません。多くの場合、コード生成機能を使うことで、記述しなければならないコード量は数行程度です。
 
-There is much more in symfony form classes than what this chapter exposes. In fact, there is an [entire book](http://www.symfony-project.org/book/forms/1_4/en/) describing all its features through usage examples. And if the form framework itself doesn't provide the widget or the validator you need, it is designed in such an extensible way that you will only need to write a single class to get exactly what you need.
+symfony のフォームクラスには、この章で説明した以外にも多くの機能があります。[Forms in Action](http://www.symfony-project.org/book/forms/1_4/en/) で、使用例もまじえてすべての機能を説明しています。もしフォームフレームワークに必要なウィジェットやバリデーターが無い場合は、クラスを 1 つ記述するだけで、拡張したウィジェットやバリデーターを簡単に作ることもできます。
