@@ -173,7 +173,7 @@ L'administrateur peut créer ou modifier des affiliés. Il est responsable de l'
 d'un affilié et peut également les désactiver.
 
 Lorsque l'administrateur active une nouvelle filiale, le système crée un jeton unique
-a utilisé par la filiale.
+à utiliser par la filiale.
 
 Conclusion
 ----------

@@ -104,7 +104,7 @@ With symfony, you build an administration on a per-model basis. A module is gene
     $ php symfony propel:generate-admin backend BlogArticle --module=article
     
     // Doctrine
-    $ php symfony propel:generate-admin backend BlogArticle --module=article
+    $ php symfony doctrine:generate-admin backend BlogArticle --module=article
 
 >**NOTE**
 >The administration modules are based on a REST architecture. The `propel:generate-admin` task automatically adds such a route to the `routing.yml` configuration file:

@@ -288,8 +288,8 @@ expliquées dans ce tutoriel :
  * [`plugin:install`](#chapter_13_plugins)
  * [`plugin:publish-assets`](#chapter_20_sub_les_ressources)
  * [`project:deploy`](#chapter_22_sub_strategies_de_deploiement)
- * [`propel:build-all`](#chapter_03_l_orm)
- * [`propel:build-all-load`](#chapter_07_mise_a_jour_de_la_base_de_donnee)
+ * [`propel:build --all`](#chapter_03_l_orm)
+ * [`propel:build --all --and-load`](#chapter_07_mise_a_jour_de_la_base_de_donnee)
 <propel>
  * [`propel:build-forms`](#chapter_10_les_formulaires_de_propel)
 </propel>
