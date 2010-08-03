@@ -1,20 +1,20 @@
-Appendix A - Inside The Model Layer (Propel)
+Appendice A - All'interno dello strato modello (Propel)
 ===========================================
 
-Much of the discussion so far has been devoted to building pages, and processing requests and responses. But the business logic of a web application relies mostly on its data model. Symfony's default model component is based on an object/relational mapping layer. Symfony comes bundles with the two most popular PHP ORMs: [Propel](http://www.propelorm.org/) and [Doctrine](http://www.doctrine-project.org/). In a symfony application, you access data stored in a database and modify it through objects; you never address the database explicitly. This maintains a high level of abstraction and portability.
+Gran parte della trattazione finora è stata dedicata alla costruzione di pagine e all'elaborazione delle richieste e delle risposte. Ma la business logic di una applicazione web si basa principalmente sul suo modello di dati. Il componente predefinito di symfony per il modello, è basato su uno strato che mappa oggetti e relazioni. Symfony è in bundle con i due più popolari ORM per PHP: [Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/). In un'applicazione symfony, si accede ai dati memorizzati in un database e li si modifica, attraverso gli oggetti; non è necessario riferirsi direttamente al database. Quest'ultimo mantiene un elevato livello di astrazione e portabilità.
 
-This chapter explains how to create an object data model, and the way to access and modify the data in Propel. It also demonstrates the integration of Propel in Symfony.
+Questo capitolo spiega come creare un modello di dati a oggetti e come accedere ai dati e modificarli con Propel. Viene anche trattata l'integrazione di Propel con symfony.
 
-Why Use an ORM and an Abstraction Layer?
+Perché usare un ORM e uno strato per l'astrazione?
 ----------------------------------------
 
-Databases are relational. PHP 5 and symfony are object-oriented. In order to most effectively access the database in an object-oriented context, an interface translating the object logic to the relational logic is required. As explained in Chapter 1, this interface is called an object-relational mapping (ORM), and it is made up of objects that give access to data and keep business rules within themselves.
+I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per poter accedere nel modo più efficace al database in un contesto orientato agli oggetti, è indispensabile una interfaccia per tradurre la logica degli oggetti nella logica relazionale. Come spiegato nel capitolo 1, questa interfaccia è chiamata Object-Relational Mapping (ORM), ed è costituita di oggetti che forniscono l'accesso ai dati e mantengono le business rules all'interno di se stessi.
 
-The main benefit of an ORM is reusability, allowing the methods of a data object to be called from various parts of the application, even from different applications. The ORM layer also encapsulates the data logic--for instance, the calculation of a forum user rating based on how many contributions were made and how popular these contributions are. When a page needs to display such a user rating, it simply calls a method of the data model, without worrying about the details of the calculation. If the calculation changes afterwards, you will just need to modify the rating method in the model, leaving the rest of the application unchanged.
+Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Lo strato ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
 
-Using objects instead of records, and classes instead of tables, has another benefit: They allow you to add new accessors to your objects that don't necessarily match a column in a table. For instance, if you have a table called `client` with two fields named `first_name` and `last_name`, you might like to be able to require just a `Name`. In an object-oriented world, it is as easy as adding a new accessor method to the `Client` class, as in Listing 8-1. From the application point of view, there is no difference between the `FirstName`, `LastName`, and `Name` attributes of the `Client` class. Only the class itself can determine which attributes correspond to a database column.
+Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo accessor alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome`, e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
 
-Listing 8-1 - Accessors Mask the Actual Table Structure in a Model Class
+Listato 8-1 - Il metodo accessor maschera la struttura della tabella in una classe del modello
 
     [php]
     public function getName()
@@ -22,9 +22,9 @@ Listing 8-1 - Accessors Mask the Actual Table Structure in a Model Class
       return $this->getFirstName().' '.$this->getLastName();
     }
 
-All the repeated data-access functions and the business logic of the data itself can be kept in such objects. Suppose you have a `ShoppingCart` class in which you keep `Items` (which are objects). To get the full amount of the shopping cart for the checkout, write a custom method to encapsulate the actual calculation, as shown in Listing 8-2.
+Tutte le funzioni ripetute di accesso ai dati e la business logic dei dati stessi, possono essere tenute in tali oggetti. Supponiamo di avere una classe `ShoppingCart` in cui si tenere gli `Articoli` (che sono oggetti). Per ottenere l'importo totale del carrello della spesa, necessario per il pagamento, bisogna scrivere un metodo personalizzato per incapsulare il calcolo effettivo, come mostrato nel Listato 8-2.
 
-Listing 8-2 - Accessors Mask the Data Logic
+Listato 8-2 - Il metodo accessor maschera la logica dei dati
 
     [php]
     public function getTotal()
@@ -38,36 +38,36 @@ Listing 8-2 - Accessors Mask the Data Logic
       return $total;
     }
 
-There is another important point to consider when building data-access procedures: Database vendors use different SQL syntax variants. Switching to another database management system (DBMS) forces you to rewrite part of the SQL queries that were designed for the previous one. If you build your queries using a database-independent syntax, and leave the actual SQL translation to a third-party component, you can switch database systems without pain. This is the goal of the database abstraction layer. It forces you to use a specific syntax for queries, and does the dirty job of conforming to the DBMS particulars and optimizing the SQL code.
+C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo dello strato di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL.
 
-The main benefit of an abstraction layer is portability, because it makes switching to another database possible, even in the middle of a project. Suppose that you need to write a quick prototype for an application, but the client hasn't decided yet which database system would best suit his needs. You can start building your application with SQLite, for instance, and switch to MySQL, PostgreSQL, or Oracle when the client is ready to decide. Just change one line in a configuration file, and it works.
+Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione.
 
-Symfony uses Propel or Doctrine as the ORM, and they use PHP Data Objects for database abstraction. These two third-party components, both developed by the Propel and Doctrine teams, are seamlessly integrated into symfony, and you can consider them as part of the framework. Their syntax and conventions, described in this chapter, were adapted so that they differ from the symfony ones as little as possible.
+Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony, ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
 
 >**NOTE**
->In a symfony project, all the applications share the same model. That's the whole point of the project level: regrouping applications that rely on common business rules. This is the reason that the model is independent from the applications and the model files are stored in a `lib/model/` directory at the root of the project.
+>In un progetto symfony, tutte le applicazioni condividono lo stesso modello. Questo è un punto fondamentale a livello di progetto: raggruppare le applicazioni che si basano su regole di business comuni. Questa è la ragione per cui il modello è indipendente dalle applicazioni e i file del modello sono memorizzati in una cartella `lib/model/` nella radice del progetto.
 
-Symfony's Database Schema
+Lo schema del database di symfony
 -------------------------
 
-In order to create the data object model that symfony will use, you need to translate whatever relational model your database has to an object data model. The ORM needs a description of the relational model to do the mapping, and this is called a schema. In a schema, you define the tables, their relations, and the characteristics of their columns.
+Allo scopo di creare il modello a oggetti dei dati che symfony userà, bisogna tradurre tutti i modelli relazionali del database in un modello dati a oggetti. L'ORM ha bisogno di una descrizione del modello relazionale per fare la mappatura e questo è chiamato schema. In uno schema si definiscono le tabelle, le relazioni e le caratteristiche delle colonne.
 
-Symfony's syntax for schemas uses the YAML format. The `schema.yml` files must be located in the `myproject/config/` directory.
+La sintassi di symfony per gli schemi utilizza il formato YAML. I file `schema.yml` devono essere messi nella cartella `mioprogetto/config`.
 
 >**NOTE**
->Symfony also understands the Propel native XML schema format, as described in the "Beyond the schema.yml: The schema.xml" section later in this chapter.
+>Symfony riconosce inoltre la sintassi native di Propel in XML, come descritto nella sezione "Oltre schema.yml: schema.xml" più avanti in questo capitolo.
 
-### Schema Example
+### Esempio di schema
 
-How do you translate a database structure into a schema? An example is the best way to understand it. Imagine that you have a blog database with two tables: `blog_article` and `blog_comment`, with the structure shown in Figure 8-1.
+Come tradurre la struttura del database in uno schema? Un esempio è il modo migliore per capirlo. Immaginiamo di avere il database di un blog con due tabelle: `blog_articolo` e `blog_commento`, con la struttura mostrata in Figura 8-1.
 
-Figure 8-1 - A blog database table structure
+Figura 8-1 - Struttura delle tabelle del database di un blog
 
-![A blog database table structure](http://www.symfony-project.org/images/book/1_4/F0801.png "A blog database table structure")
+![Struttura delle tabelle del database di un blog](http://www.symfony-project.org/images/book/1_4/F0801.png "Struttura delle tabelle del database di un blog")
 
-The related `schema.yml` file should look like Listing 8-3.
+Il relativo file `schema.yml` dovrebbe apparire come nel Listato 8-3.
 
-Listing 8-3 - Sample `schema.yml`
+Listato 8-3 - Esempio di file `schema.yml`
 
     [yml]
     propel:
@@ -85,196 +85,196 @@ Listing 8-3 - Sample `schema.yml`
         content:          longvarchar
         created_at:       ~
 
-Notice that the name of the database itself (`blog`) doesn't appear in the `schema.yml` file. Instead, the database is described under a connection name (`propel` in this example). This is because the actual connection settings can depend on the environment in which your application runs. For instance, when you run your application in the development environment, you will access a development database (maybe `blog_dev`), but with the same schema as the production database. The connection settings will be specified in the `databases.yml` file, described in the "Database Connections" section later in this chapter. The schema doesn't contain any detailed connection to settings, only a connection name, to maintain database abstraction.
+Notare che il nome del database (`blog`) non compare nel file `schema.yml`. Il database invece è descritto con un nome di connessione (`propel` in questo esempio). Questo perché le impostazioni di connessione effettive possono dipendere dall'ambiente in cui l'applicazione è in esecuzione. Per esempio, quando si esegue l'applicazione nell'ambiente di sviluppo, si accede a un database di sviluppo (può essere `blog_dev`), ma con lo stesso schema del database di produzione. Le impostazioni di connessione saranno specificate nel file `databases.yml`, descritto più avanti in questo capitolo nella sezione "Connessioni del database". Lo schema non contiene nessuna impostazione di connessione, solo un nome di connessione, per mantenere l'astrazione del database.
 
-### Basic Schema Syntax
+### Sintassi di base dello schema
 
-In a `schema.yml` file, the first key represents a connection name. It can contain several tables, each having a set of columns. According to the YAML syntax, the keys end with a colon, and the structure is shown through indentation (one or more spaces, but no tabulations).
+In un file `schema.yml`, la prima chiave rappresenta un nome della connessione. Può contenere diverse tabelle, ognuna con un set di colonne. In base alla sintassi YAML, le chiavi terminano con un simbolo di due punti, e la struttura è mostrata tramite indentazione (uno o più spazi, non tabulazioni).
 
-A table can have special attributes, including the `phpName` (the name of the class that will be generated). If you don't mention a `phpName` for a table, symfony creates it based on the camelCase version of the table name.
+Una tabella può avere attributi speciali, incluso `phpName` (il nome della classe che verrà generata). Se non vuoi usare un `phpName` per una tabella, symfony lo creerà in base alla versione camelCase del nome della tabella stessa.
 
 >**TIP**
->The camelCase convention removes underscores from words, and capitalizes the first letter of inner words. The default camelCase versions of `blog_article` and `blog_comment` are `BlogArticle` and `BlogComment`. The name of this convention comes from the appearance of capitals inside a long word, suggestive of the humps of a camel.
+>La convezione camelCase rimuove i trattini bassi dalle parole, e rende maiuscole le prime lettere delle parole interne. La versione camelCase di default di `blog_articolo` e `blog_commento` sono `BlogArticolo` e `BlogCommento`. Il nome di questa convenzione viene dall'aspetto delle lettere maiuscole all'interno di una lunga parola, come le gobbe di un cammello.
 
-A table contains columns. The column value can be defined in three different ways:
 
-  * If you define nothing (`~` in YAML is equivalent to `null` in PHP), symfony will guess the best attributes according to the column name and a few conventions that will be described in the "Empty Columns" section later in this chapter. For instance, the `id` column in Listing 8-3 doesn't need to be defined. Symfony will make it an auto-incremented integer, primary key of the table. The `blog_article_id` in the `blog_comment` table will be understood as a foreign key to the `blog_article` table (columns ending with `_id` are considered to be foreign keys, and the related table is automatically determined according to the first part of the column name). Columns called `created_at` are automatically set to the `timestamp` type. For all these columns, you don't need to specify any type. This is one of the reasons why `schema.yml` is so easy to write.
+Una tabella contiene colonne. Il valore delle colonne può essere definito in tre differenti modi:
 
-  * If you define only one attribute, it is the column type. Symfony understands the usual column types: `boolean`, `integer`, `float`, `date`, `varchar(size)`, `longvarchar` (converted, for instance, to `text` in MySQL), and so on. For text content over 256 characters, you need to use the `longvarchar` type, which has no size (but cannot exceed 65KB in MySQL).
+  * Se non definisci nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna ed alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: Symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne, e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non devi specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
 
-  * If you need to define other column attributes (like default value, required, and so on), you should write the column attributes as a set of `key: value`. This extended schema syntax is described later in the chapter.
+  * Se definisci soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri devi usare il valore `longvarchar` che non ha lunghezza (ma non può eccedere 65KB in MySQL).
 
-Columns can also have a `phpName` attribute, which is the capitalized version of the name (`Id`, `Title`, `Content`, and so on) and doesn't need overriding in most cases.
+  * Se hai bisogno di definire altri attributi (come il valore di default, se il campo è obbligatorio, e così via), dovresti scrivere gli attributi della colonna come un insieme di `chiave: valore`. Questa sintassi estesa è spiegata più avanti nel capitolo.
 
-Tables can also contain explicit foreign keys and indexes, as well as a few database-specific structure definitions. Refer to the "Extended Schema Syntax" section later in this chapter to learn more.
+Le colonne possono avere un attributi `phpName`, che è la versione con prima lettera maiuscola del nome (`Id`, `Title`, `Content`, e così via) e non ha bisogno di essere specificata nella maggior parte dei casi.
 
-Model Classes
+Le tabelle possono inoltre contenere esplicite chiavi esterne ed indici, come anche alcune definizioni specifiche per alcuni database. Controlla la sezione `Sintassi estesa dello schema` più avanti in questo capitolo per saperne di più.
+
+Le classi del modello
 -------------
-
-The schema is used to build the model classes of the ORM layer. To save execution time, these classes are generated with a command-line task called `propel:build-model`.
+Lo schema è usato per costruire le classi del modello nello strato ORM. Per risparmiare tempo di esecuzione, queste classi sono generate con un task a riga di comando chiamato `propel:build-model`.
 
     $ php symfony propel:build-model
 
 >**TIP**
->After building your model, you must remember to clear symfony's internal cache with `php symfony cc` so symfony can find your newly created models.
+>Dopo aver generato il modello, bisogna ricordarsi di cancellare la cache interna di symfony con `php symfony cc` in modo che symfony possa trovare i nuovi modelli creati.
 
-Typing this command will launch the analysis of the schema and the generation of base data model classes in the `lib/model/om/` directory of your project:
+La digitazione del comando lancerà l'analisi dello schema e la generazione delle classe base del modello dei dati nella cartella `lib/model/om/` del progetto:
 
   * `BaseArticle.php`
   * `BaseArticlePeer.php`
   * `BaseComment.php`
   * `BaseCommentPeer.php`
 
-In addition, the actual data model classes will be created in `lib/model/`:
+Inoltre nella cartella `lib/model/` verranno create le classi personalizzate del modello:
 
   * `Article.php`
   * `ArticlePeer.php`
   * `Comment.php`
   * `CommentPeer.php`
 
-You defined only two tables, and you end up with eight files. There is nothing wrong, but it deserves some explanation.
+Sono stati definiti solo due modelli e ci si ritrova con otto file. Non c'è nulla di sbagliato, ma questo risultato merita una ulteriore spiegazione.
 
-### Base and Custom Classes
+### Classi base e personalizzate
 
-Why keep two versions of the data object model in two different directories?
+Perché tenere due versioni dello stesso modello a oggetti dei dati, in due diverse cartelle?
 
-You will probably need to add custom methods and properties to the model objects (think about the `getName()` method in Listing 8-1). But as your project develops, you will also add tables or columns. Whenever you change the `schema.yml` file, you need to regenerate the object model classes by making a new call to propel:build-model. If your custom methods were written in the classes actually generated, they would be erased after each generation.
+Probabilmente si avrà bisogno di aggiungere metodi e proprietà agli oggetti del modello (pensiamo al metodo `getNome()` nel Listato 8-1). Mano a mano che il progetto si evolve, si vorranno aggiungere tabelle o colonne. Ogni volta che si cambia il file `schema.yml`, bisogna rigenerare le classi del modello a oggetti facendo una nuova chiamata di doctrine:build-model. Se i metodi personalizzati venissero scritti nelle classi generate, sarebbero cancellati dopo ogni rigenerazione.
 
-The `Base` classes kept in the `lib/model/om/` directory are the ones directly generated from the schema. You should never modify them, since every new build of the model will completely erase these files.
+Le classi `Base` presenti nella cartella `lib/model/om/` sono le uniche effettivamente generate dallo schema. Non bisogna mai modificarle, dal momento che nuove ricostruzioni del modello cancelleranno completamente questi file.
 
-On the other hand, the custom object classes, kept in the `lib/model/` directory, actually inherit from the `Base` ones. When the `propel:build-model` task is called on an existing model, these classes are not modified. So this is where you can add custom methods.
+D'altra parte, le classi di oggetti personalizzati presenti nella cartella `lib/model/`, di fatto ereditano da quelle Base`. Quando il task `propel:build-model` è chiamato su un modello esistente, queste classi non vengono modificate. Quindi questo è il posto dove aggiungere i metodi personalizzati.
 
-Listing 8-4 presents an example of a custom model class as created by the first call to the `propel:build-model` task.
+Il Listato 8-4 mostra un esempio di una classe personalizzata del modello, così come viene creata dopo la prima chiamata del task `propel:build-model`.
 
-Listing 8-4 - Sample Model Class File, in `lib/model/Article.php`
+Listing 8-4 - Esempio di file di una classe del modello, in `lib/model/Article.php`
 
     [php]
     class Article extends BaseArticle
     {
     }
 
-It inherits all the methods of the `BaseArticle` class, but a modification in the schema will not affect it.
+La classe `Article` eredita ogni cosa della classe `BaseArticle`, ma modifiche nello schema non hanno effetti su `Article`.
 
-The mechanism of custom classes extending base classes allows you to start coding, even without knowing the final relational model of your database. The related file structure makes the model both customizable and evolutionary.
+Il meccanismo delle classi personalizzate che estendono delle classi base consente di iniziare lo sviluppo, anche senza conoscere il modello relazionale finale del database. La relativa struttura dei file rende il modello sia personalizzabile che estendibile.
 
-### Object and Peer Classes
+### Oggetti e classi Peer
 
-`Article` and `Comment` are object classes that represent a record in the database. They give access to the columns of a record and to related records. This means that you will be able to know the title of an article by calling a method of an Article object, as in the example shown in Listing 8-5.
+`Article` e `Comment` sono classi oggetto che rappresentano una riga nel database. Danno accesso alle colonne di una riga e colonne collegate. Questo significa che sarai capace di conoscere il titolo di un articolo chiamando un metodo sull'oggetto `Article`, come nell'esempio mostrato nel Listato 8-5.
 
-Listing 8-5 - Getters for Record Columns Are Available in the Object Class
+Listato 8-5 - Getter per colonne dei record sono disponibili nelle classi oggetto
 
     [php]
     $article = new Article();
     // ...
     $title = $article->getTitle();
 
-`ArticlePeer` and `CommentPeer` are peer classes; that is, classes that contain static methods to operate on the tables. They provide a way to retrieve records from the tables. Their methods usually return an object or a collection of objects of the related object class, as shown in Listing 8-6.
+`ArticlePeer` e `CommentPeer` sono classi peer; ovvero, classi che contengono metodi statici che operano sulle tabelle. Possono fornire un modo per recuperare righe dalle tabelle. I loro metodi ritornano solitamente un oggetto o collezione di oggetti della collegata classe oggetto, come mostrato nel Listato 8-6.
 
-Listing 8-6 - Static Methods to Retrieve Records Are Available in the Peer Class
+Listato 8-6 - Metodi statici per recuperare record sono disponibili nelle classi peer
 
     [php]
-    // $articles is an array of objects of class Article
+    // $articles è un array di oggetti di classe Article
     $articles = ArticlePeer::retrieveByPks(array(123, 124, 125));
 
 >**NOTE**
->From a data model point of view, there cannot be any peer object. That's why the methods of the peer classes are called with a `::` (for static method call), instead of the usual `->` (for instance method call).
+>Da un punto di vista di modello di dati, non potrebbe esserci un oggetto peer. Per questo che i metodi delle classi peer sono chiamati con `::` (operatore per metodi statici), al posto del solito `->` (per le chiamate a metodi d'istanza).
 
-So combining object and peer classes in a base and a custom version results in four classes generated per table described in the schema. In fact, there is a fifth class created in the `lib/model/map/` directory, which contains metadata information about the table that is needed for the runtime environment. But as you will probably never change this class, you can forget about it.
+Per questo combinare classi oggetto e peer, base e personalizzate risulta in quattro classi generate per ogni tabella descritta nello schema. A dir la verità, c'è una quinta classe creata nella directory `lib/model/map/`, che contiene metadati riguardo le tabelle ed è necessaria per l'ambiente di esecuzione. Ma dato che probabilmente non avrai mai a che fare con questa classe, te ne puoi tranquillamente dimenticare.
 
-Accessing Data
---------------
+Accesso ai dati
+---------------
 
-In symfony, your data is accessed through objects. If you are used to the relational model and using SQL to retrieve and alter your data, the object model methods will likely look complicated. But once you've tasted the power of object orientation for data access, you will probably like it a lot.
+In symfony si accede ai dati attraverso oggetti. Se si è abituati al modello relazionale e a usare l'SQL per recuperare e modificare i dati, i metodi a oggetti del modello potranno sembrare complicati inizialmente. Ma una volta che si prova la potenza dell'accesso ai dati tramite interfaccia orientata agli oggetti, probabilmente ci si troverà a proprio agio.
 
-But first, let's make sure we share the same vocabulary. Relational and object data model use similar concepts, but they each have their own nomenclature:
+Ma prima, vediamo di essere sicuri di condividere lo stesso vocabolario. Il modello dei dati relazionale e a oggetti utilizza concetti simili, ma ciascuno ha una propria nomenclatura:
 
-Relational    | Object-Oriented
-------------- | ---------------
-Table         | Class
-Row, record   | Object
-Field, column | Property
+Relazionale   | Orientato agli oggetti
+------------- | ----------------------
+Tabella       | Classe
+Riga, record  | Oggetto
+Campo, colonna| Proprietà
 
-### Retrieving the Column Value
+### Recuperare il valore della colonna
 
-When symfony builds the model, it creates one base object class for each of the tables defined in the `schema.yml`. Each of these classes comes with default constructors, accessors, and mutators based on the column definitions: The `new`, `getXXX()`, and `setXXX()` methods help to create objects and give access to the object properties, as shown in Listing 8-7.
+Quando symfony costruisce il modello, crea una classe base di un oggetto per ciascuno dei modelli definiti nel file `schema.yml`. Ciascuna di queste classi è dotata di accessori e modificatori predefiniti generati in base alle definizioni della colonna: i metodi `new`, `getXXX()` e `setXXX()` aiutano a creare oggetti e forniscono accesso alle proprietà dell'oggetto, come mostrato nel Listato 8-7.
 
-Listing 8-7 - Generated Object Class Methods
+Listato 8-7 - Metodi generati nella classe dell'oggetto
 
     [php]
     $article = new Article();
-    $article->setTitle('My first article');
-    $article->setContent("This is my very first article.\n Hope you enjoy it!");
+    $article->setTitle('Il mio primo articolo');
+    $article->setContent("Questo è il mio primo articolo.\n Spero che possa piacere!");
 
     $title   = $article->getTitle();
     $content = $article->getContent();
 
 >**NOTE**
->The generated object class is called `Article`, which is the `phpName` given to the `blog_article` table. If the `phpName` were not defined in the schema, the class would have been called `BlogArticle`. The accessors and mutators use a camelCase variant of the column names, so the `getTitle()` method retrieves the value of the `title` column.
+>La classe oggetto generata si chiama `Article`, che è il `phpName` dato alla tabella `blog_article`. Se `phpName` non è stato definito nello schema, la classe sarebbe stata chiamata `BlogArticle`. Gli accessori e modificatori usano una variante camelCase del nome delle colonne, quindi il metodo `getTitle()` resituirà il valore della colonna `title`.
 
-To set several fields at one time, you can use the `fromArray()` method, also generated for each object class, as shown in Listing 8-8.
+Impostare diversi valori in un unica volta, puoi usare il metodo `fromArray()`, generato per ogni classe oggetto, come mostrato nel Listato 8-8.
 
-Listing 8-8 - The `fromArray()` Method Is a Multiple Setter
+Listato 8-8 - Il metodo `fromArray()` è un setter multiplo
 
     [php]
     $article->fromArray(array(
-      'Title'   => 'My first article',
-      'Content' => 'This is my very first article.\n Hope you enjoy it!',
+      'Title'   => 'Il mio primo articolo',
+      'Content' => 'Questo è il mio primo articolo.\n Spero che possa piacere!',
     ));
 
 >**NOTE**
->The `fromArray()` method has a second argument `keyType`. You can specify the key type of the array by additionally passing one of the class type constants `BasePeer::TYPE_PHPNAME`, `BasePeer::TYPE_STUDLYPHPNAME`, `BasePeer::TYPE_COLNAME`, `BasePeer::TYPE_FIELDNAME`, `BasePeer::TYPE_NUM`. The default key type is the column's PhpName (e.g. 'AuthorId').
+>Il metodo `fromArray()` ha un secondo argomento, `keyType`. Puoi specificare il tipo di chiave dell'array passando uno tra `BasePeer::TYPE_PHPNAME`, `BasePeer::TYPE_STUDLYPHPNAME`, `BasePeer::TYPE_COLNAME`, `BasePeer::TYPE_FIELDNAME` e `BasePeer::TYPE_NUM`. Il valore di default è PhpName (i.e. `AuthorId`).
 
-### Retrieving Related Records
+### Recuperare i record correlati
 
-The `blog_article_id` column in the `blog_comment` table implicitly defines a foreign key to the `blog_article` table. Each comment is related to one article, and one article can have many comments. The generated classes contain five methods translating this relationship in an object-oriented way, as follows:
+La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamente una chiave esterna verso la tabella `blog_article`. Ogni commento è collegato ad un articolo, ed un articolo può avere più commenti. Le classi generate possono contenere cinque metodi che traducono queste relazioni in codice ad oggetti, come segue:
 
-  * `$comment->getArticle()`: To get the related `Article` object
-  * `$comment->getArticleId()`: To get the ID of the related `Article` object
-  * `$comment->setArticle($article)`: To define the related `Article` object
-  * `$comment->setArticleId($id)`: To define the related `Article` object from an ID
-  * `$article->getComments()`: To get the related `Comment` objects
+  * `$comment->getArticle()`: Per ottenere il relativo oggetto `Article`
+  * `$comment->getArticleId()`: Per ottenere l'ID del relativo oggetto `Article`
+  * `$comment->setArticle($article)`: Per impostare il relativo oggetto `Article`
+  * `$comment->setArticleId($id)`: Per impostare il relativo oggetto `Article` tramite il suo ID
+  * `$article->getComments()`: Per ottenere un array con i relativi oggetti `Comment`
 
-The `getArticleId()` and `setArticleId()` methods show that you can consider the `blog_article_id` column as a regular column and set the relationships by hand, but they are not very interesting. The benefit of the object-oriented approach is much more apparent in the three other methods. Listing 8-9 shows how to use the generated setters.
+I metodi `getArticleId()` e `setArticleId()` mostrano che puoi considerare la colonna `blog_article_id` come una colonna normale ed impostare le relazioni a mano, ma non sono molto interessanti. Il beneficio dell'approccio orientato agli oggetti è molto più evidente negli altri tre metodi. Il Listato 8-9 mostra come usare il setter generati.
 
-Listing 8-9 - Foreign Keys Are Translated into a Special Setter
+Listato 8-9 - Le chiavi esterne sono tradotte in speciali setter
 
     [php]
     $comment = new Comment();
     $comment->setAuthor('Steve');
-    $comment->setContent('Gee, dude, you rock: best article ever!');
+    $comment->setContent('Accidenti, amico, sei forte: miglior articolo di sempre!');
 
-    // Attach this comment to the previous $article object
+    // Collega questo commento al precedente oggetto $article
     $comment->setArticle($article);
 
-    // Alternative syntax
-    // Only makes sense if the object is already saved in the database
+    // Sintassi alternativa
+    // Ha senso soltanto se l'oggetto è già salvato nel database
     $comment->setArticleId($article->getId());
 
-Listing 8-10 shows how to use the generated getters. It also demonstrates how to chain method calls on model objects.
+Il Listato 8-10 mostra come usare i getter generati. Può inoltre dimostrare come concatenare chiamate ai metodi di oggetti del modello.
 
-Listing 8-10 - Foreign Keys Are Translated into Special Getters
+Listato 8-10 - Chiavi esterne sono trasformate in speciali getter
 
     [php]
-    // Many to one relationship
+    // Relazione molti-a-uno
     echo $comment->getArticle()->getTitle();
-     => My first article
+     => Il mio primo articolo
     echo $comment->getArticle()->getContent();
-     => This is my very first article.
-        Hope you enjoy it!
+     => Questo è il mio primo articolo.
+        Spero che possa piacere!
 
-    // One to many relationship
+    // Relazione uno-a-molti
     $comments = $article->getComments();
 
-The `getArticle()` method returns an object of class `Article`, which benefits from the `getTitle()` accessor. This is much better than doing the join yourself, which may take a few lines of code (starting from the `$comment->getArticleId()` call).
+Il metodo `getArticle()` ritorna un oggetto di classe `Article`, con i benefici del metodo accessore `getTitle()`. Questo è molto migliore di dover eseguire la join tu stesso, che potrebbe richiedere alcune linee di codice (a partire dalla riga `$comment->getArticleId()`).
 
-The `$comments` variable in Listing 8-10 contains an array of objects of class `Comment`. You can display the first one with `$comments[0]` or iterate through the collection with `foreach ($comments as $comment)`.
+La variabile `$comments` nel listato 8-10 contiene un array di oggetti di classe `Comment`. Puoi mostrare il primo con `$comments[0]` o iterare sulla collezione con `foreach ($comments as $comment)`.
 
 >**NOTE**
->Objects from the model are defined with a singular name by convention, and you can now understand why. The foreign key defined in the `blog_comment` table causes the creation of a `getComments()` method, named by adding an `s` to the `Comment` object name. If you gave the model object a plural name, the generation would lead to a method named `getCommentss()`, which doesn't make sense.
+>Oggetti del modello sono definiti con un nome singolare per convenzione, ed ora puoi capire perché. La chiave esterna definita nella tabelle `blog_comment` causa la creazione del metood `getComments()`, chiamato aggiungendo una `s` al nome dell'oggetto `Comment`. Se tu dessi un nome plurale al modello, la generazione porterebbe ad un metodo chiamato `getCommentss()`, che non avrebbe senso.
 
-### Saving and Deleting Data
+### Salvare ed eliminare dati
 
-By calling the `new` constructor, you created a new object, but not an actual record in the `blog_article` table. Modifying the object has no effect on the database either. In order to save the data into the database, you need to call the `save()` method of the object.
+Chiamando il costruttore con `new`, hai creato un nuovo oggetto, ma non un record nella tabella `blog_article`. Nemmeno modificare l'oggetto ha effetto sul database. Per salvare dati nel database, devi chiamare il metodo `save()` sull'oggetto.
 
     [php]
     $article->save();
