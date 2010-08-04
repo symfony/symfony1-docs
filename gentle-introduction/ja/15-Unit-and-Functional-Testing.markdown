@@ -12,7 +12,7 @@ Web ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ðŠJ”­‚µ‚½ŒoŒ±‚ðŽ‚ÂŠJ”­ŽÒ‚ÍƒeƒXƒg‚ðŽÀŽ{‚·‚é‚½‚ß‚ÉŽžŠÔ‚ª‚©‚©
 
 Ž©“®ƒeƒXƒg‚ÍŽž‚ÉŠJ”­ŽÒ‚ÌƒhƒLƒ…ƒƒ“ƒg‚É‚Æ‚Á‚Ä‘ã‚í‚è‚Ü‚·BƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªs‚¤‚±‚Æ‚Ìà–¾‚É‚È‚Á‚Ä‚¢‚é‚©‚ç‚Å‚·B‚æ‚¢ƒeƒXƒgƒXƒC[ƒg‚ÍƒeƒXƒg“ü—Í‚ÌƒZƒbƒg‚Ì‚½‚ß‚É‚Ç‚ñ‚Èo—Í‚ªŠú‘Ò‚³‚ê‚Ä‚¢‚é‚Ì‚©‚ðŽ¦‚µAƒƒ\ƒbƒh‚Ì–Ú“I‚ðà–¾‚·‚é‚æ‚¢•û–@‚Å‚·B
 
-symfony ƒtƒŒ[ƒ€ƒ[ƒN‚Í‚±‚ÌŒ´‘¥‚ðŽ©•ªŽ©g‚É“K—p‚µ‚Ü‚·Bsymfony ‚Ì“à•”‚ÍŽ©“®ƒeƒXƒg‚É‚æ‚Á‚ÄŒŸØ‚³‚ê‚Ü‚·B‚±‚ê‚ç‚Ìƒ†ƒjƒbƒgƒeƒXƒg (unit test) ‚Æ‹@”\ƒeƒXƒg (functional test) ‚Í PEAR ƒpƒbƒP[ƒW‚É‚Í“‹Ú‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ‚ªASVN ƒŠƒ|ƒWƒgƒŠ‚©‚çƒ`ƒFƒbƒNƒAƒEƒg‚·‚é‚©AƒIƒ“ƒ‰ƒCƒ“‚Ì [http://trac.symfony-project.org/browser/branches/1.2/test](http://trac.symfony-project.org/browser/branches/1.2/test) ‚Å’­‚ß‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+symfony ƒtƒŒ[ƒ€ƒ[ƒN‚Í‚±‚ÌŒ´‘¥‚ðŽ©•ªŽ©g‚É“K—p‚µ‚Ü‚·Bsymfony ‚Ì“à•”‚ÍŽ©“®ƒeƒXƒg‚É‚æ‚Á‚ÄŒŸØ‚³‚ê‚Ü‚·B‚±‚ê‚ç‚Ìƒ†ƒjƒbƒgƒeƒXƒg (unit test) ‚Æ‹@”\ƒeƒXƒg (functional test) ‚Í PEAR ƒpƒbƒP[ƒW‚É‚Í“‹Ú‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ‚ªASVN ƒŠƒ|ƒWƒgƒŠ‚©‚çƒ`ƒFƒbƒNƒAƒEƒg‚·‚é‚©A[ƒIƒ“ƒ‰ƒCƒ“](http://trac.symfony-project.org/browser/branches/1.4/test)‚Å’­‚ß‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
 ### ƒ†ƒjƒbƒgƒeƒXƒg‚Æ‹@”\ƒeƒXƒg
 
@@ -52,7 +52,7 @@ symfony ƒtƒŒ[ƒ€ƒ[ƒN‚Í‚±‚ÌŒ´‘¥‚ðŽ©•ªŽ©g‚É“K—p‚µ‚Ü‚·Bsymfony ‚Ì“à•”‚ÍŽ©“®ƒeƒX
 
 ### lime ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN
 
-PHP ‚Ì¢ŠE‚É‚¨‚¢‚Äƒ†ƒjƒbƒgƒeƒXƒg‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚Í‘½‚­‘¶Ý‚µAPhpUnit ‚Æ SimpleTest ‚ª‚à‚Á‚Æ‚à‚æ‚­’m‚ç‚ê‚Ä‚¢‚Ü‚·Bsymfony ‚Í lime ‚ÆŒÄ‚Î‚ê‚é“ÆŽ©‚ÌƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚ðŽ‚¿‚Ü‚·BPerl ƒ‰ƒCƒuƒ‰ƒŠ‚Ì `Test::More` ‚ÉŠî‚Ã‚«ATAP (Test Anything Protoco) ‚É€‹’‚µ‚Ä‚¢‚Ü‚·A‚±‚Ì‚±‚Æ‚ÍAƒeƒXƒg‚Ìo—Í‚ð‚æ‚è“Ç‚Ý‚â‚·‚­‚·‚é‚½‚ß‚ÉÝŒv‚³‚ê‚½ TAP ‚Å’è‚ß‚ç‚ê‚Ä‚¢‚é‚æ‚¤‚ÉAƒeƒXƒg‚ÌŒ‹‰Ê‚ª•\Ž¦‚³‚ê‚é‚±‚Æ‚ðˆÓ–¡‚µ‚Ü‚·B
+PHP ‚Ì¢ŠE‚É‚¨‚¢‚Äƒ†ƒjƒbƒgƒeƒXƒg‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚Í‘½‚­‘¶Ý‚µAPhpUnit ‚ª‚à‚Á‚Æ‚à‚æ‚­’m‚ç‚ê‚Ä‚¢‚Ü‚·Bsymfony ‚Í lime ‚ÆŒÄ‚Î‚ê‚é“ÆŽ©‚ÌƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚ðŽ‚¿‚Ü‚·BPerl ƒ‰ƒCƒuƒ‰ƒŠ‚Ì `Test::More` ‚ÉŠî‚Ã‚«ATAP (Test Anything Protoco) ‚É€‹’‚µ‚Ä‚¢‚Ü‚·A‚±‚Ì‚±‚Æ‚ÍAƒeƒXƒg‚Ìo—Í‚ð‚æ‚è“Ç‚Ý‚â‚·‚­‚·‚é‚½‚ß‚ÉÝŒv‚³‚ê‚½ TAP ‚Å’è‚ß‚ç‚ê‚Ä‚¢‚é‚æ‚¤‚ÉAƒeƒXƒg‚ÌŒ‹‰Ê‚ª•\Ž¦‚³‚ê‚é‚±‚Æ‚ðˆÓ–¡‚µ‚Ü‚·B
 
 lime ‚Íƒ†ƒjƒbƒgƒeƒXƒg‚ðƒTƒ|[ƒg‚µ‚Ü‚·BPHP ‚ÌƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚æ‚è‚àŒy—Ê‚Å‚¢‚­‚Â‚©‚Ì—˜“_‚ª‚ ‚è‚Ü‚·:
 
@@ -60,7 +60,7 @@ lime ‚Íƒ†ƒjƒbƒgƒeƒXƒg‚ðƒTƒ|[ƒg‚µ‚Ü‚·BPHP ‚ÌƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚æ‚è‚àŒy—Ê‚Å‚¢‚
   * lime ƒeƒXƒg‚¨‚æ‚Ñ‚»‚ÌƒeƒXƒg‚Ìo—Í‚Í‚Æ‚Ä‚à“Ç‚Ý‚â‚·‚¢‚Å‚·BŒÝŠ·«‚Ì‚ ‚éƒVƒXƒeƒ€‚ÅAd—v‚Èî•ñ‚ðŒ©•ª‚¯‚ç‚ê‚é‚æ‚¤‚ÉAlime ‚ÍƒXƒ}[ƒg‚È•û–@‚ÅƒJƒ‰[o—Í‚ðŽg‚¢‚Ü‚·B
   * ‰ñ‹AƒeƒXƒg‚Ì‚½‚ß‚É symfony Ž©g‚ª `lime` ƒeƒXƒg‚ðŽg‚¤‚Ì‚ÅAƒ†ƒjƒbƒgƒeƒXƒg‚Æ‰ñ‹AƒeƒXƒg‚Ì‘½‚­‚Ì—á‚ª symfony ‚Ìƒ\[ƒXƒR[ƒh‚ÅŒ©‚Â‚©‚è‚Ü‚·B
   * lime ƒRƒA‚Íƒ†ƒjƒbƒgƒeƒXƒg‚É‚æ‚Á‚ÄŒŸØ‚³‚ê‚Ü‚·B
-  * lime ‚Í PHP ‚Å‘‚©‚ê‚Ä‚¨‚èA‘¬‚­“®ì‚µãŽè‚É‘‚©‚ê‚Ä‚¢‚Ü‚·Blime ‚ÍˆË‘¶‚È‚µ‚Å’P“Æ‚Ì `lime.php` ƒtƒ@ƒCƒ‹‚ÉŠÜ‚Ü‚ê‚Ü‚·B
+  * lime ‚Í PHP ‚Å‘‚©‚ê‚Ä‚¨‚èA‘¬‚­“®ì‚µãŽè‚É‘‚©‚ê‚Ä‚¢‚Ü‚·B‘¼‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÉˆË‘¶‚µ‚Ü‚¹‚ñB
 
 ‚Â‚¬‚ÌƒZƒNƒVƒ‡ƒ“‚Åà–¾‚³‚ê‚é‚³‚Ü‚´‚Ü‚ÈƒeƒXƒg‚Í lime ‚Ì\•¶‚ðŽg‚¢‚Ü‚·Bsymfony ‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚½‚Ì‚Å‚ ‚ê‚Î‚±‚ê‚ç‚ÌƒeƒXƒg‚Í‚»‚Ì‚Ü‚Ü“®‚«‚Ü‚·B
 
@@ -81,10 +81,9 @@ symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Í `Test.php` ‚ÅI‚í‚éƒVƒ“ƒvƒ‹‚È PHP ƒtƒ@ƒCƒ‹‚ÅAƒAƒvƒŠƒ
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../bootstrap/unit.php');
-    require_once(dirname(__FILE__).'/../../lib/strtolower.php');
+    include dirname(__FILE__).'/../bootstrap/unit.php';
 
-    $t = new lime_test(7, new lime_output_color());
+    $t = new lime_test(7);
 
     // strtolower()
     $t->diag('strtolower()');
@@ -107,8 +106,8 @@ symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Í `Test.php` ‚ÅI‚í‚éƒVƒ“ƒvƒ‹‚È PHP ƒtƒ@ƒCƒ‹‚ÅAƒAƒvƒŠƒ
 
 ƒŠƒXƒg15-2 - 1‚Â‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚ðƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚ç‹N“®‚³‚¹‚é
 
-    > php symfony test:unit strtolower
-
+    $ php symfony test:unit strtolower
+    
     1..7
     # strtolower()
     ok 1 - strtolower() ‚Í•¶Žš—ñ‚ð•Ô‚·
@@ -162,7 +161,7 @@ symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Í `Test.php` ‚ÅI‚í‚éƒVƒ“ƒvƒ‹‚È PHP ƒtƒ@ƒCƒ‹‚ÅAƒAƒvƒŠƒ
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../bootstrap/unit.php');
+    include dirname(__FILE__).'/../bootstrap/unit.php';
 
     // ƒeƒXƒg‚ð–Ú“I‚Æ‚µ‚½ƒXƒ^ƒuƒIƒuƒWƒFƒNƒg‚ÆŠÖ”
     class myObject
@@ -178,7 +177,7 @@ symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Í `Test.php` ‚ÅI‚í‚éƒVƒ“ƒvƒ‹‚È PHP ƒtƒ@ƒCƒ‹‚ÅAƒAƒvƒŠƒ
     }
 
     // ƒeƒXƒgƒIƒuƒWƒFƒNƒg‚ð‰Šú‰»‚·‚é
-    $t = new lime_test(16, new lime_output_color());
+    $t = new lime_test(16);
 
     $t->diag('hello world');
     $t->ok(1 == '1', '“™†‰‰ŽZŽq‚ÍŒ^‚ð–³Ž‹‚·‚é');
@@ -228,7 +227,7 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
 
 ƒŠƒXƒg15-4 - ƒeƒXƒg‚ÌŽÀs‰ñ”‚ÌƒJƒEƒ“ƒg‚ÍƒeƒXƒg‚ÌŒv‰æ‚Ì•‚¯‚É‚È‚é
 
-    > php symfony test:unit example
+    $ php symfony test:unit example
 
     1..16
     # hello world
@@ -256,8 +255,6 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
 
 ‚æ‚­Œv‰æ‚³‚ê‚½ƒeƒXƒgí—ª‚Í—\‘z‚³‚ê‚éƒeƒXƒg‚Ì”‚ðŠÜ‚Ü‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB‚Æ‚è‚í‚¯ƒeƒXƒg‚ª“à•”‚ÌðŒ‚à‚µ‚­‚Í—áŠO‚ÌðŒ‚Å“®ì‚·‚é•¡ŽG‚ÈƒP[ƒX‚É‚¨‚¢‚ÄAƒeƒXƒg‚Ì”‚ª“ÆŽ©‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ðŒŸØ‚·‚é‚½‚ß‚É‚Æ‚Ä‚à•Ö—˜‚Å‚ ‚é‚±‚Æ‚ª‚í‚©‚é‚Å‚µ‚å‚¤B‚»‚µ‚ÄAƒeƒXƒg‚ª‚ ‚éŽž“_‚ÅŽ¸”s‚·‚é‚Æ‚·‚®‚ÉƒeƒXƒg‚Ì”‚ª‚í‚©‚è‚Ü‚·BŽÀsƒeƒXƒg‚ÌÅŒã‚Ì”‚ª‰Šú‰»‚ÌŠÔ‚É“n‚³‚ê‚½”Žš‚Æˆê’v‚µ‚È‚¢‚©‚ç‚Å‚·B
 
-ƒRƒ“ƒXƒgƒ‰ƒNƒ^[‚Ì2”Ô–Ú‚Ìƒpƒ‰ƒ[ƒ^[‚Í `lime_output` ƒNƒ‰ƒX‚ðŠg’£‚·‚éo—ÍƒIƒuƒWƒFƒNƒg‚Å‚·B‚½‚¢‚Ä‚¢‚Ìê‡AƒeƒXƒg‚Í CLI ‚ð’Ê‚µ‚ÄŽÀs‚³‚ê‚é‚±‚Æ‚ª‘O’ñ‚È‚Ì‚ÅAo—Í‚Í `lime_output_color` ƒIƒuƒWƒFƒNƒg‚ÅA—˜—p‰Â”\‚Å‚ ‚ê‚Î bash ‚ÌF•t‚¯‚ðŠˆ—p‚µ‚Ü‚·B
-
 ### test:unit ƒ^ƒXƒN
 
 `test:unit` ƒ^ƒXƒN‚ÍAƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚çƒ†ƒjƒbƒgƒeƒXƒg‚ð‹N“®‚³‚¹AƒeƒXƒg‚Ì–¼‘O‚ÌƒŠƒXƒg‚à‚µ‚­‚Íƒtƒ@ƒCƒ‹‚Ìƒpƒ^[ƒ“‚ð•K—v‚Æ‚µ‚Ü‚·BƒŠƒXƒg15-5‚ÅÚ×‚ð‚²——‚­‚¾‚³‚¢B
@@ -272,10 +269,10 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
         foo/
           barTest.php
 
-    > php symfony test:unit myFunction                   ## myFunctionTest.php ‚ðŽÀs‚·‚é
-    > php symfony test:unit myFunction mySecondFunction  ## —¼•û‚ÌƒeƒXƒg‚ðŽÀs‚·‚é
-    > php symfony test:unit 'foo/*'                      ## barTest.php ‚ðŽÀs‚·‚é
-    > php symfony test:unit '*'                          ## ‚·‚×‚Ä‚ÌƒeƒXƒg‚ðŽÀs‚·‚é (Ä‹A“I)
+    $ php symfony test:unit myFunction                   ## myFunctionTest.php ‚ðŽÀs‚·‚é
+    $ php symfony test:unit myFunction mySecondFunction  ## —¼•û‚ÌƒeƒXƒg‚ðŽÀs‚·‚é
+    $ php symfony test:unit foo/*                        ## barTest.php ‚ðŽÀs‚·‚é
+    $ php symfony test:unit *                            ## ‚·‚×‚Ä‚ÌƒeƒXƒg‚ðŽÀs‚·‚é (Ä‹A“I)
 
 ### ƒXƒ^ƒuAƒtƒBƒNƒXƒ`ƒƒAƒI[ƒgƒ[ƒh
 
@@ -286,10 +283,10 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../bootstrap/unit.php');
-    require_once($sf_symfony_lib_dir.'/util/sfToolkit.class.php');
+    include dirname(__FILE__).'/../bootstrap/unit.php';
+    require_once sfConfig::get('sf_symfony_lib_dir').'/util/sfToolkit.class.php';
 
-    $t = new lime_test(7, new lime_output_color());
+    $t = new lime_test(7);
 
     // isPathAbsolute()
     $t->diag('isPathAbsolute()');
@@ -313,7 +310,7 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
 ƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚½‚ß‚É‘½‚­‚ÌƒXƒNƒŠƒvƒg‚ðƒCƒ“ƒNƒ‹[ƒh‚ðŠJŽn‚·‚éê‡‚Í‚Â‚Ë‚ÉƒVƒ“ƒvƒ‹‚ÈƒI[ƒgƒ[ƒhƒVƒXƒeƒ€‚ª•K—v‚É‚È‚è‚Ü‚·B‚±‚Ì–Ú“I‚Ì‚½‚ß‚ÉA`sfSimpleAutoload` ƒNƒ‰ƒX (Žè“®‚ÅƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñ) ‚Í `addDirectory()` ƒƒ\ƒbƒh‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚Ìƒƒ\ƒbƒh‚Íƒpƒ‰ƒ[ƒ^[‚Æ‚µ‚Äâ‘ÎƒpƒX‚ð•K—v‚Æ‚µŒŸõƒpƒXã‚Ì•¡”‚ÌƒfƒBƒŒƒNƒgƒŠ‚ðƒCƒ“ƒNƒ‹[ƒh‚·‚é•K—v‚ª‚ ‚éê‡‚É‰½“x‚àŒÄ‚Ño‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·B‚±‚ÌƒpƒX‚ÌŒ³‚ÉÝ’u‚³‚ê‚½‚·‚×‚Ä‚ÌƒNƒ‰ƒX‚ªƒI[ƒgƒ[ƒh‚³‚ê‚Ü‚·B‚½‚Æ‚¦‚ÎA`$sf_symfony_lib_dir/util/` ‚ÌŒ³‚ÉÝ’u‚³‚ê‚½‚·‚×‚Ä‚ÌƒNƒ‰ƒX‚ðƒI[ƒgƒ[ƒh‚µ‚½‚¢ê‡A‚Â‚¬‚Ì‚æ‚¤‚ÈƒR[ƒh‚Åƒ†ƒjƒbƒgƒeƒXƒg‚ÌƒXƒNƒŠƒvƒg‚ðŽn‚ß‚Ä‚­‚¾‚³‚¢B
 
     [php]
-    require_once($sf_symfony_lib_dir.'/autoload/sfSimpleAutoload.class.php');
+    require_once sfConfig::get('sf_symfony_lib_dir').'/autoload/sfSimpleAutoload.class.php';
     $autoload = sfSimpleAutoload();
     $autoload->addDirectory($sf_symfony_lib_dir.'/util');
     $autoload->register();
@@ -323,9 +320,9 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
 ƒŠƒXƒg15-7 - ƒ†ƒjƒbƒgƒeƒXƒg‚ÅƒXƒ^ƒu‚ðŽg‚¤
 
     [php]
-    require_once(dirname(__FILE__).'/../../lib/WebService.class.php');
-    require_once(dirname(__FILE__).'/../../lib/MapAPI.class.php');
-
+    require_once dirname(__FILE__).'/../../lib/WebService.class.php';
+    require_once dirname(__FILE__).'/../../lib/MapAPI.class.php'
+    
     class testWebService extends WebService
     {
       public static function fetch()
@@ -379,9 +376,9 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
     <?php
 
     include(dirname(__FILE__).'/../bootstrap/unit.php');
-    require_once($sf_symfony_lib_dir.'/util/sfToolkit.class.php');
-    require_once($sf_symfony_lib_dir.'/yaml/sfYaml.class.php');
-
+    require_once sfConfig::get('sf_symfony_lib_dir').'/util/sfToolkit.class.php';
+    require_once sfConfig::get('sf_symfony_lib_dir').'/yaml/sfYaml.class.php';
+    
     $testCases = sfYaml::load(dirname(__FILE__).'/fixtures.yml');
 
     $t = new lime_test(count($testCases), new lime_output_color());
@@ -393,9 +390,9 @@ symfony‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚É‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ª‘½‚­Œ©‚Â‚©‚è‚Ü‚·
       $t->is(sfToolkit::isPathAbsolute($case['input']), $case['output'],$case['comment']);
     }
 
-### Propel ‚ÌƒNƒ‰ƒX‚ðƒ†ƒjƒbƒgƒeƒXƒg‚·‚é
+### ORM ‚ÌƒNƒ‰ƒX‚ðƒ†ƒjƒbƒgƒeƒXƒg‚·‚é
 
-Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰ƒX‚ðƒeƒXƒg‚·‚é‚Ì‚Í­‚µ•¡ŽG‚Å‚·B‚³‚ç‚ÉAPropel ‚É—LŒø‚Èƒf[ƒ^ƒx[ƒXÚ‘±‚ð’ñ‹Ÿ‚µ‚Äƒf[ƒ^ƒx[ƒX‚É‚¢‚­‚Â‚©‚ÌƒeƒXƒgƒf[ƒ^‚ð‘—‚èž‚Þ•K—v‚à‚ ‚è‚Ü‚·B
+Propel ‚Ü‚½‚Í Doctrine ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAƒNƒ‰ƒX‚ðƒeƒXƒg‚·‚é‚Ì‚Í­‚µ•¡ŽG‚Å‚·B‚³‚ç‚ÉAPropel ‚É—LŒø‚Èƒf[ƒ^ƒx[ƒXÚ‘±‚ð’ñ‹Ÿ‚µ‚Äƒf[ƒ^ƒx[ƒX‚É‚¢‚­‚Â‚©‚ÌƒeƒXƒgƒf[ƒ^‚ð‘—‚èž‚Þ•K—v‚à‚ ‚è‚Ü‚·B
 
 ‚ ‚è‚ª‚½‚¢‚±‚Æ‚ÉAsymfony ‚Í•K—v‚È‚·‚×‚Ä‚Ì‹@”\‚ð’ñ‹Ÿ‚µ‚Ä‚¢‚é‚Ì‚Å‚±‚ê‚Í‚Æ‚Ä‚àŠÈ’P‚Å‚·:
 
@@ -410,9 +407,9 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../bootstrap/unit.php');
+    include dirname(__FILE__).'/../bootstrap/unit.php';
 
-    new sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('frontend', 'test', true));
+    new sfDatabaseManager($configuration);
     $loader = new sfPropelData();
     $loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
 
@@ -423,6 +420,25 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     $user = UserPeer::retrieveByUsername('fabien');
     $t->is($user->getLastName(), 'Potencier', '->retrieveByUsername() ‚Í”CˆÓ‚Ìƒ†[ƒU[–¼‚Ì‚½‚ß‚Ì User ‚ð•Ô‚·');
 
+“TŒ^“I‚È Doctrine ‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ðAƒŠƒXƒg 15-10 ‚Ì‚æ‚¤‚É‚È‚è‚Ü‚·B
+    
+ƒŠƒXƒg 15-10 - Doctrine ‚ÌƒNƒ‰ƒX‚ðƒeƒXƒg‚·‚é
+
+    [php]
+    <?php
+
+    include dirname(__FILE__).'/../bootstrap/unit.php';
+
+    new sfDatabaseManager($configuration);
+    Doctrine_Core::loadData(sfConfig::get('sf_data_dir').'/fixtures');
+
+    $t = new lime_test(1, new lime_output_color());
+
+    // ƒ‚ƒfƒ‹ƒNƒ‰ƒX‚ÌƒeƒXƒg‚ÌŠJŽn
+    $t->diag('->retrieveByUsername()');
+    $user = Doctrine::getTable('User')->findOneByUsername('fabien');
+    $t->is($user->getLastName(), 'Potencier', '->findOneByUsername() returns the User for the given username');
+
 ‹@”\ƒeƒXƒg
 ----------
 
@@ -430,40 +446,45 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
 
 ### ‹@”\ƒeƒXƒg‚Í‚Ç‚Ì‚æ‚¤‚ÉŒ©‚¦‚Ü‚·‚©H
 
-ƒeƒLƒXƒgƒuƒ‰ƒEƒU[‚Æ‘½‚­‚Ì³‹K•\Œ»‚Å‹@”\ƒeƒXƒg‚ðŽÀs‚Å‚«‚Ü‚·‚ªAŽžŠÔ‚Ì‘å‚«‚È–³‘ÊŒ­‚¢‚Å‚·Bsymfony ‚Í `sfBrowser` ‚Æ‚¢‚¤–¼‘O‚Ì“Á•Ê‚ÈƒIƒuƒWƒFƒNƒg‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÍŽÀÛ‚É•K—v‚ÈƒT[ƒo[‚ð‚Æ‚à‚È‚í‚¸‚É symfony ‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉÚ‘±‚µ‚½ƒuƒ‰ƒEƒU[‚Ì‚æ‚¤‚É‚Ó‚é‚Ü‚¢‚Ü‚·B‚»‚µ‚Ä HTTP ‚Ì“]‘—‚ÌŒ¸‘¬‚Í‹N‚«‚Ü‚¹‚ñB‚±‚ÌƒIƒuƒWƒFƒNƒg‚Í‚»‚ê‚¼‚ê‚ÌƒŠƒNƒGƒXƒg (ƒŠƒNƒGƒXƒgAƒZƒbƒVƒ‡ƒ“AƒRƒ“ƒeƒLƒXƒgAƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg) ‚ÌƒRƒAƒIƒuƒWƒFƒNƒg‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·Bsymfony ‚Í `TestBrowser` ‚ÆŒÄ‚Î‚ê‚é‚±‚ÌƒNƒ‰ƒX‚ÌŠg’£‹@”\‚à’ñ‹Ÿ‚µ‚Ü‚·B`sfTestBrowser` ‚Í‹@”\ƒeƒXƒg‚Ì‚½‚ß‚ÉÝŒv‚³‚êA`sfBrowser` ƒIƒuƒWƒFƒNƒg‚Ì‚·‚×‚Ä‚Ì‹@”\‚É‰Á‚¦‚ÄƒXƒ}[ƒg‚ÈƒAƒT[ƒgƒƒ\ƒbƒh‚ðŽ‚¿‚Ü‚·B
+ƒeƒLƒXƒgƒuƒ‰ƒEƒU[‚Æ‘½‚­‚Ì³‹K•\Œ»‚Å‹@”\ƒeƒXƒg‚ðŽÀs‚Å‚«‚Ü‚·‚ªAŽžŠÔ‚Ì‘å‚«‚È–³‘ÊŒ­‚¢‚Å‚·Bsymfony ‚Í `sfBrowser` ‚Æ‚¢‚¤–¼‘O‚Ì“Á•Ê‚ÈƒIƒuƒWƒFƒNƒg‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÍŽÀÛ‚É•K—v‚ÈƒT[ƒo[‚ð‚Æ‚à‚È‚í‚¸‚É symfony ‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉÚ‘±‚µ‚½ƒuƒ‰ƒEƒU[‚Ì‚æ‚¤‚É‚Ó‚é‚Ü‚¢‚Ü‚·B‚»‚µ‚Ä HTTP ‚Ì“]‘—‚ÌŒ¸‘¬‚Í‹N‚«‚Ü‚¹‚ñB‚±‚ÌƒIƒuƒWƒFƒNƒg‚Í‚»‚ê‚¼‚ê‚ÌƒŠƒNƒGƒXƒg (ƒŠƒNƒGƒXƒgAƒZƒbƒVƒ‡ƒ“AƒRƒ“ƒeƒLƒXƒgAƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg) ‚ÌƒRƒAƒIƒuƒWƒFƒNƒg‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·Bsymfony ‚Í `TestBrowser` ‚ÆŒÄ‚Î‚ê‚é‚±‚ÌƒNƒ‰ƒX‚ÌŠg’£‹@”\‚à’ñ‹Ÿ‚µ‚Ü‚·B`sfTestFunctional` ‚Í‹@”\ƒeƒXƒg‚Ì‚½‚ß‚ÉÝŒv‚³‚êA`sfBrowser` ƒIƒuƒWƒFƒNƒg‚Ì‹@”\‚É‰Á‚¦‚ÄƒXƒ}[ƒg‚ÈƒAƒT[ƒgƒƒ\ƒbƒh‚ðŽ‚¿‚Ü‚·B
 
 “`““I‚É‹@”\ƒeƒXƒg‚ÍƒeƒXƒgƒuƒ‰ƒEƒU[‚ÌƒIƒuƒWƒFƒNƒg‚ð‰Šú‰»‚·‚é‚±‚Æ‚©‚çŽn‚Ü‚è‚Ü‚·B‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÍƒŠƒAƒNƒVƒ‡ƒ“‚Ö‚ÌƒŒƒXƒ|ƒ“ƒX‚ðì¬‚µAƒŒƒXƒ|ƒ“ƒX“à‚É‘¶Ý‚·‚é‚¢‚­‚Â‚©‚Ì—v‘f‚ð•ÏX‚µ‚Ü‚·B
 
-‚½‚Æ‚¦‚ÎA`generate:module` ƒ^ƒXƒN‚à‚µ‚­‚Í `propel:generate-module`ƒ^ƒXƒN‚Åƒ‚ƒWƒ…[ƒ‹ƒXƒPƒ‹ƒgƒ“‚ð¶¬‚·‚é‚½‚Ñ‚ÉAsymfony ‚Í‚±‚Ìƒ‚ƒWƒ…[ƒ‹‚Ì‚½‚ß‚ÉƒVƒ“ƒvƒ‹‚È‹@”\ƒeƒXƒg‚ðì‚è‚Ü‚·BƒeƒXƒg‚Íƒ‚ƒWƒ…[ƒ‹‚ÌƒfƒtƒHƒ‹ƒgƒAƒNƒVƒ‡ƒ“‚ÉƒŠƒNƒGƒXƒg‚ðs‚¢ƒŒƒXƒ|ƒ“ƒX‚ÌƒXƒe[ƒ^ƒXƒR[ƒhAƒ‹[ƒeƒBƒ“ƒOƒVƒXƒeƒ€‚É‚æ‚Á‚ÄŽZo‚³‚ê‚½ƒ‚ƒWƒ…[ƒ‹‚ÆƒAƒNƒVƒ‡ƒ“A‚ÆƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚Ì‚È‚©‚Ì“Á’è‚ÌƒZƒ“ƒeƒ“ƒX‚Ì‘¶Ý‚ðƒ`ƒFƒbƒN‚µ‚Ü‚·B`foobar`  ƒ‚ƒWƒ…[ƒ‹‚É‘Î‚µ‚ÄA¶¬‚³‚ê‚½ `foobarActionsTest.php` ƒtƒ@ƒCƒ‹‚ÍƒŠƒXƒg15-9‚Ì‚æ‚¤‚É‚È‚è‚Ü‚·B
+‚½‚Æ‚¦‚ÎA`generate:module` ƒ^ƒXƒN‚à‚µ‚­‚Í `propel:generate-module`ƒ^ƒXƒN‚Åƒ‚ƒWƒ…[ƒ‹ƒXƒPƒ‹ƒgƒ“‚ð¶¬‚·‚é‚½‚Ñ‚ÉAsymfony ‚Í‚±‚Ìƒ‚ƒWƒ…[ƒ‹‚Ì‚½‚ß‚ÉƒVƒ“ƒvƒ‹‚È‹@”\ƒeƒXƒg‚ðì‚è‚Ü‚·BƒeƒXƒg‚Íƒ‚ƒWƒ…[ƒ‹‚ÌƒfƒtƒHƒ‹ƒgƒAƒNƒVƒ‡ƒ“‚ÉƒŠƒNƒGƒXƒg‚ðs‚¢ƒŒƒXƒ|ƒ“ƒX‚ÌƒXƒe[ƒ^ƒXƒR[ƒhAƒ‹[ƒeƒBƒ“ƒOƒVƒXƒeƒ€‚É‚æ‚Á‚ÄŽZo‚³‚ê‚½ƒ‚ƒWƒ…[ƒ‹‚ÆƒAƒNƒVƒ‡ƒ“A‚ÆƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚Ì‚È‚©‚Ì“Á’è‚ÌƒZƒ“ƒeƒ“ƒX‚Ì‘¶Ý‚ðƒ`ƒFƒbƒN‚µ‚Ü‚·B`foobar`  ƒ‚ƒWƒ…[ƒ‹‚É‘Î‚µ‚ÄA¶¬‚³‚ê‚½ `foobarActionsTest.php` ƒtƒ@ƒCƒ‹‚ÍƒŠƒXƒg15-11‚Ì‚æ‚¤‚É‚È‚è‚Ü‚·B
 
-ƒŠƒXƒg15-9 - V‚µ‚¢ƒ‚ƒWƒ…[ƒ‹—p‚ÌƒfƒtƒHƒ‹ƒg‚Ì‹@”\ƒeƒXƒg (`tests/functional/frontend/foobarActionsTest.php`)
+ƒŠƒXƒg15-11 - V‚µ‚¢ƒ‚ƒWƒ…[ƒ‹—p‚ÌƒfƒtƒHƒ‹ƒg‚Ì‹@”\ƒeƒXƒg (`tests/functional/frontend/foobarActionsTest.php`)
 
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+    include dirname(__FILE__).'/../../bootstrap/functional.php';
 
-    // V‚µ‚¢ƒeƒXƒgƒuƒ‰ƒEƒU[‚ðì¬‚·‚é
-    $browser = new sfTestBrowser();
+    $browser = new sfTestFunctional(new sfBrowser());
 
     $browser->
       get('/foobar/index')->
-      isStatusCode(200)->
-      isRequestParameter('module', 'foobar')->
-      isRequestParameter('action', 'index')->
-      checkResponseElement('body', '!/This is a temporary page/')
+
+      with('request')->begin()->
+        isParameter('module', 'foobar')->
+        isParameter('action', 'index')->
+      end()->
+
+      with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('body', '!/This is a temporary page/')->
+      end()
     ;
 
 >**TIP**
->ƒuƒ‰ƒEƒU[‚Ìƒƒ\ƒbƒh‚Í `sfTestBrowser`ƒIƒuƒWƒFƒNƒg‚ð•Ô‚·‚Ì‚ÅAƒeƒXƒgƒtƒ@ƒCƒ‹‚ð“Ç‚Ý‚â‚·‚­‚·‚é‚½‚ß‚Éƒƒ\ƒbƒhƒ`ƒF[ƒ“‚ð—˜—p‚Å‚«‚Ü‚·B‚±‚ê‚ÍƒIƒuƒWƒFƒNƒg‚Ö‚Ì—¬‚ê‚é‚æ‚¤‚ÈƒCƒ“ƒ^[ƒtƒFƒCƒX (fluid interface ‚à‚µ‚­‚Í fluent interface) ‚ÆŒÄ‚Î‚ê‚Ü‚·B‚±‚Ì–¼‘O‚Ì—R—ˆ‚Íƒƒ\ƒbƒhŒÄ‚Ño‚µ‚Ì—¬‚ê‚ðŽ~‚ß‚é‚à‚Ì‚ª‚È‚¢‚©‚ç‚Å‚·B
+>`browser` ‚Ìƒƒ\ƒbƒh‚Í `sfTestFunctional`ƒIƒuƒWƒFƒNƒg‚ð•Ô‚·‚Ì‚ÅAƒeƒXƒgƒtƒ@ƒCƒ‹‚ð“Ç‚Ý‚â‚·‚­‚·‚é‚½‚ß‚Éƒƒ\ƒbƒhƒ`ƒF[ƒ“‚ð—˜—p‚Å‚«‚Ü‚·B‚±‚ê‚ÍƒIƒuƒWƒFƒNƒg‚Ö‚Ì—¬‚ê‚é‚æ‚¤‚ÈƒCƒ“ƒ^[ƒtƒFƒCƒX (fluid interface ‚à‚µ‚­‚Í fluent interface) ‚ÆŒÄ‚Î‚ê‚Ü‚·B‚±‚Ì–¼‘O‚Ì—R—ˆ‚Íƒƒ\ƒbƒhŒÄ‚Ño‚µ‚Ì—¬‚ê‚ðŽ~‚ß‚é‚à‚Ì‚ª‚È‚¢‚©‚ç‚Å‚·B
 
 ‹@”\ƒeƒXƒg‚Í‚¢‚­‚Â‚©‚ÌƒŠƒNƒGƒXƒg‚Æ•¡ŽG‚ÈƒAƒT[ƒVƒ‡ƒ“‚ðŠÜ‚Þ‚±‚Æ‚ª‚Å‚«‚Ü‚·; ‚Â‚¬‚ÌƒZƒNƒVƒ‡ƒ“‚Å‚·‚×‚Ä‚Ì‹@”\‚ðŒ©‚é‚±‚Æ‚É‚È‚è‚Ü‚·B
 
-‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚é‚½‚ß‚ÉAƒŠƒXƒg15-10‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Å `test:functional` ƒ^ƒXƒN‚ðŽg‚¢‚Ü‚·B‚±‚Ìƒ^ƒXƒN‚ÍƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì–¼‘O‚ÆƒeƒXƒg‚Ì–¼‘O‚ð•K—v‚Æ‚µ‚Ü‚· (`Test.php`‚ÌƒTƒtƒBƒbƒNƒX‚ðo—Í‚µ‚Ü‚·)B
+‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚é‚½‚ß‚ÉAƒŠƒXƒg15-12‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Å `test:functional` ƒ^ƒXƒN‚ðŽg‚¢‚Ü‚·B‚±‚Ìƒ^ƒXƒN‚ÍƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì–¼‘O‚ÆƒeƒXƒg‚Ì–¼‘O‚ð•K—v‚Æ‚µ‚Ü‚· (`Test.php`‚ÌƒTƒtƒBƒbƒNƒX‚ðo—Í‚µ‚Ü‚·)B
 
-ƒŠƒXƒg15-10 - ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚ç1‚Â‚Ì‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚é
+ƒŠƒXƒg15-12 - ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚ç1‚Â‚Ì‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚é
 
-    > php symfony test:functional frontend foobarActions
+    $ php symfony test:functional frontend foobarActions
 
     # get /comment/index
     ok 1 - status code is 200
@@ -480,15 +501,15 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
 
 ### sfBrowser ƒIƒuƒWƒFƒNƒg‚Åƒuƒ‰ƒEƒWƒ“ƒO‚·‚é
 
-ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `GET` ƒŠƒNƒGƒXƒg‚Æ `POST` ƒŠƒNƒGƒXƒg‚ðs‚¤‹@”\‚ðŽ‚¿‚Ü‚·B—¼•û‚Ìê‡‚É‚¨‚¢‚ÄA–{“–‚Ì URI ‚ðƒpƒ‰ƒ[ƒ^[‚Æ‚µ‚ÄŽg‚¢‚Ü‚·BƒŠƒXƒg15-11‚ÍƒŠƒNƒGƒXƒg‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é‚½‚ß‚É `sfTestBrowser`ƒIƒuƒWƒFƒNƒg‚ÌŒÄ‚Ño‚µ‚Ì‘‚«‚©‚½‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `GET` ƒŠƒNƒGƒXƒg‚Æ `POST` ƒŠƒNƒGƒXƒg‚ðs‚¤‹@”\‚ðŽ‚¿‚Ü‚·B—¼•û‚Ìê‡‚É‚¨‚¢‚ÄA–{“–‚Ì URI ‚ðƒpƒ‰ƒ[ƒ^[‚Æ‚µ‚ÄŽg‚¢‚Ü‚·BƒŠƒXƒg15-13‚ÍƒŠƒNƒGƒXƒg‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é‚½‚ß‚É `sfTestBrowser`ƒIƒuƒWƒFƒNƒg‚ÌŒÄ‚Ño‚µ‚Ì‘‚«‚©‚½‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-11 - `sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒŠƒNƒGƒXƒg‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
+ƒŠƒXƒg15-13 - `sfBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒŠƒNƒGƒXƒg‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
 
     [php]
-    include(dirname(__FILE__).'/../../bootstrap/functional.php');
-
-    // V‚µ‚¢ƒeƒXƒgƒuƒ‰ƒEƒU[‚ðì¬‚·‚é
-    $b = new sfTestBrowser();
+    include dirname(__FILE__).'/../../bootstrap/functional.php';
+    
+    // V‚µ‚¢ƒuƒ‰ƒEƒU[‚ðì¬‚·‚é
+    $b = new sfBrowser();
 
     $b->get('/foobar/show/id/1');                   // GETƒŠƒNƒGƒXƒg
     $b->post('/foobar/show', array('id' => 1));     // POSTƒŠƒNƒGƒXƒg
@@ -502,9 +523,9 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     $b->call('/foobar/add/id/1', 'put');
     $b->call('/foobar/delete/id/1', 'delete');
 
-“TŒ^“I‚Èƒuƒ‰ƒEƒWƒ“ƒOƒZƒbƒVƒ‡ƒ“‚Í“Á’è‚ÌƒAƒNƒVƒ‡ƒ“‚Ö‚ÌƒŠƒNƒGƒXƒg‚¾‚¯‚Å‚È‚­AƒŠƒ“ƒN‚Æƒuƒ‰ƒEƒU[ƒ{ƒ^ƒ“‚Ö‚ÌƒNƒŠƒbƒN‚àŠÜ‚Ý‚Ü‚·BƒŠƒXƒg15-12‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚Í‚±‚ê‚ç‚àƒVƒ~ƒ…ƒŒ[ƒg‚Å‚«‚Ü‚·B
+“TŒ^“I‚Èƒuƒ‰ƒEƒWƒ“ƒOƒZƒbƒVƒ‡ƒ“‚Í“Á’è‚ÌƒAƒNƒVƒ‡ƒ“‚Ö‚ÌƒŠƒNƒGƒXƒg‚¾‚¯‚Å‚È‚­AƒŠƒ“ƒN‚Æƒuƒ‰ƒEƒU[ƒ{ƒ^ƒ“‚Ö‚ÌƒNƒŠƒbƒN‚àŠÜ‚Ý‚Ü‚·BƒŠƒXƒg15-14‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA`sfBrowser` ƒIƒuƒWƒFƒNƒg‚Í‚±‚ê‚ç‚àƒVƒ~ƒ…ƒŒ[ƒg‚Å‚«‚Ü‚·B
 
-ƒŠƒXƒg15-12 - `sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒiƒrƒQ[ƒVƒ‡ƒ“‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
+ƒŠƒXƒg15-14 - `sfBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒiƒrƒQ[ƒVƒ‡ƒ“‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
 
     [php]
     $b->get('/');                  // ƒz[ƒ€ƒy[ƒW‚Ö‚ÌƒŠƒNƒGƒXƒg
@@ -514,27 +535,27 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     $b->reload();                  // Œ»Ý‚Ìƒy[ƒW‚ðƒŠƒ[ƒh‚·‚é
     $b->click('go');               // 'go'ƒŠƒ“ƒN‚à‚µ‚­‚Íƒ{ƒ^ƒ“‚ð’T‚µ‚ÄƒNƒŠƒbƒN‚·‚é
 
-ƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍƒR[ƒ‹ƒXƒ^ƒbƒN‚ðˆ—‚·‚é‚Ì‚ÅA`back()` ƒƒ\ƒbƒh‚Æ `forward()` ƒƒ\ƒbƒh‚Í–{“–‚Ìƒuƒ‰ƒEƒU[‚Æ“¯‚¶‚æ‚¤‚É“®ì‚µ‚Ü‚·B
+ƒuƒ‰ƒEƒU[‚ÍƒR[ƒ‹ƒXƒ^ƒbƒN‚ðˆ—‚·‚é‚Ì‚ÅA`back()` ƒƒ\ƒbƒh‚Æ `forward()` ƒƒ\ƒbƒh‚Í–{“–‚Ìƒuƒ‰ƒEƒU[‚Æ“¯‚¶‚æ‚¤‚É“®ì‚µ‚Ü‚·B
 
 >**TIP**
->ƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍƒZƒbƒVƒ‡ƒ“ (`sfTestStorage`) ‚Æ Cookie ‚ðŠÇ—‚·‚é“ÆŽ©‚ÌƒƒJƒjƒYƒ€‚ðŽ‚¿‚Ü‚·B
+>ƒuƒ‰ƒEƒU[‚ÍƒZƒbƒVƒ‡ƒ“ (`sfTestStorage`) ‚Æ Cookie ‚ðŠÇ—‚·‚é“ÆŽ©‚ÌƒƒJƒjƒYƒ€‚ðŽ‚¿‚Ü‚·B
 
-ƒeƒXƒg‚·‚é•K—v‚Ì‚ ‚éƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚Ì‚È‚©‚ÅA‚¨‚»‚ç‚­ƒtƒH[ƒ€‚ÉŠÖ˜A‚·‚é‚à‚Ì‚ªÅ—Dæ‚³‚ê‚Ü‚·BƒtƒH[ƒ€‚Ì“ü—Í‚Æ“Še‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é‚É‚ÍA‘I‘ðŽˆ‚ª3‚Â‚ ‚è‚Ü‚·B‘—M‚µ‚½‚¢ƒpƒ‰ƒ[ƒ^[‚Å POST ƒŠƒNƒGƒXƒg‚ðs‚¤ê‡A”z—ñ‚Æ‚µ‚Ä‚Ì `form` ƒpƒ‰ƒ[ƒ^[‚Å `click()` ‚ðŒÄ‚Ño‚·‚©A1‚Â‚¸‚ÂƒtƒB[ƒ‹ƒh‚ð“ü—Í‚µ‚ÄA“Šeƒ{ƒ^ƒ“‚ðƒNƒŠƒbƒN‚µ‚Ü‚·B‚¢‚¸‚ê‚É‚¹‚æA‚±‚ê‚ç‚Í‚·‚×‚Ä“¯‚¶POSTƒŠƒNƒGƒXƒg‚É‚È‚è‚Ü‚·BƒŠƒXƒg15-13‚Í—á‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+ƒeƒXƒg‚·‚é•K—v‚Ì‚ ‚éƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚Ì‚È‚©‚ÅA‚¨‚»‚ç‚­ƒtƒH[ƒ€‚ÉŠÖ˜A‚·‚é‚à‚Ì‚ªÅ—Dæ‚³‚ê‚Ü‚·BƒtƒH[ƒ€‚Ì“ü—Í‚Æ“Še‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é‚É‚ÍA‘I‘ðŽˆ‚ª3‚Â‚ ‚è‚Ü‚·B‘—M‚µ‚½‚¢ƒpƒ‰ƒ[ƒ^[‚Å POST ƒŠƒNƒGƒXƒg‚ðs‚¤ê‡A”z—ñ‚Æ‚µ‚Ä‚Ì `form` ƒpƒ‰ƒ[ƒ^[‚Å `click()` ‚ðŒÄ‚Ño‚·‚©A1‚Â‚¸‚ÂƒtƒB[ƒ‹ƒh‚ð“ü—Í‚µ‚ÄA“Šeƒ{ƒ^ƒ“‚ðƒNƒŠƒbƒN‚µ‚Ü‚·B‚¢‚¸‚ê‚É‚¹‚æA‚±‚ê‚ç‚Í‚·‚×‚Ä“¯‚¶POSTƒŠƒNƒGƒXƒg‚É‚È‚è‚Ü‚·BƒŠƒXƒg15-15‚Í—á‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-13 - `sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒtƒH[ƒ€“ü—Í‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
+ƒŠƒXƒg15-15 - `sfBrowser` ƒIƒuƒWƒFƒNƒg‚ÅƒtƒH[ƒ€“ü—Í‚ðƒVƒ~ƒ…ƒŒ[ƒg‚·‚é
 
     [php]
     // modules/foobar/templates/editSuccess.php ‚Å‚Ìƒeƒ“ƒvƒŒ[ƒg‚Ì—á
     <?php echo form_tag('foobar/update') ?>
-      <?php echo input_hidden_tag('id', $sf_params->get('id')) ?>
-      <?php echo input_tag('name', 'foo') ?>
-      <?php echo submit_tag('go') ?>
-      <?php echo textarea('text1', 'foo') ?>
-      <?php echo textarea('text2', 'bar') ?>
+      <input type="hidden" name="id" value="<?php echo $sf_params->get('id') ?>" />
+      <input type="text" name="name" value="foo" />
+      <input type="submit" value="go" />
+      <textarea name="text1">foo</textarea>
+      <textarea name="text2">bar</textarea>
     </form>
 
     // ‚±‚ÌƒtƒH[ƒ€‚Ì‚½‚ß‚Ì‹@”\ƒeƒXƒg‚Ì—á
-    $b = new sfTestBrowser();
+    $b = new sfBrowser();
     $b->get('/foobar/edit/id/1');
 
     // ƒIƒvƒVƒ‡ƒ“ 1: POST ƒŠƒNƒGƒXƒg
@@ -550,13 +571,13 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
 >**NOTE**
 >2”Ô–Ú‚Æ3”Ô–Ú‚ÌƒIƒvƒVƒ‡ƒ“‚É‚æ‚Á‚ÄAƒfƒtƒHƒ‹ƒg‚ÌƒtƒH[ƒ€‚Ì’l‚ÍŽ©“®“I‚ÉƒtƒH[ƒ€‚Ì“Še‚ÉŠÜ‚Ü‚êAƒtƒH[ƒ€ƒ^[ƒQƒbƒg‚ðŽw’è‚·‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
 
-`redirect()` ƒƒ\ƒbƒh‚É‚æ‚Á‚ÄƒAƒNƒVƒ‡ƒ“‚ªI—¹‚µ‚½ê‡AƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚³‚ê‚Ü‚¹‚ñ; ƒŠƒXƒg15-14‚Å‚¨Žè–{‚ªŽ¦‚³‚ê‚é‚æ‚¤‚ÉAŽè“®‚É‚æ‚é `followRedirect()` ƒƒ\ƒbƒh‚ÅƒeƒXƒgƒuƒ‰ƒEƒU[‚ðƒŠƒ_ƒCƒŒƒNƒg‚µ‚Ü‚·B
+`redirect()` ƒƒ\ƒbƒh‚É‚æ‚Á‚ÄƒAƒNƒVƒ‡ƒ“‚ªI—¹‚µ‚½ê‡AƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚³‚ê‚Ü‚¹‚ñ; ƒŠƒXƒg15-16‚Å‚¨Žè–{‚ªŽ¦‚³‚ê‚é‚æ‚¤‚ÉAŽè“®‚É‚æ‚é `followRedirect()` ƒƒ\ƒbƒh‚ÅƒeƒXƒgƒuƒ‰ƒEƒU[‚ðƒŠƒ_ƒCƒŒƒNƒg‚µ‚Ü‚·B
 
-ƒŠƒXƒg15-14 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚³‚ê‚È‚¢
+ƒŠƒXƒg15-16 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚³‚ê‚È‚¢
 
     [php]
     // modules/foobar/actions/actions.class.php ‚ÌƒAƒNƒVƒ‡ƒ“‚Ì—á
-    public function executeUpdate(sfWebRequest $request)
+    public function executeUpdate($request)
     {
       // ...
 
@@ -564,45 +585,29 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     }
 
     // ‚±‚ÌƒAƒNƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‹@”\ƒeƒXƒg‚Ì—á
-    $b = new sfTestBrowser();
+    $b = new sfBrowser();
     $b->get('/foobar/edit?id=1')->
         click('go', array('name' => 'dummy'))->
-        isRedirected()->   // ƒŠƒNƒGƒXƒg‚ªƒŠƒ_ƒCƒŒƒNƒg‚³‚ê‚½‚©ƒ`ƒFƒbƒN‚·‚é
         followRedirect();    // Žè“®‚ÅƒŠƒ_ƒCƒŒƒNƒg‚ÌŒã‚É‘±‚­
 
 ƒuƒ‰ƒEƒWƒ“ƒO‚Ì‚½‚ß‚É•Ö—˜‚Èƒƒ\ƒbƒh‚ª1‚ÂŽc‚Á‚Ä‚¢‚Ü‚·B`restart()` ‚Í‚ ‚½‚©‚àƒuƒ‰ƒEƒU[‚ðÄ‹N“®‚µ‚½‚æ‚¤‚Éƒuƒ‰ƒEƒWƒ“ƒO‚Ì—š—ðAƒZƒbƒVƒ‡ƒ“‚Æ Cookie ‚ðÄ‚Ñ‰Šú‰»‚µ‚Ü‚·B
 
-‚±‚Ìƒƒ\ƒbƒh‚ªÅ‰‚ÌƒŠƒNƒGƒXƒg‚ðs‚¤‚ÆA`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ÍƒŠƒNƒGƒXƒgAƒRƒ“ƒeƒLƒXƒgAƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·BƒeƒLƒXƒg‚Ì“à—e‚©‚çƒŒƒXƒ|ƒ“ƒXƒwƒbƒ_[AƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^[‚ÆÝ’è‚Ü‚Å‚¨‚æ‚ÔA‘½‚­‚Ì“à—e‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·:
+‚±‚Ìƒƒ\ƒbƒh‚ªÅ‰‚ÌƒŠƒNƒGƒXƒg‚ðs‚¤‚ÆA`sfBrowser` ƒIƒuƒWƒFƒNƒg‚ÍƒŠƒNƒGƒXƒgAƒRƒ“ƒeƒLƒXƒgAƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·BƒeƒLƒXƒg‚Ì“à—e‚©‚çƒŒƒXƒ|ƒ“ƒXƒwƒbƒ_[AƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^[‚ÆÝ’è‚Ü‚Å‚¨‚æ‚ÔA‘½‚­‚Ì“à—e‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·:
 
     [php]
     $request  = $b->getRequest();
     $context  = $b->getContext();
     $response = $b->getResponse();
 
->**SIDEBAR**
->`sfBrowser` ƒIƒuƒWƒFƒNƒg
->
->ƒŠƒXƒg15-10‚©‚ç15-13‚Ü‚Åà–¾‚³‚ê‚½‚·‚×‚Ä‚Ìƒuƒ‰ƒEƒWƒ“ƒOƒƒ\ƒbƒh‚Í `sfBrowser` ƒIƒuƒWƒFƒNƒg‘S‘Ì‚É“n‚èAƒeƒXƒg‚Ì”ÍˆÍ‚©‚ç‚à—˜—p‰Â”\‚Å‚Â‚¬‚Ì‚æ‚¤‚ÉŒÄ‚Ño‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·:
->
->     [php]
->     // V‚µ‚¢ƒuƒ‰ƒEƒU[‚ðì¬‚·‚é
->     $b = new sfBrowser();
->     $b->get('/foobar/show/id/1')->
->         setField('name', 'dummy')->
->         click('go');
->     $content = $b->getResponse()->getContent();
->     // ...
->
->‚½‚Æ‚¦‚ÎA‚»‚ê‚¼‚ê‚Ìƒoƒbƒ`ƒXƒNƒŠƒvƒg‚É‘Î‚µ‚ÄƒLƒƒƒbƒVƒ…ƒo[ƒWƒ‡ƒ“‚ð¶¬‚·‚é‚½‚ß‚Éƒy[ƒW‚ÌƒŠƒXƒg‚ðƒuƒ‰ƒEƒWƒ“ƒO‚µ‚½‚¢ê‡A`sfBrowser` ƒIƒuƒWƒFƒNƒg‚Íƒoƒbƒ`ƒXƒNƒŠƒvƒg‚Ì‚½‚ß‚É‚Æ‚Ä‚à•Ö—˜‚Èƒc[ƒ‹‚Å‚· (Ú×‚È—á‚ÉŠÖ‚µ‚Ä‚Í18Í‚ðŽQÆ)B
 
 ### ƒAƒT[ƒVƒ‡ƒ“‚ðŽg‚¤
 
-ƒŒƒXƒ|ƒ“ƒX‚ÆƒŠƒNƒGƒXƒg‚Ì‚Ù‚©‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒAƒNƒZƒX‚Å‚«‚é `sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚Ì‚¨‚©‚°‚ÅA‚±‚ê‚ç‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÅƒeƒXƒg‚ðŽÀŽ{‚Å‚«‚Ü‚·B‚±‚Ì–Ú“I‚Ì‚½‚ß‚ÉV‚µ‚¢ `lime_test` ƒIƒuƒWƒFƒNƒg‚ðì‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·‚ªAK‚¢‚É‚µ‚ÄA`sfTestBrowser` ‚Í `lime_test` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚· `test()` ƒƒ\ƒbƒh‚ð’ñŽ¦‚µ‚Ü‚·B`sfTestBrowser` Œo—R‚ÅƒAƒT[ƒVƒ‡ƒ“‚ðs‚¤•û–@‚ÉŠÖ‚µ‚Ä‚ÍƒŠƒXƒg15-15‚ÅŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
+ƒŒƒXƒ|ƒ“ƒX‚ÆƒŠƒNƒGƒXƒg‚Ì‚Ù‚©‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒAƒNƒZƒX‚Å‚«‚é `sfTestFunctional` ƒIƒuƒWƒFƒNƒg‚Ì‚¨‚©‚°‚ÅA‚±‚ê‚ç‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÅƒeƒXƒg‚ðŽÀŽ{‚Å‚«‚Ü‚·B‚±‚Ì–Ú“I‚Ì‚½‚ß‚ÉV‚µ‚¢ `lime_test` ƒIƒuƒWƒFƒNƒg‚ðì‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·‚ªAK‚¢‚É‚µ‚ÄA`sfTestBrowser` ‚Í `lime_test` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚· `test()` ƒƒ\ƒbƒh‚ð’ñŽ¦‚µ‚Ü‚·B`sfTestFunctional` Œo—R‚ÅƒAƒT[ƒVƒ‡ƒ“‚ðs‚¤•û–@‚ÉŠÖ‚µ‚Ä‚ÍƒŠƒXƒg15-15‚ÅŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
 
-ƒŠƒXƒg15-15 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `test()` ƒƒ\ƒbƒh‚É‚æ‚éƒeƒXƒg‹@”\‚ð’ñ‹Ÿ‚·‚é
+ƒŠƒXƒg15-17 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `test()` ƒƒ\ƒbƒh‚É‚æ‚éƒeƒXƒg‹@”\‚ð’ñ‹Ÿ‚·‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit/id/1');
     $request  = $b->getRequest();
     $context  = $b->getContext();
@@ -615,28 +620,33 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     $b->test()->like($response->getContent(), '/edit/');
 
 >**NOTE**
->`getResponse()`A`getContent()`A`getRquest()` ‚Æ `test()`ƒƒ\ƒbƒh‚Í `sfBrowser` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚³‚È‚¢‚Ì‚ÅA‚±‚ê‚ç‚Ì‚ ‚Æ‚Å‚Í `sfTestBrwoser` ƒƒ\ƒbƒhŒÄ‚Ño‚µ‚Ìƒ`ƒF[ƒ“‚ðŽg‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
+>`getResponse()`A`getContent()`A`getRquest()` ‚Æ `test()`ƒƒ\ƒbƒh‚Í `sfBrowser` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚³‚È‚¢‚Ì‚ÅA‚±‚ê‚ç‚Ì‚ ‚Æ‚Å‚Í `sfBrowser` ƒƒ\ƒbƒhŒÄ‚Ño‚µ‚Ìƒ`ƒF[ƒ“‚ðŽg‚¤‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
 
-ƒŠƒXƒg15-16‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒŠƒNƒGƒXƒgƒIƒuƒWƒFƒNƒg‚ÆƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg‚ð’Ê‚µ‚ÄV‹Œ‚Ì Cookie ‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·B
+ƒŠƒXƒg15-17‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒŠƒNƒGƒXƒgƒIƒuƒWƒFƒNƒg‚ÆƒŒƒXƒ|ƒ“ƒXƒIƒuƒWƒFƒNƒg‚ð’Ê‚µ‚ÄV‹Œ‚Ì Cookie ‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·B
 
-ƒŠƒXƒg15-16 - `sfTestBrowser` ‚Å Cookie ‚ðƒeƒXƒg‚·‚é
+ƒŠƒXƒg15-17 - `sfBrowser` ‚Å Cookie ‚ðƒeƒXƒg‚·‚é
 
     [php]
     $b->test()->is($request->getCookie('foo'), 'bar');     // “ü‚Á‚Ä‚­‚é Cookie
     $cookies = $response->getCookies();
     $b->test()->is($cookies['foo'], 'foo=bar');            // o‚Äs‚­ Cookie
 
-ƒŠƒNƒGƒXƒg‚Ì—v‘f‚ðƒeƒXƒg‚·‚é‚½‚ß‚É `test()` ƒƒ\ƒbƒh‚ðŽg‚¤‚Æ’·‚¢s‚ÌƒR[ƒh‚ð‘‚­‚±‚Æ‚É‚È‚è‚Ü‚·BK‚¢‚É‚µ‚ÄA`sfTestbrowser` ƒIƒuƒWƒFƒNƒg‚Í‹@”\ƒeƒXƒg‚ð“Ç‚Ý‚â‚·‚­’Z‚­•Û‚Âˆê˜A‚ÌƒvƒƒLƒVƒƒ\ƒbƒh‚ðŠÜ‚Ý‚Ü‚·B‚³‚ç‚ÉA‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚Í‚±‚ê‚çŽ©g‚Å `sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚µ‚Ü‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-17‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒŠƒXƒg15-15‚ð‚æ‚è‘¬‚¢•û–@‚Å‘‚«Š·‚¦‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+ƒŠƒNƒGƒXƒg‚Ì—v‘f‚ðƒeƒXƒg‚·‚é‚½‚ß‚É `test()` ƒƒ\ƒbƒh‚ðŽg‚¤‚Æ’·‚¢s‚ÌƒR[ƒh‚ð‘‚­‚±‚Æ‚É‚È‚è‚Ü‚·BK‚¢‚É‚µ‚ÄA`sfTestFunctional` ƒIƒuƒWƒFƒNƒg‚Í‹@”\ƒeƒXƒg‚ð“Ç‚Ý‚â‚·‚­’Z‚­•Û‚Âˆê˜A‚ÌƒvƒƒLƒVƒƒ\ƒbƒh‚ðŠÜ‚Ý‚Ü‚·B‚³‚ç‚ÉA‚±‚ê‚ç‚Ìƒƒ\ƒbƒh‚Í‚±‚ê‚çŽ©g‚Å `sfTestFunctional` ƒIƒuƒWƒFƒNƒg‚ð•Ô‚µ‚Ü‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-18‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒŠƒXƒg15-15‚ð‚æ‚è‘¬‚¢•û–@‚Å‘‚«Š·‚¦‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
-ƒŠƒXƒg15-17 - `sfTestBrowser` ‚Å’¼ÚƒeƒXƒg‚·‚é
+ƒŠƒXƒg15-18 - `sfTestFunctional` ‚Å’¼ÚƒeƒXƒg‚·‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit/id/1')->
-        isRequestParameter('id', 1)->
-        isStatusCode()->
-        isResponseHeader('content-type', 'text/html; charset=utf-8')->
-        responseContains('edit');
+    with('request')->isParameter('id', 1)->
+    with('response')->begin()->
+      isStatusCode()->
+      isHeader('content-type', 'text/html; charset=utf-8')->
+      matches('/edit/')->
+    end()
+    ;
+
+Each proxy method is part of a tester group. Using a tester group is done by wrapping the method calls with the `with()` and `end()` methods. The `with()` methods takes the tester group name (like `request` and `response`).
 
 ƒXƒe[ƒ^ƒX200‚Í `isStatusCode()` ƒƒ\ƒbƒh‚É‚æ‚Á‚Ä‹‚ß‚ç‚ê‚éƒpƒ‰ƒ[ƒ^[‚ÌƒfƒtƒHƒ‹ƒg’l‚È‚Ì‚ÅA˜A‘±‚·‚éƒŒƒXƒ|ƒ“ƒX‚ðƒeƒXƒg‚·‚é‚½‚ß‚Éˆø”‚È‚µ‚Å‚±‚Ìƒƒ\ƒbƒh‚ðŒÄ‚Ño‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
@@ -646,69 +656,79 @@ Propel ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚ÅAPropel ‚ÌƒNƒ‰
     ok 1 - request parameter "id" is "1"
     ok 2 - status code is "200"
     ok 3 - response header "content-type" is "text/html"
-    ok 4 - response contains "edit"
+    ok 4 - response matches "/edit/"
     1..4
 
-ŽÀÛ‚É‚ÍAƒŠƒXƒg15-17‚ÌƒvƒƒLƒVƒƒ\ƒbƒh‚Í’Êí‚ÌƒeƒXƒg‚Ì‘å•”•ª‚ðƒJƒo[‚·‚é‚Ì‚ÅA`sfTestBrowser` ƒIƒuƒWƒFƒNƒgã‚Å `test()` ƒƒ\ƒbƒh‚ðŽg‚¤‚±‚Æ‚Í‚ß‚Á‚½‚É‚ ‚è‚Ü‚¹‚ñB
+ŽÀÛ‚É‚ÍAƒŠƒXƒg15-17‚ÌƒvƒƒLƒVƒƒ\ƒbƒh‚Í’Êí‚ÌƒeƒXƒg‚Ì‘å•”•ª‚ðƒJƒo[‚·‚é‚Ì‚ÅA`sfTestFunctional` ƒIƒuƒWƒFƒNƒgã‚Å `test()` ƒƒ\ƒbƒh‚ðŽg‚¤‚±‚Æ‚Í‚ß‚Á‚½‚É‚ ‚è‚Ü‚¹‚ñB
 
-ƒŠƒXƒg15-14‚Í `sfTestBrowser` ƒƒ\ƒbƒh‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚ÌŒã‚É‘±‚©‚È‚¢‚±‚Æ‚ðŽ¦‚µ‚Ü‚µ‚½B‚±‚ê‚Í1‚Â‚Ì—˜“_‚ðŽ‚¿‚Ü‚·: ƒŠƒ_ƒCƒŒƒNƒg‚ðƒeƒXƒg‚Å‚«‚é‚±‚Æ‚Å‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-18‚ÍƒŠƒXƒg15-14‚ÌƒŒƒXƒ|ƒ“ƒX‚ðƒeƒXƒg‚·‚é•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+ƒŠƒXƒg15-15‚Í `sfBrowser` ƒƒ\ƒbƒh‚ÍŽ©“®“I‚ÉƒŠƒ_ƒCƒŒƒNƒg‚ÌŒã‚É‘±‚©‚È‚¢‚±‚Æ‚ðŽ¦‚µ‚Ü‚µ‚½B‚±‚ê‚Í1‚Â‚Ì—˜“_‚ðŽ‚¿‚Ü‚·: ƒŠƒ_ƒCƒŒƒNƒg‚ðƒeƒXƒg‚Å‚«‚é‚±‚Æ‚Å‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-18‚ÍƒŠƒXƒg15-19‚ÌƒŒƒXƒ|ƒ“ƒX‚ðƒeƒXƒg‚·‚é•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-18 - `sfTestBrowser` ‚ÅƒŠƒ_ƒCƒŒƒNƒg‚ðƒeƒXƒg‚·‚é
+ƒŠƒXƒg15-19 - `sfTestFunctional` ‚ÅƒŠƒ_ƒCƒŒƒNƒg‚ðƒeƒXƒg‚·‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->
-        get('/foobar/edit/id/1')->
-        click('go', array('name' => 'dummy'))->
+      get('/foobar/edit/id/1')->
+      click('go', array('name' => 'dummy'))->
+      with('request')->begin()->
+        isParameter('module', 'foobar')->
+        isParameter('action', 'update')->
+      end()->
+      with('response')->begin()->
         isStatusCode(200)->
-        isRequestParameter('module', 'foobar')->
-        isRequestParameter('action', 'update')->
+        isRedirected()->      // Check that the response is a redirect
+      end()->
 
-        isRedirected()->      // ƒŒƒXƒ|ƒ“ƒX‚ªƒŠƒ_ƒCƒŒƒNƒg‚Å‚ ‚é‚±‚Æ‚ðŠm”F‚·‚é
-        followRedirect()->    // Žè“®‚ÅƒŠƒ_ƒCƒŒƒNƒg‚ðƒtƒHƒ[‚·‚é     
+      followRedirect()->    // Manually follow the redirection
 
-        isStatusCode(200)->
+      with('request')->begin()->
         isRequestParameter('module', 'foobar')->
-        isRequestParameter('action', 'show');
+        isRequestParameter('action', 'show')->
+      end()->
+      with('response')->isStatusCode(200)
+    ;
 
 ### CSS ƒZƒŒƒNƒ^‚ðŽg‚¤
 
-‘½‚­‚Ì‹@”\ƒeƒXƒg‚ÍƒRƒ“ƒeƒ“ƒc‚Ì‚È‚©‚ÉƒeƒLƒXƒg‚ª‘¶Ý‚·‚é‚±‚Æ‚ðŠm”F‚·‚é‚±‚Æ‚Åƒy[ƒW‚ª³‚µ‚¢‚©‚ðŒŸØ‚µ‚Ü‚·B`responseContains()` ƒƒ\ƒbƒh‚Å³‹K•\Œ»‚Ì•‚¯‚ðŽØ‚è‚é‚±‚Æ‚ÅA•\Ž¦‚³‚ê‚éƒeƒLƒXƒgAƒ^ƒO‚Ì‘®«A‚à‚µ‚­‚Í’l‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·B‚µ‚©‚µAƒŒƒXƒ|ƒ“ƒX‚Ì DOM ‚É[‚­–„‚ßž‚Ü‚ê‚½‚à‚Ì‚ðƒ`ƒFƒbƒN‚µ‚½‚¢‚Ì‚Å‚ ‚ê‚ÎA³‹K•\Œ»‚Í—‘z“I‚È•û–@‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
+‘½‚­‚Ì‹@”\ƒeƒXƒg‚ÍƒRƒ“ƒeƒ“ƒc‚Ì‚È‚©‚ÉƒeƒLƒXƒg‚ª‘¶Ý‚·‚é‚±‚Æ‚ðŠm”F‚·‚é‚±‚Æ‚Åƒy[ƒW‚ª³‚µ‚¢‚©‚ðŒŸØ‚µ‚Ü‚·B`matches()` ƒƒ\ƒbƒh‚Å³‹K•\Œ»‚Ì•‚¯‚ðŽØ‚è‚é‚±‚Æ‚ÅA•\Ž¦‚³‚ê‚éƒeƒLƒXƒgAƒ^ƒO‚Ì‘®«A‚à‚µ‚­‚Í’l‚ðƒ`ƒFƒbƒN‚Å‚«‚Ü‚·B‚µ‚©‚µAƒŒƒXƒ|ƒ“ƒX‚Ì DOM ‚É[‚­–„‚ßž‚Ü‚ê‚½‚à‚Ì‚ðƒ`ƒFƒbƒN‚µ‚½‚¢‚Ì‚Å‚ ‚ê‚ÎA³‹K•\Œ»‚Í—‘z“I‚È•û–@‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
 
-`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ª `getResponseDom()` ƒƒ\ƒbƒh‚ðƒTƒ|[ƒg‚·‚é‚í‚¯‚Í‚»‚¤‚¢‚¤‚í‚¯‚Å‚·B‚±‚ê‚Í libXML2 ‚Ì DOM ƒIƒuƒWƒFƒNƒg‚ð•Ô‚µA‰ðÍ‚ÆƒeƒXƒg‚ÌŽÀs‚Íƒtƒ‰ƒbƒg‚ÈƒeƒLƒXƒg‚æ‚è‚à‚Í‚é‚©‚ÉŠÈ’P‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ÍƒŠƒXƒg15-19‚ð‚²——‚­‚¾‚³‚¢B
+`sfTestFunctional` ƒIƒuƒWƒFƒNƒg‚ª `getResponseDom()` ƒƒ\ƒbƒh‚ðƒTƒ|[ƒg‚·‚é‚í‚¯‚Í‚»‚¤‚¢‚¤‚í‚¯‚Å‚·B‚±‚ê‚Í libXML2 ‚Ì DOM ƒIƒuƒWƒFƒNƒg‚ð•Ô‚µA‰ðÍ‚ÆƒeƒXƒg‚ÌŽÀs‚Íƒtƒ‰ƒbƒg‚ÈƒeƒLƒXƒg‚æ‚è‚à‚Í‚é‚©‚ÉŠÈ’P‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚Ì—á‚ÍƒŠƒXƒg15-20‚ð‚²——‚­‚¾‚³‚¢B
 
-ƒŠƒXƒg15-19 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í DOM ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚ÄƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚ÉƒAƒNƒZƒX‚Å‚«‚é
+ƒŠƒXƒg15-20 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í DOM ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚ÄƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚ÉƒAƒNƒZƒX‚Å‚«‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit/id/1');
     $dom = $b->getResponseDom();
     $b->test()->is($dom->getElementsByTagName('input')->item(1)->getAttribute('type'),'text');
 
-PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚Å‚à‚ ‚è‚Ü‚¹‚ñBCSS ƒZƒŒƒNƒ^‚ÉŠµ‚ê‚Ä‚¢‚é‚Ì‚Å‚ ‚ê‚ÎA‚±‚ê‚ç‚ÌƒZƒŒƒNƒ^‚ª HTML ƒhƒLƒ…ƒƒ“ƒg‚©‚ç—v‘f‚ð“Ç‚Ý‚Æ‚é‚½‚ß‚Ì‚æ‚è‹­—Í‚È•û–@‚Å‚ ‚é‚±‚Æ‚ð‚²‘¶‚¶‚Å‚µ‚å‚¤Bsymfony ‚Í `sfDomCssSelector` ‚ÆŒÄ‚Î‚ê‚éƒc[ƒ‹ƒNƒ‰ƒX‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ê‚Í DOM ƒhƒLƒ…ƒƒ“ƒg‚ðƒRƒ“ƒXƒgƒ‰ƒNƒ^[‚Ì•K{ƒpƒ‰ƒ[ƒ^[‚Æ‚µ CSS ƒZƒŒƒNƒ^‚É‚µ‚½‚ª‚Á‚Ä•¶Žš—ñ‚Ì”z—ñ‚ð•Ô‚· `getTexts()` ƒƒ\ƒbƒh‚ÆADOM —v‘f‚Ì”z—ñ‚ð•Ô‚· `getElements()` ƒƒ\ƒbƒh‚ðŽ‚¿‚Ü‚·BƒŠƒXƒg15-20‚Ì—á‚ð‚²——‚­‚¾‚³‚¢B
+PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚Å‚à‚ ‚è‚Ü‚¹‚ñBCSS ƒZƒŒƒNƒ^‚ÉŠµ‚ê‚Ä‚¢‚é‚Ì‚Å‚ ‚ê‚ÎA‚±‚ê‚ç‚ÌƒZƒŒƒNƒ^‚ª HTML ƒhƒLƒ…ƒƒ“ƒg‚©‚ç—v‘f‚ð“Ç‚Ý‚Æ‚é‚½‚ß‚Ì‚æ‚è‹­—Í‚È•û–@‚Å‚ ‚é‚±‚Æ‚ð‚²‘¶‚¶‚Å‚µ‚å‚¤Bsymfony ‚Í `sfDomCssSelector` ‚ÆŒÄ‚Î‚ê‚éƒc[ƒ‹ƒNƒ‰ƒX‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ê‚Í DOM ƒhƒLƒ…ƒƒ“ƒg‚ðƒRƒ“ƒXƒgƒ‰ƒNƒ^[‚Ì•K{ƒpƒ‰ƒ[ƒ^[‚Æ‚µ CSS ƒZƒŒƒNƒ^‚É‚µ‚½‚ª‚Á‚Ä•¶Žš—ñ‚Ì”z—ñ‚ð•Ô‚· `getValues()` ƒƒ\ƒbƒh‚ÆADOM —v‘f‚Ì”z—ñ‚ð•Ô‚· `getElements()` ƒƒ\ƒbƒh‚ðŽ‚¿‚Ü‚·BƒŠƒXƒg15-21‚Ì—á‚ð‚²——‚­‚¾‚³‚¢B
 
-ƒŠƒXƒg15-20 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `sfDomCssSelector` ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä‚ÌƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚ÉƒAƒNƒZƒX‚Å‚«‚é
+ƒŠƒXƒg15-21 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í `sfDomCssSelector` ƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä‚ÌƒŒƒXƒ|ƒ“ƒX‚Ì“à—e‚ÉƒAƒNƒZƒX‚Å‚«‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit/id/1');
     $c = new sfDomCssSelector($b->getResponseDom())
-    $b->test()->is($c->getTexts('form input[type="hidden"][value="1"]'), array('');
-    $b->test()->is($c->getTexts('form textarea[name="text1"]'), array('foo'));
-    $b->test()->is($c->getTexts('form input[type="submit"]'), array(''));
+    $b->test()->is($c->getValues('form input[type="hidden"][value="1"]'), array('');
+    $b->test()->is($c->getValues('form textarea[name="text1"]'), array('foo'));
+    $b->test()->is($c->getValues('form input[type="submit"]'), array(''));
 
-ŠÈŒ‰‚³‚Æ–¾—Ä‚³‚ðâ‚¦‚¸’Ç‹‚·‚é‚½‚ß‚ÉAsymfony‚ÍƒVƒ‡[ƒgƒJƒbƒg‚ð’ñ‹Ÿ‚µ‚Ü‚·: `checkRsponseElement()` ƒvƒƒLƒVƒƒ\ƒbƒh‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚ÍƒŠƒXƒg15-20‚Ì“à—e‚ðƒŠƒXƒg15-21‚Ì‚æ‚¤‚É‚µ‚Ü‚·B
+ŠÈŒ‰‚³‚Æ–¾—Ä‚³‚ðâ‚¦‚¸’Ç‹‚·‚é‚½‚ß‚ÉAsymfony‚ÍƒVƒ‡[ƒgƒJƒbƒg‚ð’ñ‹Ÿ‚µ‚Ü‚·: `response` ƒeƒXƒ^[ƒOƒ‹[ƒv‚Ì `checkElement()` ƒvƒƒLƒVƒƒ\ƒbƒh‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚ÍƒŠƒXƒg15-22‚Ì“à—e‚ðƒŠƒXƒg15-21‚Ì‚æ‚¤‚É‚µ‚Ü‚·B
 
-ƒŠƒXƒg15-21 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í CSS ƒZƒŒƒNƒ^‚É‚æ‚Á‚ÄƒŒƒXƒ|ƒ“ƒX—v‘f‚ÉƒAƒNƒZƒX‚Å‚«‚é
+ƒŠƒXƒg15-22 - ƒeƒXƒgƒuƒ‰ƒEƒU[‚Í CSS ƒZƒŒƒNƒ^‚É‚æ‚Á‚ÄƒŒƒXƒ|ƒ“ƒX—v‘f‚ÉƒAƒNƒZƒX‚Å‚«‚é
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit/id/1')->
-        checkResponseElement('form input[type="hidden"][value="1"]', true)->
-        checkResponseElement('form textarea[name="text1"]', 'foo')->
-        checkResponseElement('form input[type="submit"]', 1);
+      with('response')->begin()->
+        checkElement('form input[type="hidden"][value="1"]', true)->
+        checkElement('form textarea[name="text1"]', 'foo')->
+        checkElement('form input[type="submit"]', 1)->
+      end()
+    ;
 
-`checkResponseElement()` ƒƒ\ƒbƒh‚Ì‚Ó‚é‚Ü‚¢‚Í‚»‚ê‚ªŽó‚¯‚Æ‚é2”Ô–Ú‚Ìˆø”‚ÌŒ^‚ÉˆË‘¶‚µ‚Ü‚·:
+`checkElement()` ƒƒ\ƒbƒh‚Ì‚Ó‚é‚Ü‚¢‚Í‚»‚ê‚ªŽó‚¯‚Æ‚é2”Ô–Ú‚Ìˆø”‚ÌŒ^‚ÉˆË‘¶‚µ‚Ü‚·:
 
   * ƒu[ƒ‹’l‚Ìê‡ACSS ƒZƒŒƒNƒ^‚Éƒ}ƒbƒ`‚·‚é—v‘f‚ª‘¶Ý‚·‚é‚©ƒ`ƒFƒbƒN‚ð‚µ‚Ü‚·B
   * ®”‚Ìê‡ACSS ƒZƒŒƒNƒ^‚ª‚±‚Ì”‚ÌŒ‹‰Ê‚ð•Ô‚·‚Ì‚©ƒ`ƒFƒbƒN‚ð‚µ‚Ü‚·B
@@ -716,84 +736,83 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
   * !‚ÅŽn‚Ü‚é³‹K•\Œ»‚Ìê‡Aƒpƒ^[ƒ“‚Éƒ}ƒbƒ`‚µ‚È‚¢Å‰‚Ì—v‘f‚ðƒ`ƒFƒbƒN‚µ‚Ü‚·B 
   * ‚»‚Ì‚Ù‚©‚Ìê‡ACSS ƒZƒŒƒNƒ^‚ÅŒ©‚Â‚©‚éÅ‰‚Ì—v‘f‚Æ2”Ô–Ú‚Ìˆø”‚ð•¶Žš—ñ‚Æ‚µ‚Ä”äŠr‚µ‚Ü‚·B
 
-ƒƒ\ƒbƒh‚Í3”Ô–Ú‚ÌƒIƒvƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^[‚ð˜A‘z”z—ñ‚ÌŒ`Ž®‚ÅŽó‚¯‚Æ‚è‚Ü‚·BƒŠƒXƒg15-22‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA(ƒZƒŒƒNƒ^‚ª‚¢‚­‚Â‚©‚Ì—v‘f‚ð•Ô‚·ê‡)ƒZƒŒƒNƒ^‚É‚æ‚Á‚Ä•Ô‚³‚ê‚½Å‰‚Ì—v‘f‚Å‚Í‚È‚­A“Á’è‚ÌˆÊ’u‚Ì‚Ù‚©‚Ì—v‘f‚ÅƒeƒXƒg‚ªŽÀs‚³‚ê‚Ü‚·B
+ƒƒ\ƒbƒh‚Í3”Ô–Ú‚ÌƒIƒvƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^[‚ð˜A‘z”z—ñ‚ÌŒ`Ž®‚ÅŽó‚¯‚Æ‚è‚Ü‚·BƒŠƒXƒg15-23‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA(ƒZƒŒƒNƒ^‚ª‚¢‚­‚Â‚©‚Ì—v‘f‚ð•Ô‚·ê‡)ƒZƒŒƒNƒ^‚É‚æ‚Á‚Ä•Ô‚³‚ê‚½Å‰‚Ì—v‘f‚Å‚Í‚È‚­A“Á’è‚ÌˆÊ’u‚Ì‚Ù‚©‚Ì—v‘f‚ÅƒeƒXƒg‚ªŽÀs‚³‚ê‚Ü‚·B
 
-ƒŠƒXƒg15-22 - “Á’è‚ÌˆÊ’u‚Å—v‘f‚Éƒ}ƒbƒ`‚·‚éˆÊ’uƒIƒvƒVƒ‡ƒ“‚ðŽg‚¤
+ƒŠƒXƒg15-23 - “Á’è‚ÌˆÊ’u‚Å—v‘f‚Éƒ}ƒbƒ`‚·‚éˆÊ’uƒIƒvƒVƒ‡ƒ“‚ðŽg‚¤
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit?id=1')->
-        checkResponseElement('form textarea', 'foo')->
-        checkResponseElement('form textarea', 'bar', array('position' => 1));
+      with('response')->begin()->
+        checkElement('form textarea', 'foo')->
+        checkElement('form textarea', 'bar', array('position' => 1))->
+      end()
+    ;
 
-ƒIƒvƒVƒ‡ƒ“‚Ì”z—ñ‚Í2‚Â‚ÌƒeƒXƒg‚ð“¯Žž‚ÉŽÀŽ{‚·‚é‚½‚ß‚É‚àŽg‚í‚ê‚Ü‚·BƒŠƒXƒg15-23‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒZƒŒƒNƒ^‚ª—v‘f‚Éƒ}ƒbƒ`‚·‚é‚©‚Ç‚¤‚©‚Æ‚»‚ê‚ç‚ª‘¶Ý‚·‚é”‚ÉŠÖ‚µ‚ÄƒeƒXƒg‚Å‚«‚Ü‚·B
+ƒIƒvƒVƒ‡ƒ“‚Ì”z—ñ‚Í2‚Â‚ÌƒeƒXƒg‚ð“¯Žž‚ÉŽÀŽ{‚·‚é‚½‚ß‚É‚àŽg‚í‚ê‚Ü‚·BƒŠƒXƒg15-24‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒZƒŒƒNƒ^‚ª—v‘f‚Éƒ}ƒbƒ`‚·‚é‚©‚Ç‚¤‚©‚Æ‚»‚ê‚ç‚ª‘¶Ý‚·‚é”‚ÉŠÖ‚µ‚ÄƒeƒXƒg‚Å‚«‚Ü‚·B
 
-ƒŠƒXƒg15-23 - ƒ}ƒbƒ`‚·‚é”‚ðƒJƒEƒ“ƒg‚·‚é count ƒIƒvƒVƒ‡ƒ“‚ðŽg‚¤
+ƒŠƒXƒg15-24 - ƒ}ƒbƒ`‚·‚é”‚ðƒJƒEƒ“ƒg‚·‚é count ƒIƒvƒVƒ‡ƒ“‚ðŽg‚¤
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit?id=1')->
-        checkResponseElement('form input', true, array('count' => 3));
+      with('response')->checkElement('form input', true, array('count' => 3));
 
-ƒZƒŒƒNƒ^‚Ìƒc[ƒ‹‚Í‚Æ‚Ä‚à‹­—Í‚Å‚·B‚±‚ê‚Í CSS3 ‚ÌƒZƒŒƒNƒ^‚Ì‘å•”•ª‚ðŽó‚¯“ü‚êAƒŠƒXƒg15-24‚Ì‚æ‚¤‚È•¡ŽG‚ÈƒNƒGƒŠ‚É‘Î‚µ‚Ä—˜—p‚Å‚«‚Ü‚·B
+ƒZƒŒƒNƒ^‚Ìƒc[ƒ‹‚Í‚Æ‚Ä‚à‹­—Í‚Å‚·B‚±‚ê‚Í CSS3 ‚ÌƒZƒŒƒNƒ^‚Ì‘å•”•ª‚ðŽó‚¯“ü‚êAƒŠƒXƒg15-25‚Ì‚æ‚¤‚È•¡ŽG‚ÈƒNƒGƒŠ‚É‘Î‚µ‚Ä—˜—p‚Å‚«‚Ü‚·B
 
-ƒŠƒXƒg15-24 - `checkResponseElment()` ‚ªŽó‚¯“ü‚ê‚é•¡ŽG‚È CSS ƒZƒŒƒNƒ^‚Ì—á
+ƒŠƒXƒg15-25 - `checkElement()` ‚ªŽó‚¯“ü‚ê‚é•¡ŽG‚È CSS ƒZƒŒƒNƒ^‚Ì—á
 
     [php]
-    $b->checkResponseElement('ul#list li a[href]', 'click me');
-    $b->checkResponseElement('ul > li', 'click me');
-    $b->checkResponseElement('ul + li', 'click me');
-    $b->checkResponseElement('h1, h2', 'click me');
-    $b->checkResponseElement('a[class$="foo"][href*="bar.html"]', 'my link');
-    $b->checkResponseElement('p:last ul:nth-child(2) li:contains("Some text")');
+    ->checkElement('ul#list li a[href]', 'click me');
+    ->checkElement('ul > li', 'click me');
+    ->checkElement('ul + li', 'click me');
+    ->checkElement('h1, h2', 'click me');
+    ->checkElement('a[class$="foo"][href*="bar.html"]', 'my link');
+    ->checkElement('p:last ul:nth-child(2) li:contains("Some text")');
 
 ### ƒGƒ‰[‚ðƒeƒXƒg‚·‚é
 
-‚Æ‚«‚Ç‚«AƒAƒNƒVƒ‡ƒ“‚à‚µ‚­‚Íƒ‚ƒfƒ‹‚ª—áŠO‚ðŒÌˆÓ‚É“Š‚¶‚Ü‚· (‚½‚Æ‚¦‚Î404ƒy[ƒW‚ð•\Ž¦‚·‚é‚½‚ß)BHTML ‚Ì¶¬ƒR[ƒh‚Ì‚È‚©‚Ì“Á’è‚ÌƒGƒ‰[ƒƒbƒZ[ƒW‚ðƒ`ƒFƒbƒN‚·‚é‚½‚ß‚É CSS ƒZƒŒƒNƒ^‚ðŽg‚¤ê‡‚Å‚àAƒŠƒXƒg15-25‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚É—áŠO‚ª“Š‚¶‚ç‚ê‚½‚±‚Æ‚ðƒ`ƒFƒbƒN‚·‚é‚½‚ß‚É `throwsException` ƒƒ\ƒbƒh‚ðŽg‚¤‚Ù‚¤‚ª‚æ‚¢‚Å‚·B
+‚Æ‚«‚Ç‚«AƒAƒNƒVƒ‡ƒ“‚à‚µ‚­‚Íƒ‚ƒfƒ‹‚ª—áŠO‚ðŒÌˆÓ‚É“Š‚¶‚Ü‚· (‚½‚Æ‚¦‚Î404ƒy[ƒW‚ð•\Ž¦‚·‚é‚½‚ß)BHTML ‚Ì¶¬ƒR[ƒh‚Ì‚È‚©‚Ì“Á’è‚ÌƒGƒ‰[ƒƒbƒZ[ƒW‚ðƒ`ƒFƒbƒN‚·‚é‚½‚ß‚É CSS ƒZƒŒƒNƒ^‚ðŽg‚¤ê‡‚Å‚àAƒŠƒXƒg15-26‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚É—áŠO‚ª“Š‚¶‚ç‚ê‚½‚±‚Æ‚ðƒ`ƒFƒbƒN‚·‚é‚½‚ß‚É `throwsException` ƒƒ\ƒbƒh‚ðŽg‚¤‚Ù‚¤‚ª‚æ‚¢‚Å‚·B
 
-ƒŠƒXƒg15-25 - —áŠO‚É‘Î‚µ‚ÄƒeƒXƒg‚ðs‚¤
+ƒŠƒXƒg15-26 - —áŠO‚É‘Î‚µ‚ÄƒeƒXƒg‚ðs‚¤
 
     [php]
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
     $b->
-        get('/foobar/edit/id/1')->
-        click('go', array('name' => 'dummy'))->
-        isStatusCode(200)->
-        isRequestParameter('module', 'foobar')->
-        isRequestParameter('action', 'update')->
-
-        throwsException()->                   // ÅŒã‚ÌƒŠƒNƒGƒXƒg‚ª—áŠO‚ð“Š‚¶‚é‚©ƒ`ƒFƒbƒN‚·‚é
-        throwsException('RuntimeException')-> // —áŠO‚ÌƒNƒ‰ƒX‚ðƒ`ƒFƒbƒN‚·‚é
-        throwsException(null, '/error/');     // —áŠO‚ÌƒƒbƒZ[ƒW‚ª³‹K•\Œ»‚Éƒ}ƒbƒ`‚·‚é‚©ƒ`ƒFƒbƒN‚·‚é
+      get('/foobar/edit/id/1')->
+      click('go', array('name' => 'dummy'))->
+      throwsException()->                   // ÅŒã‚ÌƒŠƒNƒGƒXƒg‚ª—áŠO‚ð“Š‚¶‚é‚©ƒ`ƒFƒbƒN‚·‚é
+      throwsException('RuntimeException')-> // —áŠO‚ÌƒNƒ‰ƒX‚ðƒ`ƒFƒbƒN‚·‚é
+      throwsException(null, '/error/');     // —áŠO‚ÌƒƒbƒZ[ƒW‚ª³‹K•\Œ»‚Éƒ}ƒbƒ`‚·‚é‚©ƒ`ƒFƒbƒN‚·‚é
 
 ### ƒeƒXƒgŠÂ‹«‚Å‚Æ‚è‘g‚Þ
 
-`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚Í `test` ŠÂ‹«‚ÅÝ’è‚³‚ê‚é“Á•Ê‚Èƒtƒƒ“ƒgƒRƒ“ƒgƒ[ƒ‰[‚ðŽg‚¢‚Ü‚·B‚±‚ÌŠÂ‹«‚É‘Î‚·‚éƒfƒtƒHƒ‹ƒgÝ’è‚ÍƒŠƒXƒg15-26‚Å•\‚³‚ê‚Ü‚·B
+`sfTestFunctional` ƒIƒuƒWƒFƒNƒg‚Í `test` ŠÂ‹«‚ÅÝ’è‚³‚ê‚é“Á•Ê‚Èƒtƒƒ“ƒgƒRƒ“ƒgƒ[ƒ‰[‚ðŽg‚¢‚Ü‚·B‚±‚ÌŠÂ‹«‚É‘Î‚·‚éƒfƒtƒHƒ‹ƒgÝ’è‚ÍƒŠƒXƒg15-27‚Å•\‚³‚ê‚Ü‚·B
 
-ƒŠƒXƒg15-26 - ƒeƒXƒgŠÂ‹«‚ÌƒfƒtƒHƒ‹ƒgÝ’è (`frontend/config/settings.php`)
+ƒŠƒXƒg15-27 - ƒeƒXƒgŠÂ‹«‚ÌƒfƒtƒHƒ‹ƒgÝ’è (`frontend/config/settings.php`)
 
     test:
       .settings:
-        error_reporting:        <?php echo (E_ALL | E_STRICT & ~E_NOTICE)."\n" ?>
-        cache:                  off
-        web_debug:              off
-        no_script_name:         off
-        etag:                   off
+        error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+        cache:                  false
+        web_debug:              false
+        no_script_name:         false
+        etag:                   false
 
-‚±‚ÌŠÂ‹«‚É‚¨‚¢‚ÄƒLƒƒƒbƒVƒ… (cache) ‚Æ Web ƒfƒoƒbƒOƒc[ƒ‹ƒo[ (web_debug) ‚Í `off` ‚ÉÝ’è‚³‚ê‚Ü‚·B‚µ‚©‚µ‚È‚ª‚çAƒR[ƒh‚ÌŽÀs‚ÍA`dev` ŠÂ‹«‚Æ `prod` ŠÂ‹«‚ÌƒƒOƒtƒ@ƒCƒ‹‚Í•Ê‚É‚µ‚ÄAƒƒOƒtƒ@ƒCƒ‹‚ÉƒgƒŒ[ƒX‚³‚ê‚Ä‚¢‚é‚Ì‚ÅA‚»‚ê‚¼‚ê‚Ìƒtƒ@ƒCƒ‹‚ðŒÂ•Ê‚ÉŠm”F‚Å‚«‚Ü‚· (`myproject/log/frontend_test.log`)B‚±‚ÌŠÂ‹«‚É‚¨‚¢‚ÄA—áŠO‚ÍƒXƒNƒŠƒvƒg‚ÌŽÀs‚ð’âŽ~‚³‚¹‚Ü‚¹‚ñB1‚Â‚ÌƒeƒXƒg‚ªŽ¸”s‚µ‚Ä‚àƒeƒXƒg‘S‘Ì‚ÌƒZƒbƒg‚ðŽÀŽ{‚Å‚«‚Ü‚·B‚½‚Æ‚¦‚ÎAƒeƒXƒgƒf[ƒ^‚ðŽ‚Â‚Ù‚©‚Ìƒf[ƒ^ƒx[ƒX‚ðŽg‚¤‚½‚ß‚ÉAŒÂ•Ê‚Ìƒf[ƒ^ƒx[ƒX‚ÌÝ’è‚ðŽ‚Â‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+‚±‚ÌŠÂ‹«‚É‚¨‚¢‚ÄƒLƒƒƒbƒVƒ… (cache) ‚Æ Web ƒfƒoƒbƒOƒc[ƒ‹ƒo[ (web_debug) ‚Í `false` ‚ÉÝ’è‚³‚ê‚Ü‚·B‚µ‚©‚µ‚È‚ª‚çAƒR[ƒh‚ÌŽÀs‚ÍA`dev` ŠÂ‹«‚Æ `prod` ŠÂ‹«‚ÌƒƒOƒtƒ@ƒCƒ‹‚Í•Ê‚É‚µ‚ÄAƒƒOƒtƒ@ƒCƒ‹‚ÉƒgƒŒ[ƒX‚³‚ê‚Ä‚¢‚é‚Ì‚ÅA‚»‚ê‚¼‚ê‚Ìƒtƒ@ƒCƒ‹‚ðŒÂ•Ê‚ÉŠm”F‚Å‚«‚Ü‚· (`myproject/log/frontend_test.log`)B‚±‚ÌŠÂ‹«‚É‚¨‚¢‚ÄA—áŠO‚ÍƒXƒNƒŠƒvƒg‚ÌŽÀs‚ð’âŽ~‚³‚¹‚Ü‚¹‚ñB1‚Â‚ÌƒeƒXƒg‚ªŽ¸”s‚µ‚Ä‚àƒeƒXƒg‘S‘Ì‚ÌƒZƒbƒg‚ðŽÀŽ{‚Å‚«‚Ü‚·B‚½‚Æ‚¦‚ÎAƒeƒXƒgƒf[ƒ^‚ðŽ‚Â‚Ù‚©‚Ìƒf[ƒ^ƒx[ƒX‚ðŽg‚¤‚½‚ß‚ÉAŒÂ•Ê‚Ìƒf[ƒ^ƒx[ƒX‚ÌÝ’è‚ðŽ‚Â‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
-`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ÍŽg‚¤‚Ü‚¦‚É‰Šú‰»‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB•K—v‚Å‚ ‚ê‚ÎAƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒzƒXƒg‚Ì–¼‘O‚ÆƒNƒ‰ƒCƒAƒ“ƒg‚ÌIPƒAƒhƒŒƒX‚ðŽw’è‚Å‚«‚Ü‚·B‚·‚È‚í‚¿A‚±‚ê‚ç2‚Â‚Ìƒpƒ‰ƒ[ƒ^[‚ð’Ê‚µ‚ÄƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªƒRƒ“ƒgƒ[ƒ‹‚·‚éê‡‚Å‚·BƒŠƒXƒg15-27‚Í‚±‚Ì•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+`sfBrowser` ƒIƒuƒWƒFƒNƒg‚ÍŽg‚¤‚Ü‚¦‚É‰Šú‰»‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB•K—v‚Å‚ ‚ê‚ÎAƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒzƒXƒg‚Ì–¼‘O‚ÆƒNƒ‰ƒCƒAƒ“ƒg‚ÌIPƒAƒhƒŒƒX‚ðŽw’è‚Å‚«‚Ü‚·B‚·‚È‚í‚¿A‚±‚ê‚ç2‚Â‚Ìƒpƒ‰ƒ[ƒ^[‚ð’Ê‚µ‚ÄƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªƒRƒ“ƒgƒ[ƒ‹‚·‚éê‡‚Å‚·BƒŠƒXƒg15-28‚Í‚±‚Ì•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-27 - ƒzƒXƒg–¼‚Æ IP ‚ÅƒeƒXƒgƒuƒ‰ƒEƒU[‚ðƒZƒbƒgƒAƒbƒv‚·‚é
+ƒŠƒXƒg15-28 - ƒzƒXƒg–¼‚Æ IP ‚ÅƒeƒXƒgƒuƒ‰ƒEƒU[‚ðƒZƒbƒgƒAƒbƒv‚·‚é
 
     [php]
-    $b = new sfTestBrowser('myapp.example.com', '123.456.789.123');
+    $b = new sfBrowser('myapp.example.com', '123.456.789.123');
 
-### test:functionalƒ^ƒXƒN‚ðŽg‚¤
+### `test:functional` ƒ^ƒXƒN‚ðŽg‚¤
 
-`test:functional` ƒ^ƒXƒN‚É‚æ‚Á‚Ä1‚Â‚à‚µ‚­‚Í•¡”‚Ì‹@”\ƒeƒXƒg‚ðŽÀŽ{‚·‚é‚±‚Æ‚ª‰Â”\‚ÅA‚±‚Ìƒ^ƒXƒN‚ÍŽó‚¯‚Æ‚éˆø”‚Ì”‚ÉˆË‘¶‚µ‚Ü‚·BƒŠƒXƒg15-27‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA‹@”\ƒeƒXƒg‚ªÅ‰‚Ìˆø”‚Æ‚µ‚ÄƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì–¼‘O‚ð•K—v‚Æ‚·‚é‚±‚ÆˆÈŠOAƒ‹[ƒ‹‚Í `test:unit` ƒ^ƒXƒN‚Ì‚à‚Ì‚Æ“¯‚¶‚É‚È‚è‚Ü‚·B
+`test:functional` ƒ^ƒXƒN‚É‚æ‚Á‚Ä1‚Â‚à‚µ‚­‚Í•¡”‚Ì‹@”\ƒeƒXƒg‚ðŽÀŽ{‚·‚é‚±‚Æ‚ª‰Â”\‚ÅA‚±‚Ìƒ^ƒXƒN‚ÍŽó‚¯‚Æ‚éˆø”‚Ì”‚ÉˆË‘¶‚µ‚Ü‚·BƒŠƒXƒg15-29‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉA‹@”\ƒeƒXƒg‚ªÅ‰‚Ìˆø”‚Æ‚µ‚ÄƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì–¼‘O‚ð•K—v‚Æ‚·‚é‚±‚ÆˆÈŠOAƒ‹[ƒ‹‚Í `test:unit` ƒ^ƒXƒN‚Ì‚à‚Ì‚Æ“¯‚¶‚É‚È‚è‚Ü‚·B
 
-ƒŠƒXƒg15-27 - ‹@”\ƒeƒXƒg‚Ìƒ^ƒXƒN\•¶
+ƒŠƒXƒg15-29 - ‹@”\ƒeƒXƒg‚Ìƒ^ƒXƒN\•¶
 
     // testƒfƒBƒŒƒNƒgƒŠ‚Ì\‘¢
     test/
@@ -805,22 +824,22 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
           myOtherScenarioTest.php
 
     ## Ä‹A“I‚ÉA1‚Â‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚É‘Î‚µ‚Ä‚·‚×‚Ä‚Ì‹@”\ƒeƒXƒg‚ðŽÀs‚·‚é
-    > php symfony test:functional frontend
+    $ php symfony test:functional frontend
 
     ## 1‚Â‚Ì”CˆÓ‚Ì‹@”\ƒeƒXƒg‚ðŽÀs‚·‚é
-    > php symfony test:functional frontend myScenario
+    $ php symfony test:functional frontend myScenario
 
     ## ƒpƒ^[ƒ“‚ÉŠî‚Ã‚¢‚Ä‚¢‚­‚Â‚©‚ÌƒeƒXƒg‚ðŽÀs‚·‚é
-    > php symfony test:functional frontend my*
+    $ php symfony test:functional frontend my*
 
 ƒeƒXƒg‚Ì–½–¼ŠµK
 ----------------
 
 ‚±‚ÌƒZƒNƒVƒ‡ƒ“‚Å‚ÍƒeƒXƒg‚ð®—‚µ‚ÄˆÛŽ‚µ‚â‚·‚¢ó‘Ô‚É•Û‚Â‚½‚ß‚Ì‚¢‚­‚Â‚©‚ÌŠµK‚Ìˆê——‚ðŽ¦‚µ‚Ü‚·BŽg‚¢‚±‚È‚·‚½‚ß‚Ì”éŒ‚Íƒtƒ@ƒCƒ‹‚Ì®—Aƒ†ƒjƒbƒgƒeƒXƒg‚Æ‹@”\ƒeƒXƒg‚ÉŠÖ‚·‚é‚±‚Æ‚Å‚·B
 
-ƒtƒ@ƒCƒ‹\‘¢‚ÉŠÖ‚µ‚Ä‚ÍAƒeƒXƒg‚·‚é—\’è‚ÌƒNƒ‰ƒX–¼‚Åƒ†ƒjƒbƒgƒeƒXƒg‚Ìƒtƒ@ƒCƒ‹‚ð–¼‚Ã‚¯AƒeƒXƒg‚·‚é—\’è‚Ìƒ‚ƒWƒ…[ƒ‹‚à‚µ‚­‚ÍƒVƒiƒŠƒI‚Ì–¼‘O‚Å‹@”\ƒeƒXƒg‚ð–¼‚Ã‚¯‚Ü‚·B—á‚Æ‚µ‚ÄƒŠƒXƒg15-29‚ð‚²——‚­‚¾‚³‚¢B`test/` ƒfƒBƒŒƒNƒgƒŠ‚Í‚·‚®‚É‘½‚­‚Ìƒtƒ@ƒCƒ‹‚ðŽû”[‚·‚é‚æ‚¤‚É‚È‚é‚Ì‚ÅA‚±‚ê‚ç‚ÌƒKƒCƒhƒ‰ƒCƒ“‚É]‚í‚È‚¢‚ÆA’·ŠúŠÔ‰^—p‚µ‚Ä‚¢‚é‚ÆƒeƒXƒg‚ðŒ©‚Â‚¯‚é‚Ì‚ª¢“ï‚É‚È‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
+ƒtƒ@ƒCƒ‹\‘¢‚ÉŠÖ‚µ‚Ä‚ÍAƒeƒXƒg‚·‚é—\’è‚ÌƒNƒ‰ƒX–¼‚Åƒ†ƒjƒbƒgƒeƒXƒg‚Ìƒtƒ@ƒCƒ‹‚ð–¼‚Ã‚¯AƒeƒXƒg‚·‚é—\’è‚Ìƒ‚ƒWƒ…[ƒ‹‚à‚µ‚­‚ÍƒVƒiƒŠƒI‚Ì–¼‘O‚Å‹@”\ƒeƒXƒg‚ð–¼‚Ã‚¯‚Ü‚·B—á‚Æ‚µ‚ÄƒŠƒXƒg15-30‚ð‚²——‚­‚¾‚³‚¢B`test/` ƒfƒBƒŒƒNƒgƒŠ‚Í‚·‚®‚É‘½‚­‚Ìƒtƒ@ƒCƒ‹‚ðŽû”[‚·‚é‚æ‚¤‚É‚È‚é‚Ì‚ÅA‚±‚ê‚ç‚ÌƒKƒCƒhƒ‰ƒCƒ“‚É]‚í‚È‚¢‚ÆA’·ŠúŠÔ‰^—p‚µ‚Ä‚¢‚é‚ÆƒeƒXƒg‚ðŒ©‚Â‚¯‚é‚Ì‚ª¢“ï‚É‚È‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
 
-ƒŠƒXƒg15-29 - ƒtƒ@ƒCƒ‹‚Ì–½–¼ŠµK‚Ì—á
+ƒŠƒXƒg15-30 - ƒtƒ@ƒCƒ‹‚Ì–½–¼ŠµK‚Ì—á
 
     test/
       unit/
@@ -835,9 +854,9 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
         backend/
           myOtherScenarioTest.php
 
-ƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚½‚ß‚Ì‚æ‚¢KŠµ‚ÍŠÖ”‚à‚µ‚­‚Íƒƒ\ƒbƒh‚É‚æ‚Á‚ÄƒeƒXƒg‚ð•ª—Þ‚·‚é‚±‚Æ‚Æ `diag()` ŒÄ‚Ño‚µ‚Å‚»‚ê‚¼‚ê‚ÌƒeƒXƒg‚ÌƒOƒ‹[ƒv‚ðŽn‚ß‚é‚±‚Æ‚Å‚·B‚»‚ê‚¼‚ê‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚ÌƒƒbƒZ[ƒW‚ÍŠÖ”‚Ì–¼‘O‚à‚µ‚­‚ÍAƒeƒXƒg‚³‚ê‚½ƒƒ\ƒbƒh‚ðŠÜ‚ÝA“®ŽŒ‚ÆƒvƒƒpƒeƒB‚ÌŒã‚É‘±‚­‚Ì‚ÅAƒeƒXƒg‚Ìo—Í‚ÍƒIƒuƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB‚ðà–¾‚·‚é•¶‚Ì‚æ‚¤‚ÉŒ©‚¦‚Ü‚·BƒŠƒXƒg15-30‚Í—á‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+ƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚½‚ß‚Ì‚æ‚¢KŠµ‚ÍŠÖ”‚à‚µ‚­‚Íƒƒ\ƒbƒh‚É‚æ‚Á‚ÄƒeƒXƒg‚ð•ª—Þ‚·‚é‚±‚Æ‚Æ `diag()` ŒÄ‚Ño‚µ‚Å‚»‚ê‚¼‚ê‚ÌƒeƒXƒg‚ÌƒOƒ‹[ƒv‚ðŽn‚ß‚é‚±‚Æ‚Å‚·B‚»‚ê‚¼‚ê‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚ÌƒƒbƒZ[ƒW‚ÍŠÖ”‚Ì–¼‘O‚à‚µ‚­‚ÍAƒeƒXƒg‚³‚ê‚½ƒƒ\ƒbƒh‚ðŠÜ‚ÝA“®ŽŒ‚ÆƒvƒƒpƒeƒB‚ÌŒã‚É‘±‚­‚Ì‚ÅAƒeƒXƒg‚Ìo—Í‚ÍƒIƒuƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB‚ðà–¾‚·‚é•¶‚Ì‚æ‚¤‚ÉŒ©‚¦‚Ü‚·BƒŠƒXƒg15-31‚Í—á‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-30 - ƒ†ƒjƒbƒgƒeƒXƒg‚Ì–½–¼ŠµK‚Ì—á
+ƒŠƒXƒg15-31 - ƒ†ƒjƒbƒgƒeƒXƒg‚Ì–½–¼ŠµK‚Ì—á
 
     [php]
     // srttolower()
@@ -849,17 +868,21 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
     ok 1 - strtolower() ‚Í•¶Žš—ñ‚ð•Ô‚·
     ok 2 - strtolower() ‚Í“ü—Í‚ð¬•¶Žš‚É•ÏŠ·‚·‚é
 
-‹@”\ƒeƒXƒg‚Íƒy[ƒW‚É‚æ‚Á‚Ä•ª—Þ‚³‚êƒŠƒNƒGƒXƒg‚É‚æ‚Á‚ÄŽn‚Ü‚è‚Ü‚·BƒŠƒXƒg15-31‚Í‚±‚ÌŠµK‚ðà–¾‚µ‚Ä‚¢‚Ü‚·B
+‹@”\ƒeƒXƒg‚Íƒy[ƒW‚É‚æ‚Á‚Ä•ª—Þ‚³‚êƒŠƒNƒGƒXƒg‚É‚æ‚Á‚ÄŽn‚Ü‚è‚Ü‚·BƒŠƒXƒg15-32‚Í‚±‚ÌŠµK‚ðà–¾‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-31 - ‹@”\ƒeƒXƒg‚Ì–½–¼ŠµK‚Ì—á
+ƒŠƒXƒg15-32 - ‹@”\ƒeƒXƒg‚Ì–½–¼ŠµK‚Ì—á
 
     [php]
     $browser->
       get('/foobar/index')->
-      isStatusCode(200)->
-      isRequestParameter('module', 'foobar')->
-      isRequestParameter('action', 'index')->
-      checkResponseElement('body', '/foobar/')
+      with('request')->begin()->
+        isParameter('module', 'foobar')->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('body', '/foobar/')->
+      end()
     ;
 
     # /comment/index‚ðŽæ“¾‚·‚é
@@ -877,11 +900,11 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
 
 ### ƒeƒXƒg‚ðƒeƒXƒgƒn[ƒlƒX‚ÅŽÀs‚·‚é
 
-`test:unit` ‚Æ `test:functional` ƒ^ƒXƒN‚Í’P“Æ‚ÌƒeƒXƒg‚à‚µ‚­‚ÍƒeƒXƒg‚ÌƒZƒbƒg‚ð—§‚¿ã‚°‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B‚µ‚©‚µ‚È‚ª‚çA‚±‚ê‚ç‚Ìƒ^ƒXƒN‚ðƒpƒ‰ƒ[ƒ^[‚È‚µ‚ÅŒÄ‚Ño‚·ê‡A‚±‚ê‚ç‚Í`test/`ƒfƒBƒŒƒNƒgƒŠ‚Ì‚È‚©‚Ì‚·‚×‚Ä‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Æ‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚Ü‚·BƒeƒXƒg‚Ì‚ ‚¢‚¾‚Ì‰˜õ‚ð‰ñ”ð‚·‚é‚É‚ÍA‚»‚ê‚¼‚ê‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ð“Æ—§‚µ‚½ƒTƒ“ƒhƒ{ƒbƒNƒX‚É•ª—£‚·‚é“Á’è‚ÌƒƒJƒjƒYƒ€‚ª•K—v‚Å‚·B‚³‚ç‚ÉA(o—Í‚Í‰½çs‚Ì’·‚³‚É‚È‚é‚Ì‚Å)‚»‚Ìê‡A’P“Æ‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚Ì‚æ‚¤‚É“¯‚¶o—Í‚ð‘±‚¯‚é‚Ì‚Í–³ˆÓ–¡‚È‚Ì‚ÅAƒeƒXƒg‚ÌŒ‹‰Ê‚Í“‡“I‚Èƒrƒ…[‚É‚Ü‚Æ‚ß‚ç‚ê‚Ü‚·B‚±‚ê‚ª‘½‚­‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ðŽÀs‚·‚é‚½‚ß‚ÉƒeƒXƒgƒn[ƒlƒX‚ðŽg‚¤——R‚Å‚·BƒeƒXƒgƒn[ƒlƒX (test harness) ‚Í“Á•Ê‚È‹@”\‚ðŽ‚ÂŽ©“®ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚Å‚·BƒeƒXƒgƒn[ƒlƒX‚Í `lime_harness` ŒÄ‚Î‚ê‚é lime ƒtƒŒ[ƒ€ƒ[ƒN‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉˆË‘¶‚µ‚Ä‚¢‚Ü‚·BƒŠƒXƒg15-32‚Ì‚æ‚¤‚ÉA‚±‚ê‚Íƒtƒ@ƒCƒ‹‚²‚Æ‚ÌƒeƒXƒg‚Ìó‘Ô‚ÆI—¹‚µ‚½ƒeƒXƒg‚Ì”‚ÌŠT—v‚ðŽ¦‚µ‚Ü‚·B
+`test:unit` ‚Æ `test:functional` ƒ^ƒXƒN‚Í’P“Æ‚ÌƒeƒXƒg‚à‚µ‚­‚ÍƒeƒXƒg‚ÌƒZƒbƒg‚ð—§‚¿ã‚°‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B‚µ‚©‚µ‚È‚ª‚çA‚±‚ê‚ç‚Ìƒ^ƒXƒN‚ðƒpƒ‰ƒ[ƒ^[‚È‚µ‚ÅŒÄ‚Ño‚·ê‡A‚±‚ê‚ç‚Í`test/`ƒfƒBƒŒƒNƒgƒŠ‚Ì‚È‚©‚Ì‚·‚×‚Ä‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Æ‹@”\ƒeƒXƒg‚ð—§‚¿ã‚°‚Ü‚·BƒeƒXƒg‚Ì‚ ‚¢‚¾‚Ì‰˜õ‚ð‰ñ”ð‚·‚é‚É‚ÍA‚»‚ê‚¼‚ê‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ð“Æ—§‚µ‚½ƒTƒ“ƒhƒ{ƒbƒNƒX‚É•ª—£‚·‚é“Á’è‚ÌƒƒJƒjƒYƒ€‚ª•K—v‚Å‚·B‚³‚ç‚ÉA(o—Í‚Í‰½çs‚Ì’·‚³‚É‚È‚é‚Ì‚Å)‚»‚Ìê‡A’P“Æ‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚Ì‚æ‚¤‚É“¯‚¶o—Í‚ð‘±‚¯‚é‚Ì‚Í–³ˆÓ–¡‚È‚Ì‚ÅAƒeƒXƒg‚ÌŒ‹‰Ê‚Í“‡“I‚Èƒrƒ…[‚É‚Ü‚Æ‚ß‚ç‚ê‚Ü‚·B‚±‚ê‚ª‘½‚­‚ÌƒeƒXƒgƒtƒ@ƒCƒ‹‚ðŽÀs‚·‚é‚½‚ß‚ÉƒeƒXƒgƒn[ƒlƒX‚ðŽg‚¤——R‚Å‚·BƒeƒXƒgƒn[ƒlƒX (test harness) ‚Í“Á•Ê‚È‹@”\‚ðŽ‚ÂŽ©“®ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚Å‚·BƒeƒXƒgƒn[ƒlƒX‚Í `lime_harness` ŒÄ‚Î‚ê‚é lime ƒtƒŒ[ƒ€ƒ[ƒN‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉˆË‘¶‚µ‚Ä‚¢‚Ü‚·BƒŠƒXƒg15-33‚Ì‚æ‚¤‚ÉA‚±‚ê‚Íƒtƒ@ƒCƒ‹‚²‚Æ‚ÌƒeƒXƒg‚Ìó‘Ô‚ÆI—¹‚µ‚½ƒeƒXƒg‚Ì”‚ÌŠT—v‚ðŽ¦‚µ‚Ü‚·B
 
-ƒŠƒXƒg15-32 - ‚·‚×‚Ä‚ÌƒeƒXƒg‚ðƒeƒXƒgƒn[ƒlƒX‚Å—§‚¿ã‚°‚é
+ƒŠƒXƒg15-33 - ‚·‚×‚Ä‚ÌƒeƒXƒg‚ðƒeƒXƒgƒn[ƒlƒX‚Å—§‚¿ã‚°‚é
 
-    > php symfony test:all
+    $ php symfony test:all
 
     unit/myFunctionTest.php................ok
     unit/mySecondFunctionTest.php..........ok
@@ -894,17 +917,17 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
 
 ƒeƒXƒg‚Í1‚Â‚¸‚ÂŒÄ‚Ño‚·‚Æ‚«‚Æ“¯‚¶•û–@‚ÅŽÀs‚³‚ê‚Ü‚·; –{“–‚É•Ö—˜‚É‚·‚é‚½‚ß‚Éo—Í‚¾‚¯‚ª’Z‚­‚È‚è‚Ü‚·B‚Æ‚è‚í‚¯AÅŒã‚Ì•\‚ÍŽ¸”s‚µ‚½ƒeƒXƒg‚ÉÅ“_‚ð“–‚Ä‚Ä‚¢‚é‚Ì‚ÅA‚±‚ê‚ç‚ÌƒeƒXƒg‚ðŒ©‚Â‚¯‚é‚½‚ß‚Ì•‚¯‚É‚È‚è‚Ü‚·B
 
-ƒŠƒXƒg15-33‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒeƒXƒgƒn[ƒlƒX‚Ì `test:all` ƒ^ƒXƒN‚ðŽg‚¤‚±‚Æ‚Å‚·‚×‚Ä‚ÌƒeƒXƒg‚ð1‚Â‚ÌŒÄ‚Ño‚µ‚Å‹N“®‚Å‚«‚Ü‚·BÅV‚ÌƒŠƒŠ[ƒXˆÈ~‚ÅƒŠƒOƒŒƒbƒVƒ‡ƒ“(‰ñ‹A)‚ª‹N‚±‚ç‚È‚¢‚±‚Æ‚ð•ÛØ‚·‚é‚½‚ß‚ÉA‚±‚ÌŒÄ‚Ño‚µ‚Í‚·‚×‚Ä‚ÌƒR[ƒh‚ð‰^—pŠÂ‹«‚É“]‘—‚·‚é‚Ü‚¦‚És‚¤‚×‚«‚Å‚·B
+ƒŠƒXƒg15-34‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚ÉAƒeƒXƒgƒn[ƒlƒX‚Ì `test:all` ƒ^ƒXƒN‚ðŽg‚¤‚±‚Æ‚Å‚·‚×‚Ä‚ÌƒeƒXƒg‚ð1‚Â‚ÌŒÄ‚Ño‚µ‚Å‹N“®‚Å‚«‚Ü‚·BÅV‚ÌƒŠƒŠ[ƒXˆÈ~‚ÅƒŠƒOƒŒƒbƒVƒ‡ƒ“(‰ñ‹A)‚ª‹N‚±‚ç‚È‚¢‚±‚Æ‚ð•ÛØ‚·‚é‚½‚ß‚ÉA‚±‚ÌŒÄ‚Ño‚µ‚Í‚·‚×‚Ä‚ÌƒR[ƒh‚ð‰^—pŠÂ‹«‚É“]‘—‚·‚é‚Ü‚¦‚És‚¤‚×‚«‚Å‚·B
 
-ƒŠƒXƒg15-33 - ƒvƒƒWƒFƒNƒg‚Ì‚·‚×‚Ä‚ÌƒeƒXƒg‚ð—§‚¿ã‚°‚é
+ƒŠƒXƒg15-34 - ƒvƒƒWƒFƒNƒg‚Ì‚·‚×‚Ä‚ÌƒeƒXƒg‚ð—§‚¿ã‚°‚é
 
-    > php symfony test:all
+    $ php symfony test:all
 
 ### ƒf[ƒ^ƒx[ƒX‚ÉƒAƒNƒZƒX‚·‚é
 
-ƒ†ƒjƒbƒgƒeƒXƒg‚É‚¨‚¢‚Äƒf[ƒ^ƒx[ƒX‚ÉƒAƒNƒZƒX‚·‚é‚±‚Æ‚ª‚æ‚­•K—v‚É‚È‚è‚Ü‚·BÅ‰‚É `sfTestBrowser::get()` ‚ðŒÄ‚Ño‚·‚Æ‚«‚Éƒf[ƒ^ƒx[ƒXÚ‘±‚ÍŽ©“®“I‚É‰Šú‰»‚³‚ê‚Ü‚·B‚µ‚©‚µ‚È‚ª‚ç `sfTestBrowser` ‚ðŽg‚¤‚Ü‚¦‚É‚àƒf[ƒ^ƒx[ƒX‚ÉÚ‘±‚µ‚½‚¢ê‡AƒŠƒXƒg15-34‚Ì‚æ‚¤‚ÉAŽè“®‚Å `sfDabataseManager` ‚ð‰Šú‰»‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
+ƒ†ƒjƒbƒgƒeƒXƒg‚É‚¨‚¢‚Äƒf[ƒ^ƒx[ƒX‚ÉƒAƒNƒZƒX‚·‚é‚±‚Æ‚ª‚æ‚­•K—v‚É‚È‚è‚Ü‚·BÅ‰‚É `sfBrowser::get()` ‚ðŒÄ‚Ño‚·‚Æ‚«‚Éƒf[ƒ^ƒx[ƒXÚ‘±‚ÍŽ©“®“I‚É‰Šú‰»‚³‚ê‚Ü‚·B‚µ‚©‚µ‚È‚ª‚ç `sfBrowser` ‚ðŽg‚¤‚Ü‚¦‚É‚àƒf[ƒ^ƒx[ƒX‚ÉÚ‘±‚µ‚½‚¢ê‡AƒŠƒXƒg15-35‚Ì‚æ‚¤‚ÉAŽè“®‚Å `sfDabataseManager` ‚ð‰Šú‰»‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
 
-ƒŠƒXƒg15-34 - ƒeƒXƒg‚É‚¨‚¢‚Äƒf[ƒ^ƒx[ƒX‚ð‰Šú‰»‚·‚é
+ƒŠƒXƒg15-35 - ƒeƒXƒg‚É‚¨‚¢‚Äƒf[ƒ^ƒx[ƒX‚ð‰Šú‰»‚·‚é
 
     [php]
     $databaseManager = new sfDatabaseManager($configuration);
@@ -913,9 +936,9 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
     // ƒIƒvƒVƒ‡ƒ“‚Æ‚µ‚ÄAŒ»Ý‚Ìƒf[ƒ^ƒx[ƒXÚ‘±‚ðŽæ“¾‚Å‚«‚é
     $con = Propel::getConnection();
 
-ƒeƒXƒg‚ðŽn‚ß‚é‚Ü‚¦‚Éƒf[ƒ^ƒx[ƒX‚ÉƒtƒBƒNƒXƒ`ƒƒ‚ð“Š“ü‚µ‚Ü‚·B‚±‚ê‚Í `sfPropelData` ƒIƒuƒWƒFƒNƒg‚ð’Ê‚µ‚Äs‚¤‚±‚Æ‚ª‚Å‚«‚Ü‚·BƒŠƒXƒg15-35‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚É `propel:data-load` ƒ^ƒXƒN‚Ì‚æ‚¤‚ÉAƒtƒ@ƒCƒ‹‚©‚ç‚à‚µ‚­‚Í”z—ñ‚©‚çA‚±‚ÌƒIƒuƒWƒFƒNƒg‚Íƒf[ƒ^‚ðƒ[ƒh‚µ‚Ü‚·B
+ƒeƒXƒg‚ðŽn‚ß‚é‚Ü‚¦‚Éƒf[ƒ^ƒx[ƒX‚ÉƒtƒBƒNƒXƒ`ƒƒ‚ð“Š“ü‚µ‚Ü‚·B‚±‚ê‚Í `sfPropelData` ƒIƒuƒWƒFƒNƒg‚ð’Ê‚µ‚Äs‚¤‚±‚Æ‚ª‚Å‚«‚Ü‚·BƒŠƒXƒg15-36‚ÅŽ¦‚³‚ê‚é‚æ‚¤‚É `propel:data-load` ƒ^ƒXƒN‚Ì‚æ‚¤‚ÉAƒtƒ@ƒCƒ‹‚©‚ç‚à‚µ‚­‚Í”z—ñ‚©‚çA‚±‚ÌƒIƒuƒWƒFƒNƒg‚Íƒf[ƒ^‚ðƒ[ƒh‚µ‚Ü‚·B
 
-ƒŠƒXƒg15-35 - ƒeƒXƒgƒtƒ@ƒCƒ‹‚©‚çƒf[ƒ^ƒx[ƒX‚É“Š“ü‚·‚é
+ƒŠƒXƒg15-36 - ƒeƒXƒgƒtƒ@ƒCƒ‹‚©‚çƒf[ƒ^ƒx[ƒX‚É“Š“ü‚·‚é
 
     [php]
     $data = new sfPropelData();
@@ -946,22 +969,22 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
 
 ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚É‘Î‚µ‚ÄƒLƒƒƒbƒVƒ…‚ð—LŒø‚É‚µ‚½‚Æ‚«A‹@”\ƒeƒXƒg‚ÍƒLƒƒƒbƒVƒ…‚³‚ê‚½ƒAƒNƒVƒ‡ƒ“‚ªŠú‘Ò’Ê‚è‚É“®ì‚·‚é‚©ŒŸØ‚µ‚Ü‚·B
 
-Å‰‚És‚¤‚×‚«‚±‚Æ‚ÍƒeƒXƒgŠÂ‹« (`settings.yml` ƒtƒ@ƒCƒ‹) ‚É‘Î‚µ‚ÄƒLƒƒƒbƒVƒ…‚ð—LŒø‚É‚·‚é‚±‚Æ‚Å‚·B‚»‚ê‚©‚çAƒy[ƒW‚ªƒLƒƒƒbƒVƒ…‚©‚ç—R—ˆ‚·‚é‚à‚Ì‚È‚Ì‚©A¶¬‚³‚ê‚½‚à‚Ì‚Å‚ ‚é‚Ì‚©‚ðƒeƒXƒg‚µ‚½‚¢ê‡A`sfTestBrowser` ƒIƒuƒWƒFƒNƒg‚ª’ñ‹Ÿ‚·‚é `isCached()` ƒeƒXƒgƒƒ\ƒbƒh‚ðŽg‚¢‚Ü‚·BƒŠƒXƒg15-36‚Í‚±‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+Å‰‚És‚¤‚×‚«‚±‚Æ‚ÍƒeƒXƒgŠÂ‹« (`settings.yml` ƒtƒ@ƒCƒ‹) ‚É‘Î‚µ‚ÄƒLƒƒƒbƒVƒ…‚ð—LŒø‚É‚·‚é‚±‚Æ‚Å‚·B‚»‚ê‚©‚çAƒy[ƒW‚ªƒLƒƒƒbƒVƒ…‚©‚ç—R—ˆ‚·‚é‚à‚Ì‚È‚Ì‚©A¶¬‚³‚ê‚½‚à‚Ì‚Å‚ ‚é‚Ì‚©‚ðƒeƒXƒg‚µ‚½‚¢ê‡A`view_cache` ƒeƒXƒgƒOƒ‹[ƒv‚ª’ñ‹Ÿ‚·‚é `isCached()` ƒeƒXƒgƒƒ\ƒbƒh‚ðŽg‚¢‚Ü‚·BƒŠƒXƒg15-37‚Í‚±‚Ìƒƒ\ƒbƒh‚ÌŽg‚¢‚©‚½‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-36 - `isCached()` ƒƒ\ƒbƒh‚ÍƒLƒƒƒbƒVƒ…‚ðƒeƒXƒg‚·‚é
+ƒŠƒXƒg15-37 - `isCached()` ƒƒ\ƒbƒh‚ÍƒLƒƒƒbƒVƒ…‚ðƒeƒXƒg‚·‚é
 
     [php]
     <?php
 
-    include(dirname(__FILE__).'/../../bootstrap/functional.php');
+    include dirname(__FILE__).'/../../bootstrap/functional.php';
 
     // V‚µ‚¢ƒeƒXƒgƒuƒ‰ƒEƒU[‚ðì¬‚·‚é
-    $b = new sfTestBrowser();
+    $b = new sfTestFunctional(new sfBrowser());
 
     $b->get('/mymodule');
-    $b->isCached(true);       // ƒŒƒXƒ|ƒ“ƒX‚ªƒLƒƒƒbƒVƒ…‚©‚ç‚â‚Á‚Ä—ˆ‚½‚±‚Æ‚ðŠm”F‚·‚é
-    $b->isCached(true, true); // ƒLƒƒƒbƒVƒ…‚³‚ê‚½ƒŒƒXƒ|ƒ“ƒX‚ªƒŒƒCƒAƒEƒg‚Æˆê‚É—ˆ‚é‚±‚Æ‚ðŠm”F‚·‚é
-    $b->isCached(false);      // ƒŒƒXƒ|ƒ“ƒX‚ªƒLƒƒƒbƒVƒ…‚©‚ç‚â‚Á‚Ä—ˆ‚È‚¢‚±‚Æ‚ðŠm”F‚·‚é
+    $b->with('view_cache')->isCached(true);       // ƒŒƒXƒ|ƒ“ƒX‚ªƒLƒƒƒbƒVƒ…‚©‚ç‚â‚Á‚Ä—ˆ‚½‚±‚Æ‚ðŠm”F‚·‚é
+    $b->with('view_cache')->isCached(true, true); // ƒLƒƒƒbƒVƒ…‚³‚ê‚½ƒŒƒXƒ|ƒ“ƒX‚ªƒŒƒCƒAƒEƒg‚Æˆê‚É—ˆ‚é‚±‚Æ‚ðŠm”F‚·‚é
+    $b->with('view_cache')->isCached(false);      // ƒŒƒXƒ|ƒ“ƒX‚ªƒLƒƒƒbƒVƒ…‚©‚ç‚â‚Á‚Ä—ˆ‚È‚¢‚±‚Æ‚ðŠm”F‚·‚é
 
 >**NOTE**
 >‹@”\ƒeƒXƒg‚ÌÅ‰‚ÉƒLƒƒƒbƒVƒ…‚ðƒNƒŠƒA‚·‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñ; ƒu[ƒgƒXƒgƒ‰ƒbƒv‚ÌƒXƒNƒŠƒvƒg‚ª‘ãs‚µ‚Ä‚­‚ê‚Ü‚·B
@@ -970,16 +993,16 @@ PHP ‚Ì DOM ƒƒ\ƒbƒh‚É‚æ‚é HTML ƒhƒLƒ…ƒƒ“ƒg‚Ì‰ðÍ‚Í\•ª‚È‘¬‚³‚Ås‚í‚ê‚¸‚Ü‚½ŠÈ’P‚
 
 ‚±‚±‚Ü‚Å‚Åà–¾‚³‚ê‚½ƒeƒNƒjƒbƒN‚ÌŽå‚È“ï“_‚Í JavaScript ‚ðƒVƒ~ƒ…ƒŒ[ƒg‚Å‚«‚È‚¢‚±‚Æ‚Å‚·B‚½‚Æ‚¦‚ÎAAjax ƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚Ì‚æ‚¤‚È‚Æ‚Ä‚à•¡ŽG‚ÈƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚Ì‚½‚ß‚ÉAƒ†[ƒU[‚ªs‚¤ƒ}ƒEƒX‚ÆƒL[ƒ{[ƒh‚Ì“ü—Í‚ÆƒNƒ‰ƒCƒAƒ“ƒgƒTƒCƒhã‚Å‚ÌƒXƒNƒŠƒvƒg‚ÌŽÀs‚ðÄŒ»‚Å‚«‚é‚±‚Æ‚ª•K—v‚Å‚·B’ÊíA‚±‚ê‚ç‚ÌƒeƒXƒg‚ÍŽèì‹Æ‚ÅÄŒ»‚³‚ê‚Ü‚·‚ªA‚Æ‚Ä‚àŽžŠÔ‚ª‚©‚©‚èƒGƒ‰[‚É‚È‚è‚ª‚¿‚Å‚·B
 
-‰ðŒˆ•û–@‚Í Selenium([http://www.openqa.org/selenium/](http://www.openqa.org/selenium/)) ‚ÆŒÄ‚Î‚ê‚é‚à‚Ì‚ÅAŠ®‘S‚É JavaScript ‚Å‘‚©‚ê‚½ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚Å‚·B‚±‚Ìƒc[ƒ‹‚ÍAŒ»Ý‚Ìƒuƒ‰ƒEƒU[ƒEƒBƒ“ƒhƒE‚ð—˜—p‚µ‚ÄA’Êí‚Ìƒ†[ƒU[‚ªs‚¤‚æ‚¤‚Èƒy[ƒWã‚ÌƒAƒNƒVƒ‡ƒ“‚ÌƒZƒbƒg‚ðŽÀs‚µ‚Ü‚·B`sfBrowser` ƒIƒuƒWƒFƒNƒg‚ð‰z‚¦‚é—˜“_‚Í Slemenium ‚ªƒy[ƒW“à‚Å JavaScript ‚ðŽÀs‚Å‚«‚é‚Ì‚ÅAAjax ƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚à Slemenium ‚ÅƒeƒXƒg‚Å‚«‚é‚±‚Æ‚Å‚·B
+‰ðŒˆ•û–@‚Í [Selenium](http://seleniumhq.org/) ‚ÆŒÄ‚Î‚ê‚é‚à‚Ì‚ÅAŠ®‘S‚É JavaScript ‚Å‘‚©‚ê‚½ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚Å‚·B‚±‚Ìƒc[ƒ‹‚ÍAŒ»Ý‚Ìƒuƒ‰ƒEƒU[ƒEƒBƒ“ƒhƒE‚ð—˜—p‚µ‚ÄA’Êí‚Ìƒ†[ƒU[‚ªs‚¤‚æ‚¤‚Èƒy[ƒWã‚ÌƒAƒNƒVƒ‡ƒ“‚ÌƒZƒbƒg‚ðŽÀs‚µ‚Ü‚·B`sfBrowser` ƒIƒuƒWƒFƒNƒg‚ð‰z‚¦‚é—˜“_‚Í Slemenium ‚ªƒy[ƒW“à‚Å JavaScript ‚ðŽÀs‚Å‚«‚é‚Ì‚ÅAAjax ƒCƒ“ƒ^ƒ‰ƒNƒVƒ‡ƒ“‚à Slemenium ‚ÅƒeƒXƒg‚Å‚«‚é‚±‚Æ‚Å‚·B
 
-symfony ‚Í Selenium ‚ðƒfƒtƒHƒ‹ƒg‚Å“‹Ú‚µ‚Ä‚¢‚Ü‚¹‚ñB‚±‚ê‚ðƒCƒ“ƒXƒg[ƒ‹‚·‚é‚É‚ÍA`web/` ƒfƒBƒŒƒNƒgƒŠ‚Ì‚È‚©‚ÅV‚½‚É `selenium/` ƒfƒBƒŒƒNƒgƒŠ‚ðì‚èASelenium ƒA[ƒJƒCƒu‚Ì“à—e‚ð“WŠJ‚·‚é•K—v‚ª‚ ‚è‚Ü‚· ([http://www.openqa.org/selenium-core/download.action](http://www.openqa.org/selenium-core/download.action))B‚È‚º‚È‚çASelenium ‚Í JavaScript ‚ÉˆË‘¶‚·‚é‚Ì‚ÅA‚½‚¢‚Ä‚¢‚Ìƒuƒ‰ƒEƒU[“à‚ÌƒZƒLƒ…ƒŠƒeƒBÝ’è‚ÌŠî€‚É]‚¦‚ÎAƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉŠÖ‚µ‚Ä“¯‚¶ƒzƒXƒg‚Æƒ|[ƒgã‚Å JavaScript ‚ª—˜—p‚Å‚«‚È‚¢‚©‚¬‚èASelenium ‚Ì“®ì‚ª‹–‰Â‚³‚ê‚È‚¢‚©‚ç‚Å‚·B
+symfony ‚Í Selenium ‚ðƒfƒtƒHƒ‹ƒg‚Å“‹Ú‚µ‚Ä‚¢‚Ü‚¹‚ñB‚±‚ê‚ðƒCƒ“ƒXƒg[ƒ‹‚·‚é‚É‚ÍA`web/` ƒfƒBƒŒƒNƒgƒŠ‚Ì‚È‚©‚ÅV‚½‚É `selenium/` ƒfƒBƒŒƒNƒgƒŠ‚ðì‚èASelenium [ƒA[ƒJƒCƒu](http://seleniumhq.org/download/)‚Ì“à—e‚ð“WŠJ‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B‚È‚º‚È‚çASelenium ‚Í JavaScript ‚ÉˆË‘¶‚·‚é‚Ì‚ÅA‚½‚¢‚Ä‚¢‚Ìƒuƒ‰ƒEƒU[“à‚ÌƒZƒLƒ…ƒŠƒeƒBÝ’è‚ÌŠî€‚É]‚¦‚ÎAƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉŠÖ‚µ‚Ä“¯‚¶ƒzƒXƒg‚Æƒ|[ƒgã‚Å JavaScript ‚ª—˜—p‚Å‚«‚È‚¢‚©‚¬‚èASelenium ‚Ì“®ì‚ª‹–‰Â‚³‚ê‚È‚¢‚©‚ç‚Å‚·B
 
 >**CAUTION**
 >`selenium/` ƒfƒBƒŒƒNƒgƒŠ‚ð‰^—pƒT[ƒo[‚É’¼Ú“]‘—‚µ‚È‚¢‚æ‚¤‚É‹C‚ð‚Â‚¯‚Ä‚­‚¾‚³‚¢Bƒuƒ‰ƒEƒU[‚ð’Ê‚µ‚Ä’N‚Å‚àWebƒhƒLƒ…ƒƒ“ƒg‚Ìƒ‹[ƒg‚ÉƒAƒNƒZƒX‚Å‚«‚é‚©‚ç‚Å‚·B
 
-Selenium ƒeƒXƒg‚Í HTML Œ`Ž®‚Å‹Lq‚³‚ê `web/slenium/tests/` ƒfƒBƒŒƒNƒgƒŠ‚É•Û‘¶‚³‚ê‚Ü‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-37‚ÍAƒz[ƒ€ƒy[ƒW‚ªƒ[ƒh‚³‚êAclick me ‚ÌƒŠƒ“ƒN‚ªƒNƒŠƒbƒN‚³‚êAƒŒƒXƒ|ƒ“ƒX‚ÌuHello, Worldv‚ÌƒeƒLƒXƒg‚ª’T‚³‚ê‚é‹@”\ƒeƒXƒg‚ðŽ¦‚µ‚Ü‚·BƒeƒXƒgŠÂ‹«‚ÅƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉƒAƒNƒZƒX‚·‚é‚É‚ÍA`frontend_test.php` ƒtƒƒ“ƒgƒRƒ“ƒgƒ[ƒ‰[‚ðŽw’è‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
+Selenium ƒeƒXƒg‚Í HTML Œ`Ž®‚Å‹Lq‚³‚ê `web/slenium/tests/` ƒfƒBƒŒƒNƒgƒŠ‚É•Û‘¶‚³‚ê‚Ü‚·B‚½‚Æ‚¦‚ÎAƒŠƒXƒg15-38‚ÍAƒz[ƒ€ƒy[ƒW‚ªƒ[ƒh‚³‚êAclick me ‚ÌƒŠƒ“ƒN‚ªƒNƒŠƒbƒN‚³‚êAƒŒƒXƒ|ƒ“ƒX‚ÌuHello, Worldv‚ÌƒeƒLƒXƒg‚ª’T‚³‚ê‚é‹@”\ƒeƒXƒg‚ðŽ¦‚µ‚Ü‚·BƒeƒXƒgŠÂ‹«‚ÅƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÉƒAƒNƒZƒX‚·‚é‚É‚ÍA`frontend_test.php` ƒtƒƒ“ƒgƒRƒ“ƒgƒ[ƒ‰[‚ðŽw’è‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
 
-ƒŠƒXƒg15-37 - Selenium ƒeƒXƒg‚ÌƒTƒ“ƒvƒ‹ (`web/selenium/test/testIndex.html`)
+ƒŠƒXƒg15-38 - Selenium ƒeƒXƒg‚ÌƒTƒ“ƒvƒ‹ (`web/selenium/test/testIndex.html`)
 
     [php]
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -1002,9 +1025,9 @@ Selenium ƒeƒXƒg‚Í HTML Œ`Ž®‚Å‹Lq‚³‚ê `web/slenium/tests/` ƒfƒBƒŒƒNƒgƒŠ‚É•Û‘¶‚³‚
 
 ƒeƒXƒgƒP[ƒX‚ÍƒRƒ}ƒ“ƒhAƒ^[ƒQƒbƒgA’l‚Ì3‚Â‚ÌƒJƒ‰ƒ€‚ðŽ‚Âƒe[ƒuƒ‹‚ðŠÜ‚Þ HTML ƒhƒLƒ…ƒƒ“ƒg‚É‚æ‚Á‚Ä•\Œ»‚³‚ê‚Ü‚·B‚·‚×‚Ä‚ÌƒRƒ}ƒ“ƒh‚Í’l‚ð‚Æ‚è‚Ü‚¹‚ñBƒRƒ}ƒ“ƒh‚ª’l‚ð‚Æ‚ç‚È‚¢ê‡AƒJƒ‰ƒ€‚ð‹ó”’‚É‚µ‚Ä‚¨‚­‚©Aƒe[ƒuƒ‹‚ðŒ©‚â‚·‚­‚·‚é‚½‚ß‚É `&nbsp;` ‚ðŽg‚¤‚±‚Æ‚Å‚·BƒRƒ}ƒ“ƒh‚ÌŠ®‘S‚Èˆê——‚Í Selenium ‚Ì Web ƒTƒCƒg‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
 
-“¯‚¶ƒfƒBƒŒƒNƒgƒŠ‚ÉÝ’u‚³‚ê‚½ `TestSuite.html` ƒtƒ@ƒCƒ‹“à‚ÉV‚µ‚¢s‚ð‘}“ü‚·‚é‚±‚Æ‚ÅA‚±‚ÌƒeƒXƒg‚ðƒOƒ[ƒoƒ‹ƒeƒXƒgƒXƒC[ƒg‚É’Ç‰Á‚·‚é•K—v‚ª‚ ‚è‚Ü‚·BƒŠƒXƒg15-38‚Í‚±‚ê‚ðs‚¤•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
+“¯‚¶ƒfƒBƒŒƒNƒgƒŠ‚ÉÝ’u‚³‚ê‚½ `TestSuite.html` ƒtƒ@ƒCƒ‹“à‚ÉV‚µ‚¢s‚ð‘}“ü‚·‚é‚±‚Æ‚ÅA‚±‚ÌƒeƒXƒg‚ðƒOƒ[ƒoƒ‹ƒeƒXƒgƒXƒC[ƒg‚É’Ç‰Á‚·‚é•K—v‚ª‚ ‚è‚Ü‚·BƒŠƒXƒg15-39‚Í‚±‚ê‚ðs‚¤•û–@‚ðŽ¦‚µ‚Ä‚¢‚Ü‚·B
 
-ƒŠƒXƒg15-38 - ƒeƒXƒgƒXƒC[ƒg‚ÉƒeƒXƒgƒtƒ@ƒCƒ‹‚ð’Ç‰Á‚·‚é (`web/selenium/test/TestSuite.html`)
+ƒŠƒXƒg15-39 - ƒeƒXƒgƒXƒC[ƒg‚ÉƒeƒXƒgƒtƒ@ƒCƒ‹‚ð’Ç‰Á‚·‚é (`web/selenium/test/TestSuite.html`)
 
     ...
     <tr><td><a href='./testIndex.html'>My First Test</a></td></tr>
@@ -1019,7 +1042,7 @@ Main Test Suite ‚ð‘I‘ð‚µA‚·‚×‚Ä‚ÌƒeƒXƒg‚ðŽÀs‚·‚éƒ{ƒ^ƒ“‚ðƒNƒŠƒbƒN‚µAŽÀŽ{‚·‚é‚æ
 >**NOTE**
 >Selenium ‚ÌƒeƒXƒg‚Í–{“–‚Ìƒuƒ‰ƒEƒU[‚Å“®ì‚·‚é‚Ì‚ÅA‚±‚ê‚ç‚É‚æ‚Á‚Äƒuƒ‰ƒEƒU[‚Ì•sˆê’v‚àƒeƒXƒg‚Å‚«‚Ü‚·B1‚Â‚Ìƒuƒ‰ƒEƒU[‚ÅƒeƒXƒg‚ðì‚èA’P“Æ‚ÌƒŠƒNƒGƒXƒg‚Å“®ì‚·‚é‚±‚Æ‚É‚È‚Á‚Ä‚¢‚éƒTƒCƒgã‚Å‚»‚Ì‚Ù‚©‚Ì‚·‚×‚Ä‚Ìƒuƒ‰ƒEƒU[ã‚Å Selenium ‚ÌƒeƒXƒg‚ðŽÀŽ{‚µ‚Ä‚­‚¾‚³‚¢B
 
-Selenim ‚Í HTML ‚Å‘‚©‚ê‚Ä‚¢‚é‚Ì‚ÅASelenium ‚ÌƒeƒXƒg‚ð‘‚­‚±‚Æ‚Í–Ê“|‚Å‚µ‚½B‚µ‚©‚µAFirefox ‚Ì Selenium Šg’£‹@”\‚Ì‚¨‚©‚°‚Å ([http://seleniumrecorder.mozdev.org/](http://seleniumrecorder.mozdev.org/))AƒeƒXƒg‚ðŽÀŽ{‚·‚é‚½‚ß‚É•K—v‚È‚±‚Æ‚ÍƒŒƒR[ƒhƒZƒbƒVƒ‡ƒ“‚Å1‰ñ‚ÌƒeƒXƒg‚ðŽÀŽ{‚·‚é‚¾‚¯‚Å‚·BƒŒƒR[ƒhƒZƒbƒVƒ‡ƒ“‚ÅƒiƒrƒQ[ƒg‚·‚éˆê•û‚ÅAƒuƒ‰ƒEƒU[‚ÌƒEƒBƒ“ƒhƒE“à‚Å‰EƒNƒŠƒbƒN‚ð‚µ‚Äƒ|ƒbƒvƒAƒbƒvƒƒjƒ…[“à‚Ì Append Selenium Command ‚Ì‚à‚Æ‚Å“KØ‚Èƒ`ƒFƒbƒN€–Ú‚ð‘I‘ð‚·‚é‚±‚Æ‚ÅAƒAƒT[ƒgŒ^‚ÌƒeƒXƒg‚ð’Ç‰Á‚Å‚«‚Ü‚·B
+Selenim ‚Í HTML ‚Å‘‚©‚ê‚Ä‚¢‚é‚Ì‚ÅASelenium ‚ÌƒeƒXƒg‚ð‘‚­‚±‚Æ‚Í–Ê“|‚Å‚µ‚½B‚µ‚©‚µAFirefox ‚Ì Selenium [Šg’£‹@”\](http://seleniumhq.org/projects/ide/)‚Ì‚¨‚©‚°‚ÅAƒeƒXƒg‚ðŽÀŽ{‚·‚é‚½‚ß‚É•K—v‚È‚±‚Æ‚ÍƒŒƒR[ƒhƒZƒbƒVƒ‡ƒ“‚Å1‰ñ‚ÌƒeƒXƒg‚ðŽÀŽ{‚·‚é‚¾‚¯‚Å‚·BƒŒƒR[ƒhƒZƒbƒVƒ‡ƒ“‚ÅƒiƒrƒQ[ƒg‚·‚éˆê•û‚ÅAƒuƒ‰ƒEƒU[‚ÌƒEƒBƒ“ƒhƒE“à‚Å‰EƒNƒŠƒbƒN‚ð‚µ‚Äƒ|ƒbƒvƒAƒbƒvƒƒjƒ…[“à‚Ì Append Selenium Command ‚Ì‚à‚Æ‚Å“KØ‚Èƒ`ƒFƒbƒN€–Ú‚ð‘I‘ð‚·‚é‚±‚Æ‚ÅAƒAƒT[ƒgŒ^‚ÌƒeƒXƒg‚ð’Ç‰Á‚Å‚«‚Ü‚·B
 
 ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚É‘Î‚µ‚ÄƒeƒXƒgƒXƒC[ƒg‚ðŽÀŽ{‚·‚é‚½‚ß‚ÉƒeƒXƒg‚ð HTML ƒtƒ@ƒCƒ‹‚É•Û‘¶‚Å‚«‚Ü‚·BFirefox ‚ÌŠg’£‹@”\‚É‚æ‚Á‚Ä‹L˜^‚µ‚½ Selenium ƒeƒXƒg‚àŽÀs‚Å‚«‚é‚æ‚¤‚É‚È‚è‚Ü‚·B
 
@@ -1029,6 +1052,6 @@ Selenim ‚Í HTML ‚Å‘‚©‚ê‚Ä‚¢‚é‚Ì‚ÅASelenium ‚ÌƒeƒXƒg‚ð‘‚­‚±‚Æ‚Í–Ê“|‚Å‚µ‚½B‚µ‚
 ‚Ü‚Æ‚ß
 ----
 
-Ž©“®ƒeƒXƒg‚Æ‚µ‚Äƒƒ\ƒbƒh‚à‚µ‚­‚ÍŠÖ”‚ðŒŸØ‚·‚éƒ†ƒjƒbƒgƒeƒXƒg (unit test) ‚Æ‹@”\‚ðŒŸØ‚·‚é‹@”\ƒeƒXƒg (functional test) ‚ª‘¶Ý‚µ‚Ü‚·Bsymfony ‚Íƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚½‚ß‚Ì lime ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚ÉˆË‘¶‚µA‹@”\ƒeƒXƒg—p‚É“Á‰»‚µ‚½ `sfTestBrowser` ƒNƒ‰ƒX‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ê‚ç‚ÌƒeƒXƒgƒc[ƒ‹‚ÍACSS ƒZƒŒƒNƒ^‚Ì‚æ‚¤‚ÉA—¼•û‚Æ‚àŠî‘b‚©‚ç‰ž—p‚Ü‚Å‹y‚Ô‘½‚­‚ÌƒAƒT[ƒVƒ‡ƒ“ƒƒ\ƒbƒh‚ð’ñ‹Ÿ‚µ‚Ü‚·BƒeƒXƒg‚ð‹N“®‚³‚¹‚é‚É‚Í symfony ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ðŽg‚¢‚Ü‚·B1‚Â‚¸‚ÂŽÀŽ{‚·‚é‚É‚Í `test:unit` ƒ^ƒXƒN‚à‚µ‚­‚Í `test:functional`  ƒ^ƒXƒN‚ðŽg‚¢AƒeƒXƒgƒn[ƒlƒX‚ðŽÀŽ{‚·‚é‚É‚Í `test-all` ƒ^ƒXƒN‚ðŽg‚¢‚Ü‚·Bƒf[ƒ^‚ðˆµ‚¤‚Æ‚«AŽ©“®ƒeƒXƒg‚ÍƒtƒBƒNƒXƒ`ƒƒ (fixture) ‚ÆƒXƒ^ƒu (stub) ‚ðŽg‚¢A‚±‚ê‚Í symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚ÅŠÈ’P‚ÉŽÀŒ»‚³‚ê‚Ü‚·B
+Ž©“®ƒeƒXƒg‚Æ‚µ‚Äƒƒ\ƒbƒh‚à‚µ‚­‚ÍŠÖ”‚ðŒŸØ‚·‚éƒ†ƒjƒbƒgƒeƒXƒg (unit test) ‚Æ‹@”\‚ðŒŸØ‚·‚é‹@”\ƒeƒXƒg (functional test) ‚ª‘¶Ý‚µ‚Ü‚·Bsymfony ‚Íƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚½‚ß‚Ì lime ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN‚ÉˆË‘¶‚µA‹@”\ƒeƒXƒg—p‚É“Á‰»‚µ‚½ `sfBrowser` ƒNƒ‰ƒX‚Æ `sfTestFunctional` ƒNƒ‰ƒX‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚±‚ê‚ç‚ÌƒeƒXƒgƒc[ƒ‹‚ÍACSS ƒZƒŒƒNƒ^‚Ì‚æ‚¤‚ÉA—¼•û‚Æ‚àŠî‘b‚©‚ç‰ž—p‚Ü‚Å‹y‚Ô‘½‚­‚ÌƒAƒT[ƒVƒ‡ƒ“ƒƒ\ƒbƒh‚ð’ñ‹Ÿ‚µ‚Ü‚·BƒeƒXƒg‚ð‹N“®‚³‚¹‚é‚É‚Í symfony ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ðŽg‚¢‚Ü‚·B1‚Â‚¸‚ÂŽÀŽ{‚·‚é‚É‚Í `test:unit` ƒ^ƒXƒN‚à‚µ‚­‚Í `test:functional`  ƒ^ƒXƒN‚ðŽg‚¢AƒeƒXƒgƒn[ƒlƒX‚ðŽÀŽ{‚·‚é‚É‚Í `test-all` ƒ^ƒXƒN‚ðŽg‚¢‚Ü‚·Bƒf[ƒ^‚ðˆµ‚¤‚Æ‚«AŽ©“®ƒeƒXƒg‚ÍƒtƒBƒNƒXƒ`ƒƒ (fixture) ‚ÆƒXƒ^ƒu (stub) ‚ðŽg‚¢A‚±‚ê‚Í symfony ‚Ìƒ†ƒjƒbƒgƒeƒXƒg‚Ì‚È‚©‚ÅŠÈ’P‚ÉŽÀŒ»‚³‚ê‚Ü‚·B
 
 (‚¨‚»‚ç‚­ƒeƒXƒg‹ì“®ŠJ”­ (TDD) ‚Ì•û–@˜_‚ð—˜—p‚µ‚Ä) ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì‘å•”•ª‚ðƒJƒo[‚·‚é‚½‚ß‚É\•ª‚Èƒ†ƒjƒbƒgƒeƒXƒg‚ð‚©‚È‚ç‚¸‘‚¯‚ÎA“à•”‚ðƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚é‚à‚µ‚­‚ÍV‚µ‚¢‹@”\‚ð’Ç‰Á‚·‚é‚Æ‚«‚ÉAˆÀSŠ´‚ð“¾‚ç‚êƒhƒLƒ…ƒƒ“ƒg‚ðì‚éŽžŠÔ‚ðß–ñ‚·‚é‚±‚Æ‚à‚Å‚«‚Ü‚·B
