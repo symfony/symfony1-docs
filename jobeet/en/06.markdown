@@ -170,10 +170,7 @@ account some requirements from day 2:
 But as the above code only relies on the `created_at` value, and because this
 column stores the creation date, we cannot satisfy the above requirement.
 
-But if you remember the database schema we have described during day 3, we
-also have defined an `expires_at` column. Currently this value is always empty
-as it is not set in the fixture data. But when a job is created, it can be
-automatically set to 30 days after the current date.
+But if you remember the database schema we have described during day 3, we also have defined an `expires_at` column. Currently, if this value is not set in fixture file, it remains always empty. But when a job is created, it can be automatically set to 30 days after the current date.
 
 When you need to do something automatically before a ##ORM## object is
 serialized to the database, you can override the `save()` method of the model
