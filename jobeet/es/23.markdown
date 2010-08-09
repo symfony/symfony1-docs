@@ -235,8 +235,8 @@ El CLI de symfony proporciona una gran cantidad de tareas, y las más útiles ha
  * [`plugin:install`](#chapter_13_plugins)
  * [`plugin:publish-assets`](#chapter_20_sub_the_assets)
  * [`project:deploy`](#chapter_22_sub_deploying_strategies)
- * [`propel:build-all`](#chapter_03_the_orm)
- * [`propel:build-all-load`](#chapter_07_update_the_database)
+ * [`propel:build --all`](#chapter_03_the_orm)
+ * [`propel:build --all --and-load`](#chapter_07_update_the_database)
 <propel>
  * [`propel:build-forms`](#chapter_10_propel_forms)
 </propel>
