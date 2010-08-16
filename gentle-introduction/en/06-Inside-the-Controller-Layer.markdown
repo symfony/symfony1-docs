@@ -223,7 +223,7 @@ Listing 6-7 - `sfActions` Common Methods
 >
 >`sfDatabaseConnection`: The database connection (`->getDatabaseConnection()`)
 >
->All these core objects are availables through the `sfContext::getInstance()` singleton from any part of the code. However, it's a really bad practice because this will create some hard dependencies making your code really hard to test, reuse and maintain. You will learn in this book how to avoid the usage of `sfContext::getInstance()`. 
+>All these core objects are available through the `sfContext::getInstance()` singleton from any part of the code. However, it's a really bad practice because this will create some hard dependencies making your code really hard to test, reuse and maintain. You will learn in this book how to avoid the usage of `sfContext::getInstance()`. 
 
 ### Action Termination
 
