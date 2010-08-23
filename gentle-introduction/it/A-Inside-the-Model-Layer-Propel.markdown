@@ -407,7 +407,7 @@ Come SQL è un linguaggio semplice che consente di gestire interrogazioni molto 
 
 In aggiunta al metodo `doSelect()`, ogni classe peer ha un metodo `doCount()`, che semplicemente ritorna il numero di record che soddisfano i requisiti passati come parametri e ritorna un numero intero. Dato che nessun oggetto viene ritornato, il processo di idratazione non viene eseguito in questo caso, perciò il metodo `doCount()` è più veloce di `doSelect()`.
 
-La classi peer forniscono inoltre i metodi `doDelete(), `doInsert()` e `doUpdate()`, che ricevono un oggetto `Criteria` come parametro. Questi metodi consentono di eseguire interrogazioni di tipo `DELETE`, `INSERT` e `UPDATE` sul database. Dai un'occhiata alle classi peer generate nel tuo modello per ulteriori dettagli su questi metodi di Propel.
+La classi peer forniscono inoltre i metodi `doDelete()`, `doInsert()` e `doUpdate()`, che ricevono un oggetto `Criteria` come parametro. Questi metodi consentono di eseguire interrogazioni di tipo `DELETE`, `INSERT` e `UPDATE` sul database. Dai un'occhiata alle classi peer generate nel tuo modello per ulteriori dettagli su questi metodi di Propel.
 
 Infine, se vuoi soltanto il primo oggetto, sostituisci `doSelect()` con `doSelectOne()`. Questo potrebbe essere il caso in cui sai che `Criteria` produrrà un risultato soltanto, con il vantaggio che il metodo ritornerà direttamente un oggetto piuttosto di un array.
 
