@@ -279,14 +279,14 @@ Chiamando il costruttore con `new`, hai creato un nuovo oggetto, ma non un recor
     [php]
     $article->save();
 
-The ORM is smart enough to detect relationships between objects, so saving the `$article` object also saves the related `$comment` object. It also knows if the saved object has an existing counterpart in the database, so the call to `save()` is sometimes translated in SQL by an `INSERT`, and sometimes by an `UPDATE`. The primary key is automatically set by the `save()` method, so after saving, you can retrieve the new primary key with `$article->getId()`.
+L'ORM è intelligente abbastanza da capire le relazioni tra gli oggetti, quindi salvare l'oggetto `$article` salverà anche il relativo oggetto `$comment`. Conosce inoltre se l'oggetto salvato è già presente nel database, quindi una chiamata a `save()` sarà tradotta in una istruzione `INSERT` oppure `UPDATE` in SQL. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo il salvataggio, puoi recuperare la nuova chiave primaria con `$article->getId()`.
 
 >**TIP**
->You can check if an object is new by calling `isNew()`. And if you wonder if an object has been modified and deserves saving, call its `isModified()` method.
+>Puoi controllare se un oggetto è nuovo chiamando `isNew()`. E se ti domandi se un oggetto è stato modificato e necessita del salvataggio, puoi usare il metodo `isModified()`.
 
-If you read comments to your articles, you might change your mind about the interest of publishing on the Internet. And if you don't appreciate the irony of article reviewers, you can easily delete the comments with the `delete()` method, as shown in Listing 8-11.
+Se leggi i commenti ai tuoi articoli, potresti cambiare idea riguardo il pubblicare contenuti su internet. E se non apprezzi l'ironia dei lettori, puoi cancellare semplicemente i commenti con il metodo `delete()`, come mostrato nel Listato 8-11.
 
-Listing 8-11 - Delete Records from the Database with the `delete()` Method on the Related Object
+Listato 8-11 - Cancellare righe dal database con il metodo `delete()` dell'oggetto
 
     [php]
     foreach ($article->getComments() as $comment)
@@ -295,48 +295,48 @@ Listing 8-11 - Delete Records from the Database with the `delete()` Method on th
     }
 
 >**TIP**
->Even after calling the `delete()` method, an object remains available until the end of the request. To determine if an object is deleted in the database, call the `isDeleted()` method.
+>Anche dopo aver chiamato il metodo `delete()`, un oggetto rimane disponibile fino alla fine dell'esecuzione. Per determinare se un oggetto è stato cancellato dal database, chiama il metodo `isDeleted()`.
 
-### Retrieving Records by Primary Key
+### Recuperare record usando la chiave primaria
 
-If you know the primary key of a particular record, use the `retrieveByPk()` class method of the peer class to get the related object.
+Se conosci la chiave primaria di un particolare record, usa il metodo `retrieveByPk()` della classe peer per ottenere il relativo oggetto.
 
     [php]
     $article = ArticlePeer::retrieveByPk(7);
 
-The `schema.yml` file defines the `id` field as the primary key of the `blog_article` table, so this statement will actually return the article that has `id` 7. As you used the primary key, you know that only one record will be returned; the `$article` variable contains an object of class `Article`.
+Il file `schema.yml` definisce il campo `id` come la chiave primaria della tabella `blog_article`, quindi questo comando ritornerà un articolo che ha `id` uguale a 7. Dato che hai utilizzato la chiave primaria, sai che soltanto un record sarà ritornato; la variabile `$article` contiene un oggetto della classe `Article`.
 
-In some cases, a primary key may consist of more than one column. In those cases, the `retrieveByPK()` method accepts multiple parameters, one for each primary key column.
+In alcuni casi, una chiave primaria può consistere in più di una colonna. In questi casi, il metodo `retrieveByPk()` accetta parametri multipli, uno per ogni colonna della chiave primaria.
 
-You can also select multiple objects based on their primary keys, by calling the generated `retrieveByPKs()` method, which expects an array of primary keys as a parameter.
+Puoi inoltre selezionare multipli oggetti basandoti sulla loro chiave primaria, chiamato in metodo generato `retrieveByPks()`, che ha come parametri un array di chiavi primarie.
 
-### Retrieving Records with Criteria
+### Recuperare record con Criteria
 
-When you want to retrieve more than one record, you need to call the `doSelect()` method of the peer class corresponding to the objects you want to retrieve. For instance, to retrieve objects of class `Article`, call `ArticlePeer::doSelect()`.
+Quando vuoi recuperare più di un record, dovrai utilizzare il metodo `doSelect()` della classe peer corrispondente agli oggetti che vuoi ottenere. Per esempio, per recuperare oggetti della classe `Article`, chiama `ArticlePeer::doSelect()`.
 
-The first parameter of the `doSelect()` method is an object of class `Criteria`, which is a simple query definition class defined without SQL for the sake of database abstraction.
+Il primo parametro del metodo `doSelect()` è un oggetto della classe `Criteria`, che è una semplice classe per la costruzione delle query, senza l'utilizzo di SQL per mantenere l'astrazione dal database.
 
-An empty `Criteria` returns all the objects of the class. For instance, the code shown in Listing 8-12 retrieves all the articles.
+Un oggetto `Criteria` vuoto ritorna tutti gli oggetti della classe. Per esempio, il codice mostrato nel Listato 8-12 ritorna tutti gli articoli.
 
-Listing 8-12 - Retrieving Records by Criteria with `doSelect()`--Empty Criteria
+Listato 8-12 - Recuperare record usando Criteria e `doSelect()`--Criteria vuoto
 
     [php]
     $c = new Criteria();
     $articles = ArticlePeer::doSelect($c);
 
-    // Will result in the following SQL query
+    // Risulterà nella seguente query SQL
     SELECT blog_article.ID, blog_article.TITLE, blog_article.CONTENT,
            blog_article.CREATED_AT
     FROM   blog_article;
 
 >**SIDEBAR**
->Hydrating
+>Idratazione
 >
->The call to `::doSelect()` is actually much more powerful than a simple SQL query. First, the SQL is optimized for the DBMS you choose. Second, any value passed to the `Criteria` is escaped before being integrated into the SQL code, which prevents SQL injection risks. Third, the method returns an array of objects, rather than a result set. The ORM automatically creates and populates objects based on the database result set. This process is called hydrating.
+>La chiamata a `::doSelect()` è a dir la verità molto più potente di una semplice query SQL. Per prima cosa, il codice SQL generato è ottimizzato per il DBMS scelto. Secondo, su ogni valore passato a `Criteria` viene effettuato l'escape prima di venir intergrato nel codice SQL, che previene rischi di SQL injection. Terzo, questo metodo ritorna un array di oggetti piuttosto che una risorsa PHP. L'ORM crea automaticamente gli oggetti basandosi sulla risorsa ritornata dal database. Questo processo è chiamato idratazione.
 
-For a more complex object selection, you need an equivalent of the WHERE, ORDER BY, GROUP BY, and other SQL statements. The `Criteria` object has methods and parameters for all these conditions. For example, to get all comments written by Steve, ordered by date, build a `Criteria` as shown in Listing 8-13.
+Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY ed altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruisci un `Criteria` come mostrato nel Listato 8-13.
 
-Listing 8-13 - Retrieving Records by Criteria with `doSelect()`--Criteria with Conditions
+Listato 8-13 - Recuperare record usando Criteria e `doSelect()`--Criteria con condizioni
 
     [php]
     $c = new Criteria();
@@ -344,33 +344,33 @@ Listing 8-13 - Retrieving Records by Criteria with `doSelect()`--Criteria with C
     $c->addAscendingOrderByColumn(CommentPeer::CREATED_AT);
     $comments = CommentPeer::doSelect($c);
 
-    // Will result in the following SQL query
+    // Risulterà nella seguente query SQL
     SELECT blog_comment.ARTICLE_ID, blog_comment.AUTHOR, blog_comment.CONTENT,
            blog_comment.CREATED_AT
     FROM   blog_comment
     WHERE  blog_comment.author = 'Steve'
     ORDER BY blog_comment.CREATED_AT ASC;
 
-The class constants passed as parameters to the `add()` methods refer to the property names. They are named after the capitalized version of the column names. For instance, to address the `content` column of the `blog_article` table, use the `ArticlePeer::CONTENT` class constant.
+Le costanti di classe passate come parametri dei metodi `add()` si riferiscono ai nomi delle propietà. Sono chiamate con la versione maiuscola dei nomi delle colonne. Per esempio, per la colonna `content` della tabella `blog_article`, usa la costante `ArticlePeer::CONTENT`.
 
 >**NOTE**
->Why use `CommentPeer::AUTHOR` instead of `blog_comment.AUTHOR`, which is the way it will be output in the SQL query anyway? Suppose that you need to change the name of the author field to `contributor` in the database. If you used `blog_comment.AUTHOR`, you would have to change it in every call to the model. On the other hand, by using `CommentPeer::AUTHOR`, you simply need to change the column name in the `schema.yml` file, keep `phpName` as `AUTHOR`, and rebuild the model.
+>Perché usare `CommentPeer::AUTHOR` al posto di `blog_comment.AUTHOR`, che è quello che sarà utilizzato nel codice SQL in ogni caso? Supponi di dover cambiare il nome della colonna da `author` a `contributor` nel database. Se tu avessi usato `blog_comment.AUTHOR`, dovresti cambiarlo ad ogni chiamata del metodo. Invece, usando `CommentPeer::AUTHOR`, devi soltanto cambiare il nome della colonna nel file `schema.yml`, impostare il valore `phpName` ad `AUTHOR` e ricostruire il modello.
 
-Table 8-1 compares the SQL syntax with the `Criteria` object syntax.
+La Tabella 8-1 confronta la sintassi SQL con quella della classe `Criteria`.
 
-Table 8-1 - SQL and Criteria Object Syntax
+Tabella 8-1 - Sintassi SQL e Criteria
 
 SQL                                                          | Criteria
 ------------------------------------------------------------ | -----------------------------------------------
 `WHERE column = value`                                       | `->add(column, value);`
 `WHERE column <> value`                                      | `->add(column, value, Criteria::NOT_EQUAL);`
-**Other Comparison Operators**                               | 
+**Altri operatori di confronto**                             | 
 `> , <`                                                      | `Criteria::GREATER_THAN, Criteria::LESS_THAN`
 `>=, <=`                                                     | `Criteria::GREATER_EQUAL, Criteria::LESS_EQUAL`
 `IS NULL, IS NOT NULL`                                       | `Criteria::ISNULL, Criteria::ISNOTNULL`
 `LIKE, ILIKE`                                                | `Criteria::LIKE, Criteria::ILIKE`
 `IN, NOT IN`                                                 | `Criteria::IN, Criteria::NOT_IN`
-**Other SQL Keywords**                                       |
+**Altre keywords SQL**                                       |
 `ORDER BY column ASC`                                        | `->addAscendingOrderByColumn(column);`
 `ORDER BY column DESC`                                       | `->addDescendingOrderByColumn(column);`
 `LIMIT limit`                                                | `->setLimit(limit)`
@@ -380,11 +380,11 @@ SQL                                                          | Criteria
 `FROM table1 RIGHT JOIN table2 ON table1.col1 = table2.col2` | `->addJoin(col1, col2, Criteria::RIGHT_JOIN)`
 
 >**TIP**
->The best way to discover and understand which methods are available in generated classes is to look at the `Base` files in the `lib/model/om/` folder after generation. The method names are pretty explicit, but if you need more comments on them, set the `propel.builder.addComments` parameter to `true` in the `config/propel.ini` file and rebuild the model.
+>Il modo migliore per scoprire e capire quali metodi sono disponibili nelle classi generate è guardare ai file `Base` nella cartella `lib/model/om/` dopo la generazione. I nomi dei metodi sono abbastanza espliciti, ma se hai bisogno di commenti in essi imposta il parametro `propel.builder.addComments` a `true` nel file `config/propel.ini` e ricostruisci il modello.
 
-Listing 8-14 shows another example of `Criteria` with multiple conditions. It retrieves all the comments by Steve on articles containing the word "enjoy," ordered by date.
+Il Listato 8-14 mostra un altro esempio di `Criteria` con condizioni multiple. Recupera tutti i commenti di Steve sugli articoli contenenti la parola "enjoy", ordinati per data.
 
-Listing 8-14 - Another Example of Retrieving Records by Criteria with `doSelect()`--Criteria with Conditions
+Listato 8-14 - Un altro esempio di recuperato record con Criteria e `doSelect()`--Criteria con condizioni
 
     [php]
     $c = new Criteria();
@@ -394,7 +394,7 @@ Listing 8-14 - Another Example of Retrieving Records by Criteria with `doSelect(
     $c->addAscendingOrderByColumn(CommentPeer::CREATED_AT);
     $comments = CommentPeer::doSelect($c);
 
-    // Will result in the following SQL query
+    // Risulterà nella seguente query SQL
     SELECT blog_comment.ID, blog_comment.ARTICLE_ID, blog_comment.AUTHOR,
            blog_comment.CONTENT, blog_comment.CREATED_AT
     FROM   blog_comment, blog_article
@@ -403,16 +403,16 @@ Listing 8-14 - Another Example of Retrieving Records by Criteria with `doSelect(
            AND blog_comment.ARTICLE_ID = blog_article.ID
     ORDER BY blog_comment.CREATED_AT ASC
 
-Just as SQL is a simple language that allows you to build very complex queries, the Criteria object can handle conditions with any level of complexity. But since many developers think first in SQL before translating a condition into object-oriented logic, the `Criteria` object may be difficult to comprehend at first. The best way to understand it is to learn from examples and sample applications. The symfony project website, for instance, is full of `Criteria` building examples that will enlighten you in many ways.
+Come SQL è un linguaggio semplice che consente di gestire interrogazioni molto complesse, l'oggetto Criteria può gestire condizioni con ogni livello di complessità. Ma dato che molti sviluppatori pensano in SQL prima di tradurre una condizione in logica object-oriented, l'oggetto `Criteria` può essere difficile da comprendere all'inizio. Il miglior modo di capirlo è imparare dagli esempi ed applicazioni esistenti. Il sito di symfony, per esempio, è pieno di esempi di utilizzo di `Criteria` che ti aiuteranno in molte situazioni.
 
-In addition to the `doSelect()` method, every peer class has a `doCount()` method, which simply counts the number of records satisfying the criteria passed as a parameter and returns the count as an integer. As there is no object to return, the hydrating process doesn't occur in this case, and the `doCount()` method is faster than `doSelect()`.
+In aggiunta al metodo `doSelect()`, ogni classe peer ha un metodo `doCount()`, che semplicemente ritorna il numero di record che soddisfano i requisiti passati come parametri e ritorna un numero intero. Dato che nessun oggetto viene ritornato, il processo di idratazione non viene eseguito in questo caso, perciò il metodo `doCount()` è più veloce di `doSelect()`.
 
-The peer classes also provide `doDelete()`, `doInsert()`, and `doUpdate()` methods, which all expect a `Criteria` as a parameter. These methods allow you to issue `DELETE`, `INSERT`, and `UPDATE` queries to your database. Check the generated peer classes in your model for more details on these Propel methods.
+La classi peer forniscono inoltre i metodi `doDelete(), `doInsert()` e `doUpdate()`, che ricevono un oggetto `Criteria` come parametro. Questi metodi consentono di eseguire interrogazioni di tipo `DELETE`, `INSERT` e `UPDATE` sul database. Dai un'occhiata alle classi peer generate nel tuo modello per ulteriori dettagli su questi metodi di Propel.
 
-Finally, if you just want the first object returned, replace `doSelect()` with a `doSelectOne()` call. This may be the case when you know that a `Criteria` will return only one result, and the advantage is that this method returns an object rather than an array of objects.
+Infine, se vuoi soltanto il primo oggetto, sostituisci `doSelect()` con `doSelectOne()`. Questo potrebbe essere il caso in cui sai che `Criteria` produrrà un risultato soltanto, con il vantaggio che il metodo ritornerà direttamente un oggetto piuttosto di un array.
 
 >**TIP**
->When a `doSelect()` query returns a large number of results, you might want to display only a subset of it in your response. Symfony provides a pager class called `sfPropelPager`, which automates the pagination of results.
+>Quando una query ritorna un gran numero di risultati, potresti volerne mostrare soltanto un sottoinsieme. Symfony fornisce una classe per la suddivisione in pagine chiamata `sfPropelPager`, che automatizza la paginazione dei risultati.
 
 ### Using Raw SQL Queries
 
