@@ -226,35 +226,36 @@ questa stessa licenza, con la versione modificata che svolga il
 ruolo del "documento", così da estendere la licenza sulla
 distribuzione e la modifica a chiunque ne possieda una copia.
 Inoltre nelle versioni modificate si deve:
-A. Usare nella pagina del titolo (e nelle copertine se ce ne
+
+* Usare nella pagina del titolo (e nelle copertine se ce ne
 sono) un titolo diverso da quello del documento, e da
 quelli di versioni precedenti (che devono essere elencati
 nella sezione storia del documento ove presenti). Si può
 usare lo stesso titolo di una versione precedente se
 l'editore di quella versione originale ne ha dato il
 permesso.
-B. Elencare nella pagina del titolo, come autori, una o più
+* Elencare nella pagina del titolo, come autori, una o più
 persone o gruppi responsabili in qualità di autori delle
 modifiche nella versione modificata, insieme ad almeno
 cinque fra i principali autori del documento (tutti gli
 autori principali se sono meno di cinque), a meno che
 questi non abbiano acconsentito a liberarvi da
 quest'obbligo.
-C. Dichiarare nella pagina del titolo il nome dell'editore
+* Dichiarare nella pagina del titolo il nome dell'editore
 della versione modificata in qualità di editore.
 D. Conservare tutte le note di copyright del documento
 originale.
-E. Aggiungere un'appropriata nota di copyright per le
+* Aggiungere un'appropriata nota di copyright per le
 modifiche di seguito alle altre note di copyright.
-F. Includere, immediatamente dopo la nota di copyright, una
+* Includere, immediatamente dopo la nota di copyright, una
 nota di licenza che dia pubblicamente il permesso di usare
 la versione modificata nei termini di questa licenza, nella
 forma mostrata nell'addendum alla fine di questo testo.
-G. Preservare in tale nota di licenza l'elenco completo di
+* Preservare in tale nota di licenza l'elenco completo di
 sezioni non modificabili e testi di copertina richiesti
 come previsto dalla licenza del documento.
-H. Includere una copia non modificata di questa licenza.
-I. Conservare la sezione intitolata "Storia", e il suo titolo,
+* Includere una copia non modificata di questa licenza.
+* Conservare la sezione intitolata "Storia", e il suo titolo,
 e aggiungere a questa un elemento che riporti almeno il
 titolo, l'anno, i nuovi autori, e gli editori della
 versione modificata come figurano nella pagina del titolo.
@@ -263,7 +264,7 @@ crearne una che riporti il titolo, gli autori, gli editori
 del documento come figurano nella pagina del titolo, quindi
 aggiungere un elemento che descriva la versione modificata
 come detto in precedenza.
-J. Conservare l'indirizzo in rete riportato nel documento, se
+* Conservare l'indirizzo in rete riportato nel documento, se
 c'è, al fine del pubblico accesso a una copia trasparente,
 e possibilmente l'indirizzo in rete per le precedenti
 versioni su cui ci si è basati. Questi possono essere
@@ -271,18 +272,18 @@ collocati nella sezione "Storia". Si può omettere un
 indirizzo di rete per un'opera pubblicata almeno quattro
 anni prima del documento stesso, o se l'originario editore
 della versione cui ci si riferisce ne dà il permesso.
-K. In ogni sezione di "Ringraziamenti" o "Dediche", si
+* In ogni sezione di "Ringraziamenti" o "Dediche", si
 conservino il titolo, il senso, il tono ivi utilizzati.
-L. Si conservino inalterate le sezioni non modificabili del
+* Si conservino inalterate le sezioni non modificabili del
 documento, nei propri testi e nei propri titoli. I numeri
 della sezione o equivalenti non sono considerati parte del
 titolo della sezione.
-M. Si cancelli ogni sezione intitolata "Approvazioni". Tale
+* Si cancelli ogni sezione intitolata "Approvazioni". Tale
 sezione non può essere inclusa nella versione modificata.
-N. Non si cambi il titolo di sezioni esistenti in
+* Non si cambi il titolo di sezioni esistenti in
 "Approvazioni" o in modo tale che si possa creare
 confusione con i titoli di sezioni non modificabili.
-O. Si conservino tutti i limiti alla garanzia.
+* Si conservino tutti i limiti alla garanzia.
 
 Se la versione modificata comprende nuove sezioni di primaria
 importanza o appendici che ricadono in "sezioni secondarie", e
@@ -449,7 +450,7 @@ versioni nuove o rivedute della Licenza per Documentazione
 Libera GNU. Le nuove versioni saranno simili nello spirito alla
 versione attuale ma potrebbero differirne in qualche dettaglio
 per affrontare nuovi problemi e concetti. Si veda
-http://www.gnu.org/copyleft/ .
+<http://www.gnu.org/copyleft/>.
 
 Ad ogni versione della licenza viene dato un numero che la
 distingue. Se il documento specifica che si riferisce a una
