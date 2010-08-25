@@ -15,19 +15,19 @@
 >**NOTE**
 >フロントエンドアプリケーションを作ったとき、運用環境のフロントコントローラの名前は `index.php` でした。ディレクトリごとに `index.php` は1つしか置けないので、symfony は一番最初のフロントコントローラに `index.php` を作り、その後はアプリケーションの名前を使います。
 
-`<propel>propel</propel><doctrine>doctrine</doctrine>:data-load` タスクでデータフィクスチャをリロードしようとしても、動かないでしょう。`JobeetJob::save()` メソッドは `frontend` アプリケーションの `app.yml` 設定ファイルにアクセスすることが必要とするからです。今は2つのアプリケーションがあるので、symfony は最初に見つかるアプリケーションである `backend` アプリケーションを使います。
+<propel>`propel:data-load`</propel><doctrine>'doctrine:data-load`</doctrine> タスクでデータフィクスチャをリロードしようとしても、動かないでしょう。`JobeetJob::save()` メソッドは `frontend` アプリケーションの `app.yml` 設定ファイルにアクセスすることが必要とするからです。今は2つのアプリケーションがあるので、symfony は最初に見つかるアプリケーションである `backend` アプリケーションを使います。
 
 しかし8日目でみたように、異なるレベルで設定を変更できます。`apps/frontend/config/app.yml` ファイルの内容を `config/app.yml` に移動させることで、すべてのアプリケーションの間で設定は共有され問題は解決されます。アドミンジェネレータでモデルクラスを広範囲で使うので、今変更しましょう。また、バックエンドアプリケーションの `app.yml` で定義される変数が必要になります。
 
 >**TIP**
->`<propel>propel</propel><doctrine>doctrine</doctrine>:data-load` タスクは `--application` オプションもとります。ですので、あるアプリケーションから特定の設定が必要な場合、次のように実行します:
+><propel>`propel:data-load`</propel><doctrine>'doctrine:data-load`</doctrine> タスクは `--application` オプションもとります。ですので、あるアプリケーションから特定の設定が必要な場合、次のように実行します:
 >
 >     $ php symfony <propel>propel</propel><doctrine>doctrine</doctrine>:data-load --application=frontend
 
 バックエンドモジュール
 -----------------------
 
-フロントエンドアプリケーションでは、モデルクラスにもとづいた基本的な CRUD モジュールをブートストラップするために、`<propel>propel</propel><doctrine>doctrine</doctrine>:generate-module` タスクを使いました。バックエンドでは、モデルクラスの完全なバックエンドインターフェイスを生成する `doctrine:generate-admin` タスクを使います:
+フロントエンドアプリケーションでは、モデルクラスにもとづいた基本的な CRUD モジュールをブートストラップするために、<propel>`propel:generate-module`</propel><doctrine>`doctrine:generate-module`</doctrine> タスクを使いました。バックエンドでは、モデルクラスの完全なバックエンドインターフェイスを生成する `doctrine:generate-admin` タスクを使います:
 
     $ php symfony <propel>propel</propel><doctrine>doctrine</doctrine>:generate-admin backend JobeetJob --module=job
     $ php symfony <propel>propel</propel><doctrine>doctrine</doctrine>:generate-admin backend JobeetCategory --module=category
@@ -575,7 +575,7 @@ list には、単独のオブジェクトで実行できるアクション用の
       // ...
     }
 
-昨日定義した `JobeetJob<propel>Peer</propel><doctrine>Table/doctrine>::cleanup()` メソッドを再利用しました。これも MVC パターンによって提供される再利用性のすばらしい例です。
+昨日定義した <propel>`JobeetJobPeer::cleanup()`</propel><doctrine>`JobeetJobTable::cleanup()`</doctrine> メソッドを再利用しました。これも MVC パターンによって提供される再利用性のすばらしい例です。
 
 
 >**NOTE**
@@ -586,7 +586,7 @@ list には、単独のオブジェクトで実行できるアクション用の
 
 ![アクション](http://www.symfony-project.org/images/jobeet/1_4/12/actions.png)
 
-### `<propel>peer</propel><doctrine>table</doctrine>_method`
+### <propel>`peermethod`</propel><doctrine>`tablemethod`</doctrine>
 
 Web デバッグツールバーによって表示されるように、求人リストのページを表示するために必要なデータベースへのリクエスト回数は14回です。
 
@@ -594,7 +594,7 @@ Web デバッグツールバーによって表示されるように、求人リ�
 
 ![修正前のリクエスト回数](http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png)
 
-リクエストの数を減らすために、`<propel>peer</propel><doctrine>table</doctrine>_method` オプションを使用して求人情報を得るのに使われるデフォルトメソッドを変更できます。
+リクエストの数を減らすために、<propel>`peermethod`</propel><doctrine>`tablemethod`</doctrine> オプションを使用して求人情報を得るのに使われるデフォルトメソッドを変更できます。
 
     [yml]
     # apps/backend/modules/job/config/generator.yml
@@ -805,7 +805,7 @@ Web デバッグツールバーによって表示されるように、求人リ�
 >**TIP**
 >生成されたテンプレートは多くの `class` と `id` 属性を定義するので、アドミンジェネレータの見た目はとても簡単に調整できます。たとえば、ロゴフィールドは `sf_admin_form_field_logo` クラスを使ってカスタマイズできます。それぞれのフィールドは `sf_admin_text` もしくは `sf_admin_boolean` のようなフィールドタイプによって決まるクラスも持ちます。
 
-`edit_mode` オプションは `sf<propel>Propel</propel><doctrine>Doctrine</doctrine>Record::isNew()` メソッドを使います。
+`edit_mode` オプションは <propel>`sfPropelRecord::isNew()`</propel><doctrine>`sfDoctrineRecord::isNew()`</doctrine> メソッドを使います。
 
 これはフォームのモデルオブジェクトが新しい場合は `true` を返し、そうでなければ `false` を返します。埋め込みオブジェクトのステータスによって異なるウィジェットもしくはバリデータを用意する必要がある場合にこれはとても役立ちます。
 
