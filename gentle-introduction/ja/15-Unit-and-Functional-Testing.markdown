@@ -1,41 +1,41 @@
-��15�� - ���j�b�g�e�X�g�Ƌ@�\�e�X�g
+第15章 - ユニットテストと機能テスト
 ===================================
 
-�����e�X�g�̓v���O���~���O�ɂ�����I�u�W�F�N�g�w���ȍ~�̍ő�̐i����1�ł��B�Ƃ�킯�AWeb �A�v���P�[�V�������J�����邽�߂̏����ɂȂ�̂ŁA�Ⴆ���т����������̃A�v���P�[�V�����������[�X���ꂽ�Ƃ��Ă��A�A�v���P�[�V�����̕i����ۏ؂ł��܂��B���̏͂ł͎����e�X�g���~���ɉ^�p���邽�߂̂��܂��܂ȃc�[�����Љ�܂��B
+自動テストはプログラミングにおけるオブジェクト指向以降の最大の進歩の1つです。とりわけ、Web アプリケーションを開発するための助けになるので、例えおびただしい数のアプリケーションがリリースされたとしても、アプリケーションの品質を保証できます。この章では自動テストを円滑に運用するためのさまざまなツールを紹介します。
 
-�����c�[��
+自動ツール
 ----------
 
-Web �A�v���P�[�V�������J�������o�������J���҂̓e�X�g�����{���邽�߂Ɏ��Ԃ������邱�Ƃ����m���Ă��܂��B�e�X�g�P�[�X�������A���������{���āA���ʂ���͂���̂͑ދ��ȍ�Ƃł��B�����āAWeb �A�v���P�[�V�����̗v���͂˂ɕω��������Ȃ̂ŁA�R�[�h�̃��t�@�N�^�����O�ƃA�v���P�[�V�����̃����[�X���p�����čs���邱�ƂɂȂ�܂��B���̍�Ƃ̗���ł́A�\�����Ȃ��V���ȃG���[������I�ɋN���肪���ł��B
+Web アプリケーションを開発した経験を持つ開発者はテストを実施するために時間がかかることを承知しています。テストケースを書き、それらを実施して、結果を解析するのは退屈な作業です。加えて、Web アプリケーションの要件はつねに変化しがちなので、コードのリファクタリングとアプリケーションのリリースが継続して行われることになります。この作業の流れでは、予期しない新たなエラーが定期的に起こりがちです。
 
-�Ȃ������c�[�����A�K�v�ł͂Ȃ��Ă���Ă���A���������J�����̈ꕔ�ɂȂ��Ă��闝�R�͂��������킯�ł��B�e�X�g�P�[�X�̃Z�b�g�̓A�v���P�[�V���������ۂɍs�����Ƃ�ۏ؂��܂��B�����̃R�[�h���p�ɂɏ����������ꍇ�A�������e�X�g�͗\�z�O�̉�A��h�~���܂��B�����āA���i�ȕW���t�H�[�}�b�g�ɂ���āA�e�X�g�t���[�����[�N���������₷���悤�Ƀe�X�g���������Ƃ��J���҂ɋ������܂��B
+なぜ自動ツールが、必要ではなくても提案され、成功した開発環境の一部になっている理由はそういうわけです。テストケースのセットはアプリケーションが実際に行うことを保証します。内部のコードが頻繁に書き直される場合、自動化テストは予想外の回帰を防止します。加えて、厳格な標準フォーマットによって、テストフレームワークが理解しやすいようにテストを書くことを開発者に強制します。
 
-�����e�X�g�͎��ɊJ���҂̃h�L�������g�ɂƂ��đ���܂��B�A�v���P�[�V�������s�����Ƃ̐����ɂȂ��Ă��邩��ł��B�悢�e�X�g�X�C�[�g�̓e�X�g���͂̃Z�b�g�̂��߂ɂǂ�ȏo�͂����҂���Ă���̂��������A���\�b�h�̖ړI���������悢���@�ł��B
+自動テストは時に開発者のドキュメントにとって代わります。アプリケーションが行うことの説明になっているからです。よいテストスイートはテスト入力のセットのためにどんな出力が期待されているのかを示し、メソッドの目的を説明するよい方法です。
 
-symfony �t���[�����[�N�͂��̌������������g�ɓK�p���܂��Bsymfony �̓����͎����e�X�g�ɂ���Č��؂���܂��B�����̃��j�b�g�e�X�g (unit test) �Ƌ@�\�e�X�g (functional test) �� PEAR �p�b�P�[�W�ɂ͓��ڂ���Ă��܂��񂪁ASVN ���|�W�g������`�F�b�N�A�E�g���邩�A[�I�����C��](http://trac.symfony-project.org/browser/branches/1.4/test)�Œ��߂邱�Ƃ��ł��܂��B
+symfony フレームワークはこの原則を自分自身に適用します。symfony の内部は自動テストによって検証されます。これらのユニットテスト (unit test) と機能テスト (functional test) は PEAR パッケージには搭載されていませんが、SVN リポジトリからチェックアウトするか、[オンライン](http://trac.symfony-project.org/browser/branches/1.4/test)で眺めることができます。
 
-### ���j�b�g�e�X�g�Ƌ@�\�e�X�g
+### ユニットテストと機能テスト
 
-���j�b�g�e�X�g (�������͒P�̃e�X�g - unit test) �͒P��̃R�[�h�R���|�[�l���g���C�ӂ̓��͂ɑ΂��Đ������o�͂�񋟂��邱�Ƃ��m�F���܂��B�����̃e�X�g�͊֐��ƃ��\�b�h�����ׂĂ̓���̃P�[�X�œ��삷����@�����؂��܂��B���j�b�g�e�X�g�͈�x��1�̃P�[�X����������̂ŁA���Ƃ��΁A1�̃��\�b�h������̏󋵂ňقȂ铮�������ꍇ�A�������̃��j�b�g�e�X�g���K�v�ɂȂ邱�Ƃ�����܂��B
+ユニットテスト (もしくは単体テスト - unit test) は単一のコードコンポーネントが任意の入力に対して正しい出力を提供することを確認します。これらのテストは関数とメソッドがすべての特定のケースで動作する方法を検証します。ユニットテストは一度に1つのケースを処理するので、たとえば、1つのメソッドが特定の状況で異なる動作をする場合、いくつかのユニットテストが必要になることがあります。
 
-�@�\�e�X�g (functional test) �́A�V���v���ȓ��͂���o�͂ւ̕ϊ��ł͂Ȃ��A���S�ȋ@�\�����؂��܂��B���Ƃ��΁A�L���b�V���V�X�e���͋@�\�e�X�g�����Ō��؂ł��܂��B�Ȃ��Ȃ畡���̃X�e�b�v���܂܂�邩��ł�: �ŏ��A�y�[�W�����N�G�X�g����A�����_�����O����܂�; ���ɁA�L���b�V������y�[�W���擾����܂��B�ł��̂ŋ@�\�e�X�g�̓v���Z�X�����؂��A�V�i���I��K�v�Ƃ��܂��Bsymfony �ɂ����āA���ׂẴA�N�V�����ɑ΂��ċ@�\�e�X�g�������ׂ��ł��B
+機能テスト (functional test) は、シンプルな入力から出力への変換ではなく、完全な機能を検証します。たとえば、キャッシュシステムは機能テストだけで検証できます。なぜなら複数のステップが含まれるからです: 最初、ページがリクエストされ、レンダリングされます; つぎに、キャッシュからページが取得されます。ですので機能テストはプロセスを検証し、シナリオを必要とします。symfony において、すべてのアクションに対して機能テストを書くべきです。
 
-�����ƕ��G�ȃC���^���N�V�����̂ɂ́A������2�̃^�C�v�̃e�X�g�͕s�\����������܂���B���Ƃ��΁AAjax �C���^���N�V������ JavaScript �����s���邽�߂� Web  �u���E�U�[��K�v�Ƃ���̂ŁA�����������I�Ƀe�X�g����ɂ͓��ʂȃT�[�h�p�[�e�B�̃c�[�����K�v�ł��B����ɁA���o���ʂ����؂ł���̂͐l�Ԃ����ł��B
+もっと複雑なインタラクションのには、これらの2つのタイプのテストは不十分かもしれません。たとえば、Ajax インタラクションは JavaScript を実行するために Web  ブラウザーを必要とするので、これらを自動的にテストするには特別なサードパーティのツールが必要です。さらに、視覚効果を検証できるのは人間だけです。
 
-�����c�[���ւ̍L���͈͂ł̃A�v���[�`������ꍇ�A�����炭�A����炷�ׂĂ̕��@�̑g�ݍ��킹���g���K�v������܂��B�w�j�Ƃ��ẮA�e�X�g���V���v���œǂ݂₷�����̂ɕۂׂ��ł��邱�Ƃ��o���Ă����Ă��������B
+自動ツールへの広い範囲でのアプローチがある場合、おそらく、これらすべての方法の組み合わせを使う必要があります。指針としては、テストをシンプルで読みやすいものに保つべきであることを覚えておいてください。
 
 >**NOTE**
->�����e�X�g�͌��ʂƗ\�������o�͂̔�r�ɂ���ē��삵�܂��B����������ƁA�A�T�[�V���� (`$a == 2` �Ȃǂ̎�) ��]�����܂��B�A�T�[�V�����̒l�� `true` �������� `false` �ŁA�e�X�g�����i���������s�������𔻒肵�܂��B�����e�X�g�̋Z�p�������Ƃ��u�A�T�[�V�����v(�������͕\�� - assertion)�Ƃ������t�͈�ʓI�Ɏg���܂��B
+>自動テストは結果と予期される出力の比較によって動作します。言い換えると、アサーション (`$a == 2` などの式) を評価します。アサーションの値は `true` もしくは `false` で、テストが合格したか失敗したかを判定します。自動テストの技術を扱うとき「アサーション」(もしくは表明 - assertion)という言葉は一般的に使われます。
 
-### �e�X�g�쓮�J��
+### テスト駆動開発
 
-�e�X�g�쓮�J�� (TDD - Test-Driven Development) �̕��@�_�ɂ����āA�e�X�g�̓R�[�h�̂܂��ɏ�����܂��B�ŏ��Ƀe�X�g���������Ƃ͎��ۂɊJ������܂��ɋ@�\����������^�X�N�ɏœ_�𓖂Ă邽�߂̏����ɂȂ�܂��B�G�N�X�g���[���v���O���~���O (XP - Extreme Programming) �̂悤�ȁA����͂悢�K���ŁA���l�ɂ����߂ł��B�����āA���̕��@�_�̓��j�b�g�e�X�g���ŏ��ɏ����Ă����Ȃ��Ƃ��Ƃŏ������Ƃ͂Ȃ��Ƃ����������l�����Ă��܂��B
+テスト駆動開発 (TDD - Test-Driven Development) の方法論において、テストはコードのまえに書かれます。最初にテストを書くことは実際に開発するまえに機能が実現するタスクに焦点を当てるための助けになります。エクストリームプログラミング (XP - Extreme Programming) のような、これはよい習慣で、同様にお勧めです。加えて、この方法論はユニットテストを最初に書いておかないとあとで書くことはないという事実を考慮しています。
 
-���Ƃ��΁A�e�L�X�g���Ƃ菜���@�\���J�����Ȃ���΂Ȃ�Ȃ��ꍇ���l���Ă݂܂��傤�B���̋@�\�͕�����̍ŏ��ƍŌ�̋󔒃X�y�[�X���Ƃ菜���A�A���t�@�x�b�g�łȂ��������A���_�[�X�R�A�ɒu�������A���ׂĂ̑啶�����������ɕϊ����܂��B�e�X�g�쓮�J���ɂ����āA�e�[�u��15-1�Ŏ������悤�ɁA���ׂĂ̂��蓾��ꍇ���l���A���ꂼ��̏ꍇ�ɑ΂��ē��̗͂�Ɗ��҂����o�͂��������邱�ƂɂȂ�܂��B
+たとえば、テキストをとり除く機能を開発しなければならない場合を考えてみましょう。この機能は文字列の最初と最後の空白スペースをとり除き、アルファベットでない文字をアンダースコアに置き換え、すべての大文字を小文字に変換します。テスト駆動開発において、テーブル15-1で示されるように、すべてのあり得る場合を考え、それぞれの場合に対して入力の例と期待される出力を準備することになります。
 
-�e�[�u��15-1 �z�肳���e�L�X�g���Ƃ菜���@�\
+テーブル15-1 想定されるテキストをとり除く機能
 
-����                  | ���҂����o��
+入力                  | 期待される出力
 --------------------- | ---------------------
 `" foo "`             | `"foo"`
 `"foo bar"`           | `"foo_bar"`
@@ -43,40 +43,40 @@ symfony �t���[�����[�N�͂��̌������������g�ɓK�p���܂��Bsymfony �̓����͎����e�X
 `"FooBar"`            | `"foobar`"
 `"Don't foo-bar me!"` | `"don_t_foo_bar_me_"`
 
-���j�b�g�e�X�g�����������ꍇ�A���������s���āA���s����l�q�����Ă��������B�ŏ��̃e�X�g�P�[�X���������邽�߂ɕK�v�ȃR�[�h��ǉ����A�e�X�g���ēx�������A�ŏ��̃e�X�g����������̂����āA���̂悤�ɑ����܂��B�ŏI�I�ɁA���ׂẴe�X�g�P�[�X�͐��������Ƃ��A�@�\�͐������ł��B
+ユニットテストを書きたい場合、それらを実行して、失敗する様子を見てください。最初のテストケースを処理するために必要なコードを追加し、テストを再度動かし、最初のテストが成功するのを見て、そのように続けます。最終的に、すべてのテストケースは成功したとき、機能は正しいです。
 
-�e�X�g�쓮���@�_�ŊJ�����ꂽ�A�v���P�[�V�����͑�܂��Ɏ��ۂ̃R�[�h�Ɠ������炢�̃e�X�g�R�[�h�ŏI���܂��B�e�X�g�P�[�X���f�o�b�O���邱�ƂɎ��Ԃ��₵�����Ȃ��̂ł���΁A�������V���v���ɕۂ��Ă��������B
-
->**NOTE**
->���\�b�h�����t�@�N�^�����O����ƈȑO�͌���Ȃ������V�����o�O�������\��������܂��B�^�p���ɐV���������[�X�̃A�v���P�[�V�������f�v���C����܂��ɁA���ׂĂ̎����e�X�g�����s���邱�Ƃ��悢�K���ł���̂͂��������킯�ł��B����͉�A�e�X�g (regression testing) �ƌĂ΂�܂��B
-
-### lime �e�X�g�t���[�����[�N
-
-PHP �̐��E�ɂ����ă��j�b�g�e�X�g�̃t���[�����[�N�͑������݂��APhpUnit �������Ƃ��悭�m���Ă��܂��Bsymfony �� lime �ƌĂ΂��Ǝ��̃e�X�g�t���[�����[�N�������܂��BPerl ���C�u������ `Test::More` �Ɋ�Â��ATAP (Test Anything Protoco) �ɏ������Ă��܂��A���̂��Ƃ́A�e�X�g�̏o�͂����ǂ݂₷�����邽�߂ɐ݌v���ꂽ TAP �Œ�߂��Ă���悤�ɁA�e�X�g�̌��ʂ��\������邱�Ƃ��Ӗ����܂��B
-
-lime �̓��j�b�g�e�X�g���T�|�[�g���܂��BPHP �̃e�X�g�t���[�����[�N�����y�ʂł������̗��_������܂�:
-
-  * lime �͂��ꂼ��̓����e�X�g�̊Ԃ̊�ȕ���p��������邽�߂Ƀe�X�g�t�@�C�����T���h�{�b�N�X�ŋN�����܂��B
-  * lime �e�X�g����т��̃e�X�g�̏o�͂͂ƂĂ��ǂ݂₷���ł��B�݊����̂���V�X�e���ŁA�d�v�ȏ�������������悤�ɁAlime �̓X�}�[�g�ȕ��@�ŃJ���[�o�͂��g���܂��B
-  * ��A�e�X�g�̂��߂� symfony ���g�� `lime` �e�X�g���g���̂ŁA���j�b�g�e�X�g�Ɖ�A�e�X�g�̑����̗Ⴊ symfony �̃\�[�X�R�[�h�Ō�����܂��B
-  * lime �R�A�̓��j�b�g�e�X�g�ɂ���Č��؂���܂��B
-  * lime �� PHP �ŏ�����Ă���A�������삵���ɏ�����Ă��܂��B���̃��C�u�����Ɉˑ����܂���B
-
-���̃Z�N�V�����Ő�������邳�܂��܂ȃe�X�g�� lime �̍\�����g���܂��Bsymfony ���C���X�g�[�������̂ł���΂����̃e�X�g�͂��̂܂ܓ����܂��B
+テスト駆動方法論で開発されたアプリケーションは大まかに実際のコードと同じぐらいのテストコードで終わります。テストケースをデバッグすることに時間を費やしたくないのであれば、それらをシンプルに保ってください。
 
 >**NOTE**
->�^�p�T�[�o�[�Ń��j�b�g�e�X�g�Ƌ@�\�e�X�g���N�������邱�Ƃ͑z�肳��Ă��܂���B�����̃e�X�g�͊J���҂̃c�[���Ȃ̂ŁA�z�X�g�T�[�o�[�ł͂Ȃ��A�J���҂̃R���s���[�^�œ������ׂ��ł��B
+>メソッドをリファクタリングすると以前は現れなかった新しいバグが作られる可能性があります。運用環境に新しいリリースのアプリケーションをデプロイするまえに、すべての自動テストを実行することもよい習慣であるのはそういうわけです。これは回帰テスト (regression testing) と呼ばれます。
 
-���j�b�g�e�X�g
+### lime テストフレームワーク
+
+PHP の世界においてユニットテストのフレームワークは多く存在し、PhpUnit がもっともよく知られています。symfony は lime と呼ばれる独自のテストフレームワークを持ちます。Perl ライブラリの `Test::More` に基づき、TAP (Test Anything Protoco) に準拠しています、このことは、テストの出力をより読みやすくするために設計された TAP で定められているように、テストの結果が表示されることを意味します。
+
+lime はユニットテストをサポートします。PHP のテストフレームワークよりも軽量でいくつかの利点があります:
+
+  * lime はそれぞれの動くテストの間の奇妙な副作用を回避するためにテストファイルをサンドボックスで起動します。
+  * lime テストおよびそのテストの出力はとても読みやすいです。互換性のあるシステムで、重要な情報を見分けられるように、lime はスマートな方法でカラー出力を使います。
+  * 回帰テストのために symfony 自身が `lime` テストを使うので、ユニットテストと回帰テストの多くの例が symfony のソースコードで見つかります。
+  * lime コアはユニットテストによって検証されます。
+  * lime は PHP で書かれており、速く動作し上手に書かれています。他のライブラリに依存しません。
+
+つぎのセクションで説明されるさまざまなテストは lime の構文を使います。symfony をインストールしたのであればこれらのテストはそのまま動きます。
+
+>**NOTE**
+>運用サーバーでユニットテストと機能テストを起動させることは想定されていません。これらのテストは開発者のツールなので、ホストサーバーではなく、開発者のコンピュータで動かすべきです。
+
+ユニットテスト
 -------------
 
-symfony �̃��j�b�g�e�X�g�� `Test.php` �ŏI���V���v���� PHP �t�@�C���ŁA�A�v���P�[�V������ `test/unit/` �f�B���N�g���ɐݒu����Ă��܂��B�����̓V���v���œǂ݂₷���\���ɏ]���܂��B
+symfony のユニットテストは `Test.php` で終わるシンプルな PHP ファイルで、アプリケーションの `test/unit/` ディレクトリに設置されています。これらはシンプルで読みやすい構文に従います。
 
-### ���j�b�g�e�X�g�͉��Ɍ����܂����H
+### ユニットテストは何に見えますか？
 
-���X�g15-1�� `strtolower()` �֐��̂��߂̓T�^�I�ȃ��j�b�g�e�X�g�̈ꎮ�������Ă��܂��B���̃e�X�g�� `lime_test` �I�u�W�F�N�g���C���X�^���X�����邱�ƂŎn�܂�܂�(���̓p�����[�^�[�ɔY�ޕK�v�͂���܂���)�B���ꂼ��̃��j�b�g�e�X�g�� `lime_test` �C���X�^���X�̌Ăяo���ł��B�����̃��\�b�h�̍Ō�̃p�����[�^�[�͂˂ɏo�͂Ƃ��Ē񋟂����I�v�V�����̕�����ł��B
+リスト15-1は `strtolower()` 関数のための典型的なユニットテストの一式を示しています。このテストは `lime_test` オブジェクトをインスタンス化することで始まります(今はパラメーターに悩む必要はありません)。それぞれのユニットテストは `lime_test` インスタンスの呼び出しです。これらのメソッドの最後のパラメーターはつねに出力として提供されるオプションの文字列です。
 
-���X�g15-1 - ���j�b�g�e�X�g�̃t�@�C���̗� (`test/unit/strtolwerTest.php`)
+リスト15-1 - ユニットテストのファイルの例 (`test/unit/strtolwerTest.php`)
 
     [php]
     <?php
@@ -88,82 +88,82 @@ symfony �̃��j�b�g�e�X�g�� `Test.php` �ŏI���V���v���� PHP �t�@�C���ŁA�A�v���
     // strtolower()
     $t->diag('strtolower()');
     $t->isa_ok(strtolower('Foo'), 'string',
-        'strtolower() �͕������Ԃ�');
+        'strtolower() は文字列を返す');
     $t->is(strtolower('FOO'), 'foo',
-        'strtolower() �͓��͂��������ɕϊ�����');
+        'strtolower() は入力を小文字に変換する');
     $t->is(strtolower('foo'), 'foo',
-        'strtolower() �͏�������ύX���Ȃ�');
+        'strtolower() は小文字を変更しない');
     $t->is(strtolower('12#?@~'), '12#?@~',
-        'strtolower() �̓A���t�@�x�b�g�ł͂Ȃ�������ύX���Ȃ�');
+        'strtolower() はアルファベットではない文字を変更しない');
     $t->is(strtolower('FOO BAR'), 'foo bar',
-        'strtolower() �͋󔒂����̂܂܂ɂ���');
+        'strtolower() は空白をそのままにする');
     $t->is(strtolower('FoO bAr'), 'foo bar',
-        'strtolower() �͍������镶���̓��͂�����');
+        'strtolower() は混合する文字の入力を扱う');
     $t->is(strtolower(''), 'foo',
-        'strtolower() �͋�̕������ foo �ɕϊ�����');
+        'strtolower() は空の文字列を foo に変換する');
 
-�R�}���h���C������ `test:unit` �^�X�N�Ńe�X�g�Z�b�g���N�������Ă��������B�R�}���h���C���̏o�͓��e�͂ƂĂ����m�Ȃ̂ŁA���������e�X�g�Ǝ��s�����e�X�g�������o�����߂̏����ɂȂ�܂��B���X�g15-2�̃e�X�g�̏o�͗���������������B
+コマンドラインから `test:unit` タスクでテストセットを起動させてください。コマンドラインの出力内容はとても明確なので、成功したテストと失敗したテストを見つけ出すための助けになります。リスト15-2のテストの出力例をご覧ください。
 
-���X�g15-2 - 1�̃��j�b�g�e�X�g���R�}���h���C������N��������
+リスト15-2 - 1つのユニットテストをコマンドラインから起動させる
 
     $ php symfony test:unit strtolower
     
     1..7
     # strtolower()
-    ok 1 - strtolower() �͕������Ԃ�
-    ok 2 - strtolower() �͓��͂��������ɕϊ�����
-    ok 3 - strtolower() �͏�������ύX���Ȃ�
-    ok 4 - strtolower() �̓A���t�@�x�b�g�ł͂Ȃ�������ύX���Ȃ�
-    ok 5 - strtolower() �͋󔒂����̂܂܂ɂ���
-    ok 6 - strtolower() �͍������镶���̓��͂�����
-    not ok 7 - strtolower() �͋�̕������foo�ɕϊ�����
+    ok 1 - strtolower() は文字列を返す
+    ok 2 - strtolower() は入力を小文字に変換する
+    ok 3 - strtolower() は小文字を変更しない
+    ok 4 - strtolower() はアルファベットではない文字を変更しない
+    ok 5 - strtolower() は空白をそのままにする
+    ok 6 - strtolower() は混合する文字の入力を扱う
+    not ok 7 - strtolower() は空の文字列をfooに変換する
     #     Failed test (.\batch\test.php at line 21)
     #            got: ''
     #       expected: 'foo'
     # Looks like you failed 1 tests of 7.
 
 >**TIP**
->���X�g15-1�̎n�߂� `include` �X�e�[�g�����g�̓I�v�V�����ł����A`php test/unit/strtolowerTest.php` ���Ăяo�����ƂŁA�e�X�g�t�@�C���� symfony �R�}���h���C�����g�킸�Ɏ��s�ł���Ɨ����� PHP �X�N���v�g�ɂȂ�܂��B
+>リスト15-1の始めの `include` ステートメントはオプションですが、`php test/unit/strtolowerTest.php` を呼び出すことで、テストファイルは symfony コマンドラインを使わずに実行できる独立した PHP スクリプトになります。
 
-### ���j�b�g�e�X�g�̃��\�b�h
+### ユニットテストのメソッド
 
-�e�[�u��15-2�ňꗗ���������悤�ɁA`lime_test` �I�u�W�F�N�g�ɂ͑����̃e�X�g���\�b�h���t�����Ă��܂��B
+テーブル15-2で一覧が示されるように、`lime_test` オブジェクトには多くのテストメソッドが付随しています。
 
-�e�[�u��15-2 - ���j�b�g�e�X�g�̂��߂� `lime_test` �I�u�W�F�N�g�̃��\�b�h
+テーブル15-2 - ユニットテストのための `lime_test` オブジェクトのメソッド
 
-���\�b�h                                      | ����
+メソッド                                      | 説明
 -------------------------------------------   | -----------------------------------------
-`diag($msg)`                                  | �R�����g���o�͂��邪�e�X�g�͎��{���Ȃ�
-`ok($test[, $msg])`                           | �������e�X�g���� true �̏ꍇ�Ƀp�X����
-`is($value1, $value2[, $msg])`                | �Q�̒l���r���ē������ꍇ�Ƀp�X����
-`isnt($value1, $value2[, $msg])`              | �Q�̒l���r���A�������Ȃ��ꍇ�Ƀp�X����
-`like($string, $regexp[, $msg])`              | ���K�\���ɑ΂��ĕ�������e�X�g����
-`unlike($string, $regexp[, $msg])`            | �����񂪐��K�\���Ƀ}�b�`���Ȃ����Ƃ��`�F�b�N����
-`cmp_ok($value1, $operator, $value2[, $msg])` | ���Z�q�ň������r���� 
-`isa_ok($variable, $type[, $msg])`            | �����̃^�C�v���`�F�b�N���� 
-`isa_ok($object, $class[, $msg])`             | �I�u�W�F�N�g�̃N���X���`�F�b�N����
-`can_ok($object, $method[, $msg])`            | �I�u�W�F�N�g�������̓N���X�̂��߂̃��\�b�h�����p�ł��邩�`�F�b�N���� 
-`is_deeply($array1, $array2[, $msg])`         | �����l������2�̔z����`�F�b�N����
-`include_ok($file[, $msg])`                   | �t�@�C�������݂��A�K�؂Ɋ܂܂�邩���o���f�[�g����
-`fail([$msg])`                                | �˂Ɏ��s����--�e�X�g�̗�O�ɕ֗��ł���
-`pass([$msg])`                                | �˂ɐ�������-- �e�X�g�̗�O�ɕ֗��ł���
-`skip($msg, $nb_tests)`                       | `$nb_tests` ���̃e�X�g���J�E���g���܂�--�������̃e�X�g�ɕ֗��ł�
-`todo([$msg])`                                | �e�X�g�Ƃ��ăJ�E���g���܂�-- �܂�������Ă��Ȃ��e�X�g�ɕ֗��ł�
-`comment($msg)`                               | �R�����g���b�Z�[�W�͏o�͂��邪�e�X�g�͎��{���Ȃ� 
-`error($msg)`                                 | �G���[���b�Z�[�W�͏o�͂��邪�e�X�g�͎��{���Ȃ�
-`info($msg)`                                  | ��񃁃b�Z�[�W�͏o�͂��邪�e�X�g�͎��{���Ȃ� 
+`diag($msg)`                                  | コメントを出力するがテストは実施しない
+`ok($test[, $msg])`                           | 条件をテストして true の場合にパスする
+`is($value1, $value2[, $msg])`                | ２つの値を比較して等しい場合にパスする
+`isnt($value1, $value2[, $msg])`              | ２つの値を比較し、等しくない場合にパスする
+`like($string, $regexp[, $msg])`              | 正規表現に対して文字列をテストする
+`unlike($string, $regexp[, $msg])`            | 文字列が正規表現にマッチしないことをチェックする
+`cmp_ok($value1, $operator, $value2[, $msg])` | 演算子で引数を比較する 
+`isa_ok($variable, $type[, $msg])`            | 引数のタイプをチェックする 
+`isa_ok($object, $class[, $msg])`             | オブジェクトのクラスをチェックする
+`can_ok($object, $method[, $msg])`            | オブジェクトもしくはクラスのためのメソッドが利用できるかチェックする 
+`is_deeply($array1, $array2[, $msg])`         | 同じ値を持つ2つの配列をチェックする
+`include_ok($file[, $msg])`                   | ファイルが存在し、適切に含まれるかをバリデートする
+`fail([$msg])`                                | つねに失敗する--テストの例外に便利である
+`pass([$msg])`                                | つねに成功する-- テストの例外に便利である
+`skip($msg, $nb_tests)`                       | `$nb_tests` 件のテストをカウントします--条件つきのテストに便利です
+`todo([$msg])`                                | テストとしてカウントします-- まだ書かれていないテストに便利です
+`comment($msg)`                               | コメントメッセージは出力するがテストは実施しない 
+`error($msg)`                                 | エラーメッセージは出力するがテストは実施しない
+`info($msg)`                                  | 情報メッセージは出力するがテストは実施しない 
 
 
-�\���͂ƂĂ��P�������ł�; �����Ă��̃��\�b�h�̓��b�Z�[�W���Ō�̃p�����[�^�[�Ƃ��Ď󂯂Ƃ邱�Ƃɒ��ӂ��Ă��������B���̃��b�Z�[�W�̓e�X�g�����������Ƃ��ɏo�͂ɕ\������܂��B�����̃��\�b�h���w�ԃx�X�g�ȕ��@�͂��������ۂɃe�X�g���邱�Ƃł��B�ł��̂ŁA�����̃��\�b�h�����ׂĎg���Ă��郊�X�g15-3���������������B
+構文はとても単刀直入です; たいていのメソッドはメッセージを最後のパラメーターとして受けとることに注意してください。このメッセージはテストが成功したときに出力に表示されます。これらのメソッドを学ぶベストな方法はこれらを実際にテストすることです。ですので、これらのメソッドをすべて使っているリスト15-3をご覧ください。
 
-���X�g15-3 - `lime_test` �I�u�W�F�N�g�̃��\�b�h���e�X�g���� (`test/unit/exampleTest.php`)
+リスト15-3 - `lime_test` オブジェクトのメソッドをテストする (`test/unit/exampleTest.php`)
 
     [php]
     <?php
 
     include dirname(__FILE__).'/../bootstrap/unit.php';
 
-    // �e�X�g��ړI�Ƃ����X�^�u�I�u�W�F�N�g�Ɗ֐�
+    // テストを目的としたスタブオブジェクトと関数
     class myObject
     {
       public function myMethod()
@@ -176,92 +176,92 @@ symfony �̃��j�b�g�e�X�g�� `Test.php` �ŏI���V���v���� PHP �t�@�C���ŁA�A�v���
       throw new Exception('exception thrown');
     }
 
-    // �e�X�g�I�u�W�F�N�g������������
+    // テストオブジェクトを初期化する
     $t = new lime_test(16);
 
     $t->diag('hello world');
-    $t->ok(1 == '1', '�������Z�q�͌^�𖳎�����');
-    $t->is(1, '1', '������͔�r�̂��߂ɐ����ɕϊ������');
-    $t->isnt(0, 1, '0 �� 1 �͓������Ȃ�');
-    $t->like('test01', '/test\d+/', 'test01 �̓e�X�g�̔ԍ��t���p�^�[���ɏ]��');
-    $t->unlike('tests01', '/test\d+/', 'tests01 �͂��̃p�^�[���ɏ]��Ȃ�');
-    $t->cmp_ok(1, '<', 2, '1 �� 2 ��菬����');
-    $t->cmp_ok(1, '!==', true, '1 �� true �͂܂����������ł͂Ȃ�');
-    $t->isa_ok('foobar', 'string', '\'foobar\' �͕�����');
-    $t->isa_ok(new myObject(), 'myObject', 'new���Z�q�͉E�̃N���X�̃I�u�W�F�N�g�����');
-    $t->can_ok(new myObject(), 'myMethod', 'myObject �N���X�̃I�u�W�F�N�g�� myMethod ���\�b�h������');
+    $t->ok(1 == '1', '等号演算子は型を無視する');
+    $t->is(1, '1', '文字列は比較のために数字に変換される');
+    $t->isnt(0, 1, '0 と 1 は等しくない');
+    $t->like('test01', '/test\d+/', 'test01 はテストの番号付けパターンに従う');
+    $t->unlike('tests01', '/test\d+/', 'tests01 はこのパターンに従わない');
+    $t->cmp_ok(1, '<', 2, '1 は 2 より小さい');
+    $t->cmp_ok(1, '!==', true, '1 と true はまったく同じではない');
+    $t->isa_ok('foobar', 'string', '\'foobar\' は文字列');
+    $t->isa_ok(new myObject(), 'myObject', 'new演算子は右のクラスのオブジェクトを作る');
+    $t->can_ok(new myObject(), 'myMethod', 'myObject クラスのオブジェクトは myMethod メソッドを持つ');
     $array1 = array(1, 2, array(1 => 'foo', 'a' => '4'));
     $t->is_deeply($array1, array(1, 2, array(1 => 'foo', 'a' => '4')),
-        '�ŏ���2�Ԗڂ̔z��͓���');
-    $t->include_ok('./fooBar.php', 'fooBar.php �t�@�C�����K�؂ɃC���N���[�h���ꂽ');
+        '最初と2番目の配列は同じ');
+    $t->include_ok('./fooBar.php', 'fooBar.php ファイルが適切にインクルードされた');
 
     try
     {
       throw_an_exception();
-      $t->fail('��O��������ꂽ��R�[�h�͎��s����܂���');
+      $t->fail('例外が投じられた後コードは実行されません');
     }
     catch (Exception $e)
     {
-      $t->pass('��O�̕ߑ��𐬌����܂���');
+      $t->pass('例外の捕捉を成功しました');
     }
 
     if (!isset($foobar))
     {
-      $t->skip('�e�X�g�̉񐔂𐳊m�ɕۂ��߂�1�̃e�X�g���X�L�b�v����', 1);
+      $t->skip('テストの回数を正確に保つために1つのテストをスキップする', 1);
     }
     else
     {
       $t->ok($foobar, 'foobar');
     }
 
-    $t->todo('���ׂ��e�X�g��1�c���Ă���');
+    $t->todo('すべきテストが1つ残っている');
 
-symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��B
+symfonyのユニットテストのなかにこれらのメソッドの使いかたの例が多く見つかります。
 
 >**TIP**
->�Ȃ� `ok()` �ƑΏƓI�� `is()` ���g���̂��Ƃ܂ǂ��Ă��邩������܂���B`is()` �ɂ��G���[���b�Z�[�W�̏o�͂��͂邩�ɖ��m������ł�; ���̃��\�b�h���e�X�g�̗����̃����o�[��\���������� `ok()` �͏��������s�������Ƃ�`���܂��B
+>なぜ `ok()` と対照的に `is()` を使うのかとまどっているかもしれません。`is()` によるエラーメッセージの出力がはるかに明確だからです; このメソッドがテストの両方のメンバーを表示する一方で `ok()` は条件が失敗したことを伝えます。
 
-### �p�����[�^�[���e�X�g����
+### パラメーターをテストする
 
-`lime_test` �I�u�W�F�N�g�̏������͍ŏ��̃p�����[�^�[�Ƃ��Ď��s�����e�X�g�̐����Ƃ�܂��B�ŏI�I�Ɏ��s�����e�X�g�̐������̃p�����[�^�[�̐��l�ƈقȂ�ꍇ�Alime �͂��̂��ƂɊւ���x�����o�͂��܂��B���Ƃ��΁A���X�g15-3�̃e�X�g�Z�b�g�̓��X�g15-4�̂悤�ɏo�͂��܂��B16��̃e�X�g�����{����邱�Ƃ��ۏ؂���܂������A���ۂɂ�15�񂾂��s��ꂽ�̂ŁA�o�͂͂���������Ă��܂��B
+`lime_test` オブジェクトの初期化は最初のパラメーターとして実行されるテストの数をとります。最終的に実行されるテストの数がこのパラメーターの数値と異なる場合、lime はそのことに関する警告を出力します。たとえば、リスト15-3のテストセットはリスト15-4のように出力します。16回のテストが実施されることが保証されましたが、実際には15回だけ行われたので、出力はこれを示してします。
 
-���X�g15-4 - �e�X�g�̎��s�񐔂̃J�E���g�̓e�X�g�̌v��̏����ɂȂ�
+リスト15-4 - テストの実行回数のカウントはテストの計画の助けになる
 
     $ php symfony test:unit example
 
     1..16
     # hello world
-    ok 1 - �������Z�q�͌^�𖳎�����
-    ok 2 - ������͔�r�̂��߂ɐ����ɕϊ������
-    ok 3 - 0��1�͓������Ȃ�
-    ok 4 - test01 �̓e�X�g�̔ԍ��t���p�^�[���ɏ]��
-    ok 5 - tests01 �͂��̃p�^�[���ɏ]��Ȃ�
-    ok 6 - 1��2��菬����
-    ok 7 - 1�� true �͂܂����������ł͂Ȃ�
-    ok 8 - 'foobar' �͕�����
-    ok 9 - new ���Z�q�͉E�̃N���X�̃I�u�W�F�N�g�����
-    ok 10 - myObject �N���X�̃I�u�W�F�N�g�� amyMethod ���\�b�h������
-    ok 11 - �ŏ���2�Ԗڂ̔z��͓���
-    not ok 12 - fooBar.php �t �@�C�����K�؂ɃC���N���[�h���ꂽ
+    ok 1 - 等号演算子は型を無視する
+    ok 2 - 文字列は比較のために数字に変換される
+    ok 3 - 0と1は等しくない
+    ok 4 - test01 はテストの番号付けパターンに従う
+    ok 5 - tests01 はこのパターンに従わない
+    ok 6 - 1は2より小さい
+    ok 7 - 1と true はまったく同じではない
+    ok 8 - 'foobar' は文字列
+    ok 9 - new 演算子は右のクラスのオブジェクトを作る
+    ok 10 - myObject クラスのオブジェクトは amyMethod メソッドを持つ
+    ok 11 - 最初と2番目の配列は同じ
+    not ok 12 - fooBar.php フ ァイルが適切にインクルードされた
     #     Failed test (.\test\unit\testTest.php at line 27)
     #       Tried to include './fooBar.php'
-    ok 13 - ��O�̕ߑ����������܂���
-    ok 14 # SKIP �e�X�g�̉񐔂𐳊m�ɕۂ��߂�1�̃e�X�g���X�L�b�v����
-    ok 15 # TODO ���ׂ��e�X�g��1�c���Ă���
+    ok 13 - 例外の捕捉が成功しました
+    ok 14 # SKIP テストの回数を正確に保つために1つのテストをスキップする
+    ok 15 # TODO すべきテストが1つ残っている
     # Looks like you planned 16 tests but only ran 15.
     # Looks like you failed 1 tests of 16.
 
-`diag()` ���\�b�h�̓e�X�g�Ƃ��ăJ�E���g����܂���B�R�����g��\�����邽�߂ɂ�����g���΁A�e�X�g�̏o�͂͐�������ǂ݂₷����Ԃɕۂ���܂��B����ŁA`todo()` ���\�b�h�� `skip()` ���\�b�h�͎��ۂ̃e�X�g�Ƃ��ăJ�E���g����܂��B`try/catch` �u���b�N�� `pass()/fail()` ���\�b�h�̑g�ݍ��킹�͒P�Ƃ̃e�X�g�Ƃ��ăJ�E���g����܂��B
+`diag()` メソッドはテストとしてカウントされません。コメントを表示するためにこれを使えば、テストの出力は整理され読みやすい状態に保たれます。一方で、`todo()` メソッドと `skip()` メソッドは実際のテストとしてカウントされます。`try/catch` ブロックの `pass()/fail()` メソッドの組み合わせは単独のテストとしてカウントされます。
 
-�悭�v�悳�ꂽ�e�X�g�헪�͗\�z�����e�X�g�̐����܂܂Ȃ���΂Ȃ�܂���B�Ƃ�킯�e�X�g�������̏����������͗�O�̏����œ��삷�镡�G�ȃP�[�X�ɂ����āA�e�X�g�̐����Ǝ��̃e�X�g�t�@�C�������؂��邽�߂ɂƂĂ��֗��ł��邱�Ƃ��킩��ł��傤�B�����āA�e�X�g�����鎞�_�Ŏ��s����Ƃ����Ƀe�X�g�̐����킩��܂��B���s�e�X�g�̍Ō�̐����������̊Ԃɓn���ꂽ�����ƈ�v���Ȃ�����ł��B
+よく計画されたテスト戦略は予想されるテストの数を含まなければなりません。とりわけテストが内部の条件もしくは例外の条件で動作する複雑なケースにおいて、テストの数が独自のテストファイルを検証するためにとても便利であることがわかるでしょう。そして、テストがある時点で失敗するとすぐにテストの数がわかります。実行テストの最後の数が初期化の間に渡された数字と一致しないからです。
 
-### test:unit �^�X�N
+### test:unit タスク
 
-`test:unit` �^�X�N�́A�R�}���h���C�����烆�j�b�g�e�X�g���N�������A�e�X�g�̖��O�̃��X�g�������̓t�@�C���̃p�^�[����K�v�Ƃ��܂��B���X�g15-5�ŏڍׂ��������������B
+`test:unit` タスクは、コマンドラインからユニットテストを起動させ、テストの名前のリストもしくはファイルのパターンを必要とします。リスト15-5で詳細をご覧ください。
 
-���X�g15-5 - ���j�b�g�e�X�g���N��������
+リスト15-5 - ユニットテストを起動させる
 
-    // test�̃f�B���N�g���\��
+    // testのディレクトリ構造
     test/
       unit/
         myFunctionTest.php
@@ -269,16 +269,16 @@ symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��
         foo/
           barTest.php
 
-    $ php symfony test:unit myFunction                   ## myFunctionTest.php �����s����
-    $ php symfony test:unit myFunction mySecondFunction  ## �����̃e�X�g�����s����
-    $ php symfony test:unit foo/*                        ## barTest.php �����s����
-    $ php symfony test:unit *                            ## ���ׂẴe�X�g�����s���� (�ċA�I)
+    $ php symfony test:unit myFunction                   ## myFunctionTest.php を実行する
+    $ php symfony test:unit myFunction mySecondFunction  ## 両方のテストを実行する
+    $ php symfony test:unit foo/*                        ## barTest.php を実行する
+    $ php symfony test:unit *                            ## すべてのテストを実行する (再帰的)
 
-### �X�^�u�A�t�B�N�X�`���A�I�[�g���[�h
+### スタブ、フィクスチャ、オートロード
 
-���j�b�g�e�X�g�ɂ����āA�f�t�H���g�ł̓I�[�g���[�h�@�\�͗L���ł͂���܂���B�e�X�g�Ŏg�����ꂼ��̃N���X�̓e�X�g�t�@�C���Œ�`���邩�A�O���ˑ��̃t�@�C���Ƃ��� `require` �X�e�[�g�����g�œǂݍ��܂Ȃ���΂Ȃ�܂���B���X�g15-6�Ŏ������悤�ɁA�����̃e�X�g�t�@�C���������s�� `include` �X�e�[�g�����g�Ŏn�܂�̂͂��������킯�ł��B
+ユニットテストにおいて、デフォルトではオートロード機能は有効ではありません。テストで使うそれぞれのクラスはテストファイルで定義するか、外部依存のファイルとして `require` ステートメントで読み込まなければなりません。リスト15-6で示されるように、多くのテストファイルが複数行の `include` ステートメントで始まるのはそういうわけです。
 
-���X�g15-6 - ���j�b�g�e�X�g�̃N���X���C���N���[�h����
+リスト15-6 - ユニットテストのクラスをインクルードする
 
     [php]
     <?php
@@ -291,23 +291,23 @@ symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��
     // isPathAbsolute()
     $t->diag('isPathAbsolute()');
     $t->is(sfToolkit::isPathAbsolute('/test'), true,
-        'isPathAbsolute() ����΃p�X�ł���Ȃ� true ��Ԃ�');
+        'isPathAbsolute() が絶対パスであるなら true を返す');
     $t->is(sfToolkit::isPathAbsolute('\\test'), true,
-        'isPathAbsolute() ����΃p�X�ł���Ȃ� true ��Ԃ�');
+        'isPathAbsolute() が絶対パスであるなら true を返す');
     $t->is(sfToolkit::isPathAbsolute('C:\\test'), true,
-        'isPathAbsolute() ����΃p�X�ł���Ȃ� true ��Ԃ�');
+        'isPathAbsolute() が絶対パスであるなら true を返す');
     $t->is(sfToolkit::isPathAbsolute('d:/test'), true,
-        'isPathAbsolute() ����΃p�X�ł���Ȃ� true ��Ԃ�');
+        'isPathAbsolute() が絶対パスであるなら true を返す');
     $t->is(sfToolkit::isPathAbsolute('test'), false,
-        'isPathAbsolute() �����΃p�X�ł���Ȃ� false ��Ԃ�');
+        'isPathAbsolute() が相対パスであるなら false を返す');
     $t->is(sfToolkit::isPathAbsolute('../test'), false,
-        'isPathAbsolute() �����΃p�X�ł���Ȃ� false ��Ԃ�');
+        'isPathAbsolute() が相対パスであるなら false を返す');
     $t->is(sfToolkit::isPathAbsolute('..\\test'), false,
-        'isPathAbsolute() �����΃p�X�ł���Ȃ� false ��Ԃ�');
+        'isPathAbsolute() が相対パスであるなら false を返す');
 
-���j�b�g�e�X�g�ɂ����āA�e�X�g���Ă���I�u�W�F�N�g�������C���X�^���X�����邾���łȂ��A�ˑ��I�u�W�F�N�g���C���X�^���X������K�v������܂��B���j�b�g�e�X�g�͒P�ꐫ��ۂ��Ȃ���΂Ȃ�Ȃ��̂ŁA�ق��̃N���X�Ɉˑ����Ă���ꍇ1�̃N���X������ƕ����̃e�X�g�����s����\��������܂��B�����āA�{���̃I�u�W�F�N�g���Z�b�g�A�b�v���邱�Ƃ̓R�[�h�̍s���Ǝ��s���Ԃ̓_���犄���ł��B�J���҂͒x����Ƃɂ����ɖO����̂ŁA���j�b�g�e�X�g�ɂ����ăX�s�[�h���d��ł��邱�Ƃ��o���Ă����Ă��������B
+ユニットテストにおいて、テストしているオブジェクトだけをインスタンス化するだけでなく、依存オブジェクトもインスタンス化する必要があります。ユニットテストは単一性を保たなければならないので、ほかのクラスに依存している場合1つのクラスが壊れると複数のテストが失敗する可能性があります。加えて、本当のオブジェクトをセットアップすることはコードの行数と実行時間の点から割高です。開発者は遅い作業にすぐに飽きるので、ユニットテストにおいてスピードが重大であることを覚えておいてください。
 
-���j�b�g�e�X�g�̂��߂ɑ����̃X�N���v�g���C���N���[�h���J�n����ꍇ�͂˂ɃV���v���ȃI�[�g���[�h�V�X�e�����K�v�ɂȂ�܂��B���̖ړI�̂��߂ɁA`sfSimpleAutoload` �N���X (�蓮�ŃC���N���[�h���Ȃ���΂Ȃ�܂���) �� `addDirectory()` ���\�b�h��񋟂��܂��B���̃��\�b�h�̓p�����[�^�[�Ƃ��Đ�΃p�X��K�v�Ƃ������p�X��̕����̃f�B���N�g�����C���N���[�h����K�v������ꍇ�ɉ��x���Ăяo�����Ƃ��ł��܂��B���̃p�X�̌��ɐݒu���ꂽ���ׂẴN���X���I�[�g���[�h����܂��B���Ƃ��΁A`$sf_symfony_lib_dir/util/` �̌��ɐݒu���ꂽ���ׂẴN���X���I�[�g���[�h�������ꍇ�A���̂悤�ȃR�[�h�Ń��j�b�g�e�X�g�̃X�N���v�g���n�߂Ă��������B
+ユニットテストのために多くのスクリプトをインクルードを開始する場合はつねにシンプルなオートロードシステムが必要になります。この目的のために、`sfSimpleAutoload` クラス (手動でインクルードしなければなりません) は `addDirectory()` メソッドを提供します。このメソッドはパラメーターとして絶対パスを必要とし検索パス上の複数のディレクトリをインクルードする必要がある場合に何度も呼び出すことができます。このパスの元に設置されたすべてのクラスがオートロードされます。たとえば、`$sf_symfony_lib_dir/util/` の元に設置されたすべてのクラスをオートロードしたい場合、つぎのようなコードでユニットテストのスクリプトを始めてください。
 
     [php]
     require_once sfConfig::get('sf_symfony_lib_dir').'/autoload/sfSimpleAutoload.class.php';
@@ -315,9 +315,9 @@ symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��
     $autoload->addDirectory($sf_symfony_lib_dir.'/util');
     $autoload->register();
 
-�I�[�g���[�h���̕ʂ̂悢���P��̓X�^�u���g�����Ƃł��B�X�^�u (stub) �Ƃ͎��ۂ̃��\�b�h���V���v���ł��炩���ߗp�ӂ��ꂽ�f�[�^�ɒu����������N���X�̑�֎����ł��B����͎��ۂ̃N���X�̂ӂ�܂���^�����܂����A�R�X�g�͂�����܂���B�X�^�u�̂悢��̓f�[�^�x�[�X�̐ڑ��������� Web �T�[�r�X�̃C���^�[�t�F�C�X�ł��B���X�g15-7�ɂ����āA�}�b�s���O API �p�̃��j�b�g�e�X�g�� `WebService` �N���X�Ɉˑ����܂��B���ۂ�Web�T�[�r�X�̃N���X�̖{���� `fetch()` ���\�b�h���Ăяo������ɁA�e�X�g�̓e�X�g�f�[�^��Ԃ��X�^�u���g���܂��B
+オートロード問題の別のよい次善策はスタブを使うことです。スタブ (stub) とは実際のメソッドがシンプルであらかじめ用意されたデータに置き換えられるクラスの代替実装です。これは実際のクラスのふるまいを真似しますが、コストはかかりません。スタブのよい例はデータベースの接続もしくは Web サービスのインターフェイスです。リスト15-7において、マッピング API 用のユニットテストは `WebService` クラスに依存します。実際のWebサービスのクラスの本当の `fetch()` メソッドを呼び出す代わりに、テストはテストデータを返すスタブを使います。
 
-���X�g15-7 - ���j�b�g�e�X�g�ŃX�^�u���g��
+リスト15-7 - ユニットテストでスタブを使う
 
     [php]
     require_once dirname(__FILE__).'/../../lib/WebService.class.php';
@@ -337,42 +337,42 @@ symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��
 
     $t->is($myMap->getMapSize(testWebService::fetch(), 100));
 
-�e�X�g�f�[�^�͕�����⃁�\�b�h�̌Ăяo���������G�ɂȂ�\��������܂��B���G�ȃe�X�g�f�[�^�͂��΂��t�B�N�X�`�� (fixture - �t���i) �Ƃ��ĎQ�Ƃ���܂��B�R�[�f�B���O�𖾊m�ɂ��邽�߂ɁA�Ƃ�킯�t�B�N�X�`���������̃��j�b�g�e�X�g�̃t�@�C���ɂ���Ďg����ꍇ�A�t�B�N�X�`����ʁX�̃t�@�C���ɕۑ������ق����x�^�[�ł��Bsymfony �� `sfYAML::load()` ���\�b�h�ɂ���� YAML �t�@�C����z��ɊȒP�ɕϊ��ł��邱�Ƃ����Y��Ȃ��B���X�g15-8�̂悤�ɁA���̂��Ƃ� PHP �̒����z�����������ɁAYAML �t�@�C���Ńe�X�g�f�[�^���������Ƃ��ł��邱�Ƃ��Ӗ����܂��B
+テストデータは文字列やメソッドの呼び出しよりも複雑になる可能性があります。複雑なテストデータはしばしフィクスチャ (fixture - 付属品) として参照されます。コーディングを明確にするために、とりわけフィクスチャが複数のユニットテストのファイルによって使われる場合、フィクスチャを別々のファイルに保存したほうがベターです。symfony が `sfYAML::load()` メソッドによって YAML ファイルを配列に簡単に変換できることもお忘れなく。リスト15-8のように、このことは PHP の長い配列を書く代わりに、YAML ファイルでテストデータを書くことができることを意味します。
 
-���X�g15-8 - ���j�b�g�e�X�g�Ńt�B�N�X�`���t�@�C�����g��
+リスト15-8 - ユニットテストでフィクスチャファイルを使う
 
     [php]
-    // fixtures.yml�ɂ�:
+    // fixtures.ymlにて:
     -
       input:   '/test'
       output:  true
-      comment: isPathAbsolute() ����΃p�X�ł���ꍇtrue��Ԃ�
+      comment: isPathAbsolute() が絶対パスである場合trueを返す
     -
       input:   '\\test'
       output:  true
-      comment: isPathAbsolute() ����΃p�X�ł���ꍇ true ��Ԃ�
+      comment: isPathAbsolute() が絶対パスである場合 true を返す
     -
       input:   'C:\\test'
       output:  true
-      comment: isPathAbsolute() ����΃p�X�ł���ꍇ true ��Ԃ�
+      comment: isPathAbsolute() が絶対パスである場合 true を返す
     -
       input:   'd:/test'
       output:  true
-      comment: isPathAbsolute() ����΃p�X�ł���ꍇ true ��Ԃ�
+      comment: isPathAbsolute() が絶対パスである場合 true を返す
     -
       input:   'test'
       output:  false
-      comment: isPathAbsolute() �����΃p�X�ł���ꍇ false ��Ԃ�
+      comment: isPathAbsolute() が相対パスである場合 false を返す
     -
       input:   '../test'
       output:  false
-      comment: isPathAbsolute() �����΃p�X�ł���ꍇ false ��Ԃ�
+      comment: isPathAbsolute() が相対パスである場合 false を返す
     -
       input:   '..\\test'
       output:  false
-      comment: isPathAbsolute() �����΃p�X�ł���ꍇ false ��Ԃ�
+      comment: isPathAbsolute() が相対パスである場合 false を返す
 
-    // testTest.php�ɂ�
+    // testTest.phpにて
     <?php
 
     include(dirname(__FILE__).'/../bootstrap/unit.php');
@@ -390,19 +390,19 @@ symfony�̃��j�b�g�e�X�g�̂Ȃ��ɂ����̃��\�b�h�̎g�������̗Ⴊ����������܂��
       $t->is(sfToolkit::isPathAbsolute($case['input']), $case['output'],$case['comment']);
     }
 
-### ORM �̃N���X�����j�b�g�e�X�g����
+### ORM のクラスをユニットテストする
 
-Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂ŁA�N���X���e�X�g����̂͏������G�ł��B����ɁAPropel �ɗL���ȃf�[�^�x�[�X�ڑ���񋟂��ăf�[�^�x�[�X�ɂ������̃e�X�g�f�[�^�𑗂荞�ޕK�v������܂��B
+Propel または Doctrine の生成オブジェクトは長いカスケード状のクラスに依存するので、クラスをテストするのは少し複雑です。さらに、Propel に有効なデータベース接続を提供してデータベースにいくつかのテストデータを送り込む必要もあります。
 
-���肪�������ƂɁAsymfony �͕K�v�Ȃ��ׂĂ̋@�\��񋟂��Ă���̂ł���͂ƂĂ��ȒP�ł�:
+ありがたいことに、symfony は必要なすべての機能を提供しているのでこれはとても簡単です:
 
-  * �I�[�g���[�h���擾����ɂ́A�ݒ�I�u�W�F�N�g������������K�v������܂�
-  * �f�[�^�x�[�X�̐ڑ��𓾂�ɂ́A`sfDatabaseManager` �N���X������������K�v������܂�
-  * �e�X�g�f�[�^�����[�h����ɂ́A`sfPropelData` �N���X���g�����Ƃ��ł��܂�
+  * オートロードを取得するには、設定オブジェクトを初期化する必要があります
+  * データベースの接続を得るには、`sfDatabaseManager` クラスを初期化する必要があります
+  * テストデータをロードするには、`sfPropelData` クラスを使うことができます
 
-�T�^�I�� Propel �̃e�X�g�t�@�C���̓��X�g15-9�Ŏ�����Ă��܂��B
+典型的な Propel のテストファイルはリスト15-9で示されています。
 
-���X�g15-9 - Propel �̃N���X���e�X�g����
+リスト15-9 - Propel のクラスをテストする
 
     [php]
     <?php
@@ -415,14 +415,14 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
 
     $t = new lime_test(1, new lime_output_color());
 
-    // ���f���N���X�̃e�X�g���n�߂�
+    // モデルクラスのテストを始める
     $t->diag('->retrieveByUsername()');
     $user = UserPeer::retrieveByUsername('fabien');
-    $t->is($user->getLastName(), 'Potencier', '->retrieveByUsername() �͔C�ӂ̃��[�U�[���̂��߂� User ��Ԃ�');
+    $t->is($user->getLastName(), 'Potencier', '->retrieveByUsername() は任意のユーザー名のための User を返す');
 
-�T�^�I�� Doctrine �̃e�X�g�t�@�C�����A���X�g 15-10 �̂悤�ɂȂ�܂��B
+典型的な Doctrine のテストファイルを、リスト 15-10 のようになります。
     
-���X�g 15-10 - Doctrine �̃N���X���e�X�g����
+リスト 15-10 - Doctrine のクラスをテストする
 
     [php]
     <?php
@@ -434,25 +434,25 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
 
     $t = new lime_test(1, new lime_output_color());
 
-    // ���f���N���X�̃e�X�g�̊J�n
+    // モデルクラスのテストの開始
     $t->diag('->retrieveByUsername()');
     $user = Doctrine::getTable('User')->findOneByUsername('fabien');
     $t->is($user->getLastName(), 'Potencier', '->findOneByUsername() returns the User for the given username');
 
-�@�\�e�X�g
+機能テスト
 ----------
 
-�@�\�e�X�g (functional test) �̓A�v���P�[�V�����̈ꕔ�����؂��܂��B�����̃e�X�g�́A�A�N�V�������z�肳�ꂽ��������邩���ƂŌ��؂�����@�Ɠ����悤�ɁA�u���E�W���O�Z�b�V�������V�~�����[�g���A���N�G�X�g�����A���X�|���X�̗v�f���`�F�b�N���܂��B
+機能テスト (functional test) はアプリケーションの一部を検証します。これらのテストは、アクションが想定された動作をするか手作業で検証する方法と同じように、ブラウジングセッションをシミュレートし、リクエストを作り、レスポンスの要素をチェックします。
 
-### �@�\�e�X�g�͂ǂ̂悤�Ɍ����܂����H
+### 機能テストはどのように見えますか？
 
-�e�L�X�g�u���E�U�[�Ƒ����̐��K�\���ŋ@�\�e�X�g�����s�ł��܂����A���Ԃ̑傫�Ȗ��ʌ����ł��Bsymfony �� `sfBrowser` �Ƃ������O�̓��ʂȃI�u�W�F�N�g��񋟂��܂��B���̃I�u�W�F�N�g�͎��ۂɕK�v�ȃT�[�o�[���Ƃ��Ȃ킸�� symfony �̃A�v���P�[�V�����ɐڑ������u���E�U�[�̂悤�ɂӂ�܂��܂��B������ HTTP �̓]���̌����͋N���܂���B���̃I�u�W�F�N�g�͂��ꂼ��̃��N�G�X�g (���N�G�X�g�A�Z�b�V�����A�R���e�L�X�g�A���X�|���X�I�u�W�F�N�g) �̃R�A�I�u�W�F�N�g�ɃA�N�Z�X�ł��܂��Bsymfony �� `TestBrowser` �ƌĂ΂�邱�̃N���X�̊g���@�\���񋟂��܂��B`sfTestFunctional` �͋@�\�e�X�g�̂��߂ɐ݌v����A`sfBrowser` �I�u�W�F�N�g�̋@�\�ɉ����ăX�}�[�g�ȃA�T�[�g���\�b�h�������܂��B
+テキストブラウザーと多くの正規表現で機能テストを実行できますが、時間の大きな無駄遣いです。symfony は `sfBrowser` という名前の特別なオブジェクトを提供します。このオブジェクトは実際に必要なサーバーをともなわずに symfony のアプリケーションに接続したブラウザーのようにふるまいます。そして HTTP の転送の減速は起きません。このオブジェクトはそれぞれのリクエスト (リクエスト、セッション、コンテキスト、レスポンスオブジェクト) のコアオブジェクトにアクセスできます。symfony は `TestBrowser` と呼ばれるこのクラスの拡張機能も提供します。`sfTestFunctional` は機能テストのために設計され、`sfBrowser` オブジェクトの機能に加えてスマートなアサートメソッドを持ちます。
 
-�`���I�ɋ@�\�e�X�g�̓e�X�g�u���E�U�[�̃I�u�W�F�N�g�����������邱�Ƃ���n�܂�܂��B���̃I�u�W�F�N�g�̓��A�N�V�����ւ̃��X�|���X���쐬���A���X�|���X���ɑ��݂��邢�����̗v�f��ύX���܂��B
+伝統的に機能テストはテストブラウザーのオブジェクトを初期化することから始まります。このオブジェクトはリアクションへのレスポンスを作成し、レスポンス内に存在するいくつかの要素を変更します。
 
-���Ƃ��΁A`generate:module` �^�X�N�������� `propel:generate-module`�^�X�N�Ń��W���[���X�P���g���𐶐����邽�тɁAsymfony �͂��̃��W���[���̂��߂ɃV���v���ȋ@�\�e�X�g�����܂��B�e�X�g�̓��W���[���̃f�t�H���g�A�N�V�����Ƀ��N�G�X�g���s�����X�|���X�̃X�e�[�^�X�R�[�h�A���[�e�B���O�V�X�e���ɂ���ĎZ�o���ꂽ���W���[���ƃA�N�V�����A�ƃ��X�|���X�̓��e�̂Ȃ��̓���̃Z���e���X�̑��݂��`�F�b�N���܂��B`foobar`  ���W���[���ɑ΂��āA�������ꂽ `foobarActionsTest.php` �t�@�C���̓��X�g15-11�̂悤�ɂȂ�܂��B
+たとえば、`generate:module` タスクもしくは `propel:generate-module`タスクでモジュールスケルトンを生成するたびに、symfony はこのモジュールのためにシンプルな機能テストを作ります。テストはモジュールのデフォルトアクションにリクエストを行いレスポンスのステータスコード、ルーティングシステムによって算出されたモジュールとアクション、とレスポンスの内容のなかの特定のセンテンスの存在をチェックします。`foobar`  モジュールに対して、生成された `foobarActionsTest.php` ファイルはリスト15-11のようになります。
 
-���X�g15-11 - �V�������W���[���p�̃f�t�H���g�̋@�\�e�X�g (`tests/functional/frontend/foobarActionsTest.php`)
+リスト15-11 - 新しいモジュール用のデフォルトの機能テスト (`tests/functional/frontend/foobarActionsTest.php`)
 
     [php]
     <?php
@@ -476,13 +476,13 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     ;
 
 >**TIP**
->`browser` �̃��\�b�h�� `sfTestFunctional`�I�u�W�F�N�g��Ԃ��̂ŁA�e�X�g�t�@�C����ǂ݂₷�����邽�߂Ƀ��\�b�h�`�F�[���𗘗p�ł��܂��B����̓I�u�W�F�N�g�ւ̗����悤�ȃC���^�[�t�F�C�X (fluid interface �������� fluent interface) �ƌĂ΂�܂��B���̖��O�̗R���̓��\�b�h�Ăяo���̗�����~�߂���̂��Ȃ�����ł��B
+>`browser` のメソッドは `sfTestFunctional`オブジェクトを返すので、テストファイルを読みやすくするためにメソッドチェーンを利用できます。これはオブジェクトへの流れるようなインターフェイス (fluid interface もしくは fluent interface) と呼ばれます。この名前の由来はメソッド呼び出しの流れを止めるものがないからです。
 
-�@�\�e�X�g�͂������̃��N�G�X�g�ƕ��G�ȃA�T�[�V�������܂ނ��Ƃ��ł��܂�; ���̃Z�N�V�����ł��ׂĂ̋@�\�����邱�ƂɂȂ�܂��B
+機能テストはいくつかのリクエストと複雑なアサーションを含むことができます; つぎのセクションですべての機能を見ることになります。
 
-�@�\�e�X�g�𗧂��グ�邽�߂ɁA���X�g15-12�Ŏ������悤�ɁA�R�}���h���C���� `test:functional` �^�X�N���g���܂��B���̃^�X�N�̓A�v���P�[�V�����̖��O�ƃe�X�g�̖��O��K�v�Ƃ��܂� (`Test.php`�̃T�t�B�b�N�X���o�͂��܂�)�B
+機能テストを立ち上げるために、リスト15-12で示されるように、コマンドラインで `test:functional` タスクを使います。このタスクはアプリケーションの名前とテストの名前を必要とします (`Test.php`のサフィックスを出力します)。
 
-���X�g15-12 - �R�}���h���C������1�̋@�\�e�X�g�𗧂��グ��
+リスト15-12 - コマンドラインから1つの機能テストを立ち上げる
 
     $ php symfony test:functional frontend foobarActions
 
@@ -494,58 +494,58 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     # Looks like you failed 1 tests of 4.
     1..4
 
-�V�������W���[���ɑ΂��Đ������ꂽ�@�\�e�X�g�̓f�t�H���g�ł͐������܂���B�V�����쐬���ꂽ���W���[���ɂ����āA`index` �A�N�V�����́A�uThis is a temporary page.�v�Ƃ��������܂ޏ����y�[�W�Ƀt�H���[�h���܂� (symfony �� `default` ���W���[�����܂݂܂�)�B`index` �A�N�V�������C�����Ȃ�������A���̃��W���[���ɑ΂���e�X�g�͎��s���܂��B����͖��I���̃��W���[���ł��ׂẴe�X�g�𐬌��ł��Ȃ����Ƃ�ۏ؂��܂��B
+新しいモジュールに対して生成された機能テストはデフォルトでは成功しません。新しく作成されたモジュールにおいて、`index` アクションは、「This is a temporary page.」という文を含む初期ページにフォワードします (symfony の `default` モジュールを含みます)。`index` アクションを修正しないかぎり、このモジュールに対するテストは失敗します。これは未終了のモジュールですべてのテストを成功できないことを保証します。
 
 >**NOTE**
->�@�\�e�X�g �ɂ����āA�I�[�g���[�h���L���Ȃ̂ŁA�蓮�Ńt�@�C�����C���N���[�h����K�v�͂���܂���B
+>機能テスト において、オートロードが有効なので、手動でファイルをインクルードする必要はありません。
 
-### sfBrowser �I�u�W�F�N�g�Ńu���E�W���O����
+### sfBrowser オブジェクトでブラウジングする
 
-�e�X�g�u���E�U�[�� `GET` ���N�G�X�g�� `POST` ���N�G�X�g���s���@�\�������܂��B�����̏ꍇ�ɂ����āA�{���� URI ���p�����[�^�[�Ƃ��Ďg���܂��B���X�g15-13�̓��N�G�X�g���V�~�����[�g���邽�߂� `sfTestBrowser`�I�u�W�F�N�g�̌Ăяo���̏��������������Ă��܂��B
+テストブラウザーは `GET` リクエストと `POST` リクエストを行う機能を持ちます。両方の場合において、本当の URI をパラメーターとして使います。リスト15-13はリクエストをシミュレートするために `sfTestBrowser`オブジェクトの呼び出しの書きかたを示しています。
 
-���X�g15-13 - `sfBrowser` �I�u�W�F�N�g�Ń��N�G�X�g���V�~�����[�g����
+リスト15-13 - `sfBrowser` オブジェクトでリクエストをシミュレートする
 
     [php]
     include dirname(__FILE__).'/../../bootstrap/functional.php';
     
-    // �V�����u���E�U�[���쐬����
+    // 新しいブラウザーを作成する
     $b = new sfBrowser();
 
-    $b->get('/foobar/show/id/1');                   // GET���N�G�X�g
-    $b->post('/foobar/show', array('id' => 1));     // POST���N�G�X�g
+    $b->get('/foobar/show/id/1');                   // GETリクエスト
+    $b->post('/foobar/show', array('id' => 1));     // POSTリクエスト
 
-    // get()���\�b�h��post()���\�b�h��call()���\�b�h�ւ̃V���[�g�J�b�g
+    // get()メソッドとpost()メソッドはcall()メソッドへのショートカット
     $b->call('/foobar/show/id/1', 'get');
     $b->call('/foobar/show', 'post', array('id' => 1));
 
-    // call()���\�b�h�͔C�ӂ̃��\�b�h�ɂ�郊�N�G�X�g���V�~�����[�g����
+    // call()メソッドは任意のメソッドによるリクエストをシミュレートする
     $b->call('/foobar/show/id/1', 'head');
     $b->call('/foobar/add/id/1', 'put');
     $b->call('/foobar/delete/id/1', 'delete');
 
-�T�^�I�ȃu���E�W���O�Z�b�V�����͓���̃A�N�V�����ւ̃��N�G�X�g�����łȂ��A�����N�ƃu���E�U�[�{�^���ւ̃N���b�N���܂݂܂��B���X�g15-14�Ŏ������悤�ɁA`sfBrowser` �I�u�W�F�N�g�͂������V�~�����[�g�ł��܂��B
+典型的なブラウジングセッションは特定のアクションへのリクエストだけでなく、リンクとブラウザーボタンへのクリックも含みます。リスト15-14で示されるように、`sfBrowser` オブジェクトはこれらもシミュレートできます。
 
-���X�g15-14 - `sfBrowser` �I�u�W�F�N�g�Ńi�r�Q�[�V�������V�~�����[�g����
+リスト15-14 - `sfBrowser` オブジェクトでナビゲーションをシミュレートする
 
     [php]
-    $b->get('/');                  // �z�[���y�[�W�ւ̃��N�G�X�g
+    $b->get('/');                  // ホームページへのリクエスト
     $b->get('/foobar/show/id/1');
-    $b->back();                    // ������1�̃y�[�W�ɖ߂�
-    $b->forward();                 // ������1�̃y�[�W�ɐi��
-    $b->reload();                  // ���݂̃y�[�W�������[�h����
-    $b->click('go');               // 'go'�����N�������̓{�^����T���ăN���b�N����
+    $b->back();                    // 履歴の1つのページに戻る
+    $b->forward();                 // 履歴の1つのページに進む
+    $b->reload();                  // 現在のページをリロードする
+    $b->click('go');               // 'go'リンクもしくはボタンを探してクリックする
 
-�u���E�U�[�̓R�[���X�^�b�N����������̂ŁA`back()` ���\�b�h�� `forward()` ���\�b�h�͖{���̃u���E�U�[�Ɠ����悤�ɓ��삵�܂��B
+ブラウザーはコールスタックを処理するので、`back()` メソッドと `forward()` メソッドは本当のブラウザーと同じように動作します。
 
 >**TIP**
->�u���E�U�[�̓Z�b�V���� (`sfTestStorage`) �� Cookie ���Ǘ�����Ǝ��̃��J�j�Y���������܂��B
+>ブラウザーはセッション (`sfTestStorage`) と Cookie を管理する独自のメカニズムを持ちます。
 
-�e�X�g����K�v�̂���C���^���N�V�����̂Ȃ��ŁA�����炭�t�H�[���Ɋ֘A������̂��ŗD�悳��܂��B�t�H�[���̓��͂Ɠ��e���V�~�����[�g����ɂ́A�I������3����܂��B���M�������p�����[�^�[�� POST ���N�G�X�g���s���ꍇ�A�z��Ƃ��Ă� `form` �p�����[�^�[�� `click()` ���Ăяo�����A1���t�B�[���h����͂��āA���e�{�^�����N���b�N���܂��B������ɂ���A�����͂��ׂē���POST���N�G�X�g�ɂȂ�܂��B���X�g15-15�͗�������Ă��܂��B
+テストする必要のあるインタラクションのなかで、おそらくフォームに関連するものが最優先されます。フォームの入力と投稿をシミュレートするには、選択肢が3つあります。送信したいパラメーターで POST リクエストを行う場合、配列としての `form` パラメーターで `click()` を呼び出すか、1つずつフィールドを入力して、投稿ボタンをクリックします。いずれにせよ、これらはすべて同じPOSTリクエストになります。リスト15-15は例を示しています。
 
-���X�g15-15 - `sfBrowser` �I�u�W�F�N�g�Ńt�H�[�����͂��V�~�����[�g����
+リスト15-15 - `sfBrowser` オブジェクトでフォーム入力をシミュレートする
 
     [php]
-    // modules/foobar/templates/editSuccess.php �ł̃e���v���[�g�̗�
+    // modules/foobar/templates/editSuccess.php でのテンプレートの例
     <?php echo form_tag('foobar/update') ?>
       <input type="hidden" name="id" value="<?php echo $sf_params->get('id') ?>" />
       <input type="text" name="name" value="foo" />
@@ -554,29 +554,29 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
       <textarea name="text2">bar</textarea>
     </form>
 
-    // ���̃t�H�[���̂��߂̋@�\�e�X�g�̗�
+    // このフォームのための機能テストの例
     $b = new sfBrowser();
     $b->get('/foobar/edit/id/1');
 
-    // �I�v�V���� 1: POST ���N�G�X�g
+    // オプション 1: POST リクエスト
     $b->post('/foobar/update', array('id' => 1, 'name' => 'dummy', 'commit' => 'go'));
 
-    // �I�v�V���� 2: �p�����[�^�[�œ��e�{�^�����N���b�N����
+    // オプション 2: パラメーターで投稿ボタンをクリックする
     $b->click('go', array('name' => 'dummy'));
 
-    // �I�v�V���� 3: �t�B�[���h���Ńt�H�[���̒l����͂����e�{�^�����N���b�N����
+    // オプション 3: フィールド名でフォームの値を入力し投稿ボタンをクリックする
     $b->setField('name', 'dummy')->
         click('go');
 
 >**NOTE**
->2�Ԗڂ�3�Ԗڂ̃I�v�V�����ɂ���āA�f�t�H���g�̃t�H�[���̒l�͎����I�Ƀt�H�[���̓��e�Ɋ܂܂�A�t�H�[���^�[�Q�b�g���w�肷��K�v�͂���܂���B
+>2番目と3番目のオプションによって、デフォルトのフォームの値は自動的にフォームの投稿に含まれ、フォームターゲットを指定する必要はありません。
 
-`redirect()` ���\�b�h�ɂ���ăA�N�V�������I�������ꍇ�A�e�X�g�u���E�U�[�͎����I�Ƀ��_�C���N�g����܂���; ���X�g15-16�ł���{���������悤�ɁA�蓮�ɂ�� `followRedirect()` ���\�b�h�Ńe�X�g�u���E�U�[�����_�C���N�g���܂��B
+`redirect()` メソッドによってアクションが終了した場合、テストブラウザーは自動的にリダイレクトされません; リスト15-16でお手本が示されるように、手動による `followRedirect()` メソッドでテストブラウザーをリダイレクトします。
 
-���X�g15-16 - �e�X�g�u���E�U�[�͎����I�Ƀ��_�C���N�g����Ȃ�
+リスト15-16 - テストブラウザーは自動的にリダイレクトされない
 
     [php]
-    // modules/foobar/actions/actions.class.php �̃A�N�V�����̗�
+    // modules/foobar/actions/actions.class.php のアクションの例
     public function executeUpdate($request)
     {
       // ...
@@ -584,15 +584,15 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
       $this->redirect('foobar/show?id='.$request->getParameter('id'));
     }
 
-    // ���̃A�N�V�����̂��߂̋@�\�e�X�g�̗�
+    // このアクションのための機能テストの例
     $b = new sfBrowser();
     $b->get('/foobar/edit?id=1')->
         click('go', array('name' => 'dummy'))->
-        followRedirect();    // �蓮�Ń��_�C���N�g�̌�ɑ���
+        followRedirect();    // 手動でリダイレクトの後に続く
 
-�u���E�W���O�̂��߂ɕ֗��ȃ��\�b�h��1�c���Ă��܂��B`restart()` �͂��������u���E�U�[���ċN�������悤�Ƀu���E�W���O�̗����A�Z�b�V������ Cookie ���Ăя��������܂��B
+ブラウジングのために便利なメソッドが1つ残っています。`restart()` はあたかもブラウザーを再起動したようにブラウジングの履歴、セッションと Cookie を再び初期化します。
 
-���̃��\�b�h���ŏ��̃��N�G�X�g���s���ƁA`sfBrowser` �I�u�W�F�N�g�̓��N�G�X�g�A�R���e�L�X�g�A���X�|���X�I�u�W�F�N�g�ɃA�N�Z�X�ł��܂��B�e�L�X�g�̓��e���烌�X�|���X�w�b�_�[�A���N�G�X�g�p�����[�^�[�Ɛݒ�܂ł���ԁA�����̓��e���`�F�b�N�ł��܂�:
+このメソッドが最初のリクエストを行うと、`sfBrowser` オブジェクトはリクエスト、コンテキスト、レスポンスオブジェクトにアクセスできます。テキストの内容からレスポンスヘッダー、リクエストパラメーターと設定までおよぶ、多くの内容をチェックできます:
 
     [php]
     $request  = $b->getRequest();
@@ -600,11 +600,11 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     $response = $b->getResponse();
 
 
-### �A�T�[�V�������g��
+### アサーションを使う
 
-���X�|���X�ƃ��N�G�X�g�̂ق��̃R���|�[�l���g�ɃA�N�Z�X�ł��� `sfTestFunctional` �I�u�W�F�N�g�̂������ŁA�����̃R���|�[�l���g�Ńe�X�g�����{�ł��܂��B���̖ړI�̂��߂ɐV���� `lime_test` �I�u�W�F�N�g����邱�Ƃ��ł��܂����A�K���ɂ��āA`sfTestBrowser` �� `lime_test` �I�u�W�F�N�g��Ԃ� `test()` ���\�b�h��񎦂��܂��B`sfTestFunctional` �o�R�ŃA�T�[�V�������s�����@�Ɋւ��Ă̓��X�g15-15�Ŋm�F���Ă��������B
+レスポンスとリクエストのほかのコンポーネントにアクセスできる `sfTestFunctional` オブジェクトのおかげで、これらのコンポーネントでテストを実施できます。この目的のために新しい `lime_test` オブジェクトを作ることができますが、幸いにして、`sfTestBrowser` は `lime_test` オブジェクトを返す `test()` メソッドを提示します。`sfTestFunctional` 経由でアサーションを行う方法に関してはリスト15-15で確認してください。
 
-���X�g15-17 - �e�X�g�u���E�U�[�� `test()` ���\�b�h�ɂ��e�X�g�@�\��񋟂���
+リスト15-17 - テストブラウザーは `test()` メソッドによるテスト機能を提供する
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -613,27 +613,27 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     $context  = $b->getContext();
     $response = $b->getResponse();
 
-    // test()���\�b�h��ʂ��� lime_test ���\�b�h�ɃA�N�Z�X����
+    // test()メソッドを通して lime_test メソッドにアクセスする
     $b->test()->is($request->getParameter('id'), 1);
     $b->test()->is($response->getStatuscode(), 200);
     $b->test()->is($response->getHttpHeader('content-type'), 'text/html;charset=utf-8');
     $b->test()->like($response->getContent(), '/edit/');
 
 >**NOTE**
->`getResponse()`�A`getContent()`�A`getRquest()` �� `test()`���\�b�h�� `sfBrowser` �I�u�W�F�N�g��Ԃ��Ȃ��̂ŁA�����̂��Ƃł� `sfBrowser` ���\�b�h�Ăяo���̃`�F�[�����g�����Ƃ͂ł��܂���B
+>`getResponse()`、`getContent()`、`getRquest()` と `test()`メソッドは `sfBrowser` オブジェクトを返さないので、これらのあとでは `sfBrowser` メソッド呼び出しのチェーンを使うことはできません。
 
-���X�g15-17�Ŏ������悤�ɁA���N�G�X�g�I�u�W�F�N�g�ƃ��X�|���X�I�u�W�F�N�g��ʂ��ĐV���� Cookie ���`�F�b�N�ł��܂��B
+リスト15-17で示されるように、リクエストオブジェクトとレスポンスオブジェクトを通して新旧の Cookie をチェックできます。
 
-���X�g15-17 - `sfBrowser` �� Cookie ���e�X�g����
+リスト15-17 - `sfBrowser` で Cookie をテストする
 
     [php]
-    $b->test()->is($request->getCookie('foo'), 'bar');     // �����Ă��� Cookie
+    $b->test()->is($request->getCookie('foo'), 'bar');     // 入ってくる Cookie
     $cookies = $response->getCookies();
-    $b->test()->is($cookies['foo'], 'foo=bar');            // �o�čs�� Cookie
+    $b->test()->is($cookies['foo'], 'foo=bar');            // 出て行く Cookie
 
-���N�G�X�g�̗v�f���e�X�g���邽�߂� `test()` ���\�b�h���g���ƒ����s�̃R�[�h���������ƂɂȂ�܂��B�K���ɂ��āA`sfTestFunctional` �I�u�W�F�N�g�͋@�\�e�X�g��ǂ݂₷���Z���ۂ�A�̃v���L�V���\�b�h���܂݂܂��B����ɁA�����̃��\�b�h�͂���玩�g�� `sfTestFunctional` �I�u�W�F�N�g��Ԃ��܂��B���Ƃ��΁A���X�g15-18�Ŏ������悤�ɁA���X�g15-15����葬�����@�ŏ��������邱�Ƃ��ł��܂��B
+リクエストの要素をテストするために `test()` メソッドを使うと長い行のコードを書くことになります。幸いにして、`sfTestFunctional` オブジェクトは機能テストを読みやすく短く保つ一連のプロキシメソッドを含みます。さらに、これらのメソッドはこれら自身で `sfTestFunctional` オブジェクトを返します。たとえば、リスト15-18で示されるように、リスト15-15をより速い方法で書き換えることができます。
 
-���X�g15-18 - `sfTestFunctional` �Œ��ڃe�X�g����
+リスト15-18 - `sfTestFunctional` で直接テストする
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -646,11 +646,11 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     end()
     ;
 
-�e�v���L�V���\�b�h�̓e�X�^�[�O���[�v�̈ꕔ�ł��B�e�X�^�[�O���[�v�́A`with()` ���\�b�h�� `end()` ���\�b�h�̌Ăяo���ň݂͂܂��B`with()` ���\�b�h�ɂ́A�e�X�^�[�O���[�v�̖��O��n���܂�(`request` �� `response`)�B
+各プロキシメソッドはテスターグループの一部です。テスターグループは、`with()` メソッドと `end()` メソッドの呼び出しで囲みます。`with()` メソッドには、テスターグループの名前を渡します(`request` や `response`)。
 
-�X�e�[�^�X200�� `isStatusCode()` ���\�b�h�ɂ���ċ��߂���p�����[�^�[�̃f�t�H���g�l�Ȃ̂ŁA�A�����郌�X�|���X���e�X�g���邽�߂Ɉ����Ȃ��ł��̃��\�b�h���Ăяo�����Ƃ��ł��܂��B
+ステータス200は `isStatusCode()` メソッドによって求められるパラメーターのデフォルト値なので、連続するレスポンスをテストするために引数なしでこのメソッドを呼び出すことができます。
 
-�v���L�V���\�b�h�̗��_�� `lime_test` ���\�b�h�ŏo�̓e�L�X�g���w�肷��K�v���Ȃ����Ƃł��B���b�Z�[�W�̓v���L�V���\�b�h�ɂ���Ď����I�ɐ�������A�e�X�g�̏o�͖͂����œǂ݂₷���ł��B
+プロキシメソッドの利点は `lime_test` メソッドで出力テキストを指定する必要がないことです。メッセージはプロキシメソッドによって自動的に生成され、テストの出力は明快で読みやすいです。
 
     # get /foobar/edit/id/1
     ok 1 - request parameter "id" is "1"
@@ -659,11 +659,11 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     ok 4 - response matches "/edit/"
     1..4
 
-���ۂɂ́A���X�g15-17�̃v���L�V���\�b�h�͒ʏ�̃e�X�g�̑啔�����J�o�[����̂ŁA`sfTestFunctional` �I�u�W�F�N�g��� `test()` ���\�b�h���g�����Ƃ͂߂����ɂ���܂���B
+実際には、リスト15-17のプロキシメソッドは通常のテストの大部分をカバーするので、`sfTestFunctional` オブジェクト上で `test()` メソッドを使うことはめったにありません。
 
-���X�g15-15�� `sfBrowser` ���\�b�h�͎����I�Ƀ��_�C���N�g�̌�ɑ����Ȃ����Ƃ������܂����B�����1�̗��_�������܂�: ���_�C���N�g���e�X�g�ł��邱�Ƃł��B���Ƃ��΁A���X�g15-18�̓��X�g15-19�̃��X�|���X���e�X�g������@�������Ă��܂��B
+リスト15-15は `sfBrowser` メソッドは自動的にリダイレクトの後に続かないことを示しました。これは1つの利点を持ちます: リダイレクトをテストできることです。たとえば、リスト15-18はリスト15-19のレスポンスをテストする方法を示しています。
 
-���X�g15-19 - `sfTestFunctional` �Ń��_�C���N�g���e�X�g����
+リスト15-19 - `sfTestFunctional` でリダイレクトをテストする
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -676,10 +676,10 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
       end()->
       with('response')->begin()->
         isStatusCode(200)->
-        isRedirected()->      // ���X�|���X�����_�C���N�g���ǂ����`�F�b�N����
+        isRedirected()->      // レスポンスがリダイレクトかどうかチェックする
       end()->
 
-      followRedirect()->    // �蓮�Ń��_�C���N�g����
+      followRedirect()->    // 手動でリダイレクトする
 
       with('request')->begin()->
         isRequestParameter('module', 'foobar')->
@@ -688,13 +688,13 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
       with('response')->isStatusCode(200)
     ;
 
-### CSS �Z���N�^���g��
+### CSS セレクタを使う
 
-�����̋@�\�e�X�g�̓R���e���c�̂Ȃ��Ƀe�L�X�g�����݂��邱�Ƃ��m�F���邱�ƂŃy�[�W���������������؂��܂��B`matches()` ���\�b�h�Ő��K�\���̏������؂�邱�ƂŁA�\�������e�L�X�g�A�^�O�̑����A�������͒l���`�F�b�N�ł��܂��B�������A���X�|���X�� DOM �ɐ[�����ߍ��܂ꂽ���̂��`�F�b�N�������̂ł���΁A���K�\���͗��z�I�ȕ��@�ł͂���܂���B
+多くの機能テストはコンテンツのなかにテキストが存在することを確認することでページが正しいかを検証します。`matches()` メソッドで正規表現の助けを借りることで、表示されるテキスト、タグの属性、もしくは値をチェックできます。しかし、レスポンスの DOM に深く埋め込まれたものをチェックしたいのであれば、正規表現は理想的な方法ではありません。
 
-`sfTestFunctional` �I�u�W�F�N�g�� `getResponseDom()` ���\�b�h���T�|�[�g����킯�͂��������킯�ł��B����� libXML2 �� DOM �I�u�W�F�N�g��Ԃ��A��͂ƃe�X�g�̎��s�̓t���b�g�ȃe�L�X�g�����͂邩�ɊȒP�ł��B���̃��\�b�h�̎g�������̗�̓��X�g15-20���������������B
+`sfTestFunctional` オブジェクトが `getResponseDom()` メソッドをサポートするわけはそういうわけです。これは libXML2 の DOM オブジェクトを返し、解析とテストの実行はフラットなテキストよりもはるかに簡単です。このメソッドの使いかたの例はリスト15-20をご覧ください。
 
-���X�g15-20 - �e�X�g�u���E�U�[�� DOM �I�u�W�F�N�g�Ƃ��ă��X�|���X�̓��e�ɃA�N�Z�X�ł���
+リスト15-20 - テストブラウザーは DOM オブジェクトとしてレスポンスの内容にアクセスできる
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -702,9 +702,9 @@ Propel �܂��� Doctrine �̐����I�u�W�F�N�g�͒����J�X�P�[�h��̃N���X�Ɉˑ�����̂
     $dom = $b->getResponseDom();
     $b->test()->is($dom->getElementsByTagName('input')->item(1)->getAttribute('type'),'text');
 
-PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�ł�����܂���BCSS �Z���N�^�Ɋ���Ă���̂ł���΁A�����̃Z���N�^�� HTML �h�L�������g����v�f��ǂ݂Ƃ邽�߂̂�苭�͂ȕ��@�ł��邱�Ƃ��������ł��傤�Bsymfony �� `sfDomCssSelector` �ƌĂ΂��c�[���N���X��񋟂��܂��B����� DOM �h�L�������g���R���X�g���N�^�[�̕K�{�p�����[�^�[�Ƃ� CSS �Z���N�^�ɂ��������ĕ�����̔z���Ԃ� `getValues()` ���\�b�h�ƁADOM �v�f�̔z���Ԃ� `getElements()` ���\�b�h�������܂��B���X�g15-21�̗���������������B
+PHP の DOM メソッドによる HTML ドキュメントの解析は十分な速さで行われずまた簡単でもありません。CSS セレクタに慣れているのであれば、これらのセレクタが HTML ドキュメントから要素を読みとるためのより強力な方法であることをご存じでしょう。symfony は `sfDomCssSelector` と呼ばれるツールクラスを提供します。これは DOM ドキュメントをコンストラクターの必須パラメーターとし CSS セレクタにしたがって文字列の配列を返す `getValues()` メソッドと、DOM 要素の配列を返す `getElements()` メソッドを持ちます。リスト15-21の例をご覧ください。
 
-���X�g15-21 - �e�X�g�u���E�U�[�� `sfDomCssSelector` �I�u�W�F�N�g�Ƃ��Ẵ��X�|���X�̓��e�ɃA�N�Z�X�ł���
+リスト15-21 - テストブラウザーは `sfDomCssSelector` オブジェクトとしてのレスポンスの内容にアクセスできる
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -714,9 +714,9 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
     $b->test()->is($c->getValues('form textarea[name="text1"]'), array('foo'));
     $b->test()->is($c->getValues('form input[type="submit"]'), array(''));
 
-�Ȍ����Ɩ��Ă���₦���ǋ����邽�߂ɁAsymfony�̓V���[�g�J�b�g��񋟂��܂�: `response` �e�X�^�[�O���[�v�� `checkElement()` �v���L�V���\�b�h�ł��B���̃��\�b�h�̓��X�g15-22�̓��e�����X�g15-21�̂悤�ɂ��܂��B
+簡潔さと明瞭さを絶えず追求するために、symfonyはショートカットを提供します: `response` テスターグループの `checkElement()` プロキシメソッドです。このメソッドはリスト15-22の内容をリスト15-21のようにします。
 
-���X�g15-22 - �e�X�g�u���E�U�[�� CSS �Z���N�^�ɂ���ă��X�|���X�v�f�ɃA�N�Z�X�ł���
+リスト15-22 - テストブラウザーは CSS セレクタによってレスポンス要素にアクセスできる
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -728,17 +728,17 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
       end()
     ;
 
-`checkElement()` ���\�b�h�̂ӂ�܂��͂��ꂪ�󂯂Ƃ�2�Ԗڂ̈����̌^�Ɉˑ����܂�:
+`checkElement()` メソッドのふるまいはそれが受けとる2番目の引数の型に依存します:
 
-  * �u�[���l�̏ꍇ�ACSS �Z���N�^�Ƀ}�b�`����v�f�����݂��邩�`�F�b�N�����܂��B
-  * �����̏ꍇ�ACSS �Z���N�^�����̐��̌��ʂ�Ԃ��̂��`�F�b�N�����܂��B
-  * ���K�\���̏ꍇ�ACSS �Z���N�^�ɂ���Č�����ŏ��̗v�f������Ƀ}�b�`���邩�`�F�b�N�����܂��B
-  * !�Ŏn�܂鐳�K�\���̏ꍇ�A�p�^�[���Ƀ}�b�`���Ȃ��ŏ��̗v�f���`�F�b�N���܂��B 
-  * ���̂ق��̏ꍇ�ACSS �Z���N�^�Ō�����ŏ��̗v�f��2�Ԗڂ̈����𕶎���Ƃ��Ĕ�r���܂��B
+  * ブール値の場合、CSS セレクタにマッチする要素が存在するかチェックをします。
+  * 整数の場合、CSS セレクタがこの数の結果を返すのかチェックをします。
+  * 正規表現の場合、CSS セレクタによって見つかる最初の要素がそれにマッチするかチェックをします。
+  * !で始まる正規表現の場合、パターンにマッチしない最初の要素をチェックします。 
+  * そのほかの場合、CSS セレクタで見つかる最初の要素と2番目の引数を文字列として比較します。
 
-���\�b�h��3�Ԗڂ̃I�v�V�����p�����[�^�[��A�z�z��̌`���Ŏ󂯂Ƃ�܂��B���X�g15-23�Ŏ������悤�ɁA(�Z���N�^���������̗v�f��Ԃ��ꍇ)�Z���N�^�ɂ���ĕԂ��ꂽ�ŏ��̗v�f�ł͂Ȃ��A����̈ʒu�̂ق��̗v�f�Ńe�X�g�����s����܂��B
+メソッドは3番目のオプションパラメーターを連想配列の形式で受けとります。リスト15-23で示されるように、(セレクタがいくつかの要素を返す場合)セレクタによって返された最初の要素ではなく、特定の位置のほかの要素でテストが実行されます。
 
-���X�g15-23 - ����̈ʒu�ŗv�f�Ƀ}�b�`����ʒu�I�v�V�������g��
+リスト15-23 - 特定の位置で要素にマッチする位置オプションを使う
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
@@ -749,18 +749,18 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
       end()
     ;
 
-�I�v�V�����̔z���2�̃e�X�g�𓯎��Ɏ��{���邽�߂ɂ��g���܂��B���X�g15-24�Ŏ������悤�ɁA�Z���N�^���v�f�Ƀ}�b�`���邩�ǂ����Ƃ���炪���݂��鐔�Ɋւ��ăe�X�g�ł��܂��B
+オプションの配列は2つのテストを同時に実施するためにも使われます。リスト15-24で示されるように、セレクタが要素にマッチするかどうかとそれらが存在する数に関してテストできます。
 
-���X�g15-24 - �}�b�`���鐔���J�E���g���� count �I�v�V�������g��
+リスト15-24 - マッチする数をカウントする count オプションを使う
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
     $b->get('/foobar/edit?id=1')->
       with('response')->checkElement('form input', true, array('count' => 3));
 
-�Z���N�^�̃c�[���͂ƂĂ����͂ł��B����� CSS3 �̃Z���N�^�̑啔�����󂯓���A���X�g15-25�̂悤�ȕ��G�ȃN�G���ɑ΂��ė��p�ł��܂��B
+セレクタのツールはとても強力です。これは CSS3 のセレクタの大部分を受け入れ、リスト15-25のような複雑なクエリに対して利用できます。
 
-���X�g15-25 - `checkElement()` ���󂯓���镡�G�� CSS �Z���N�^�̗�
+リスト15-25 - `checkElement()` が受け入れる複雑な CSS セレクタの例
 
     [php]
     ->checkElement('ul#list li a[href]', 'click me');
@@ -770,26 +770,26 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
     ->checkElement('a[class$="foo"][href*="bar.html"]', 'my link');
     ->checkElement('p:last ul:nth-child(2) li:contains("Some text")');
 
-### �G���[���e�X�g����
+### エラーをテストする
 
-�Ƃ��ǂ��A�A�N�V�����������̓��f������O���̈ӂɓ����܂� (���Ƃ���404�y�[�W��\�����邽��)�BHTML �̐����R�[�h�̂Ȃ��̓���̃G���[���b�Z�[�W���`�F�b�N���邽�߂� CSS �Z���N�^���g���ꍇ�ł��A���X�g15-26�Ŏ������悤�ɗ�O��������ꂽ���Ƃ��`�F�b�N���邽�߂� `throwsException` ���\�b�h���g���ق����悢�ł��B
+ときどき、アクションもしくはモデルが例外を故意に投じます (たとえば404ページを表示するため)。HTML の生成コードのなかの特定のエラーメッセージをチェックするために CSS セレクタを使う場合でも、リスト15-26で示されるように例外が投じられたことをチェックするために `throwsException` メソッドを使うほうがよいです。
 
-���X�g15-26 - ��O�ɑ΂��ăe�X�g���s��
+リスト15-26 - 例外に対してテストを行う
 
     [php]
     $b = new sfTestFunctional(new sfBrowser());
     $b->
       get('/foobar/edit/id/1')->
       click('go', array('name' => 'dummy'))->
-      throwsException()->                   // �Ō�̃��N�G�X�g����O�𓊂��邩�`�F�b�N����
-      throwsException('RuntimeException')-> // ��O�̃N���X���`�F�b�N����
-      throwsException(null, '/error/');     // ��O�̃��b�Z�[�W�����K�\���Ƀ}�b�`���邩�`�F�b�N����
+      throwsException()->                   // 最後のリクエストが例外を投じるかチェックする
+      throwsException('RuntimeException')-> // 例外のクラスをチェックする
+      throwsException(null, '/error/');     // 例外のメッセージが正規表現にマッチするかチェックする
 
-### �e�X�g���łƂ�g��
+### テスト環境でとり組む
 
-`sfTestFunctional` �I�u�W�F�N�g�� `test` ���Őݒ肳�����ʂȃt�����g�R���g���[���[���g���܂��B���̊��ɑ΂���f�t�H���g�ݒ�̓��X�g15-27�ŕ\����܂��B
+`sfTestFunctional` オブジェクトは `test` 環境で設定される特別なフロントコントローラーを使います。この環境に対するデフォルト設定はリスト15-27で表されます。
 
-���X�g15-27 - �e�X�g���̃f�t�H���g�ݒ� (`frontend/config/settings.php`)
+リスト15-27 - テスト環境のデフォルト設定 (`frontend/config/settings.php`)
 
     test:
       .settings:
@@ -799,22 +799,22 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
         no_script_name:         false
         etag:                   false
 
-���̊��ɂ����ăL���b�V�� (cache) �� Web �f�o�b�O�c�[���o�[ (web_debug) �� `false` �ɐݒ肳��܂��B�������Ȃ���A�R�[�h�̎��s�́A`dev` ���� `prod` ���̃��O�t�@�C���͕ʂɂ��āA���O�t�@�C���Ƀg���[�X����Ă���̂ŁA���ꂼ��̃t�@�C�����ʂɊm�F�ł��܂� (`myproject/log/frontend_test.log`)�B���̊��ɂ����āA��O�̓X�N���v�g�̎��s���~�����܂���B1�̃e�X�g�����s���Ă��e�X�g�S�̂̃Z�b�g�����{�ł��܂��B���Ƃ��΁A�e�X�g�f�[�^�����ق��̃f�[�^�x�[�X���g�����߂ɁA�ʂ̃f�[�^�x�[�X�̐ݒ�������Ƃ��ł��܂��B
+この環境においてキャッシュ (cache) と Web デバッグツールバー (web_debug) は `false` に設定されます。しかしながら、コードの実行は、`dev` 環境と `prod` 環境のログファイルは別にして、ログファイルにトレースされているので、それぞれのファイルを個別に確認できます (`myproject/log/frontend_test.log`)。この環境において、例外はスクリプトの実行を停止させません。1つのテストが失敗してもテスト全体のセットを実施できます。たとえば、テストデータを持つほかのデータベースを使うために、個別のデータベースの設定を持つことができます。
 
-`sfBrowser` �I�u�W�F�N�g�͎g���܂��ɏ��������Ȃ���΂Ȃ�܂���B�K�v�ł���΁A�A�v���P�[�V�����̃z�X�g�̖��O�ƃN���C�A���g��IP�A�h���X���w��ł��܂��B���Ȃ킿�A�����2�̃p�����[�^�[��ʂ��ăA�v���P�[�V�������R���g���[������ꍇ�ł��B���X�g15-28�͂��̕��@�������Ă��܂��B
+`sfBrowser` オブジェクトは使うまえに初期化しなければなりません。必要であれば、アプリケーションのホストの名前とクライアントのIPアドレスを指定できます。すなわち、これら2つのパラメーターを通してアプリケーションがコントロールする場合です。リスト15-28はこの方法を示しています。
 
-���X�g15-28 - �z�X�g���� IP �Ńe�X�g�u���E�U�[���Z�b�g�A�b�v����
+リスト15-28 - ホスト名と IP でテストブラウザーをセットアップする
 
     [php]
     $b = new sfBrowser('myapp.example.com', '123.456.789.123');
 
-### `test:functional` �^�X�N���g��
+### `test:functional` タスクを使う
 
-`test:functional` �^�X�N�ɂ����1�������͕����̋@�\�e�X�g�����{���邱�Ƃ��\�ŁA���̃^�X�N�͎󂯂Ƃ�����̐��Ɉˑ����܂��B���X�g15-29�Ŏ������悤�ɁA�@�\�e�X�g���ŏ��̈����Ƃ��ăA�v���P�[�V�����̖��O��K�v�Ƃ��邱�ƈȊO�A���[���� `test:unit` �^�X�N�̂��̂Ɠ����ɂȂ�܂��B
+`test:functional` タスクによって1つもしくは複数の機能テストを実施することが可能で、このタスクは受けとる引数の数に依存します。リスト15-29で示されるように、機能テストが最初の引数としてアプリケーションの名前を必要とすること以外、ルールは `test:unit` タスクのものと同じになります。
 
-���X�g15-29 - �@�\�e�X�g�̃^�X�N�\��
+リスト15-29 - 機能テストのタスク構文
 
-    // test�f�B���N�g���̍\��
+    // testディレクトリの構造
     test/
       functional/
         frontend/
@@ -823,23 +823,23 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
         backend/
           myOtherScenarioTest.php
 
-    ## �ċA�I�ɁA1�̃A�v���P�[�V�����ɑ΂��Ă��ׂĂ̋@�\�e�X�g�����s����
+    ## 再帰的に、1つのアプリケーションに対してすべての機能テストを実行する
     $ php symfony test:functional frontend
 
-    ## 1�̔C�ӂ̋@�\�e�X�g�����s����
+    ## 1つの任意の機能テストを実行する
     $ php symfony test:functional frontend myScenario
 
-    ## �p�^�[���Ɋ�Â��Ă������̃e�X�g�����s����
+    ## パターンに基づいていくつかのテストを実行する
     $ php symfony test:functional frontend my*
 
-�e�X�g�̖������K
+テストの命名慣習
 ----------------
 
-���̃Z�N�V�����ł̓e�X�g�𐮗����Ĉێ����₷����Ԃɕۂ��߂̂������̊��K�̈ꗗ�������܂��B�g�����Ȃ����߂̔錍�̓t�@�C���̐����A���j�b�g�e�X�g�Ƌ@�\�e�X�g�Ɋւ��邱�Ƃł��B
+このセクションではテストを整理して維持しやすい状態に保つためのいくつかの慣習の一覧を示します。使いこなすための秘訣はファイルの整理、ユニットテストと機能テストに関することです。
 
-�t�@�C���\���Ɋւ��ẮA�e�X�g����\��̃N���X���Ń��j�b�g�e�X�g�̃t�@�C���𖼂Â��A�e�X�g����\��̃��W���[���������̓V�i���I�̖��O�ŋ@�\�e�X�g�𖼂Â��܂��B��Ƃ��ă��X�g15-30���������������B`test/` �f�B���N�g���͂����ɑ����̃t�@�C�������[����悤�ɂȂ�̂ŁA�����̃K�C�h���C���ɏ]��Ȃ��ƁA�����ԉ^�p���Ă���ƃe�X�g��������̂�����ɂȂ�\��������܂��B
+ファイル構造に関しては、テストする予定のクラス名でユニットテストのファイルを名づけ、テストする予定のモジュールもしくはシナリオの名前で機能テストを名づけます。例としてリスト15-30をご覧ください。`test/` ディレクトリはすぐに多くのファイルを収納するようになるので、これらのガイドラインに従わないと、長期間運用しているとテストを見つけるのが困難になる可能性があります。
 
-���X�g15-30 - �t�@�C���̖������K�̗�
+リスト15-30 - ファイルの命名慣習の例
 
     test/
       unit/
@@ -854,23 +854,23 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
         backend/
           myOtherScenarioTest.php
 
-���j�b�g�e�X�g�̂��߂̂悢�K���͊֐��������̓��\�b�h�ɂ���ăe�X�g�𕪗ނ��邱�Ƃ� `diag()` �Ăяo���ł��ꂼ��̃e�X�g�̃O���[�v���n�߂邱�Ƃł��B���ꂼ��̃��j�b�g�e�X�g�̃��b�Z�[�W�͊֐��̖��O�������́A�e�X�g���ꂽ���\�b�h���܂݁A�����ƃv���p�e�B�̌�ɑ����̂ŁA�e�X�g�̏o�͂̓I�u�W�F�N�g�̃v���p�e�B��������镶�̂悤�Ɍ����܂��B���X�g15-31�͗�������Ă��܂��B
+ユニットテストのためのよい習慣は関数もしくはメソッドによってテストを分類することと `diag()` 呼び出しでそれぞれのテストのグループを始めることです。それぞれのユニットテストのメッセージは関数の名前もしくは、テストされたメソッドを含み、動詞とプロパティの後に続くので、テストの出力はオブジェクトのプロパティを説明する文のように見えます。リスト15-31は例を示しています。
 
-���X�g15-31 - ���j�b�g�e�X�g�̖������K�̗�
+リスト15-31 - ユニットテストの命名慣習の例
 
     [php]
     // srttolower()
     $t->diag('strtolower()');
-    $t->isa_ok(strtolower('Foo'), 'string', 'strtolower() �͕������Ԃ�');
-    $t->is(strtolower('FOO'), 'foo', 'strtolower() �͓��͂��������ɕϊ�����');
+    $t->isa_ok(strtolower('Foo'), 'string', 'strtolower() は文字列を返す');
+    $t->is(strtolower('FOO'), 'foo', 'strtolower() は入力を小文字に変換する');
 
     # strtolower()
-    ok 1 - strtolower() �͕������Ԃ�
-    ok 2 - strtolower() �͓��͂��������ɕϊ�����
+    ok 1 - strtolower() は文字列を返す
+    ok 2 - strtolower() は入力を小文字に変換する
 
-�@�\�e�X�g�̓y�[�W�ɂ���ĕ��ނ��ꃊ�N�G�X�g�ɂ���Ďn�܂�܂��B���X�g15-32�͂��̊��K��������Ă��܂��B
+機能テストはページによって分類されリクエストによって始まります。リスト15-32はこの慣習を説明しています。
 
-���X�g15-32 - �@�\�e�X�g�̖������K�̗�
+リスト15-32 - 機能テストの命名慣習の例
 
     [php]
     $browser->
@@ -885,24 +885,24 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
       end()
     ;
 
-    # /comment/index���擾����
+    # /comment/indexを取得する
     ok 1 - status code is 200
     ok 2 - request parameter module is foobar
     ok 3 - request parameter action is index
     ok 4 - response selector body matches regex /foobar/
 
-���̋K��ɏ]���΁A�v���W�F�N�g�̊J���҂̃h�L�������g�Ƃ��Ďg�������Ƀe�X�g�̏o�͂͏\���ɖ����Ȃ��̂ɂȂ�܂��B�����Ă������̏ꍇ�ɂ����ăh�L�������g�����ۂɏ����Ȃ��Ă����݂܂��B
+この規約に従えば、プロジェクトの開発者のドキュメントとして使うさいにテストの出力は十分に明快なものになります。そしていくつかの場合においてドキュメントを実際に書かなくてもすみます。
 
-���ʂȃe�X�g�̃j�[�Y
+特別なテストのニーズ
 --------------------
 
-�����Ă��̏ꍇ�Asymfony �ɂ���Ē񋟂��ꂽ���j�b�g�e�X�g�Ƌ@�\�e�X�g�̃c�[���ŏ\���ł��B�����e�X�g�ɂ����鋤�ʂ̖����������邽�߂̂������̕⑫�̃e�N�j�b�N�̈ꗗ�����̃Z�N�V�����ɏ����Ă����܂�: �Ǘ��������Ńe�X�g�̗����グ�A�e�X�g�͈͈̔ȓ��Ńf�[�^�x�[�X�ɃA�N�Z�X���A�L���b�V���̃e�X�g�A�N���C�A���g�T�C�h��ŃC���^���N�V�����̃e�X�g���s�����Ƃł��B
+たいていの場合、symfony によって提供されたユニットテストと機能テストのツールで十分です。自動テストにおける共通の問題を解決するためのいくつかの補足のテクニックの一覧をこのセクションに書いておきます: 孤立した環境でテストの立ち上げ、テストの範囲以内でデータベースにアクセスし、キャッシュのテスト、クライアントサイド上でインタラクションのテストを行うことです。
 
-### �e�X�g���e�X�g�n�[�l�X�Ŏ��s����
+### テストをテストハーネスで実行する
 
-`test:unit` �� `test:functional` �^�X�N�͒P�Ƃ̃e�X�g�������̓e�X�g�̃Z�b�g�𗧂��グ�邱�Ƃ��ł��܂��B�������Ȃ���A�����̃^�X�N���p�����[�^�[�Ȃ��ŌĂяo���ꍇ�A������`test/`�f�B���N�g���̂Ȃ��̂��ׂẴ��j�b�g�e�X�g�Ƌ@�\�e�X�g�𗧂��グ�܂��B�e�X�g�̂������̉������������ɂ́A���ꂼ��̃e�X�g�t�@�C����Ɨ������T���h�{�b�N�X�ɕ����������̃��J�j�Y�����K�v�ł��B����ɁA(�o�͉͂���s�̒����ɂȂ�̂�)���̏ꍇ�A�P�Ƃ̃e�X�g�t�@�C���̂悤�ɓ����o�͂𑱂���͖̂��Ӗ��Ȃ̂ŁA�e�X�g�̌��ʂ͓����I�ȃr���[�ɂ܂Ƃ߂��܂��B���ꂪ�����̃e�X�g�t�@�C�������s���邽�߂Ƀe�X�g�n�[�l�X���g�����R�ł��B�e�X�g�n�[�l�X (test harness) �͓��ʂȋ@�\���������e�X�g�t���[�����[�N�ł��B�e�X�g�n�[�l�X�� `lime_harness` �Ă΂�� lime �t���[�����[�N�̃R���|�[�l���g�Ɉˑ����Ă��܂��B���X�g15-33�̂悤�ɁA����̓t�@�C�����Ƃ̃e�X�g�̏�ԂƏI�������e�X�g�̐��̊T�v�������܂��B
+`test:unit` と `test:functional` タスクは単独のテストもしくはテストのセットを立ち上げることができます。しかしながら、これらのタスクをパラメーターなしで呼び出す場合、これらは`test/`ディレクトリのなかのすべてのユニットテストと機能テストを立ち上げます。テストのあいだの汚染を回避するには、それぞれのテストファイルを独立したサンドボックスに分離する特定のメカニズムが必要です。さらに、(出力は何千行の長さになるので)その場合、単独のテストファイルのように同じ出力を続けるのは無意味なので、テストの結果は統合的なビューにまとめられます。これが多くのテストファイルを実行するためにテストハーネスを使う理由です。テストハーネス (test harness) は特別な機能を持つ自動テストフレームワークです。テストハーネスは `lime_harness` 呼ばれる lime フレームワークのコンポーネントに依存しています。リスト15-33のように、これはファイルごとのテストの状態と終了したテストの数の概要を示します。
 
-���X�g15-33 - ���ׂẴe�X�g���e�X�g�n�[�l�X�ŗ����グ��
+リスト15-33 - すべてのテストをテストハーネスで立ち上げる
 
     $ php symfony test:all
 
@@ -915,38 +915,38 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
     unit/foo/barTest.php               0      2      2  62 63
     Failed 1/3 test scripts, 66.66% okay. 2/53 subtests failed, 96.22% okay.
 
-�e�X�g��1���Ăяo���Ƃ��Ɠ������@�Ŏ��s����܂�; �{���ɕ֗��ɂ��邽�߂ɏo�͂������Z���Ȃ�܂��B�Ƃ�킯�A�Ō�̕\�͎��s�����e�X�g�ɏœ_�𓖂ĂĂ���̂ŁA�����̃e�X�g�������邽�߂̏����ɂȂ�܂��B
+テストは1つずつ呼び出すときと同じ方法で実行されます; 本当に便利にするために出力だけが短くなります。とりわけ、最後の表は失敗したテストに焦点を当てているので、これらのテストを見つけるための助けになります。
 
-���X�g15-34�Ŏ������悤�ɁA�e�X�g�n�[�l�X�� `test:all` �^�X�N���g�����Ƃł��ׂẴe�X�g��1�̌Ăяo���ŋN���ł��܂��B�ŐV�̃����[�X�ȍ~�Ń��O���b�V����(��A)���N����Ȃ����Ƃ�ۏ؂��邽�߂ɁA���̌Ăяo���͂��ׂẴR�[�h���^�p���ɓ]������܂��ɍs���ׂ��ł��B
+リスト15-34で示されるように、テストハーネスの `test:all` タスクを使うことですべてのテストを1つの呼び出しで起動できます。最新のリリース以降でリグレッション(回帰)が起こらないことを保証するために、この呼び出しはすべてのコードを運用環境に転送するまえに行うべきです。
 
-���X�g15-34 - �v���W�F�N�g�̂��ׂẴe�X�g�𗧂��グ��
+リスト15-34 - プロジェクトのすべてのテストを立ち上げる
 
     $ php symfony test:all
 
-### �f�[�^�x�[�X�ɃA�N�Z�X����
+### データベースにアクセスする
 
-���j�b�g�e�X�g�ɂ����ăf�[�^�x�[�X�ɃA�N�Z�X���邱�Ƃ��悭�K�v�ɂȂ�܂��B�ŏ��� `sfBrowser::get()` ���Ăяo���Ƃ��Ƀf�[�^�x�[�X�ڑ��͎����I�ɏ���������܂��B�������Ȃ��� `sfBrowser` ���g���܂��ɂ��f�[�^�x�[�X�ɐڑ��������ꍇ�A���X�g15-35�̂悤�ɁA�蓮�� `sfDabataseManager` �����������Ȃ���΂Ȃ�܂���B
+ユニットテストにおいてデータベースにアクセスすることがよく必要になります。最初に `sfBrowser::get()` を呼び出すときにデータベース接続は自動的に初期化されます。しかしながら `sfBrowser` を使うまえにもデータベースに接続したい場合、リスト15-35のように、手動で `sfDabataseManager` を初期化しなければなりません。
 
-���X�g15-35 - �e�X�g�ɂ����ăf�[�^�x�[�X������������
+リスト15-35 - テストにおいてデータベースを初期化する
 
     [php]
     $databaseManager = new sfDatabaseManager($configuration);
     $databaseManager->loadConfiguration();
 
-    // �I�v�V�����Ƃ��āA���݂̃f�[�^�x�[�X�ڑ����擾�ł���
+    // オプションとして、現在のデータベース接続を取得できる
     $con = Propel::getConnection();
 
-�e�X�g���n�߂�܂��Ƀf�[�^�x�[�X�Ƀt�B�N�X�`���𓊓����܂��B����� `sfPropelData` �I�u�W�F�N�g��ʂ��čs�����Ƃ��ł��܂��B���X�g15-36�Ŏ������悤�� `propel:data-load` �^�X�N�̂悤�ɁA�t�@�C������������͔z�񂩂�A���̃I�u�W�F�N�g�̓f�[�^�����[�h���܂��B
+テストを始めるまえにデータベースにフィクスチャを投入します。これは `sfPropelData` オブジェクトを通して行うことができます。リスト15-36で示されるように `propel:data-load` タスクのように、ファイルからもしくは配列から、このオブジェクトはデータをロードします。
 
-���X�g15-36 - �e�X�g�t�@�C������f�[�^�x�[�X�ɓ�������
+リスト15-36 - テストファイルからデータベースに投入する
 
     [php]
     $data = new sfPropelData();
 
-    // �t�@�C������f�[�^�����[�h����
+    // ファイルからデータをロードする
     $data->loadData(sfConfig::get('sf_data_dir').'/fixtures/test_data.yml');
 
-    // �z�񂩂�f�[�^�����[�h����
+    // 配列からデータをロードする
     $fixtures = array(
       'Article' => array(
         'article_1' => array(
@@ -963,46 +963,46 @@ PHP �� DOM ���\�b�h�ɂ�� HTML �h�L�������g�̉�͂͏\���ȑ����ōs��ꂸ�܂��ȒP�
     );
     $data->loadDataFromArray($fixtures);
 
-���ꂩ��A���Ȃ��̃e�X�g�̃j�[�Y�ɍ��킹�Ēʏ�̃A�v���P�[�V�����̂悤�� Propel �I�u�W�F�N�g���g���܂��B�����̃t�@�C�������j�b�g�e�X�g�ɃC���N���[�h���邱�Ƃ��o���Ă����Ă������� (���̏͂̈ȑO�́u�X�^�u�A�t�B�N�X�`���A�I�[�g���[�h�v�̃Z�N�V�����Ő��������悤�ɁA��������������邽�߂� `sfSimpleAutoload` �N���X���g�����Ƃ��ł��܂�)�BPropel �I�u�W�F�N�g�͋@�\�e�X�g�ɃI�[�g���[�h����܂��B
+それから、あなたのテストのニーズに合わせて通常のアプリケーションのように Propel オブジェクトを使います。これらのファイルをユニットテストにインクルードすることを覚えておいてください (この章の以前の「スタブ、フィクスチャ、オートロード」のセクションで説明したように、これを自動化するために `sfSimpleAutoload` クラスを使うことができます)。Propel オブジェクトは機能テストにオートロードされます。
 
-### �L���b�V�����e�X�g����
+### キャッシュをテストする
 
-�A�v���P�[�V�����ɑ΂��ăL���b�V����L���ɂ����Ƃ��A�@�\�e�X�g�̓L���b�V�����ꂽ�A�N�V���������Ғʂ�ɓ��삷�邩���؂��܂��B
+アプリケーションに対してキャッシュを有効にしたとき、機能テストはキャッシュされたアクションが期待通りに動作するか検証します。
 
-�ŏ��ɍs���ׂ����Ƃ̓e�X�g�� (`settings.yml` �t�@�C��) �ɑ΂��ăL���b�V����L���ɂ��邱�Ƃł��B���ꂩ��A�y�[�W���L���b�V������R��������̂Ȃ̂��A�������ꂽ���̂ł���̂����e�X�g�������ꍇ�A`view_cache` �e�X�g�O���[�v���񋟂��� `isCached()` �e�X�g���\�b�h���g���܂��B���X�g15-37�͂��̃��\�b�h�̎g�������������Ă��܂��B
+最初に行うべきことはテスト環境 (`settings.yml` ファイル) に対してキャッシュを有効にすることです。それから、ページがキャッシュから由来するものなのか、生成されたものであるのかをテストしたい場合、`view_cache` テストグループが提供する `isCached()` テストメソッドを使います。リスト15-37はこのメソッドの使いかたを示しています。
 
-���X�g15-37 - `isCached()` ���\�b�h�̓L���b�V�����e�X�g����
+リスト15-37 - `isCached()` メソッドはキャッシュをテストする
 
     [php]
     <?php
 
     include dirname(__FILE__).'/../../bootstrap/functional.php';
 
-    // �V�����e�X�g�u���E�U�[���쐬����
+    // 新しいテストブラウザーを作成する
     $b = new sfTestFunctional(new sfBrowser());
 
     $b->get('/mymodule');
-    $b->with('view_cache')->isCached(true);       // ���X�|���X���L���b�V���������ė������Ƃ��m�F����
-    $b->with('view_cache')->isCached(true, true); // �L���b�V�����ꂽ���X�|���X�����C�A�E�g�ƈꏏ�ɗ��邱�Ƃ��m�F����
-    $b->with('view_cache')->isCached(false);      // ���X�|���X���L���b�V���������ė��Ȃ����Ƃ��m�F����
+    $b->with('view_cache')->isCached(true);       // レスポンスがキャッシュからやって来たことを確認する
+    $b->with('view_cache')->isCached(true, true); // キャッシュされたレスポンスがレイアウトと一緒に来ることを確認する
+    $b->with('view_cache')->isCached(false);      // レスポンスがキャッシュからやって来ないことを確認する
 
 >**NOTE**
->�@�\�e�X�g�̍ŏ��ɃL���b�V�����N���A����K�v�͂���܂���; �u�[�g�X�g���b�v�̃X�N���v�g����s���Ă���܂��B
+>機能テストの最初にキャッシュをクリアする必要はありません; ブートストラップのスクリプトが代行してくれます。
 
-### �N���C�A���g��̃C���^���N�V�������e�X�g����
+### クライアント上のインタラクションをテストする
 
-�����܂łŐ������ꂽ�e�N�j�b�N�̎�ȓ�_�� JavaScript ���V�~�����[�g�ł��Ȃ����Ƃł��B���Ƃ��΁AAjax �C���^���N�V�����̂悤�ȂƂĂ����G�ȃC���^���N�V�����̂��߂ɁA���[�U�[���s���}�E�X�ƃL�[�{�[�h�̓��͂ƃN���C�A���g�T�C�h��ł̃X�N���v�g�̎��s���Č��ł��邱�Ƃ��K�v�ł��B�ʏ�A�����̃e�X�g�͎��ƂōČ�����܂����A�ƂĂ����Ԃ�������G���[�ɂȂ肪���ł��B
+ここまでで説明されたテクニックの主な難点は JavaScript をシミュレートできないことです。たとえば、Ajax インタラクションのようなとても複雑なインタラクションのために、ユーザーが行うマウスとキーボードの入力とクライアントサイド上でのスクリプトの実行を再現できることが必要です。通常、これらのテストは手作業で再現されますが、とても時間がかかりエラーになりがちです。
 
-�������@�� [Selenium](http://seleniumhq.org/) �ƌĂ΂����̂ŁA���S�� JavaScript �ŏ����ꂽ�e�X�g�t���[�����[�N�ł��B���̃c�[���́A���݂̃u���E�U�[�E�B���h�E�𗘗p���āA�ʏ�̃��[�U�[���s���悤�ȃy�[�W��̃A�N�V�����̃Z�b�g�����s���܂��B`sfBrowser` �I�u�W�F�N�g���z���闘�_�� Slemenium ���y�[�W���� JavaScript �����s�ł���̂ŁAAjax �C���^���N�V������ Slemenium �Ńe�X�g�ł��邱�Ƃł��B
+解決方法は [Selenium](http://seleniumhq.org/) と呼ばれるもので、完全に JavaScript で書かれたテストフレームワークです。このツールは、現在のブラウザーウィンドウを利用して、通常のユーザーが行うようなページ上のアクションのセットを実行します。`sfBrowser` オブジェクトを越える利点は Slemenium がページ内で JavaScript を実行できるので、Ajax インタラクションも Slemenium でテストできることです。
 
-symfony �� Selenium ���f�t�H���g�œ��ڂ��Ă��܂���B������C���X�g�[������ɂ́A`web/` �f�B���N�g���̂Ȃ��ŐV���� `selenium/` �f�B���N�g�������ASelenium [�A�[�J�C�u](http://seleniumhq.org/download/)�̓��e��W�J����K�v������܂��B�Ȃ��Ȃ�ASelenium �� JavaScript �Ɉˑ�����̂ŁA�����Ă��̃u���E�U�[���̃Z�L�����e�B�ݒ�̊�ɏ]���΁A�A�v���P�[�V�����Ɋւ��ē����z�X�g�ƃ|�[�g��� JavaScript �����p�ł��Ȃ�������ASelenium �̓��삪������Ȃ�����ł��B
+symfony は Selenium をデフォルトで搭載していません。これをインストールするには、`web/` ディレクトリのなかで新たに `selenium/` ディレクトリを作り、Selenium [アーカイブ](http://seleniumhq.org/download/)の内容を展開する必要があります。なぜなら、Selenium は JavaScript に依存するので、たいていのブラウザー内のセキュリティ設定の基準に従えば、アプリケーションに関して同じホストとポート上で JavaScript が利用できないかぎり、Selenium の動作が許可されないからです。
 
 >**CAUTION**
->`selenium/` �f�B���N�g�����^�p�T�[�o�[�ɒ��ړ]�����Ȃ��悤�ɋC�����Ă��������B�u���E�U�[��ʂ��ĒN�ł�Web�h�L�������g�̃��[�g�ɃA�N�Z�X�ł��邩��ł��B
+>`selenium/` ディレクトリを運用サーバーに直接転送しないように気をつけてください。ブラウザーを通して誰でもWebドキュメントのルートにアクセスできるからです。
 
-Selenium �e�X�g�� HTML �`���ŋL�q���� `web/slenium/tests/` �f�B���N�g���ɕۑ�����܂��B���Ƃ��΁A���X�g15-38�́A�z�[���y�[�W�����[�h����Aclick me �̃����N���N���b�N����A���X�|���X�́uHello, World�v�̃e�L�X�g���T�����@�\�e�X�g�������܂��B�e�X�g���ŃA�v���P�[�V�����ɃA�N�Z�X����ɂ́A`frontend_test.php` �t�����g�R���g���[���[���w�肷��K�v������܂��B
+Selenium テストは HTML 形式で記述され `web/slenium/tests/` ディレクトリに保存されます。たとえば、リスト15-38は、ホームページがロードされ、click me のリンクがクリックされ、レスポンスの「Hello, World」のテキストが探される機能テストを示します。テスト環境でアプリケーションにアクセスするには、`frontend_test.php` フロントコントローラーを指定する必要があります。
 
-���X�g15-38 - Selenium �e�X�g�̃T���v�� (`web/selenium/test/testIndex.html`)
+リスト15-38 - Selenium テストのサンプル (`web/selenium/test/testIndex.html`)
 
     [php]
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -1023,35 +1023,35 @@ Selenium �e�X�g�� HTML �`���ŋL�q���� `web/slenium/tests/` �f�B���N�g���ɕۑ����
     </body>
     </html>
 
-�e�X�g�P�[�X�̓R�}���h�A�^�[�Q�b�g�A�l��3�̃J���������e�[�u�����܂� HTML �h�L�������g�ɂ���ĕ\������܂��B���ׂẴR�}���h�͒l���Ƃ�܂���B�R�}���h���l���Ƃ�Ȃ��ꍇ�A�J�������󔒂ɂ��Ă������A�e�[�u�������₷�����邽�߂� `&nbsp;` ���g�����Ƃł��B�R�}���h�̊��S�Ȉꗗ�� Selenium �� Web �T�C�g���Q�Ƃ��Ă��������B
+テストケースはコマンド、ターゲット、値の3つのカラムを持つテーブルを含む HTML ドキュメントによって表現されます。すべてのコマンドは値をとりません。コマンドが値をとらない場合、カラムを空白にしておくか、テーブルを見やすくするために `&nbsp;` を使うことです。コマンドの完全な一覧は Selenium の Web サイトを参照してください。
 
-�����f�B���N�g���ɐݒu���ꂽ `TestSuite.html` �t�@�C�����ɐV�����s��}�����邱�ƂŁA���̃e�X�g���O���[�o���e�X�g�X�C�[�g�ɒǉ�����K�v������܂��B���X�g15-39�͂�����s�����@�������Ă��܂��B
+同じディレクトリに設置された `TestSuite.html` ファイル内に新しい行を挿入することで、このテストをグローバルテストスイートに追加する必要があります。リスト15-39はこれを行う方法を示しています。
 
-���X�g15-39 - �e�X�g�X�C�[�g�Ƀe�X�g�t�@�C����ǉ����� (`web/selenium/test/TestSuite.html`)
+リスト15-39 - テストスイートにテストファイルを追加する (`web/selenium/test/TestSuite.html`)
 
     ...
     <tr><td><a href='./testIndex.html'>My First Test</a></td></tr>
     ...
 
-�e�X�g�����{����ɂ́A���� URL �Ƀu���E�U�[�ŃA�N�Z�X���܂��B
+テストを実施するには、つぎの URL にブラウザーでアクセスします。
 
     http://myapp.example.com/selenium/index.html
 
-Main Test Suite ��I�����A���ׂẴe�X�g�����s����{�^�����N���b�N���A���{����悤�ɓ`�����X�e�b�v���u���E�U�[���Č�����l�q���ώ@���Ă��������B
+Main Test Suite を選択し、すべてのテストを実行するボタンをクリックし、実施するように伝えたステップをブラウザーが再現する様子を観察してください。
 
 >**NOTE**
->Selenium �̃e�X�g�͖{���̃u���E�U�[�œ��삷��̂ŁA�����ɂ���ău���E�U�[�̕s��v���e�X�g�ł��܂��B1�̃u���E�U�[�Ńe�X�g�����A�P�Ƃ̃��N�G�X�g�œ��삷�邱�ƂɂȂ��Ă���T�C�g��ł��̂ق��̂��ׂẴu���E�U�[��� Selenium �̃e�X�g�����{���Ă��������B
+>Selenium のテストは本当のブラウザーで動作するので、これらによってブラウザーの不一致もテストできます。1つのブラウザーでテストを作り、単独のリクエストで動作することになっているサイト上でそのほかのすべてのブラウザー上で Selenium のテストを実施してください。
 
-Selenim �� HTML �ŏ�����Ă���̂ŁASelenium �̃e�X�g���������Ƃ͖ʓ|�ł����B�������AFirefox �� Selenium [�g���@�\](http://seleniumhq.org/projects/ide/)�̂������ŁA�e�X�g�����{���邽�߂ɕK�v�Ȃ��Ƃ̓��R�[�h�Z�b�V������1��̃e�X�g�����{���邾���ł��B���R�[�h�Z�b�V�����Ńi�r�Q�[�g�������ŁA�u���E�U�[�̃E�B���h�E���ŉE�N���b�N�����ă|�b�v�A�b�v���j���[���� Append Selenium Command �̂��ƂœK�؂ȃ`�F�b�N���ڂ�I�����邱�ƂŁA�A�T�[�g�^�̃e�X�g��ǉ��ł��܂��B
+Selenim は HTML で書かれているので、Selenium のテストを書くことは面倒でした。しかし、Firefox の Selenium [拡張機能](http://seleniumhq.org/projects/ide/)のおかげで、テストを実施するために必要なことはレコードセッションで1回のテストを実施するだけです。レコードセッションでナビゲートする一方で、ブラウザーのウィンドウ内で右クリックをしてポップアップメニュー内の Append Selenium Command のもとで適切なチェック項目を選択することで、アサート型のテストを追加できます。
 
-�A�v���P�[�V�����ɑ΂��ăe�X�g�X�C�[�g�����{���邽�߂Ƀe�X�g�� HTML �t�@�C���ɕۑ��ł��܂��BFirefox �̊g���@�\�ɂ���ċL�^���� Selenium �e�X�g�����s�ł���悤�ɂȂ�܂��B
+アプリケーションに対してテストスイートを実施するためにテストを HTML ファイルに保存できます。Firefox の拡張機能によって記録した Selenium テストも実行できるようになります。
 
 >**NOTE**
->Selenium �e�X�g�𗧂��グ��܂��Ƀe�X�g�f�[�^���Ăя��������邱�Ƃ�Y��Ȃ��ł��������B
+>Selenium テストを立ち上げるまえにテストデータを再び初期化することを忘れないでください。
 
-�܂Ƃ�
+まとめ
 ----
 
-�����e�X�g�Ƃ��ă��\�b�h�������͊֐������؂��郆�j�b�g�e�X�g (unit test) �Ƌ@�\�����؂���@�\�e�X�g (functional test) �����݂��܂��Bsymfony �̓��j�b�g�e�X�g�̂��߂� lime �e�X�g�t���[�����[�N�Ɉˑ����A�@�\�e�X�g�p�ɓ������� `sfBrowser` �N���X�� `sfTestFunctional` �N���X��񋟂��܂��B�����̃e�X�g�c�[���́ACSS �Z���N�^�̂悤�ɁA�����Ƃ���b���牞�p�܂ŋy�ԑ����̃A�T�[�V�������\�b�h��񋟂��܂��B�e�X�g���N��������ɂ� symfony �R�}���h���C�����g���܂��B1�����{����ɂ� `test:unit` �^�X�N�������� `test:functional`  �^�X�N���g���A�e�X�g�n�[�l�X�����{����ɂ� `test-all` �^�X�N���g���܂��B�f�[�^�������Ƃ��A�����e�X�g�̓t�B�N�X�`�� (fixture) �ƃX�^�u (stub) ���g���A����� symfony �̃��j�b�g�e�X�g�̂Ȃ��ŊȒP�Ɏ�������܂��B
+自動テストとしてメソッドもしくは関数を検証するユニットテスト (unit test) と機能を検証する機能テスト (functional test) が存在します。symfony はユニットテストのための lime テストフレームワークに依存し、機能テスト用に特化した `sfBrowser` クラスと `sfTestFunctional` クラスを提供します。これらのテストツールは、CSS セレクタのように、両方とも基礎から応用まで及ぶ多くのアサーションメソッドを提供します。テストを起動させるには symfony コマンドラインを使います。1つずつ実施するには `test:unit` タスクもしくは `test:functional`  タスクを使い、テストハーネスを実施するには `test-all` タスクを使います。データを扱うとき、自動テストはフィクスチャ (fixture) とスタブ (stub) を使い、これは symfony のユニットテストのなかで簡単に実現されます。
 
-(�����炭�e�X�g�쓮�J�� (TDD) �̕��@�_�𗘗p����) �A�v���P�[�V�����̑啔�����J�o�[���邽�߂ɏ\���ȃ��j�b�g�e�X�g�����Ȃ炸�����΁A���������t�@�N�^�����O����������͐V�����@�\��ǉ�����Ƃ��ɁA���S���𓾂��h�L�������g����鎞�Ԃ�ߖ񂷂邱�Ƃ��ł��܂��B
+(おそらくテスト駆動開発 (TDD) の方法論を利用して) アプリケーションの大部分をカバーするために十分なユニットテストをかならず書けば、内部をリファクタリングするもしくは新しい機能を追加するときに、安心感を得られドキュメントを作る時間を節約することもできます。
