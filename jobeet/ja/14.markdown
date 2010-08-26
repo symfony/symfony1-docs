@@ -1,23 +1,21 @@
 14日目: フィード
 ================
 
-昨日、あなた独自の symfony アプリケーションの開発を始めました。やめないでください。symfony をさらに学ぶので、アプリケーションに新しい機能を追加し、どこかでそれをホストし、コミュニティと共有しようとすることに努めてください。
+昨日、あなたは自身の symfony アプリケーションの開発を始めました。今やめないでください。symfony をさらに学ぶにしたがい、アプリケーションに新しい機能を追加しようとし、どこかでそれをホストしようとし、コミュニティと共有しようとしてください。
 
-今日は完全に異なる題材に移ります。
-
-求人情報を探している場合、新しいものが投稿されるとすぐに知らせが来ることが望ましいでしょう。1時間ごとに Web サイトを確認するのはあまり便利ではないので、Jobeet のユーザーに最新情報を提供するために求人情報のフィードを追加します。
+今日から全く違うことをします。求人情報を探している場合、新しいものが投稿されるとすぐに知らせてくれることが望ましいでしょう。1時間ごとに Web サイトを確認するのはあまり便利ではないので、Jobeet のユーザーに最新情報を提供するために求人情報のフィードを追加します。
 
 フォーマット
 ------------
 
-symfony フレームワークは~フォーマット~と ~MIME-Type|MIME Type~ をネイティブにサポートします。これは同じ Model と Controller がリクエストされたフォーマットに基づいて異なる~テンプレート~をもつことを意味します。デフォルトのフォーマットは HTML ですが、`txt`、`js`、`css`、`json`、`xml`、`rdf` もしくは `atom` のように、symfony は~いくつかのフォーマット|組み込みフォーマット~をそのまま使えます。
+symfony フレームワークはフォーマットと mime-yype を標準サポートします。これは同じ Model と Controller がリクエストされたフォーマットに基づいて異なるテンプレートを持てることを意味します。デフォルトのフォーマットは HTML ですが、`txt`、`js`、`css`、`json`、`xml`、`rdf` もしくは `atom` のように、symfony は~くつかのフォーマットをそのまま使えます。
 
-フォーマットは~リクエスト|HTTP リクエスト~オブジェクトの `setRequestFormat()` メソッドを使って設定できます:
+フォーマットは request オブジェクトの `setRequestFormat()` メソッドを使って設定できます:
 
     [php]
     $request->setRequestFormat('xml');
 
-しかし、たいていの場合、フォーマットは URL に埋め込まれます。このケースの場合、特別な変数の ~`sf_format`~ が対応するルートで使われる場合、symfony は自動的に設定します。求人リストに関して、リストの URL は次のとおりです:
+しかし、たいていの場合、フォーマットは URL に埋め込まれます。このケースでは、特別な変数の `sf_format` が対応するルートで使われる場合、symfony が設定します。求人リストでは、リストの URL は次の通りです:
 
     http://www.jobeet.com.localhost/frontend_dev.php/job
 
@@ -25,7 +23,7 @@ symfony フレームワークは~フォーマット~と ~MIME-Type|MIME Type~ �
 
     http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
-両方の URL は同等です。`sfPropelRouteCollection` クラスによって生成されたルートは拡張子として `sf_format` をもち、`html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行することであなた自身で確認できます:
+両方の URL は同等です。<propel>`sfPropelRouteCollection`</propel><doctrine>`sfDoctrineRouteCollection`</doctrine> クラスによって生成されたルートは拡張子として `sf_format` を持ち、`html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行すれば自身で確認できます:
 
 ![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
 
@@ -34,7 +32,7 @@ symfony フレームワークは~フォーマット~と ~MIME-Type|MIME Type~ �
 
 ### 最新の求人フィード
 
-異なるテンプレートを作ることで異なるフォーマットを簡単にサポートできます。最新の求人情報用に [Atom フィード](http://ja.wikipedia.org/wiki/Atom)を作るには、`indexSuccess.atom.php` テンプレートを作ります:
+異なるフォーマットをサポートすることは異なるテンプレートを作ることと同じくらい簡単です。最新の求人用に [Atom フィード](http://ja.wikipedia.org/wiki/Atom)を作るには、`indexSuccess.atom.php` テンプレートを作ります:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
@@ -61,28 +59,28 @@ symfony フレームワークは~フォーマット~と ~MIME-Type|MIME Type~ �
 >**SIDEBAR**
 >テンプレートの名前
 >
->`html` は Web アプリケーションでもっとも使われる共通のフォーマットなので、テンプレートの名前で省略できます。`indexSuccess.php` と `indexSuccess.html.php` テンプレートは同等で symfony は最初のほうを使います。
+>`html` は Web アプリケーションでもっとも使われる共通のフォーマットなので、テンプレートの名前から省略できます。`indexSuccess.php` と `indexSuccess.html.php` テンプレートは同等で symfony は最初に見つけた方を使います。
 >
->デフォルトでは、テンプレートのサフィックスは `Success` なのはなぜでしょうか？アクションはレンダリングするテンプレートを指し示す値を返すことができます。アクションが何も返さない場合、次のコードと同等です:
+>なぜデフォルトでテンプレートのサフィックスは `Success` なのでしょうか？アクションはレンダリングするテンプレートを指定して返すことができます。アクションが何も返さない場合、次のコードと同等です:
 >
 >     [php]
 >     return sfView::SUCCESS; // == 'Success'
 >
->サフィックスを変更したい場合、次のようなものを返すだけです:
+>サフィックスを変更したい場合、次のように何かを返せば良いだけです:
 >
 >     [php]
 >     return sfView::ERROR; // == 'Error'
 >
 >     return 'Foo';
 >
->以前見たように、テンプレートの名前は `setTemplate()` メソッドを利用して変更することもできます:
+>昨日見たように、テンプレートの名前は `setTemplate()` メソッドを利用して変更することもできます:
 >
 >     [php]
 >     $this->setTemplate('foo');
 
-デフォルトでは、symfony はフォーマットに従って ~`Content-Type`~ レスポンスを変更し、HTML ではないすべてのフォーマットに関して、レイアウトは無効です。Atom フィードに関して、symfony は `Content-Type` を `application/atom+xml; charset=utf-8` に変更します。
+デフォルトでは、symfony はフォーマットに従って `Content-Type` レスポンスを変更します。なお、HTML ではないすべてのフォーマットにはレイアウトは無効です。Atom フィードに関して、symfony は `Content-Type` を `application/atom+xml; charset=utf-8` に変更します。
 
-Jobeet のフッターにおいて、フィードへのリンクを更新します:
+Jobeet のフッターにおいて、フィードへのリンクを追加します:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
@@ -90,7 +88,7 @@ Jobeet のフッターにおいて、フィードへのリンクを更新しま�
       <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
-~内部 URI~ は変数として追加される `sf_format` を伴う `job` リストに対して同じです。
+内部 URI は変数として `sf_format` を使用した求人リストと同じです。
 
 ブラウザがフィードを自動的に検出できるように `<link>` タグをレイアウトの head セクションに追加します:
 
@@ -99,9 +97,9 @@ Jobeet のフッターにおいて、フィードへのリンクを更新しま�
     <link rel="alternate" type="application/atom+xml" title="Latest Jobs"
       href="<?php echo url_for('job', array('sf_format' => 'atom'), true) ?>" />
 
-`href` リンク属性に関して、`url_for()` ヘルパーの第2引数のおかげで~絶対 URL~ が使われます。
+`href` リンク属性に関して、`url_for()` ヘルパーの第2引数により絶対 URL が使われます。
 
-Atom テンプレートヘッダーを次のコードで置き換えます:
+Atom テンプレートのヘッダーを次のコードで置き換えます:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
@@ -120,12 +118,7 @@ Atom テンプレートヘッダーを次のコードで置き換えます:
     </author>
     <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
-<propel>
-日付をタイムスタンプとして得るために、`getCreatedAt()` の引数として `U` を使う方法に注目してください。最新投稿の日付を得るには、`getLatestPost()` メソッドを作ります:
-</propel>
-<doctrine>
-`created_at` の日付をタイムスタンプとして取得するために、`strtotime()` 関数の使い方に注目してください。最新投稿の日付を得るには、`getLatestPost()` メソッドを作ります:
-</doctrine>
+タイムスタンプを日付として得るための <propel>`getCreatedAt()`</propel><doctrine>`format()`</doctrine> の引数として使う `U` の使い方に気が付いてください。最新の投稿に日付を得るために、`getLatestPost()` を作ります:
 
 <propel>
     [php]
@@ -161,7 +154,7 @@ Atom テンプレートヘッダーを次のコードで置き換えます:
     }
 </doctrine>
 
-フィードエントリは次のコードで生成できます:
+フィードエントリーは次のコードで生成されます:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
@@ -207,16 +200,16 @@ Atom テンプレートヘッダーを次のコードで置き換えます:
       <?php endforeach ?>
     <?php endforeach ?>
 
-リクエストオブジェクト (`$sf_request`) の `getHost()` メソッドは現在のホストを返します。企業ロゴの絶対パスを作る際に重宝します。
+リクエストオブジェクト (`$sf_request`) の `getHost()` メソッドは現在のホストを返します。企業ロゴの絶対パスを作る際に役立ちます。
 
 ![フィード](http://www.symfony-project.org/images/jobeet/1_4/15/feed.png)
 
 >**TIP**
->フィードを作成する際に、[`curl`](http://curl.haxx.se/) もしくは [`wget`](http://www.gnu.org/software/wget/) のようなコマンドラインツールを使えばフィードの実際の内容を見れるので~デバッグ~作業が楽になります。
+>フィードを作成する際に、[`curl`](http://curl.haxx.se/) もしくは [`wget`](http://www.gnu.org/software/wget/) のようなコマンドラインツールを使えばフィードの実際の内容を見れるのでデバッグが楽になります。
 
 ### カテゴリの最新求人フィード
 
-Jobeet のゴールの1つはよりターゲットを絞った求人情報を見つための手助けになることです。ですので、それぞれのカテゴリ用の~フィード~を提供する必要があります。
+Jobeet のゴールの1つはよりターゲットを絞った求人を見つけるための手助けになることです。ですので、それぞれのカテゴリ用のフィードを提供する必要があります。
 
 最初に、異なるフォーマットのサポートを追加するために `category` ルートを更新しましょう:
 
@@ -224,13 +217,13 @@ Jobeet のゴールの1つはよりターゲットを絞った求人情報を見
     // apps/frontend/config/routing.yml
     category:
       url:     /category/:slug.:sf_format
-      class:   sfPropelRoute
+      class:   sf<propel>Propel</propel><doctrine>Doctrine</doctrine>Route
       param:   { module: category, action: show, sf_format: html }
       options: { model: JobeetCategory, type: object }
       requirements:
         sf_format: (?:html|atom)
 
-これで、`category` ルートは `html` と `atom` フォーマットの両方を理解します。~テンプレート~のカテゴリフィードへのリンクを更新します:
+これで、`category` ルートは `html` と `atom` フォーマットの両方を理解します。テンプレートのカテゴリフィードへのリンクを更新します:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.php -->
@@ -243,7 +236,7 @@ Jobeet のゴールの1つはよりターゲットを絞った求人情報を見
       <a href="<?php echo url_for('category', array('sf_subject' => $category, 'sf_format' => 'atom')) ?>">Feed</a>
     </div>
 
-最後のステップは `showSuccess.atom.php` テンプレートを作ることです。しかしこのフィードは求人の一覧も表示するので、`_list.atom.php` パーシャルを作ることでフィードエントリを生成するコードを~リファクタリング~できます。`html` フォーマットに関して、~パーシャル|パーシャルテンプレート~はフォーマット専用です:
+最後のステップは `showSuccess.atom.php` テンプレートを作ることです。しかしこのフィードは求人の一覧も表示するので、`_list.atom.php` パーシャルを作ることでフィードエントリを生成するコードをリファクタリングできます。`html` フォーマットのように、パーシャルはフォーマット固有です:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_list.atom.php -->
@@ -286,7 +279,7 @@ Jobeet のゴールの1つはよりターゲットを絞った求人情報を見
       </entry>
     <?php endforeach ?>
 
-求人フィードのテンプレートを簡略化するために `_list.atom.php` パーシャルを使うことができます:
+求人フィードのテンプレートを単純にするために `_list.atom.php` パーシャルを使うことができます:
 
     [php]
     <!-- apps/frontend/modules/job/templates/indexSuccess.atom.php -->
@@ -336,7 +329,7 @@ Jobeet のゴールの1つはよりターゲットを絞った求人情報を見
       <?php include_partial('job/list', array('jobs' => $pager->getResults())) ?>
     </feed>
 
-メインの求人情報フィードに関して、カテゴリ用の最新の求人情報の日付が必要です:
+メインの求人情報フィードと同じように、カテゴリ用の最新の求人の投稿日付が必要です:
 
     [php]
 <propel>
@@ -360,8 +353,6 @@ Jobeet のゴールの1つはよりターゲットを絞った求人情報を見
 また明日
 --------
 
-symfony の多くの機能と同じように、ネイティブのフォーマットサポートによって難なくフィードを Web サイトに追加できます。
-
-今日は、求職者のユーザーエクスペリエンスを強化しました。明日は、Web サービスを提供することで職の投稿者に優れた公開機能を提供する方法を見ることになります。
+symfony の多くの機能と同じように、ネイティブのフォーマットサポートによって難なくフィードを Web サイトに追加できます。今日は、求職者のユーザーエクスペリエンスを強化しました。明日は、Web サービスを提供することで求人の投稿者に優れた公開機能を提供する方法を経験することになります。
 
 __ORM__
