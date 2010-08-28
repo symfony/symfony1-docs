@@ -646,7 +646,7 @@ Propel ‚Ü‚½‚Í Doctrine ‚Ì¶¬ƒIƒuƒWƒFƒNƒg‚Í’·‚¢ƒJƒXƒP[ƒhó‚ÌƒNƒ‰ƒX‚ÉˆË‘¶‚·‚é‚Ì‚
     end()
     ;
 
-Each proxy method is part of a tester group. Using a tester group is done by wrapping the method calls with the `with()` and `end()` methods. The `with()` methods takes the tester group name (like `request` and `response`).
+ŠeƒvƒƒLƒVƒƒ\ƒbƒh‚ÍƒeƒXƒ^[ƒOƒ‹[ƒv‚Ìˆê•”‚Å‚·BƒeƒXƒ^[ƒOƒ‹[ƒv‚ÍA`with()` ƒƒ\ƒbƒh‚Æ `end()` ƒƒ\ƒbƒh‚ÌŒÄ‚Ño‚µ‚ÅˆÍ‚Ý‚Ü‚·B`with()` ƒƒ\ƒbƒh‚É‚ÍAƒeƒXƒ^[ƒOƒ‹[ƒv‚Ì–¼‘O‚ð“n‚µ‚Ü‚·(`request` ‚â `response`)B
 
 ƒXƒe[ƒ^ƒX200‚Í `isStatusCode()` ƒƒ\ƒbƒh‚É‚æ‚Á‚Ä‹‚ß‚ç‚ê‚éƒpƒ‰ƒ[ƒ^[‚ÌƒfƒtƒHƒ‹ƒg’l‚È‚Ì‚ÅA˜A‘±‚·‚éƒŒƒXƒ|ƒ“ƒX‚ðƒeƒXƒg‚·‚é‚½‚ß‚Éˆø”‚È‚µ‚Å‚±‚Ìƒƒ\ƒbƒh‚ðŒÄ‚Ño‚·‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
@@ -676,10 +676,10 @@ Each proxy method is part of a tester group. Using a tester group is done by wra
       end()->
       with('response')->begin()->
         isStatusCode(200)->
-        isRedirected()->      // Check that the response is a redirect
+        isRedirected()->      // ƒŒƒXƒ|ƒ“ƒX‚ªƒŠƒ_ƒCƒŒƒNƒg‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚é
       end()->
 
-      followRedirect()->    // Manually follow the redirection
+      followRedirect()->    // Žè“®‚ÅƒŠƒ_ƒCƒŒƒNƒg‚·‚é
 
       with('request')->begin()->
         isRequestParameter('module', 'foobar')->
