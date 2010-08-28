@@ -50,7 +50,7 @@ Symfony è stato creato per soddisfare i seguenti requisiti:
 La maggior parte delle caratteristiche comuni dei progetti web sono automatizzate in
 symfony, come segue:
 
-  * Lo strato precostituito di internazionalizzazione consente la traduzione sia dei dati
+  * Il livello di internazionalizzazione consente la traduzione sia dei dati
     che delle interfacce, così come anche localizzazione dei contenuti.
   * La presentazione usa template e layout che possono essere costruiti da grafici HTML
     senza alcuna conoscenza del framework. Le funzioni helper riducono l'ammontare di

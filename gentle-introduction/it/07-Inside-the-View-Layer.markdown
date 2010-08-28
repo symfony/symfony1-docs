@@ -1,5 +1,5 @@
-﻿Capitolo 7 - All'interno dello strato vista
-===========================================
+﻿Capitolo 7 - All'interno del livello della vista
+================================================
 
 La vista è la responsabile per la visualizzazione dell'output relativo a una particolare azione. In symfony, la vista è costituita da più parti, di cui ogni singolo elemento è stato progettato per essere facilmente modificato da chi di solito lavora con esso.
 
@@ -553,9 +553,9 @@ Listato 7-19 - Configurazione predefinita della vista a livello di applicazione,
 
 Ciascuna di queste impostazioni verrà descritta in dettaglio nella sezione "Impostazione della configurazione della vista".
 
-### L'oggetto Response
+### L'oggetto response
 
-Sebbene faccia parte dello strato vista, l'oggetto response viene spesso modificato dall'azione. Le azioni possono accedere all'oggetto response di symfony, chiamato `sfResponse`, attraverso il metodo `getResponse()`. Il Listato 7-20 elenca alcuni dei metodi di `sfResponse` spesso utilizzati all'interno di un'azione.
+Sebbene faccia parte del livello vista, l'oggetto response viene spesso modificato dall'azione. Le azioni possono accedere all'oggetto response di symfony, chiamato `sfResponse`, attraverso il metodo `getResponse()`. Il Listato 7-20 elenca alcuni dei metodi di `sfResponse` spesso utilizzati all'interno di un'azione.
 
 Listato 7-20 - Le azioni hanno accesso ai metodi dell'oggetto `sfResponse`
 
@@ -865,8 +865,8 @@ Listato 7-37 - Rimozione del layout
 >**NOTE**
 >Le viste per le azioni Ajax non hanno layout per impostazione predefinita.
 
-Escapizzazione dell'output
---------------------------
+Escape dell'output
+------------------
 
 Quando vengono inseriti dati dinamici in un template, bisogna essere sicuri dell'integrità dei dati. Per esempio, se i dati provengono da form compilati da utenti anonimi, c'è il rischio che possano includere script maligni che hanno lo scopo di lanciare attacchi di tipo cross-site scripting (XSS). Bisogna essere in grado di fare l'escape dei dati visualizzati, in modo che qualunque tag HTML possa contenere diventi inerte.
 
@@ -974,7 +974,7 @@ Listato 7-39 - L'escape funziona anche per gli array e gli oggetti
     <?php echo get_class($test_object) ?>
      => sfOutputEscaperObjectDecorator
 
-Questo spiega perché alcune normali funzioni PHP (come `array_shift()`, `print_r()` e altre) non funzionano più con gli array esacpizzati. Ma questi possono essere acceduti utilizzando `[]`, essere attraversati usando `foreach` e restituire il corretto risultato con `count()`. E in ogni caso nei template i dati dovrebbero essere a sola lettura, quindi la maggior parte degli accessi verrà fatta utilizzando metodi che funzionano correttamente.
+Questo spiega perché alcune normali funzioni PHP (come `array_shift()`, `print_r()` e altre) non funzionano più con gli array sotto escape. Ma questi possono essere acceduti utilizzando `[]`, essere attraversati usando `foreach` e restituire il corretto risultato con `count()`. E in ogni caso nei template i dati dovrebbero essere a sola lettura, quindi la maggior parte degli accessi verrà fatta utilizzando metodi che funzionano correttamente.
 	 
 C'è ancora un modo per recuperare i dati raw attraverso l'oggetto `$sf_data`. Inoltre, i metodi di oggetti sotto escape vengono alterati per accettare un parametro aggiuntivo: un metodo di escape. Così si può scegliere un metodo alternativo per fare l'escape ogni volta che si visualizza una variabile in un template, oppure optare per l'helper `ESC_RAW` per disattivare l'escape. Vedere il Listato 7-40 come esempio.
 

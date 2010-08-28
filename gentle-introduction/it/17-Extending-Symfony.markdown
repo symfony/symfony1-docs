@@ -27,7 +27,7 @@ Listato 17-1 - Registrare un ascoltatore di eventi
       // fa qualcosa con la cultura dell'utente
     }
 
-Tutti gli eventi e le registrazioni degli ascoltatori sono gestiti da un oggetto speciale chiamato *dispatcher di eventi*. Questo oggetto è disponibile ovunque in symfony attraverso l'istanza di `ProjectConfiguration` e la maggior parte degli oggetti di symfony offrono un metodo `getEventDispatcher()` per ottenere un accesso diretto ad esso. Utilizzando il metodo `connect()` del dispatcher, è possibile registrare qualsiasi callable PHP (o un metodo di classe o una funzione) da chiamare quando si verifica un evento. Il primo argomento di `connect()` è l'identificatore dell'evento, che è una stringa composta da uno spazio nomi e da un nome. Il secondo argomento è un callable PHP.
+Tutti gli eventi e le registrazioni degli ascoltatori sono gestiti da un oggetto speciale chiamato *dispatcher di eventi*. Questo oggetto è disponibile ovunque in symfony attraverso l'istanza di `ProjectConfiguration` e la maggior parte degli oggetti di symfony offrono un metodo `getEventDispatcher()` per accedervi direttamente. Utilizzando il metodo `connect()` del dispatcher, è possibile registrare qualsiasi callable PHP (o un metodo di classe o una funzione) da chiamare quando si verifica un evento. Il primo argomento di `connect()` è l'identificatore dell'evento, che è una stringa composta da uno spazio nomi e da un nome. Il secondo argomento è un callable PHP.
 
 >**Note**
 >Recuperare il dispatcher degli eventi da un qualsiasi punto dell'applicazione:
@@ -164,7 +164,7 @@ Listato 17-4 - Gestire un evento del tipo "notificare finché"
 
 In pratica, `notifyUntil()` aggiunge funzionalità di ereditarietà multipla, o meglio mixin (l'aggiunta di metodi da parte di classi esterne rispetto a una classe esistente), al PHP. Quindi ora si possono "iniettare" nuovi metodi agli oggetti che non si possono estendere atrtaverso l'ereditarietà. E questo avviene a runtime. Non si è più limitati dalle capacità orientate agli oggetti di PHP quando si utilizza symfony.
 
->**TIP**: Essendo che il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo ad essere registrato, è il primo ad essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi a una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
+>**TIP**: Essendo che il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo a essere registrato, è il primo a essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi a una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
 
 ### Cambiare il valore di ritorno di un metodo
 
@@ -293,14 +293,15 @@ Listato 17-6 - Registrare un ascoltatore nella classe di configurazione  dell'ap
 I plugin (vedere sotto) possono registrare i propri ascoltatori di eventi. Dovrebbero farlo nello script `config/config.php` del plugin, che viene eseguito durante l'inizializzazione dell'applicazione e offre l'accesso al dispatcher di eventi attraverso `$this->dispatcher`.
 
 Factory
----------
+-------
 
-Factory è la definizione di una classe per un determinato compito. Symfony per le sue caratteristiche del core, come la gestione del controllore e della sessione, si basa su factory. Ad esempio, quando il framework deve creare un oggetto per un nuova richiesta, cerca nella definizione della factory il nome della classe da utilizzare a tale scopo. La definizione predefinita della factory per le richieste è `sfWebRequest`, quindi symfony crea un oggetto di questa classe, al fine di gestire le richieste. Il grande vantaggio di utilizzare una definizione della factory è che è molto facile alterare le caratteristiche core del framework: basta cambiare la definizione della factory e symfony userà la classe personalizzata per la richiesta, invece della sua.
+Factory è la definizione di una classe per un determinato compito. Symfony per le sue caratteristiche del core, come la gestione del controllore e della sessione, si basa su factory. Ad esempio, quando il framework deve creare un oggetto per un nuova richiesta, cerca nella definizione del factory il nome della classe da utilizzare a tale scopo. La definizione predefinita del factory per le richieste è `sfWebRequest`, quindi symfony crea un oggetto di questa classe, al fine di gestire le richieste. Il grande vantaggio di utilizzare una definizione del factory è che è molto facile alterare le caratteristiche core del framework: basta cambiare la definizione del factory e symfony userà la classe personalizzata per la richiesta, invece della sua.
 
-Le definizioni delle factory sono memorizzate nel file di configurazione `factories.yml`. Il Listato 17-7 mostra il file con le definizioni predefinite delle factory. Ogni definizione è costituita dal nome di una classe autocaricata e (opzionalmente) da un insieme di parametri. Per esempio, la factory per la memorizzazione delle sessioni (impostata sotto la chiave `storage:`), utilizza un parametro `session_name` per dare un nome al cookie creato sul computer client, che consente le sessioni persistenti.
+Le definizioni dei factory sono memorizzate nel file di configurazione `factories.yml`. Il Listato 17-7 mostra il file con le definizioni predefinite dei factory. Ogni definizione è costituita dal nome di una classe autocaricata e (opzionalmente) da un insieme di parametri. Per esempio, il factory per la memorizzazione delle sessioni (impostata sotto la chiave `storage:`), utilizza un parametro `session_name` per dare un nome al cookie creato sul computer client, che consente le sessioni persistenti.
 
-Listato 17-7 - File predefinito per le factory, in `frontend/config/factories.yml`
+Listato 17-7 - File predefinito per i factory, in `frontend/config/factories.yml`
 
+    [yml]
     -
     prod:
       logger:
@@ -342,9 +343,9 @@ Listato 17-7 - File predefinito per le factory, in `frontend/config/factories.ym
           cache_key_use_vary_headers: true
           cache_key_use_host_name:    true
 
-Il modo migliore per cambiare una factory è quello di creare una nuova classe che eredita dalla factory predefinita e aggiungere nuovi metodi ad essa. Per esempio, la factory della sessione utente è impostata con la classe `myUser` (che si trova in `frontend/lib/`) ed eredita da `sfUser`. Utilizzare lo stesso meccanismo per trarre beneficio dalle factory esistenti. Il Listato 17-8 mostra un esempio di una nuova factory per l'oggetto request.
+Il modo migliore per cambiare un factory è quello di creare una nuova classe che eredita dal factory predefinito e aggiungervi nuovi metodi. Per esempio, il factory della sessione utente è impostato con la classe `myUser` (che si trova in `frontend/lib/`) ed eredita da `sfUser`. Utilizzare lo stesso meccanismo per trarre beneficio dai factory esistenti. Il Listato 17-8 mostra un esempio di un nuovo factory per l'oggetto request.
 
-Listato 17-8 - Sovrascrivere le factory
+Listato 17-8 - Sovrascrivere i factory
 
     [php]
     // Creare un file myRequest.class.php in una cartella con autocaricamento,
@@ -608,7 +609,7 @@ Ci sono alcuni elementi che il task `plugin:install` non può gestire da solo e 
   * Configurazione personalizzate dell'applicazione possono essere utilizzate nel codice del plugin (ad esempio, utilizzando `sfConfig::get('app_myplugin_foo')`), ma non si possono mettere i valori predefiniti in un file `app.yml` che si trova nella cartella `config/` del plugin. Per gestire i valori predefiniti, si usa il secondo argomento del metodo `sfConfig::get()`. Le impostazioni possono comunque essere sovrascritte a livello di applicazione (vedere il Listato 17-25 per un esempio).
   * Le regole personalizzate delle rotte devono essere aggiunte manualmente nel file `routing.yml` dell'applicazione.
   * I filtri personalizzati devono essere aggiunti manualmente nel file `filters.yml` dell'applicazione.
-  * Le factory personalizzate devono essere aggiunte manualmente nel file `factories.yml` dell'applicazione.
+  * I factory personalizzati devono essere aggiunti manualmente nel file `factories.yml` dell'applicazione.
 
 In generale, tutta la configurazione che dovrebbe finire in uno dei file di configurazione dell'applicazione deve essere aggiunta manualmente. I plugin con tali impostazioni manuali dovrebbero incorporare un file `README` che descrive i dettagli dell'installazione.
 
@@ -985,7 +986,7 @@ I plugin devono sempre includere un file `LICENSE` che descrive le condizioni di
 Riepilogo
 ---------
 
-Le classi di symfony notificano eventi che danno loro la possibilità di essere modificati a livello di applicazione. Il meccanismo degli eventi permette l'ereditarietà multipla e la sovrascrittura delle classi in fase di runtime, anche se le limitazioni di PHP lo impedirebbero. Quindi le funzionalità di symfony si possono estendere facilmente, anche quando è necessario modificare le classi core: la configurazione delle factory è qui per questo.
+Le classi di symfony notificano eventi che danno loro la possibilità di essere modificati a livello di applicazione. Il meccanismo degli eventi permette l'ereditarietà multipla e la sovrascrittura delle classi in fase di runtime, anche se le limitazioni di PHP lo impedirebbero. Quindi le funzionalità di symfony si possono estendere facilmente, anche quando è necessario modificare le classi core: la configurazione dei factory è qui per questo.
 
 Molte estensioni esistono già, sono pacchettizzate come plugin, per essere installate facilmente, aggiornate e disinstallate tramite la riga di comando di symfony. Creare un plugin è facile come creare un pacchetto PEAR e fornisce riutilizzabilità tra le applicazioni.
 

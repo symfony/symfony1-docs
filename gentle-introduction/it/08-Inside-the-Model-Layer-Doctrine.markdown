@@ -1,19 +1,19 @@
-﻿Capitolo 8 - All'interno dello strato modello (Doctrine)
-===========================================
+﻿Capitolo 8 - All'interno del livello del modello (Doctrine)
+===========================================================
 
-Gran parte della trattazione finora è stata dedicata alla costruzione di pagine e all'elaborazione delle richieste e delle risposte. Ma la business logic di una applicazione web si basa principalmente sul suo modello di dati. Il componente predefinito di symfony per il modello, è basato su uno strato che mappa oggetti e relazioni. Symfony è in bundle con i due più popolari ORM per PHP: [Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/). In un'applicazione symfony, si accede ai dati memorizzati in un database e li si modifica, attraverso gli oggetti; non è necessario riferirsi direttamente al database. Quest'ultimo mantiene un elevato livello di astrazione e portabilità.
+Gran parte della trattazione finora è stata dedicata alla costruzione di pagine e all'elaborazione delle richieste e delle risposte. Ma la business logic di una applicazione web si basa principalmente sul suo modello di dati. Il componente predefinito di symfony per il modello, è basato su un livello che mappa oggetti e relazioni. Symfony è distribuito con i due più popolari ORM per PHP: [Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/). In un'applicazione symfony, si accede ai dati memorizzati in un database e li si modifica, attraverso gli oggetti; non è necessario riferirsi direttamente al database. Quest'ultimo mantiene un elevato livello di astrazione e portabilità.
 
 Questo capitolo spiega come creare un modello di dati a oggetti e come accedere ai dati e modificarli con Doctrine. Viene anche trattata l'integrazione di Doctrine con symfony.
 
 >**TIP**
 >Se si vuole utilizzare Propel al posto di Doctrine, leggere l'Appendice A che contiene le stesse informazioni ma riferite a Propel.
 
-Perché usare un ORM e uno strato per l'astrazione?
+Perché usare un ORM e un livello per l'astrazione?
 --------------------------------------------------
 
 I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per poter accedere nel modo più efficace al database in un contesto orientato agli oggetti, è indispensabile una interfaccia per tradurre la logica degli oggetti nella logica relazionale. Come spiegato nel capitolo 1, questa interfaccia è chiamata Object-Relational Mapping (ORM), ed è costituita di oggetti che forniscono l'accesso ai dati e mantengono le business rules all'interno di se stessi.
 
-Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Lo strato ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
+Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Il livello ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
 
 Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo accessor alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome`, e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
 
@@ -41,7 +41,7 @@ Listato 8-2 - Il metodo accessor maschera la logica dei dati
       return $totale;
     }
 
-C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo dello strato di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL. 
+C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo del livello di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL. 
 
 Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione. 
 
@@ -120,7 +120,7 @@ I modelli possono anche contenere chiavi esterne esplicite e indici. Per saperne
 Le classi del modello
 ---------------------
 
-Lo schema è usato per costruire le classi del modello nello strato ORM. Per risparmiare tempo di esecuzione, queste classi sono generate con un task a riga di comando chiamato `doctrine:build-model`.
+Lo schema è usato per costruire le classi del modello nel livello ORM. Per risparmiare tempo di esecuzione, queste classi sono generate con un task a riga di comando chiamato `doctrine:build-model`.
 
     $ php symfony doctrine:build-model
 
@@ -321,7 +321,7 @@ Listato 8-12 - Recuperare i record di Doctrine_Query con `createQuery()`--Query 
 >**SIDEBAR**
 >Idratazione
 >
->La chiamata a `->execute()` è molto più potente di una semplice query SQL. Primo, l'SQL è ottimizzato per il DBMS che si è scelto. Secondo, ogni valore passato a `Doctrine_Query` è escapizzato prima di essere inserito nel codice SQL, il che previene i rischi di SQL injection. Terzo, il metodo restituisce un array di oggetti, piuttosto che un insieme di risultati. L'ORM crea e popola automaticamente gli oggetti basandosi sull'insieme dei risultati del database. Questo processo è chiamato idratazione.
+>La chiamata a `->execute()` è molto più potente di una semplice query SQL. Primo, l'SQL è ottimizzato per il DBMS che si è scelto. Secondo, ogni valore passato a `Doctrine_Query` è passato sotto escape prima di essere inserito nel codice SQL, il che previene i rischi di SQL injection. Terzo, il metodo restituisce un array di oggetti, piuttosto che un insieme di risultati. L'ORM crea e popola automaticamente gli oggetti basandosi sull'insieme dei risultati del database. Questo processo è chiamato idratazione.
 
 Per selezionare gli oggetti in modo più complesso, è necessario un qualcosa di equivalente a WHERE, ORDER BY, GROUP BY e alle altre istruzioni SQL. L'oggetto `Doctrine_Query` ha metodi e parametri per tutte queste condizioni. Ad esempio, per recuperare tutti i commenti scritti da Fabrizio, ordinati per data, fare una `Doctrine_Query` come mostrato nel Listato 8-13.
 
@@ -407,13 +407,13 @@ Listato 8-15 - Query SQL personalizzate con PDO
 Così come per Doctrine, le query PDO possono sembrare difficili all'inizio. Ancora una volta, gli esempi di applicazioni esistenti e i tutorial, mostreranno il modo più corretto per utilizzarle.
 
 >**CAUTION**
->Se si è tentati di saltare questo processo e accedere direttamente al database, si rischia di perdere la sicurezza e l'astrazione fornite da Doctrine. Farlo con Doctrine è più lungo, ma costringe a usare buone pratiche che garantiscono prestazioni, portabilità e sicurezza per l'applicazione. Ciò è particolarmente vero per le query che contengono parametri provenienti da una fonte non attendibile (ad esempio, un utente Internet). Doctrine fa tutte le necessarie escapizzazioni e protegge i dati. L'accesso al database mette direttamente a rischio di attacchi di tipo SQL injection.
+>Se si è tentati di saltare questo processo e accedere direttamente al database, si rischia di perdere la sicurezza e l'astrazione fornite da Doctrine. Farlo con Doctrine è più lungo, ma costringe a usare buone pratiche che garantiscono prestazioni, portabilità e sicurezza per l'applicazione. Ciò è particolarmente vero per le query che contengono parametri provenienti da una fonte non attendibile (ad esempio, un utente Internet). Doctrine fa tutti i necessari escape e protegge i dati. L'accesso al database mette direttamente a rischio di attacchi di tipo SQL injection.
 
 ### Uso di colonne speciali per le date
 
-Generalmente, quando una tabella ha una colonna chiamata `created_at`, è usata per memorizzare un timestamp della data di creazione di un record. Stessa cosa per le colonne `updated_at` (aggiornato_il), che vengono aggiornate con il valore del tempo corrente, ogni volta che il record stesso viene aggiornato
+Generalmente, quando una tabella ha una colonna chiamata `created_at`, qeusta è usata per memorizzare un timestamp della data di creazione di un record. Stessa cosa per le colonne `updated_at`, che vengono aggiornate con il valore del tempo corrente, ogni volta che il record stesso viene aggiornato
 
-La buona notizia è che Doctrine ha un comportamento `Timestampable` che gestirà questi aggiornamenti per noi. Non è necessario impostare manualmente le colonne `created_at` e `updated_at`; verranno aggiornate automaticamente , come mostrato nel Listato 8-16.
+La buona notizia è che Doctrine ha un comportamento `Timestampable` che gestirà questi aggiornamenti per noi. Non è necessario impostare manualmente le colonne `created_at` e `updated_at`; verranno aggiornate automaticamente, come mostrato nel Listato 8-16.
 
 Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite automaticamente
 
@@ -427,7 +427,7 @@ Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite autom
       => [data dell'operazione di INSERT nel database]
 
 >**SIDEBAR**
->Rifattorizzazione nello strato dei dati
+>Rifattorizzazione nel livello dei dati
 >
 >Quando si sviluppa un progetto symfony, spesso si inizia scrivendo il codice della logica di dominio nelle azioni. Ma le query sul database e la manipolazione del modello non devono essere messi nel livello del controllore. Tutta la logica relativa ai dati dovrebbe essere spostata al livello di modello. Ogni volta che si deve fare la stessa richiesta in più di un posto nelle azioni, è meglio pensare di trasferire il relativo codice al modello. Aiuta a mantenere le azioni brevi e leggibili.
 >
@@ -443,7 +443,7 @@ Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite autom
 >
 >L'azione crea un oggetto  della classe `Tag` dal parametro della request. Tutto il codice necessario per interrogare il database si trova nel metodo `getArticoliPopolari` di questa classe. Rende l'azione più leggibile e il codice del modello può facilmente venire riutilizzato in un'altra azione.
 >
->Spostare il codice in un posto più appropriato è una delle tecniche della rifattorizzazione. Se la si fa spesso, il codice sarà semplice da mantenere e da comprendere da parte di altri sviluppatori. Una buona regola per capire quando fare refactoring nello strato dei dati, è che il codice di una azione raramente deve contenere più di dieci righe di codice PHP.
+>Spostare il codice in un posto più appropriato è una delle tecniche della rifattorizzazione. Se la si fa spesso, il codice sarà semplice da mantenere e da comprendere da parte di altri sviluppatori. Una buona regola per capire quando fare refactoring nel livello dei dati, è che il codice di una azione raramente deve contenere più di dieci righe di codice PHP.
 
 Connessioni al database
 ---------------------------
@@ -844,6 +844,6 @@ Riepilogo
 
 Symfony usa Doctrine come ORM e PHP Data Objects per il livello di astrazione del database. Ciò significa che è necessario prima descrivere lo schema relazionale del database in YAML prima di generare le classi del modello a oggetti. Poi, in fase di runtime, utilizzare i metodi dell'oggetto e le classi delle tabelle per recuperare informazioni su un record o un insieme di record. È possibile facilmente sovrascrivere ed estendere il modello aggiungendo metodi alle classi personalizzate. Le impostazioni di connessione sono definite in un file `databases.yml`, che può supportare più di una connessione. E la linea di comando contiene dei task speciali per evitare di duplicare la definizione della struttura. 
 
-Lo strato del modello è il più complesso del framework symfony. Una delle ragioni di questa complessità è che la manipolazione dei dati è una questione intricata. I problemi di sicurezza correlati sono fondamentali per un sito web e non devono essere ignorati. Un'altra ragione è che symfony è più adatto ad applicazioni di medio-grandi dimensioni in contesto enterprise. In tali applicazioni, le automazioni fornite dal modello di symfony possono davvero rappresentare un guadagno di tempo che vale l'investimento per apprendere il suo funzionamento. 
+Il livello del modello è il più complesso del framework symfony. Una delle ragioni di questa complessità è che la manipolazione dei dati è una questione intricata. I problemi di sicurezza correlati sono fondamentali per un sito web e non devono essere ignorati. Un'altra ragione è che symfony è più adatto ad applicazioni di medio-grandi dimensioni in contesto enterprise. In tali applicazioni, le automazioni fornite dal modello di symfony possono davvero rappresentare un guadagno di tempo che vale l'investimento per apprendere il suo funzionamento. 
 
 Quindi non esitate nel dedicare un periodo di prova al modello a oggetti e ai metodi, per comprenderli pienamente. La solidità e la scalabilità delle applicazioni saranno la ricompensa.
