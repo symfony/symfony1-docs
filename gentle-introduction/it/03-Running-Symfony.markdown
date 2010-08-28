@@ -314,17 +314,17 @@ cartella `apps/frontend/`.
 >due vulnerabilità più diffuse sul web. Symfony
 >attua automaticamente le misure di ~sicurezza|Sicurezza~ per nostro conto.
 >
->Per prevenire attacchi di tipo ~XSS~, viene abilitata l'escapizzazione dell'output; per prevenire
+>Per prevenire attacchi di tipo ~XSS~, viene abilitata l'escape dell'output; per prevenire
 >attacchi di tipo ~CSRF~, viene generata una stringa CSRF casuale.
 >
 >Naturalmente, queste impostazioni si possono modificare, grazie alle *opzioni* seguenti:
 >
->  * `--escaping-strategy`: Abilita o disabilita l'escapizzazione dell'output
+>  * `--escaping-strategy`: Abilita o disabilita l'escape dell'output
 >  * `--csrf-secret`: Abilita i token di sessione nei form
 >
 >Per chi ne sa poco di
 >[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) o
->[CSRF](http://en.wikipedia.org/wiki/CSRF), è meglio dedicare un po' di tempo per imparare qualcosa
+>[CSRF](http://en.wikipedia.org/wiki/CSRF), è meglio dedicare un po' di tempo a imparare qualcosa
 >su queste vulnerabilità relative alla sicurezza.
 
 ### Permessi nella struttura delle cartelle

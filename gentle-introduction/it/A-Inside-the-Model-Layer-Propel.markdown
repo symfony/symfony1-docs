@@ -1,16 +1,16 @@
-Appendice A - All'interno dello strato modello (Propel)
-===========================================
+Appendice A - All'interno del livello del modello (Propel)
+==========================================================
 
-Gran parte della trattazione finora è stata dedicata alla costruzione di pagine e all'elaborazione delle richieste e delle risposte. Ma la business logic di una applicazione web si basa principalmente sul suo modello di dati. Il componente predefinito di symfony per il modello, è basato su uno strato che mappa oggetti e relazioni. Symfony è in bundle con i due più popolari ORM per PHP: [Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/). In un'applicazione symfony, si accede ai dati memorizzati in un database e li si modifica, attraverso gli oggetti; non è necessario riferirsi direttamente al database. Quest'ultimo mantiene un elevato livello di astrazione e portabilità.
+Gran parte della trattazione finora è stata dedicata alla costruzione di pagine e all'elaborazione delle richieste e delle risposte. Ma la business logic di una applicazione web si basa principalmente sul suo modello di dati. Il componente predefinito di symfony per il modello, è basato su un livello che mappa oggetti e relazioni. Symfony è distrubuito con i due più popolari ORM per PHP: [Propel](http://www.propelorm.org/) e [Doctrine](http://www.doctrine-project.org/). In un'applicazione symfony, si accede ai dati memorizzati in un database e li si modifica, attraverso gli oggetti; non è necessario riferirsi direttamente al database. Quest'ultimo mantiene un elevato livello di astrazione e portabilità.
 
 Questo capitolo spiega come creare un modello di dati a oggetti e come accedere ai dati e modificarli con Propel. Viene anche trattata l'integrazione di Propel con symfony.
 
-Perché usare un ORM e uno strato per l'astrazione?
-----------------------------------------
+Perché usare un ORM e un livello per l'astrazione?
+--------------------------------------------------
 
-I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per poter accedere nel modo più efficace al database in un contesto orientato agli oggetti, è indispensabile una interfaccia per tradurre la logica degli oggetti nella logica relazionale. Come spiegato nel capitolo 1, questa interfaccia è chiamata Object-Relational Mapping (ORM), ed è costituita di oggetti che forniscono l'accesso ai dati e mantengono le business rules all'interno di se stessi.
+I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per poter accedere nel modo più efficace al database in un contesto orientato agli oggetti, è indispensabile una interfaccia per tradurre la logica degli oggetti nella logica relazionale. Come spiegato nel capitolo 1, questa interfaccia è chiamata Object-Relational Mapping (ORM) ed è costituita di oggetti che forniscono l'accesso ai dati e mantengono le business rules all'interno di se stessi.
 
-Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Lo strato ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
+Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Il livello ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
 
 Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo accessor alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome`, e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
 
@@ -38,11 +38,11 @@ Listato 8-2 - Il metodo accessor maschera la logica dei dati
       return $total;
     }
 
-C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo dello strato di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL.
+C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo del livello di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL.
 
 Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione.
 
-Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony, ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
+Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
 
 >**NOTE**
 >In un progetto symfony, tutte le applicazioni condividono lo stesso modello. Questo è un punto fondamentale a livello di progetto: raggruppare le applicazioni che si basano su regole di business comuni. Questa è la ragione per cui il modello è indipendente dalle applicazioni e i file del modello sono memorizzati in una cartella `lib/model/` nella radice del progetto.
@@ -99,7 +99,7 @@ Una tabella può avere attributi speciali, incluso `phpName` (il nome della clas
 
 Una tabella contiene colonne. Il valore delle colonne può essere definito in tre differenti modi:
 
-  * Se non definisci nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna ed alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: Symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne, e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non devi specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
+  * Se non definisci nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: Symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne, e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non devi specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
 
   * Se definisci soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri devi usare il valore `longvarchar` che non ha lunghezza (ma non può eccedere 65KB in MySQL).
 
@@ -107,11 +107,11 @@ Una tabella contiene colonne. Il valore delle colonne può essere definito in tr
 
 Le colonne possono avere un attributi `phpName`, che è la versione con prima lettera maiuscola del nome (`Id`, `Title`, `Content`, e così via) e non ha bisogno di essere specificata nella maggior parte dei casi.
 
-Le tabelle possono inoltre contenere esplicite chiavi esterne ed indici, come anche alcune definizioni specifiche per alcuni database. Controlla la sezione `Sintassi estesa dello schema` più avanti in questo capitolo per saperne di più.
+Le tabelle possono inoltre contenere esplicite chiavi esterne e indici, come anche alcune definizioni specifiche per alcuni database. Controlla la sezione `Sintassi estesa dello schema` più avanti in questo capitolo per saperne di più.
 
 Le classi del modello
 -------------
-Lo schema è usato per costruire le classi del modello nello strato ORM. Per risparmiare tempo di esecuzione, queste classi sono generate con un task a riga di comando chiamato `propel:build-model`.
+Lo schema è usato per costruire le classi del modello nel livello ORM. Per risparmiare tempo di esecuzione, queste classi sono generate con un task a riga di comando chiamato `propel:build-model`.
 
     $ php symfony propel:build-model
 
@@ -226,7 +226,7 @@ Listato 8-8 - Il metodo `fromArray()` è un setter multiplo
 
 ### Recuperare i record correlati
 
-La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamente una chiave esterna verso la tabella `blog_article`. Ogni commento è collegato ad un articolo, ed un articolo può avere più commenti. Le classi generate possono contenere cinque metodi che traducono queste relazioni in codice ad oggetti, come segue:
+La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamente una chiave esterna verso la tabella `blog_article`. Ogni commento è collegato ad un articolo e un articolo può avere più commenti. Le classi generate possono contenere cinque metodi che traducono queste relazioni in codice ad oggetti, come segue:
 
   * `$comment->getArticle()`: Per ottenere il relativo oggetto `Article`
   * `$comment->getArticleId()`: Per ottenere l'ID del relativo oggetto `Article`
@@ -234,7 +234,7 @@ La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamen
   * `$comment->setArticleId($id)`: Per impostare il relativo oggetto `Article` tramite il suo ID
   * `$article->getComments()`: Per ottenere un array con i relativi oggetti `Comment`
 
-I metodi `getArticleId()` e `setArticleId()` mostrano che puoi considerare la colonna `blog_article_id` come una colonna normale ed impostare le relazioni a mano, ma non sono molto interessanti. Il beneficio dell'approccio orientato agli oggetti è molto più evidente negli altri tre metodi. Il Listato 8-9 mostra come usare il setter generati.
+I metodi `getArticleId()` e `setArticleId()` mostrano che puoi considerare la colonna `blog_article_id` come una colonna normale e impostare le relazioni a mano, ma non sono molto interessanti. Il beneficio dell'approccio orientato agli oggetti è molto più evidente negli altri tre metodi. Il Listato 8-9 mostra come usare il setter generati.
 
 Listato 8-9 - Le chiavi esterne sono tradotte in speciali setter
 
@@ -270,7 +270,7 @@ Il metodo `getArticle()` ritorna un oggetto di classe `Article`, con i benefici 
 La variabile `$comments` nel listato 8-10 contiene un array di oggetti di classe `Comment`. Puoi mostrare il primo con `$comments[0]` o iterare sulla collezione con `foreach ($comments as $comment)`.
 
 >**NOTE**
->Oggetti del modello sono definiti con un nome singolare per convenzione, ed ora puoi capire perché. La chiave esterna definita nella tabelle `blog_comment` causa la creazione del metood `getComments()`, chiamato aggiungendo una `s` al nome dell'oggetto `Comment`. Se tu dessi un nome plurale al modello, la generazione porterebbe ad un metodo chiamato `getCommentss()`, che non avrebbe senso.
+>Oggetti del modello sono definiti con un nome singolare per convenzione, e ora si capisce perché. La chiave esterna definita nella tabelle `blog_comment` causa la creazione del metood `getComments()`, chiamato aggiungendo una `s` al nome dell'oggetto `Comment`. Se tu dessi un nome plurale al modello, la generazione porterebbe ad un metodo chiamato `getCommentss()`, che non avrebbe senso.
 
 ### Salvare ed eliminare dati
 
@@ -334,7 +334,7 @@ Listato 8-12 - Recuperare record usando Criteria e `doSelect()`--Criteria vuoto
 >
 >La chiamata a `::doSelect()` è a dir la verità molto più potente di una semplice query SQL. Per prima cosa, il codice SQL generato è ottimizzato per il DBMS scelto. Secondo, su ogni valore passato a `Criteria` viene effettuato l'escape prima di venir intergrato nel codice SQL, che previene rischi di SQL injection. Terzo, questo metodo ritorna un array di oggetti piuttosto che una risorsa PHP. L'ORM crea automaticamente gli oggetti basandosi sulla risorsa ritornata dal database. Questo processo è chiamato idratazione.
 
-Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY ed altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruisci un `Criteria` come mostrato nel Listato 8-13.
+Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY e altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruisci un `Criteria` come mostrato nel Listato 8-13.
 
 Listato 8-13 - Recuperare record usando Criteria e `doSelect()`--Criteria con condizioni
 
@@ -403,7 +403,7 @@ Listato 8-14 - Un altro esempio di recuperato record con Criteria e `doSelect()`
            AND blog_comment.ARTICLE_ID = blog_article.ID
     ORDER BY blog_comment.CREATED_AT ASC
 
-Come SQL è un linguaggio semplice che consente di gestire interrogazioni molto complesse, l'oggetto Criteria può gestire condizioni con ogni livello di complessità. Ma dato che molti sviluppatori pensano in SQL prima di tradurre una condizione in logica object-oriented, l'oggetto `Criteria` può essere difficile da comprendere all'inizio. Il miglior modo di capirlo è imparare dagli esempi ed applicazioni esistenti. Il sito di symfony, per esempio, è pieno di esempi di utilizzo di `Criteria` che ti aiuteranno in molte situazioni.
+Come SQL è un linguaggio semplice che consente di gestire interrogazioni molto complesse, l'oggetto Criteria può gestire condizioni con ogni livello di complessità. Ma dato che molti sviluppatori pensano in SQL prima di tradurre una condizione in logica object-oriented, l'oggetto `Criteria` può essere difficile da comprendere all'inizio. Il miglior modo di capirlo è imparare dagli esempi e applicazioni esistenti. Il sito di symfony, per esempio, è pieno di esempi di utilizzo di `Criteria` che ti aiuteranno in molte situazioni.
 
 In aggiunta al metodo `doSelect()`, ogni classe peer ha un metodo `doCount()`, che semplicemente ritorna il numero di record che soddisfano i requisiti passati come parametri e ritorna un numero intero. Dato che nessun oggetto viene ritornato, il processo di idratazione non viene eseguito in questo caso, perciò il metodo `doCount()` è più veloce di `doSelect()`.
 
