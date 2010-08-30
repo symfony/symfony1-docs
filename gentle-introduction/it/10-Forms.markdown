@@ -504,7 +504,7 @@ Gestire le richieste dei form
 
 Quando gli utenti riempiono un form e lo inviano, il server deve recuperare i dati dalla richiesta e fare alcune cose con essi. La classe `sfForm` fornisce tutti i metodi necessari per fare questo in un paio di linee di codice. 
 
-### Gestione semplice dei Form
+### Gestione semplice dei form
 
 Dato che i widget restituiscono dei campi form HTML regolari, ricevere il loro valore nell'azione che tratta l'invio dei form è semplice: basta testare i relativi parametri della richiesta. Per il form di contatto di esempio, l'azione potrebbe essere scritta come segue:
 
@@ -883,7 +883,7 @@ I validatori multipli operano sull'intero form, anziché su un singolo input. Se
 Modi alternativi di usare un form
 ---------------------------------
 
-### Classi Form
+### Classi form
 
 Con tutte le opzioni dei widget, i validatori e i parametri dei form, la definizione del form dei contatti scritta nella classe delle azioni appare piuttosto confusa:
 

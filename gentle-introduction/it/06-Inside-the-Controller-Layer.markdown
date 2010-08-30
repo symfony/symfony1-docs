@@ -1,11 +1,11 @@
-Capitolo 6 - All'interno dello strato controllore
-=================================================
+Capitolo 6 - All'interno del livello del controllore
+====================================================
 
-Il controllore in symfony è lo strato che contiene il codice che collega la business logic alla presentazione, esso è diviso in diversi componenti che si usano per diversi scopi:
+Il controllore in symfony è il livello che contiene il codice che collega la business logic alla presentazione, diviso in diversi componenti che si usano per diversi scopi:
 
   * Il front controller è il punto d'accesso univoco all'applicazione. Si occupa di caricare la configurazione e determina l'azione da eseguire.
-  * Le azioni contengono la logica dell'applicazione. Verificano l'integrità della richiesta e preparano i dati necessari allo strato di presentazione.
-  * Richiesta, risposta e oggetti di sessione permettono l'accesso ai parametri della richiesta, alle intestazioni della risposta e ai dati persistenti dell'utente. Vengono usati molto spesso nello strato controllore.
+  * Le azioni contengono la logica dell'applicazione. Verificano l'integrità della richiesta e preparano i dati necessari al livello della vista.
+  * Richiesta, risposta e oggetti di sessione permettono l'accesso ai parametri della richiesta, alle intestazioni della risposta e ai dati persistenti dell'utente. Vengono usati molto spesso nel livello controllore.
   * I filtri sono porzioni di codice eseguito a ogni richiesta, prima o dopo l'azione. Per esempio i filtri di sicurezza e validazione sono usati comunemente nelle applicazioni web. Si può facilmente estendere il framework creando i propri filtri.
 
 Questo capitolo descrive tutti questi componenti, non fatevi intimidire dal loro numero. Per una pagina semplice molto probabilmente basterà scrivere poche righe di codice nella classe dell'azione, tutto qui. Gli altri componenti del controllore vengono utilizzati solo in situazioni particolari.
@@ -129,7 +129,7 @@ Listing 6-4 - Classe azione con due azioni, in `frontend/modules/mymodule/action
       }
     }
 
-Se la dimensione di una classe azione tende a crescere troppo, molto probabilmente, necessita di un po' di refactoring per spostare del codice verso lo strato del modello. Le azioni dovrebbero essere mantenute sempre brevi (non più di alcune righe), mentre tutta la business logic dovrebbe essere nel modello.
+Se la dimensione di una classe azione tende a crescere troppo, molto probabilmente necessita di un po' di rifattorizzazione per spostare del codice verso il livello del modello. Le azioni dovrebbero essere mantenute sempre brevi (non più di alcune righe), mentre tutta la business logic dovrebbe essere nel modello.
 
 Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato da spingervi a separarlo in due moduli.
 
@@ -267,7 +267,7 @@ Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un
     [php]
     return sfView::NONE;
 
-Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente lo strato della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
+Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente il livello della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
 
 Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfView::NONE`
 
@@ -987,6 +987,6 @@ Il parametro `partial_view_class` definisce la classe della vista utilizzata per
 Sommario
 --------
 
-In symfony lo strato del controllore è diviso in due parti: il front controller, l'unico punto d'accesso per l'applicazione in un dato ambiente, e le azioni che contengono la logica delle pagine. Un'azione ha l'abilità di determinare come verrà eseguita la sua vista restituendo una delle costanti `sfView`. All'interno di un'azione si possono manipolare i diversi elementi del context, inclusi l'oggetto della richiesta (`sfRequest`) e l'oggetto della sessione utente corrente (`sfUser`).
+In symfony il livello del controllore è diviso in due parti: il front controller, l'unico punto d'accesso per l'applicazione in un dato ambiente, e le azioni che contengono la logica delle pagine. Un'azione ha l'abilità di determinare come verrà eseguita la sua vista restituendo una delle costanti `sfView`. All'interno di un'azione si possono manipolare i diversi elementi del context, inclusi l'oggetto della richiesta (`sfRequest`) e l'oggetto della sessione utente corrente (`sfUser`).
 
 Combinando assieme la potenza dell'oggetto sessione, l'oggetto azione, le configurazioni di sicurezza, symfony mette a disposizione un completo sistema di sicurezza con restrizione sull'accesso e sistema di credenziali associato. Se i metodi `preExecute()` e `postExecute()` sono stati pensati per il riutilizzo del codice all'interno di un modulo, i filtri permettono lo stesso grado di riutilizzo per tutte le applicazioni facendo eseguire codice del controllore per ogni singola richiesta.

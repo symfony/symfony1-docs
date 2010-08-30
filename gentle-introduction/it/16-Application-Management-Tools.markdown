@@ -440,7 +440,7 @@ Listato 16-14 - Un esempio di task più completo, in `lib/task/mioSecondoTask.cl
     }
 
 >**NOTE**
->Se il task ha bisogno di accedere allo strato database, deve estendere `sfPropelBaseTask` invece di `sfBaseTask`. L'inizializzazione del task si prenderà cura di caricare le classi di Propel. Si può iniziare una connessione al database nel metodo `execute()` chiamando:
+>Se il task ha bisogno di accedere al livello del database, deve estendere `sfPropelBaseTask` invece di `sfBaseTask`. L'inizializzazione del task si prenderà cura di caricare le classi di Propel. Si può aprire una connessione al database nel metodo `execute()` chiamando:
 >
 >    $databaseManager = new sfDatabaseManager($this->configuration);
 >
