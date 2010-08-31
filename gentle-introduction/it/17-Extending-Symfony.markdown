@@ -164,7 +164,8 @@ Listato 17-4 - Gestire un evento del tipo "notificare finché"
 
 In pratica, `notifyUntil()` aggiunge funzionalità di ereditarietà multipla, o meglio mixin (l'aggiunta di metodi da parte di classi esterne rispetto a una classe esistente), al PHP. Quindi ora si possono "iniettare" nuovi metodi agli oggetti che non si possono estendere atrtaverso l'ereditarietà. E questo avviene a runtime. Non si è più limitati dalle capacità orientate agli oggetti di PHP quando si utilizza symfony.
 
->**TIP**: Essendo che il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo a essere registrato, è il primo a essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi a una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
+>**TIP**
+>Poiché il primo ascoltatore che cattura un evento `notifyUntil()` impedisce ulteriori notifiche, bisogna prestare attenzione all'ordine con cui vengono eseguiti gli ascoltatori. Questo ordine corrisponde all'ordine in cui gli ascoltatori sono stati registrati - il primo a essere registrato, è il primo a essere eseguito. Nella pratica, i casi in cui questo potrebbe essere un problema sono rari. Se ci si rende conto che due ascoltatori sono in conflitto su un particolare evento, forse la classe dovrebbe notificare eventi diversi, per esempio uno all'inizio e uno alla fine dell'esecuzione del metodo. E se si utilizzano gli eventi per aggiungere nuovi metodi a una classe esistente, è meglio dare un nome appropriato a questi metodi, in modo che altre volte in cui si aggiungono metodi non si creino dei conflitti. Prefissare i nomi dei metodi con il nome della classe dell'ascoltatore è una buona pratica.
 
 ### Cambiare il valore di ritorno di un metodo
 
@@ -727,11 +728,11 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 >         created_at:
 >         stripped_title: varchar(50)
 >
->Essendo che il processo di fusione usa la tabella `phpName` come chiave, si può anche cambiare il nome della tabella di un plugin nel database, a condizione che si mantiene lo stesso `phpName` nello schema.
+>Poiché il processo di fusione usa la tabella `phpName` come chiave, si può anche cambiare il nome della tabella di un plugin nel database, a condizione che si mantenga lo stesso `phpName` nello schema.
 
 ### Come scrivere un plugin
 
-Solo i plugin pacchettizzati con PEAR possono essere installati con il task `plugin:install`. È bene ricordare che tali plugin possono essere distribuiti attraverso la sezione plugin di symfony, un canale PEAR, o un semplice file per il download. Quindi se si vuole scrivere un plugin, è meglio pubblicarlo come pacchetto PEAR che come semplice file di archivio. Inoltre, i plugin che utilizzano PEAR sono più facili da aggiornare, possono dichiarare dipendenze e fare il deploy in automatico delle risorse nella cartella `web/`.
+Solo i plugin pacchettizzati con PEAR possono essere installati con il task `plugin:install`. È bene ricordare che tali plugin possono essere distribuiti attraverso la sezione plugin di symfony, un canale PEAR o un semplice file da scaricare. Quindi, se si vuole scrivere un plugin, è meglio pubblicarlo come pacchetto PEAR che come semplice file archivio. Inoltre, i plugin che utilizzano PEAR sono più facili da aggiornare, possono dichiarare dipendenze e fare il deploy in automatico delle risorse nella cartella `web/`.
 
 #### Organizzazione dei file
 

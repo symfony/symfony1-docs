@@ -49,7 +49,7 @@ Per ogni nuovo modulo, symfony crea una azione `index` predefinita. Questa si co
 L'azione predefinita `index` non verrà usata in questo capitolo, quindi si può rimuovere il metodo `executeIndex()` dal file `actions.class.php` e cancellare il file `indexSuccess.php` dalla cartella `templates/`.
 
 >**NOTE**
->Symfony mette a disposizione altri modi per creare un modulo oltre che da riga di comando. Uno di questi è quello di creare le cartelle e i file manualmente. In molti casi, le azioni e i template di un modulo hanno lo scopo di manipolare i dati di una determinata tabella. Essendo che il codice necessario per creare, recuperare, aggiornare ed eliminare record da una tabella è spesso lo stesso, symfony fornisce un meccanismo per generare tale codice.
+>Symfony mette a disposizione altri modi per creare un modulo oltre che da riga di comando. Uno di questi è quello di creare le cartelle e i file manualmente. In molti casi, le azioni e i template di un modulo hanno lo scopo di manipolare i dati di una determinata tabella. Essendo il codice necessario per creare, recuperare, aggiornare ed eliminare record da una tabella spesso lo stesso, symfony fornisce un meccanismo per generare tale codice.
 
 Figura 4-1 - La pagina index creata in modo predefinito
 
@@ -235,7 +235,7 @@ Listato 4-10 - Molti helper accettano opzioni come parametri
 Ogni volta che si utilizza un helper di symfony che genera un tag HTML, è possibile inserire ulteriori attributi al tag (come l'attributo `class` nell'esempio del Listato 4-10) nelle opzioni. Questi attributi si possono anche scrivere nel modo "sporco e veloce" dell'HTML 4.0 (senza i doppi apici) e symfony li mostrerà con una formattazione XHTML. Questa è un'altra ragione per cui gli helper sono più veloci da scrivere rispetto all'HTML.
 
 >**NOTE**
->Essendo che è necessaria una ulteriore analisi e trasformazione la sintassi con stringa è un po' più lenta della sintassi con gli array.
+>Essendo necessaria una ulteriore analisi e trasformazione, la sintassi con stringa è un po' più lenta della sintassi con gli array.
 
 Come tutti gli helper di symfony, gli helper per i link sono numerosi e hanno molte opzioni. Il Capitolo 9 li descrive in dettaglio.
 
