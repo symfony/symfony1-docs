@@ -428,7 +428,7 @@ Listato 7-15 - Inclusione di uno slot `'sidebar'` nel layout
     <?php endif; ?>
     </div>
 
-Ciascun template ha la possibilità di definire i contenuti di uno slot (in realtà anche i partial sono in grado di farlo). Essendo che gli slot sono destinati a contenere codice HTML, symfony offre un modo conveniente per definirli: basta scrivere il codice dello slot tra l'helper `slot()` e `end_slot()`, come mostrato nel Listato 7-16.
+Ciascun template ha la possibilità di definire i contenuti di uno slot (in realtà anche i partial sono in grado di farlo). Essendo gli slot destinati a contenere codice HTML, symfony offre un modo conveniente per definirli: basta scrivere il codice dello slot tra gli helper `slot()` e `end_slot()`, come mostrato nel Listato 7-16.
 
 Listato 7-16 - Sovrascrivere il contenuto dello slot `'sidebar'` in un template
 
@@ -436,13 +436,13 @@ Listato 7-16 - Sovrascrivere il contenuto dello slot `'sidebar'` in un template
     // ...
 
     <?php slot('sidebar') ?>
-      <!-- codice per la barra laterale personalizzata per il template corrente-->
+      <!-- codice per la barra laterale personalizzata per il template corrente -->
       <h1>Dettagli dell'utente</h1>
       <p>nome:  <?php echo $user->getNome() ?></p>
       <p>email: <?php echo $user->getEmail() ?></p>
     <?php end_slot() ?>
 
-Il codice tra gli helper slot è eseguito nel contesto del template, quindi ha accesso a tutte le variabili che sono state definite nell'azione. Symfony metterà automaticamente il risultato dell'esecuzione del codice nell'oggetto response. Non verrà visualizzato nel template, ma reso disponibile per future chiamate `include_slot()` come quella mostrata nel Listato 7-14.
+Il codice tra gli helper slot è eseguito nel contesto del template, quindi ha accesso a tutte le variabili che sono state definite nell'azione. Symfony metterà automaticamente il risultato dell'esecuzione del codice nell'oggetto response. Non verrà visualizzato nel template, ma reso disponibile per future chiamate `include_slot()`, come quella mostrata nel Listato 7-14.
 
 Gli slot sono molto utili per definire zone che devono mostrare dei contenuti contestuali. Possono anche essere usati per aggiungere codice HTML al layout solo per certe azioni. Ad esempio, un template che mostra l'elenco delle ultime news potrebbe volere aggiungere un link a un feed RSS nella zona `<head>` del layout. Questo si può ottenere semplicemente aggiungendo uno slot 'feed'` nel layout e sovrascrivendolo nel template dell'elenco.
 

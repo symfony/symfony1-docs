@@ -297,7 +297,7 @@ Se si conosce la chiave primaria di un certo record usare il metodo `find()` del
     [php]
     $articolo = Doctrine_Core::getTable('Articolo')->find(7);
 
-Il file `schema.yml` definisce il campo `id` come chiave primaria della tabella `blog_articolo`, quindi questo comando restituirà l'articolo che ha `id` 7. Essendo che è stata utilizzata la chiave primaria, sappiamo che verrà restituito solo un record; la variabile `$articolo` contiene un oggetto della classe `Articolo`.
+Il file `schema.yml` definisce il campo `id` come chiave primaria della tabella `blog_articolo`, quindi questo comando restituirà l'articolo che ha `id` 7. Essendo stata utilizzata la chiave primaria, sappiamo che verrà restituito solo un record; la variabile `$articolo` contiene un oggetto della classe `Articolo`.
 
 In alcuni casi, una chiave primaria piò essere costituita da più di una colonna. Per gestire questi casi, il metodo `find()` accetta parametri multipli, uno per ciascuna chiave primaria di colonna.
 
