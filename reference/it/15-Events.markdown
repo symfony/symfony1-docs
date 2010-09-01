@@ -291,7 +291,7 @@ si può aggiungere un metodo alla classe senza usare l'ereditarietà.
 
 L'evento `context.load_factories` è notificato una volta a richiesta
 dall'oggetto `sfContext`, subito dopo che tutti i factory sono stati
-inizializzati. È il primo evento ad essere notificato con tutte le
+inizializzati. È il primo evento a essere notificato con tutte le
 classi principali inizializzate.
 
 `controller`
@@ -553,7 +553,7 @@ dalla CLI con il task `cache:clear`.
 
 L'evento `template.filter_parameters` è notificato prima che la vista di un
 file sia resa. Ascoltando questo evento, si può accedere e manipolare le
-variabili passate ad un template.
+variabili passate a un template.
 
 `user`
 ------

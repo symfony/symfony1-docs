@@ -13,7 +13,7 @@ creazione di un progetto symfony.
 Prima di iniziare
 -----------------
 
-Inizieremo aggiungendo un form di contatto ad un'applicazione symfony.
+Inizieremo aggiungendo un form di contatto a un'applicazione symfony.
 
 La Figura 1-1 mostra il form di contatto come viene visto dagli utenti
 che vogliono inviare un messaggio.
@@ -266,7 +266,7 @@ template per personalizzare ulteriormente il form.
 >       'message' => new sfWidgetFormTextarea(),
 >     ));
 >
->Il metodo `setLabels()` è applicato ad un insieme di widget
+>Il metodo `setLabels()` è applicato a un insieme di widget
 >inclusi nell'oggetto `widgetSchema`.
 >
 >Vedremo nel Capitolo 5 che la nozione di "schema widget" rende
@@ -344,7 +344,7 @@ Il metodo `executeSubmit()` esegue tre azioni:
 
   * Per ragioni di sicurezza, verifichiamo che la pagina sia stata
     inviata usando il metodo HTTP `POST`. Se non è stata inviata col
-    metodo `POST`, l'utente è rediretto ad una pagina 404. Nel template
+    metodo `POST`, l'utente è rediretto a una pagina 404. Nel template
     `indexSuccess`, dichiariamo il metodo di invio come `POST`
     (`<form ... method="post">`):
 
@@ -359,13 +359,13 @@ Il metodo `executeSubmit()` esegue tre azioni:
         'email'   => $request->getParameter('email'),
         'message' => $request->getParameter('message'),
       );
-  * Infine, redirigiamo l'utente ad una pagina di ringraziamenti
+  * Infine, redirigiamo l'utente a una pagina di ringraziamenti
     (`contact/thankyou`) per mostrare le sue informazioni:
 
       [php]
       $this->redirect('contact/thankyou?'.http_build_query($params));
 
-Invece di redirigere l'utente ad un'altra pagina, potremmo creare un
+Invece di redirigere l'utente a un'altra pagina, potremmo creare un
 template `submitSuccess.php`. Sebbene sia possibile, è una pratica
 migliore redirigere sempre l'utente dopo una richiesta con metodo `POST`:
 

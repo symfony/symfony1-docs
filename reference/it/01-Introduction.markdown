@@ -6,7 +6,7 @@ per aumentare la propria velocità ed efficienza come sviluppatore web.
 Il framework include nella sua distribuzione molte caratteristiche utili,
 che aiutano a concentrarsi sulla logica della propria applicazione,
 piuttosto che sull'implementazione, ad esempio per l'ennesimo paginatore
-ad oggetti o per l'ennesimo livello di astrazione del database. Tuttavia,
+a oggetti o per l'ennesimo livello di astrazione del database. Tuttavia,
 questo ha anche un costo; per imparare tutte le caratteristiche disponibili
 e tutte le possibilità di configurazione potrebbe non bastare una giornata.
 
@@ -20,7 +20,7 @@ alle proprie domande, in poco tempo. Il libro *Guida di Riferimento a symfony*
 si prefigge lo scopo di fornire una guida del genere. È un libro
 complementare a *Symfony in pratica*. È un libro da tenere con sé ogni
 volta che si sviluppa con symfony. Questo libro è il modo più rapido per
-trovare ogni possibile configurazione, grazie ad un indice molto dettagliato,
+trovare ogni possibile configurazione, grazie a un indice molto dettagliato,
 un glossario, riferimenti incrociati nei capitoli, tabelle e molto altro.
 
 Pur essendo lo sviluppatore capo di symfony, io stesso uso questo libro di

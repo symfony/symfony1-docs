@@ -1427,7 +1427,7 @@ il progetto:
 
     ./symfony generate:project blog --installer=./installer.php
 
-Opzionalmente si può includere un secondo argomento `autore` per specificare qual'è
+Opzionalmente si può includere un secondo argomento `autore` per specificare qual è
 il nome da utilizzare come autore quando symfony genera nuove classi:
 
     ./symfony generate:project blog "Jack Doe"

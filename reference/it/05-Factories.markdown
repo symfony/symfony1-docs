@@ -305,7 +305,7 @@ sulle classi di trasporto built-in e i loro differenti parametri.
 ### ~`path_info_array`~
 
 L'opzione `path_info_array` definisce l'array PHP globale che sarà usato per recuperare informazioni. 
-In alcune configurazioni il valore predefinito potrebbe essere cambiato da `SERVER` ad `ENV`.
+In alcune configurazioni il valore predefinito potrebbe essere cambiato da `SERVER` a `ENV`.
 
 ### ~`path_info_key`~
 
@@ -355,7 +355,7 @@ cambiamenti.
 L'opzione `send_http_headers` specifica quando deve essere inviato un
 header di risposta insieme al contenuto della risposta. Questa opzione è particolarmente 
 comoda per fare test, in quanto gli header sono inviati tramite la funzione PHP 
-`header()`, che invia un warning se si sta provando ad inviare header dopo qualche tipo
+`header()`, che invia un warning se si sta provando a inviare header dopo qualche tipo
 di output.
 
 ### ~`charset`~
@@ -395,7 +395,7 @@ altrimenti usa `HTTP/1.0`.
 
 L'opzione `timeout` definisce il timeout per l'autenticazione utente.
 Non è correlata al timeout della sessione. Il valore predefinito rimuove l'autenticazione
-ad un utente dopo 30 minuti di inattività.
+a un utente dopo 30 minuti di inattività.
 
 Questa impostazione è usata solo dalle classi user che ereditano dalla classe base 
 `sfBasicSecurityUser`, come nel caso della classe generata dal sistema `myUser`.

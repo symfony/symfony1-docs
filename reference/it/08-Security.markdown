@@ -39,7 +39,7 @@ nel seguente ordine:
   * la configurazione predefinita dell'applicazione (sotto la chiave `default`).
 
 Le stesse regole di precedenza sono usate per determinare le credenziali necessarie per
-accedere ad una azione.
+accedere a una azione.
 
 >**NOTE**
 >Il file di configurazione `security.yml` è memorizzato nella cache come file PHP; il
@@ -60,7 +60,7 @@ Con l'impostazione della chiave ~`is_secure`~ su `true` nel file dell'applicazio
  `security.yml`, l'intera applicazione richiederà l'autenticazione per tutti gli utenti.
 
 >**NOTE**
->Quando un utente non autenticato prova ad accedere ad una azione messa in sicurezza, symfony
+>Quando un utente non autenticato prova ad accedere a una azione messa in sicurezza, symfony
 >inoltra la richiesta all'azione `login` configurata in `settings.yml`.
 
 Per modificare i requisiti di autenticazione di un modulo, creare un file `security.yml`
