@@ -693,8 +693,8 @@ Listing 17-21 - Customizing a Plug-In Action
 >-------------------------------------- | ------------------------------
 >config/schema.yml                      | schema.custom.yml
 >config/foobar_schema.yml               | foobar_schema.custom.yml
->plugins/myPlugin/config/schema.yml     | myPlugin_schema.custom.yml
->plugins/myPlugin/config/foo_schema.yml | myPlugin_foo_schema.custom.yml
+>plugins/myPlugin/config/schema.yml     | myPlugin-schema.custom.yml
+>plugins/myPlugin/config/foo_schema.yml | myPlugin_foo-schema.custom.yml
 >
 >Custom schemas will be looked for in the application's and plugins' `config/` directories, so a plugin can override another plugin's schema, and there can be more than one customization per schema.
 >
