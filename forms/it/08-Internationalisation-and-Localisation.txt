@@ -147,7 +147,7 @@ può essere una delle seguenti tre cose:
 
   * una stringa rappresentante un nome funzione, come `my_function`
 
-  * un array con riferimento ad una istanza di una classe e al nome di
+  * un array con riferimento a una istanza di una classe e al nome di
     uno dei suoi metodi, come `array($anObject, 'oneOfItsMethodsName')`
 
   * una istanza `sfCallable`. Questa classe incapsula un PHP callable
@@ -156,7 +156,7 @@ può essere una delle seguenti tre cose:
 >**Note**
 >Un PHP callable è un riferimento a una funzione o all'istanza di un
 >metodo. È anche una variabile PHP che restituisce `true` quando
->passata ad una funzione `is_callable()`.
+>passata a una funzione `is_callable()`.
 
 Facciamo un esempio. Si deve migrare un progetto che ha già il suo
 sistema di internazionalizzazione, fornito dalla classe mostrata nel

@@ -3,7 +3,7 @@ Capitolo 11 - Integrazione con Doctrine
 
 In un progetto web, la maggior parte dei form è usata per creare o
 modificare oggetti del modello. Questi oggetti sono solitamente
-serializzati in un database grazie ad un ORM. Il sistema di form
+serializzati in un database grazie a un ORM. Il sistema di form
 di symfony offre un livello addizionale per interfacciarsi con
 Doctrine, l'ORM predefinito in symfony, rendendo l'implementazione
 dei form basati su questi oggetti più facile.
@@ -79,7 +79,7 @@ Ecco le relazioni tra le tabelle:
   * Relazione 1-n tra la tabella `article` e la tabella `author`:
     un articolo è scritto da uno e un solo autore
   * Relazione 1-n tra la tabella `article` e la tabella `category`:
-    un articolo appartiene ad una o nessuna categoria
+    un articolo appartiene a una o nessuna categoria
   * Relazione n-n tra le tabelle `article` e `tag`
 
 Generazione delle classi dei form
@@ -141,7 +141,7 @@ coinvolte nella definizione del form `AuthorForm`.
   | **Classe**       | **Package**     | **Per**       | **Descrizione**
   | ---------------- | --------------- | ------------- | ---------------
   | AuthorForm       | project         | sviluppatore  | Sovrascrive il form generato
-  | BaseAuthorForm   | project         | symfony       | Basato sullo schema e sovrascritto ad ogni esecuzione di `doctrine:build-forms`
+  | BaseAuthorForm   | project         | symfony       | Basato sullo schema e sovrascritto a ogni esecuzione di `doctrine:build-forms`
   | BaseFormDoctrine | project         | sviluppatore  | Consente la personalizzazione globale dei form Doctrine
   | sfFormDoctrine   | Doctrine plugin | symfony       | Base dei form Doctrine
   | sfForm           | symfony         | symfony       | Base dei form symfony
@@ -527,7 +527,7 @@ essere sovrascritto esplicitamente dall'utente. Anche se questo campo è
 obbligatorio nello schema, non può esserlo nel form. Per questo motivo
 modifichiamo il validatore e lo rendiamo opzionale, come nel Listato 4-8.
 Personalizzeremo anche il campo `content`, aumentando la sua dimensione e
-forzando l'utente ad inserirvi almeno cinque caratteri.
+forzando l'utente a inserirvi almeno cinque caratteri.
 
 Listato 4-8 - Personalizzare i validatori e i widget
 
@@ -885,10 +885,10 @@ di vita dei form, iniziando dal codice generato dal task `doctrine:generate-crud
 
 ### Valori di default
 
-**Un'istanza Doctrine è sempre connessa ad un oggetto Doctrine**. L'oggetto
+**Un'istanza Doctrine è sempre connessa a un oggetto Doctrine**. L'oggetto
 Doctrine collegato appartiene sempre alla classe restituita dal metodo
 `getModelName()`. Ad esempio, il form `AuthorForm` può essere collegato solo
-ad oggetti che appartengono alla classe `Author`. Questo oggetto è o un
+a oggetti che appartengono alla classe `Author`. Questo oggetto è o un
 oggetto vuoto (un'istanza vuota della classe `Author`), oppure l'oggetto
 inviato al costruttore come primo parametro. Dal momento che il costruttore
 di un form "medio" accetta un array di valori come primo parametro, il
@@ -993,7 +993,7 @@ modifica di oggetti della classe `Author`:
 
       * La chiamata a `find()` di conseguenza restituisce `null`
 
-      * L'oggetto `form` quindi è collegato ad un oggetto Doctrine `Author`
+      * L'oggetto `form` quindi è collegato a un oggetto Doctrine `Author`
         vuoto
 
       * La chiamata a `$this->form->save()` crea di conseguenza un nuovo
@@ -1018,7 +1018,7 @@ modifica di oggetti della classe `Author`:
 Quando un form Doctrine è valido, il metodo `save()` aggiorna l'oggetto
 correlato e lo memorizza nel database. Questo metodo in realtà memorizza
 non solo l'oggetto principale, ma anche gli eventuali oggetti correlati. Ad
-esempio, il form `ArticleForm` aggiorna i tag connessi ad un articolo.
+esempio, il form `ArticleForm` aggiorna i tag connessi a un articolo.
 Essendo la relazione tra le tabelle `article` e `tag` n-n, i tag relativi
 all'articolo sono salvati nella tabella `article_tag` (usando il metodo
 generato `saveArticleTagList()`).
@@ -1058,7 +1058,7 @@ ogni aggiornamento in una transazione.
 Il metodo `save()` aggiorna automaticamente gli oggetti Doctrine, ma non può
 gestire gli elementi collaterali come l'invio di file.
 
-Vediamo come allegare un file ad ogni articolo. I file sono memorizzati
+Vediamo come allegare un file a ogni articolo. I file sono memorizzati
 nella cartella `web/uploads` e un riferimento al percorso del file viene
 tenuto nel campo `file` della tabella `article`, come mostrato nel Listato 4-24.
 
@@ -1080,7 +1080,7 @@ oggetti, il database e i relativi form:
 >Ricordare che il task `doctrine:build-all` cancella tutte le tabelle dello
 >schema e le ricrea. I dati presenti nelle tabelle sono quindi
 >sovrascritti. Per questo è importante creare dei dati di test (`fixtures`),
->che si possono ricaricare ad ogni modifica del modello.
+>che si possono ricaricare a ogni modifica del modello.
 
 Il Listato 4-25 mostra come modificare la classe `ArticleForm` per
 collegare un widget e un validatore al campo `file`.

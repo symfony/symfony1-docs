@@ -147,7 +147,7 @@ Listato 3-2 - Template generato in caso di invio non valido
 >anche di passare un numero arbitrario di attributi addizionali al tag
 >form in modo più semplice, usando un array. Lo svantaggio di usare questa
 >scorciatoia sta nel fatto che gli strumenti di design avranno più
->difficoltà ad individuare correttamente il form.
+>difficoltà a individuare correttamente il form.
 
 Analizziamo questo codice. La Figura 3-2 evidenzia le righe
 `<tr>` prodotte per ogni campo.
@@ -241,7 +241,7 @@ Listato 3-4 - Uso di `renderRow()`
       </table>
     </form>
 
-Possiamo accedere ad ogni campo usando l'oggetto `form` come un
+Possiamo accedere a ogni campo usando l'oggetto `form` come un
 array PHP. Si può accedere al campo `email` tramite
 `$form['email']`. Il metodo `renderRow()` visualizza il campo
 come una riga di una tabella HTML. L'espressione
@@ -255,7 +255,7 @@ visualizzazione del form.
 >
 >Dalla versione 5 di PHP, agli oggetti possono essere dati gli
 >stessi comportamenti di un array. La classe `sfForm` implementa
->l'interfaccia `ArrayAccess` per consentire l'accesso ad ogni
+>l'interfaccia `ArrayAccess` per consentire l'accesso a ogni
 >campo usando una sintassi breve e semplice. La chiave
 >dell'array è il nome del campo e il valore restituito è
 >associato con l'oggetto `widget`:
@@ -553,7 +553,7 @@ Listato 3-11 - Mostrare i messaggi di errore usando il metodo `renderError()`
 ### Personalizzazione avanzata dei messaggi di errore
 
 Il metodo `renderError()` genera la lista degli errori
-associati ad un campo. Genera codice HTML solo se il campo
+associati a un campo. Genera codice HTML solo se il campo
 ha degli errori. Per default, la list è generata come una
 lista HTML non ordinata (`<ul>`).
 
@@ -633,13 +633,13 @@ Listato 3-14 - Generazione dei messaggi di errore globali
 
 Ci sono tre tipi di errore in un form:
 
-  * Errori associati ad un campo specifico
+  * Errori associati a un campo specifico
   * Errori globali
   * Errori su campi nascosti o su campi che non sono visualizzati
     nel form. Questi sono aggiunti agli errori globali.
 
 Abbiamo già visto l'implementazione dei messaggi di errore associati
-ad un campo e il Listato 3-15 mostra l'implementazione dei
+a un campo e il Listato 3-15 mostra l'implementazione dei
 messaggi di errore globali.
 
 Listato 3-15 - Implementazione dei messaggi di errore globali

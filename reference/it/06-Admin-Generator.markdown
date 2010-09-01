@@ -685,7 +685,7 @@ contenente un sottoinsieme di campi del form.
 
 >**CAUTION**
 >Tutti i campi definiti nel modello del form devono essere presenti nell'opzione
->`display`. Se così non fosse, questo potrebbe portare ad inaspettati errori di validazione
+>`display`. Se così non fosse, questo potrebbe portare a inaspettati errori di validazione
 
 ### ~`class`~
 

@@ -128,7 +128,7 @@ uniti in un unico grosso file nell'ambiente `prod`, per velocizzare il tempo
 necessario a symfony per caricare. Per impostazione predefinita, le principali classi del core di symfony
 sono definite in questo file di configurazione. Se l'applicazione si basa su alcune classi
 che necessitano di essere caricate per ogni richiesta, è possibile creare un file di
-configurazione `core_compile.yml` nel progetto o applicazione e aggiungerli ad esso. Questo è
+configurazione `core_compile.yml` nel progetto o applicazione e aggiungerli a esso. Questo è
 un estratto della configurazione predefinita:
 
     [yml]

@@ -1067,7 +1067,7 @@ all'utente di cercare date vuote.
 ~`sfWidgetFormSchema`~
 ----------------------
 
-`sfWidgetFormSchema` rappresenta un widget composo da più campi.
+`sfWidgetFormSchema` rappresenta un widget composto da più campi.
 Un campo è semplicemente un widget con un nome:
 
     [php]

@@ -265,7 +265,7 @@ prima dell'interpretazione:
       versione: "<?php echo file_get_contents('1.1/VERSION') ?>"
 
 Occorre fare attenzione a non scombinare l'indentazione. Tenete a mente le
-seguenti semplici regole quando aggiungete codice PHP ad un file YAML:
+seguenti semplici regole quando aggiungete codice PHP a un file YAML:
 
 
  * Le istruzioni `<?php ?>` devono sempre iniziare la riga o essere incluse in

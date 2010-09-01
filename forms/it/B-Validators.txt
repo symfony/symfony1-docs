@@ -214,7 +214,7 @@ ed eredita da `sfValidatorRegex`.
 *Validatore schema**: No
 
 Il validatore `sfValidatorUrl` può validare indirizzi, URL HTTP
-ed URL FTP. Eredita da `sfValidatorRegex`.
+e URL FTP. Eredita da `sfValidatorRegex`.
 
 | Opzione     | Errore    | Descrizione
 | ----------- | --------- | -----------
@@ -277,7 +277,7 @@ di tipo booleano e restituisce i valori `true` o `false`.
 *Validatore schema**: No
 
 Il validatore `sfValidatorChoice` controlla se i valori inseriti
-appartengono ad una lista di valori definiti.
+appartengono a una lista di valori definiti.
 
 | Opzione    | Errore | Descrizione
 | ---------- | ------ | -----------
@@ -301,7 +301,7 @@ i valori di input così come sono.
 
 *Validatore schema**: No
 
-Il validatore `sfValidatorCallback` delega il controllo ad un callback
+Il validatore `sfValidatorCallback` delega il controllo a un callback
 di PHP.
 
 Al callback sono passati come parametri l'istanza del validatore, i valori
@@ -507,7 +507,7 @@ Il costruttore di `sfValidatorAnd` accetta una lista di validatori come primo pa
 
 Di default, il validatore lancia un array di messaggi d'errore lanciati da tutti
 i validatori inclusi. Può inoltre lanciare un singolo messaggio d'errore se il messaggio
-d'errore `invalid` è impostato ad una stringa non vuota, come mostrato nell'esempio
+d'errore `invalid` è impostato a una stringa non vuota, come mostrato nell'esempio
 precedente.
 
 | Opzione         | Errore | Descrizione
@@ -541,7 +541,7 @@ Il costruttore `sfValidatorOr` accetta una lista di validatori come primo parame
 
 Di default il validatore lancia un array di messaggi d'errore lanciati da tutti i
 validatori inclusi. Può inoltre lanciare un singolo messaggio d'errore se il messaggio
-d'errore `invalid` è impostato ad una stringa non vuota, come mostrato nell'esempio
+d'errore `invalid` è impostato a una stringa non vuota, come mostrato nell'esempio
 precedente.
 
 La lista di validatori inclusi può essere inoltre gestita usando i metodi
@@ -644,7 +644,7 @@ Il messaggio di errore `invalid` accetta i seguenti valori: `%left_field%`,
 *Validatore schema**: Sì
 
 Il validatore `sfValidatorSchemaFilter` converte un validatore di tipo non-schema
-ad un validatore di tipo schema. A volte è utile nell'ambito dei post validatori:
+a un validatore di tipo schema. A volte è utile nell'ambito dei post validatori:
 
     [php]
     $v = new sfValidatorSchema();

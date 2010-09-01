@@ -30,7 +30,7 @@ Ecco le regole di validazione da implementare per il form di contatto:
 
 >**NOTE**
 >Perché abbiamo bisogno di validare il campo `subject`? Il tag
->`<select>` costringe già l'utente ad un elenco di valori
+>`<select>` costringe già l'utente a un elenco di valori
 >predefiniti. Un utente medio può solo scegliere una delle opzioni
 >mostrate, ma altri valori possono essere inviati usando degli
 >strumenti come l'estensione Web Developer di Firefox, oppure
@@ -68,7 +68,7 @@ Validatori
 
 Un form in symfony è fatto di campi. Ciascun campo può essere
 identificato da un nome univoco, come osservato nel Capitolo 1.
-Abbiamo connesso un widget ad ogni campo per poterlo mostrare
+Abbiamo connesso un widget a ogni campo per poterlo mostrare
 all'utente, ora vediamo come possiamo applicare le regole di
 validazione a ciascun campo.
 
@@ -136,7 +136,7 @@ Vediamo le opzioni disponibili per i validatori che abbiamo appena usato:
   | sfValidatorChoice | `choices`                |                              |
 
 
-Se si prova ad inviare il form con valori non validi, non si vedrà
+Se si prova a inviare il form con valori non validi, non si vedrà
 alcun cambiamento nel comportamento. Dobbiamo aggiornare il modulo
 `contact` per validare i valori inviati, come mostrato nel Listato 2-3.
 
@@ -175,7 +175,7 @@ Il Listato 2-3 introduce molti nuovi concetti:
 
   * Quando l'utente invia il form con una richiesta `POST`,
     il metodo `bind()` lega il form ai dati utente e attiva
-    il meccanismo di validazione. il form quindi passa ad uno
+    il meccanismo di validazione. il form quindi passa a uno
     **stato vincolato**.
 
         [php]
@@ -343,7 +343,7 @@ Figura 2-5 - Messaggi di errore personalizzati
 ![Messaggi di errore personalizzati](http://www.symfony-project.org/images/forms_book/en/02_05.png "Messaggi di errore personalizzati")
 
 La Figura 2-6 mostra il messaggio di errore ottenuto se si prova
-ad inviare un messaggio troppo corto (abbiamo impostato la
+a inviare un messaggio troppo corto (abbiamo impostato la
 lunghezza minima a 4 caratteri).
 
 Figura 2-6 - Messaggio di errore per stringa troppo corta
@@ -388,8 +388,8 @@ valori disponibili sono solitamente i dati inseriti dall'utente
 (`value`) e i valori delle opzioni del validatore relativo all'errore.
 
 >**TIP**
->Se si vogliono conoscere tutti i codici di errore, le opzioni,
->ed i messaggi predefiniti di un validatore, fare riferimento
+>Se si vogliono conoscere tutti i codici di errore, le opzioni
+>e i messaggi predefiniti di un validatore, fare riferimento
 >alla documentazione online delle API (http://www.symfony-project.org/api/1_2/).
 >Ogni codice, opzione e messaggio di errore è descritto in dettaglio,
 >insieme con i valori predefiniti (per esempio, l'API del
@@ -683,7 +683,7 @@ default, si comportano ignorando ogni altro dato inviato dall'utente,
 ma talvolta la validazione di un campo dipende dal contesto o
 dipende da molti altri campi. Per esempio, serve un validatore
 globale quando due password devono coincidere, oppure quando
-una data d'inizio deve essere antecedente ad una data di fine.
+una data d'inizio deve essere antecedente a una data di fine.
 
 In entrambi questi casi, dobbiamo usare un validatore globale
 per validare i dati inviati dall'utente nel loro contesto.
@@ -715,7 +715,7 @@ L'esempio precedente è equivalente a:
 >di ogni campo.
 
 Il Listato 2-14 mostra come usare un singolo validatore per
-validare una data di inizio che debba essere antecedente ad
+validare una data di inizio che debba essere antecedente a
 una data di fine, personalizzando il messaggio di errore.
 
 Listato 2-14 - Usare il validatore `sfValidatorSchemaCompare`
@@ -736,7 +736,7 @@ sarà sempre convertito in un formato comparabile (di default
 
 Per default, i pre-validatori e i post-validatori restituiscono
 errori globali al form. Tuttavia, alcuni di essi possono associare
-un errore ad un campo specifico. Per esempio, l'opzione
+un errore a un campo specifico. Per esempio, l'opzione
 `throw_global_error` del validatore `sfValidatorSchemaCompare` può
 scegliere tra un errore globale (Figura 2-10) o un errore associato
 al primo campo (Figura 2-11). Il Listato 2-15 mostra come usare

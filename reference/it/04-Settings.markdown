@@ -12,7 +12,7 @@ Come anticipato nell'introduzione il file `settings.yml` è
 [consapevole dell'ambiente](#chapter_03_consapevolezza_dell_ambiente) 
 e beneficia del [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata).
 
-Ogni sezione dedicata ad un ambiente ha due sottosezioni: `.actions` e `.settings`.
+Ogni sezione dedicata a un ambiente ha due sottosezioni: `.actions` e `.settings`.
 Tutte le impostazioni vanno inserite nella sottosezione `.settings`, eccezion 
 fatta per le azioni predefinite da visualizzare per alcune pagine comuni.
 
@@ -92,7 +92,7 @@ L'azione `error_404` viene eseguita quando deve essere visualizzata una pagina 4
 ### ~`login`~
 
 L'azione `login` viene eseguita quando un utente non autenticato cerca di accedere
-ad una pagina protetta.
+a una pagina protetta.
 
 ### ~`secure`~
 
@@ -101,7 +101,7 @@ L'azione `secure` viene eseguita quando un utente non ha le credenziali richiest
 ### ~`module_disabled`~
 
 L'azione `module_disabled` viene eseguita quando un utente invia una richiesta
-ad un modulo disabilitato.
+a un modulo disabilitato.
 
 La sottosezione `.settings`
 ---------------------------
@@ -163,7 +163,7 @@ l'inglese o lingue europee.
 L'impostazione `csrf_secret` specifica una chiave univoca di sicurezza per 
 l'applicazione. Se non è impostata a `false`, attiva la protezione CSRF per 
 tutti i form generati dal framework dei form. Questa impostazione è utilizzata anche 
-dall'helper `link_to()` quando c'è la necessità di convertire un link ad un form
+dall'helper `link_to()` quando c'è la necessità di convertire un link a un form
 (per simulare un metodo HTTP `DELETE` per esempio).
 
 È vivamente consigliato di cambiare il valore predefinito con una chiave segreta
@@ -237,7 +237,7 @@ L'impostazione `cache` abilita o meno la cache dei template.
 
 ### ~`etag`~
 
-*Predefinito*: `true` ad esclusione degli ambienti `dev` e `test`
+*Predefinito*: `true`, tranne per gli ambienti `dev` e `test`
 
 L'impostazione `etag` abilita e disabilita la generazione automatica degli header 
 HTTP `ETag`. L'ETag generato da symfony è un semplice md5 del contenuto della 
