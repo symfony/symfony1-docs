@@ -723,8 +723,8 @@ PEAR プラグインをアンインストールするには、リスト17-17で�
 >-------------------------------------- | ------------------------------
 >config/schema.yml                      | schema.custom.yml
 >config/foobar_schema.yml               | foobar_schema.custom.yml
->plugins/myPlugin/config/schema.yml     | myPlugin_schema.custom.yml
->plugins/myPlugin/config/foo_schema.yml | myPlugin_foo_schema.custom.yml
+>plugins/myPlugin/config/schema.yml     | myPlugin-schema.custom.yml
+>plugins/myPlugin/config/foo_schema.yml | myPlugin_foo-schema.custom.yml
 >
 >カスタムスキーマはアプリケーションとプラグインの `config/` ディレクトリを探すので、プラグインは別のプラグインのスキーマを上書きをして、スキーマ単位で複数のカスタマイズが可能です。
 >

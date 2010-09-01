@@ -694,12 +694,12 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 >###Propel
 >Quando si costruisce il modello, symfony cercherà i file personalizzati YAML per ogni schema esistente, compresi i plugin, seguendo questa regola:
 >
->Nome originale dello schema            | Nome dello schema personalizzato
->-------------------------------------- | --------------------------------
->config/schema.yml                      | schema.custom.yml
->config/foobar_schema.yml               | foobar_schema.custom.yml
->plugins/mioPlugin/config/schema.yml     | mioPlugin_schema.custom.yml
->plugins/mioPlugin/config/foo_schema.yml | mioPlugin_foo_schema.custom.yml
+>Nome originale dello schema             | Nome dello schema personalizzato
+>--------------------------------------- | --------------------------------
+>config/schema.yml                       | schema.custom.yml
+>config/foobar_schema.yml                | foobar_schema.custom.yml
+>plugins/mioPlugin/config/schema.yml     | mioPlugin-schema.custom.yml
+>plugins/mioPlugin/config/foo_schema.yml | mioPlugin_foo-schema.custom.yml
 >
 >Gli schemi personalizzati saranno cercati nelle cartelle `config/` dell'applicazione e del plugin , quindi un plugin può sovrascrivere lo schema di un'altro plugin e ci può essere più di una personalizzazione per ciascuno schema.
 >
