@@ -46,7 +46,9 @@ But as of now, all jobs are displayed, whether they are active or not:
 An active job is one that was posted less than 30 days ago. The `doSelect()`
 method takes a ~`Criteria|Propel Criteria`~ object that describes the database
 request to execute. In the code above, an empty `Criteria` is passed, which
-means that all the records are retrieved from the database. </propel> <doctrine>
+means that all the records are retrieved from the database.
+</propel>
+<doctrine>
 An active job is one that was posted less than 30 days ago. The
 `~Doctrine_Query~::execute()` method will make a request to the database. In the
 code above, we are not specifying any where condition which means that all the
