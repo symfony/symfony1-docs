@@ -226,7 +226,7 @@ Listato 8-8 - Il metodo `fromArray()` è un setter multiplo
 
 ### Recuperare i record correlati
 
-La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamente una chiave esterna verso la tabella `blog_article`. Ogni commento è collegato ad un articolo e un articolo può avere più commenti. Le classi generate possono contenere cinque metodi che traducono queste relazioni in codice ad oggetti, come segue:
+La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamente una chiave esterna verso la tabella `blog_article`. Ogni commento è collegato a un articolo e un articolo può avere più commenti. Le classi generate possono contenere cinque metodi che traducono queste relazioni in codice a oggetti, come segue:
 
   * `$comment->getArticle()`: Per ottenere il relativo oggetto `Article`
   * `$comment->getArticleId()`: Per ottenere l'ID del relativo oggetto `Article`
@@ -270,7 +270,7 @@ Il metodo `getArticle()` ritorna un oggetto di classe `Article`, con i benefici 
 La variabile `$comments` nel listato 8-10 contiene un array di oggetti di classe `Comment`. Si può mostrare il primo con `$comments[0]` o iterare sulla collezione con `foreach ($comments as $comment)`.
 
 >**NOTE**
->Oggetti del modello sono definiti con un nome singolare per convenzione, e ora si capisce perché. La chiave esterna definita nella tabelle `blog_comment` causa la creazione del metood `getComments()`, chiamato aggiungendo una `s` al nome dell'oggetto `Comment`. Se tu dessi un nome plurale al modello, la generazione porterebbe ad un metodo chiamato `getCommentss()`, che non avrebbe senso.
+>Oggetti del modello sono definiti con un nome singolare per convenzione, e ora si capisce perché. La chiave esterna definita nella tabelle `blog_comment` causa la creazione del metood `getComments()`, chiamato aggiungendo una `s` al nome dell'oggetto `Comment`. Se tu dessi un nome plurale al modello, la generazione porterebbe a un metodo chiamato `getCommentss()`, che non avrebbe senso.
 
 ### Salvare ed eliminare dati
 
@@ -354,7 +354,7 @@ Listato 8-13 - Recuperare record usando Criteria e `doSelect()`--Criteria con co
 Le costanti di classe passate come parametri dei metodi `add()` si riferiscono ai nomi delle propietà. Sono chiamate con la versione maiuscola dei nomi delle colonne. Per esempio, per la colonna `content` della tabella `blog_article`, usa la costante `ArticlePeer::CONTENT`.
 
 >**NOTE**
->Perché usare `CommentPeer::AUTHOR` al posto di `blog_comment.AUTHOR`, che è quello che sarà utilizzato nel codice SQL in ogni caso? Supponi di dover cambiare il nome della colonna da `author` a `contributor` nel database. Se tu avessi usato `blog_comment.AUTHOR`, dovresti cambiarlo ad ogni chiamata del metodo. Invece, usando `CommentPeer::AUTHOR`, devi soltanto cambiare il nome della colonna nel file `schema.yml`, impostare il valore `phpName` ad `AUTHOR` e ricostruire il modello.
+>Perché usare `CommentPeer::AUTHOR` al posto di `blog_comment.AUTHOR`, che è quello che sarà utilizzato nel codice SQL in ogni caso? Supponi di dover cambiare il nome della colonna da `author` a `contributor` nel database. Se tu avessi usato `blog_comment.AUTHOR`, dovresti cambiarlo a ogni chiamata del metodo. Invece, usando `CommentPeer::AUTHOR`, devi soltanto cambiare il nome della colonna nel file `schema.yml`, impostare il valore `phpName` ad `AUTHOR` e ricostruire il modello.
 
 La Tabella 8-1 confronta la sintassi SQL con quella della classe `Criteria`.
 

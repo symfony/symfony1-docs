@@ -764,7 +764,7 @@ ogni email verrà inviata in base alla priorità attribuita.
 >         ->compose('john@doe.com', 'foo@example.com', 'Subject', 'Body')
 >       ;
 >     
->       $message->getHeaders()->addTextHeader('X-Queue-Criteria', 'foò);
+>       $message->getHeaders()->addTextHeader('X-Queue-Criteria', 'pippo');
 >     
 >       $this->getMailer()->send($message);
 >     }
