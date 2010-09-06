@@ -414,22 +414,22 @@ Infine, se si vuole soltanto il primo oggetto, sostituire `doSelect()` con `doSe
 >**TIP**
 >Quando una query ritorna un gran numero di risultati, potresti volerne mostrare soltanto un sottoinsieme. Symfony fornisce una classe per la suddivisione in pagine chiamata `sfPropelPager`, che automatizza la paginazione dei risultati.
 
-### Using Raw SQL Queries
+### Usare query SQL
 
-Sometimes, you don't want to retrieve objects, but want to get only synthetic results calculated by the database. For instance, to get the latest creation date of all articles, it doesn't make sense to retrieve all the articles and to loop on the array. You will prefer to ask the database to return only the result, because it will skip the object hydrating process.
+A volte, non ti serve recuperare oggetti, ma vuoi soltanto risultati sintetici calcolati dal database. Per esempio, per ottenere l'ultima data di creazione di tutti gli articoli, non ha senso recuperare tutti gli articoli ed eseguire un ciclo sull'array. È preferibile richiedere direttamente al database di ritornare soltanto il risultato, perché salterà il processo di idratazione.
 
-On the other hand, you don't want to call the PHP commands for database management directly, because then you would lose the benefit of database abstraction. This means that you need to bypass the ORM (Propel) but not the database abstraction (PDO).
+D'altra parte, non è il caso di usare i comandi PHP per gestire direttamente il database, perché perderesti i vantaggi dell'astrazione dal database. Questo significa che hai bisogno di bypassare l'ORM (Propel) ma non l'astrazione dal database (PDO).
 
-Querying the database with PHP Data Objects requires that you do the following:
+Una query al database con PHP Data Objects richiede che tu faccia il seguente:
 
-  1. Get a database connection.
-  2. Build a query string.
-  3. Create a statement out of it.
-  4. Iterate on the result set that results from the statement execution.
+  1. Ottieni una connessione al database
+  2. Crea una query
+  3. Usala per creare uno "statement"
+  4. Cicla sul risultato dell'esecuzione dello statement
 
-If this looks like gibberish to you, the code in Listing 8-15 will probably be more explicit.
+Se queste sembrano parole campate in aria per te, il codice del Listato 8-15 probabilmente sarà più esplicito.
 
-Listing 8-15 - Custom SQL Query with PDO
+Listato 8-15 - Query SQL personalizzata con PDO
 
     [php]
     $connection = Propel::getConnection();
@@ -441,39 +441,39 @@ Listing 8-15 - Custom SQL Query with PDO
     $resultset = $statement->fetch(PDO::FETCH_OBJ);
     $max = $resultset->max;
 
-Just like Propel selections, PDO queries are tricky when you first start using them. Once again, examples from existing applications and tutorials will show you the right way.
+Proprio come le selezioni con Propel, le query con PDO sono complesse la prima volta che inizi ad usarle. Ma anche stavolta, esempi da applicazioni esistenti e tutorial ti mostreranno il modo giusto.
 
 >**CAUTION**
->If you are tempted to bypass this process and access the database directly, you risk losing the security and abstraction provided by Propel. Doing it the Propel way is longer, but it forces you to use good practices that guarantee the performance, portability, and security of your application. This is especially true for queries that contain parameters coming from a untrusted source (such as an Internet user). Propel does all the necessary escaping and secures your database. Accessing the database directly puts you at risk of SQL-injection attacks.
+>Se sei tentato di bypassare questo processo ed accedere al database direttamente, rischi di perdere la sicurezza ed astrazione fornita da Propel. Facendo in questo modo, ma ti forza ad usare le migliori pratiche per garantire performance, portabilità, e sicurezza della tua applicazione. Questo è specialmente vero per query che contengono parametri che arrivano da una fonte non sicura (come ad esempio l'utente). Propel fa tutto il lavoro necessario per mettere al sicuro il tuo database. Accedere al database dirttamente ti mette a rischio di attacchi di tipo SQL-injection.
 
-### Using Special Date Columns
+### Usare colonne di tipo data speciali
 
-Usually, when a table has a column called `created_at`, it is used to store a timestamp of the date when the record was created. The same applies to updated_at columns, which are to be updated each time the record itself is updated, to the value of the current time.
+Di solito, quando una tabella ha una colonna chiamata `created_at`, è usata per salvare il timestamp della data di quando il record è stato creato. Lo stesso succede per le colonne `updated_at`, che saranno aggiornate ogni volta che il record stesso viene aggiornato.
 
-The good news is that symfony will recognize the names of these columns and handle their updates for you. You don't need to manually set the `created_at` and `updated_at` columns; they will automatically be updated, as shown in Listing 8-16. The same applies for columns named `created_on` and `updated_on`.
+La buona notizia è che symfony riconoscerà i nomi di queste colonne e gestirà il loro aggiornamento per te. Non avrai bisogno di impostare manualmente i valori di `created_at` e `updated_at`; saranno aggiornati automaticamente, come mostrato nel Listato 8-16. Lo stesso succede per le colonne chiamate `created_on` e `updated_on`.
 
-Listing 8-16 - `created_at` and `updated_at` Columns Are Dealt with Automatically
+Listato 8-16 - Le colonne `created_at` e `updated_at` sono gestite in automatico
 
     [php]
     $comment = new Comment();
     $comment->setAuthor('Steve');
     $comment->save();
 
-    // Show the creation date
+    // Mostra la data di creazione
     echo $comment->getCreatedAt();
       => [date of the database INSERT operation]
 
-Additionally, the getters for date columns accept a date format as an argument:
+Inoltre, il getter per le colonne di tipo data accetta un formato di data come parametro:
 
     [php]
     echo $comment->getCreatedAt('Y-m-d');
 
 >**SIDEBAR**
->Refactoring to the Data layer
+>Refactoring dello strato di gestione dei dati
 >
->When developing a symfony project, you often start by writing the domain logic code in the actions. But the database queries and model manipulation should not be stored in the controller layer. So all the logic related to the data should be moved to the model layer. Whenever you need to do the same request in more than one place in your actions, think about transferring the related code to the model. It helps to keep the actions short and readable.
+>Durante lo sviluppo di un progetto symfony, inizierai spesso scrivendo il codice per le azioni sul database nelle azioni. Ma le query al database e manipolazione del modello non dovrebbero risiedere nello strato del controller. Per questo, tutto il codice per la gestione del database dovrebbe essere spostato nel modello. Nel caso avessi bisogno di fare la stessa richiesta al database in più di un punto nelle tue azioni, pensa al trasferire il relativo codice nel modello. Aiuta a tenere le azioni corte e leggibili.
 >
->For example, imagine the code needed in a blog to retrieve the ten most popular articles for a given tag (passed as request parameter). This code should not be in an action, but in the model. In fact, if you need to display this list in a template, the action should simply look like this:
+>Per esempio, immagina il codice in un blog per recuperare i dieci articoli più popolari per un determinato tag (passato come parametro della richiesta). Questo codice non dovrebbe risiedere nell'azione, ma nel modello. Infatti, se avrai bisogno di mostrare questa lista in un template, l'azione dovrebbe essere così semplice:
 >
 >     [php]
 >     public function executeShowPopularArticlesForTag($request)
@@ -483,9 +483,9 @@ Additionally, the getters for date columns accept a date format as an argument:
 >       $this->articles = $tag->getPopularArticles(10);
 >     }
 >
->The action creates an object of class `Tag` from the request parameter. Then all the code needed to query the database is located in a `getPopularArticles()` method of this class. It makes the action more readable, and the model code can easily be reused in another action.
+>L'azione crea un oggetto della classe `Tag` dal parametro di richiesta. Poi, tutto il codice necessario alla query al database è localizzato nel metodo `getPopularArticles()` di questa classe. Rende l'azione più leggibile, ed il codice può essere facilmente riutilizzato in un'altra azione.
 >
->Moving code to a more appropriate location is one of the techniques of refactoring. If you do it often, your code will be easy to maintain and to understand by other developers. A good rule of thumb about when to do refactoring to the data layer is that the code of an action should rarely contain more than ten lines of PHP code.
+>Spostare il codice nel posto più appropriato è una delle tecniche del refactoring. Se lo fai spesso, il tuo codice sarà facilmente mantenibile e comprensibile da altri sviluppatori. Una buona convenzione sul quando fare refactoring verso il modello consiste nel riuscire a mantenere un numero di righe di codice di un azione inferiore a dieci.
 
 Database Connections
 --------------------
