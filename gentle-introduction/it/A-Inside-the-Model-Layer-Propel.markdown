@@ -487,28 +487,28 @@ Inoltre, il getter per le colonne di tipo data accetta un formato di data come p
 >
 >Spostare il codice nel posto più appropriato è una delle tecniche del refactoring. Se lo fai spesso, il tuo codice sarà facilmente mantenibile e comprensibile da altri sviluppatori. Una buona convenzione sul quando fare refactoring verso il modello consiste nel riuscire a mantenere un numero di righe di codice di un azione inferiore a dieci.
 
-Database Connections
+Connessioni al database
 --------------------
 
-The data model is independent from the database used, but you will definitely use a database. The minimum information required by symfony to send requests to the project database is the name, the credentials, and the type of database.These connection settings can be configured by passing a data source name (DSN) to the `configure:database` task:
+Il modello è indipendente dal database usato, ma per forza di cose userai un database. Le informazioni minime richiesta da symfony per inviare richieste al database è il nome, le credenziali di acecsso ed il tipo di database. Queste impostazioni di connessione possono essere configurati passato un data source name (DSN) al processo `configure:database`:
 
     $ php symfony configure:database "mysql:host=localhost;dbname=blog" root mYsEcret
 
-The connection settings are environment-dependent. You can define distinct settings for the `prod`, `dev`, and `test` environments, or any other environment in your application by using the `env` option:
+Le impostazioni di connessione dipendono dall'ambiente di lavoro. Puoi definire configurazioni differenti per gli ambienti `prod`, `dev` e `test`, o per ogni altro ambiente nella tua applicazione usando l'opzione `env`:
 
     $ php symfony configure:database --env=dev "mysql:host=localhost;dbname=blog_dev" root mYsEcret
 
-This configuration can also be overridden per application. For instance, you can use this approach to have different security policies for a front-end and a back-end application, and define several database users with different privileges in your database to handle this:
+Questa configurazione può inoltre venir sovrascritta per ogni applicazione. Per esempio, puoi usare questo approccio per avere differenti polizze di sicurezza per le tue applicazioni frontend o backend, e definire utenti del database differenti con privilegi diversi per gestire tutto ciò:
 
     $ php symfony configure:database --app=frontend "mysql:host=localhost;dbname=blog" root mYsEcret
 
-For each environment, you can define many connections. Each connection refers to a schema being labeled with the same name. The default connection name used is `propel` and it refers to the `propel` schema in Listing 8-3. The `name` option allows you to create another connection:
+Per ogni ambiente, puoi definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione di default si chiama `propel` e si riferisce allo schema `propel` nel Listato 8-3. L'opzione `name` consente di creare un altra connessione:
 
     $ php symfony configure:database --name=main "mysql:host=localhost;dbname=example" root mYsEcret
 
-You can also enter these connection settings manually in the `databases.yml` file located in the `config/` directory. Listing 8-17 shows an example of such a file and Listing 8-18 shows the same example with the extended notation.
+Puoi inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml` collocato nella cartella `config/`. Il Listato 8-17 mostra un esempio di questo file ed il Listato 8-18 mostra lo stesso esempio con la notazione estesa.
 
-Listing 8-17 - Shorthand Database Connection Settings
+Listato 8-17 - Notazione semplice per la connessione al database
 
     [yml]
     all:
@@ -517,7 +517,7 @@ Listing 8-17 - Shorthand Database Connection Settings
         param:
           dsn:          mysql://login:passwd@localhost/blog
 
-Listing 8-18 - Sample Database Connection Settings, in `myproject/config/databases.yml`
+Listato 8-18 - Esempio di impostazioni di connessione al database, in `myproject/config/databases.yml`
 
     [yml]
     prod:
@@ -531,16 +531,16 @@ Listing 8-18 - Sample Database Connection Settings, in `myproject/config/databas
       propel:
         class:                sfPropelDatabase
         param:
-          phptype:            mysql     # Database vendor
+          phptype:            mysql     # Tipo di database
           hostspec:           localhost
           database:           blog
           username:           login
           password:           passwd
           port:               80
-          encoding:           utf8      # Default charset for table creation
-          persistent:         true      # Use persistent connections
+          encoding:           utf8      # Codifica di default per la creazione delle tabelle
+          persistent:         true      # Usa connessione persistente
 
-The permitted values of the `phptype` parameter are the ones of the database systems supported by PDO:
+I valori consentiti per il parametri `phptype` sono quelli dei database supportati da PDO:
 
   * `mysql`
   * `mssql`
@@ -548,13 +548,13 @@ The permitted values of the `phptype` parameter are the ones of the database sys
   * `sqlite`
   * `oracle`
 
-`hostspec`, `database`, `username`, and `password` are the usual database connection settings.
+`hostspec`, `database`, `username`, e `password` sono i normali parametri di connessione.
 
-To override the configuration per application, you need to edit an application-specific file, such as `apps/frontend/config/databases.yml`.
+Per sovrascrivere la configurazione per applicazione, avrai bisogno di modificare il file specifico dell'applicazione, come `apps/frontend/config/databases.yml`.
 
-If you use a SQLite database, the `hostspec` parameter must be set to the path of the database file. For instance, if you keep your blog database in `data/blog.db`, the `databases.yml` file will look like Listing 8-19.
+Se usi un database SQLite, il parametro `hostspec` deve essere impostato al percorso del file del database. Per esempio, se tu tieni il tuo blog in `data/blog.db`, il file `databases.yml` sarà come quello nel Listato 8-19.
 
-Listing 8-19 - Database Connection Settings for SQLite Use a File Path As Host
+Listato 8-19 - Connessione al database specifica per SQLite usando un percorso file come host
 
     [yml]
     all:
