@@ -79,7 +79,7 @@ Con i parametri passati a setWidgets(), symfony ha informazioni sufficienti per 
       </table>
     </form>
 
-Ogni widget viene convertito nella riga di una tabella contenente un tag <label> e un tag di input del form. Symfony deduce il nome della label dal nome del widget, convertendo l'iniziale in maiuscolo (il nome del widget `subject` dà la label `Subject`). Per quanto riguarda il tag di input, esso dipende dal tipo di widget. Symfony aggiunge un attributo `id` ad ogni widget, basandolo sul suo nome. Infine, la resa del form è sempre conforme alle specifiche XHTML.
+Ogni widget viene convertito nella riga di una tabella contenente un tag <label> e un tag di input del form. Symfony deduce il nome della label dal nome del widget, convertendo l'iniziale in maiuscolo (il nome del widget `subject` dà la label `Subject`). Per quanto riguarda il tag di input, esso dipende dal tipo di widget. Symfony aggiunge un attributo `id` a ogni widget, basandolo sul suo nome. Infine, la resa del form è sempre conforme alle specifiche XHTML.
 
 Personalizzare la visualizzazione del form
 ------------------------------------------
