@@ -612,13 +612,13 @@ Listato 8.22 - Usare i metodi personalizzati è come usare i metodi generati
       echo $article;      // Chiamerà il metodo magico __toString()
     }
 
-### Overriding Existing Methods
+### Sobrascrivere metodi esistenti
 
-If some of the generated methods in the `Base` classes don't fit your requirements, you can still override them in the custom classes. Just make sure that you use the same method signature (that is, the same number of arguments).
+Se alcuni dei metodi generati nelle classi `Base` non soddisfano i tuoi requisiti, puoi comunque sovrascriverli nelle classi personalizzate. Sii sicuro che abbiano la stessa firma (ovvero lo stesso numero di parametri).
 
-For instance, the `$article->getComments()` method returns an array of `Comment` objects, in no particular order. If you want to have the results ordered by creation date, with the latest comment coming first, then override the `getComments()` method, as shown in Listing 8-23. Be aware that the original `getComments()` method (found in `lib/model/om/BaseArticle.php`) expects a criteria value and a connection value as parameters, so your function must do the same.
+Per esempio, il metodo `$article->getComments()` ritorna un array di oggetti `Comment`, senza alcun ordine particolare. Se vuoi avere i risultati ordinati per data di creazione, con gli ultimi commenti per primi, allora sovrascrivi il metodo `getComments()`, come mostrato nel Listato 8-23. Sii conscio che il metodo originale `getComments()` (collocato in `lib/model/om/BaseArticle.php`) si aspetta un oggetto Criteria ed una connessione come parametri, quindi la tua funzione deve fare lo stesso.
 
-Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
+Listato 8-23 - Sovrascivere metodi esistenti del modello, in `lib/model/Article.php`
 
     [php]
     public function getComments($criteria = null, $con = null)
@@ -629,7 +629,7 @@ Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
       }
       else
       {
-        // Objects are passed by reference in PHP5, so to avoid modifying the original, you must clone it
+        // Gli oggetti sono passati per riferimento in PHP5, quindi per evitare di modificare l'originale, devi clonarlo
         $criteria = clone $criteria;
       }
       $criteria->addDescendingOrderByColumn(CommentPeer::CREATED_AT);
@@ -637,30 +637,30 @@ Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
       return parent::getComments($criteria, $con);
     }
 
-The custom method eventually calls the one of the parent Base class, and that's good practice. However, you can completely bypass it and return the result you want.
+Il metodo personalizzato chiama infine quello della classe Base, ed è una buona pratica. Comunque, puoi completamente bypassarlo e ritornare il risultato che vuoi.
 
-### Using Model Behaviors
+### Usare i comportamenti (behavior) del modello
 
-Some model modifications are generic and can be reused. For instance, methods to make a model object sortable and an optimistic lock to prevent conflicts between concurrent object saving are generic extensions that can be added to many classes.
+Alcune modifiche al modello sono generiche e possono venire riutilizzate. Per esempio, i metodi per rendere un oggetto del modello ordinabile ed un blocco ottimistico per prevenire conflitti tra il salvataggio di oggetti concorrenti sono estensioni generiche che possono venir aggiunte a diverse classi.
 
-Symfony packages these extensions into behaviors. Behaviors are external classes that provide additional methods to model classes. The model classes already contain hooks, and symfony knows how to extend them.
+Symfony fornisce queste estensioni tramite i behavior. I behavior sono classi esterne che forniscono metodi aggiuntivi alle classi del modello. Le classi del modello contengono già degli "appigli" (hooks), e symfony sa come estenderle.
 
-To enable behaviors in your model classes, you must modify one setting in the `config/propel.ini` file:
+Per abilitare i behavior nelle tue classi del modello, devi modificare un'impostazione nel file `config/propel.ini`:
 
-    propel.builder.AddBehaviors = true     // Default value is false
+    propel.builder.AddBehaviors = true     // Il valore di default è false
 
-There is no behavior bundled by default in symfony, but they can be installed via plug-ins. Once a behavior plug-in is installed, you can assign the behavior to a class with a single line. For instance, if you install the `sfPropelParanoidBehaviorPlugin` in your application, you can extend an `Article` class with this behavior by adding the following at the end of the `Article.class.php`:
+Non c'è nessun behavior incluso in symfony di default, ma possono venir installati tramite plugins. Dopo che un behavior è installato, puoi assegnare il behavior ad una classe con una singola istruzione. Per esempio, se installi il plugin `sfPropelParanoidBehaviorPlugin` nella tua applicazione, puoi estendere una classe `Article` con questo behavior aggiungendo queste righe alla fine di `Article.class.php`:
 
     [php]
     sfPropelBehavior::add('Article', array(
       'paranoid' => array('column' => 'deleted_at')
     ));
 
-After rebuilding the model, deleted `Article` objects will remain in the database, invisible to the queries using the ORM, unless you temporarily disable the behavior with `sfPropelParanoidBehavior::disable()`.
+Dopo aver ricostruito il modello, gli oggetti `Article` eliminati resteranno nel database, invisibile alle query creato usando l'ORM, a meno che non disabiliti temporaneamente il behavior con `sfPropelParanoidBehavior::disable()`.
 
-Alternatively, you can also declare behaviors directly in the `schema.yml`, by listing them under the `_behaviors` key (see Listing 8-34 below).
+In alternativa, puoi inoltre dichiarare behaviors direttamente dentro a `schema.yml`, aggiungendoli all'interno della chiave `_behaviors` (vedi il Listato 8-34 di seguito).
 
-Check the list of symfony plug-ins on the official [repository](http://www.symfony-project.org/plugins/) to find behaviors. Each has its own documentation and installation guide.
+Controlla la lista dei plugin di symfony sul [repository](http://www.symfony-project.org/plugins/) ufficiale per trovare i behavior. Ognuno ha la sua documentazione e guida di installazione.
 
 Extended Schema Syntax
 ----------------------
