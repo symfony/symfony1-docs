@@ -564,31 +564,31 @@ Listato 8-19 - Connessione al database specifica per SQLite usando un percorso f
           phptype:  sqlite
           database: %SF_DATA_DIR%/blog.db
 
-Extending the Model
+Estendere il modello
 -------------------
 
-The generated model methods are great but often not sufficient. As soon as you implement your own business logic, you need to extend it, either by adding new methods or by overriding existing ones.
+I metodi generati del modello sono ottimi, ma spesso non sufficienti. Presto implementerai la tua logica ed avrai bisogno di estenderlo, aggiungendo nuovi metodi oppure sovrascrivendo quelli esistenti.
 
-### Adding New Methods
+### Aggiungere nuovi metodi
 
-You can add new methods to the empty model classes generated in the `lib/model/` directory. Use `$this` to call methods of the current object, and use `self::` to call static methods of the current class. Remember that the custom classes inherit methods from the `Base` classes located in the `lib/model/om/` directory.
+Puoi aggiugnere nuovi metodi alle classi del modello vuote generate nella cartella `lib/model`. Usa `$this` per chiamare metodi sull'oggetto corrente, mentre usa `self::` per chiamare metodi statici sulla classe corrente. Ricorda che le classi personalizzate ereditano i metodi dalle classi `Base` collocate nella cartella `lib/model/om`.
 
-For instance, for the `Article` object generated based on Listing 8-3, you can add a magic `__toString()` method so that echoing an object of class `Article` displays its title, as shown in Listing 8-20.
+Per esempio, per l'oggetto `Article` generato basato sul Listato 8-3, puoi aggiungere un metodo magico `__toString()` per far si che un comando `echo` su un oggetto di classe `Article` mostri il suo titolo, come mostrato nel Listato 8-20.
 
-Listing 8-20 - Customizing the Model, in `lib/model/Article.php`
+Listato 8-20 - Personalizzazione del modello, in `lib/model/Article.php`
 
     [php]
     class Article extends BaseArticle
     {
       public function __toString()
       {
-        return $this->getTitle();  // getTitle() is inherited from BaseArticle
+        return $this->getTitle();  // getTitle() è ereditato da BaseArticle
       }
     }
 
-You can also extend the peer classes--for instance, to add a method to retrieve all articles ordered by creation date, as shown in Listing 8-21.
+Puoi inoltre estendere le classi peer, per esempio, per aggiungere un metodo per recuperare tutti gli articoli ordinati per data di creazione, come mostrato nel Listato 8-21.
 
-Listing 8-21 - Customizing the Model, in `lib/model/ArticlePeer.php`
+Listato 8-21 - Personalizzazione del modello, in `lib/model/ArticlePeer.php`
 
     [php]
     class ArticlePeer extends BaseArticlePeer
@@ -602,14 +602,14 @@ Listing 8-21 - Customizing the Model, in `lib/model/ArticlePeer.php`
       }
     }
 
-The new methods are available in the same way as the generated ones, as shown in Listing 8-22.
+I nuovi metodi sono disponibili nello stesso modo di quelli generati, come mostrato nel Listato 8-22.
 
-Listing 8-22 - Using Custom Model Methods Is Like Using the Generated Methods
+Listato 8.22 - Usare i metodi personalizzati è come usare i metodi generati
 
     [php]
     foreach (ArticlePeer::getAllOrderedByDate() as $article)
     {
-      echo $article;      // Will call the magic __toString() method
+      echo $article;      // Chiamerà il metodo magico __toString()
     }
 
 ### Overriding Existing Methods
