@@ -2,11 +2,11 @@ Capitolo 2 - Esplorazione del codice di symfony
 ===============================================
 
 In un primo momento l'esplorazione del codice alla base di un applicativo scritto utillizzando symfony può sembrare scoraggiante. 
-Il codice è costituito da tante directory e script, i vari file sono un mix di classi PHP, HTML e a volte una combinazione di entrambi. 
+Il codice è costituito da molteplici directory e script, i vari file sono un mix di classi PHP, HTML e a volte una combinazione di entrambi. 
 Capiterà anche di trovare riferimenti a classi che non sono presenti all'interno della directory 
 dell'applicativo oppure constatare che si può arrivare ad una profondità delle directory di ben sei livelli. 
 Ma una volta compresa la ragione di questa apparente complessità, ci si sentirà talmente a proprio agio che non si vorrebbe assolutamente cambiare la struttura 
-dell'applicativo symfony con nessun'altro.
+dell'applicativo symfony con nessun'altra.
 
 Pattern MVC
 ---------------
@@ -17,9 +17,9 @@ Symfony è basato sul classico web design pattern conosciuto come architettura M
   * La vista (View) presenta il modello su una pagina web in modo da renderla interattiva per l'utente.
   * Il controllore (Controller) risponde alle azioni dell'utente e invoca in modo appropriato i cambiamenti sul modello o sulla vista.
 
-Figura 2-1 illustra il pattern MVC
+La Figura 2-1 illustra il pattern MVC
 
-L'architettura MVC separa la business logic (model) e la presentazione (view), 
+L'architettura MVC separa la business logic (modello) e la presentazione (vista), 
 in questo modo si ottiene grande manutenibilità. 
 Per esempio: se l'applicativo dovesse essere eseguito sia su un browser web standard sia su un palmare, 
 basterà creare una nuova vista; il controllore originale e il modello non verranno modificati. 
@@ -41,7 +41,7 @@ Un perfetto esempio e' dato da una lista di post di un web blog.
 #### Programmazione "piatta"
 
 Se si volesse mostrare una lista di record estratti da un database utilizzando un unico script PHP 
-verrebbe utilizzato del codice simile a quello mostrato nel Listato 2-1
+si utilizzerebbe del codice simile a quello mostrato nel Listato 2-1
 
 Listing 2-1 - Un'unico Script
 
@@ -96,7 +96,7 @@ I maggiori problemi che si possono incontrare utilizzando questo codice e questo
 #### Isolare la Presentazione
 
 Le chiamate `echo` e `printf` presenti nel Listato 2-1 rendono il codice difficile da leggere. 
-Diventerebbe un'operazione onerosa e complessa se si volesse modificare il codice HTML per migliorarne la presentazione. 
+Diventerebbe un'operazione onerosa e complessa modificare il codice HTML per migliorarne la presentazione. 
 Il codice può essere spezzato in due parti. 
 La prima parte, lo script controllore, conterrà puro codice PHP con tutta la logica di business, come mostrato nel Listato 2-2.
 
@@ -239,7 +239,7 @@ In questo modo, le funzioni di accesso ai dati non utilizzeranno query dipendent
 ma chiameranno altre funzioni che eseguiranno quelle particolari query. 
 Se si cambiasse il database scelto, sarà necessario aggiornare solamente il livello di astrazione del database.
 
-Un esempio di uno specifico accesso ai dati tramite un database MySQL è mostrato nel Listato 2-6
+Un esempio specifico di accesso ai dati tramite un database MySQL è mostrato nel Listato 2-6
 seguito da un esempio di un livello di astrazione dell'accesso stesso nel Listato 2-7.
 
 
@@ -299,7 +299,7 @@ Inoltre, le funzioni create nel componente di astrazione del database posso esse
 che richiedano accesso al database.
 
 >**NOTE**
->Gli esempi mostrati nei Listati 2-6 e 2-7 non risultano ancora del tutto soddisfacenti, e ci sarebbe ancora del codice da scrivere
+>Gli esempi mostrati nei Listati 2-6 e 2-7 non risultano ancora del tutto soddisfacenti in quanto ci sarebbe ancora del codice da scrivere
 >per poter ottenere una completa e reale astrazione del database (astrazione del codice SQL attravero un costruttore di query,
 > spostamento di tutte le funzioni in una classe, e cos via). Ma lo scopo di questa guida non e' mostrare come si debba scrivere
 > tutto questo codice, e verrà mostrato nel Capitolo 8 come symfony fornisce già elegantemente questa astrazione.
@@ -308,27 +308,18 @@ che richiedano accesso al database.
 ### Elementi della Vista
 
 Il livello della vista può beneficiare a sua volta di una separazione interna del codice.
- A web page often contains consistent elements throughout an application: the page headers,
- Una pagina web contiene spesso degli elementi presenti e consistentia in tutto l'applicativo: gli header della pagina
-  the graphical layout, the footer, and the global navigation. Only the inner part of the page changes.
-  il layout grafico, il footer, e il menu' di navigazione. In generale soltanto le parti interne della pagina cambiano.
-   That's why the view is separated into a layout and a template. 
+Una pagina web contiene spesso degli elementi presenti e consistentia in tutto l'applicativo: gli header della pagina
+il layout grafico, il footer, e il menu' di navigazione. In generale soltanto le parti interne della pagina cambiano.
 Per questo motivo la vista e' separata in altri due livelli: layout e template.
-   The layout is usually global to the application, or to a group of pages. 
 Il layout e' solitamente globale nell'applicativo o comunque accomuna un gruppo di pagine.
-   The template only puts in shape the variables made available by the controller. 
- Il template si occupa di mostrare i valori delle variabili messe a disposizione dal controllore.
-   Some logic is needed to make these components work together, and this view logic layer will keep the name view.
+Il template si occupa di mostrare i valori delle variabili messe a disposizione dal controllore.
 E' necessaria della logica per poter far in modo che queste componenti lavorino insieme, e questa logica di presentazione e'
 gestita appunto dalla vista.
-    According to these principles, the view part of Listing 2-3 can be separated into three parts, 
 In base a questi principi, la parta di vista del Listato 2-3 può essere separate in tre parti,
-    as shown in Listings 2-8, 2-9, and 2-10.
 come mostrato dai Listati 2-8, 2-9 e 2-10.
 
 
 
-Listing 2-8 - The Template Part of the View, in `mytemplate.php`
 Listato 2-8 - La parte Template della vista, in `mytemplate.php`
 
     [php]
@@ -343,7 +334,6 @@ Listato 2-8 - La parte Template della vista, in `mytemplate.php`
     <?php endforeach; ?>
     </table>
 
-Listing 2-9 - The View Logic Part of the View
 Listato 2-9 - La parte logica della vista
 
     [php]
@@ -352,7 +342,6 @@ Listato 2-9 - La parte logica della vista
     $title = 'List of Posts';
     $posts = getAllPosts();
 
-Listing 2-10 - The Layout Part of the View
 Listato 2-10 - La parte di layout della vista
 
     [php]
@@ -365,64 +354,41 @@ Listato 2-10 - La parte di layout della vista
       </body>
     </html>
 
-#### Action and Front Controller
+#### Azioni e Front Controller
 
-The controller doesn't do much in the previous example, but in real web applications, the controller has a lot of work.
-Il controllore mostrato nell'esempio precedente non effettua molte operazione, ma in una applicazione web reale, esso deve svolgere molti compiti. 
-An important part of this work is common to all the controllers of the application. 
-Un compito importante e' comune a tutti i controllori dell'applicativo.
-The common tasks include request handling, security handling, loading the application configuration, and similar chores. 
+Il controllore mostrato nell'esempio precedente non effettua molte operazioni, ma in una applicazione web reale, esso deve svolgere molti compiti. 
+Un compito importante e comune a tutti i controllori dell'applicativo.
 Un compito comune include la gestione della request, sicurezza, caricamento delle configurazuone e faccende simili.
-This is why the controller is often divided into a front controller, which is unique for the whole application, and actions,
-Questo e' il motivo per cui spesso il controllore e' suddiviso in un front controller, che e' unico in tutto l'applicativo, e azioni
- which contain only the controller code specific to one page.
- che contiene solamente il codice del controllore specifico di una pagina.
+Questo è il motivo per cui spesso il controllore è suddiviso in un front controller, che è unico in tutto l'applicativo, e azioni
+che contengono solamente il codice del controllore specifico di una pagina.
 
-One of the great advantages of a front controller is that it offers a unique entry point to the whole application. 
-Uno dei grandi vantaggi nell'avere un front controller e' che viene offerto un unico punto di accesso per tutto l'applicativo.
-If you ever decide to close the access to the application, you will just need to edit the front controller script.
-Qualora si decidesse di rendere inacessibile l'applicativo, bastera' semplicemente editare lo script del front controller.
- In an application without a front controller, each individual controller would need to be turned off.
+Uno dei grandi vantaggi nell'avere un front controller è che viene offerto un unico punto di accesso per tutto l'applicativo.
+Qualora si decidesse di rendere inacessibile l'applicativo, basterà semplicemente modificare lo script del front controller.
 In un'applicativo sprovvisto di front controller, si dovrebbe intervenire su ogni singolo controllore per poter ottenere lo stesso effetto.
 
-#### Object Orientation
 #### Orientamento agli Oggetti
 
-All the previous examples use procedural programming. 
-Tutti gli esempi precedenti sono stati scritti con un paradigma di programmazione procedurale.
-The OOP capabilities of modern languages make the programming even easier, since objects can encapsulate logic,
-Le possibilita' offerte dalla OOP dei moderni linguaggi di programmazione rende la programmazione stessa più semplice, dato che gli oggetti incapsulano logica,
+Tutti gli esempi mostrati in precedenza sono stati scritti con un paradigma di programmazione procedurale.
+Le possibilità offerte dalla OOP dei moderni linguaggi di programmazione rende la programmazione stessa più semplice, dato che gli oggetti incapsulano logica,
 ereditano uno dall'altro e forniscono un chiaro e pulito utilizzo dei nomi.
- inherit from one another, and provide clean naming conventions.
 
-Implementing an MVC architecture in a language that is not object-oriented raises namespace and code-duplication issues, 
 Implementare un'architettura MVC con un linguaggio che non sia object-oriented produrrebbe problematiche nella gestione dei namespace, duplicazione del codice
-and the overall code is difficult to read.
 e supratutto un codice difficile da leggere.
 
-Object orientation allows developers to deal with such things as the view object, the controller object, 
 Lo sviluppo orientato agli oggetti permette agli sviluppatori di utilizzare strumenti e componenti come l'oggetto vista, l'oggetto controllore
-and the model classes, and to transform all the functions in the previous examples into methods. 
 le classi di modello e trasformare tutte le funzioni degli esempi precedenti in metodi.
-It is a must for MVC architectures.
 E' una necessita' per un'architettura MVC.
 
 
 
 >**TIP**
->If you want to learn more about design patterns for web applications in an object-oriented context, 
 > Se si volesse approfondire meglio i vari design pattern per un applicativo web in un contesto object-oriented
 > si consiglia la lettura di Patterns of Enterprise Application Architecture by Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).
 >Il codice d'esempio presente nel libro di Fowler e' scritto in Java o C#, ma e' piuttosto comprensibile anche ad uno sviluppatore PHP.
-read Patterns of Enterprise Application Architecture by Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0). 
-Code examples in Fowler's book are in Java or C#, but are still quite readable for a PHP developer.
 
-### Symfony's MVC Implementation
 ### Implementazione del pattern MVC di symfony
 
-Hold on a minute. For a single page listing the posts in a weblog, how many components are required? 
 Ricapitolando: per una semplice pagine che mostra i post di un weblog, quanti componenti sono richiesti?
-As illustrated in Figure 2-2, we have the following parts:
 Come mostrato nella Figura 2-2, sono presenti le seguenti parti:
 
   * Model layer
@@ -442,52 +408,33 @@ Come mostrato nella Figura 2-2, sono presenti le seguenti parti:
     * Front controller
     * Action
 
-Seven scripts--a whole lot of files to open and to modify each time you create a new page! 
 Sette script, diversi file da aprire e modificare ogni volta che si crea una pagina!
-However, symfony makes things easy. While taking the best of the MVC architecture, 
-Cio' nonostante symfony rende le cose semplici. Utilizzando il meglio dell'architettura MVC
-symfony implements it in a way that makes application development fast and painless.
-symfony la implementa in modo da rendere veloce e indolore lo sviluppo di una applicazione.
+Ciò nonostante symfony rende le cose semplici. Symfony implementa il meglio dell'architettura MVC
+in modo da rendere veloce e indolore lo sviluppo di una applicazione.
 
-First of all, the front controller and the layout are common to all actions in an application. 
-Per prima cosa, il Front Controlle e il layout sono gli stessi per tutte le actions dell'applicazione.
-You can have multiple controllers and layouts, but you need only one of each. 
-E' possibile avere controllori e layoit multipli, ma e' necessario solo uno di essi.
-The front controller is pure MVC logic component, and you will never need to write a single one,
+Per prima cosa, il Front Controlle e il layout sono gli stessi per tutte le azioni dell'applicativo.
+È possibile avere controllori e layout multipli, ma è necessario solo uno di essi.
 Il Front controller e' un componente puramente in logica MVC e non ci sarà mai l'esigenza di scriverne uno perche'
- because symfony will generate it for you.
- symfony si preoccupera' di generarlo.
+symfony si preoccuperà di generarlo.
 
-The other good news is that the classes of the model layer are also generated automatically, 
-L'altra buona notizia e' che le classi del modello sono anch'esse generate automaticamente,
-based on your data structure. This is the job of the ORM library, which provides class skeletons and code generation. 
-basandosi sulla struttura dei dati. Questo compito di autogenerazione delle classi del modello e' affidata alla libreria ORM, che fornisce lo scheletro e la generazione del codice.
-If the ORM finds foreign key constraints or date fields, it will provide special accessor and mutator methods that will make data manipulation a piece of cake.
-Se la libreria ORM trovasse una chiave esterna o un campo data, generera' degli speciali metodi che renderanno estremamente semplice la manipolazione dei dati.
- And the database abstraction is totally invisible to you, because it is handled natively by PHP Data Objects. 
- La parte di astrazione del database e' totalmente invisibile perche' viene gestita nativamente da PHP Data Objects.
- So if you decide to change your database engine at anytime, you have zero code to refactor. 
- Qualora si decidesse di cambiare il motore del database, non si dovra' toccare minimamente una singola riga di codice applicativo.
- You just need to change one configuration parameter.
- Occorre solamente cambiare un parametro di configurazione.
+L'altra buona notizia è che le classi del modello sono anch'esse generate automaticamente,
+basandosi sulla struttura dei dati. Questo compito di autogenerazione delle classi del modello è affidato alla libreria ORM, che fornisce lo scheletro e la generazione del codice.
+Se la libreria ORM trovasse una chiave esterna o un campo data, genererà degli speciali metodi che renderanno estremamente semplice la manipolazione dei dati e le relazioni tra essi.
+La parte di astrazione del database è totalmente invisibile perché viene gestita nativamente da PHP Data Objects.
+Qualora si decidesse di cambiare il motore del database, non si dovra' toccare minimamente una singola riga di codice applicativo.
+Occorre solamente cambiare un parametro di configurazione.
 
 
-And the last thing is that the view logic can be easily translated as a simple configuration file,
-Inoltre la logica della vista può essere descritta attraverso un semplice file di configurazione, senza che ci sia la necessita'
- with no programming needed.
+Inoltre la logica della vista può essere descritta attraverso un semplice file di configurazione, senza che ci sia la necessità
 di scrivere dell codice applicativo.
 
-Figure 2-2 - Symfony workflow
 Figura 2-2 - Symfony workflow
 
 ![Symfony workflow](http://www.symfony-project.org/images/book/1_4/F0202.png "Symfony workflow")
 
-That means that the list of posts described in our example would require only three files to work in symfony, 
 Questo significa che per quanto riguarda la lista dei post descritta in precedenza saranno necessari solamente tre file
-as shown in Listings 2-11, 2-12, and 2-13.
 come mostrato nei Listati 2-11, 2-12, e 2-13.
 
-Listing 2-11 - `list` Action, in `myproject/apps/myapp/modules/weblog/actions/actions.class.php`
 Listato 2-11 - `list` Action, in `myproject/apps/myapp/modules/weblog/actions/actions.class.php`
 
     [php]
@@ -501,7 +448,6 @@ Listato 2-11 - `list` Action, in `myproject/apps/myapp/modules/weblog/actions/ac
       }
     }
 
-Listing 2-12 - `list` Template, in `myproject/apps/myapp/modules/weblog/templates/listSuccess.php`
 Listato 2-12 - `list` Template, in `myproject/apps/myapp/modules/weblog/templates/listSuccess.php`
 
     [php]
@@ -532,8 +478,7 @@ Listato 2-13 - Layout, in `myproject/apps/myapp/templates/layout.php`
       </body>
     </html>
 
-Tutto ciò è quello che è realmente necessario.
-Quello appena mostrato è l'esatto codice richiesto per mostrare la stessa pagina che si otterrebbe con lo script del Listato 2-1. 
+Quello appena mostrato è l'esatto e unico codice richiesto per mostrare la stessa pagina che si otterrebbe con lo script del Listato 2-1. 
 Il resto (rendere possibile che tutti i componenti interagiscano tra loro) è gestito da symfony.
 Se si contassero le linee di codice, si noterà che creare la lista di post in un'architettura MVC con symfony 
 non richieda più tempo o codice rispetto a scrivere la stessa cosa su un unico file.
@@ -898,5 +843,5 @@ Symfony è un framework MVC scritto in PHP.
 La sua struttura permette di ottenere il meglio grazie all'utilizzo del pattern MVC, mantenendo al contempo una praticità e semplicità d'utilizzo.
 Grazie alla sua versatilità e configurabilità, symfony è adatto per tutte le tipologie di applicativi web.
 
-Ora che è stata mostrata la teoria alla base di symfony si è in grado di sviluppare una prima applicazione, ma prima di questo occorre un'installazione di symfony e un
+Ora che è stata mostrata la teoria alla base di symfony si è in grado di sviluppare una prima applicazione, ma prima di questo occorre un'installazione di symf ony e un
 server di sviluppo.
