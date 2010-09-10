@@ -215,7 +215,7 @@ Per esempio, se molti template dell'applicazione hanno bisogno di utilizzare lo 
     [php]
     <?php include(sfConfig::get('sf_app_template_dir').'/mioFrammento.php') ?>
 
-Ma questo non è un modo molto pulito per gestire un frammento, soprattutto perché possono esserci nomi di variabili differenti tra il frammento e i vari template che lo includono. Inoltre, il sistema per la cache di symfony (descritto nel Capitolo 12) non ha modo di rilevare un include, quindi il frammento non può essere messo in cache indipendentemente dal template. Symfony fornisce tre tipi alternativi di frammenti di codice per sostituire gli `include`:
+Ma questo non è un modo molto pulito per gestire un frammento, soprattutto perché possono esserci nomi di variabili differenti tra il frammento e i vari template che lo includono. Inoltre, il sistema per la cache di symfony (descritto nel capitolo 12) non ha modo di rilevare un include, quindi il frammento non può essere messo in cache indipendentemente dal template. Symfony fornisce tre tipi alternativi di frammenti di codice per sostituire gli `include`:
 
   * Se la logica è leggera, basterà includere un file template che ha accesso ad alcuni dati che gli vengono passati. Per questo si userà un partial.
   * Se la logica è più pesante (ad esempio, se è necessario accedere al modello dei dati e/o modificare il contenuto in base alla sessione), è preferibile separare la presentazione dalla logica. Per questo, si userà un component.
@@ -279,7 +279,7 @@ Listato 7-10 - Il partial ora può usare la variabile, in `miomodulo/templates/_
 >Tutti gli helper fin'ora sono stati chiamati da `<?php echo nomeFunzione() ?>`. L'helper partial, però, è chiamato semplicemente da `<?php include_partial() ?>`, senza `echo`, in modo che abbia un comportamento simile al normale comando PHP `include()`. Se si ha bisogno di una funzione che restituisca il contenuto di un partial senza visualizzarlo, utilizzare `get_partial()`. Tutti gli helper `include_` descritti in questo capitolo hanno una controparte `get_` che può essere chiamata insieme al comando `echo`.
 
 >**TIP**
->Invece di visualizzare un template, una azione può restituire un partial o un component. I metodi `renderPartial()` e `renderComponent()` della classe dell'azione promuovono la riusabilità del codice. Inoltre sfruttano la possibilità dei partial di essere messi in cache (vedere il Capitolo 12). Le variabili definite nell'azione verranno passate automaticamente al partial/component, a meno che non si definisca un array associativo di varibili come secondo paramentro del metodo.
+>Invece di visualizzare un template, una azione può restituire un partial o un component. I metodi `renderPartial()` e `renderComponent()` della classe dell'azione promuovono la riusabilità del codice. Inoltre sfruttano la possibilità dei partial di essere messi in cache (vedere il capitolo 12). Le variabili definite nell'azione verranno passate automaticamente al partial/component, a meno che non si definisca un array associativo di varibili come secondo paramentro del metodo.
 >
 >     [php]
 >     public function executeFoo()
@@ -299,7 +299,7 @@ Listato 7-10 - Il partial ora può usare la variabile, in `miomodulo/templates/_
 
 ### Component
 
-Nel Capitolo 2, il primo script di esempio è stato spezzato in due parti per separare la logica dalla presentazione. Proprio come il pattern MVC si applica alle azioni e ai template, può essere necessario dividere un partial in una parte di logica e in una parte di presentazione. In tal caso, è necessario utilizzare un componente. 
+Nel capitolo 2, il primo script di esempio è stato spezzato in due parti per separare la logica dalla presentazione. Proprio come il pattern MVC si applica alle azioni e ai template, può essere necessario dividere un partial in una parte di logica e in una parte di presentazione. In tal caso, è necessario utilizzare un componente. 
 
 Un componente è come una azione, salvo il fatto che è molto più veloce. La logica di un componente è all'interno di una classe che eredita da `sfComponents`, situata in un file `actions/components.class.php`.  La sua presentazione è è messa in un partial. I metodi di una classe `sfComponents` iniziano con la parola `execute`, proprio come le azioni e possono passare variabili ai loro controparti della presentazione nello stesso modo con cui le azioni passano variabili. I partial che vengono utilizzati come presentazione per componenti sono nominati con lo stesso nome del componente (senza l'`execute`, ma con una sottolineatura iniziale). La Tabella 7-1 compara le convenzioni per i nomi per azioni e componenti.
 
@@ -594,7 +594,7 @@ I setter dell'header sono molto potenti in symfony. Gli header sono inviati il p
     echo $response->getContentType();
      => 'text/xml; charset=utf-8'
 
-Il codice di stato delle risposte di symfony è compatibile con la specifica HTTP. Le eccezioni restituiscono uno stato 500, le pagine non trovate restituiscono 404, le pagine normali restituiscono uno stato 200, le pagine non modificate possono essere ridotte a un semplice header con il codice di stato 304 (vedere il Capitolo 12 per maggiori dettagli) e così via. Ma è possibile sovrascrivere questi valori predefiniti impostando il proprio codice di stato nell'azione con il metodo response `setStatusCode()`.  È possibile specificare un codice personalizzato e un messaggio personalizzato, o semplicemente un codice personalizzato, nel qual caso, symfony aggiunge un messaggio generico per questo codice.
+Il codice di stato delle risposte di symfony è compatibile con la specifica HTTP. Le eccezioni restituiscono uno stato 500, le pagine non trovate restituiscono 404, le pagine normali restituiscono uno stato 200, le pagine non modificate possono essere ridotte a un semplice header con il codice di stato 304 (vedere il capitolo 12 per maggiori dettagli) e così via. Ma è possibile sovrascrivere questi valori predefiniti impostando il proprio codice di stato nell'azione con il metodo response `setStatusCode()`.  È possibile specificare un codice personalizzato e un messaggio personalizzato, o semplicemente un codice personalizzato, nel qual caso, symfony aggiunge un messaggio generico per questo codice.
 
     [php]
     $response->setStatusCode(404, 'Questa pagina non esiste');

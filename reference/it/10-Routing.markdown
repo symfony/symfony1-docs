@@ -248,7 +248,7 @@ metodo è chiamato con i parametri della rotta scansionata come parametro.
 *Predefinito*: none
 
 L'opzione `method_for_query` definisce il metodo da chiamare sul modello per
-recuperare l'oggetto (o gli oggetti) associati con la richiesta corrente. L'ggetto della richiesta
+recuperare l'oggetto (o gli oggetti) associati con la richiesta corrente. L'oggetto della richiesta
 corrente è passato come parametro.
 
 Se l'opzione non è assegnata, la richiesta è solo "eseguita" con il metodo

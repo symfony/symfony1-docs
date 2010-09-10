@@ -229,13 +229,13 @@ escape solamente i caratteri di barra `\`, le virgolette `'` e `"` e gli "a capo
 Integrazione con Doctrine
 -------------------------
 
-### Versione Richiesta di Doctrine
+### Versione richiesta di Doctrine
 
 Gli external verso Doctrine sono stati aggiornati all'ultima versione di
 Doctrine 1.2. Si possono avere informazioni sulle novità di Doctrine 1.2 
 [qui](http://www.doctrine-project.org/upgrade/1_2).
 
-### Cancellazione nell'Admin Generator
+### Cancellazione nell'admin generator
 
 La cancellazione multipla nell'admin generator è stata modificata per
 scorrere le righe ed eseguire il metodo `delete()` su ciascuna di esse
@@ -243,7 +243,7 @@ singolarmente, piuttosto che eseguire una singola query DQL per cancellarle
 tutte. Questo per fare in modo che siano invocati gli eventi per la
 cancellazione di ogni singola riga.
 
-### Sovrascrittura dello Schema Doctrine dei Plugin
+### Sovrascrittura dello schema doctrine dei plugin
 
 Si può sovrascrivere il modello incluso in uno schema YAML di un plugin,
 semplicemente definendo lo stesso modello nel proprio schema locale.

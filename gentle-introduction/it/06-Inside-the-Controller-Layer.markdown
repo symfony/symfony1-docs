@@ -203,7 +203,7 @@ Listing 6-7 - Metodi comuni `sfActions`
 >**SIDEBAR**
 >Il singleton context
 >
->Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` ritorna lo stesso singleton. Questo è un oggetto molto utile che contiene una referenza a tutti gli oggetti del core di symfony associati a una richiesta mettendo a disposizione una via di accesso a ognuno di loro:
+>Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` restituisce lo stesso singleton. Questo è un oggetto molto utile che contiene un riferimento a tutti gli oggetti del nocciolo di symfony associati a una richiesta, mettendo a disposizione una via di accesso a ognuno di loro:
 >
 >`sfController`: L'oggetto controllore (`->getController()`)
 >
@@ -227,7 +227,7 @@ Listing 6-7 - Metodi comuni `sfActions`
 
 ### Terminare l'azione
 
-Alla fine dell'esecuzione di un'azione si possono assumere diversi comportamenti. Il valore ritornato dal metodo dell'azione determina come la vista verrà generata. Le costanti della classe `sfView` vengono utilizzate per specificate quale template utilizzare per mostrare il risultato dell'azione.
+Alla fine dell'esecuzione di un'azione si possono assumere diversi comportamenti. Il valore restituito dal metodo dell'azione determina come la vista verrà generata. Le costanti della classe `sfView` vengono utilizzate per specificate quale template utilizzare per mostrare il risultato dell'azione.
 
 Se esiste una vista predefinita da invocare (questo è il caso più comune), l'azione dovrebbe terminare come segue:
 
@@ -267,9 +267,9 @@ Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un
     [php]
     return sfView::NONE;
 
-Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente il livello della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel Capitolo 11.
+Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente il livello della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel capitolo 11.
 
-Listing 6-9 - Aggirare la vista facendo l'echo della risposta e ritornando `sfView::NONE`
+Listing 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfView::NONE`
 
     [php]
     public function executeIndex()
@@ -587,7 +587,7 @@ Listing 6-18 - Cambiare server session storage, in `apps/frontend/config/factori
           db_data_col: sess_data            # Name of the column storing the session data
           db_time_col: sess_time            # Name of the column storing the session timestamp
 
-L'impostazione `database` definisce quale connessione al database utilizzare. Symfony userà così `databases.yml` (vedere Capitolo 8) per determinare i parametri di connessione (host, nome database, utente e password).
+L'impostazione `database` definisce quale connessione al database utilizzare. Symfony userà così `databases.yml` (vedere capitolo 8) per determinare i parametri di connessione (host, nome database, utente e password).
 
 La classi disponibili per il session storage sono `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage` e `sfPDOSessionStorage`; l'ultima è quella da preferire. Per disabilitare totalmente il session storage si può utilizzaree la classe `sfNoStorage`.
 
@@ -601,7 +601,7 @@ Listing 6-19 - Modificare la durata delle sessioni, in `apps/frontend/config/fac
         param:
           timeout:   1800           # Durata delle sessioni in secondi
 
-Per conoscere più a fondo i factory fare riferimento al Capitolo 19.
+Per conoscere più a fondo i factory fare riferimento al capitolo 19.
 
 Sicurezza delle azioni
 ----------------------
@@ -727,7 +727,7 @@ Listing 6-24 - Lavorare con le credenziali utenti in un template
 Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente durante il processo di login. Ecco perché l'oggetto `sfUser` viene spesso esteso per aggiungere i metodi di login e logout in modo da impostare lo stato di sicurezza in un posto centralizzato.
 
 >**TIP**
->Tra i plugin di symfony [`sfGuardPlugin`](http://www.symfony-project.org/plugins/sfGuardPlugin) e [`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin) estendono la classe della sessione per semplificare login e logout. Fare riferimento al Capitolo 17 per maggiori informazioni.
+>Tra i plugin di symfony [`sfGuardPlugin`](http://www.symfony-project.org/plugins/sfGuardPlugin) e [`sfDoctrineGuardPlugin`](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin) estendono la classe della sessione per semplificare login e logout. Fare riferimento al capitolo 17 per maggiori informazioni.
 
 ### Credenziali complesse
 
@@ -961,7 +961,7 @@ Listing 6-33 - Filtro per comunicazione sicura
       }
     }
 
-I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di estendere le funzionalità di un'applicazione in modo completo. Fare riferimento al Capitolo 17 per saperne di più sui plugin.
+I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di estendere le funzionalità di un'applicazione in modo completo. Fare riferimento al capitolo 17 per saperne di più sui plugin.
 
 Configurazione dei moduli
 -------------------------

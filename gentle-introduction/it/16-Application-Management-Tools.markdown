@@ -357,7 +357,7 @@ Listato 16-12 - Esempio di script batch, in `lib/mioScript.php`
 
     // aggiungere qua il codice
 
-Assomiglia molto alle prime righe di un front controller (vedere il Capitolo 6), perché queste linee fanno la stessa cosa: inizializzano symfony, analizzano la configurazione del progetto e dell'applicazione. Notare che il metodo `ProjectConfiguration::getApplicationConfiguration` richiede tre parametri:
+Assomiglia molto alle prime righe di un front controller (vedere il capitolo 6), perché queste linee fanno la stessa cosa: inizializzano symfony, analizzano la configurazione del progetto e dell'applicazione. Notare che il metodo `ProjectConfiguration::getApplicationConfiguration` richiede tre parametri:
 
  * un nome di applicazione
  * un nome di ambiente
@@ -501,7 +501,7 @@ Nella chiamata è possibile specificare un'altra cartella per le fixture. In que
 
 Si è imparato come aggiungere record a una singola tabella, ma come si fa ad aggiungere record con chiavi esterne a un'altra tabella? Dal momento che la chiave primaria non è inclusa nei dati delle fixture, c'è bisogno di un modo alternativo per relazionare dei record con altri.
 
-Torniamo all'esempio del Capitolo 8, dove la tabella `blog_article` è collegata alla tabella `blog_comment`, come mostrato in Figura 16-8.
+Torniamo all'esempio del capitolo 8, dove la tabella `blog_article` è collegata alla tabella `blog_comment`, come mostrato in Figura 16-8.
 
 Figura 16-8 - Esempio di un modello relazionale di database
 
@@ -551,7 +551,7 @@ Symfony offre comandi manuali per sincronizzare due versioni di un sito web. Que
 
 ### L'utilizzo di `rsync` per il trasferimento incrementale di file
 
-L'invio della cartella principale di un progetto tramite FTP va bene per il primo trasferimento, ma quando si ha bisogno di caricare un aggiornamento dell'applicazione, in cui sono cambiati solo alcuni file, l'FTP non è l'ideale. È necessario trasferire nuovamente l'intero progetto, il che è uno spreco di tempo e di larghezza di banda. In alternativa si può passare alla directory in cui si sa che alcuni file sono stati modificati e trasferire solo quelli con certe date di modifica. Questo è un lavoro che richiede tempo ed è suscettibile di errori. Inoltre, il sito web può diventare non disponibile o restituire errori durante il tempo del trasferimento. 
+L'invio della cartella principale di un progetto tramite FTP va bene per il primo trasferimento, ma quando si ha bisogno di caricare un aggiornamento dell'applicazione, in cui sono cambiati solo alcuni file, l'FTP non è l'ideale. È necessario trasferire nuovamente l'intero progetto, il che è uno spreco di tempo e di larghezza di banda. In alternativa si può passare alla cartella in cui si sa che alcuni file sono stati modificati e trasferire solo quelli con certe date di modifica. Questo è un lavoro che richiede tempo ed è suscettibile di errori. Inoltre, il sito web può diventare non disponibile o restituire errori durante il tempo del trasferimento. 
 
 La soluzione supportata da symfony è la sincronizzazione rsync attraverso SSH. [Rsync] (http://samba.anu.edu.au/rsync/) è una utility a riga di comando che consente il trasferimento incrementale di file in modo veloce ed è open source. Con il trasferimento incrementale, solo i dati modificati verranno inviati. Se un file non è stato modificato, non sarà inviato all'host. Se un file è stato modificato solo in parte, sarà inviata solo la parte cambiata. Il vantaggio principale è che la sincronizzazione con rsync trasferire solo una piccola quantità di dati ed è molto veloce.
 
@@ -598,11 +598,11 @@ Non dimenticarsi di cancellare la cache nel server di produzione dopo la sincron
 >
 >Prima di inviare l'applicazione in produzione, bisogna essere sicuri che sia pronta per un utilizzo pubblico. Verificare i punti seguenti prima di decidere di distribuire l'aplicazione:
 >
->Le pagine degli errori devono essere personalizzate in base al look and feel dell'applicazione. Fare riferimento al Capitolo 19 per vedere come personalizzare l'errore 500, l'errore 404, le pagine messe in sicurezza e alla sezione "Gestire un'applicazione in produzione" di questo capitolo per vedere come personalizzare le pagine visualizzate quando il sito non è disponibile.
+>Le pagine degli errori devono essere personalizzate in base al look and feel dell'applicazione. Fare riferimento al capitolo 19 per vedere come personalizzare l'errore 500, l'errore 404, le pagine messe in sicurezza e alla sezione "Gestire un'applicazione in produzione" di questo capitolo per vedere come personalizzare le pagine visualizzate quando il sito non è disponibile.
 >
 >Il modulo `default` dovrebbe essere rimosso dall'array `enabled_modules` presente in `settings.yml`, in modo che nessuna pagina di symfony possa comparire per errore.
 >
->Il meccanismo di gestione della sessione utilizza un cookie lato client e questo cookie in modalità predefinita si chiama `symfony`. Prima di distribuire l'applicazione, si dovrebbe rinominarlo, in modo da evitare la divulgazione del fatto che l'applicazione utilizza symfony. Fare riferimento al Capitolo 6 per vedere come personalizzare il nome del cookie nel file `factories.yml`.
+>Il meccanismo di gestione della sessione utilizza un cookie lato client e questo cookie in modalità predefinita si chiama `symfony`. Prima di distribuire l'applicazione, si dovrebbe rinominarlo, in modo da evitare la divulgazione del fatto che l'applicazione utilizza symfony. Fare riferimento al capitolo 6 per vedere come personalizzare il nome del cookie nel file `factories.yml`.
 >
 > Il file `robots.txt` che si trova nella cartella `web/` del progetto, in modalità predefinita è vuoto. Si consiglia di personalizzarlo per informare spider web e robot web su quali parti del sito web possono navigare e quali dovrebbero ignorare. Il più delle volte, questo file viene utilizzato per escludere alcune URL dall'indicizzazione; per esempio le pagine di risorse che non hanno bisogno di indicizzazione (come l'archivio dei bug), o gli infiniti URL in cui i robot potrebbero rimanere bloccati. 
 >

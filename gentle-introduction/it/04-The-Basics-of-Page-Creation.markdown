@@ -24,7 +24,7 @@ La riga di comando di symfony automatizza la creazione di moduli. Basta eseguire
     >> tokens    ~/mioprogetto/apps/frontend/modules/contenuto/actions/actions.class.php
     >> tokens    ~/mioprogetto/apps/frontend/modules/contenuto/templates/indexSuccess.php
 
-A parte le cartelle `actions/` e `templates/`, questo comando crea solo tre file. Il primo si trova nella cartella `test/`, riguarda i test funzionali e non si ha bisogno di farci caso fino al Capitolo 15. `actions.class.php` (mostrato nel Listato 4-1) esegue il forward al modulo predefinito con la pagina di congratulazioni. Il file `templates/indexSuccess.php` è vuoto.
+A parte le cartelle `actions/` e `templates/`, questo comando crea solo tre file. Il primo si trova nella cartella `test/`, riguarda i test funzionali e non si ha bisogno di farci caso fino al capitolo 15. `actions.class.php` (mostrato nel Listato 4-1) esegue il forward al modulo predefinito con la pagina di congratulazioni. Il file `templates/indexSuccess.php` è vuoto.
 
 Listato 4-1 - L'azione predefinita generata in `actions/actions.class.php`
 
@@ -104,7 +104,7 @@ symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È n
 >
 >     http://localhost/articles/tagged/finance+france+euro
 >
->Symfony sa come fare il parse e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da una URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il Capitolo 9.
+>Symfony sa come fare il parse e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da una URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il capitolo 9.
 >
 >Nel complesso, questo significa che il modo in cui si dà un nome alle azioni delle applicazioni non dovrebbe essere influenzato dal modo in cui scegliamo l'URL per chiamarli, ma dalle funzioni delle azioni nell'applicazione. Il nome di una azione deve descrivere cosa fa l'azione reale e spesso è spesso un verbo in forma all'infinito (come `show`, `list`, `edit` e così via). I nomi delle azioni possono essere del tutto invisibili all'utente finale, quindi non bisogna aver paura di utilizzare nomi di azioni espliciti (come `listByName` or `showWithComments`). In questo modo si può risparmiare sui commenti del codice atti a spiegare la funzione dell'azione e inoltre il codice sarà molto più facile da leggere.
 
@@ -208,7 +208,7 @@ Listato 4-9 - Gli helper `link_to()` e `url_for()`
 
 L'HTML risultante sarà lo stesso del precedente, eccetto che quando si cambiano le regole delle rotte, tutti i template si comporteranno correttamente e riformatteranno gli URL di conseguenza.
 
-L'utilizzo dei form merita un capitolo a sé stante, dato che symfony fornisce molti strumenti per renderli ancora più facili. Si imparerà di più su questi helper nel Capitolo 10.
+L'utilizzo dei form merita un capitolo a sé stante, dato che symfony fornisce molti strumenti per renderli ancora più facili. Si imparerà di più su questi helper nel capitolo 10.
 
 L'helper `link_to()`, così come altri helper, accetta un altro parametro per opzioni speciali e addizionali attributi per i tag. Il Listato 4-10 mostra un esempio di opzioni passate come parametro e dell'HTML risultante. Le opzioni possono essere sia un array associativo che una semplice stringa con coppie `chiave=valore` separate da spazi.
 
@@ -237,7 +237,7 @@ Ogni volta che si utilizza un helper di symfony che genera un tag HTML, è possi
 >**NOTE**
 >Essendo necessaria una ulteriore analisi e trasformazione, la sintassi con stringa è un po' più lenta della sintassi con gli array.
 
-Come tutti gli helper di symfony, gli helper per i link sono numerosi e hanno molte opzioni. Il Capitolo 9 li descrive in dettaglio.
+Come tutti gli helper di symfony, gli helper per i link sono numerosi e hanno molte opzioni. Il capitolo 9 li descrive in dettaglio.
 
 Ottenere informazioni dalla Request
 -----------------------------------

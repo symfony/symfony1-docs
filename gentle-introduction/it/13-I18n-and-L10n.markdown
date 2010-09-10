@@ -485,7 +485,7 @@ nella stessa cartella.
 >corretta di una data stringa potrebbe richiedere un po' di tempo, symfony usa una cache
 >interna per accelerare il processo. Per impostazione predefinita, questa cache usa il
 >filesystem. Si può configurare la modalità di funzionamento della cache i18n (ad esempio,
->per condividere la cache tra server diversi) in `factories.yml` (vedere Capitolo 19).
+>per condividere la cache tra server diversi) in `factories.yml` (vedere capitolo 19).
 
 ### Gestire i dizionari
 
@@ -509,7 +509,7 @@ Un altro modo per organizzare i dizionari è quello di dividerli per modulo. Inv
 scrivere un singolo file `messages.XX.xml` per l'intera applicazione, se ne può scrivere
 uno in ogni cartella `modules/[nome_modulo]/i18n/`. Questo rende i moduli più
 indipendenti dall'applicazione, il che è necessario se si vuole riutilizzarli, come in
-un plugin (vedere Capitolo 17).
+un plugin (vedere capitolo 17).
 
 Poiché l'aggiornamento manuale dei dizionari è spesso soggetto a errori, symfony fornisce
 un task per automatizzare il processo. Il task `i18n:extract` analizza un'applicazione
@@ -552,7 +552,7 @@ I seguenti sono altri elementi che potrebbero richiedere traduzione:
   * Le pagine predefinite di symfony (pagina non trovata, errore interno del server,
     accesso vietato, ecc.) sono in inglese e devono essere riscritte in una applicazione
     i18n. Probabilmente si vorrà creare un proprio modulo `default` nell'applicazione e
-    usare `__()` nei suoi template. Si faccia riferimento al Capitolo 19 per vedere come
+    usare `__()` nei suoi template. Si faccia riferimento al capitolo 19 per vedere come
     personalizzare queste pagine.
 
 ### Gestire esigenze complesse di traduzione

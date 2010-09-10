@@ -1,5 +1,5 @@
-Chapter 10 - I form
-===================
+Capitolo 10 - I form
+====================
 
 La visualizzazione degli input di un form, la validazione dei dati inseriti in un form e tutta la casistica particolare del trattamento dei form è uno dei compiti più complessi nello sviluppo web. Fortunatamente, symfony fornisce un'interfaccia semplice verso un potente sottosistema dedicato ai form, e facilita la creazione e la manipolazione con poche linee di codice di form di qualsiasi livello di complessità.
 
@@ -415,7 +415,7 @@ I widget data sono un buon esempio della potenza dei widget in symfony. Un widge
 
 ### I widget I18n
 
-Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il Capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa localizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla `culture` dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un `month_format` per visualizzare una lista drop-down con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
+Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa localizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla `culture` dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un `month_format` per visualizzare una lista drop-down con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
 
     [php]
     // Data
@@ -741,7 +741,7 @@ Ogni validatore invalido risulta in un messaggio di errore nel campo. Questi mes
       ))
     ));
 
-Naturalmente, questi messaggi personalizzati vengono resi nei template attraverso gli helper i18n, così le applicazioni multilingua possono anche tradurre i messaggi di errore personalizzati in un dizionario (si veda il Capitolo 13 per ulteriori dettagli).
+Naturalmente, questi messaggi personalizzati vengono resi nei template attraverso gli helper i18n, così le applicazioni multilingua possono anche tradurre i messaggi di errore personalizzati in un dizionario (si veda il capitolo 13 per ulteriori dettagli).
 
 ### Applicare un validatore a più campi
 

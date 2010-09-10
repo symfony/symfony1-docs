@@ -6,23 +6,23 @@ Gran parte della trattazione finora è stata dedicata alla costruzione di pagine
 Questo capitolo spiega come creare un modello di dati a oggetti e come accedere ai dati e modificarli con Doctrine. Viene anche trattata l'integrazione di Doctrine con symfony.
 
 >**TIP**
->Se si vuole utilizzare Propel al posto di Doctrine, leggere l'Appendice A che contiene le stesse informazioni ma riferite a Propel.
+>Se si vuole utilizzare Propel al posto di Doctrine, leggere l'Appendice A, che contiene le stesse informazioni ma riferite a Propel.
 
 Perché usare un ORM e un livello per l'astrazione?
 --------------------------------------------------
 
 I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per poter accedere nel modo più efficace al database in un contesto orientato agli oggetti, è indispensabile una interfaccia per tradurre la logica degli oggetti nella logica relazionale. Come spiegato nel capitolo 1, questa interfaccia è chiamata Object-Relational Mapping (ORM), ed è costituita di oggetti che forniscono l'accesso ai dati e mantengono le business rules all'interno di se stessi.
 
-Il vantaggio principale di un ORM è la riutilizzabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Il livello ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
+Il vantaggio principale di un ORM è la riusabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Il livello ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
 
-Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo accessor alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome`, e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
+Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo di accesso alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome`, e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
 
-Listato 8-1 - Il metodo accessor maschera la struttura della tabella in una classe del modello
+Listato 8-1 - Il metodo di accesso maschera la struttura della tabella in una classe del modello
 
     [php]
-    public function getNomePersona()
+    public function getName()
     {
-      return $this->getNome().' '.$this->getCognome();
+      return $this->getFirstName().' '.$this->getLastName();
     }
 
 Tutte le funzioni ripetute di accesso ai dati e la business logic dei dati stessi, possono essere tenute in tali oggetti. Supponiamo di avere una classe `ShoppingCart` in cui si tenere gli `Articoli` (che sono oggetti). Per ottenere l'importo totale del carrello della spesa, necessario per il pagamento, bisogna scrivere un metodo personalizzato per incapsulare il calcolo effettivo, come mostrato nel Listato 8-2.
@@ -30,22 +30,22 @@ Tutte le funzioni ripetute di accesso ai dati e la business logic dei dati stess
 Listato 8-2 - Il metodo accessor maschera la logica dei dati
 
     [php]
-    public function getTotale()
+    public function getTotal()
     {
-      $totale = 0;
-      foreach ($this->getArticoli() as $articolo)
+      $total = 0;
+      foreach ($this->getItems() as $item)
       {
-        $totale += $articolo->getPrezzo() * $articolo->getQuantita();
+        $total += $item->getPrice() * $item->getQuantity();
       }
 
-      return $totale;
+      return $total;
     }
 
-C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro DataBase Management System (DBMS) costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale nell'SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo del livello di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del DBMS e di ottimizzare il codice SQL. 
+C'è un altro punto importante da considerare quando si realizzano delle procedure di accesso ai dati: ogni database utilizza una variante diversa di sintassi SQL. Il passaggio a un altro database costringe a riscrivere parte delle query SQL che sono state progettate per quello precedente. Costruendo le query utilizzando una sintassi indipendente dal database e lasciando la traduzione reale del codice SQL a un componente di terze parti, è possibile cambiare il tipo di database senza troppi problemi. Questo è l'obiettivo del livello di astrazione del database. Costringe a usare una sintassi specifica per le query e fa il lavoro sporco di conformarsi alle particolarità del database e di ottimizzare il codice SQL.
 
 Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione. 
 
-Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony, ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
+Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
 
 >**NOTE**
 >In un progetto symfony, tutte le applicazioni condividono lo stesso modello. Questo è un punto fondamentale a livello di progetto: raggruppare le applicazioni che si basano su regole di business comuni. Questa è la ragione per cui il modello è indipendente dalle applicazioni e i file del modello sono memorizzati in una cartella `lib/model/` nella radice del progetto.
@@ -59,8 +59,7 @@ La sintassi di symfony per gli schemi utilizza il formato YAML. I file `schema.y
 
 ### Esempio di schema
 
-Come tradurre la struttura del database in uno schema? Un esempio è il modo migliore per capirlo. Immaginiamo di avere il database di un blog con due tabelle:
- `blog_articolo` e `blog_commento`, con la struttura mostrata in Figura 8-1.
+Come tradurre la struttura del database in uno schema? Un esempio è il modo migliore per capirlo. Immaginiamo di avere il database di un blog con due tabelle: `blog_articolo` e `blog_commento`, con la struttura mostrata in Figura 8-1.
 
 Figura 8-1 - Struttura delle tabelle del database di un blog
 
@@ -71,30 +70,30 @@ Il relativo file `schema.yml` dovrebbe apparire come nel Listato 8-3.
 Listato 8-3 - Esempio di file `schema.yml`
 
     [yml]
-    Articolo:
+    Article:
       actAs: [Timestampable]
-      tableName: blog_articolo
+      tableName: blog_article
       columns:
         id:
           type: integer
           primary: true
           autoincrement: true
-        titolo:   string(255)
-        contenuto: clob
+        title:   string(255)
+        content: clob
     
-    Commento:
+    Comment:
       actAs: [Timestampable]
-      tableName: blog_commento
+      tableName: blog_comment
       columns:
         id:
           type: integer
           primary: true
           autoincrement: true
-        articolo_id: integer
-        autore: string(255)
-        contenuto: clob
+        article_id: integer
+        author: string(255)
+        content: clob
       relations:
-        Articolo:
+        Article:
           onDelete: CASCADE
           foreignAlias: Comments
 
@@ -107,7 +106,7 @@ In un file `schema.yml`, la prima chiave rappresenta un nome del modello. È pos
 Un modello può avere attributi speciali, tra cui la `tableName` (il nome della tabella del database relativa al modello). Se non si specifica la `tableName` per un modello, Doctrine lo crea facendo una versione con sottolineatura del nome del modello. 
 
 >**TIP**
->La convenzione della sottolineatura aggiunge sottolineature tra le parole e utilizza solo caratteri minuscoli. Le versioni sottolineate predefinite di `Articolo` e `Commento` sono `articolo` e `commento`.
+>La convenzione della sottolineatura aggiunge sottolineature tra le parole e utilizza solo caratteri minuscoli. Le versioni sottolineate predefinite di `Article` e `Comment` sono `article` e `comment`.
 
 Un modello contiene colonne. Il valore della colonna può essere definito in due modi diversi:
 
@@ -129,15 +128,15 @@ Lo schema è usato per costruire le classi del modello nel livello ORM. Per risp
 
 La digitazione del comando lancerà l'analisi dello schema e la generazione delle classe base del modello dei dati nella cartella `lib/model/doctrine/base` del progetto:
 
-  * `BaseArticolo.php`
-  * `BaseCommento.php`
+  * `BaseArticle.php`
+  * `BaseComment.php`
 
 Inoltre nella cartella `lib/model/doctrine` verranno create le classi personalizzate del modello :
 
-  * `Articolo.php`
-  * `ArticoloTable.php`
-  * `Commento.php`
-  * `CommentoTable.php`
+  * `Article.php`
+  * `ArticleTable.php`
+  * `Comment.php`
+  * `CommentTable.php`
 
 Sono stati definiti solo due modelli e ci si ritrova con sei file. Non c'è nulla di sbagliato, ma questo risultato merita una ulteriore spiegazione.
 
@@ -156,32 +155,32 @@ Il Listato 8-4 mostra un esempio di una classe personalizzata del modello, così
 Listato 8-4 - Esempio di file di una classe del modello, in `lib/model/doctrine/Article.php`
 
     [php]
-    class Articolo extends BaseArticolo
+    class Article extends BaseArticle
     {
     }
 
-La classe Articolo eredita ogni cosa della classe `BaseArticolo`, ma modifiche nello schema non hanno effetti su Articolo.
+La classe Articolo eredita ogni cosa della classe `BaseArticle`, ma modifiche nello schema non hanno effetti su Articolo.
 	
 Il meccanismo delle classi personalizzate che estendono delle classi base consente di iniziare lo sviluppo, anche senza conoscere il modello relazionale finale del database. La relativa struttura dei file rende il modello sia personalizzabile che estendibile.
 
 ### Classi di oggetti e tabelle
 
-`Articolo` e `Commento` sono classi di oggetti che rappresentano un record nel database. Forniscono accesso alle colonne di un record e ai relativi record. Questo significa che si è in grado di sapere il titolo di un articolo chiamando un metodo di un oggetto Articolo, come nell'esempio mostrato nel Listato 8-5.
+`Article` e `Comment` sono classi di oggetti che rappresentano un record nel database. Forniscono accesso alle colonne di un record e ai relativi record. Questo significa che si è in grado di sapere il titolo di un articolo chiamando un metodo di un oggetto Articolo, come nell'esempio mostrato nel Listato 8-5.
 
 Listato 8-5 - Nella classe dell'oggetto sono disponibili dei metodi getter per tutte le colonne del record
 
     [php]
-    $articolo = new Articolo();
+    $article = new Article();
     // ...
-    $titolo = $articolo->getTitolo();
+    $title = $article->getTitle();
 
-`ArticoloTable` e `CommentoTable` sono classi per le tabelle; cioè classi che contengono metodi pubblici che permettono di operare sulle tabelle. Essi forniscono un modo per recuperare i record dalle tabelle. I loro metodi di solito restituiscono un oggetto o un insieme di oggetti della relativa classe dell'oggetto, come mostrato nel Listato 8-6
+`ArticleTable` e `CommentTable` sono classi per le tabelle; cioè classi che contengono metodi pubblici che permettono di operare sulle tabelle. Essi forniscono un modo per recuperare i record dalle tabelle. I loro metodi di solito restituiscono un oggetto o un insieme di oggetti della relativa classe dell'oggetto, come mostrato nel Listato 8-6
 
 Listato 8-6 - Nella classe della tabella sono disponibili dei metodi pubblici per recuperare i record
 
     [php]
-    // $articolo è una istanza della classe Articolo
-    $articolo = Doctrine_Core::getTable('Articolo')->find(123);
+    // $article è una istanza della classe Article
+    $article = Doctrine_Core::getTable('Article')->find(123);
 
 Accesso ai dati
 ---------------
@@ -198,56 +197,56 @@ Campo, colonna| Proprietà
 
 ### Recuperare il valore della colonna
 
-Quando symfony costruisce il modello, crea una classe base di un oggetto per ciascuno dei modelli definiti nel file `schema.yml`. Ciascuna di queste classi è dotata di accessor e mutator predefiniti generati in base alle definizioni della colonna: i metodi `new`, `getXXX()` e `setXXX()` aiutano a creare oggetti e forniscono accesso alle proprietà dell'oggetto, come mostrato nel Listato 8-7.
+Quando symfony costruisce il modello, crea una classe base di un oggetto per ciascuno dei modelli definiti nel file `schema.yml`. Ciascuna di queste classi è dotata di accessori e modificatori predefiniti generati in base alle definizioni della colonna: i metodi `new`, `getXXX()` e `setXXX()` aiutano a creare oggetti e forniscono accesso alle proprietà dell'oggetto, come mostrato nel Listato 8-7.
 
 Listato 8-7 - Metodi generati nella classe dell'oggetto
 
     [php]
-    $articolo = new Articolo();
-    $articolo->setTitolo('Il mio primo articolo');
-    $articolo->setContenuto("Questo è il mio primo articolo.\n Spero che possa piacere!");
+    $article = new Article();
+    $article->setTitle('Il mio primo articolo');
+    $article->setContent("Questo è il mio primo articolo.\n Spero che possa piacere!");
 
-    $titolo   = $articolo->getTitolo();
-    $contenuto = $articolo->getContenuto();
+    $title   = $article->getTitle();
+    $content = $article->getContent();
 
 >**NOTE**
->La classe generata per l'oggetto è chiamata `Articolo` ma nel database il dato è memorizzato in una tabella chiamata `blog_articolo`. Se nello schema `tableName` non fosse stato definito, la classe sarebbe stata chiamata `articolo`. I metodi accessor e mutator usano una variante camelCase dei nomi delle colonne, quindi il metodo `getTitolo()` recupera il valore della colonna `titolo`.
+>La classe generata per l'oggetto è chiamata `Article` ma nel database il dato è memorizzato in una tabella chiamata `blog_articolo`. Se nello schema `tableName` non fosse stato definito, la classe sarebbe stata chiamata `article`. I metodi accessor e mutator usano una variante camelCase dei nomi delle colonne, quindi il metodo `getTitolo()` recupera il valore della colonna `titolo`.
 
 Per impostare molti campi in una sola volta, si può usare il metodo `fromArray()`, disponibile anche per ciascuna classe dell'oggetto, come mostrato nel Listato 8-8.
 
 Listato 8-8 - Il metodo `fromArray()` è un setter multiplo
 
     [php]
-    $articolo->fromArray(array(
-      'Titolo'   => 'Il mio primo articolo',
-      'Contenuto' => 'Questo è il mio primo articolo.\n Spero che possa piacere!',
+    $article->fromArray(array(
+      'Title'   => 'Il mio primo articolo',
+      'Content' => 'Questo è il mio primo articolo.\n Spero che possa piacere!',
     ));
 
 ### Recuperare i record correlati
 
 La colonna `articolo_id` della tabella `blog_commento` definisce implicitamente una chiave esterna alla tabella `blog_articolo`. Ogni commento è correlato a un articolo e un articolo può avere molti commenti. Le classi generate contengono cinque metodi per tradurre queste relazioni in una modalità orientata agli oggetti. Sono i seguenti:
 
-  * `$commento->getArticolo()`: Per ottenere gli oggetti relativi ad `Articolo`
-  * `$commento->getArticoloId()`: Per ottenere l'ID del relativo oggetto `Articolo`
-  * `$commento->setArticolo($articolo)`: Per definire il relativo oggetto `Articolo`
-  * `$commento->setArticoloId($id)`: Per definire il relativo oggetto `Articolo` da un ID
-  * `$articolo->getCommenti()`: Per ottenere i relativi oggetti `Commento`
+  * `$comment->getArticle()`: Per ottenere gli oggetti relativi ad `Article`
+  * `$comment->getArticleId()`: Per ottenere l'ID del relativo oggetto `Article`
+  * `$comment->setArticolo($article)`: Per definire il relativo oggetto `Article`
+  * `$comment->setArticoloId($id)`: Per definire il relativo oggetto `Article` da un ID
+  * `$article->getCommenti()`: Per ottenere i relativi oggetti `Comment`
 
-I metodi `getArticoloId()` e `setArticoloId()` mostrano che si può considerare la colonna `articolo_id` come una normale colonna e impostare le relazioni a mano, ma non è una cosa molto utile. Il vantaggio di un approccio orientato agli oggetti è molto più evidente nei tre altri metodi. Il Listato 8-9 mostra come usare i metodi setter generati.
+I metodi `getArticleId()` e `setArticoloId()` mostrano che si può considerare la colonna `articolo_id` come una normale colonna e impostare le relazioni a mano, ma non è una cosa molto utile. Il vantaggio di un approccio orientato agli oggetti è molto più evidente nei tre altri metodi. Il Listato 8-9 mostra come usare i metodi setter generati.
 
 Listato 8-9 - Le chiavi esterne sono tradotte in un setter speciale
 
     [php]
-    $commento = new Commento();
-    $commento->setAutore('Fabrizio');
-    $commento->setContenuto('Fantastico, è il miglior articolo che ho letto!');
+    $comment = new Comment();
+    $comment->setAuthor('Fabrizio');
+    $comment->setContent('Fantastico, è il miglior articolo che ho letto!');
 
-    // Collega questo commento al precedente oggetto $articolo
-    $commento->setArticolo($articolo);
+    // Collega questo commento al precedente oggetto $article
+    $comment->setArticle($article);
 
     // Sintassi alternativa
     // Ha senso solo se l'oggetto è stato già salvato nel database
-    $commento->setArticoloId($articolo->getId());
+    $comment->setArticleId($article->getId());
 
 Il Listato 8-10 mostra come usare i metodi getter generati. Mostra anche come concatenare le chiamate di metodi sugli oggetti del modello.
 
@@ -255,27 +254,27 @@ Listato 8-10 - Le chiavi esterne sono tradotte in getter speciali
 
     [php]
     // Relazione molti a uno
-    echo $commento->getArticolo()->getTitolo();
+    echo $comment->getArticle()->getTitolo();
      => Il mio primo articolo
-    echo $commento->getArticolo()->getContenuto();
+    echo $comment->getArticle()->getContenuto();
      => Questo è il mio primo articolo.
 	    Spero che possa piacere!
 
     // Relazione uno a molti
-    $commenti = $articolo->getCommenti();
+    $commenti = $article->getComments();
 
-Il metodo `getArticolo()` restituisce un oggetto della classe `Articolo`, che trae beneficio dall'accessor `getTitolo()`. Questa è una operazione migliore rispetto a fare la join da soli, la quale può necessitare di qualche riga di codice in più (partendo dalla chiamata  `$commento->getArticoloId()`).
+Il metodo `getArticle()` restituisce un oggetto della classe `Article`, che trae beneficio dall'accessor `getTitolo()`. Questa è una operazione migliore rispetto a fare la join da soli, la quale può necessitare di qualche riga di codice in più (partendo dalla chiamata  `$comment->getArticleId()`).
 
-La variabile `$commenti` nel Listato 8-10 contiene un array di oggetti della classe `Commento`. Si può visualizzare il primo con `$commenti[0]` o iterare sulla collezione con `foreach ($commenti as $commento)`.
+La variabile `$commenti` nel Listato 8-10 contiene un array di oggetti della classe `Comment`. Si può visualizzare il primo con `$commenti[0]` o iterare sulla collezione con `foreach ($commenti as $comment)`.
 
 ### Salvare e cancellare i dati
 
 Chiamando il costruttore `new`, viene creato un nuovo oggetto, ma non un nuovo record nella tabella `blog_articolo`. La modifica dell'oggetto non ha effetto sul database. Per salvare i dati nel database, bisogna chiamare il metodo `save()` dell'oggetto.
 
     [php]
-    $articolo->save();
+    $article->save();
 
-L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$articolo` viene anche salvato l'oggetto `$commento` a esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database , quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$articolo->getId()`.
+L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$article` viene anche salvato l'oggetto `$comment` a esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database , quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$article->getId()`.
 
 >**TIP**
 >Si può controllare se un oggetto è nuovo, chiamando `isNew()`. Se si vuole sapere se un oggetto è stato modificato per eventualmente evitare il salvataggio, basta chiamare il metodo `isModified()`.
@@ -285,25 +284,25 @@ Se si leggono commenti ai propri articoli, si potrebbe cambiare idea circa l'opp
 Listato 8-11 - Cancellare i record dal database con il metodo `delete()` sul relativo oggetto
 
     [php]
-    foreach ($articolo->getCommenti() as $commento)
+    foreach ($article->getCommenti() as $comment)
     {
-      $commento->delete();
+      $comment->delete();
     }
 
 ### Recuperare i record tramite chiave primaria
 
-Se si conosce la chiave primaria di un certo record usare il metodo `find()` della classe della tabella per recuperare il relativo oggetto.
+Se si conosce la chiave primaria di un certo record, usare il metodo `find()` della classe della tabella per recuperare il relativo oggetto.
 
     [php]
-    $articolo = Doctrine_Core::getTable('Articolo')->find(7);
+    $article = Doctrine_Core::getTable('Article')->find(7);
 
-Il file `schema.yml` definisce il campo `id` come chiave primaria della tabella `blog_articolo`, quindi questo comando restituirà l'articolo che ha `id` 7. Essendo stata utilizzata la chiave primaria, sappiamo che verrà restituito solo un record; la variabile `$articolo` contiene un oggetto della classe `Articolo`.
+Il file `schema.yml` definisce il campo `id` come chiave primaria della tabella `blog_articolo`, quindi questo comando restituirà l'articolo che ha `id` 7. Essendo stata utilizzata la chiave primaria, sappiamo che verrà restituito solo un record; la variabile `$article` contiene un oggetto della classe `Article`.
 
-In alcuni casi, una chiave primaria piò essere costituita da più di una colonna. Per gestire questi casi, il metodo `find()` accetta parametri multipli, uno per ciascuna chiave primaria di colonna.
+In alcuni casi, una chiave primaria può essere costituita da più di una colonna. Per gestire questi casi, il metodo `find()` accetta parametri multipli, uno per ciascuna chiave primaria di colonna.
 
 ### Recuperare i record tramite Doctrine_Query
 
-Quando si vuole recuperare più di un record, bisogna chiamare il metodo `createQuery()` della classe della tabella corrispondente agli oggetti che si vogliono recuperare. Ad esempio, per recuperare oggetti della classe `Articolo`, chiamare `Doctrine_Core::getTable('Articolo')->createQuery()->execute()`.
+Quando si vuole recuperare più di un record, bisogna chiamare il metodo `createQuery()` della classe della tabella corrispondente agli oggetti che si vogliono recuperare. Ad esempio, per recuperare oggetti della classe `Article`, chiamare `Doctrine_Core::getTable('Article')->createQuery()->execute()`.
 
 Il primo parametro del metodo `execute()` è un array di parametri, che è l'array di valori per sostituire tutti i segnaposto trovati nella query.
 
@@ -312,7 +311,7 @@ Una `Doctrine_Query` vuota restituisce tutti gli oggetti della classe. Ad esempi
 Listato 8-12 - Recuperare i record di Doctrine_Query con `createQuery()`--Query vuota
 
     [php]
-    $q = Doctrine_Core::getTable('Articolo')->createQuery();
+    $q = Doctrine_Core::getTable('Article')->createQuery();
     $articoli = $q->execute();
 
     // Verrà generata la seguente query SQL
@@ -379,7 +378,7 @@ Infine, se si vuole che venga restituito solo il primo oggetto, sostituire la ch
 >**TIP**
 >Quando una query `execute()` restituisce un grosso numero di risultati, si potrebbe voler visualizzare solo un sottoinsieme di questi nella risposta. Symfony fornisce una classe per la paginazione chiamata `sfDoctrinePager`, che automatizza la paginazione dei risultati.
 
-### Utilizzo di query SQL raw
+### Utilizzo di query in puro SQL
 
 A volte non si vogliono recuperare oggetti, ma solo risultati sintetici calcolati dal database. Ad esempio, per ottenere l'ultima data di creazione tra tutti gli articoli, non ha senso recuperare tutti gli articoli e ciclare sull'array. Si preferirà chiedere al database di restituire solo il risultato, perché in questo modo verrà saltato il processo di idratazione.
 
@@ -418,12 +417,12 @@ La buona notizia è che Doctrine ha un comportamento `Timestampable` che gestir�
 Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite automaticamente
 
     [php]
-    $commento = new Commento();
-    $commento->setAutore('Fabrizio');
-    $commento->save();
+    $comment = new Commento();
+    $comment->setAutore('Fabrizio');
+    $comment->save();
 
     // Mostra la creazione della data
-    echo $commento->getCreatedAt();
+    echo $comment->getCreatedAt();
       => [data dell'operazione di INSERT nel database]
 
 >**SIDEBAR**
@@ -441,12 +440,12 @@ Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite autom
 >       $this->articoli = $tag->getArticoliPopolari(10);
 >     }
 >
->L'azione crea un oggetto  della classe `Tag` dal parametro della request. Tutto il codice necessario per interrogare il database si trova nel metodo `getArticoliPopolari` di questa classe. Rende l'azione più leggibile e il codice del modello può facilmente venire riutilizzato in un'altra azione.
+>L'azione crea un oggetto  della classe `Tag` dal parametro della richiesta. Tutto il codice necessario per interrogare il database si trova nel metodo `getArticoliPopolari` di questa classe. Rende l'azione più leggibile e il codice del modello può facilmente venire riutilizzato in un'altra azione.
 >
 >Spostare il codice in un posto più appropriato è una delle tecniche della rifattorizzazione. Se la si fa spesso, il codice sarà semplice da mantenere e da comprendere da parte di altri sviluppatori. Una buona regola per capire quando fare refactoring nel livello dei dati, è che il codice di una azione raramente deve contenere più di dieci righe di codice PHP.
 
 Connessioni al database
----------------------------
+------------------------
 
 Il modello del dati è indipendente dal database usato, ma dovrà sicuramente utilizzare un database. Le minime informazioni richieste da symfony per inviare richieste al database del progetto sono il nome, le credenziali e il tipo di database. Queste impostazioni per la connessione possono essere configurate passando il nome della sorgente dati (DSN, data source name) al task `configure:database`:
 
@@ -514,7 +513,7 @@ I metodi generati del modello sono utili ma a volte non sufficienti. Non appena 
 
 Si possono aggiungere nuovi metodi alle classi vuote del modello generate nella cartella `lib/model/doctrine`. Usare `$this` per chiamare i metodi dell'oggetto corrente e usare `self::` per chiamare metodi statici della classe corrente. Ricordarsi che le classi personalizzate ereditano i metodi dalle classi `Base` presenti nella cartella `lib/model/doctrine/base`.
 
-Ad esempio, per l'oggetto `Articolo` generato basandosi sul Listato 8-3, si può aggiungere un metodo magico `__toString()` in modo che faccendo l'echo di un oggetto della classe `Articolo` venga visualizzato il suo titolo, come mostrato nel Listato 8-20.
+Ad esempio, per l'oggetto `Article` generato basandosi sul Listato 8-3, si può aggiungere un metodo magico `__toString()` in modo che faccendo l'echo di un oggetto della classe `Article` venga visualizzato il suo titolo, come mostrato nel Listato 8-20.
 
 Listato 8-20 - Personalizzazione del modello, in `lib/model/doctrine/Articolo.php`
 
@@ -548,17 +547,17 @@ I nuovi metodi sono disponibili nello stesso modo di quelli generati, come mostr
 Listato 8-22 - Usare i metodi personalizzati dei modelli è come usare i metodi generati
 
     [php]
-    $articoli = Doctrine_Core::getTable('Articolo')->getTuttoOrdinatoPerData();
-    foreach ($articoli as $articolo)
+    $articoli = Doctrine_Core::getTable('Article')->getTuttoOrdinatoPerData();
+    foreach ($articoli as $article)
     {
-      echo $articolo;      // Chiamerà il metodo magico __toString()
+      echo $article;      // Chiamerà il metodo magico __toString()
     }
 
 ### Sovrascrivere i metodi esistenti
 
 Se alcuni dei metodi generati nelle classi `Base` non si adattano alle proprie esigenze, si può sovrascriverle nella classe personalizzata. Basta fare in modo di utilizzare la stessa firma nel metodo (cioè lo stesso numero di argomenti).
 
-Ad esempio, il metodo `$article->getCommenti()` restituisce una collezione di oggetti `Commento`, in nessun ordine particolare. Se si vogliono avere i risultati ordinati per data di creazione, con gli ultimi commenti messi all'inizio, allora bisogna creare il metodo `getCommenti()` come mostrato nel Listato 8-23.
+Ad esempio, il metodo `$article->getCommenti()` restituisce una collezione di oggetti `Comment`, in nessun ordine particolare. Se si vogliono avere i risultati ordinati per data di creazione, con gli ultimi commenti messi all'inizio, allora bisogna creare il metodo `getCommenti()` come mostrato nel Listato 8-23.
 
 Listato 8-23 - Sovrascrivere i metodi esistenti del modello, in `lib/model/Articolo.php`
 
@@ -594,7 +593,7 @@ Per abilitare i comportamenti nelle classi del modello, è necessario modificare
         titolo:   string(255)
         contenuto: clob
 
-Dopo aver rigenerato i modelli, il modello `Articolo` ha una colonna slug che è automaticamente impostata con una stringa "amichevole" per le url basata sul titolo.
+Dopo aver rigenerato i modelli, il modello `Article` ha una colonna slug che è automaticamente impostata con una stringa "amichevole" per le url basata sul titolo.
 		
 Alcuni dei comportamenti disponibili per Doctrine sono:
 
@@ -625,7 +624,7 @@ Listato 8-24 - Attributi per le impostazioni del modello
 
 L'attributo `export` controlla quale SQL è esportato al database quando vengono create le tabelle per questo modello. Utilizzando il valore `tables` viene solo esportata la struttura della tabella e non le chiavi esterne, gli indici, ecc.
 
-Le tabelle che contengono contenuto localizzato (cioè, diverse versioni del contenuto, in una tabella correlata per l'internazionalizzazione) devono utilizzare il comportamento I18n (si veda il Capitolo 13 per dettagli), come mostrato nel Listato 8-25.
+Le tabelle che contengono contenuto localizzato (cioè, diverse versioni del contenuto, in una tabella correlata per l'internazionalizzazione) devono utilizzare il comportamento I18n (si veda il capitolo 13 per dettagli), come mostrato nel Listato 8-25.
 
 Listato 8-25 - Il comportamento I18n
 
@@ -636,7 +635,7 @@ Listato 8-25 - Il comportamento I18n
           fields: [titolo, contenuto]
 
 >**SIDEBAR**
->Trattare con più schemi
+>Gestire schemi multipli
 >
 >Si può avere più di uno schema per applicazione. Symfony considererà tutti i file che finiscono con`.yml` presenti nella cartella `config/doctrine`. Se l'applicazione ha molti modelli, o se alcuni modelli non condividono la stessa connessione, si potrà trovare questo approccio molto utile.
 >
@@ -662,7 +661,7 @@ Listato 8-25 - Il comportamento I18n
 >         resource: string(100)
 >
 >
->Entrambi gli schemi condividono la stessa connessione (`doctrine`) e le classi `Articolo` e `Hit` verranno generate sotto la stessa cartella `lib/model/doctrine`. Tutto avviene come se si fosse scritto un solo schema.
+>Entrambi gli schemi condividono la stessa connessione (`doctrine`) e le classi `Article` e `Hit` verranno generate sotto la stessa cartella `lib/model/doctrine`. Tutto avviene come se si fosse scritto un solo schema.
 >
 >Si possono anche avere schemi diversi che usano connessioni diverse (ad esempio, `doctrine` e `doctrine_bis`, da definire `databases.yml`) e associarli a questa connessione:
 >
@@ -689,7 +688,7 @@ Listato 8-25 - Il comportamento I18n
 >         resource: string(100)
 >
 >
->Molte applicazioni usano più di uno schema. In particolare, alcuni plug-in hanno il loro proprio schema per evitare problemi con quelli di altre classi (vedere il capitolo 17 per maggiori dettagli).
+>Molte applicazioni usano più di uno schema. In particolare, alcuni plugin hanno il proprio schema, per evitare problemi con quelli di altre classi (vedere il capitolo 17 per maggiori dettagli).
 
 ### Dettagli delle colonne
 
@@ -748,11 +747,11 @@ Listato 8-28 - Sintassi alternativa per la chiave esterna
           onDelete: CASCADE
           foreignAlias: Articles
 
-### Indexes
+### Indici
 
-Si possono aggiungere indici in un modello, sotto la chiave `indexes:`. Se si vogliono definire indici univoci, bisogna usare la sintassi `type: unique`. Per le colonne che richiedono una dimensione, perché sono colonne di testo, la dimensione dell'indice è specificata nello stesso modo della lunghezza della colonna usando le parentesi. Il Listato 8-30 mostra la sintassi alternativa per gli indici.
+Si possono aggiungere indici in un modello, sotto la chiave `indexes:`. Se si vogliono definire chiavi univoche, bisogna usare la sintassi `type: unique`. Per le colonne che richiedono una dimensione, perché sono colonne di testo, la dimensione dell'indice è specificata nello stesso modo della lunghezza della colonna, usando le parentesi. Il Listato 8-30 mostra la sintassi alternativa per gli indici.
 
-Listato 8-30 - Indici e indici univoci
+Listato 8-30 - Indici e chiavi univoche
 
     [yml]
     Articolo:
@@ -785,7 +784,7 @@ Listato 8-30 - Indici e indici univoci
 
 Symfony supporta l'internazionalizzazione dei contenuti tramite tabelle dedicate. Questo significa che quando si ha un contenuto da internazionalizzare, viene memorizzato in due tabelle separate: una per le colonne che non cambiano e una per le colonne da internazionalizzare.
 
-Listato 8-33 - Meccanismo I18n
+Listato 8-33 - Meccanismo i18n
 
     [yml]
     DbGroup:
@@ -797,7 +796,7 @@ Listato 8-33 - Meccanismo I18n
 
 ### Comportamenti
 
-I comportamenti sono modificatori dei modelli forniti da plug-in, che aggiungono nuove capacità alle classi di Doctrine. Il capitolo 17 parla più approfonditamente dei comportamenti. I comportamenti si possono definire nello schema, elencandoli per ciascuna tabella, insieme con i loro parametri, sotto la chiave `actAs`. Il Listato 8-34 fornisce un esempio estendendo la classe `Articolo` con il comportamento `Sluggable`.
+I comportamenti sono modificatori dei modelli forniti da plugin, che aggiungono nuove capacità alle classi di Doctrine. Il capitolo 17 parla più approfonditamente dei comportamenti. I comportamenti si possono definire nello schema, elencandoli per ciascuna tabella, insieme con i loro parametri, sotto la chiave `actAs`. Il Listato 8-34 fornisce un esempio estendendo la classe `Article` con il comportamento `Sluggable`.
 
 Listato 8-34 - Dichiarazione dei comportamenti
 
@@ -809,7 +808,7 @@ Listato 8-34 - Dichiarazione dei comportamenti
 Non creare il modello due volte
 -------------------------------
 
-Lo svantaggio nell'utilizzo di un ORM è che bisogna definire la struttura dati due volte: una per il database e una per il modello a oggetti. Per fortuna, symfony fornisce dei tool a riga di comando per generare l'uno basato sull'altro, in modo da evitare la duplicazione del lavoro.
+Lo svantaggio nell'utilizzo di un ORM è che bisogna definire la struttura dati due volte: una per il database e una per il modello a oggetti. Per fortuna, symfony fornisce degli strumenti a riga di comando per generare l'uno basato sull'altro, in modo da evitare la duplicazione del lavoro.
 
 ### Creare l'SQL della struttura di un database basandosi su uno schema esistente
 
@@ -824,7 +823,7 @@ Si può usare il file `schema.sql` direttamente per costruire le tabelle. Ad ese
     $ mysqladmin -u root -p create blog
     $ mysql -u root -p blog < data/sql/schema.sql
 
-L'SQL generato è utile anche per ricostruire il database in un altro ambiente o per passare a un altro DBMS.
+Il codice SQL generato è utile anche per ricostruire il database in un altro ambiente o per passare a un altro DBMS.
 
 >**TIP**
 >La riga di comando offre anche un task per popolare il database con i dati caricati da un file di testo. Vedere il capitolo 16 per maggiori informazioni sul task `doctrine:data-load` e i file delle fixture in YAML.
@@ -842,7 +841,7 @@ Dalla struttura del database viene generato un nuovo file `schema.yml` nella car
 Riepilogo
 ---------
 
-Symfony usa Doctrine come ORM e PHP Data Objects per il livello di astrazione del database. Ciò significa che è necessario prima descrivere lo schema relazionale del database in YAML prima di generare le classi del modello a oggetti. Poi, in fase di runtime, utilizzare i metodi dell'oggetto e le classi delle tabelle per recuperare informazioni su un record o un insieme di record. È possibile facilmente sovrascrivere ed estendere il modello aggiungendo metodi alle classi personalizzate. Le impostazioni di connessione sono definite in un file `databases.yml`, che può supportare più di una connessione. E la linea di comando contiene dei task speciali per evitare di duplicare la definizione della struttura. 
+Symfony usa Doctrine come ORM e gli oggetti dei dati di PHP per il livello di astrazione del database. Ciò significa che è necessario prima descrivere lo schema relazionale del database in YAML prima di generare le classi del modello a oggetti. Poi, in fase di runtime, utilizzare i metodi dell'oggetto e le classi delle tabelle per recuperare informazioni su un record o un insieme di record. È possibile sovrascrivere ed estendere facilmente il modello aggiungendo metodi alle classi personalizzate. Le impostazioni di connessione sono definite in un file `databases.yml`, che può supportare più di una connessione. E la linea di comando contiene dei task speciali per evitare di duplicare la definizione della struttura. 
 
 Il livello del modello è il più complesso del framework symfony. Una delle ragioni di questa complessità è che la manipolazione dei dati è una questione intricata. I problemi di sicurezza correlati sono fondamentali per un sito web e non devono essere ignorati. Un'altra ragione è che symfony è più adatto ad applicazioni di medio-grandi dimensioni in contesto enterprise. In tali applicazioni, le automazioni fornite dal modello di symfony possono davvero rappresentare un guadagno di tempo che vale l'investimento per apprendere il suo funzionamento. 
 

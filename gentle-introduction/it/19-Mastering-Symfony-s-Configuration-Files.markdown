@@ -36,7 +36,7 @@ definisce quale azione eseguire, a seconda dell'errore:
     Il valore predefinito è `default/error404`.
   * `login_module` e `login_action`: Azione richiamata quando un utente non autenticato
     tenta di accedere a una pagina definita come `secure` in `security.yml` (si veda il
-    Capitolo 6 per maggiori dettagli). Il valore predefinito è `default/login`.
+    capitolo 6 per maggiori dettagli). Il valore predefinito è `default/login`.
   * `secure_module` e `secure_action`: Azione richiamata quando un utente non ha le
     credenziali necessarie per un'azione. Il valore predefinito è `default/secure`.
   * `module_disabled_module` e `module_disabled_action`: Azione richiamata quando un
@@ -69,7 +69,7 @@ possono trovare queste pagine nella cartella
   * `error.html.php`: Pagina richiamata quando si verifica un errore interno del server in
     ambiente di produzione. In altri ambienti (quando debug è impostato a `true`), in caso
     di errore, symfony mostra l'intera pila di esecuzione con un messaggio di errore
-    esplicito (si veda il Capitolo 16 per maggiori dettagli).
+    esplicito (si veda il capitolo 16 per maggiori dettagli).
   * `unavailable.php`: Pagina richiamata quando un utente richiede una pagina mentre
      l'applicazione è disabilitata (tramite il task `project:disable`). Viene anche
      richiamata quando la cache è in fase di pulizia (cioè tra la chiamata al task
@@ -101,11 +101,11 @@ Tabella 19-1 - Caratteristiche opzionali configurabili in `settings.yml`
 Parametro           | Descrizione                                    | Valore predefinito
 ------------------- | ---------------------------------------------- | ------------------
 `use_database`      | Abilita la gestione del database. Impostare a `false` se non si usa un database. | `true`
-`i18n`              | Abilita la traduzione dell'interfaccia (si veda il Capitolo 13). Impostare a `true` per applicazioni multi-lingua. | `false`
+`i18n`              | Abilita la traduzione dell'interfaccia (si veda il capitolo 13). Impostare a `true` per applicazioni multi-lingua. | `false`
 `logging_enabled`   | Abilita il log degli eventi di symfony. Impostare a `false` se si vogliono disabilitare i log. | `true`
-`escaping_strategy` | Abilita l'escape dell'output (si veda il Capitolo 7). Impostare a `true` se si vuole l'escape dei dati passati ai template. | `true`
-`cache`             | Abilita template caching (see Capitolo 12). Impostare a `true` se almeno un modulo include il file `cache.yml`. Il filtro della cache (`sfCacheFilter`) è abilitato. | `false` in sviluppo, `true` in produzione
-`web_debug`         | Abilita la web debug toolbar per facilitare il debug (si veda il Capitolo 16). Impostare a `true` per mostrare toolbar su ogni pagina. | `true` in sviluppo, `false` in produzione
+`escaping_strategy` | Abilita l'escape dell'output (si veda il capitolo 7). Impostare a `true` se si vuole l'escape dei dati passati ai template. | `true`
+`cache`             | Abilita template caching (see capitolo 12). Impostare a `true` se almeno un modulo include il file `cache.yml`. Il filtro della cache (`sfCacheFilter`) è abilitato. | `false` in sviluppo, `true` in produzione
+`web_debug`         | Abilita la web debug toolbar per facilitare il debug (si veda il capitolo 16). Impostare a `true` per mostrare toolbar su ogni pagina. | `true` in sviluppo, `false` in produzione
 `check_symfony_version` | Abilita la verifica della versione di symfony a ogni richiesta. Impostare a `true` per pulire la cache automaticamente dopo un aggiornamento di symfony. Lasciare a `false` se si pulisce la cache a mano dopo un aggiornamento. | `false`
 `check_lock`        | Abilita il sistema di blocco dell'applicazione, attivato dai task `cache:clear` e `project:disable` (vedere la sezione precedente). Impostare a `true` per fare in modo che tutte le richieste ad applicazioni disabilitate siano rinviate alla pagina `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php`. | `false`
 `compressed`        | Abilita la compressione della risposta in PHP. Impostare a `true` per comprimere il codice HTML in uscita tramite il gestore di compressione di PHP. | `false`
@@ -119,7 +119,7 @@ parti.
 #### Impostazioni dell'escape dell'output
 
 Le impostazioni di escape dell'output controllano il modo in cui il template accede alle
-variabili (vedere Capitolo 7). Il file `settings.yml` include due impostazioni per questa
+variabili (vedere capitolo 7). Il file `settings.yml` include due impostazioni per questa
 caratteristica:
 
   * L'impostazione `escaping_strategy` accetta i valori `true` o `false`.
@@ -128,7 +128,7 @@ caratteristica:
 
 #### Impostazioni del routing
 
-Le impostazioni del routing (vedere Capitolo 9) sono definite in `factories.yml`, sotto
+Le impostazioni del routing (vedere capitolo 9) sono definite in `factories.yml`, sotto
 la chiave `routing`. Il Listato 19-1 mostra la configurazione predefinita del routing.
 
 Listato 19-1 - Impostazioni di configurazione del routing, in `frontend/config/factories.yml`
@@ -172,7 +172,7 @@ Listato 19-1 - Impostazioni di configurazione del routing, in `frontend/config/f
   * Lo schema del routing usa una sua cache, in produzione, per accelerare la conversione
     tra URL esterni e interni. Per impostazione predefinita, questa cache usa il
     filesystem, ma si può usare qualsiasi classe di cache, a patto di dichiarare tale
-    classe e le sue impostazioni nel parametro `cache`. Vedere il Capitolo 15 per la lista
+    classe e le sue impostazioni nel parametro `cache`. Vedere il capitolo 15 per la lista
     delle classi disponibili. Per disattivare la cache del routing in produzione,
     impostare il parametro `debug` a `true`.
 
@@ -198,7 +198,7 @@ Ci sono altri parametri legati al routing, ma questo si trova in `settings.yml`:
 >funzionano solo abilitando il plugin `sfCompat10`.
 
 Le impostazioni di validazione dei form controllano il modo in cui i messaggi di errore
-sono mostrati dagli helper `Validation` (vedere Capitolo 10). Questi errori sono inseriti
+sono mostrati dagli helper `Validation` (vedere capitolo 10). Questi errori sono inseriti
 in tag `<div>` usano `validation_error_ class` come attributo `class` e
 `validation_error_id_prefix` per costruire l'attributo `id`. I valori predefiniti sono
 `form_error` e `error_for_`, quindi gli attributi mostrati da una chiamata all'helper
@@ -212,7 +212,7 @@ per personalizzare tutti i messaggi di errore.
 
 Le impostazioni della cache sono definiti per la maggior parte in `cache.yml`, tranne per
 due impostazioni in `settings.yml`: `cache` abilita la cache e `etag` abilita la gestione
-di ETag sul server (vedere Capitolo 15). Si può anche specificare quale sistema di
+di ETag sul server (vedere capitolo 15). Si può anche specificare quale sistema di
 memorizzazione usare per tutte le cache (della vista, del routing e di i18n) in
 `factories.yml`. Il Listato 19-2 mostra la configurazione predefinita della cache della
 vista.
@@ -259,7 +259,7 @@ dei file per accelerare, ma la si può cambiare.
 
 #### Impostazioni di log
 
-Ci sono due impostazioni di log (vedere Capitolo 16) in `settings.yml`:
+Ci sono due impostazioni di log (vedere capitolo 16) in `settings.yml`:
 
   * `error_reporting` specifica quali eventi inserire nei log di PHP. La sua impostazione
     predefinita è `E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR` per
@@ -281,7 +281,7 @@ percorsi:
 #### Helper predefiniti
 
 Gli helper predefiniti, caricati per ogni template, sono dichiarati nell'impostazione
-`standard_helpers` (vedere Capitolo 7). I predefiniti sono i gruppi `Partial` e `Cache`.
+`standard_helpers` (vedere capitolo 7). I predefiniti sono i gruppi `Partial` e `Cache`.
 Se si usano altri gruppi di helper in tutti i template di un'applicazione, aggiungere i
 loro nomi all'impostazione `standard_helpers` fa risparmiare la dichiarazione ripetuta di
 `use_helper()` in ogni template.
@@ -304,7 +304,7 @@ Definito nell'impostazione `charset`, il valore predefinito (e consigliato) è `
 >Aggiungere le proprie impostazioni
 >
 >Il file `settings.yml` definisce le impostazioni di symfony per un'applicazione. Come
->discusso nel Capitolo 5, quando si vogliono aggiungere nuovi parametri, il posto migliore
+>discusso nel capitolo 5, quando si vogliono aggiungere nuovi parametri, il posto migliore
 >per farlo è il file `frontend/config/app.yml`. Questo file è anche dipendente
 >dall'ambiente e le impostazioni che vi sono definite sono disponibili tramite la classe
 >`sfConfig` col prefisso `app_`.
@@ -325,7 +325,7 @@ Definito nell'impostazione `charset`, il valore predefinito (e consigliato) è `
 Estendere l'autocaricamento
 ---------------------------
 
-L'autocaricamento, spiegato brevemente nel Capitolo 2, evita di dover richiedere ogni
+L'autocaricamento, spiegato brevemente nel capitolo 2, evita di dover richiedere ogni
 volta le classi, se sono inserite in cartelle specifiche. Questo vuol dire che si può
 lasciare che il framework faccia il lavoro per noi, consentendogli di caricare solo le
 classi necessarie nel momento opportuno e solo quando necessario.
@@ -429,7 +429,7 @@ metodo di autocaricamento di symfony (e usa i posti definiti in `autoload.yml`).
 trova una definizione di classe, tutti gli altri callable registrati con
 `spl_autoload_register()` saranno richiamati, finché la classe non viene trovata. Quindi
 si possono aggiungere quanti meccanismi di autocaricamento si vuole, ad esempio per
-fornire sistemi di aggancio con componenti di altri framework (vedere Capitolo 17).
+fornire sistemi di aggancio con componenti di altri framework (vedere capitolo 17).
 
 Struttura dei file personalizzata
 ---------------------------------

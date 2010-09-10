@@ -31,7 +31,7 @@ Tenendo conto di questi svantaggi, symfony utilizza file di configurazione solo 
 
 ### Sintassi YAML e convenzioni di symfony
 
-Per la sua configurazione, symfony utilizza il formato YAML, invece dei più tradizionali INI e XML. YAML mostra la struttura tramite indentazione ed è veloce da scrivere. I vantaggi e le regole di base sono già state mostrate nel Capitolo 1. Comunque, occorre tenere a mente qualche convenzione quando si scrivono file YAML. Questa sezione introduce diverse convenzioni tra le più importanti. Per approfondimenti, visitare il [sito web di YAML](http://www.yaml.org/).
+Per la sua configurazione, symfony utilizza il formato YAML, invece dei più tradizionali INI e XML. YAML mostra la struttura tramite indentazione ed è veloce da scrivere. I vantaggi e le regole di base sono già state mostrate nel capitolo 1. Comunque, occorre tenere a mente qualche convenzione quando si scrivono file YAML. Questa sezione introduce diverse convenzioni tra le più importanti. Per approfondimenti, visitare il [sito web di YAML](http://www.yaml.org/).
 
 Prima di tutto non sono ammessi caratteri di tabulazione in YAML: occorre usare spazi vuoti. I parser YAML non capiscono le tabulazioni, per cui si devono utilizzare spazi vuoti per l'indentazione (la convenzione in symfony è di due spazi), come mostrato nel Listato 5-1.
 
@@ -162,7 +162,7 @@ Listato 5-10 - Gli header di categoria esistono solo per una questione di leggib
 >
 >YAML è solo un'interfaccia per definire impostazioni utilizzate da PHP, per cui le configurazioni YAML finiscono per essere trasformate in PHP. Dopo aver navigato la propria applicazione, se ne può controllare la configurazione in cache (ad esempio in cache/frontend/dev/config/). Si vedranno file PHP corrispondenti alle configurazioni YAML. Altre informazioni sulla cache di configurazione sono disponibili più avanti in questo capitolo.
 >
->La buona notizia è che se non si vuole usare YAML, si può fare la stessa cosa a mano in PHP o con altri formati (come XML o INI). Nel corso di questo libro, vedremo modi alternativi per definire configurazioni senza YAML e impareremo anche come sostituire il gestore di configurazioni di symfony (nel Capitolo 19). Usati largamente, questi trucchi permetteranno di aggirare i file di configurazione o definire il proprio personale formato di configurazione.
+>La buona notizia è che se non si vuole usare YAML, si può fare la stessa cosa a mano in PHP o con altri formati (come XML o INI). Nel corso di questo libro, vedremo modi alternativi per definire configurazioni senza YAML e impareremo anche come sostituire il gestore di configurazioni di symfony (nel capitolo 19). Usati largamente, questi trucchi permetteranno di aggirare i file di configurazione o definire il proprio personale formato di configurazione.
 
 ### Aiuto, un file YAML ha ucciso l'applicazione!
 
@@ -203,16 +203,16 @@ Se la propria applicazione smette improvvisamente di funzionare dopo un cambio d
 Riepilogo sui file di configurazione
 ------------------------------------
 
-La configurazione è suddivisa in file, per oggetto. Questi file contengono definizioni di parametri o impostazioni. Alcuni di tali parametri possono essere sovrascritti a diversi livelli (progetto, applicazione e modulo), altri sono specifici di un certo livello. I prossimi capitoli prenderanno in esame le configurazioni relativamente alle loro finalità principali, mentre il Capitolo 19 esaminerà le configurazioni avanzate.
+La configurazione è suddivisa in file, per oggetto. Questi file contengono definizioni di parametri o impostazioni. Alcuni di tali parametri possono essere sovrascritti a diversi livelli (progetto, applicazione e modulo), altri sono specifici di un certo livello. I prossimi capitoli prenderanno in esame le configurazioni relativamente alle loro finalità principali, mentre il capitolo 19 esaminerà le configurazioni avanzate.
 
 ### Configurazione di progetto
 
 Ci sono pochi file di configurazione predefiniti per il progetto. Di seguito quelli che si trovano nella cartella `progetto/config/`:
 
-  * `ProjectConfiguration.class.php`: Questo è assolutamente il primo file incluso da ogni richiesta o comando. Contiene i percorsi ai file del framework e può essere cambiato per usare un'installazione diversa. Vedere il Capitolo 19 per usi avanzati di questo file.
-  * `databases.yml`: Qui è dove si definisce l'accesso e la connessione al database (host, login, password, nome del database e così via). Vedremo di più su questo nel Capitolo 8. Può essere sovrascritto a livello di applicazione.
-  * `properties.ini`: Questo file gestisce parametri utilizzati a linea di comando, inclusi il nome del progetto e le impostazioni di connessione a server remoti. Vedere il Capitolo 16 per un sommario delle caratteristiche di utilizzo di questo file.
-  * `rsync_exclude.txt`: Questo file specifica quali cartelle e file devono essere esclusi dalla sincronizzazione tra server. È discusso nel Capitolo 16.
+  * `ProjectConfiguration.class.php`: Questo è assolutamente il primo file incluso da ogni richiesta o comando. Contiene i percorsi ai file del framework e può essere cambiato per usare un'installazione diversa. Vedere il capitolo 19 per usi avanzati di questo file.
+  * `databases.yml`: Qui è dove si definisce l'accesso e la connessione al database (host, login, password, nome del database e così via). Vedremo di più su questo nel capitolo 8. Può essere sovrascritto a livello di applicazione.
+  * `properties.ini`: Questo file gestisce parametri utilizzati a linea di comando, inclusi il nome del progetto e le impostazioni di connessione a server remoti. Vedere il capitolo 16 per un sommario delle caratteristiche di utilizzo di questo file.
+  * `rsync_exclude.txt`: Questo file specifica quali cartelle e file devono essere esclusi dalla sincronizzazione tra server. È discusso nel capitolo 16.
   * `schema.yml`: Si tratta del file di configurazione per l'accesso ai dati usato da Propel e Doctrine (gli ORM di symfony). Esso è usato per far funzionare le librerie dell'ORM con le classi di symfony e i dati del progetto. Il file `schema.yml` contiene una rappresentazione del modello relazionale del progetto. Per Doctrine, il file è in `config/doctrine/`.
 
 Questi file sono usati per lo più da componenti esterni o dalla linea di comando o devono essere processati prima che il framework carichi il programma di analisi YAML. Ecco perché alcuni di essi non usano il formato YAML.
@@ -239,7 +239,7 @@ Dopo aver definito il nome dell'applicazione (`frontend`), l'ambiente (`prod`) e
   * `$configuration->getRootDir()`: La cartella radice del progetto (di norma dovrebbe rimanere come è, a meno che non si voglia cambiare la struttura delle cartelle). 
   * `$configuration->getApplication()`: Nome dell'applicazione nel progetto. Necessario per calcolare i percorsi dei file.
   * `$configuration->getEnvironment()`: Nome dell'ambiente (`prod`, `dev` o qualsiasi altro ambiente specifico creato ad hoc per il progetto). Determinerà quali sono le impostazioni di configurazione da utilizzare. Gli ambienti sono spiegati più avanti in questo capitolo. 
-  * `$configuration->isDebug()`: Attivazione della modalità di debug (vedere il Capitolo 16 per i dettagli). 
+  * `$configuration->isDebug()`: Attivazione della modalità di debug (vedere il capitolo 16 per i dettagli). 
 
 Se si vuole cambiare uno di questi valori, probabilmente occorrerà di un front controller addizionale. Il prossimo capitolo spiegherà più nel dettaglio i front controller e come crearne di nuovi. 
 
@@ -248,12 +248,12 @@ Se si vuole cambiare uno di questi valori, probabilmente occorrerà di un front 
 La configurazione dell'applicazione principale è memorizzata in file che si trovano nella cartella `progetto/apps/frontend/config/`: 
 
   * `app.yml`: Questo file dovrebbe contenere configurazioni specifiche all'applicazione; ad esempio variabili globali che definiscono business logic, che non hanno bisogno di essere memorizzate nel db. Tasse, costi di spedizione, indirizzi e-mail sono memorizzati spesso in questo file, che di base è vuoto.
-  * `frontendConfiguration.class.php`: questa classe si occupa del bootstrap dell'applicazione, quindi fa tutte le inizializzazioni di base necessarie all'applicazione per partire. È qui che si può definire una struttura di cartelle particolare, oppure delle costanti specifiche (il Capitolo 19 ne fornirà maggiori dettagli). Estende la classe `ProjectConfiguration`. 
-  * `factories.yml`: symfony definisce le proprie classi per gestire le viste, la richiesta, la risposta, le sessioni e così via. Se invece si vogliono utilizzare le proprie classi personali, questo file è i posto in cui definirle (maggiori informazioni nel Capitolo 17). 
-  * `filters.yml`: I filtri sono porzioni di codice eseguiti per ogni richiesta. Qui è dove definisci quali filtri devono essere processati, e può essere sovrascritto in ogni modulo. Il Capitolo 6 fornisce maggiori dettagli sui filtri. 
-  * `routing.yml`: Le regole di routing, che permettono di trasformare un URL illeggibile in uno più "intelligente", sono definite in questo file. Per nuove applicazioni, esistono poche regole predefinite. Il Capitolo 9 è dedicato ai link e al routing.
-  * `settings.yml`: Le impostazioni principali di un'applicazione symfony sono definiti in questo file. Qui si specifica se la propria applicazione è internazionalizzata, qual è la lingua di default, il timeout per le richieste e se la cache è attiva o meno. Cambiando una linea di questo file si può "spegnere" la propria applicazione, per poterla aggiornare o manutenere. Le impostazioni più comuni e il loro utilizzo sono approfonditi nel Capitolo 19. 
-  * `view.yml`: La struttura predefinita della vista (nome del layout, fogli di stile e JavaScript da includere di default, content-type di default e così via) è definita in questo file. Il Capitolo 7 approfondirà questo file. Queste impostazioni possono essere sovrascritte in ogni modulo. 
+  * `frontendConfiguration.class.php`: questa classe si occupa del bootstrap dell'applicazione, quindi fa tutte le inizializzazioni di base necessarie all'applicazione per partire. È qui che si può definire una struttura di cartelle particolare, oppure delle costanti specifiche (il capitolo 19 ne fornirà maggiori dettagli). Estende la classe `ProjectConfiguration`. 
+  * `factories.yml`: symfony definisce le proprie classi per gestire le viste, la richiesta, la risposta, le sessioni e così via. Se invece si vogliono utilizzare le proprie classi personali, questo file è i posto in cui definirle (maggiori informazioni nel capitolo 17). 
+  * `filters.yml`: I filtri sono porzioni di codice eseguiti per ogni richiesta. Qui è dove definisci quali filtri devono essere processati, e può essere sovrascritto in ogni modulo. Il capitolo 6 fornisce maggiori dettagli sui filtri. 
+  * `routing.yml`: Le regole di routing, che permettono di trasformare un URL illeggibile in uno più "intelligente", sono definite in questo file. Per nuove applicazioni, esistono poche regole predefinite. Il capitolo 9 è dedicato ai link e al routing.
+  * `settings.yml`: Le impostazioni principali di un'applicazione symfony sono definiti in questo file. Qui si specifica se la propria applicazione è internazionalizzata, qual è la lingua di default, il timeout per le richieste e se la cache è attiva o meno. Cambiando una linea di questo file si può "spegnere" la propria applicazione, per poterla aggiornare o manutenere. Le impostazioni più comuni e il loro utilizzo sono approfonditi nel capitolo 19. 
+  * `view.yml`: La struttura predefinita della vista (nome del layout, fogli di stile e JavaScript da includere di default, content-type di default e così via) è definita in questo file. Il capitolo 7 approfondirà questo file. Queste impostazioni possono essere sovrascritte in ogni modulo. 
 
 >**TIP**
 >Tutti i file di configurazione di symfony sono descritti in dettaglio nella [Guida di riferimento a symfony](http://www.symfony-project.org/reference/1_4/it/).
@@ -265,15 +265,15 @@ Applicazioni internazionalizzate possono mostrare le pagine in diverse lingue. Q
   * `factories.yml` della cartella `config/` dell'applicazione: Questo file definisce il factory i18n e le opzioni generali di traduzione, come ad esempio la cultura predefinita per la traduzione, se le traduzioni sono in un file o nel database e il loro formato. 
   * File di traduzione nella cartella `i18n/` dell'applicazione: Questi sono fondamentalmente dei dizionari, che forniscono la traduzione delle parole utilizzate nelle template dell'applicazione in modo che le pagine mostrino testo tradotto quando un utente cambia la lingua.
   
-Nota che l'attivazione delle feature i18n è impostata nel file `settings.yml`. Approfondimenti a tale proposito nel Capitolo 13.
+Nota che l'attivazione delle feature i18n è impostata nel file `settings.yml`. Approfondimenti a tale proposito nel capitolo 13.
 
 #### Configurazioni addizionali dell'applicazione
 
 Un secondo insieme di file di configurazione è posizionato nella cartella di installazione di symfony in `sfConfig::get('sf_symfony_lib_dir')/config/config/`) e non figura nella cartella di configurazione delle applicazioni. Tali impostazioni raramente hanno bisogno di essere modificate, oppure sono globali a tutti i progetti. Comunque, se si avesse bisogno di modificarle, creare un file vuoto nella cartella `progetto/apps/frontend/config/` e sovrascrivere i parametri da cambiare. Le impostazioni definite nell'applicazione hanno sempre la precedenza rispetto a quelle definite nel framework. Di seguito, i file di configurazione nella cartella `config/` dell'installazione di symfony: 
 
-  * `autoload.yml`: Questo file contiene le impostazioni della funzione di autoloading. Tale funzione ti esonera dall'includere classi personalizzate se esse si trovano in una cartella specifica. Questa funzione è descritta nel Capitolo 19.
-  * `core_compile.yml`: Queste sono liste di classi da includere per far partire un'applicazione. Queste classi vengono poi concatenate in un file PHP ottimizzato senza commenti, che velocizzerà l'esecuzione minimizzando le operazioni di accesso (è caricato un solo file invece di quaranta per ogni richiesta). Questo risulta specialmente utile se non utilizzi un acceleratore PHP. Le tecniche di ottimizzazione sono descritte nel Capitolo 18. 
-  * `config_handlers.yml`: Qui si possono aggiungere o modificare i gestori usati per processare ogni file di configurazione. Il Capitolo 19 fornisce maggiori dettagli in merito.
+  * `autoload.yml`: Questo file contiene le impostazioni della funzione di autoloading. Tale funzione ti esonera dall'includere classi personalizzate se esse si trovano in una cartella specifica. Questa funzione è descritta nel capitolo 19.
+  * `core_compile.yml`: Queste sono liste di classi da includere per far partire un'applicazione. Queste classi vengono poi concatenate in un file PHP ottimizzato senza commenti, che velocizzerà l'esecuzione minimizzando le operazioni di accesso (è caricato un solo file invece di quaranta per ogni richiesta). Questo risulta specialmente utile se non utilizzi un acceleratore PHP. Le tecniche di ottimizzazione sono descritte nel capitolo 18. 
+  * `config_handlers.yml`: Qui si possono aggiungere o modificare i gestori usati per processare ogni file di configurazione. Il capitolo 19 fornisce maggiori dettagli in merito.
   
 ### Configurazione del modulo
 
@@ -281,10 +281,10 @@ Per impostazione predefinita, un modulo non ha una configurazione specifica. Ma,
 
 Come si può immaginare, le impostazioni di un modulo devono essere nella cartella `progetto/apps/frontend/modules/mymodule/config/`. I file interessati sono i seguenti: 
 
-  * `generator.yml`: Per i moduli generati secondo una tabella di database (scaffolding e amministrazione), questo file descrive il modo in cui le righe e campi devono essere visualizzati e quali tipi di interazioni sono proposti all'utente (filtri, ordinamenti, pulsanti e così via). Il Capitolo 14 approfondirà l'argomento. 
-  * `module.yml`: Questo file contiene parametri specifici per un modulo (equivalente a `app.yml`, ma a livello di modulo) e la configurazione dell'azione. Il Capitolo 6 fornisce maggiori dettagli in merito.
-  * `security.yml`: Questo file permette di impostare restrizioni per le azioni. Qui si può impostare il fatto che una certa pagina sia visibile solo agli utenti registrati, oppure a un sottoinsieme di utenti con permessi speciali. Il Capitolo 6 fornisce maggiori dettagli in merito. 
-  * `view.yml`: Questo file contiene le configurazioni delle viste di una o tutte le azioni di un modulo. Permette di sovrascrivere `view.yml` del livello dell'applicazione ed è descritto nel Capitolo 7. 
+  * `generator.yml`: Per i moduli generati secondo una tabella di database (scaffolding e amministrazione), questo file descrive il modo in cui le righe e campi devono essere visualizzati e quali tipi di interazioni sono proposti all'utente (filtri, ordinamenti, pulsanti e così via). Il capitolo 14 approfondirà l'argomento. 
+  * `module.yml`: Questo file contiene parametri specifici per un modulo (equivalente a `app.yml`, ma a livello di modulo) e la configurazione dell'azione. Il capitolo 6 fornisce maggiori dettagli in merito.
+  * `security.yml`: Questo file permette di impostare restrizioni per le azioni. Qui si può impostare il fatto che una certa pagina sia visibile solo agli utenti registrati, oppure a un sottoinsieme di utenti con permessi speciali. Il capitolo 6 fornisce maggiori dettagli in merito. 
+  * `view.yml`: Questo file contiene le configurazioni delle viste di una o tutte le azioni di un modulo. Permette di sovrascrivere `view.yml` del livello dell'applicazione ed è descritto nel capitolo 7. 
 
 La maggior parte dei file di configurazione dei moduli offrono la possibilità di definire parametri per tutte le viste o tutte le azioni di un modulo, oppure per un loro sottoinsieme. 
 
@@ -521,7 +521,7 @@ Listato 5-18 - Ciò che symfony produce quando analizza `settings.yml`
       'sf_escaping_method' => 'ESC_SPECIALCHARS',
     ));
 
-Il significato dei parametri del file `settings.yml` è spiegato nel Capitolo 19.
+Il significato dei parametri del file `settings.yml` è spiegato nel capitolo 19.
 
 ### Impostazioni dell'applicazione personalizzati e `app.yml`
 
@@ -570,7 +570,7 @@ Per sapere se una carta di credito è accettata nell'ambiente corrente, controll
 >**TIP**
 >Ogni qualvolta si è tentati di definire una costante o un parametro in uno script, considerare se non possa essere meglio metterlo nel file `app.yml`. È un posto molto conveniente per memorizzare i parametri dell'applicazione.
 
-Quando servono parametri personalizzati e diventa difficile utilizzare la sintassi di `app.yml`, si può definire una propria sintassi personalizzata. In questo caso, si può memorizzare la configurazione in un nuovo file, interpretato da un nuovo gestore. Il Capitolo 19 fornisce maggiori informazioni sui gestori di configurazione. 
+Quando servono parametri personalizzati e diventa difficile utilizzare la sintassi di `app.yml`, si può definire una propria sintassi personalizzata. In questo caso, si può memorizzare la configurazione in un nuovo file, interpretato da un nuovo gestore. Il capitolo 19 fornisce maggiori informazioni sui gestori di configurazione. 
 
 Suggerimenti per ottenere di più dai file di configurazione
 -----------------------------------------------------------

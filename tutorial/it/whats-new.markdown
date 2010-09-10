@@ -84,7 +84,7 @@ I primi tre sostituiscono i widget `sfWidgetFormI18nSelectLanguage`,
 `sfWidgetFormI18nSelectCurrency` e `sfWidgetFormI18nSelectCountry`, che ora
 sono deprecati.
 
-### Interfaccia Fluida
+### Interfaccia fluida
 
 I widget ora implementano un'interfaccia fluida per i seguenti metodi:
 
@@ -151,7 +151,7 @@ Sono stati aggiunti i seguenti validatori:
 
  * `sfValidatorI18nChoiceTimezone`
 
-### Messaggi di Errore Predefiniti
+### Messaggi di errore predefiniti
 
 Si possono ora definire dei messaggi di errore predefiniti in modo globale,
 usando il metodo `sfForm::setDefaultMessage()`:
@@ -180,7 +180,7 @@ determinato nel modo seguente:
  * Se non definito, usa il messaggio predefinito dal validatore stesso
    (quando il messaggio è stato aggiunto col metodo `addMessage()`).
 
-### Interfaccia Fluida
+### Interfaccia fluida
 
 I validatori ora implementano un'interfaccia fluida per i seguenti metodi:
 
@@ -292,7 +292,7 @@ nel suo metodo `configure()`:
 Richiamando `disableLocalCSRFProtection()`, la protezione CSRF sarà
 disabilitata, anche se si passa una stringa segreta CSRF all'istanza del form.
 
-### Interfaccia Fluida
+### Interfaccia fluida
 
 Alcuni metodi di `sfForm` ora implementano un'interfaccia fluida:
 `addCSRFProtection()`, `setValidators()`, `setValidator()`, `setValidatorSchema()`,
@@ -315,7 +315,7 @@ eseguire `symfony cc` dopo l'aggiunta di una nuova classe al progetto.
 Test
 ----
 
-### Accelerazione dei Test
+### Accelerazione dei test
 
 Quando si hanno molti test, lanciarli tutti dopo ogni modifica può portar via
 molto tempo, specialmente quando alcuni test falliscono. Questo perché
@@ -335,7 +335,7 @@ passeranno e saranno quindi rimossi dalle esecuzioni successive. Quando
 tutti i test passano di nuovo, tutti i test vengono eseguiti... si può
 quindi ripetere a piacere.
 
-### Test Funzionali
+### Test funzionali
 
 Quando una richiesta genera un'eccezione, il metodo `debug()` del tester della
 risposta ora manda in output una rappresentazione testuale leggibile
@@ -354,7 +354,7 @@ Inoltre sostitusce il metodo `contains()`, meno potente:
       matches('!/Ho \d+ mele/i')->  // si possono usare anche i modificatori
     end();
 
-### Output XML Compatibile con JUnit
+### Output XML compatibile con JUnit
 
 I task dei test ora possono inviare in output un file XML compatibile con
 JUnit, usando l'opzione `--xml`:
@@ -369,7 +369,7 @@ dei fallimenti:
 
     $ php symfony test:all -t
 
-### Colorazione dell'Output di Lime
+### Colorazione dell'output di Lime
 
 Da symfony 1.3/1.4, lime si comporta bene riguardo alla colorazione. Questo vuol
 dire che si può omettere quasi sempre il secondo parametro del costruttore
@@ -623,12 +623,12 @@ Il task `generate:app` ora cerca uno scheletro di cartelle nella cartella
 `data/skeleton/app` del progetto, prima di usare lo scheletro predefinito
 distribuito con symfony.
 
-### Invio di Email da un Task
+### Invio di email da un task
 
 Si può ora inviare facilmente una email da un task, usando il metodo
 `getMailer()`.
 
-### Usare il Routing in un Task
+### Usare il routing in un task
 
 Si può ora recuperare facilmente l'oggetto routing da un task, usando
 il metodo `getRouting()`.
@@ -642,7 +642,7 @@ Quando viene lanciata un'eccezione durante un autoload, symfony ora la
 cattura e mostra l'errore all'utente. Questo dovrebbe risolvere il problema
 delle pagine bianche.
 
-### Web Debug Toolbar
+### Web debug toolbar
 
 Se possibile, la web debug toolbar ora viene mostrata anche sulle pagine
 delle eccezioni, nell'ambiente di sviluppo.
@@ -730,7 +730,7 @@ in `ProjectConfiguration`:
 Routing
 -------
 
-### Richieste Predefinite
+### Richieste predefinite
 
 La richiesta predefinita `\d+` è ora applicata a `sfObjectRouteCollection`
 solo quando l'opzione `column` è il predefinito `id`. Questo vuol dire
@@ -752,7 +752,7 @@ Consente di registrare dei parametri predefiniti per ogni rotta generata:
 CLI
 ---
 
-### Colorazione dell'Otput 
+### Colorazione dell'output 
 
 Symfony prova a indovinare se la console supporta i colori, quando si usano
 gli strumenti della CLI. Ma a volte symfony si sbaglia; ad esempio quando si
@@ -864,7 +864,7 @@ Doctrine è stato aggiornato alla versione 1.2. Si visiti il sito di Doctrine
 per ulteriori informazioni sul suo aggiornamento
 (http://www.doctrine-project.org/documentation/1_2/en).
 
-### Generazione delle Classi dei Form
+### Generazione delle classi dei form
 
 È ora possibile specificare delle opzioni aggiuntive per symfony nei file YAML
 degli schema di Doctrine. Abbiamo aggiunto alcune opzioni per disabilitare la
@@ -888,13 +888,13 @@ nel modo seguente:
           type: integer
           primary: true
 
-### Ereditarietà delle Classi dei Form
+### Ereditarietà delle classi dei form
 
 Quando si generano form dai modelli, i modelli contengono ereditarietà.
 Le classi figlie generate rispetteranno l'ereditarietà e genereranno
 form che seguono la stessa struttura di ereditarietà.
 
-### Nuovi Task
+### Nuovi task
 
 Abbiamo introdotto alcuni nuovi task che aiutano nello sviluppo con Doctrine.
 
@@ -952,7 +952,7 @@ equivale a eseguire questi comandi:
     $ php symfony doctrine:insert-sql
     $ php symfony doctrine:data-load
 
-#### Altri Build
+#### Altri build
 
 Il nuovo task `doctrine:build` consente di specificare esattamente cosa si
 vuole che symfony e Doctrine costruiscano. Questo task replica la
@@ -1009,7 +1009,7 @@ file in TextMate.
 Questo nuovo task genererà automaticamente delle classi per una completa
 migrazione, in base agli schemi vecchi e a quelli nuovi.
 
-### Setter e Getter di Date
+### Setter e getter di date
 
 Abbiamo aggiunto nuovi metodi per recuperare i valori di date o timestamp
 di Doctrine come istanze di oggetti DateTime di PHP.
@@ -1038,7 +1038,7 @@ si può trarre vantaggio dalla nuova opzione `dry-run`.
 
     $ php symfony doctrine:migrate --dry-run
 
-### Output dei Task DQL come Tabelle di Dati
+### Output dei task DQL come tabelle di dati
 
 Quando si eseguiva il comando `doctrine:dql`, questo mostrava i dati solo
 come YAML. Abbiamo aggiunto una nuova opzione `--table`. Tale opzione consente
@@ -1181,7 +1181,7 @@ L'uso di una diversa versione di Doctrine è facile, basta impostare
       sfConfig::set('sf_doctrine_dir', '/path/to/doctrine/lib');
     }
 
-Web Debug Toolbar
+Web debug toolbar
 -----------------
 
 ### `sfWebDebugPanel::setStatus()`
@@ -1207,7 +1207,7 @@ all'opzione `request_parameters`:
 Partial
 -------
 
-### Miglioramenti agli Slot
+### Miglioramenti agli slot
 
 Gli helper `get_slot()` e `include_slot()` ora accettano un secondo
 parametro per specificare il contenuto predefinito dello slot, da
@@ -1254,7 +1254,7 @@ Due parametri sono disponibili in `factories.yml`:
     In pratica, dice se la cache della pagina debba essere dipendente
     dal nome dell'host.
 
-### Più Cache
+### Più cache
 
 Il gestore della cache delle viste non rifiuta più di mettere in cache
 in presenza di valori in `$_GET` o `$_POST`.La logica ora conferma solo

@@ -1,15 +1,15 @@
 Capitolo 2 - Esplorazione del codice di symfony
 ===============================================
 
-In un primo momento l'esplorazione del codice alla base di un applicativo scritto utillizzando symfony può sembrare scoraggiante. 
-Il codice è costituito da molteplici directory e script, i vari file sono un mix di classi PHP, HTML e a volte una combinazione di entrambi. 
-Capiterà anche di trovare riferimenti a classi che non sono presenti all'interno della directory 
-dell'applicativo oppure constatare che si può arrivare ad una profondità delle directory di ben sei livelli. 
+In un primo momento l'esplorazione del codice alla base di un applicativo scritto utilizzando symfony può sembrare scoraggiante. 
+Il codice è costituito da molteplici cartelle e script, i vari file sono un mix di classi PHP, HTML e a volte una combinazione di entrambi. 
+Capiterà anche di trovare riferimenti a classi che non sono presenti all'interno della  cartella 
+dell'applicativo oppure constatare che si può arrivare a una profondità delle cartelle di ben sei livelli. 
 Ma una volta compresa la ragione di questa apparente complessità, ci si sentirà talmente a proprio agio che non si vorrebbe assolutamente cambiare la struttura 
 dell'applicativo symfony con nessun'altra.
 
 Pattern MVC
----------------
+-----------
 
 Symfony è basato sul classico web design pattern conosciuto come architettura MVC, che consiste di tre livelli:
 
@@ -35,15 +35,15 @@ Figure 2-1 - Il pattern MVC
 ### I livelli dell'MVC
 
 Per comprendere i vantaggi del pattern MVC, verrà illustrato di seguito come convertire un'applicazione base PHP 
-nel sudetto pattern architetturale. 
-Un perfetto esempio e' dato da una lista di post di un web blog.
+nel suddetto pattern architetturale. 
+Un perfetto esempio è dato da una lista di post di un web blog.
 
 #### Programmazione "piatta"
 
 Se si volesse mostrare una lista di record estratti da un database utilizzando un unico script PHP 
 si utilizzerebbe del codice simile a quello mostrato nel Listato 2-1
 
-Listing 2-1 - Un'unico Script
+Listato 2-1 - Un'unico Script
 
 
     [php]
@@ -91,9 +91,9 @@ I maggiori problemi che si possono incontrare utilizzando questo codice e questo
 
   * Non è presente un controllo degli errori (cosa succederebbe se la connessione al db fallisse?)
   * Codice HTML e codice PHP mischiati e intrecciati tra di loro.
-  * Il codice e' legato al database MYSQL.
+  * Il codice è legato al database MYSQL.
 
-#### Isolare la Presentazione
+#### Isolare la presentazione
 
 Le chiamate `echo` e `printf` presenti nel Listato 2-1 rendono il codice difficile da leggere. 
 Diventerebbe un'operazione onerosa e complessa modificare il codice HTML per migliorarne la presentazione. 
@@ -149,8 +149,8 @@ Listato 2-3 - La Vista, in `view.php`
     </html>
 
 Una buona regola per determinare se la vista è sufficientemente chiara e pulita dal punto di vista del codice che la compone
- è controllare che essa contenga soltanto un minimo quantitativo di codice PHP, in modo tale che sia facilmente comprensibile ad un designer HTML 
- che non abbia conoscenza del linguaggio PHP.
+è controllare che essa contenga soltanto un minimo quantitativo di codice PHP, in modo tale che sia facilmente comprensibile a un designer HTML 
+che non abbia conoscenza del linguaggio PHP.
 Le espressioni PHP più comuni presenti nelle vista sono `echo`, `if/endif`, `foreach/endforeach`. 
 Inoltre non dovrebbe esserci codice PHP che stampi codice HTML.
 
@@ -197,7 +197,7 @@ Listato 2-4 - Il modello, in `model.php`
       return $posts;
     }
 
-Il controllore rivisto e riscritto e' mostrato nel Listato 2-5
+Il controllore rivisto e riscritto è mostrato nel Listato 2-5
 
 Listato 2-5,- Il controllore, rivisto, in `index.php`
 
@@ -213,10 +213,10 @@ Listato 2-5,- Il controllore, rivisto, in `index.php`
     // Richeista della vista
     require('view.php');
 
-In questo modo diventa piu semplice leggere il codice del controllore.
+In questo modo diventa più semplice leggere il codice del controllore.
 Il suo unico scopo è quello di ottenere i dati dal modello e passarli alla vista.
 In un'applicazione più complessa, il controllore controlla anche con la richiesta, la sessione utente, l'autenticazione, e così via.
-L'utilizzo di nomi espliciti per le funzioni del modello rende adirittura non necessario l'utilizzo dei commenti 
+L'utilizzo di nomi espliciti per le funzioni del modello rende addirittura non necessario l'utilizzo dei commenti 
 nel controllore.
 
 Lo script del modello è dedito all'accesso dei dati e può essere organizzato di conseguenza.
@@ -232,7 +232,7 @@ La logica che gestisce i dati appartiene al modello, la gestione del codice di p
 L'utilizzo di altri pattern di design possono rendere ancora più semplice l'esperienza di sviluppo e scrittura del codice dell'applicativo.
 I livelli modello, vista e controllore possono al loro volta essere suddivisi.
 
-### Astrazione del Database
+### Astrazione del database
 
 Il livello del modello può essere suddiviso a sua volta in un livello di accesso ai dati e un livello di astrazione del database.
 In questo modo, le funzioni di accesso ai dati non utilizzeranno query dipendenti dal tipo di database scelto, 
@@ -300,20 +300,20 @@ che richiedano accesso al database.
 
 >**NOTE**
 >Gli esempi mostrati nei Listati 2-6 e 2-7 non risultano ancora del tutto soddisfacenti in quanto ci sarebbe ancora del codice da scrivere
->per poter ottenere una completa e reale astrazione del database (astrazione del codice SQL attravero un costruttore di query,
-> spostamento di tutte le funzioni in una classe, e cos via). Ma lo scopo di questa guida non e' mostrare come si debba scrivere
-> tutto questo codice, e verrà mostrato nel Capitolo 8 come symfony fornisce già elegantemente questa astrazione.
+>per poter ottenere una completa e reale astrazione del database (astrazione del codice SQL attraverso un costruttore di query,
+> spostamento di tutte le funzioni in una classe, e così via). Ma lo scopo di questa guida non è mostrare come si debba scrivere
+> tutto questo codice, e verrà mostrato nel capitolo 8 come symfony fornisce già elegantemente questa astrazione.
 
 
 ### Elementi della Vista
 
 Il livello della vista può beneficiare a sua volta di una separazione interna del codice.
-Una pagina web contiene spesso degli elementi presenti e consistentia in tutto l'applicativo: gli header della pagina
-il layout grafico, il footer, e il menu' di navigazione. In generale soltanto le parti interne della pagina cambiano.
-Per questo motivo la vista e' separata in altri due livelli: layout e template.
-Il layout e' solitamente globale nell'applicativo o comunque accomuna un gruppo di pagine.
+Una pagina web contiene spesso degli elementi coerenti in tutto l'applicativo: gli header della pagina
+il layout grafico, il footer e il menù di navigazione. In generale soltanto le parti interne della pagina cambiano.
+Per questo motivo la vista è separata in altri due livelli: layout e template.
+Il layout è solitamente globale nell'applicativo o comunque accomuna un gruppo di pagine.
 Il template si occupa di mostrare i valori delle variabili messe a disposizione dal controllore.
-E' necessaria della logica per poter far in modo che queste componenti lavorino insieme, e questa logica di presentazione e'
+È necessaria della logica per poter far in modo che queste componenti lavorino insieme, e questa logica di presentazione è
 gestita appunto dalla vista.
 In base a questi principi, la parta di vista del Listato 2-3 può essere separate in tre parti,
 come mostrato dai Listati 2-8, 2-9 e 2-10.
@@ -354,37 +354,37 @@ Listato 2-10 - La parte di layout della vista
       </body>
     </html>
 
-#### Azioni e Front Controller
+#### Azioni e front controller
 
 Il controllore mostrato nell'esempio precedente non effettua molte operazioni, ma in una applicazione web reale, esso deve svolgere molti compiti. 
 Un compito importante e comune a tutti i controllori dell'applicativo.
-Un compito comune include la gestione della request, sicurezza, caricamento delle configurazuone e faccende simili.
+Un compito comune include la gestione della richiesta, sicurezza, caricamento delle configurazione e faccende simili.
 Questo è il motivo per cui spesso il controllore è suddiviso in un front controller, che è unico in tutto l'applicativo, e azioni
 che contengono solamente il codice del controllore specifico di una pagina.
 
 Uno dei grandi vantaggi nell'avere un front controller è che viene offerto un unico punto di accesso per tutto l'applicativo.
-Qualora si decidesse di rendere inacessibile l'applicativo, basterà semplicemente modificare lo script del front controller.
+Qualora si decidesse di rendere inaccessibile l'applicativo, basterà semplicemente modificare lo script del front controller.
 In un'applicativo sprovvisto di front controller, si dovrebbe intervenire su ogni singolo controllore per poter ottenere lo stesso effetto.
 
-#### Orientamento agli Oggetti
+#### Orientamento agli oggetti
 
 Tutti gli esempi mostrati in precedenza sono stati scritti con un paradigma di programmazione procedurale.
 Le possibilità offerte dalla OOP dei moderni linguaggi di programmazione rende la programmazione stessa più semplice, dato che gli oggetti incapsulano logica,
 ereditano uno dall'altro e forniscono un chiaro e pulito utilizzo dei nomi.
 
-Implementare un'architettura MVC con un linguaggio che non sia object-oriented produrrebbe problematiche nella gestione dei namespace, duplicazione del codice
+Implementare un'architettura MVC con un linguaggio che non sia orientato agli oggetti produrrebbe problematiche nella gestione dei namespace, duplicazione del codice
 e supratutto un codice difficile da leggere.
 
 Lo sviluppo orientato agli oggetti permette agli sviluppatori di utilizzare strumenti e componenti come l'oggetto vista, l'oggetto controllore
 le classi di modello e trasformare tutte le funzioni degli esempi precedenti in metodi.
-E' una necessita' per un'architettura MVC.
+È una necessità per un'architettura MVC.
 
 
 
 >**TIP**
 > Se si volesse approfondire meglio i vari design pattern per un applicativo web in un contesto object-oriented
 > si consiglia la lettura di Patterns of Enterprise Application Architecture by Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).
->Il codice d'esempio presente nel libro di Fowler e' scritto in Java o C#, ma e' piuttosto comprensibile anche ad uno sviluppatore PHP.
+>Il codice d'esempio presente nel libro di Fowler è scritto in Java o C#, ma è piuttosto comprensibile anche a uno sviluppatore PHP.
 
 ### Implementazione del pattern MVC di symfony
 
@@ -412,30 +412,30 @@ Sette script, diversi file da aprire e modificare ogni volta che si crea una pag
 Ciò nonostante symfony rende le cose semplici. Symfony implementa il meglio dell'architettura MVC
 in modo da rendere veloce e indolore lo sviluppo di una applicazione.
 
-Per prima cosa, il Front Controlle e il layout sono gli stessi per tutte le azioni dell'applicativo.
+Per prima cosa, il Front Controller e il layout sono gli stessi per tutte le azioni dell'applicativo.
 È possibile avere controllori e layout multipli, ma è necessario solo uno di essi.
-Il Front controller e' un componente puramente in logica MVC e non ci sarà mai l'esigenza di scriverne uno perche'
+Il Front controller è un componente puramente in logica MVC e non ci sarà mai l'esigenza di scriverne uno perché
 symfony si preoccuperà di generarlo.
 
 L'altra buona notizia è che le classi del modello sono anch'esse generate automaticamente,
-basandosi sulla struttura dei dati. Questo compito di autogenerazione delle classi del modello è affidato alla libreria ORM, che fornisce lo scheletro e la generazione del codice.
+basandosi sulla struttura dei dati. Questo compito di auto-generazione delle classi del modello è affidato alla libreria ORM, che fornisce lo scheletro e la generazione del codice.
 Se la libreria ORM trovasse una chiave esterna o un campo data, genererà degli speciali metodi che renderanno estremamente semplice la manipolazione dei dati e le relazioni tra essi.
-La parte di astrazione del database è totalmente invisibile perché viene gestita nativamente da PHP Data Objects.
-Qualora si decidesse di cambiare il motore del database, non si dovra' toccare minimamente una singola riga di codice applicativo.
+La parte di astrazione del database è totalmente invisibile perché viene gestita nativamente da oggetti PHP.
+Qualora si decidesse di cambiare il motore del database, non si dovrà toccare minimamente una singola riga di codice applicativo.
 Occorre solamente cambiare un parametro di configurazione.
 
 
 Inoltre la logica della vista può essere descritta attraverso un semplice file di configurazione, senza che ci sia la necessità
-di scrivere dell codice applicativo.
+di scrivere del codice applicativo.
 
-Figura 2-2 - Symfony workflow
+Figura 2-2 - Flusso di lavoro di symfony
 
-![Symfony workflow](http://www.symfony-project.org/images/book/1_4/F0202.png "Symfony workflow")
+![Flusso di lavoro di symfony](http://www.symfony-project.org/images/book/1_4/F0202.png "Flusso di lavoro di symfony")
 
 Questo significa che per quanto riguarda la lista dei post descritta in precedenza saranno necessari solamente tre file
 come mostrato nei Listati 2-11, 2-12, e 2-13.
 
-Listato 2-11 - `list` Action, in `myproject/apps/myapp/modules/weblog/actions/actions.class.php`
+Listato 2-11 - Azione `list`, in `myproject/apps/myapp/modules/weblog/actions/actions.class.php`
 
     [php]
     <?php
@@ -448,7 +448,7 @@ Listato 2-11 - `list` Action, in `myproject/apps/myapp/modules/weblog/actions/ac
       }
     }
 
-Listato 2-12 - `list` Template, in `myproject/apps/myapp/modules/weblog/templates/listSuccess.php`
+Listato 2-12 - Template `list`, in `myproject/apps/myapp/modules/weblog/templates/listSuccess.php`
 
     [php]
     <?php slot('title', 'List of Posts') ?>
@@ -464,7 +464,7 @@ Listato 2-12 - `list` Template, in `myproject/apps/myapp/modules/weblog/template
     <?php endforeach; ?>
     </table>
 
-Si dovrà definira un layout, come mostrato nel Listato 2-13, ma esso sarà riutilizzato diverse volte.
+Si dovrà definire un layout, come mostrato nel Listato 2-13, ma esso sarà riutilizzato diverse volte.
 
 Listato 2-13 - Layout, in `myproject/apps/myapp/templates/layout.php`
 
@@ -491,12 +491,12 @@ di gestione degli URL, ambienti  multipli e tanti altri strumenti di sviluppo.
 
 L'implementazione MVC in symfony utilizza diverse classi che verranno spesso citate all'interno di questa guida:
 
-  * `sfController` è la classe controllore. Decodifica la request e la inoltra alla action.
-  * `sfRequest` immagazzina tutti gli elementi della request (parametri, cookies, headers e così via).
-  * `sfResponse` contiente gli header e il contenuto della response. Questo è l'oggetto che sarà eventualmente convertito in una response HTML e che a sua volta sarà inviata all'utente.
+  * `sfController` è la classe controllore. Decodifica la richiesta e la inoltra all'azione.
+  * `sfRequest` immagazzina tutti gli elementi della richiesta (parametri, cookies, headers e così via).
+  * `sfResponse` contiente gli header e il contenuto della risposta. Questo è l'oggetto che sarà eventualmente convertito in una risposta HTML e che a sua volta sarà inviata all'utente.
   * Il contesto (ottenuto invocando `sfContext::getInstance()`) mantiene una referenza a tutti gli oggetti principali e alla configurazione corrente; è accessibile in ogni punto dell'applicativo.
 
-Nel capitolo 6 questi oggetti verrano approfonditi maggiormente.
+Nel capitolo 6 questi oggetti verranno approfonditi maggiormente.
 
 Come si può notare, tutte le classi fornite da symfony utilizzano il prefisso 'sf', così come le variabili del nocciolo nei template. 
 Questo serve a scongiurare problematiche relative all'utilizzo di nomi per variabili e classi utilizzate dallo sviluppatore e rendendo semplice il loro riconoscimento.
@@ -506,11 +506,11 @@ Questo serve a scongiurare problematiche relative all'utilizzo di nomi per varia
 >Ci sono due eccezioni: le classi del nocciolo iniziano con `sf`, in minuscolo, e le variabili nei template utilizzano
 >il trattino basso come separatore.
 
-Organizzazione del Codice
------------------
+Organizzazione del codice
+-------------------------
 
-Dopo aver illustrato i diversi componenti di un'applicazione symofony, mostraimo come essi sono sono organizzati.
-Symfony organizza il codice in una struttura di progetto e colloca i file in una struttura standar ad albero.
+Dopo aver illustrato i diversi componenti di un'applicazione symofony, mostriamo come essi sono sono organizzati.
+Symfony organizza il codice in una struttura di progetto e colloca i file in una struttura standard ad albero.
 
 ### Struttura di Progetto, Applicazioni, Moduli e Azioni
 
@@ -518,7 +518,7 @@ In symfony, un progetto è un insieme di servizi e operazioni disponibili sotto 
 condividendo lo stesso modello.
 
 All'interno di un progetto, le operazioni sono raggruppate in modo logico all'interno delle applicazioni. 
-Un'applicazione può normalemnte girare indipendentemente dalle altre applicazioni dello stesso progetto.
+Un'applicazione può normalmente girare indipendentemente dalle altre applicazioni dello stesso progetto.
 Nella maggior parte dei casi, un progetto conterrà due applicazioni: una per il front-office e un per il back-office.
 condividendo lo stesso database. Ma è possibile avere anche un progetto contenente dei mini-siti,
 un'applicazione per ogni sito. Da notare che i link tra le applicazioni devono essere in forma assoluta.
@@ -530,42 +530,42 @@ Ad esempio si potrebbe avere dei moduli `home`, `articoli`, `help`, `carrelloDel
 I moduli contengono le azioni, le quali rappresentano le varie azioni che possono essere eseguite all'interno di un modulo.
 Per esempio, un modulo nominato `carrelloDellaSpesa` può contenere le azioni `aggiungi`, `mostra` e aggiorna.
 Aver a che fare con le azioni è quasi come interagire con le pagine di una classica applicazione web, sebbene due azioni 
-possano risultare nella stessa pagina (ad esempio, aggiungendo un commento ad un post in un weblog comporterà la rivisualizzazione del post con il nuovo commento).
+possano risultare nella stessa pagina (ad esempio, aggiungendo un commento a un post in un blog comporterà la ri-visualizzazione del post con il nuovo commento).
 
 >**TIP**
 >Se ci fossero troppi livelli di moduli e azioni per un progetto iniziale, è possibile raggruppare tutte le azioni in un singolo modulo,
->in modo tale che la stuttura si mantenga semplice. Nel caso in cui successivamente l'applicazione diventi più complessa,
+>in modo tale che la struttura si mantenga semplice. Nel caso in cui successivamente l'applicazione diventi più complessa,
 >sarà necessario disporre le azioni in moduli separati.
->Come descritto nel Capitolo 1, l'operazione di riscrivere il codice per migliorare la struttura e la leggibilità dello stesso (ma preservando il suo comportamento)
->viene comunemente chiamato `refactoring`, e questo viene fatto frequentemente applicando i principi RAD.
+>Come descritto nel capitolo 1, l'operazione di riscrivere il codice per migliorare la struttura e la leggibilità dello stesso (ma preservando il suo comportamento)
+>viene comunemente chiamato 'rifattorizzazione' e questo viene fatto frequentemente applicando i principi RAD.
 
-La Figura 2-3 mostra un esempio di codice per un progetto di un weblog, in una struttura project/application/module/action.
+La Figura 2-3 mostra un esempio di codice per un progetto di un blog, in una struttura `project/application/module/action`.
 
 Figura 2-3 - Esempio di organizzazione del codice
 
-![Example of code organization](http://www.symfony-project.org/images/book/1_4/F0203.png "Example of code organization")
+![Esempio di organizzazione del codice](http://www.symfony-project.org/images/book/1_4/F0203.png "Esempio di organizzazione del codice")
 
-### Strutture ad Albero dei File
+### Strutture ad albero dei file
 
-Tutti i progetti web condividono lo stesso tipo di contenuti, as esempio:
+Tutti i progetti web condividono lo stesso tipo di contenuti, ad esempio:
 
   * Un database, come MYSQL o PostgreSQL
-  * File statici (HTML, immagini, file Javascript, fogli di stile e così via)
+  * File statici (HTML, immagini, file JavaScript, fogli di stile e così via)
   * File caricati dagli utenti del sito e gli amministratori
   * Classi e librerie PHP
   * Librerie esterne (script di terze parti)
-  * File Batch (scipt che vengono lanciati da linea di comando o via cron)
+  * File Batch (script che vengono lanciati da linea di comando o via cron)
   * File di Log (informazioni scritte dall'applicativo e/o dal server)
   * File di configurazione
   
 Symfony fornisce una struttura di file standard per organizzare tutti questi contenuti in modo logico e
 consistente con le scelte architetturali (MVC pattern e raggruppamento progetto/applicazione/modulo).
 Questa è la struttura che viene creata quando si inizializza un progetto, applicazione o modulo.
-Ovviamente è possibile personalizzare completamente la struttura dei file e delle directory qualora fosse necessario.
+Ovviamente è possibile personalizzare completamente la struttura dei file e delle cartelle, qualora fosse necessario.
 
 #### Struttura principale dell'albero
 
-Queste sono le directory alla base di un progetto symfony:
+Queste sono le cartelle alla base di un progetto symfony:
 
     apps/
       frontend/
@@ -589,25 +589,24 @@ Queste sono le directory alla base di un progetto symfony:
       js/
       uploads/
 
-Tabella 2-1 descrive il contenuto delle directory mostrate
+Tabella 2-1 descrive il contenuto delle cartelle mostrate
 
-Tabella 2-1 - Directory di base
+Tabella 2-1 - Cartelle di base
 
-Directory  |  Description
----------- | ------------
-`apps/`    | Contiene una directory per ogni applicazione del progetto (tipicamente, `frontend` and `backend` pre il front e back office).
-`cache/`   | Contiene la versione cache della configurazione, e (se attivata) la versione cache delle azioni e dei template del progetto. Il meccanismo di caching (descitto nel capitolo 12) utilizza questi file per velocizzare i tempi di risposta dell'applicativo. Ciascuna applicazione avrà una subdirectory, contenente file PHP preprocessati e file HTML.
-`config/`  | Holds the general configuration of the project.
+Cartella   | Descrizione
+---------- | -----------
+`apps/`    | Contiene una  cartella per ogni applicazione del progetto (tipicamente, `frontend` e `backend`).
+`cache/`   | Contiene la versione cache della configurazione, e (se attivata) la versione cache delle azioni e dei template del progetto. Il meccanismo di cache (descritto nel capitolo 12) utilizza questi file per velocizzare i tempi di risposta dell'applicativo. Ciascuna applicazione avrà una sotto-cartella, contenente file PHP pre-processati e file HTML.
 `config/`  | Contiene la configurazione generale del progetto.
 `data/`    | Contiene i file dati del progetto come lo schema del database, un file SQL per la creazione delle tabelle o anche un file SQLite.
 `doc/`     | Contiene la documentazione del progetto
-`lib/`     | Contiene classi esterne o librerie. In essa può essere aggiunto del codice che deve essere condiviso tra le applicazioni. La subdirectory `model/` contiene gli oggetti del modello del progetto (descritto nel Capitolo 8).
-`log/`     | Contiene i file di log generati direttamente da symfony. Possono anche essere presenti i file di log del webserver, del database o file di log provenienti da qualsiasi punto del progetto. Symfony crea un file di log per ogno applicazioni e ambiente (i file di log verranno discussi nel Capitolo 16).
-`plugins/` | Contiene i vari plugin installati nell'applicativo (i plugin verranno discussi nel Capitolo 17).
-`test/`    | Contiene test unitari e funzionali scritti in PHP e compatibili con il framework di test di symfony (discusso nel Capitolo 15). Durante il setup de progetto, symfony crea automaticamente dei file con dei test basilari.
-`web/`     | È la directory root per il webserver. Essa contieni gli unici file accessibili dall'esterno.
+`lib/`     | Contiene classi esterne o librerie. In essa può essere aggiunto del codice che deve essere condiviso tra le applicazioni. La sotto-cartella `model/` contiene gli oggetti del modello del progetto (descritto nel capitolo 8).
+`log/`     | Contiene i file di log generati direttamente da symfony. Possono anche essere presenti i file di log del webserver, del database o file di log provenienti da qualsiasi punto del progetto. Symfony crea un file di log per ogni applicazione e ambiente (i file di log verranno discussi nel capitolo 16).
+`plugins/` | Contiene i vari plugin installati nell'applicativo (i plugin verranno discussi nel capitolo 17).
+`test/`    | Contiene test unitari e funzionali scritti in PHP e compatibili con il framework di test di symfony (discusso nel capitolo 15). Durante il setup del progetto, symfony crea automaticamente dei file con dei test basilari.
+`web/`     | È la cartella radice del server web. Essa contiene gli unici file accessibili dall'esterno.
 
-#### Struttura ad Albero di un'Applicazione
+#### Struttura ad albero di un'applicazione
 
 La struttura ad albero di un'applicazione è la stessa:
 
@@ -620,20 +619,20 @@ La struttura ad albero di un'applicazione è la stessa:
         templates/
           layout.php
 
-Tabella 2-2 descrive le subdirectory dell'applicazione
+Tabella 2-2 descrive le sotto-cartelle dell'applicazione
 
-Tabella 2-2 - Subdirectory dell'applicazione
+Tabella 2-2 - Sotto-cartelle dell'applicazione
 
-Directory    | Description
+Cartella     | Descrizione
 ------------ | -----------
-`config/`    | Contiene un insieme di file di configurazione YAML. In questa subdirectory sono contenuti i principali di configurazione, escludendo i parametri iniziali definiti nel framework stesso. Se fosse necessario i valori dei parametri iniziali posso essere comunque sovrascritti. Questo argomento verra' trattato nello specifico nel Capitolo 5.
-`i18n/`      | Contiene i file utilizzati per l'intenazionalizzazione dell'applicativo (il Capitolo 13 approfondisce l'argomento). E' possibile non tenere conto di questa directory qualora si utilizzasse un database per l'internazionalizzazione.
+`config/`    | Contiene un insieme di file di configurazione YAML. In questa sotto-cartelle sono contenuti i principali di configurazione, escludendo i parametri iniziali definiti nel framework stesso. Se fosse necessario i valori dei parametri iniziali posso essere comunque sovrascritti. Questo argomento verrà trattato nello specifico nel capitolo 5.
+`i18n/`      | Contiene i file utilizzati per l'internazionalizzazione dell'applicativo (il capitolo 13 approfondisce l'argomento). È possibile non tenere conto di questa  cartella qualora si utilizzasse un database per l'internazionalizzazione.
 `lib/`       | Contiene classi e librerie specifiche all'applicazione.
 `modules/`   | Contiene tutti i  moduli dell'applicazione
 `templates/` | Contiene i template globali dell'applicazione, condivisi da tutti i moduli. Contiene il file `layout.php` come predefinito, che rappresenta il layout principale nel quale i template dei moduli vengono inseriti.
 
 >**NOTE**
->Le directory `i18n/`, `lib/` e  `modules/` sono vuote quando viene creata una nuova applicazione.
+>Le cartelle `i18n/`, `lib/` e  `modules/` sono vuote quando viene creata una nuova applicazione.
 
 Le classi di un'applicazione non possono accedere a metodi o attributi di altre applicazioni dello stesso progetto. 
 Da notare che i link tra le diverse applicazioni devono essere in forma assoluta e quindi è da tener ben presente qualora si decidesse di suddividere un progetto in diverse applicazioni.
@@ -642,7 +641,7 @@ Da notare che i link tra le diverse applicazioni devono essere in forma assoluta
 #### Struttura ad albero di un modulo
 
 Ogni applicazione contiene uno o più moduli.
-Ogni modulo ha le sue subdirectory nella direcotory `modules`, e il nome di tale directory viene scelta durante il setup.
+Ogni modulo ha le sue sotto-cartelle nella cartella `modules` e il nome di tale  cartella viene scelta durante la configurazione.
 
 Tipica struttura ad albero di un modulo:
 
@@ -657,25 +656,25 @@ Tipica struttura ad albero di un modulo:
               templates/
                 indexSuccess.php
 
-Tabella 2-3 descrive le subdirectory di un modulo.
+Tabella 2-3 descrive le sotto-cartelle di un modulo.
 
-Tabella 2-3 - Subdirectory di un modulo
+Tabella 2-3 - Sotto-cartelle di un modulo
 
-Directory    | Description
------------- | ------------
-`actions/`   | Contiene generalmente un singolo file chiamato `actions.class.php`, nel quale sono scritte tutte le azione del modulo stesso. E' possibile scrivere azioni diverse di un modulo in file separati.
+Cartella     | Descrizione
+------------ | -----------
+`actions/`   | Contiene generalmente un singolo file chiamato `actions.class.php`, nel quale sono scritte tutte le azioni del modulo stesso. È possibile scrivere azioni diverse di un modulo in file separati.
 `config/`    | Contiene file di configurazione personalizzati con parametri locali per il modulo.
 `lib/`       | Contiene classi e librerie specifiche del modulo.
 `templates/` | Contiene i template corrispondenti all'azione del modulo. Un template predefinito, chiamato `indexSuccess.php`, viene creato durante il setup del modulo.
 
 >**NOTE**
->Le directory `config/` e `lib/` non vengono create automaticamente per un nuovo modulo, devono essere create manualmente qualora fossero necessarie.
+>Le cartelle `config/` e `lib/` non vengono create automaticamente per un nuovo modulo, devono essere create manualmente qualora fossero necessarie.
 
-#### Struttura ad albero della directory Web
+#### Struttura ad albero della cartella Web
 
-Esistono pochi vincoli per la directory `web`, essa è la directory contenente file accessibili pubblicamente dall'esterno.
-Seguendo poche regole base sarà possibile ottenere dei comportamenti predefiniti, messi a diposizione dal framework stesso, e utili scorciatoie da utilizzare all'interno dei template. 
-Esempio della struttura della directory `web`:
+Esistono pochi vincoli per la cartella `web`, essa è la cartella contenente file accessibili pubblicamente dall'esterno.
+Seguendo poche regole base sarà possibile ottenere dei comportamenti predefiniti, messi a disposizione dal framework stesso, e utili scorciatoie da utilizzare all'interno dei template. 
+Esempio della struttura della  cartella `web`:
 
     web/
       css/
@@ -683,30 +682,30 @@ Esempio della struttura della directory `web`:
       js/
       uploads/
 
-È convenzione che i file statici vengano collocati nell directory mostrate nella Tabella 2-4
+È convenzione che i file statici vengano collocati nella  cartella mostrate nella Tabella 2-4
 
-Tabella 2-4 Sottodirectory tipiche della directory Web
+Tabella 2-4 Sotto cartella tipiche della  cartella Web
 
-Directory  | Description
+Cartella   | Descrizione
 ---------- | -----------
 `css/`     | Contiene fogli di stile con estensione `.css`.
 `images/`  | Contiene immagini con estensione `.jpg`, `.png`, o `.gif`.
-`js/`      | Contiene file Javascript con estensione `.js`.
-`uploads/` | Contiene file caricati dagli utenti. Sebbene la directory contenga solitamente immagini, è separata dalla directory delle immagini in modo che la sincronizzazione dei server di sviluppo e server di produzione non interferisca con le immagini caricate.
+`js/`      | Contiene file JavaScript con estensione `.js`.
+`uploads/` | Contiene file caricati dagli utenti. Sebbene la  cartella contenga solitamente immagini, è separata dalla  cartella delle immagini in modo che la sincronizzazione dei server di sviluppo e server di produzione non interferisca con le immagini caricate.
 
 >**NOTE**
 >Sebbene sia altamente consigliato che venga mantenuta la struttura ad albero predefinita, è possibile modificarla 
->per esigenze specifiche, ad esempio per permettere ad un progetto di girare su un server con strutture particolari. 
->Per maggiori informazioni su quest'ultimo argomento è necessario riferirsi al Capitolo 19 nel quale verrà mostrato come modificare la struttura ad albero dei file.
+>per esigenze specifiche, ad esempio per permettere a un progetto di girare su un server con strutture particolari. 
+>Per maggiori informazioni su quest'ultimo argomento è necessario riferirsi al capitolo 19 nel quale verrà mostrato come modificare la struttura ad albero dei file.
 
 
-Strumenti Comuni
-------------------
+Strumenti comuni
+----------------
 
 Durante la lettura di questa guida e nello sviluppo di progetti con symfony si incontreranno alcune tecniche utilizzate ripetutamente.
 Tra queste ci sono: contenitori dei parametri, costanti e caricamento automatico delle classi.
 
-### Contentori di Parametri
+### Contenitori di parametri
 
 Molte delle classi che compongono il framework symfony sono dei contenitori di parametri. 
 È un modo conveniente di incapsulare gli attributi con dei metodi getter e setter chiari e puliti.
@@ -732,13 +731,13 @@ Listato 2-15 - Utilizzo del metodo proxy del contenitore dei parametri dell'ogge
      => 'bar'
 
 Il metodo getter del contenitore di parametri accetta un valore predefinito come secondo argomento.
-Tutto ciò fornisce un utile meccanismo di fallback che risulta molto più consico rispetto ad un blocco condizionale.
+Tutto ciò fornisce un utile meccanismo di fallback che risulta molto più conciso rispetto a un blocco condizionale.
 Si veda come esempio il Listato 2-16.
 
 Listato 2-16 - Utilizzo del valore predefinito 
 
     [php]
-    // Il parametro 'foobar' non è definito, il metodo getter ritorna un valore nullo
+    // Il parametro 'foobar' non è definito, il metodo getter restituisce un valore nullo
     echo $request->getParameter('foobar');
      => null
 
@@ -773,7 +772,7 @@ Listato 2-17 - Utilizzo dei namespace con il contenitore dei parametri di `sfUse
 
 È possibile aggiungere un contenitore dei parametri a delle classi personalizzate per trarre vantaggio da questo meccanismo
 
-Listato 2-18 - Aggiungere un contenitore dei parametri ad una classe
+Listato 2-18 - Aggiungere un contenitore dei parametri a una classe
 
     [php]
     class MyClass
@@ -815,33 +814,33 @@ Il capitolo 5 illustra i metodi di `sfConfig` nel dettaglio.
 ### Caricamento automatico delle classi
 
 Solitamente in PHP quando viene invocato un metodo di una classe o viene creato un oggetto c'è la necessità di includere per prima cosa 
-la definizione di tale clasee:
+la definizione di tale classe:
 
     [php]
     include_once 'classes/MyClass.php';
     $myObject = new MyClass();
 
-In un progetto di grosse dimensione con molte classi e una profonda e articolata struttura di directory, tener traccia di tutti i file delle vari classi e i percorsi delle stesse può diventare una perdita di tempo.
-Symfony fornisce una funzione `spl_autoload_register()` che rende sueprfluo l'utilizzo della direttiva `include_once`, e che permette di scrivere direttamente:
+In un progetto di grosse dimensione con molte classi e una profonda e articolata struttura di cartelle, tener traccia di tutti i file delle vari classi e i percorsi delle stesse può diventare una perdita di tempo.
+Symfony fornisce una funzione `spl_autoload_register()` che rende superfluo l'utilizzo della direttiva `include_once`, e che permette di scrivere direttamente:
 
     [php]
     $myObject = new MyClass();
 
-Symfony cercherà all'interno delle directory `lib/' la definizione della classe `MyClass` in tutti file che termineranno con `class.php`.
+Symfony cercherà all'interno delle cartelle `lib/' la definizione della classe `MyClass` in tutti file che termineranno con `class.php`.
 Se la classe verrà trovata, verrà inclusa automaticamente.
 
-Collocando le proprie classi all'interno delle directory `lib/' non sarà più necessario includerle.
+Collocando le proprie classi all'interno delle cartelle `lib/' non sarà più necessario includerle.
 Questo è il motivo per il quale solitamente i progetti symfony non contengono direttive `include_once` o `require_once`.
 
 Sommario
--------
+--------
 
-L'utilizzo di un framework MVC obbliga lo sviluppatore ad organizzare il codice in accordo con le convenzioni del framework stesso.
-Il codice di presentazione appartiene alla vista, la manipolazione dei dati appartiene al modello, e la logica della request appartiene al controllore.
+L'utilizzo di un framework MVC obbliga lo sviluppatore a organizzare il codice in accordo con le convenzioni del framework stesso.
+Il codice di presentazione appartiene alla vista, la manipolazione dei dati appartiene al modello, e la logica della richiesta appartiene al controllore.
 
 Symfony è un framework MVC scritto in PHP.
 La sua struttura permette di ottenere il meglio grazie all'utilizzo del pattern MVC, mantenendo al contempo una praticità e semplicità d'utilizzo.
 Grazie alla sua versatilità e configurabilità, symfony è adatto per tutte le tipologie di applicativi web.
 
-Ora che è stata mostrata la teoria alla base di symfony si è in grado di sviluppare una prima applicazione, ma prima di questo occorre un'installazione di symf ony e un
+Ora che è stata mostrata la teoria alla base di symfony, si è in grado di sviluppare una prima applicazione, ma prima di questo occorre un'installazione di symfony e un
 server di sviluppo.
