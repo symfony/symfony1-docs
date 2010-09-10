@@ -414,22 +414,22 @@ Infine, se si vuole soltanto il primo oggetto, sostituire `doSelect()` con `doSe
 >**TIP**
 >Quando una query ritorna un gran numero di risultati, potresti volerne mostrare soltanto un sottoinsieme. Symfony fornisce una classe per la suddivisione in pagine chiamata `sfPropelPager`, che automatizza la paginazione dei risultati.
 
-### Using Raw SQL Queries
+### Usare query SQL
 
-Sometimes, you don't want to retrieve objects, but want to get only synthetic results calculated by the database. For instance, to get the latest creation date of all articles, it doesn't make sense to retrieve all the articles and to loop on the array. You will prefer to ask the database to return only the result, because it will skip the object hydrating process.
+A volte, non ti serve recuperare oggetti, ma vuoi soltanto risultati sintetici calcolati dal database. Per esempio, per ottenere l'ultima data di creazione di tutti gli articoli, non ha senso recuperare tutti gli articoli ed eseguire un ciclo sull'array. È preferibile richiedere direttamente al database di ritornare soltanto il risultato, perché salterà il processo di idratazione.
 
-On the other hand, you don't want to call the PHP commands for database management directly, because then you would lose the benefit of database abstraction. This means that you need to bypass the ORM (Propel) but not the database abstraction (PDO).
+D'altra parte, non è il caso di usare i comandi PHP per gestire direttamente il database, perché perderesti i vantaggi dell'astrazione dal database. Questo significa che hai bisogno di bypassare l'ORM (Propel) ma non l'astrazione dal database (PDO).
 
-Querying the database with PHP Data Objects requires that you do the following:
+Una query al database con PHP Data Objects richiede che tu faccia il seguente:
 
-  1. Get a database connection.
-  2. Build a query string.
-  3. Create a statement out of it.
-  4. Iterate on the result set that results from the statement execution.
+  1. Ottieni una connessione al database
+  2. Crea una query
+  3. Usala per creare uno "statement"
+  4. Cicla sul risultato dell'esecuzione dello statement
 
-If this looks like gibberish to you, the code in Listing 8-15 will probably be more explicit.
+Se queste sembrano parole campate in aria per te, il codice del Listato 8-15 probabilmente sarà più esplicito.
 
-Listing 8-15 - Custom SQL Query with PDO
+Listato 8-15 - Query SQL personalizzata con PDO
 
     [php]
     $connection = Propel::getConnection();
@@ -441,39 +441,39 @@ Listing 8-15 - Custom SQL Query with PDO
     $resultset = $statement->fetch(PDO::FETCH_OBJ);
     $max = $resultset->max;
 
-Just like Propel selections, PDO queries are tricky when you first start using them. Once again, examples from existing applications and tutorials will show you the right way.
+Proprio come le selezioni con Propel, le query con PDO sono complesse la prima volta che inizi ad usarle. Ma anche stavolta, esempi da applicazioni esistenti e tutorial ti mostreranno il modo giusto.
 
 >**CAUTION**
->If you are tempted to bypass this process and access the database directly, you risk losing the security and abstraction provided by Propel. Doing it the Propel way is longer, but it forces you to use good practices that guarantee the performance, portability, and security of your application. This is especially true for queries that contain parameters coming from a untrusted source (such as an Internet user). Propel does all the necessary escaping and secures your database. Accessing the database directly puts you at risk of SQL-injection attacks.
+>Se sei tentato di bypassare questo processo ed accedere al database direttamente, rischi di perdere la sicurezza ed astrazione fornita da Propel. Facendo in questo modo, ma ti forza ad usare le migliori pratiche per garantire performance, portabilità, e sicurezza della tua applicazione. Questo è specialmente vero per query che contengono parametri che arrivano da una fonte non sicura (come ad esempio l'utente). Propel fa tutto il lavoro necessario per mettere al sicuro il tuo database. Accedere al database dirttamente ti mette a rischio di attacchi di tipo SQL-injection.
 
-### Using Special Date Columns
+### Usare colonne di tipo data speciali
 
-Usually, when a table has a column called `created_at`, it is used to store a timestamp of the date when the record was created. The same applies to updated_at columns, which are to be updated each time the record itself is updated, to the value of the current time.
+Di solito, quando una tabella ha una colonna chiamata `created_at`, è usata per salvare il timestamp della data di quando il record è stato creato. Lo stesso succede per le colonne `updated_at`, che saranno aggiornate ogni volta che il record stesso viene aggiornato.
 
-The good news is that symfony will recognize the names of these columns and handle their updates for you. You don't need to manually set the `created_at` and `updated_at` columns; they will automatically be updated, as shown in Listing 8-16. The same applies for columns named `created_on` and `updated_on`.
+La buona notizia è che symfony riconoscerà i nomi di queste colonne e gestirà il loro aggiornamento per te. Non avrai bisogno di impostare manualmente i valori di `created_at` e `updated_at`; saranno aggiornati automaticamente, come mostrato nel Listato 8-16. Lo stesso succede per le colonne chiamate `created_on` e `updated_on`.
 
-Listing 8-16 - `created_at` and `updated_at` Columns Are Dealt with Automatically
+Listato 8-16 - Le colonne `created_at` e `updated_at` sono gestite in automatico
 
     [php]
     $comment = new Comment();
     $comment->setAuthor('Steve');
     $comment->save();
 
-    // Show the creation date
+    // Mostra la data di creazione
     echo $comment->getCreatedAt();
       => [date of the database INSERT operation]
 
-Additionally, the getters for date columns accept a date format as an argument:
+Inoltre, il getter per le colonne di tipo data accetta un formato di data come parametro:
 
     [php]
     echo $comment->getCreatedAt('Y-m-d');
 
 >**SIDEBAR**
->Refactoring to the Data layer
+>Refactoring dello strato di gestione dei dati
 >
->When developing a symfony project, you often start by writing the domain logic code in the actions. But the database queries and model manipulation should not be stored in the controller layer. So all the logic related to the data should be moved to the model layer. Whenever you need to do the same request in more than one place in your actions, think about transferring the related code to the model. It helps to keep the actions short and readable.
+>Durante lo sviluppo di un progetto symfony, inizierai spesso scrivendo il codice per le azioni sul database nelle azioni. Ma le query al database e manipolazione del modello non dovrebbero risiedere nello strato del controller. Per questo, tutto il codice per la gestione del database dovrebbe essere spostato nel modello. Nel caso avessi bisogno di fare la stessa richiesta al database in più di un punto nelle tue azioni, pensa al trasferire il relativo codice nel modello. Aiuta a tenere le azioni corte e leggibili.
 >
->For example, imagine the code needed in a blog to retrieve the ten most popular articles for a given tag (passed as request parameter). This code should not be in an action, but in the model. In fact, if you need to display this list in a template, the action should simply look like this:
+>Per esempio, immagina il codice in un blog per recuperare i dieci articoli più popolari per un determinato tag (passato come parametro della richiesta). Questo codice non dovrebbe risiedere nell'azione, ma nel modello. Infatti, se avrai bisogno di mostrare questa lista in un template, l'azione dovrebbe essere così semplice:
 >
 >     [php]
 >     public function executeShowPopularArticlesForTag($request)
@@ -483,32 +483,32 @@ Additionally, the getters for date columns accept a date format as an argument:
 >       $this->articles = $tag->getPopularArticles(10);
 >     }
 >
->The action creates an object of class `Tag` from the request parameter. Then all the code needed to query the database is located in a `getPopularArticles()` method of this class. It makes the action more readable, and the model code can easily be reused in another action.
+>L'azione crea un oggetto della classe `Tag` dal parametro di richiesta. Poi, tutto il codice necessario alla query al database è localizzato nel metodo `getPopularArticles()` di questa classe. Rende l'azione più leggibile, ed il codice può essere facilmente riutilizzato in un'altra azione.
 >
->Moving code to a more appropriate location is one of the techniques of refactoring. If you do it often, your code will be easy to maintain and to understand by other developers. A good rule of thumb about when to do refactoring to the data layer is that the code of an action should rarely contain more than ten lines of PHP code.
+>Spostare il codice nel posto più appropriato è una delle tecniche del refactoring. Se lo fai spesso, il tuo codice sarà facilmente mantenibile e comprensibile da altri sviluppatori. Una buona convenzione sul quando fare refactoring verso il modello consiste nel riuscire a mantenere un numero di righe di codice di un azione inferiore a dieci.
 
-Database Connections
+Connessioni al database
 --------------------
 
-The data model is independent from the database used, but you will definitely use a database. The minimum information required by symfony to send requests to the project database is the name, the credentials, and the type of database.These connection settings can be configured by passing a data source name (DSN) to the `configure:database` task:
+Il modello è indipendente dal database usato, ma per forza di cose userai un database. Le informazioni minime richiesta da symfony per inviare richieste al database è il nome, le credenziali di acecsso ed il tipo di database. Queste impostazioni di connessione possono essere configurati passato un data source name (DSN) al processo `configure:database`:
 
     $ php symfony configure:database "mysql:host=localhost;dbname=blog" root mYsEcret
 
-The connection settings are environment-dependent. You can define distinct settings for the `prod`, `dev`, and `test` environments, or any other environment in your application by using the `env` option:
+Le impostazioni di connessione dipendono dall'ambiente di lavoro. Puoi definire configurazioni differenti per gli ambienti `prod`, `dev` e `test`, o per ogni altro ambiente nella tua applicazione usando l'opzione `env`:
 
     $ php symfony configure:database --env=dev "mysql:host=localhost;dbname=blog_dev" root mYsEcret
 
-This configuration can also be overridden per application. For instance, you can use this approach to have different security policies for a front-end and a back-end application, and define several database users with different privileges in your database to handle this:
+Questa configurazione può inoltre venir sovrascritta per ogni applicazione. Per esempio, puoi usare questo approccio per avere differenti polizze di sicurezza per le tue applicazioni frontend o backend, e definire utenti del database differenti con privilegi diversi per gestire tutto ciò:
 
     $ php symfony configure:database --app=frontend "mysql:host=localhost;dbname=blog" root mYsEcret
 
-For each environment, you can define many connections. Each connection refers to a schema being labeled with the same name. The default connection name used is `propel` and it refers to the `propel` schema in Listing 8-3. The `name` option allows you to create another connection:
+Per ogni ambiente, puoi definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione di default si chiama `propel` e si riferisce allo schema `propel` nel Listato 8-3. L'opzione `name` consente di creare un altra connessione:
 
     $ php symfony configure:database --name=main "mysql:host=localhost;dbname=example" root mYsEcret
 
-You can also enter these connection settings manually in the `databases.yml` file located in the `config/` directory. Listing 8-17 shows an example of such a file and Listing 8-18 shows the same example with the extended notation.
+Puoi inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml` collocato nella cartella `config/`. Il Listato 8-17 mostra un esempio di questo file ed il Listato 8-18 mostra lo stesso esempio con la notazione estesa.
 
-Listing 8-17 - Shorthand Database Connection Settings
+Listato 8-17 - Notazione semplice per la connessione al database
 
     [yml]
     all:
@@ -517,7 +517,7 @@ Listing 8-17 - Shorthand Database Connection Settings
         param:
           dsn:          mysql://login:passwd@localhost/blog
 
-Listing 8-18 - Sample Database Connection Settings, in `myproject/config/databases.yml`
+Listato 8-18 - Esempio di impostazioni di connessione al database, in `myproject/config/databases.yml`
 
     [yml]
     prod:
@@ -531,16 +531,16 @@ Listing 8-18 - Sample Database Connection Settings, in `myproject/config/databas
       propel:
         class:                sfPropelDatabase
         param:
-          phptype:            mysql     # Database vendor
+          phptype:            mysql     # Tipo di database
           hostspec:           localhost
           database:           blog
           username:           login
           password:           passwd
           port:               80
-          encoding:           utf8      # Default charset for table creation
-          persistent:         true      # Use persistent connections
+          encoding:           utf8      # Codifica di default per la creazione delle tabelle
+          persistent:         true      # Usa connessione persistente
 
-The permitted values of the `phptype` parameter are the ones of the database systems supported by PDO:
+I valori consentiti per il parametri `phptype` sono quelli dei database supportati da PDO:
 
   * `mysql`
   * `mssql`
@@ -548,13 +548,13 @@ The permitted values of the `phptype` parameter are the ones of the database sys
   * `sqlite`
   * `oracle`
 
-`hostspec`, `database`, `username`, and `password` are the usual database connection settings.
+`hostspec`, `database`, `username`, e `password` sono i normali parametri di connessione.
 
-To override the configuration per application, you need to edit an application-specific file, such as `apps/frontend/config/databases.yml`.
+Per sovrascrivere la configurazione per applicazione, avrai bisogno di modificare il file specifico dell'applicazione, come `apps/frontend/config/databases.yml`.
 
-If you use a SQLite database, the `hostspec` parameter must be set to the path of the database file. For instance, if you keep your blog database in `data/blog.db`, the `databases.yml` file will look like Listing 8-19.
+Se usi un database SQLite, il parametro `hostspec` deve essere impostato al percorso del file del database. Per esempio, se tu tieni il tuo blog in `data/blog.db`, il file `databases.yml` sarà come quello nel Listato 8-19.
 
-Listing 8-19 - Database Connection Settings for SQLite Use a File Path As Host
+Listato 8-19 - Connessione al database specifica per SQLite usando un percorso file come host
 
     [yml]
     all:
@@ -564,31 +564,31 @@ Listing 8-19 - Database Connection Settings for SQLite Use a File Path As Host
           phptype:  sqlite
           database: %SF_DATA_DIR%/blog.db
 
-Extending the Model
+Estendere il modello
 -------------------
 
-The generated model methods are great but often not sufficient. As soon as you implement your own business logic, you need to extend it, either by adding new methods or by overriding existing ones.
+I metodi generati del modello sono ottimi, ma spesso non sufficienti. Presto implementerai la tua logica ed avrai bisogno di estenderlo, aggiungendo nuovi metodi oppure sovrascrivendo quelli esistenti.
 
-### Adding New Methods
+### Aggiungere nuovi metodi
 
-You can add new methods to the empty model classes generated in the `lib/model/` directory. Use `$this` to call methods of the current object, and use `self::` to call static methods of the current class. Remember that the custom classes inherit methods from the `Base` classes located in the `lib/model/om/` directory.
+Puoi aggiugnere nuovi metodi alle classi del modello vuote generate nella cartella `lib/model`. Usa `$this` per chiamare metodi sull'oggetto corrente, mentre usa `self::` per chiamare metodi statici sulla classe corrente. Ricorda che le classi personalizzate ereditano i metodi dalle classi `Base` collocate nella cartella `lib/model/om`.
 
-For instance, for the `Article` object generated based on Listing 8-3, you can add a magic `__toString()` method so that echoing an object of class `Article` displays its title, as shown in Listing 8-20.
+Per esempio, per l'oggetto `Article` generato basato sul Listato 8-3, puoi aggiungere un metodo magico `__toString()` per far si che un comando `echo` su un oggetto di classe `Article` mostri il suo titolo, come mostrato nel Listato 8-20.
 
-Listing 8-20 - Customizing the Model, in `lib/model/Article.php`
+Listato 8-20 - Personalizzazione del modello, in `lib/model/Article.php`
 
     [php]
     class Article extends BaseArticle
     {
       public function __toString()
       {
-        return $this->getTitle();  // getTitle() is inherited from BaseArticle
+        return $this->getTitle();  // getTitle() è ereditato da BaseArticle
       }
     }
 
-You can also extend the peer classes--for instance, to add a method to retrieve all articles ordered by creation date, as shown in Listing 8-21.
+Puoi inoltre estendere le classi peer, per esempio, per aggiungere un metodo per recuperare tutti gli articoli ordinati per data di creazione, come mostrato nel Listato 8-21.
 
-Listing 8-21 - Customizing the Model, in `lib/model/ArticlePeer.php`
+Listato 8-21 - Personalizzazione del modello, in `lib/model/ArticlePeer.php`
 
     [php]
     class ArticlePeer extends BaseArticlePeer
@@ -602,23 +602,23 @@ Listing 8-21 - Customizing the Model, in `lib/model/ArticlePeer.php`
       }
     }
 
-The new methods are available in the same way as the generated ones, as shown in Listing 8-22.
+I nuovi metodi sono disponibili nello stesso modo di quelli generati, come mostrato nel Listato 8-22.
 
-Listing 8-22 - Using Custom Model Methods Is Like Using the Generated Methods
+Listato 8.22 - Usare i metodi personalizzati è come usare i metodi generati
 
     [php]
     foreach (ArticlePeer::getAllOrderedByDate() as $article)
     {
-      echo $article;      // Will call the magic __toString() method
+      echo $article;      // Chiamerà il metodo magico __toString()
     }
 
-### Overriding Existing Methods
+### Sobrascrivere metodi esistenti
 
-If some of the generated methods in the `Base` classes don't fit your requirements, you can still override them in the custom classes. Just make sure that you use the same method signature (that is, the same number of arguments).
+Se alcuni dei metodi generati nelle classi `Base` non soddisfano i tuoi requisiti, puoi comunque sovrascriverli nelle classi personalizzate. Sii sicuro che abbiano la stessa firma (ovvero lo stesso numero di parametri).
 
-For instance, the `$article->getComments()` method returns an array of `Comment` objects, in no particular order. If you want to have the results ordered by creation date, with the latest comment coming first, then override the `getComments()` method, as shown in Listing 8-23. Be aware that the original `getComments()` method (found in `lib/model/om/BaseArticle.php`) expects a criteria value and a connection value as parameters, so your function must do the same.
+Per esempio, il metodo `$article->getComments()` ritorna un array di oggetti `Comment`, senza alcun ordine particolare. Se vuoi avere i risultati ordinati per data di creazione, con gli ultimi commenti per primi, allora sovrascrivi il metodo `getComments()`, come mostrato nel Listato 8-23. Sii conscio che il metodo originale `getComments()` (collocato in `lib/model/om/BaseArticle.php`) si aspetta un oggetto Criteria ed una connessione come parametri, quindi la tua funzione deve fare lo stesso.
 
-Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
+Listato 8-23 - Sovrascivere metodi esistenti del modello, in `lib/model/Article.php`
 
     [php]
     public function getComments($criteria = null, $con = null)
@@ -629,7 +629,7 @@ Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
       }
       else
       {
-        // Objects are passed by reference in PHP5, so to avoid modifying the original, you must clone it
+        // Gli oggetti sono passati per riferimento in PHP5, quindi per evitare di modificare l'originale, devi clonarlo
         $criteria = clone $criteria;
       }
       $criteria->addDescendingOrderByColumn(CommentPeer::CREATED_AT);
@@ -637,30 +637,30 @@ Listing 8-23 - Overriding Existing Model Methods, in `lib/model/Article.php`
       return parent::getComments($criteria, $con);
     }
 
-The custom method eventually calls the one of the parent Base class, and that's good practice. However, you can completely bypass it and return the result you want.
+Il metodo personalizzato chiama infine quello della classe Base, ed è una buona pratica. Comunque, puoi completamente bypassarlo e ritornare il risultato che vuoi.
 
-### Using Model Behaviors
+### Usare i comportamenti (behavior) del modello
 
-Some model modifications are generic and can be reused. For instance, methods to make a model object sortable and an optimistic lock to prevent conflicts between concurrent object saving are generic extensions that can be added to many classes.
+Alcune modifiche al modello sono generiche e possono venire riutilizzate. Per esempio, i metodi per rendere un oggetto del modello ordinabile ed un blocco ottimistico per prevenire conflitti tra il salvataggio di oggetti concorrenti sono estensioni generiche che possono venir aggiunte a diverse classi.
 
-Symfony packages these extensions into behaviors. Behaviors are external classes that provide additional methods to model classes. The model classes already contain hooks, and symfony knows how to extend them.
+Symfony fornisce queste estensioni tramite i behavior. I behavior sono classi esterne che forniscono metodi aggiuntivi alle classi del modello. Le classi del modello contengono già degli "appigli" (hooks), e symfony sa come estenderle.
 
-To enable behaviors in your model classes, you must modify one setting in the `config/propel.ini` file:
+Per abilitare i behavior nelle tue classi del modello, devi modificare un'impostazione nel file `config/propel.ini`:
 
-    propel.builder.AddBehaviors = true     // Default value is false
+    propel.builder.AddBehaviors = true     // Il valore di default è false
 
-There is no behavior bundled by default in symfony, but they can be installed via plug-ins. Once a behavior plug-in is installed, you can assign the behavior to a class with a single line. For instance, if you install the `sfPropelParanoidBehaviorPlugin` in your application, you can extend an `Article` class with this behavior by adding the following at the end of the `Article.class.php`:
+Non c'è nessun behavior incluso in symfony di default, ma possono venir installati tramite plugins. Dopo che un behavior è installato, puoi assegnare il behavior ad una classe con una singola istruzione. Per esempio, se installi il plugin `sfPropelParanoidBehaviorPlugin` nella tua applicazione, puoi estendere una classe `Article` con questo behavior aggiungendo queste righe alla fine di `Article.class.php`:
 
     [php]
     sfPropelBehavior::add('Article', array(
       'paranoid' => array('column' => 'deleted_at')
     ));
 
-After rebuilding the model, deleted `Article` objects will remain in the database, invisible to the queries using the ORM, unless you temporarily disable the behavior with `sfPropelParanoidBehavior::disable()`.
+Dopo aver ricostruito il modello, gli oggetti `Article` eliminati resteranno nel database, invisibile alle query creato usando l'ORM, a meno che non disabiliti temporaneamente il behavior con `sfPropelParanoidBehavior::disable()`.
 
-Alternatively, you can also declare behaviors directly in the `schema.yml`, by listing them under the `_behaviors` key (see Listing 8-34 below).
+In alternativa, puoi inoltre dichiarare behaviors direttamente dentro a `schema.yml`, aggiungendoli all'interno della chiave `_behaviors` (vedi il Listato 8-34 di seguito).
 
-Check the list of symfony plug-ins on the official [repository](http://www.symfony-project.org/plugins/) to find behaviors. Each has its own documentation and installation guide.
+Controlla la lista dei plugin di symfony sul [repository](http://www.symfony-project.org/plugins/) ufficiale per trovare i behavior. Ognuno ha la sua documentazione e guida di installazione.
 
 Extended Schema Syntax
 ----------------------
