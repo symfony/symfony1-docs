@@ -85,12 +85,12 @@ Ora, se si accede al seguente URL:
 symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È normale; in symfony, una pagina è sempre costituita da un'azione e da un template.
 
 >**CAUTION**
->Le URL (non i nomi dominio) sono case-sensitive e quindi lo sono anche in symfony (anche se i nomi del metodi in PHP sono case-insensitive). Questo significa che symfony restituirà un errore 404 se si prova a visualizzare `sHow` con il browser.
+>Gli URL (non i nomi dominio) sono case-sensitive e quindi lo sono anche in symfony (anche se i nomi del metodi in PHP sono case-insensitive). Questo significa che symfony restituirà un errore 404 se si prova a visualizzare `sHow` con il browser.
 
 -
 
 >**SIDEBAR**
->Le URL sono parte della risposta
+>Gli URL sono parte della risposta
 >
 >Symfony ha un sistema di routing che permette di avere una separazione completa tra il nome dell'azione attuale e la struttura dell'URL necessario per chiamarlo. Ciò consente la formattazione personalizzata dell'URL, come se fosse parte della risposta. Non si è più limitati dalla struttura del file, né dai parametri della richiesta; l'URL per una azione può essere una frase che si desidera. Per esempio, la chiamata all'azione index di un modulo chiamato articolo, generalmente assomiglia a questa:
 >
@@ -104,7 +104,7 @@ symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È n
 >
 >     http://localhost/articles/tagged/finance+france+euro
 >
->Symfony sa come fare il parse e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da una URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il capitolo 9.
+>Symfony sa come analizzare e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da una URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il capitolo 9.
 >
 >Nel complesso, questo significa che il modo in cui si dà un nome alle azioni delle applicazioni non dovrebbe essere influenzato dal modo in cui scegliamo l'URL per chiamarli, ma dalle funzioni delle azioni nell'applicazione. Il nome di una azione deve descrivere cosa fa l'azione reale e spesso è spesso un verbo in forma all'infinito (come `show`, `list`, `edit` e così via). I nomi delle azioni possono essere del tutto invisibili all'utente finale, quindi non bisogna aver paura di utilizzare nomi di azioni espliciti (come `listByName` or `showWithComments`). In questo modo si può risparmiare sui commenti del codice atti a spiegare la funzione dell'azione e inoltre il codice sarà molto più facile da leggere.
 
@@ -179,7 +179,7 @@ Notare che l'utilizzo del tag breve di apertura (`<?=`, equivalente a `<?php ech
 Link a un'altra azione
 ----------------------
 
-Sappiamo già che c'è un disaccoppiamento totale tra il nome di una azione e l'URL utilizzata per chiamarla. Quindi se in un template si crea un link a `update` come nel Listato 4-8, funzionerà solo con le rotte in modalità predefinita. Se successivamente si decide di cambiare il modo in cui le URL devono apparire, sarà necessario rivedere tutti i template per modificare i collegamenti ipertestuali.
+Sappiamo già che c'è un disaccoppiamento totale tra il nome di una azione e l'URL utilizzata per chiamarla. Quindi se in un template si crea un link a `update` come nel Listato 4-8, funzionerà solo con le rotte in modalità predefinita. Se successivamente si decide di cambiare il modo in cui gli URL devono apparire, sarà necessario rivedere tutti i template per modificare i collegamenti ipertestuali.
 
 Listato 4-8 - Collegamenti ipertestuali, il modo classico
 

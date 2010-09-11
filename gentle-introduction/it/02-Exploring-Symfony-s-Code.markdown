@@ -601,7 +601,7 @@ Cartella   | Descrizione
 `data/`    | Contiene i file dati del progetto come lo schema del database, un file SQL per la creazione delle tabelle o anche un file SQLite.
 `doc/`     | Contiene la documentazione del progetto
 `lib/`     | Contiene classi esterne o librerie. In essa può essere aggiunto del codice che deve essere condiviso tra le applicazioni. La sotto-cartella `model/` contiene gli oggetti del modello del progetto (descritto nel capitolo 8).
-`log/`     | Contiene i file di log generati direttamente da symfony. Possono anche essere presenti i file di log del webserver, del database o file di log provenienti da qualsiasi punto del progetto. Symfony crea un file di log per ogni applicazione e ambiente (i file di log verranno discussi nel capitolo 16).
+`log/`     | Contiene i file di log generati direttamente da symfony. Possono anche essere presenti i file di log del server web, del database o file di log provenienti da qualsiasi punto del progetto. Symfony crea un file di log per ogni applicazione e ambiente (i file di log verranno discussi nel capitolo 16).
 `plugins/` | Contiene i vari plugin installati nell'applicativo (i plugin verranno discussi nel capitolo 17).
 `test/`    | Contiene test unitari e funzionali scritti in PHP e compatibili con il framework di test di symfony (discusso nel capitolo 15). Durante il setup del progetto, symfony crea automaticamente dei file con dei test basilari.
 `web/`     | È la cartella radice del server web. Essa contiene gli unici file accessibili dall'esterno.

@@ -79,7 +79,7 @@ Alcuni helper sono disponibili per impostazione predefinita su ogni template, se
 
   * `Helper`: Richiesto dall'helper di inclusione (infatti la funzione `use_helper()` è a sua volta un helper)
   * `Tag`: Helper di base per i tag, usato in quasi tutti gli helper
-  * `Url`: Helper per i link e la gestione delle URL
+  * `Url`: Helper per i link e la gestione degli URL
   * `Asset`: Helper per popolare la sezione HTML `<head>` e fornire facilmente link a risorse esterne (file di immagini, JavaScript e fogli di stile)
   * `Partial`: Helper che permettono l'inclusione di frammenti di template
   * `Cache`: Manipolazione di frammenti di codice presenti nella cache

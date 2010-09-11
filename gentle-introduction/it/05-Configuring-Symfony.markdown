@@ -327,7 +327,7 @@ Se il server web ha `mod_rewrite` abilitato, si possono anche utilizzare le rego
 >**SIDEBAR**
 >Ambienti e server
 >
->Non confondere le nozioni di ambiente e server. In symfony, diversi ambienti sono diverse configurazioni e corrispondono a diversi front controller (gli script che gestiscono le richieste). Server diversi corrispondono a diversi nomi a dominio nelle URL. 
+>Non confondere le nozioni di ambiente e server. In symfony, diversi ambienti sono diverse configurazioni e corrispondono a diversi front controller (gli script che gestiscono le richieste). Server diversi corrispondono a diversi nomi a dominio negli URL. 
 >
 >     http://localhost/frontend_dev.php/modulo/index
 >            _________ _______________
