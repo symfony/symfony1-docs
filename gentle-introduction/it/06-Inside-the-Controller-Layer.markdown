@@ -203,7 +203,7 @@ Listing 6-7 - Metodi comuni `sfActions`
 >**SIDEBAR**
 >Il singleton context
 >
->Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` restituisce lo stesso singleton. Questo è un oggetto molto utile che contiene un riferimento a tutti gli oggetti del nocciolo di symfony associati a una richiesta, mettendo a disposizione una via di accesso a ognuno di loro:
+>Abbiamo già visto, nel front controller, una chiamata a `sfContext::createInstance()`. Nell'azione il metodo `getContext()` restituisce lo stesso singleton. Questo è un oggetto molto utile che contiene un riferimento a tutti gli oggetti del nucleo di symfony associati a una richiesta, mettendo a disposizione una via di accesso a ognuno di loro:
 >
 >`sfController`: L'oggetto controllore (`->getController()`)
 >

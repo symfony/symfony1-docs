@@ -14,7 +14,7 @@ Introduzione
 ------------
 
 La gestione delle email in symfony ruota intorno all'oggetto mailer. Come 
-altri oggetti del nocciolo di symfony, il mailer è un factory. Esso è configurato nel
+altri oggetti del nucleo di symfony, il mailer è un factory. Esso è configurato nel
 file di configurazione `factories.yml` ed è sempre accessibile attraverso l'istanza del contesto:
 
     [php]

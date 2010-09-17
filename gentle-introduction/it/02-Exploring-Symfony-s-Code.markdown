@@ -487,7 +487,7 @@ e più divertimento.
 Oltre a ciò symfony fornisce conformità con gli standard XHTML, capacità di debug, semplice configurazione, astrazione del database, un intelligente sistema 
 di gestione degli URL, ambienti  multipli e tanti altri strumenti di sviluppo. 
 
-### Le Classi che compongono la base (nocciolo) del framework symfony
+### Le Classi che compongono la base (nucleo) del framework symfony
 
 L'implementazione MVC in symfony utilizza diverse classi che verranno spesso citate all'interno di questa guida:
 
@@ -498,12 +498,12 @@ L'implementazione MVC in symfony utilizza diverse classi che verranno spesso cit
 
 Nel capitolo 6 questi oggetti verranno approfonditi maggiormente.
 
-Come si può notare, tutte le classi fornite da symfony utilizzano il prefisso 'sf', così come le variabili del nocciolo nei template. 
+Come si può notare, tutte le classi fornite da symfony utilizzano il prefisso 'sf', così come le variabili del nucleo nei template. 
 Questo serve a scongiurare problematiche relative all'utilizzo di nomi per variabili e classi utilizzate dallo sviluppatore e rendendo semplice il loro riconoscimento.
 
 >**NOTE**
 >Tra i diversi standard utilizzati da symfony, UpperCamelCase è lo standard per i nomi delle classi delle variabili.
->Ci sono due eccezioni: le classi del nocciolo iniziano con `sf`, in minuscolo, e le variabili nei template utilizzano
+>Ci sono due eccezioni: le classi del nucleo iniziano con `sf`, in minuscolo, e le variabili nei template utilizzano
 >il trattino basso come separatore.
 
 Organizzazione del codice
@@ -756,7 +756,7 @@ Listato 2-16 - Utilizzo del valore predefinito
     echo $request->getParameter('foobar', 'default');
      => default
 
-Alcune classi del nocciolo di symfony utilizzano un contenitore di parametri che supporta i namespace (grazie alla classe  `sfNamespacedParameterHolder`).
+Alcune classi del nucleo di symfony utilizzano un contenitore di parametri che supporta i namespace (grazie alla classe  `sfNamespacedParameterHolder`).
 Se viene specificato un terzo argomento al setter o al getter, esso viene utilizzato come namespace, e il parametro verrà definito esclusivamente all'interno del namespace.
 Listato 2-17 ne mostra un esempio.
 

@@ -100,7 +100,7 @@ Nel 2003, Fabien ha passato un po' di tempo alla ricerca di strumenti esistenti 
 source per lo sviluppo di applicazioni web in PHP. Non ha trovato nulla che
 soddisfacesse i requisiti sopra descritti. Quando è uscito PHP 5, ha deciso che gli
 strumenti a disposizione avevano raggiunto un livello di maturità tale da poter essere
-integrati in un framework completo. Quindi, ha passato un anno a sviluppare il nocciolo
+integrati in un framework completo. Quindi, ha passato un anno a sviluppare il nucleo
 di symfony, basando il suo lavoro sul framework MVC Mojavi, l'ORM Propel e gli helper
 di Ruby on Rails.
 
