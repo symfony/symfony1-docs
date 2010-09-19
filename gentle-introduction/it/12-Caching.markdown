@@ -680,7 +680,7 @@ Ad esempio, se il contenuto di una pagina dipendesse da cookie, è possibile imp
     Vary: Cookie
 
 Molto spesso è difficile abilitare la cache sulle azioni a causa del fatto che la pagina potrebbe cambiare a seconda dei cookie, della lingua o qualcos'altro. 
-Se non ci fossere problemi di spazio per la dimensione della cache, è sufficiente impostare correttamente l'header `Vary`. 
+Se non ci fossero problemi di spazio per contenere una cache di grosse dimensioni, è sufficiente impostare correttamente l'header `Vary`. 
 Ciò può essere fatto per l'intera applicazione o per azione, utilizzando il file di configurazione `cache.yml` o il relativo metodo `sfResponse` come segue:
 
     [php]
@@ -690,20 +690,21 @@ Ciò può essere fatto per l'intera applicazione o per azione, utilizzando il fi
 
 Symfony memorizzerà diverse versioni della pagina in cache per ogni valore di tali parametri.
 Questo aumenterà significativamente la dimensione della cache, ma ogni qualvolta il server riceverà una richiesta corrispondente a tali header, la risposta sarà presa dalla cache invece di essere processata.
-Si tratta di un grande strumento di aumento delle prestazioni per le pagine che variano solo in base agli header di richiesta.
+Si tratta di un grande strumento che aumenta le prestazioni delle pagine che variano solo in base agli header di richiesta.
   
 ### Aggiungere un header Cache-Control per abilitare la cache lato client
 
 Fino ad ora, anche aggiungendo gli header visti, il browser continuerà a spedire richieste al server anche possedendo una versione in cache di una pagina. 
 Tale comportamento si puo' evitare aggiungendo gli header `Cache-Control` ed `Expires` alla risposta. 
-Questi header per default sono disabilitati in PHP, ma symfony può farne l'override per evitare richieste non necessarie al server.
+Questi header per default sono disabilitati in PHP, ma symfony può farne l'override in modo da evitare richieste non necessarie al server.
 
-Come al solito, è possibile scatenare tale comportamento chiamando un metodo dell'oggetto `sfResponse`. In un'azione, occorre definire il tempo massimo in secondi per i quali una pagina dovrebbe essere messa mantenuta in cache:
+Come al solito, è possibile scatenare tale comportamento chiamando un metodo dell'oggetto `sfResponse`. 
+In un'azione, sarà necessario definire il tempo massimo in secondi per i quali una pagina debba essere  mantenuta in cache:
 
     [php]
     $this->getResponse()->addCacheControlHttpHeader('max_age=60');
 
-è possibile anche specificare sotto quali condizioni una pagina può essere messa in cache, in modo da non lasciare memorizzati dati privati (come ad esempio un numero di conto corrente) in cache:
+È possibile anche specificare sotto quali condizioni una pagina potrà essere messa in cache, in modo da non lasciare memorizzati dati privati (come ad esempio un numero di conto corrente) in cache:
 
     [php]
     $this->getResponse()->addCacheControlHttpHeader('private=Truè);
@@ -732,8 +733,11 @@ Il sistema di cache fornisce accelerazioni variabili delle performance a seconda
 
 Inoltre è possibile mettere in cache anche partial e component.
 
-Se il cambiamento di dati nel modello o nella sessione obbligasse a svuotare la cache per una questione di coerenza, è possibile farlo con fine granularità per ottimizzare le prestazioni, ovvero eliminando solo gli elementi che hanno subito un cambiamento e mantenendo gli altri.
+Se il cambiamento di dati nel modello o nella sessione obbligasse a svuotare la cache per una questione di coerenza, 
+è possibile farlo con fine granularità per ottimizzare le prestazioni, ovvero eliminando solo gli elementi che hanno subito un cambiamento e mantenendo gli altri inalterati.
 
-è da tener presente che è necessario testare con maggior attenzione le pagine con cache abilitata, dato che potrebbero apparire nuovi bug mettendo in cache gli elmenti sbagliati o dimenticando di eliminare quando vengono aggiornati i dati sottostanti. Un ambiente di staging, dedicato al test della cache, è di grande utilità a questo scopo.
+È da tener presente che sarà necessario testare con maggior attenzione le pagine con cache abilitata, dato che potrebbero apparire nuovi bug mettendo in cache gli elementi sbagliati o dimenticando di eliminarli quando verranno aggiornati i dati sottostanti. 
+Un ambiente di staging, dedicato al test della cache, è di grande utilità a questo scopo.
 
-Infine, si consiglia di trarre il meglio dagli header del protocollo HTTP 1.1 grazie alle funzionalità avanzate di symfony, con il coinvolgimento del client nelle operazioni di caching ed un ulteriore incremento delle prestazioni.
+Infine, si consiglia di trarre il meglio dagli header del protocollo HTTP 1.1 grazie alle funzionalità avanzate di symfony, 
+con il coinvolgimento del client nelle operazioni di caching si otterrà un ulteriore incremento delle prestazioni.
