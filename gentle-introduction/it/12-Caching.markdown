@@ -1,21 +1,21 @@
 Chapter 12 - Caching
 ====================
 
-Uno dei metodi per velocizzare un'applicazione è quello di memorizzare pezzi di codice HTML, o anche pagine intere, per richieste future. 
+Uno dei metodi per velocizzare un'applicazione è quello di memorizzare porzioni di codice HTML, o anche pagine intere, per soddisfare in modo rapido richieste future. 
 Tale tecnica prende il nome di caching, e può essere utilizzata sia lato server che lato client.
 
-Symfony offre un sistema di caching lato server molto flessibile. Permette di salvare l'intera risposta, il risultato di un'azione, un partial, un segmento di template in un file, attraverso un setup 
-molto intuitivo basato su file YAML. Se i dati dell'applicativo subissero un cambiamento, è possible eliminare facilmente parti della cache tramite la linea di comando o per un'azione designata a tale scopo. 
+Symfony offre un sistema di caching lato server molto flessibile. Permette di salvare l'intera risposta (response), il risultato di un'azione, un partial, un segmento di template in un file, attraverso una configurazione 
+molto intuitiva basata su file YAML. Se i dati dell'applicativo subissero un cambiamento, è possible eliminare facilmente parti della cache tramite linea di comando o per mezzo di un'azione designata a tale scopo. 
 Symfony fornisce anche un semplice controllo della cache lato client tramite gli header HTTP 1.1. 
 Questo capitolo affronterà queste tematiche, e proporrà alcuni suggerimenti per monitorare i miglioramenti che il caching può portare in un'applicazione.
 
 Caching della risposta
 ----------------------
 
-Il principio del caching HTML è piuttosto semplice: parte o tutto il codice HTML inviato all'utente dopo una richiesta può essere riutilizzato per richieste analoghe. 
-Tale codice HTML viene memorizzato in una cartella particolare (in symfony nella cartella `cache/`), dove il front controller effettuerà un controllo prima di eseguire un'azione. 
-Se venisse trovata una versione in cache, essa verrà spedita senza che l'azione sia eseguita, in modo tale da velocizzarne in modo considerevole il processo di costruzione della risposta da inviare all'utente. 
-Se non venisse trovata alcuna versione, l'azione verrà eseguita ed il risultato (la vista) verrà memorizzato nella cartella di cache per le richieste future.
+Il principio del caching HTML è piuttosto semplice: porzioni o tutto il codice HTML inviato all'utente dopo una richiesta (request) può essere riutilizzato per analoghe richieste successive. 
+Tale codice HTML verrà memorizzato in una cartella particolare (in symfony nella cartella `cache/`), dove il front controller effettuerà un controllo prima di eseguire un'azione. 
+Se venisse trovata una versione in cache, essa verrà inviata senza che l'azione sia eseguita, in modo tale da velocizzarne in modo considerevole il processo di costruzione della risposta da inviare all'utente. 
+Se non venisse trovata alcuna versione, l'azione verrà eseguita ed il risultato (la vista) verrà memorizzato nella cartella di cache per richieste future.
 
 Symfony gestisce tre tipologie di cache HTML:
 
@@ -23,11 +23,11 @@ Symfony gestisce tre tipologie di cache HTML:
   * Cache di un parziale, di un component oppure un component slot
   * Cache di un frammento
 
-Le prima due tipologie sono gestite tramite file YAML. La terza, cache di un frammento, viene gestita tramite chiamate a helper nei template.
+Le prima due tipologie sono gestite tramite file YAML. La terza, cache di un frammento, viene gestita tramite chiamate nei template di un helper specializzato.
 
 ### Impostazioni globali della cache
 
-Per ogni applicazione di un progetto, il meccanismo di cache HTML può essere abilitato o disabilitato (default), per ambiente, nell'impostazione `cache` del file `settings.yml`.
+Per ogni applicazione di un progetto, il meccanismo di cache HTML può essere abilitato o disabilitato (impostazione predefinita), per ambiente, nell'impostazione `cache` del file `settings.yml`.
 Il Listato 12-1 mostra come abilitarla.
 
 Listato 12-1 - Attivazione della cache, in `frontend/config/settings.yml`
@@ -38,18 +38,18 @@ Listato 12-1 - Attivazione della cache, in `frontend/config/settings.yml`
 
 ### Cache di un'azione
 
-Le azioni che mostrano informazioni statiche (dati non dipendenti dal database o dalla sessione) o azioni che leggono dati da un database ma non lo modificano (tipicamente richieste GET) sono spesso ideali 
-per la cache. La Figura 12-1 mostra quali elementi della pagina vengono messi in cache in questo caso: il risultato di un'azione (il template annesso) o il risultato insieme al layout.
+Le azioni che mostrano informazioni statiche (dati non dipendenti dal database o dalla sessione) o azioni che leggono dati da un database ma non modificano i dati in esso contenuti (tipicamente richieste GET) sono spesso candidati ideali 
+per essere memorizzati nella cache. La Figura 12-1 mostra quali elementi della pagina verranno messi in cache in questo caso: il risultato di un'azione (il template annesso) o il risultato insieme al layout.
 
 Figura 12-1 - Cache di un'azione
 
 ![Cache di un'azione](http://www.symfony-project.org/images/book/1_4/F1201.png  "Cache di un'azione")
 
-Ad esempio, si consideri un'azione `user/list` che restituisce la lista degli utenti di un sito. 
+Ad esempio: si consideri un'azione `user/list` che restituisce la lista degli utenti di un sito. 
 A meno che un utente venga modificato, aggiunto o rimosso (e questo argomento sarà discusso in seguito nella sezione "Rimuovere oggetti dalla cache"), la lista sarà sempre la stessa, 
 per cui è una buona candidata per essere memorizzata in cache.
 
-L'attivazione e le impostazioni della cache, azione per azione, sono definiti nel file cache.yml, dentro la cartella `config/` del modulo. Il Listato 12-2 ne mostra un esempio.
+L'attivazione e le impostazioni della cache, azione per azione, sono definite nel file cache.yml, all'interno della cartella `config/` del modulo. Il Listato 12-2 ne mostra un esempio.
 
 Listato 12-2 - Attivare la cache per un'azione, in frontend/modules/user/config/cache.yml
 
@@ -58,7 +58,7 @@ Listato 12-2 - Attivare la cache per un'azione, in frontend/modules/user/config/
       with_layout: false   # valore predefinito
       lifetime:    86400   # valore predefinito
 
-La configurazione appena mostrata definisce che la cache è attiva per l'azione `list`, ed il layout non viene incluso (comportamento predefinito).
+La configurazione appena mostrata definisce che la cache sarà attiva per l'azione `list`, ed il layout non verrà incluso (comportamento predefinito).
 Ciò significa che anche se una versione dell'azione venisse trovata in cache, il layout (con partial e component) verrà eseguito ugualmente. Se l'opzione `with_layout` venisse impostata a `true`,
 anche il layout verrebbe messo in cache con l'azione e non sarebbe eseguito.
 
@@ -66,17 +66,17 @@ Per testare le impostazioni della cache, si deve richiamare l'azione dal browser
 
     http://myapp.example.com/frontend_dev.php/user/list
 
-Si puo'notare un bordo attorno all'area dell'azione nella pagina. La prima volta tale area avrà un header blu, che significa che la pagina non proviene dalla cache. 
-Aggiornando la pagina si noterà che l'header è di colore giallo, che significa che questa volta proviene dalla cache (con un significativo decremento del tempo di risposta). 
+Si puo'notare un bordo colorato attorno all'area dell'azione nella pagina. La prima volta tale area avrà un header blu: significa che la pagina non proviene dalla cache. 
+Aggiornando la pagina si noterà che l'header è di colore giallo: significa che questa volta proviene dalla cache (con un significativo decremento del tempo di risposta). 
 Più avanti in questo capitolo saranno approfonditi i metodi per testare e monitorare la cache.
 
 >**NOTE**
->Gli slot sono parte dei template, quindi effettuare il caching di un'azione significa anche memorizzare il valore dello slot definito dal template dell'azione. Quindi la cache funziona nativamente per gli slot.
+>Gli slot sono parte dei template, quindi effettuare il caching di un'azione significa anche memorizzare il valore dello slot definito dal template dell'azione. Di conseguenza la cache funziona nativamente per gli slot.
 
 Il sistema di cache funziona anche per le pagine con argomenti. Il modulo `user` potrebbe avere, ad esempio, un'azione `show` che si aspetta un `id` per poter mostrare i dettagli di un utente. 
-Per ottenre questo comportamento occorre modificare il file `cache.yml` per abilitare la cache anche per questa casistica, come mostrato nel Listato 12-3.
+Per ottenere questo comportamento occorre modificare il file `cache.yml` in modo tale da abilitare la cache anche per questa casistica, come mostrato nel Listato 12-3.
 
-Per organizzare i vari file `cache.yml`, è sufficiente ragruppare le impostazioni comuni a tutte le azioni di un modulo sotto la chiave `all:`, anch'essa mostrata nel Listato 12-3.
+Per organizzare i vari file `cache.yml`, sarà sufficiente ragruppare le impostazioni comuni a tutte le azioni di un modulo sotto la chiave `all:`, anch'essa mostrata nel Listato 12-3.
 
 Listato 12-3 - Esempio di `cache.yml, in frontend/modules/user/config/cache.yml`
 
@@ -89,11 +89,11 @@ Listato 12-3 - Esempio di `cache.yml, in frontend/modules/user/config/cache.yml`
       with_layout: false    # valore predefinito
       lifetime:    86400    # valore predefinito
 
-In questo modo ogni chiamata all'azione `user/show` con un `id` diverso produrrà nuovi record nella cache. Per cui la cache per:
+In questo modo ogni chiamata all'azione `user/show` con un `id` diverso produrrà nuovi record nella cache. Per cui la cache generata dall'URL:
 
     http://myapp.example.com/user/show/id/12
 
-sarà diversa da quella per:
+sarà diversa da quella dell'URL:
 
     http://myapp.example.com/user/show/id/25
 
@@ -105,13 +105,13 @@ Essa determina effettivamente che tipo di dati debbano essere memorizzati nella 
 Per cache senza layout, viene memorizzato solo il risultato dell'esecuzione di un template e le variabili dell'azione. 
 Per cache con layout, tutta la risposta viene memorizzata. Ciò significa che la cache con il layout è molto più veloce di quella senza.
 
-Se funzionalmente è possibile effettuarlo (ovvero se il layout non si basa sulla sessione) si dovrebbe scegliere sempre la cache con layout. 
+Se funzionalmente è applicabile (ovvero se il layout non si basa sulla sessione) si dovrebbe scegliere sempre la cache con layout. 
 Sfortunatamente, il layout contiene spesso elementi dinamici (ad esempio, il nome dell'utente connesso), per cui la cache senza layout è l'impostazione più comune. 
-Comunque, i feed RSS, i pop-up, e le pagine che non dipendono dai cookie possono essere messe in cache con il loro layout.
+Comunque, i feed RSS, i pop-up, e le pagine che non dipendono dai cookie possono essere messe in cache con il rispettivo layout.
 
 ### Caching di un partial, component, o component slot
 
-Il Capitolo 7 ha mostrato come riutilizzare frammenti di codice in diversi template, utilizzando l'helper `include_partial()`. 
+Il Capitolo 7 è stato mostrato come riutilizzare frammenti di codice in diversi template, utilizzando l'helper `include_partial()`. 
 Un partial è facile da mettere in cache quanto un'azione, e l'attivazione segue le stesse regole, come mostrato in Figura 12-2.
 
 Figura 12-2 - Caching di un partial, component, o component slot
@@ -129,23 +129,23 @@ Listato 12-4 - Cache di un partial, in `frontend/modules/user/config/cache.yml`
       enabled:    true
     ...
 
-In questo modo tutti i template che utilizzino questo partial non ne eseguiranno effettivamente il codice PHP, bensì utilizzeranno la versione in cache.
+In questo modo tutti i template che utilizzino questo partial non eseguiranno effettivamente il codice PHP, bensì utilizzeranno la versione in cache.
 
     [php]
     <?php include_partial('user/my_partial') ?>
 
-Come per le azioni, anche il caching dei partial diventa importante quando il risultato di tale partial dipende da parametri. Il sistema di cache memorizzerà tante versioni del template quanti sono i parametri.
+Come avviene per le azioni, anche il caching dei partial diventa importante quando il risultato di tale partial è dipendente da parametri. Il sistema di cache memorizzerà tante versioni del template quanti sono i parametri.
 
     [php]
     <?php include_partial('user/my_other_partial', array('foo' => 'bar')) ?>
 
 >**TIP**
->La cache di un'azione è più potente di quella di un partial, in quanto quando un'azione viene messa in cache il template non viene eseguito; se il template contenesse chiamate ai partial, tali chiamate non verrebbero eseguite. 
+>La cache di un'azione è più potente di quella di un partial, in quanto quando un'azione viene messa in cache il template non viene eseguito; se il template contenesse chiamate ai partial, tali chiamate non verranno eseguite. 
 >Perciò, il caching dei partial diventa utile quando non vengono messe in cache l'azione chiamante o i partial inclusi nel layout.
 
 Un piccolo promemoria dal Capitolo 7: un component è una leggera azione situata all'inizio del partial, ed un component slot è un component per il quale l'azione cambia a seconda delle azioni chiamanti.
-Questi due tipi di inclusioni sono molto simili ai partial, e supportano il caching nello stesso modo. Ad esempio, se il layout globale includesse un component chiamato `day` 
-con `include_component('general/day')` per mostrare la data odierna, per abilitarne la cache è sufficiente impostare il file `cache.yml` del modulo `general` nel seguente modo:
+Questi due tipi di inclusioni sono molto simili ai partial, e supportano il caching allo stesso modo. Ad esempio, se il layout globale includesse un component chiamato `day` 
+con `include_component('general/day')` per mostrare la data odierna, per abilitarne la cache sarà sufficiente impostare il file `cache.yml` del modulo `general` nel seguente modo:
 
     _day:
       enabled: true
@@ -193,7 +193,7 @@ Listato 12-5 - Usare l'helper `cache()`, in `frontend/modules/user/templates/lis
 
 Il funzionamento dell'helper:
 
-  * Se venisse trovata in cache una versione del fragment '`users`', verrebbe sostituito al codice compreso tra le linee `<?php if (!cache($unique_fragment_name)): ?>` e `<?php endif; ?>`.
+  * Se venisse trovata in cache una versione del fragment '`users`', verrebbe sostituita al codice compreso tra le linee `<?php if (!cache($unique_fragment_name)): ?>` e `<?php endif; ?>`.
   * Altrimenti, il codice tra tali linee verrebbe processato e salvato in cache,  identificato con il nome `$unique_fragment_name`.
 
 Il codice non incluso tra tali linee verrebbe sempre processato e mai salvato in cache.
@@ -204,14 +204,14 @@ Il codice non incluso tra tali linee verrebbe sempre processato e mai salvato in
 L'aumento di velocità dovuto alla cache dei fragment non è significatico quanto quello dovuto al caching delle azioni, dato che l'azione verrebbe sempre eseguita, 
 il template parzialmente processato ed il layout sempre usato per la presentazione.
 
-è possibile dichiarare fragment addizionali nello stesso template, però ocorre attribuire ad ognuno di essi un nome univoco, in modo che il sistema di cache riesca ad identificarli in seguito.
+È possibile dichiarare fragment addizionali nello stesso template, però ocorre attribuire ad ognuno di essi un nome univoco, in modo che il sistema di cache riesca ad identificarli in seguito.
 
 Come per le azioni ed i component, anche i fragment in cache possono accettare un tempo di vita come secondo parametro, specificato in secondi, per l'helper `cache()`:
 
     [php]
     <?php if (!cache('users', 43200)): ?>
 
-Se non ne venisse specificato alcun valore, verrebe utilizzato il valore di default (86400 secondi, ovvero un giorno).
+Se non ne venisse specificato alcun valore, verrà utilizzato il valore di default (86400 secondi, ovvero un giorno).
 
 >**TIP**
 >Una modalità alternativa per rendere un'azione memorizzabile in cache è inserire delle variabili che la rendano dinamica nell'annesso pattern di routing. 
@@ -225,7 +225,7 @@ Il file `cache.yml` rappresenta una modalità per definire le impostazioni della
 Detto ciò, come accade spesso in symfony, è possibile utilizzare PHP al posto di YAML, e questo permette di configurare la cache dinamicamente.
 
 Perché mai si vorrebbe poter cambiare la cache dinamicamente? Un buon esempio è rapprensentato da una pagina il cui contenuto varia a seconda che un utente sia autenticato o meno, ma la sua URL rimane la stessa. 
-si immagini una pagina `article/show` con un sistema di votazione per gli articoli. Tale funzionalità di votazione sarebbe disabilitata per gli utenti non autenticati; per loro, il link della votazione porterebbe
+Si immagini una pagina `article/show` con un sistema di votazione per gli articoli. Tale funzionalità di votazione sarebbe disabilitata per gli utenti non autenticati; per loro, il link della votazione porterebbe
 alla pagina di login. Questa versione della pagina potrebbe essere messa in cache. D'altra parte, per gli utenti autenticati, cliccare sul link di votazione scatenerebbe una richiesta in POST e creerebbe un nuovo voto. 
 In questo caso la cache deve essere disabilitata, in modo che symfony possa costruirla dinamicamente.
 
