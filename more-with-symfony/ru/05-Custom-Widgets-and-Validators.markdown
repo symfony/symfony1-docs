@@ -1,61 +1,44 @@
-Custom Widgets and Validators
+Свои собственные виджеты и валидаторы
 =============================
 
-*by Thomas Rabaix*
+*автор: Thomas Rabaix; перевод на русский &mdash; BRIGADA*
 
-This chapter explains how to build a custom widget and validator for use
-in the form framework. It will explain the internals of `sfWidgetForm` and
-`sfValidator`, as well as how to build both a simple and complex widget.
+Этот раздел объясняет, как создать свой собственный виджет и валидатор для использования в фреймворке форм. Здесь обсуждаются внутренности классов `sfWidgetForm` и `sfValidator`, а также описывается процесс построения простого и сложного виджета.
 
-Widget and Validator Internals
+Внутренности виджетов и валидаторов
 ------------------------------
 
-### `sfWidgetForm` Internals
+### Внутренности `sfWidgetForm`
 
-An object of the ~`sfWidgetForm`~ class represents the visual implementation of how
-related data will be edited. A string value, for example, might be edited
-with a simple text box or an advanced WYSIWYG editor. In order to be fully configurable,
-the `sfWidgetForm` class has two important properties: `options` and `attributes`.
+Объект класса ~`sfWidgetForm`~ представляет визуальную реализацию того, как соответствующие данные должны редактироваться. Строковое значение, например, может быть изменено в простом текстовом поле, а может &mdash; в расширенном WYSIWYG-редакторе. Для обеспечения полноценного конфигурирования, класс `sfWidgetForm` имеет два важных свойства: `options` и `attributes`.
 
- * `options`: used to configure the widget (e.g. the database query to be
-   used when creating a list to be used in a select box)
+ * `options` &mdash; используется для конфигурирования виджета (например, задаётся запрос к базе данных для создания содержимого ниспадающего списка)
 
- * `attributes`: HTML attributes added to the element upon rendering
+ * `attributes` &mdash; HTML-атрибуты, добавляемые к элементу при его выводе
 
-Additionally, the `sfWidgetForm` class implements two important methods:
+Дополнительно в классе `sfWidgetForm` реализовано два важных метода:
 
- * `configure()`: defines which options are *optional* or *mandatory*.
-   While it is not a good practice to override the constructor, the `configure()`
-   method can be safely overridden.
+ * `configure()` &mdash; определяет, какие опции являются *необязательными*, а какие &mdash; *важными*.
+   Так как переопределение конструктора является не очень хорошей практикой, то лучше делать всю необходимую работу в методе `configure()` &mdash; это полностью безопасно.
 
- * `render()`: outputs the HTML for the widget. The method has a mandatory
-   first argument, the HTML widget name, and an optional second argument,
-   the value.
+ * `render()` &mdash; выводит HTML-код виджета. У этого метода есть один важный первый аргумент, имя виджета, а также необязательный второй аргумент &mdash; значение.
 
 >**NOTE**
->An `sfWidgetForm` object does not know anything about its name or its value.
->The component is responsible only for rendering the widget. The name and
->the value are managed by an `sfFormFieldSchema` object, which is the link
->between the data and the widgets.
+>Объект `sfWidgetForm` ничего не знает о своем имени и значении. Компонент отвечает только за вывод виджета. Именами и значениями управляет объект `sfFormFieldSchema`, который связывает данные с виджетами.
 
-### sfValidatorBase Internals
+### Внутренности sfValidatorBase
 
-The ~`sfValidatorBase`~ class is the base class of each validator. The
-~`sfValidatorBase::clean()`~ method is the most important method of this class
-as it checks if the value is valid depending on the provided options.
+Класс ~`sfValidatorBase`~ является базовым для любого валидатора. Метод ~`sfValidatorBase::clean()`~ &mdash; самый важный метод этого класса, так как он проверяет допустимость значения в соответствии с указанными опциями.
 
-Internally, the `clean()` method perform several different actions:
+Внутри метод `clean()` выполняет несколько действий:
 
- * trims the input value for string values (if specified via the `trim` option)
- * checks if the value is empty
- * calls the validator's `doClean()` method.
+ * обрезает начальные и конечные пробелы в строковых значениях (если указана опция `trim`)
+ * проверяет значение на пустоту
+ * вызывает метод валидатора `doClean()`.
 
-The `doClean()` method is the method which implements the main validation
-logic. It is not good practice to override the `clean()` method. Instead,
-always perform any custom logic via the `doClean()` method.
+Метод `doClean()` определяет основную логику валидатора. Плохой практикой является переопределение метода `clean()`, свою логику работы валидатора следует реализовывать в методе `doClean()`.
 
-A validator can also be used as a standalone component to check input integrity.
-For instance, the `sfValidatorEmail` validator will check if the email is valid:
+Валидатор также может быть использован как самостоятельный компонент, проверяющий целостность ввода. Например, валидатор `sfValidatorEmail` проверяет допустимость электронной почты:
 
     [php]
     $v = new sfValidatorEmail();
@@ -70,29 +53,21 @@ For instance, the `sfValidatorEmail` validator will check if the email is valid:
     }
 
 >**NOTE**
->When a form is bound to the request values, the `sfForm` object keeps
->references to the original (dirty) values and the validated (clean) values.
->The original values are used when the form is redrawn, while the cleaned
->values are used by the application (e.g. to save the object).
+>Когда форма связывается со значениями запроса, объект `sfForm` сохраняет ссылки на оригинальные (грязные) и прошедшие валидатор (чистые) значения. Оригинальные значения используются при повторном выводе формы, а чистые используются приложением (например, при сохранении объекта).
 
-### The `options` Attribute
+### Атрибут `options`
 
-Both the `sfWidgetForm` and `sfValidatorBase` objects have a variety of options:
-some are optional while others are mandatory. These options are defined
-inside each class's `configure()` method via:
+Объекты `sfWidgetForm` и `sfValidatorBase` имеют различные опции: некоторые из них обязательны, а другие нет. Все эти опции определяются каждым классом в методе `configure()` через вызовы:
 
- * `addOption($name, $value)`: defines an option with a name and a default value
- * `addRequiredOption($name)`: defines a mandatory option
+ * `addOption($name, $value)` &mdash; определяет опцию с именем `name` и значением по умолчанию `value`
+ * `addRequiredOption($name)` &mdash; определяет обязательную опцию
 
-These two methods are very convenient as they ensure that dependency values
-are correctly passed to the validator or the widget.
+Эти два метода очень удобны, поскольку гарантируют что зависимые значения корректно передаются в валидатор или виджет.
 
-Building a Simple Widget and Validator
+Построение простого виджета и валидатора
 --------------------------------------
 
-This section will explain how to build a simple widget. This particular widget
-will be called a "Trilean" widget. The widget will display a select box with three choices:
-`No`, `Yes` and `Null`.
+Этот раздел описывает процесс построения простого виджета. Наш специальный виджет будет называться "Trilean". Он будет отображать поле выбора с тремя вариантами: `No`, `Yes` и `Null`.
 
     [php]
     class sfWidgetFormTrilean extends sfWidgetForm
@@ -135,29 +110,21 @@ will be called a "Trilean" widget. The widget will display a select box with thr
       }
     }
 
-The `configure()` method defines the option values list via the `choices` option.
-This array can be redefined (i.e. to change the associated label of each value).
-There is no limit to the number of option a widget can define. The base
-widget class, however, declares a few standard options, which function like
-de-facto reserved options:
+Метод `configure()` определяет список значений через опцию `choices`. Этот массив может быть переопределён (например, для изменения выводимых меток и соответствующих им значений). Никаких ограничений на число опций виджета не определяется. Базовый класс виджета, однако, определяет ряд стандартных опций, которые работают как зарезервированные:
 
- * `id_format`: the id format, default is '%s'
+ * `id_format` &mdash; формат идентификатора, по умолчанию '%s'
 
- * `is_hidden`: boolean value to define if the widget is a hidden field (used
-   by `sfForm::renderHiddenFields()` to render all hidden fields at once)
+ * `is_hidden` &mdash; булево значение, определяющее видимость поля (используется `sfForm::renderHiddenFields()` для вывода всех скрытых полей разом)
 
- * `needs_multipart`: boolean value to define if the form tag should include
-   the multipart option (i.e. for file uploads)
+ * `needs_multipart` &mdash; булево значение, определяющее необходимость включения в тэг form опции multipart (например, для загрузки файлов)
 
- * `default`: The default value that should be used to render the widget
-   if no value is provided
+ * `default` &mdash; значение по умолчанию, которое используется при выводе виджета без заданного значения
 
- * `label`: The default widget label
+ * `label` &mdash; метка виджета по умолчанию
 
-The `render()` method generates the corresponding HTML for a select box. The
-method calls the built-in `renderContentTag()` function to help render HTML tags.
+Метод `render()` генерирует соответствующий полю выбора HTML-код. Для этого он вызывает встроенную функцию `renderContentTag()`.
 
-The widget is now complete. Let's create the corresponding validator:
+Теперь наш виджет готов, давайте создадим соответствующий валидатор:
 
     [php]
     class sfValidatorTrilean extends sfValidatorBase
@@ -195,91 +162,64 @@ The widget is now complete. Let's create the corresponding validator:
       }
     }
 
-The `sfValidatorTrilean` validator defines three options in the `configure()`
-method. Each option is a set of valid values. As these are defined as options,
-the developer can customize the values depending on the specification.
+Валидатор `sfValidatorTrilean` в методе `configure()` определяет три опции. Каждая из этих опций является набором допустимых значений. Так как они определены в опциях, разработчик может изменить их в соответствии со своими нуждами.
 
-The `doClean()` method checks if the value matches a set a valid values and
-returns the cleaned value. If no value is matched, the method will raise an
-`sfValidatorError` which is the standard validation error in the form framework.
+Метод `doClean()` проверяет соответствие переданного значения наборам допустимых и возвращает очищенное значение. Если соответствия значения не обнаружено, генерируется исключение `sfValidatorError`, являющееся стандартной ошибкой валидации в фреймворке форм.
 
-The last method, `isEmpty()`, is overridden as the default behavior of this
-method is to return `true` if `null` is provided. As the current widget allows
-`null` as a valid value, the method must always return `false`.
+Последний метод, `isEmpty()`, переопределён, так как его поведение по умолчанию должно вернуть `true` если было передано значение `null`. А наш виджет считает `null` допустимым значением, поэтому этот метод должен всегда возвращать `false`.
 
 >**Note**:
-> If `isEmpty()` returns true, the `doClean()` method will never be called.
+> Если бы `isEmpty()` возвращал `true`, то метод `doClean()` никогда не был бы вызван.
 
-While this widget was fairly straightforward, it introduced some important base features
-that will be needed as we go further. The next section will create a more
-complex widget with multiple fields and JavaScript interaction.
+Несмотря на то, что разработанный нами виджет был достаточно простым, он позволил нам продемонстрировать некоторые важные особенности, которые потребуются в дальнейшем. В следующем разделе мы создадим более сложный виджет с несколькими полями и использованием JavaScript.
 
-The Google Address Map Widget
+Виджет Google Address Map
 -----------------------------
 
-In this section, we are going to build a complex widget. New methods will
-be introduced and the widget will have some JavaScript interaction as well.
-The widget will be called "GMAW": "Google Map Address Widget".
+В этом разделе, мы будем создавать сложный виджет. Будут введены новые методы, а также виджет будет использовать JavaScript-взаимодействие. Мы назовём новый виджет "GMAW" &mdash; "Google Map Address Widget" (виджет адресов гугло-карт).
 
-What do we want to achieve? The widget should provide an easy way for the
-end user to add an address. By using an input text field and with google's
-map services we can achieve this goal.
+Чего мы хотим достичь? Виджет должен обеспечить конечному пользователю простой способ добавления адресов. С помощью поля ввода текста и услуг, предоставляемых сервисом карт Google, мы сможем достичь этой цели.
 
-!["Google Map Address Widget" mashup](http://www.symfony-project.org/images/more-with-symfony/widgets-figure-01.png ""Google Map Address Widget" mashup")
+![Набросок "Google Map Address Widget"](http://www.symfony-project.org/images/more-with-symfony/widgets-figure-01.png "Набросок "Google Map Address Widget"")
 
-Use case 1:
+Вариант использования 1:
 
- * The user types an address.
- * The user clicks the "lookup" button.
- * The latitude and longitude hidden fields are updated and a new marker
-   is created on the map. The marker is positioned at the location of the
-   address. If the Google Geocoding service cannot find the address an error
-   message will popup.
+ * Пользователь вводит адрес.
+ * Пользователь щёлкает кнопку "поиск" (lookup).
+ * Скрытые поля, хранящие значения широты и долготы обновляются, и на карте создаётся новый маркер. Маркер указывает на положение введённого адреса. Если сервис геолокации Google не может найти адрес, появляется сообщение об ошибке.
 
-Use case 2:
+Вариант использования 2:
 
- * The user clicks on the map.
- * The latitude and longitude hidden fields are updated.
- * Reverse lookup is used to find the address.
+ * Пользователь кликает мышкой по карте.
+ * Скрытые поля, хранящие значения широты и долготы обновляются.
+ * Для поиска соответствующего адреса используется обратный запрос.
 
-*The following fields need to be posted and handled by the form:*
+*Следующие поля должны выводиться и обрабатываться формой:*
 
- * `latitude`: float, between 90 and -90
- * `longitude`: float, between 180 and -180
- * `address`: string, plain text only
+ * `latitude` &mdash; число с плавающей точкой (float), в диапазоне от 90 до -90
+ * `longitude` &mdash; число с плавающей точкой (float), в диапазоне от 180 до -180
+ * `address` &mdash; строка (string), только простой текст
 
-The widget's functional specifications have just been defined, now let's
-define the technical tools and their scopes:
+Функциональная спецификация виджета была только что дана, теперь давайте определим технические средства и области их применения:
 
- * Google map and Geocoding services: displays the map and retrieves address information
- * jQuery: adds JavaScript interactions between the form and the field
- * sfForm: draws the widget and validates the inputs
+ * Карты Google и сервис геолокации (Geocoding): отображение карты и получение адресной информации
+ * jQuery: добавление JavaScript-взаимодействия между формой и полями
+ * sfForm: рисование виджета и валидация ввода
 
-### `sfWidgetFormGMapAddress` Widget
+### Виджет `sfWidgetFormGMapAddress`
 
-As a widget is the visual representation of data, the `configure()` method
-of the widget must have different options to tweak the Google map or modify
-the styles of each element. One of the most important options is the
-`template.html` option, which defines how all elements are ordered.
-When building a widget it is very important to think about reusability and
-extensibility.
+Поскольку виджет &mdash; это визуальное представление данных, метод `configure()` виджета должен иметь различные опции для настройки карт Google или изменения стилей элементов. Одна из важнейших опций, `template.html`, определяет порядок элементов. Когда вы разрабатываете новый виджет, всегда помните о его повторном использовании и расширяемости.
 
-Another important thing is the external assets definition. An `sfWidgetForm`
-class can implement two specific methods:
+Другая важная вещь &mdash; внешнее определение активов. Класс `sfWidgetForm` должен реализовывать два специальных метода: 
 
- * `getJavascripts()` must return an array of JavaScript files;
+ * `getJavascripts()` должен вернуть массив JavaScript-файлов;
 
- * `getStylesheets()` must return an array of stylesheet files
-   (where the key is the path and the value the media name).
+ * `getStylesheets()` должен вернуть массив CSS-файлов
+   (где ключом будет путь, а значение &mdash; соответствующая величина для атрибута media).
 
-The current widget only requires some JavaScript to work so no stylesheet is needed.
-In this case, however, the widget will not handle the initialization of the
-Google JavaScript, though the widget will make use of the Google geocoding
-and map services. Instead, it will be the developer's responsibility
-to include it on the page. The reason behind this is that Google's services
-may be used by other elements on the page, and not only by the widget.
+Нашему виджету для работы потребуется только некоторый JavaScript-код. В данном случае, однако, виджет не будет обрабатывать инициализацию Google JavaScript, хотя и будет использовать соответствующие сервисы геолокации и карт. Вместо этого, мы обяжем разработчика включить их прямо на странице. Причина такого поведения заключается в том, что сервисы Google могут взаимодействовать с другими элементами на странице, а не только с нашим виджетом.
 
-Let's jump to the code:
+Давайте переходить к коду:
 
     [php]
     class sfWidgetFormGMapAddress extends sfWidgetForm
@@ -333,7 +273,7 @@ Let's jump to the code:
 
       public function render($name, $value = null, $attributes = array(), $errors = array())
       {
-        // define main template variables
+        // определяем главные переменные шаблона
         $template_vars = array(
           '{div.id}'             => $this->generateId($name),
           '{div.class}'          => $this->getOption('div.class'),
@@ -348,22 +288,22 @@ Let's jump to the code:
           '{input.longitude.id}' => $this->generateId($name.'[longitude]'),
         );
 
-        // avoid any notice errors to invalid $value format
+        // для исключения уведомления об ошибках при неверном формате $value
         $value = !is_array($value) ? array() : $value;
         $value['address']   = isset($value['address'])   ? $value['address'] : '';
         $value['longitude'] = isset($value['longitude']) ? $value['longitude'] : '';
         $value['latitude']  = isset($value['latitude'])  ? $value['latitude'] : '';
 
-        // define the address widget
+        // определяем виджет поля адреса
         $address = new sfWidgetFormInputText(array(), $this->getOption('address.options'));
         $template_vars['{input.search}'] = $address->render($name.'[address]', $value['address']);
 
-        // define the longitude and latitude fields
+        // определяем поля широты и долготы
         $hidden = new sfWidgetFormInputHidden;
         $template_vars['{input.longitude}'] = $hidden->render($name.'[longitude]', $value['longitude']);
         $template_vars['{input.latitude}']  = $hidden->render($name.'[latitude]', $value['latitude']);
 
-        // merge templates and variables
+        // объединяем шаблоны и переменные
         return strtr(
           $this->getOption('template.html').$this->getOption('template.javascript'),
           $template_vars
@@ -371,27 +311,16 @@ Let's jump to the code:
       }
     }
 
-The widget uses the `generateId()` method to generate the `id` of each element.
-The `$name` variable is defined by the `sfFormFieldSchema`, so the `$name`
-variable is composed of the name form, any nested widget schema names and
-the name of the widget as defined in the form `configure()`.
+Виджет использует метод `generateId()` для генерации атрибута `id` каждого элемента. Переменная `$name` определяется `sfFormFieldSchema` так, что составляется из имени формы, имён других схем виджетов и имени самого виджета, как показано в методе `configure()`.
 
 >**NOTE**
->For instance, if the form name is `user`, the nested schema name is `location`
->and the widget name is `address`, the final `name` will be `user[location][address]`
->and the `id` will be `user_location_address`. In other words,
->`$this->generateId($name.'[latitude]')` will generate a valid and unique
->`id` for the `latitude` field.
+>Например, если имя формы есть `user`, имя вложенной схемы есть `location`, а имя виджета &mdash; `address`, то результирующее значение для атрибута `name` будет `user[location][address]`, а значение атрибута `id` соответственно будет `user_location_address`. Другими словами, строка `$this->generateId($name.'[latitude]')` генерирует допустимый и уникальный атрибут `id` для поля `latitude`.
 
-The different element `id` attributes are quite important as there are passed
-to the JavaScript block (via the `template.js` variable), so the JavaScript can
-properly handle the different elements.
+Различные атрибуты `id` элементов очень важны, т.к. они передаются в блок JavaScript (через переменные `template.js`), что позволяет JavaScript-коду корректно обрабатывать различные элементы.
 
-The `render()` method also instantiates two inner widgets: an `sfWidgetFormInputText`
-widget, which is used to render the address field, and an `sfWidgetFormInputHidden`
-widget, which is used to render the hidden fields.
+Метод `render()` также выводит два типа встроенных виджетов: `sfWidgetFormInpuМеtText`, который используется как поле ввода адреса, и `sfWidgetFormInputHidden`, используемый для хранения скрытых полей с широтой и долготой.
 
-The widget can be quickly tested with this small piece of code:
+Виджет можно быстро протестировать следующим кодом:
 
     [php]
     $widget = new sfWidgetFormGMapAddress();
@@ -401,7 +330,7 @@ The widget can be quickly tested with this small piece of code:
       'latitude' => '48.858205'
     ));
 
-The output result is:
+В результате будет выведено:
 
     [html]
     <div id="user_location_address" class="sf-gmap-widget">
@@ -424,36 +353,23 @@ The output result is:
       })
     </script>
 
-The JavaScript part of the widget takes the different `id` attributes and
-binds jQuery listeners to them so that certain JavaScript is triggered
-when actions are performed. The JavaScript updates the hidden fields with
-the longitude and latitude provided by the google geocoding service.
+Часть виджета, реализованная на JavaScript, получает атрибуты `id` некоторых элементов и связывает их с библиотекой jQuery таким образом, что при обработке действий над этими элементами вызывается определённый JavaScript-код. Этот код обновляет скрытые поля со значениями долготы и широты в соответствии с ответом сервиса геолокации Google.
 
-The JavaScript object has a few interesting methods:
+JavaScript-код содержит ряд интересных функций:
 
- * `init()`: the method where all variables are initialized and events
-   bound to different inputs
+ * `init()` &mdash; метод, в котором инициализируются переменные, а также происходит связывание полей с событиями
 
- * `lookupCallback()`: a *static* method used by the geocoder method to
-   lookup the address provided by the user
+ * `lookupCallback()` &mdash; *статический* метод, используемый сервисом геолокации для поиска введённого пользователем адреса
 
- * `reverseLookupCallback()`: is another *static* method used by the geocoder
-   to convert the given longitude and latitude into a valid address.
+ * `reverseLookupCallback()` &mdash; другой *статический* метод, используемый сервисом геологации для преобразования указанной долготы и широты в адрес.
 
-The final JavaScript code can be viewed in Appendix A.
+Готовый JavaScript-код можно посмотреть в Приложении A.
 
-Please refer to the Google map documentation for more details on the functionality
-of the Google maps [API](http://code.google.com/apis/maps/).
+Пожалуйста, для получения дополнительной информации по использованию карт Google, ознакомьтесь с официальной [документацией](http://code.google.com/apis/maps/).
 
-### `sfValidatorGMapAddress` Validator
+### Валидатор `sfValidatorGMapAddress`
 
-The `sfValidatorGMapAddress` class extends `sfValidatorBase` which already
-performs one validation: specifically, if the field is set as required then
-the value cannot be `null`. Thus, `sfValidatorGMapAddress` need only validate
-the different values: `latitude`, `longitude` and `address`. The `$value` variable
-should be an array, but as the user input should not be trusted, the validator
-checks for the presence of all keys so that the inner validators are passed
-valid values.
+Класс `sfValidatorGMapAddress` наследуется от `sfValidatorBase`, который уже выполняет одну проверку: если для поля установлена опция `required`, то значение не может быть `null`. Таким образом, классу `sfValidatorGMapAddress` необходимо поверить сами значения `latitude`, `longitude` и `address`. Переменная `$value` должна быть массивом, но так как пользовательскому вводу доверять нельзя, валидатор проверяет присутствие всех ключей, и в результате внутренним валидаторам передаются допустимые значения.
 
     [php]
     class sfValidatorGMapAddress extends sfValidatorBase
@@ -486,22 +402,13 @@ valid values.
     }
 
 >**NOTE**
->A validator always raises an `sfValidatorError` exception when a value is not
->valid. That's why the validation is surrounded by a `try/catch` block.
->In this validator, the validator re-throws a new `invalid` exception, which
->equates to an `invalid` validation error on the `sfValidatorGMapAddress`
->validator.
+>Валидатор всегда генерирует исключение `sfValidatorError` при получении недопустимого значения. Именно из-за этого внутренний процесс валидации заключён в блок `try/catch`. В нашем валидаторе, при возникновении исключения в блоке `try` оно переповторяется как новое исключение `invalid`.
 
-### Testing
+### Тестирование
 
-Why is testing important? The validator is the glue between the user input
-and the application. If the validator is flawed, the application is vulnerable.
-Fortunately, symfony comes with `lime` which is a testing library that is
-very easy to use.
+Почему тестирование столь важно? Валидатор является связующим звеном между пользовательским вводом и приложением. Если валидатор реализован плохо, то всё приложение потенциально уязвимо. Однако symfony включает очень простую в использовании библиотеку тестирования `lime`.
 
-How can we test the validator? As stated before, a validator raises an exception
-on a validation error. The test can send valid and invalid values to the validator
-and check to see that the exception is thrown in the correct circumstances.
+Как мы можем протестировать валидатор? Как было рассказано выше, валидатор вызывает исключение при возникновении ошибок валидации. Тест может послать допустимые и недопустимые значения, чтобы увидеть возникновение исключения в правильных обстоятельствах.
 
     [php]
     $t = new lime_test(7, new lime_output_color());
@@ -537,15 +444,9 @@ and check to see that the exception is thrown in the correct circumstances.
       $t->ok($validity != $catched, '::clean() '.$message);
     }
 
-When the `sfForm::bind()` method is called, the form executes the `clean()`
-method of each validator. This test reproduces this behavior by instantiating
-the `sfValidatorGMapAddress` validator directly and testing different values.
+Когда вызывается метод `sfForm::bind()`, форма выполняет метод `clean()` каждого валидатора. Этот тест воспроизводит такое поведение, путём непосредственного создания валидатора `sfValidatorGMapAddress` и тестирования в нём различных значений.
 
-Final Thoughts
+Заключение
 --------------
 
-The most common mistake when creating a widget is to be overly focused on
-how the information will be stored in the database. The form framework is
-simply a data container and validation framework. Therefore, a widget must
-only manage its related information. If the data is valid then the different
-cleaned values can then be used by the model or in the controller.
+Наиболее распространенная ошибка при создании виджета заключается в том, что чрезмерно много внимания уделяется вопросам хранения информации в базе данных. Фреймворк форм &mdash; это просто контейнер данных и среда валидации. Поэтому виджет должен управлять только своей собственной информацией. Если данные допустимы, то различные очищенные значения могут использоваться в модели или контроллере.
