@@ -1,243 +1,201 @@
-Enhance your Productivity
-=========================
+Повысьте свою продуктивность
+============================
 
-*by Fabien Potencier*
+*автор Fabien Potencier; перевод на русский &mdash; BRIGADA*
 
-Using symfony itself is a great way to enhance your productivity as a web
-developer. Of course, everyone already knows how symfony's detailed exceptions
-and web debug toolbar can greatly enhance productivity. This chapter will
-teach you some tips and tricks to enhance your productivity even more by
-using some new or less well-known symfony features.
+Использование symfony само по себе уже повышает вашу продуктивность как вэб-разработчика.
+Конечно, все уже знают, как повышают продуктивность исключения symfony и отладочная панель.
+Эта глава научит вас некоторым приёмам ещё большего повышения продуктивности при использовании новых и не столь широко известных возможностей symfony.
 
-Start Faster: Customize the Project Creation Process
+Ускоряем начало проекта: настройка процесса создания
 ----------------------------------------------------
 
-Thanks to the symfony CLI tool, creating a new symfony project is quick and
-simple:
+Благодаря инструменту командной строки symfony, создание нового проекта происходит быстро и легко:
 
     $ php /path/to/symfony generate:project foo --orm=Doctrine
 
-The `generate:project` task generates the default directory structure for your
-new project and creates configuration files with sensible defaults. You can
-then use other symfony tasks to create applications, install plugins,
-configure your model, and more.
+Задача `generate:project` создаёт заданную по умолчанию структуру каталогов для вашего нового проекта, а также создаёт соответствующие конфигурационные файлы.
+Затем вы можете использовать другие задачи symfony для создания приложений, установки плагинов, конфигурирования модели и так далее.
 
-But the first steps to create a new project are usually always quite the
-same: you create a main application, install a bunch of plugins, tweak
-some configuration defaults to your liking, and so on.
+Но первые шаги по созданию нового проекта почти всегда одни и те же: вы создаёте главное приложение, устанавливаете какой-то набор плагинов, настраиваете под себя некоторые конфигурационные файлы...
 
-As of symfony 1.3, the project creation process can be customized and
-automated.
+Начиная с symfony 1.3, процесс создания проекта может быть настроен и автоматизирован.
 
 >**NOTE**
->As all symfony tasks are classes, it's pretty easy to customize and extend
->them except. The `generate:project` task, however, cannot be easily customized
->because no project exists when the task is executed.
+>Поскольку все задачи symfony являются классами, их можно легко настроить и расширить.
+>Предыдущая фраза не относится только к одной задаче &mdash; `generate:project`, так как на момент выполнения этой задачи проект ещё не существует.
 
-The `generate:project` task takes an `--installer` option, which is a PHP
-script that will be executed during the project creation process:
+Задача `generate:project` принимает опцию `--installer`, через которую задаётся исполняемый во время процесса создания проекта PHP-скрипт:
 
     $ php /path/to/symfony generate:project --installer=/somewhere/my_installer.php
 
-The `/somewhere/my_installer.php` script will be executed in the context of
-the `sfGenerateProjectTask` instance, so it has access to the task's methods to
-by using the `$this` object. The following sections describe all the available
-methods you can use to customize your project creation process.
+Скрипт `/somewhere/my_installer.php` выполняется в контексте экземпляра `sfGenerateProjectTask`, таким образом он имеет доступ к методам задачи через объект `$this`.
+Следующие разделы описывают все доступные методы, которые вы можете использовать для настройки процесса создания проекта.
 
 >**TIP**
->If you enable URL file-access for the `include()` function in your
->`php.ini`, you can even pass a URL as an installer (of course you need
->to be very careful when doing this with a script you know nothing about):
+>Если в своём `php.ini` вы включили возможность использования файлов по URL для функции `include()`, вы можете передавать в качестве установщика его URL (конечно же, следует быть очень осторожным, когда вы делаете это со скриптом, о котором ничего не знаете):
 >
 >      $ symfony generate:project
 >      --installer=http://example.com/sf_installer.php
 
 ### `installDir()`
 
-The `installDir()` method mirrors a directory structure (composed of
-sub-directories and files) in the newly created project:
+Метод `installDir()` задаёт расположение структуры каталогов (которая состоит из подкаталогов и файлов) создаваемого проекта:
 
     [php]
     $this->installDir(dirname(__FILE__).'/skeleton');
 
 ### `runTask()`
 
-The `runTask()` method executes a task. It takes the task name, and a string
-representing the arguments and the options you want to pass to it as
-arguments:
+Метод `runTask()` выполняет задачу.
+В качестве параметров он принимает имя задачи и строку, представляющую собой передаваемые в задачу аргументы:
 
     [php]
     $this->runTask('configure:author', "'Fabien Potencier'");
 
-Arguments and options can also be passed as arrays:
+Аргументы также можно передать в массиве:
 
     [php]
     $this->runTask('configure:author', array('author' => 'Fabien Potencier'));
 
 >**TIP**
->The task shortcut names also work as expected:
+>Сокращённая запись имени задачи также работает:
 >
 >     [php]
 >     $this->runTask('cc');
 
-This method can of course be used to install plugins:
+Этот метод можно использовать при установке плагинов:
 
     [php]
     $this->runTask('plugin:install', 'sfDoctrineGuardPlugin');
 
-To install a specific version of a plugin, just pass the needed options:
+Для установки определённой версии плагина необходимо передать соответствующие опции:
 
     [php]
-    $this->runTask('plugin:install', 'sfDoctrineGuardPlugin', array('release' => '10.0.0', 'stability' => beta'));
+    $this->runTask('plugin:install', 'sfDoctrineGuardPlugin', array('release' => '10.0.0', 'stability' => 'beta'));
 
 >**TIP**
->To execute a task from a freshly installed plugin, the tasks need to be
->reloaded first:
+>Для запуска задач из только что установленного плагина, необходимо перезагрузить список задач:
 >
 >     [php]
 >     $this->reloadTasks();
 
-If you create a new application and want to use tasks that relys on a
-specific application like `generate:module`, you must change the configuration
-context yourself:
+Если вы создаёте новое приложение и хотите использовать задачи, которые зависят от определённой конфигурации (например, `generate:module`), вы должны самостоятельно её установить:
 
     [php]
     $this->setConfiguration($this->createConfiguration('frontend', 'dev'));
 
-### Loggers
+### Логгеры
 
-To give feedback to the developer when the installer script runs, you can log
-things pretty easily:
-
-    [php]
-    // a simple log
-    $this->log('some installation message');
-
-    // log a block
-    $this->logBlock('Fabien\'s Crazy Installer', 'ERROR_LARGE');
-
-    // log in a section
-    $this->logSection('install', 'install some crazy files');
-
-### User Interaction
-
-The `askConfirmation()`, `askAndValidate()`, and `ask()` methods allow you to
-ask questions and make your installation process dynamically configurable.
-
-If you just need a confirmation, use the `askConfirmation()` method:
+Чтобы реализовать взаимодействие с разработчиком, запустившим установочный скрипт, вы можете легко выводить в лог сообщения:
 
     [php]
-    if (!$this->askConfirmation('Are you sure you want to run this crazy installer?'))
+    // простой лог
+    $this->log('какая-нибудь чушь про установку');
+
+    // лог блока
+    $this->logBlock('Чумовой Установщик Василия Пупкина', 'ERROR_LARGE');
+
+    // лог в разделе
+    $this->logSection('install', 'устанавливаем дикое количество файлов');
+
+### Взаимодействие с пользователем
+
+Методы `askConfirmation()`, `askAndValidate()` и `ask()` позволяют вам задавать вопросы и, таким образом, реализовать динамически конфигурируемый процесс установки.
+
+Если вам нужно простое подтверждение, используйте метод `askConfirmation()`:
+
+    [php]
+    if (!$this->askConfirmation('Вы действительно хотите запустить этот дикий установщик?'))
     {
-      $this->logSection('install', 'You made the right choice!');
+      $this->logSection('install', 'Вы сделали правильный выбор! :)');
 
       return;
     }
 
-You can also ask any question and get the user's answer as a string by using
-the `ask()` method:
+Также вы можете задавать пользователю любые вопросы и получать от него строковые ответы с помощью метода `ask()`:
 
     [php]
-    $secret = $this->ask('Give a unique string for the CSRF secret:');
+    $secret = $this->ask('Укажите уникальную строку для использования в CSRF-защите:');
 
-And if you want to validate the answer, use the `askAndValidate()` method:
+А ещё вы можете проверять ответы при помощи метода `askAndValidate()`:
 
     [php]
-    $validator = new sfValidatorEmail(array(), array('invalid' => 'hmmm, it does not look like an email!'));
-    $email = $this->askAndValidate('Please, give me your email:', $validator);
+    $validator = new sfValidatorEmail(array(), array('invalid' => 'хм... кажется вы ввели не адрес email!'));
+    $email = $this->askAndValidate('Пожалуйста, укажите свой адрес электронной почты:', $validator);
 
-### Filesystem Operations
+### Операции файловой системы
 
-If you want to do filesystem changes, you can access the symfony filesystem
-object:
+Если вы хотите изменить файловую систему, вы можете получить доступ к symfony-объекту файловой системы:
 
     [php]
     $this->getFilesystem()->...();
 
 >**SIDEBAR**
->The Sandbox Creation Process
+>Процесс создания песочницы (sandbox)
 >
->The symfony sandbox is a pre-packaged symfony project with a ready-made
->application and a pre-configured SQLite database. Anybody can create a sandbox
->by using its installer script:
+>Песочница symfony &mdash; это подготовленный проект с готовой базой данных SQLite.
+>Создать песочницу можно используя её установочный скрипт:
 >
 >     $ php symfony generate:project --installer=/path/to/symfony/data/bin/sandbox_installer.php
 >
->Have a look at the `symfony/data/bin/sandbox_installer.php` script to have a
->working example of an installer script.
+>Скрипт `symfony/data/bin/sandbox_installer.php` является готовым примером установщика.
 
-The installer script is just another PHP file. So, you can do pretty anything
-you want. Instead of running the same tasks again and again each time you
-create a new symfony project, you can create your own installer script and
-tweak your symfony project installations the way you want. Creating a new
-project with an installer is much faster and prevents you from missing
-steps. You can even share your installer script with others!
+Скрипт установщика &mdash; это всего лишь PHP-файл.
+Посему, вы можете делать что пожелаете.
+Вместо того, чтобы при создании новых проектов снова и снова запускать определённые задачи, вы можете создать свой собственный скрипт установщика и настраивать процесс установки под себя.
+Создание нового проекта через скрипт ускоряет выполнение задачи и исключает использование вами одних и тех же действий.
+А ещё вы можете поделиться вашим скриптом с другими!
 
 >**TIP**
->In [Chapter 06](#chapter_06), we will use a custom installer. The code for it
->can be found in [Appendix B](#chapter_b).
+>В [Главе 6](#chapter_06) мы используем свой собственный установщик.
+>Его код можно посмотреть в [Приложении B](#chapter_b).
 
-Develop Faster
---------------
+Разрабатывайте быстрее
+----------------------
 
-From PHP code to CLI tasks, programming means a lot of typing. Let's see how
-to reduce this to the bare minimum.
+И при написании PHP-кода, и при написании задач командной строки, программирование подразумевает ввод больших объёмов кода.
+Давайте посмотрим, как можно сократить затрачиваемое на это время до минимума.
 
-### Choosing your IDE
+### Подберите себе IDE
 
-Using an IDE helps the developer to be more productive in more than one way.
+Использование интегрированной среды разработки (IDE) позволяет повысить продуктивности не одним способом.
 
-First, most modern IDEs provide PHP autocompletion out of the box. This means
-that you only need to type the first few character of a method name. This
-also means that even if you don't remember the method name, you are not forced
-to have look at the API as the IDE will suggest all the available methods of
-the current object.
+Во-первых, большинство современных IDE поддерживают автозавершение для вводимого PHP-кода.
+Это означает, что вам необходимо набирать только первые несколько символов имени метода.
+Это также означает, что даже если вы не помните имя метода, вам всё ещё не нужно переключаться на чтение API, так как IDE может вывести список всех методов текущего объекта.
 
-Additionally, some IDEs, like PHPEdit or Netbeans, know even more about symfony
-and provide specific integration with symfony projects.
+Во-вторых, некоторые IDE, например PHPEdit и Netbeans, знают о symfony несколько больше, и определённым образом интегрируются с symfony-проектами.
 
 >**SIDEBAR**
->Text Editors
+>Текстовые редакторы
 >
->Some users prefer to use a text editor for their programming work, mainly
->because text editors are faster than any IDE. Of course, text editors provide
->less IDE-oriented features. Most popular editors, however, offer
->plugins/extensions that can be used to enhance your user experience and
->make the editor work more efficiently with PHP and symfony projects.
+>Некоторые пользователи предпочитают в своей программистской работе использовать обыкновенные текстовые редакторы, так как работают они быстрее любой IDE.
+>Безусловно, текстовый редактор обеспечивает меньше возможностей, чем полноценная IDE.
+>Однако большинство популярных редакторов имеют возможность подключения плагинов/дополнений, расширяющих пользовательские возможности при разработке PHP и symfony-проектов.
 >
->For example, a lot of Linux users tends to use VIM for all their work.
->For these developers, the [vim-symfony](http://github.com/geoffrey/vim-symfony)
->extension is available. VIM-symfony is a set of VIM scripts that integrates
->symfony into your favorite editor. Using vim-symfony, you can easily create vim
->macros and commands to streamline your symfony development. It also
->bundles a set of default commands that put a number of configuration
->files at your fingertips (schema, routing, etc) and enable you to
->easily switch from actions to templates.
+>Например, многие Linux-пользователи предпочитают использовать VIM.
+>Этим пользователям доступно расширение [vim-symfony](http://github.com/geoffrey/vim-symfony).
+>VIM-symfony &mdash; это набор VIM-скриптов, которые интегрируют symfony с их любимым редактором.
+>Используя vim-symfony, можно легко создавать макросы и команды vim для упрощения разработки под symfony.
+>Также, этот набор скриптов содержит набор команд, располагающих некоторые конфигурационные файлы "под кончиками пальцев" и позволяет легко переключаться от действий к шаблонам.
 >
->Some MacOS X users use TextMate. These developers can install the symfony
->[bundle](http://github.com/denderello/symfony-tmbundle), which adds a lot
->of time-saving macros and shortcuts for day-to-day activities.
+>Некоторые пользователи MacOS X используют TextMate.
+>Эти разработчики могут установить [пакет](http://github.com/denderello/symfony-tmbundle), который добавит несколько макросов и ярлыков для повседневных задач.
 
-#### Using an IDE that supports symfony
+#### Использование IDE, которая поддерживает symfony
 
-Some IDEs, like [PHPEdit 3.4](http://www.phpedit.com/en/presentation/extensions/symfony)
-and [NetBeans 6.8](http://www.netbeans.org/community/releases/68/), have
-native support for symfony, and so provide a finely-grained integration
-with the framework. Have a look at their documentation to learn more about
-their symfony specific support, and how it can help you develop faster.
+Некоторые IDE, например [PHPEdit 3.4](http://www.phpedit.com/en/presentation/extensions/symfony) и [NetBeans 6.8](http://www.netbeans.org/community/releases/68/), имеют встроенную поддержку symfony, и обеспечивают полноценную интеграцию с этим фреймворком.
+Посмотрите их документацию для того чтобы узнать больше об этой поддержке и о том, как это может помочь вам вести свои разработки быстрее.
 
-#### Helping the IDE
+#### Помощь IDE
 
-PHP autocompletion in IDEs only works for methods that are explicitly defined
-in the PHP code. But if your code uses the `__call()` or `__get()` "magic"
-methods, IDEs have no way to guess the available methods or properties. The
-good news is that you can help most IDEs by providing the methods and/or
-properties in a PHPDoc block (by using the `@method` and `@property`
-annotations respectively).
+Автозавершение в IDE работает только для методов, которые явно определены в коде.
+Однако, если вы используете "волшебные" методы типа `__call()` или `__get()`, у IDE нет возможности показать вам доступные свойства и методы.
+Хорошая новость &mdash; в большинстве случаев, вы можете сами помочь IDE, указав методы и/или свойства в блоке PHPDoc (используя соответствующие комментарии `@method` и `@property`).
 
-Let's say you have a `Message` class with a dynamic property (`message`) and a
-dynamic method (`getMessage()`). The following code shows you how an IDE can
-know about them without any explicit definition in the PHP code:
+Предположим, у вас есть класс `Message` с динамическим свойством (`message`) и динамическим методом (`getMessage()`). 
+Следующий код демонстрирует, как IDE сможет узнать о них без какого-либо явного определения в коде:
 
     [php]
     /**
@@ -258,13 +216,11 @@ know about them without any explicit definition in the PHP code:
       }
     }
 
-Even if the `getMessage()` method does not exist, it will be recognized by the
-IDE thanks to the `@method` annotation. The same goes for the `message`
-property as we have added a `@property` annotation.
+Даже если метод `getMessage()` не существует, он распознаётся IDE благодаря аннотации `@method`.
+То же самое происходит и в случае со свойством `message`, для которого добавлена аннотация `@property`.
 
-This technique is used by the `doctrine:build-model` task. For instance, a
-Doctrine `MailMessage` class with two columns (`message` and `priority`) looks
-like the following:
+Эта техника используется задачей `doctrine:build-model`.
+Например, Doctrine-класс `MailMessage` с двумя столбцами (`message` и `priority`) выглядит следующим образом:
 
     [php]
     /**
@@ -307,64 +263,52 @@ like the following:
         }
     }
 
-Find Documentation Faster
--------------------------
+Быстрый поиск документации
+--------------------------
 
-As symfony is a large framework with many features, it is not always easy to
-remember all the configuration possibilities, or all the classes and methods
-at your disposal. As we have seen before, using an IDE can go a long way in
-providing you autocompletion. Let's explore how existing tools can be leveraged to
-find answers as fast as possible.
+Поскольку symfony &mdash; большой фреймворк с богатыми возможностями, не так-то легко запомнить все тонкости конфигурирования или все классы и методы.
+Как мы уже видели, использование IDE может очень сильно помочь даже одним автозавершением.
+Давайте исследуем, как можно использовать существующие инструменты для быстрого поиска ответов.
 
-### Online API
+### Онлайн-документация по API
 
-The fastest way to find documentation about a class or a method is to browse
-the online [API](http://www.symfony-project.org/api/1_3/).
+Наибыстрейшим способом получения документации о классе или методе является просмотр online-версии [API](http://www.symfony-project.org/api/1_3/).
 
-Even more interesting is the built-in API search engine. The search allows
-you to rapidly find a class or a method with only a few keystrokes. After
-entering a few letters into the search box of the API page, a quick search
-results box will appear in real-time with useful suggestions.
+Ещё более интересным представляется использование встроенного в API поискового механизма.
+Он позволяет вам быстро находить класс или метод в несколько нажатий клавиш.
+После ввода нескольких букв в поисковую строку, открывается список соответствующих вариантов.
 
-You can search by typing the beginning of a class name:
+Вы можете выполнять поиск, введя только начало имени класса:
 
-![API Search](http://www.symfony-project.org/images/more-with-symfony/api_search_1.png "API Search")
+![Поиск в API](http://www.symfony-project.org/images/more-with-symfony/api_search_1.png "Поиск в API")
 
-or of a method name:
+или имени метода:
 
-![API Search](http://www.symfony-project.org/images/more-with-symfony/api_search_2.png "API Search")
+![Поиск в API](http://www.symfony-project.org/images/more-with-symfony/api_search_2.png "Поиск в API")
 
-or a class name followed by `::` to list all available methods:
+или ввести за именем класса `::` для получения списка доступных методов:
 
-![API Search](http://www.symfony-project.org/images/more-with-symfony/api_search_3.png "API Search")
+![Поиск в API](http://www.symfony-project.org/images/more-with-symfony/api_search_3.png "Поиск в API")
 
-or enter the beginning of a method name to further refine the possibilities:
+или продолжить вводить имя метода:
 
-![API Search](http://www.symfony-project.org/images/more-with-symfony/api_search_4.png "API Search")
+![Поиск в API](http://www.symfony-project.org/images/more-with-symfony/api_search_4.png "Поиск в API")
 
-If you want to list all classes of a package, just type the package name and
-submit the request.
+Если вы хотите получить список всех классов пакета, просто введите имя этого пакета и отправьте запрос.
 
-You can even integrate the symfony API search in your browser. This way, you
-don't even need to navigate to the symfony website to look for something. This is
-possible because we provide native [OpenSearch](http://www.opensearch.org/)
-support for the symfony API.
+Вы можете интегрировать поиск по API в свой браузер.
+В этом случае вам не придётся вначале переходить на сайт symfony, а затем выполнять поиск.
+Эта возможность доступна, так как мы обеспечиваем поддержку механизма [OpenSearch](http://www.opensearch.org/).
 
-If you use Firefox, the symfony API search engines will show up automatically
-in the search engine menu. You can also click on the "API OpenSearch" link
-from the API documentation section to add one of them to your browser search
-box.
+Если вы используете Firefox, механизм поиска API можно автоматически встроить в поисковом меню.
+Для этого вам потребуется нажать ссылку "API OpenSearch" в соответствующем разделе документации и произойдёт добавление в поисковое меню вашего браузера.
 
 >**NOTE**
->You can have a look at a screencast that shows how the symfony API search
->engine integrates well with Firefox on the symfony
->[blog](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api).
+>Вы можете [посмотреть](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api) видеоруководство, в котором демонстрируется интеграция поискового механизма в Firefox.
 
-### Cheat Sheets
+### Диаграммы-шпаргалки
 
-If you want to quickly access information about the main parts of the framework,
-a large collection of [cheat sheets](http://trac.symfony-project.org/wiki/CheatSheets)
-is available:
+Если вы хотите иметь быстрый доступ к информации о главных частях фреймворка, у нас есть коллекция [диаграмм-шпаргалок](http://trac.symfony-project.org/wiki/CheatSheets):
 
  * [Directory Structure and CLI](http://andreiabohner.files.wordpress.com/2007/03/cheatsheetsymfony001_enus.pdf)
  * [View](http://andreiabohner.files.wordpress.com/2007/08/sfviewfirstpartrefcard.pdf)
@@ -376,104 +320,74 @@ is available:
  * [Doctrine](http://www.phpdoctrine.org/Doctrine-Cheat-Sheet.pdf)
 
 >**NOTE**
->Some of these cheat sheets have not yet been updated for symfony 1.3.
+>Некоторые из этих шпаргалок не обновлялись после появления symfony 1.3.
 
-### Offline Documentation
+### Бумажная документация
 
-Questions about configuration are best answered by the symfony reference
-guide. This is a book you should keep with you whenever you develop with
-symfony. The book is the fastest way to find every available configuration
-thanks to a very detailed table of contents, an index of terms,
-cross-references inside the chapters, tables, and much more.
+Вопросы конфигуририрования наиболее полно освещены в *Справочнике по Symfony* (Symfony Reference Guide).
+Это именно та книга, к которой вам стоит обращаться при возникновении вопросов, появляющихся по мере разработки для symfony.
+Она является наибыстрейшим способом получения всех возможных параметров конфигурации, благодаря подробному оглавлению, списку терминов и определений, перекрёстным ссылкам в главах, таблицам и многому другому.
 
-You can browse this book
-[online](http://www.symfony-project.org/reference/1_3/en/), buy a
-[printed](http://books.sensiolabs.com/book/the-symfony-1-3-reference-guide)
-copy of it, or even download a
-[PDF](http://www.symfony-project.org/get/pdf/reference-1.3-en.pdf) version.
+Вы можете посмотреть эту книгу [онлайн](http://www.symfony-project.org/reference/1_3/en/), купить [отпечатанную](http://books.sensiolabs.com/book/the-symfony-1-3-reference-guide) копию, или скачать в виде [PDF](http://www.symfony-project.org/get/pdf/reference-1.3-en.pdf).
 
-### Online Tools
+### Онлайн-инструменты
 
-As seen at the beginning of this chapter, symfony provides a nice toolset to
-help you get started faster. Eventually, you will finish your
-project, and it will be time to deploy it to production.
+Как замечено в начале этой главы, symfony предоставляет хороший комплект инструментов, чтобы помочь вам вести свои разработки быстрее.
+Рано или поздно, вы закончите свой проект и настанет пора развернуть его.
 
-To check that your project is ready for deployment, you can use the online
-deployment [checklist](http://symfony-check.org/). This website covers the
-major points you need to check before going to production.
+Чтобы проверить готовность вашего проекта к развёртыванию, вы можете использовать [онлайн-тестировщик](http://symfony-check.org/). Этот веб-сайт контролирует все важные пункты, которые вам необходимо проверить перед развёртыванием.
 
-Debug Faster
-------------
+Отлаживайте быстрее
+-------------------
 
-When an error occurs in the development environment, symfony displays a nice
-exception page filled with useful information. You can, for instance, have a look
-at the stack trace and the files that have been executed. If you setup the
-~`sf_file_link_format`~ setting in the `settings.yml` configuration file (see
-below), you can even click on the filenames and the related file will be
-opened at the right line in your favorite text editor or IDE. This is a
-great example of a very small feature that can save you tons of time when
-debugging a problem.
+Когда в отладочном окружении происходит ошибка, symfony отображает заполненную полезной информацией страницу исключения.
+Вы можете, например, посмотреть содержимое стека функций и увидеть задействованные файлы.
+Если вы установите настройку ~`sf_file_link_format`~ в конфигурационном файле `settings.yml` (см. ниже), вы даже сможете кликать на имена файлов, и соответствующие файлы будут открываться на нужной строке в вашем текстовом редакторе или IDE.
+Это великолепный пример того, как маленькая функция сохраняет массу вашего времени при отладке.
 
 >**NOTE**
->The log and view panels in the web debug toolbar also display filenames
->(especially when XDebug is enabled) that become clickable when you set the
->`sf_file_link_format` setting.
+>Панели log и view вэб-отладчика также отображают имена файлов (когда включён XDebug), а при установке `sf_file_link_format` они становятся ещё и кликабельными.
 
-By default, the `sf_file_link_format` is empty and symfony defaults to the
-value of the
-[`xdebug.file_link_format`](http://xdebug.org/docs/all_settings#file_link_format)
-PHP configuration value if it exists (setting `xdebug.file_link_format` in
-`php.ini` allows recent versions of XDebug to add links for all filenames in
-the stack trace).
+По умолчанию, `sf_file_link_format` имеет пустое значение, и symfony использует значение [`xdebug.file_link_format`](http://xdebug.org/docs/all_settings#file_link_format) конфигурации PHP если оно существует (установка `xdebug.file_link_format` в `php.ini` для большинства версий XDebug добавляет ссылки для имён файлов в трассировке).
 
-The value for `sf_file_link_format` depends on your IDE and Operating System.
-For instance, if you want to open files in ~TextMate~, add the following to
-`settings.yml`:
+Значение `sf_file_link_format` зависит от вашей IDE и операционной системы.
+Например, если вы хотите открывать файлы в ~TextMate~, добавьте следующие строки в файле `settings.yml`:
 
     [yml]
     dev:
       .settings:
         file_link_format: txmt://open?url=file://%f&line=%l
 
-The `%f` placeholder is replaced by symfony with the absolute path of the file
-and the `%l` placeholder is replaced with the line number.
+Шаблон `%f` заменяется symfony на абсолютный путь к файлу, а `%l` &mdash; на номер строки.
 
-If you use VIM, the configuration is more involved and is described online for
-[symfony](http://geekblog.over-blog.com/article-symfony-open-exceptions-files-in-remote-vim-sessions-37895120.html)
-and [XDebug](http://www.koch.ro/blog/index.php?/archives/77-Firefox,-VIM,-Xdebug-Jumping-to-the-error-line.html).
+Если вы используете VIM, конфигурация более запутанная и описана онлайн для [symfony](http://geekblog.over-blog.com/article-symfony-open-exceptions-files-in-remote-vim-sessions-37895120.html) и [XDebug](http://www.koch.ro/blog/index.php?/archives/77-Firefox,-VIM,-Xdebug-Jumping-to-the-error-line.html).
 
 >**NOTE**
->Use your favorite search engine to learn how to configure your IDE. You can
->look for configuration of the `sf_file_link_format` or `xdebug.file_link_format`
->as both work in the same way.
+>Используйте свой любимый поисковик, чтобы узнать, как конфигурируется конкретно ваша IDE.
+>Вы можете искать конфигурацию `sf_file_link_format` или `xdebug.file_link_format` &mdash; они работают одинаково.
 
-Test Faster
------------
+Тестируйте быстрее
+------------------
 
-### Record Your Functional Tests
+### Пишите свои функциональные тесты
 
-Functional tests simulate user interaction to thoroughly test the
-integration of all the pieces of your application. Writing functional tests is
-easy but time consuming. But as each functional test file is a scenario that
-simulates a user browsing your website, and because browsing an application is
-faster than writing PHP code, what if you could record a browser session and
-have it automatically converted to PHP code? Thankfully, symfony has such a
-plugin. It's called
-[swFunctionalTestGenerationPlugin](http://www.symfony-project.org/plugins/swFunctionalTestGenerationPlugin),
-and it allows you to generate ready-to-be-customized test skeletons in a matter
-of minutes. Of course, you will still need to add the proper tester calls to
-make it useful, but this is nonetheless a great time-saver.
+Функциональные тесты моделируют взаимодействие с пользователем, что позволяет протестировать интеграцию всех компонентов вашего приложения.
+Написание функциональных тестов является лёгкой, хотя и трудоёмкой задачей.
+Поскольку каждый файл функционального теста является сценарием, моделирующим поведение пользователя, который просматривает ваш сайт, и так как просмотр приложения происходит, очевидно, быстрее написания PHP-кода, то что, если вы запишете сессию просмотра сайта и будете иметь возможность конвертировать эту запись в PHP?
+К счастью, symfony имеет такой плагин.
+Он называется [swFunctionalTestGenerationPlugin](http://www.symfony-project.org/plugins/swFunctionalTestGenerationPlugin),
+и позволяет вам сгенерировать скелет теста буквально за минуты.
+Конечно, вам всё ещё надо будет добавить правильных вызовов тестера, но это всё равно экономит вам время.
 
-The plugin works by registering a symfony filter that will intercept all
-requests, and convert them to functional test code. After installing the
-plugin the usual way, you need to enable it. Open the `filters.yml` of your
-application and add the following lines after the comment line:
+Плагин регистрирует symfony-фильтр, который перехватывает все запросы и конвертирует их в код функционального теста.
+После установки плагина, вам следует включить его.
+Откройте `filters.yml` вашего приложения и добавьте следующие строки после строки комментария:
 
     [php]
     functional_test:
       class: swFilterFunctionalTest
 
-Next, enable the plugin in your `ProjectConfiguration` class:
+Далее, включите плагин в своём классе `ProjectConfiguration`:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -487,25 +401,21 @@ Next, enable the plugin in your `ProjectConfiguration` class:
       }
     }
 
-As the plugin uses the web debug toolbar as its main user interface, be sure
-to have it enabled (which the case in the development environment by default).
-When enabled, a new menu named "Functional Test" is made available. In this
-panel, you can start recording a session by clicking on the "Activate" link,
-and reset the current session by clicking on "Reset". When you are done, copy
-and paste the code from the textarea to a test file and start customizing it.
+Так как плагин использует отладочную вэб-панель в качестве своего главного пользовательского интерфейса, убедитесь что она включена (обычно, панель включена по умолчанию в окружении dev)).
+Когда всё включено, становится доступно новое меню "Functional Test".
+В этой панели вы можете начать запись сессии кликом на ссылку "Activate", и сбросить текущую сессию кликом на "Reset".
+Когда вы закончите, скопируйте код из текстового поля в файл теста и приступайте к его модификации.
 
-### Run your Test Suite faster
+### Запускайте свои тесты быстрее
 
-When you have a large suite of tests, it can be very time consuming to launch
-all tests every time you make a change, especially if some tests fail. Each
-time you fix a test, you should run the whole test suite again to ensure
-that you have not broken other tests. But until the failed tests are fixed,
-there is no point in re-executing all the other tests. To speed up this process,
-the `test:all` task has an `--only-failed` (`-f` as a shortcut) option that forces
-the task to only re-execute tests that failed during the previous run:
+Когда у вас есть большой набор тестов, достаточно трудоёмко запускать все тесты при проверке сделанных изменений, особенно если некоторые тесты перестали работать.
+Каждый раз, когда вы изменяете тест, вам необходимо снова и снова запускать весь комплекс тестов, чтобы гарантировать неповреждённость других тестов.
+Но до тех пор, пока вы не почините ошибочный тест, запускать другие тесты не требуется.
+Для ускорения этого процесса задача `test:all` имеет опцию `--only-failed` (или `-f` как сокращённая запись), которая позволяет ускорить задачу путём выполнения только тех тестов, которые провалились при предыдущем запуске:
 
     $ php symfony test:all --only-failed
 
-On first execution, all tests are run as usual. But for subsequent test runs, only tests that failed last time are executed. As you fix your code, some tests
-will pass, and will be removed from subsequent runs. When all tests pass
-again, the full test suite is run... you can then rinse and repeat.
+При первом запуске, все тесты выполняются как обычно.
+Но в дальнейшем будут выполняться только те тесты, которые провалились.
+По мере исправления кода, тесты начнут выполняться и удаляться при дальнейших запусках.
+Когда все тесты пройдут, будет запущен полный комплекс тестов... и возможно вам придётся повторить выправление ошибок.
