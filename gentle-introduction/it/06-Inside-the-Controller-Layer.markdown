@@ -181,22 +181,22 @@ Listing 6-7 - Metodi comuni `sfActions`
     {
       public function executeIndex(sfWebRequest $request)
       {
-        // Retrieving request parameters
+        // Recupera i parametri della richiesta
         $password    = $request->getParameter('password');
 
-        // Retrieving controller information
+        // Recupera informazioni sul controllore
         $moduleName  = $this->getModuleName();
         $actionName  = $this->getActionName();
 
-        // Retrieving framework core objects
+        // Recupera gli oggetti del nucleo del framework
         $userSession = $this->getUser();
         $response    = $this->getResponse();
         $controller  = $this->getController();
         $context     = $this->getContext();
 
-        // Setting action variables to pass information to the template
-        $this->setVar('foo', 'bar');
-        $this->foo = 'bar';            // Shorter version
+        // Impostare le variabili dell'azione per passare informazioni al template
+        $this->setVar('pippo', 'pluto');
+        $this->pippo = 'pluto';          // Versione breve
       }
     }
 
@@ -279,7 +279,7 @@ Listing 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfV
       return sfView::NONE;
     }
 
-    // Is equivalent to
+    // Equivalente a
     public function executeIndex()
     {
       return $this->renderText("<html><body>Hello, World!</body></html>");
@@ -845,7 +845,7 @@ Listing 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFi
 
           if ($request->getCookie('MyWebSite'))
           {
-            // sign in
+            // entra
             $user->setAuthenticated(true);
           }
         }

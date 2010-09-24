@@ -102,7 +102,7 @@ Listato 7-4 - Gli helper predefiniti più comuni
 
     // Gruppo Url
     <?php echo link_to('clicca', 'miomodulo/miaazione') ?>
-    => <a href="/rotta/all/miaazione">clicca</a>  // Dipende dalla configurazione delle rotte
+    => <a href="/rotta/alla/miaazione">clicca</a>  // Dipende dalla configurazione delle rotte
 
     // Gruppo Asset
     <?php echo image_tag('miaimmagine', 'alt=foo size=200x100') ?>
@@ -121,11 +121,11 @@ Symfony ha molti helper per vari diversi utilizzi, ma se non si trova quello di 
 Le funzioni per gli helper (normali funzioni PHP che restituiscono codice HTML) devono essere salvate in un file chiamato `FooBarHelper.php`, dove `FooBar` è il nome del gruppo di helper. Salvare il file nella cartella `apps/frontend/lib/helper/` (o in qualunque cartella `helper/`  creata dentro una delle cartelle `lib/` del progetto) in modo che possa essere trovata automaticamente dall'helper per l'inclusione `use_helper('FooBar')`.
 
 >**TIP**
->Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helper al posto del suo. Ma attenzione: poiché il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non verranno resi disponibili.
+>Questo sistema permette anche di sovrascrivere gli helper esistenti di symfony. Ad esempio, per ridefinire tutti gli helper del gruppo `Text`, basta creare un file `TextHelper.php` nella cartella `apps/frontend/lib/helper/`. Ogni volta che verrà chiamato `use_helper('Text')`, symfony userà il vostro gruppo di helper al posto del suo. Ma attenzione: poiché il file originale non viene caricato, è necessario ridefinire tutte le funzioni di un gruppo di helper per sovrascriverlo; in caso contrario, alcuni degli helper originali non saranno disponibili.
 
 ### Layout della pagina
 
-Il template mostrato nel Listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout, o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
+Il template mostrato nel Listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
 
 >**TIP**
 >Per maggiori informazioni sul decorator e gli altri design pattern, vedere *Patterns of Enterprise Application Architecture* di Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).

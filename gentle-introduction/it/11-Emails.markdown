@@ -22,7 +22,7 @@ file di configurazione `factories.yml` ed è sempre accessibile attraverso l'ist
 
 >**TIP**
 >A differenza degli altri factory, il mailer viene caricato e inizializzato su richiesta. Se
-> non venisse utilizzato, non si avranno impatti sulle performance o altri effetti collaterali.
+>non venisse utilizzato, non si avranno impatti sulle prestazioni o altri effetti collaterali.
 
 Questa guida spiega come Swift Mailer sia integrato all'interno di symfony. Se si volessero
 approfondire tutti i particolari della libreria Swfit Mailer, ci si deve riferire alla

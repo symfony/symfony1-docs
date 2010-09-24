@@ -250,7 +250,7 @@ La configurazione dell'applicazione principale è memorizzata in file che si tro
   * `app.yml`: Questo file dovrebbe contenere configurazioni specifiche all'applicazione; ad esempio variabili globali che definiscono business logic, che non hanno bisogno di essere memorizzate nel db. Tasse, costi di spedizione, indirizzi e-mail sono memorizzati spesso in questo file, che di base è vuoto.
   * `frontendConfiguration.class.php`: questa classe si occupa del bootstrap dell'applicazione, quindi fa tutte le inizializzazioni di base necessarie all'applicazione per partire. È qui che si può definire una struttura di cartelle particolare, oppure delle costanti specifiche (il capitolo 19 ne fornirà maggiori dettagli). Estende la classe `ProjectConfiguration`. 
   * `factories.yml`: symfony definisce le proprie classi per gestire le viste, la richiesta, la risposta, le sessioni e così via. Se invece si vogliono utilizzare le proprie classi personali, questo file è i posto in cui definirle (maggiori informazioni nel capitolo 17). 
-  * `filters.yml`: I filtri sono porzioni di codice eseguiti per ogni richiesta. Qui è dove definisci quali filtri devono essere processati, e può essere sovrascritto in ogni modulo. Il capitolo 6 fornisce maggiori dettagli sui filtri. 
+  * `filters.yml`: I filtri sono porzioni di codice eseguiti per ogni richiesta. Qui è dove si definisce quali filtri devono essere processati, e può essere sovrascritto in ogni modulo. Il capitolo 6 fornisce maggiori dettagli sui filtri. 
   * `routing.yml`: Le regole di routing, che permettono di trasformare un URL illeggibile in uno più "intelligente", sono definite in questo file. Per nuove applicazioni, esistono poche regole predefinite. Il capitolo 9 è dedicato ai link e al routing.
   * `settings.yml`: Le impostazioni principali di un'applicazione symfony sono definiti in questo file. Qui si specifica se la propria applicazione è internazionalizzata, qual è la lingua di default, il timeout per le richieste e se la cache è attiva o meno. Cambiando una linea di questo file si può "spegnere" la propria applicazione, per poterla aggiornare o manutenere. Le impostazioni più comuni e il loro utilizzo sono approfonditi nel capitolo 19. 
   * `view.yml`: La struttura predefinita della vista (nome del layout, fogli di stile e JavaScript da includere di default, content-type di default e così via) è definita in questo file. Il capitolo 7 approfondirà questo file. Queste impostazioni possono essere sovrascritte in ogni modulo. 
@@ -606,7 +606,7 @@ Listato 5-21 - I file YAML possono contenere codice PHP
       translation:
         format: <?php echo (sfConfig::get('sf_i18n') === true ? 'xliff' : null)."\n" ?>
 
-Ma fai attenzione al fatto che l'analisi di questi file viene eseguita molto presto durante il ciclo di vita di una richiesta, per cui non si avranno a disposizione i metodi o le funzioni di symfony.
+Si faccia attenzione al fatto che l'analisi di questi file viene eseguita molto presto durante il ciclo di vita di una richiesta, per cui non si avranno a disposizione i metodi o le funzioni di symfony.
 
 Inoltre, siccome il costrutto `echo` non aggiunge un ritorno a capo, è necessario aggiungere un "\n" oppure utilizzare l'helper `echoln` per mantenere valido il formato YAML.
 

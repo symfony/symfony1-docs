@@ -6,7 +6,7 @@ A volte è necessario modificare il comportamento di symfony. Può accadere di d
 Eventi
 ------
 
-PHP non supporta l'ereditarietà multipla, il che significa che non è possibile avere una classe che estende più di una classe. Inoltre non è possibile aggiungere nuovi metodi a una classe esistente o sostituire i metodi già esistenti. Per rimediare a queste due limitazioni e per rendere il framework realmente estendibile, symfony introduce un *sistema per gli eventi* ispirato al centro notifica Cocoa e basato sul [Design pattern Observer](http://en.wikipedia.org/wiki/Observer_pattern).
+PHP non supporta l'ereditarietà multipla, il che significa che non è possibile avere una classe che estende più di una classe. Inoltre non è possibile aggiungere nuovi metodi a una classe esistente o sostituire i metodi già esistenti. Per rimediare a queste due limitazioni e per rendere il framework realmente estendibile, symfony introduce un *sistema per gli eventi* ispirato al centro notifica Cocoa e basato sul [design pattern Observer](http://it.wikipedia.org/wiki/Observer_pattern).
 
 ### Capire gli eventi
 
@@ -355,7 +355,7 @@ Listato 17-8 - Sovrascrivere i factory
 
     class myRequest extends sfRequest
     {
-      // Your code here
+      // Codice qui
     }
 
     // Dechiarare questa classe come factory per la request in factories.yml
@@ -645,7 +645,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
     {
       public function executeIndex()
       {
-        // Some code there
+        // Un po' di codice
       }
     }
 
@@ -655,7 +655,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 
     class mymoduleActions extends mioPluginmymoduleActions
     {
-      // Nothing
+      // Niente
     }
 
     // In frontend/modules/mymodule/actions/actions.class.php
@@ -663,7 +663,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
     {
       public function executeIndex()
       {
-        // Sovrascrivere qua il codice del plugin
+        // Sovrascrivere qui il codice del plugin
       }
     }
 

@@ -94,14 +94,14 @@ In un file `schema.yml`, la prima chiave rappresenta un nome della connessione. 
 Una tabella può avere attributi speciali, incluso `phpName` (il nome della classe che verrà generata). Se non si vuole usare un `phpName` per una tabella, symfony lo creerà in base alla versione camelCase del nome della tabella stessa.
 
 >**TIP**
->La convezione camelCase rimuove i trattini bassi dalle parole, e rende maiuscole le prime lettere delle parole interne. Le versioni camelCase predefinite di `blog_articolo` e `blog_commento` sono `BlogArticolo` e `BlogCommento`. Il nome di questa convenzione viene dall'aspetto delle lettere maiuscole all'interno di una lunga parola, come le gobbe di un cammello.
+>La convezione camelCase rimuove i trattini bassi dalle parole e rende maiuscole le prime lettere delle parole interne. Le versioni camelCase predefinite di `blog_articolo` e `blog_commento` sono `BlogArticolo` e `BlogCommento`. Il nome di questa convenzione viene dall'aspetto delle lettere maiuscole all'interno di una lunga parola, come le gobbe di un cammello.
 
 
 Una tabella contiene colonne. Il valore delle colonne può essere definito in tre differenti modi:
 
-  * Se non definisci nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: Symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne, e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non occorre specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
+  * Se non si definisce nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non occorre specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
 
-  * Se definisci soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri occorre usare il valore `longvarchar`, che non ha lunghezza (ma non può eccedere 65KB in MySQL).
+  * Se si definisce soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri occorre usare il valore `longvarchar`, che non ha lunghezza (ma non può eccedere 65KB in MySQL).
 
   * Se occorre definire altri attributi (come il valore di default, se il campo è obbligatorio, e così via), si dovrebbero scrivere gli attributi della colonna come un insieme di `chiave: valore`. Questa sintassi estesa è spiegata più avanti nel capitolo.
 
@@ -334,9 +334,9 @@ Listato 8-12 - Recuperare record usando Criteria e `doSelect()`--Criteria vuoto
 >
 >La chiamata a `::doSelect()` è a dir la verità molto più potente di una semplice query SQL. Per prima cosa, il codice SQL generato è ottimizzato per il DBMS scelto. Secondo, su ogni valore passato a `Criteria` viene effettuato l'escape prima di venir intergrato nel codice SQL, che previene rischi di SQL injection. Terzo, questo metodo restituisce un array di oggetti piuttosto che una risorsa PHP. L'ORM crea automaticamente gli oggetti basandosi sulla risorsa restituita dal database. Questo processo è chiamato idratazione.
 
-Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY e altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruisci un `Criteria` come mostrato nel Listato 8-13.
+Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY e altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruire un `Criteria` come mostrato nel Listato 8-13.
 
-Listato 8-13 - Recuperare record usando Criteria e `doSelect()`--Criteria con condizioni
+Listato 8-13 - Recuperare record usando Criteria e `doSelect()` (Criteria con condizioni)
 
     [php]
     $c = new Criteria();

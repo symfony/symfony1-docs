@@ -323,24 +323,24 @@ cartella `apps/frontend/`.
 >  * `--csrf-secret`: Abilita i token di sessione nei form
 >
 >Per chi ne sa poco di
->[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) o
->[CSRF](http://en.wikipedia.org/wiki/CSRF), è meglio dedicare un po' di tempo a imparare qualcosa
+>[XSS](http://it.wikipedia.org/wiki/Cross-site_scripting) o
+>[CSRF](http://it.wikipedia.org/wiki/Cross-site_request_forgery), è meglio dedicare un po' di tempo a imparare qualcosa
 >su queste vulnerabilità relative alla sicurezza.
 
 ### Permessi nella struttura delle cartelle
 
-Prima di provare ad accedere al progetto appena creato, è necessario impostare  ai livelli appropriati
+Prima di provare ad accedere al progetto appena creato, è necessario impostare ai livelli appropriati
 i permessi in scrittura sulle cartelle `cache/` e `log/`, in modo che sia il server web che l'utente tramite
-linea di comando, possano scrivere al loro interno:
+linea di comando possano scrivere al loro interno:
 
     $ symfony project:permissions
 
 >**SIDEBAR**
->Consigli per chi usa un tool SCM
+>Consigli per chi usa uno strumento SCM
 >
 >symfony scrive sempre e solo in due cartelle di un progetto symfony,
 >`cache/` e `log/`. Il contenuto di queste cartelle dovrebbe essere ignorato
->dal SCM (ad esempio, per chi usa Subversion modificando la proprietà
+>da SCM (ad esempio, per chi usa Subversion modificando la proprietà
 >`svn:ignore`).
 
 Configurazione del web server

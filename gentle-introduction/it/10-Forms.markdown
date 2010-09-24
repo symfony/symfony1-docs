@@ -10,7 +10,7 @@ Un semplice form di contatto con dei campi nome, email, oggetto e messaggio tipi
 
 ![Form di contatto](http://www.symfony-project.org/images/forms_book/en/01_07.png)
 
-In symfony un form è un oggetto definito nell'azione e passato al template. Prima di visualizzare un form, si devono definire i campi che esso contiene, ossia quelli che con la terminologia propria di symfony vengono chiamati "widget". Il modo più semplice per farlo è di creare un nuovo oggetto `sfForm` nell'opportuno metodo dell'action.
+In symfony un form è un oggetto definito nell'azione e passato al template. Prima di visualizzare un form, si devono definire i campi che esso contiene, ossia quelli che con la terminologia propria di symfony vengono chiamati "widget". Il modo più semplice per farlo è di creare un nuovo oggetto `sfForm` nell'opportuno metodo dell'azione.
 
     [php]
     // in modules/pippo/actions/actions.class.php
@@ -855,7 +855,7 @@ Un altro utile validatore legato al Modello è `sfValidatorPropelUnique`, che co
     )));
 
 
-Per rendere i propri form ancora più sicuri ed evitare attacchi [Cross-Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery), si può abilitare la protezione CSRF:
+Per rendere i propri form ancora più sicuri ed evitare attacchi [Cross-Site Request Forgery](http://it.wikipedia.org/wiki/Cross-site_request_forgery), si può abilitare la protezione CSRF:
 
     [php]
     // CSRF protection - impostare la chiave segreta a una stringa casuale che nessuno conosca
