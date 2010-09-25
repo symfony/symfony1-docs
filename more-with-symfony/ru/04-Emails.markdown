@@ -1,5 +1,5 @@
-Emails
-======
+Электронная почта
+=================
 
 *by Fabien Potencier*
 
@@ -34,7 +34,7 @@ dedicated [documentation](http://www.swiftmailer.org/docs).
 Отправка электронной почты из действия
 --------------------------------------
 
-From an action, retrieving the mailer instance is made simple with the `getMailer()` shortcut method:
+В действии, получение экземпляра почтового класса реализовано через метод `getMailer()`:
 
     [php]
     $mailer = $this->getMailer();
@@ -58,13 +58,13 @@ From an action, retrieving the mailer instance is made simple with the `getMaile
  * тема письма;
  * тело письма.
 
-Whenever a method takes an email address as a parameter, you can pass a string or an array:
+Адреса можно передавать в виде массивов или строк:
 
     [php]
     $address = 'fabien@example.com';
     $address = array('fabien@example.com' => 'Fabien Potencier');
 
-Of course, you can send an email to several people at once by passing an array of emails as the second argument of the method:
+Естественно, вы можете отправить письмо нескольким получателям, передав их адреса массивом во втором параметре метода:
 
     [php]
     $to = array(
@@ -81,22 +81,22 @@ Of course, you can send an email to several people at once by passing an array o
 
 ### Гибкий способ
 
-Если вам требуется большая гибкость, для создания сообщения вы можете использовать метод ~`sfMailer::compose()`~, customize it the way you want, and eventually send it.
-This is useful, for instance, when you need to add an ~attachment|email attachment~ as shown below:
+Если вам требуется большая гибкость, для создания сообщения вы можете использовать метод ~`sfMailer::compose()`~, это позволит вам настроить его необходимым образом, а затем отправить.
+Это может быть полезно, когда, например, вам требуется добавить к письму вложение:
 
     [php]
-    // create a message object
+    // создание объекта сообщения
     $message = $this->getMailer()
       ->compose('from@example.com', 'fabien@example.com', 'Subject', 'Body')
       ->attach(Swift_Attachment::fromPath('/path/to/a/file.zip'))
     ;
 
-    // send the message
+    // отправка сообщения
     $this->getMailer()->send($message);
 
 ### Мощный способ
 
-You can also create a message object directly for even more flexibility:
+Также вы можете напрямую создать объект сообщения, что даст ещё большую гибкость:
 
     [php]
     $message = Swift_Message::newInstance()
@@ -110,19 +110,19 @@ You can also create a message object directly for even more flexibility:
     $this->getMailer()->send($message);
 
 >**TIP**
->Разделы официальной документации по Swift Mailer ["Creating Messages"](http://swiftmailer.org/docs/messages) (создание сообщений) и ["Message Headers"](http://swiftmailer.org/docs/headers) (заголовки сообщений) описывают всё, что вам необходимо знать о создании сообщений.
+>Разделы официальной документации по Swift Mailer ["Creating Messages"](http://swiftmailer.org/docs/messages) (создание сообщений) и ["Message Headers"](http://swiftmailer.org/docs/headers) (заголовки сообщений) описывают всё, что вам необходимо знать о процессе создания сообщений.
 
 ### Использование Вида
 
-Sending your emails from your actions allows you to leverage the power of partials and components quite easily.
+Отправка электронных сообщений из действий позволяет вам легко использовать всю мощь компонентов.
 
     [php]
     $message->setBody($this->getPartial('partial_name', $arguments));
 
-Configuration
--------------
+Конфигурация
+------------
 
-As any other symfony factory, the mailer can be configured in the `factories.yml` configuration file. The default configuration reads as follows:
+Как и другие фабрики в symfony, почта может быть сконфигурирована через файл `factories.yml`. По умолчанию, конфигурация выглядит следующим образом:
 
     [yml]
     mailer:
@@ -140,7 +140,7 @@ As any other symfony factory, the mailer can be configured in the `factories.yml
             username:   ~
             password:   ~
 
-When creating a new application, the local `factories.yml` configuration file overrides the default configuration with some sensible defaults for the `prod`, `env`, and `test` environments:
+При создании нового приложения, локальный файл `factories.yml` приложения переопределяет некоторые заданные по умолчанию значения для окружений `prod`, `env` и `test`:
 
     [yml]
     test:
@@ -153,75 +153,75 @@ When creating a new application, the local `factories.yml` configuration file ov
         param:
           delivery_strategy: none
 
-The Delivery Strategy
----------------------
+Стратегия доставки
+------------------
 
-One of the most useful feature of the Swift Mailer integration in symfony is the delivery strategy.
-The delivery strategy allows you to tell symfony how to deliver email messages and is configured via the ~`delivery_strategy`~ setting of `factories.yml`.
-The strategy changes the way the ~`send()`|`sfMailer::send()`~ method behaves. Four strategies are available by default, which should suit all the common needs:
+Одна из самых часто используемых опций почтового сервиса Swift Mailer в symfony - управление стратегией доставки.
+Стратегия доставки указывает symfony как именно следует доставлять сообщения, и её можно задать через настройку ~`delivery_strategy`~ в `factories.yml`.
+Стратегия изменяет поведение метода ~`sfMailer::send()`~. По умолчанию доступно четыре стратегии, которые описывают все общие случаи:
 
- * `realtime`:       Messages are sent in realtime.
- * `single_address`: Messages are sent to a single address.
- * `spool`:          Messages are stored in a queue.
- * `none`:           Messages are simply ignored.
+ * `realtime` - сообщения отправляются в реальном времени;
+ * `single_address` - сообщения отправляются на один адрес;
+ * `spool` - сообщения помещаются в очередь;
+ * `none` - сообщения просто игнорируются.
 
-### The ~`realtime`~ Strategy
+### Стратегия ~`realtime`~
 
-The `realtime` strategy is the default delivery strategy, and the easiest to setup as there is nothing special to do.
+Стратегия `realtime` является стратегией по умолчанию, и не требует никаких специальных настроек.
 
-Email messages are sent via the transport configured in the `transport` section of the `factories.yml` configuration file (see the next section for more information about how to configure the mail transport).
+Сообщения электронной почты отправляются через транспорт, указанный в разделе `transport` конфигурационного файла `factories.yml` (см. следующий раздел, для получения информации о конфигурировании почтового транспорта).
 
-### The ~`single_address`~ Strategy
+### Стратегия ~`single_address`~
 
-With the `single_address` strategy, all messages are sent to a single address, configured via the `delivery_address` setting.
+При указании стратегии `single_address`, все сообщения посылаются на один адрес, заданный параметром `delivery_address`.
 
-This strategy is really useful in the development environment to avoid sending messages to real users, but still allow the developer to check the rendered message in an email reader.
+Эта стратегия очень полезна в отладочном окружении, она исключает отправку сообщений реальным пользователям, но всё ещё  позволяет разработчику проверять корректность вывода сообщений.
 
 >**TIP**
->If you need to verify the original `to`, `cc`, and `bcc` recipients, they are available as values of the following headers: `X-Swift-To`, `X-Swift-Cc`, and `X-Swift-Bcc` respectively.
+>Если вам потребуется проверить оригинальных получателей `to`, `cc` и `bcc`, то они доступны через значения следующих заголовков: `X-Swift-To`, `X-Swift-Cc` и `X-Swift-Bcc`.
 
-Email messages are sent via the same email transport as the one used for the `realtime` strategy.
+Сообщения электронной почты отправляются через тот же самый транспорт, который используется для стратегии `realtime`.
 
-### The ~`spool`~ Strategy
+### Стратегия `spool`~
 
-With the `spool` strategy, messages are stored in a queue.
+При указании стратегии `spool`, сообщения помещаются в очередь.
 
-This is the best strategy for the production environment, as web requests do not wait for the emails to be sent.
+Это наилучшая стратегия для рабочего окружения, так как обработчик вэб-запросов не ждёт реальной отправки сообщений.
 
-The `spool` class is configured with the ~`spool_class`~ setting. By default, symfony comes bundled with three of them:
+Класс для очереди задаётся параметром ~`spool_class`~. По умолчанию, symfony поставляется с тремя такими классами:
 
- * ~`Swift_FileSpool`~: Messages are stored on the filesystem.
+ * ~`Swift_FileSpool`~ - сообщения сохраняются в файловой системе.
 
- * ~`Swift_DoctrineSpool`~: Messages are stored in a Doctrine model.
+ * ~`Swift_DoctrineSpool`~ - сообщения сохраняются в Doctrine-модели.
 
- * ~`Swift_PropelSpool`~: Messages are stored in a Propel model.
+ * ~`Swift_PropelSpool`~ - сообщения сохранятся в Propel-модели.
 
-When the spool is instantiated, the ~`spool_arguments`~ setting is used as the constructor arguments. Here are the options available for the built-in queues classes:
+Когда создаётся экземпляр очереди, опция ~`spool_arguments`~ используется для передачи аргументов в конструктор. Вот опции, которые используются для встроенных классов:
 
  * `Swift_FileSpool`:
 
-    * The absolute path of the queue directory (messages are stored in this directory)
+    * Абсолютный путь к каталогу очереди (сообщения сохраняются в эту директорию)
 
  * `Swift_DoctrineSpool`:
 
-    * The Doctrine model to use to store the messages (`MailMessage` by default)
+    * Doctrine-модель, используемая для хранения сообщений (по умолчанию `MailMessage`)
 
-    * The column name to use for message storage (`message` by default)
+    * Имя столбца для сохранения сообщения (по умолчанию `message`)
 
-    * The method to call to retrieve the messages to send (optional). It receives the queue options as a argument.
+    * Метод, который будет использоваться для получения сообщения из очереди и его отправки (опционально). В качестве аргумента он получает опции очереди.
 
  * `Swift_PropelSpool`:
 
-    * The Propel model to use to store the messages (`MailMessage` by default)
+    * Propel-модель, используемая для хранения сообщений (по умолчанию `MailMessage`)
 
-    * The column name to use for message storage (`message` by default)
+    * Имя столбца для сохранения сообщения (по умолчанию `message`)
 
-    * The method to call to retrieve the messages to send (optional). It receives the queue options as a argument.
+    * Метод, который будет использоваться для получения сообщения из очереди и его отправки (опционально). В качестве аргумента он получает опции очереди.
 
-Here is a classic configuration for a Doctrine spool:
+Это классическая конфигурация для Doctrine-очереди:
 
     [yml]
-    # Schema configuration in schema.yml
+    # схема в schema.yml
     MailMessage:
      actAs: { Timestampable: ~ }
      columns:
@@ -230,7 +230,7 @@ Here is a classic configuration for a Doctrine spool:
 -
 
     [yml]
-    # configuration in factories.yml
+    # конфигурация в factories.yml
     mailer:
       class: sfMailer
       param:
@@ -238,10 +238,10 @@ Here is a classic configuration for a Doctrine spool:
         spool_class:       Swift_DoctrineSpool
         spool_arguments:   [ MailMessage, message, getSpooledMessages ]
 
-And the same configuration for a Propel spool:
+И такая же конфигурация для Propel-очереди:
 
     [yml]
-    # Schema configuration in schema.yml
+    # схема в schema.yml
     mail_message:
       message:    { type: blob, required: true }
       created_at: ~
@@ -249,7 +249,7 @@ And the same configuration for a Propel spool:
 -
 
     [yml]
-    # configuration in factories.yml
+    # конфигурация в factories.yml
     dev:
       mailer:
         param:
@@ -257,18 +257,18 @@ And the same configuration for a Propel spool:
           spool_class:       Swift_PropelSpool
           spool_arguments:   [ MailMessage, message, getSpooledMessages ]
 
-To send the message stored in a queue, you can use the ~`project:send-emails`~ task (note that this task is totally independent of the queue implementation, and the options it takes):
+Для отправки сохранённых в очереди сообщений, вы можете использовать задачу ~`project:send-emails`~ (заметьте, эта задача полностью независима от реализации очереди и её опций):
 
     $ php symfony project:send-emails
 
 >**NOTE**
->The `project:send-emails` task takes an `application` and `env` options.
+>Для задачи `project:send-emails` можно указывать опции `application` и `env`.
 
-When calling the `project:send-emails` task, email messages are sent via the same transport as the one used for the `realtime` strategy.
+Когда вызывается задача `project:send-emails`, сообщения электронной почты посылаются через тот же транспорт, который используется для стратегии `realtime`.
 
 >**TIP**
->Note that the `project:send-emails` task can be run on any machine, not necessarily on the machine that created the message.
->It works because everything is stored in the message object, even the file attachments.
+>Заметьте, задача `project:send-emails` может быть запущена на любой машине, а не обязательно на той, на которой было создано сообщение.
+>Это происходит из-за того, что всё сохраняется в объекте сообщения (даже файловые вложения).
 
 -
 
