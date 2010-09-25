@@ -39,7 +39,7 @@ From an action, retrieving the mailer instance is made simple with the `getMaile
     [php]
     $mailer = $this->getMailer();
 
-### Наибыстрейший путь
+### Быстрый способ
 
 Отправка электронной столь же проста, как и использование метода ~`sfMailer::composeAndSend()`~:
 
@@ -64,8 +64,7 @@ Whenever a method takes an email address as a parameter, you can pass a string o
     $address = 'fabien@example.com';
     $address = array('fabien@example.com' => 'Fabien Potencier');
 
-Of course, you can send an email to several people at once by passing an array
-of emails as the second argument of the method:
+Of course, you can send an email to several people at once by passing an array of emails as the second argument of the method:
 
     [php]
     $to = array(
@@ -95,7 +94,7 @@ This is useful, for instance, when you need to add an ~attachment|email attachme
     // send the message
     $this->getMailer()->send($message);
 
-### The Powerful Way
+### Мощный способ
 
 You can also create a message object directly for even more flexibility:
 
@@ -111,9 +110,9 @@ You can also create a message object directly for even more flexibility:
     $this->getMailer()->send($message);
 
 >**TIP**
->The ["Creating Messages"](http://swiftmailer.org/docs/messages) and ["Message Headers"](http://swiftmailer.org/docs/headers) sections of the Swift Mailer official documentation describe all you need to know about creating messages.
+>Разделы официальной документации по Swift Mailer ["Creating Messages"](http://swiftmailer.org/docs/messages) (создание сообщений) и ["Message Headers"](http://swiftmailer.org/docs/headers) (заголовки сообщений) описывают всё, что вам необходимо знать о создании сообщений.
 
-### Using the Symfony View
+### Использование Вида
 
 Sending your emails from your actions allows you to leverage the power of partials and components quite easily.
 
