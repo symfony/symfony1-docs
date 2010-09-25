@@ -10,10 +10,10 @@ make sending emails even more flexible and powerful. This chapter will teach
 you how to put all the power at your disposal.
 
 >**NOTE**
->symfony 1.3 embeds Swift Mailer version 4.1.
+>symfony 1.3 включает Swift Mailer версии 4.1.
 
-Introduction
-------------
+Введение
+--------
 
 Email management in symfony is centered around a mailer object. And like many
 other core symfony objects, the mailer is a factory. It is configured in the
@@ -31,19 +31,17 @@ This tutorial explains the Swift Mailer integration in symfony. If you want to
 learn the nitty-gritty details of the Swift Mailer library itself, refer to its
 dedicated [documentation](http://www.swiftmailer.org/docs).
 
-Sending Emails from an Action
------------------------------
+Отправка электронной почты из действия
+--------------------------------------
 
-From an action, retrieving the mailer instance is made simple with the
-`getMailer()` shortcut method:
+From an action, retrieving the mailer instance is made simple with the `getMailer()` shortcut method:
 
     [php]
     $mailer = $this->getMailer();
 
-### The Fastest Way
+### Наибыстрейший путь
 
-Sending an email is then as simple as using the ~`sfMailer::composeAndSend()`~
-method:
+Отправка электронной столь же проста, как и использование метода ~`sfMailer::composeAndSend()`~:
 
     [php]
     $this->getMailer()->composeAndSend(
@@ -53,15 +51,14 @@ method:
       'Body'
     );
 
-The `composeAndSend()` method takes four arguments:
+Метод `composeAndSend()` принимает четыре аргумента:
 
- * the sender email address (`from`);
- * the recipient email address(es) (`to`);
- * the subject of the message;
- * the body of the message.
+ * адрес электронной почты отправителя (`from`);
+ * один или несколько адресов электронной почты получателя (`to`);
+ * тема письма;
+ * тело письма.
 
-Whenever a method takes an email address as a parameter, you can pass a string
-or an array:
+Whenever a method takes an email address as a parameter, you can pass a string or an array:
 
     [php]
     $address = 'fabien@example.com';
