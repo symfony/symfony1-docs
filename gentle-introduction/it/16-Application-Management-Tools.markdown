@@ -533,7 +533,7 @@ Listato 16-17 - Aggiungere un record a una tabella collegata con una relazione m
 
 Un file di dati può contenere dichiarazioni di più classi. Ma quando si ha la necessità di inserire molti dati per numerose tabelle, il file con le fixture potrebbe divenare troppo grosso per essere gestito con facilità.
 		
-Il task `propel:data-load` analizza tutti i file che vengono trovati nella cartella `fixtures/` , quindi nessuno impedisce di suddividere un file YAML con le fixture in file più piccoli. La cosa importante da ricordare è che le le chiavi esterne impongono un ordine di elaborazione per le tabelle. Per essere sicuri che vengano analizzati nel giusto ordine, prefissare i nomi dei file con un numero ordinale.
+Il task `propel:data-load` analizza tutti i file che vengono trovati nella cartella `fixtures/`, quindi nessuno impedisce di suddividere un file YAML con le fixture in file più piccoli. La cosa importante da ricordare è che le le chiavi esterne impongono un ordine di elaborazione per le tabelle. Per essere sicuri che vengano analizzati nel giusto ordine, prefissare i nomi dei file con un numero ordinale.
 
     100_article_import_data.yml
     200_comment_import_data.yml

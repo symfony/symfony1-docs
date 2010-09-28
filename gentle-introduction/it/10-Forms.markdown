@@ -422,7 +422,7 @@ Nelle applicazioni multilingua, le date devono essere mostrare in un formato che
     $years = range(1950, 1990);
     $form->setWidget('dob', new sfWidgetFormI18nDate(array(
       'culture'      => $this->getUser()->getCulture(),
-      'month_format' => 'name',   // A scelta tra 'name' (default), 'short_name', e 'number' 
+      'month_format' => 'name',   // A scelta tra 'name' (default), 'short_name' e 'number' 
       'label'        => 'Date of birth',
       'default'      => '01/01/1950',
       'years'        => array_combine($years, $years)
@@ -548,7 +548,7 @@ In pratica, gestire l'invio dei form non si riduce a ricevere i valori inseriti 
  3. Se i dati non sono validi, mostrare nuovamente il form, con messaggi di errore dove necessario
  4. Se i dati sono corretti, fare quanto serve con essi, quindi rinviare a un'altra azione.
 
-Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli con un insieme di regole predefinite. Prima definisce un insieme di validatori per ogni campo. Quindi, quando il form è inviato, collega l'oggetto form con i valori inseriti dall'utente (ad esempio, richiama i valori inseriti e li inserisce nel form). Infine, chiede al form di controllare che i dati siano validi. L'esempio che segue mostra come verificare che il valore recuperato dal widget `email` sia in effetti un indirizzo email, e che `message` abbia una dimensione minima di 4 caratteri:
+Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli con un insieme di regole predefinite. Prima definisce un insieme di validatori per ogni campo. Quindi, quando il form è inviato, collega l'oggetto form con i valori inseriti dall'utente (ad esempio, richiama i valori inseriti e li inserisce nel form). Infine, chiede al form di controllare che i dati siano validi. L'esempio che segue mostra come verificare che il valore recuperato dal widget `email` sia in effetti un indirizzo email e che `message` abbia una dimensione minima di 4 caratteri:
 
     [php]
     // in modules/pippo/actions/actions.class.php
@@ -587,11 +587,11 @@ Symfony fornisce un modo automatico di validare i dati inseriti confrontandoli c
 
 Per inserire i dati della richiesta nel form e collegarli, si usa il metodo 'sfForm::bind()'. Un form deve essere collegato con qualche dato per controllare la loro validità.
 
-'isValid()' controlla che tutti i validatori registrati siano superati. In questo caso, `isValid()` restituisce `true`, e l'azione può procedere con la submission del form. Se il form non è valido, l'azione termina con il default `sfView::SUCCESS` e mostra nuovamente il fom. Il form però non viene mostrato con i valori di default come la prima volta: gli input del form sono riempiti con i dati inseriti in precedenza dall'utente, e dei messaggi di errori appaiono dove i validatori non sono stati superati.
+'isValid()' controlla che tutti i validatori registrati siano superati. In questo caso, `isValid()` restituisce `true` e l'azione può procedere con la sottomissione del form. Se il form non è valido, l'azione termina con il predefinito `sfView::SUCCESS` e mostra nuovamente il form. Il form però non viene mostrato con i valori di default, come la prima volta: gli input del form sono riempiti con i dati inseriti in precedenza dall'utente e dei messaggi di errore appaiono dove i validatori non sono stati superati.
 
 ![Form non valido](http://www.symfony-project.org/images/forms_book/en/02_01.png)
 
->**TIP**: Il processo di validazione non si ferma quando il form incontra un campo non valido. `isValid()` processa tutti i dati del form e controlla tutti i campi alla ricerca di errori, per evitare di mostrare nuovi messaggi di errori quando l'errore corregge i suoi errori e invia il form nuovamente.
+>**TIP**: Il processo di validazione non si ferma quando il form incontra un campo non valido. `isValid()` processa tutti i dati del form e controlla tutti i campi alla ricerca di errori, per evitare di mostrare nuovi messaggi di errore quando l'utente corregge i suoi errori e invia il form nuovamente.
 
 ### Utilizzo di dati form puliti
 
@@ -633,11 +633,11 @@ L'azione può adesso recuperare il parametro `contact` della richiesta in una si
       $this->form->bind($request->getParameter('contact'));
       if ($this->form->isValid())
       {
-        // Handle the form submission
+        // Gestione della sottomissione del form
         $contact = $this->form->getValues();
         $name = $contact['name'];
 
-        // Or to get a specific value
+        // Oppure prendere un valore specifico
         $name = $this->form->getValue('name');
 
         // Fa qualcosa...

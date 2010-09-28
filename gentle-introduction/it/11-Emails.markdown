@@ -187,7 +187,7 @@ riguardanti la configurazione del mezzo di trasporto delle mail).
 
 ### Strategia ~`single_address`~
 
-Con la strategia ~`single_address`~ , tutti i messaggi vengono inviati a un singolo indirizzo 
+Con la strategia ~`single_address`~, tutti i messaggi vengono inviati a un singolo indirizzo 
 configurato tramite il parametro `delivery_address`.
 
 Questa strategia risulta veramente utile in un ambiente di sviluppo per evitare l'invio

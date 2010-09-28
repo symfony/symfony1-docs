@@ -274,7 +274,7 @@ Chiamando il costruttore `new`, viene creato un nuovo oggetto, ma non un nuovo r
     [php]
     $article->save();
 
-L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$article` viene anche salvato l'oggetto `$comment` a esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database , quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$article->getId()`.
+L'ORM riesce a riconoscere le relazioni tra oggetti, quindi salvando l'oggetto `$article` viene anche salvato l'oggetto `$comment` a esso collegato. L'ORM sa anche se l'oggetto salvato ha una controparte esistente nel database, quindi la chiamata `save()` a volte è tradotta in SQL con `INSERT` e a volte con `UPDATE`. La chiave primaria è impostata automaticamente dal metodo `save()`, quindi dopo aver salvato, si può recuperare la nuova chiave primaria con `$article->getId()`.
 
 >**TIP**
 >Si può controllare se un oggetto è nuovo, chiamando `isNew()`. Se si vuole sapere se un oggetto è stato modificato per eventualmente evitare il salvataggio, basta chiamare il metodo `isModified()`.

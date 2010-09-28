@@ -701,7 +701,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 >plugins/mioPlugin/config/schema.yml     | mioPlugin-schema.custom.yml
 >plugins/mioPlugin/config/foo_schema.yml | mioPlugin_foo-schema.custom.yml
 >
->Gli schemi personalizzati saranno cercati nelle cartelle `config/` dell'applicazione e del plugin , quindi un plugin può sovrascrivere lo schema di un'altro plugin e ci può essere più di una personalizzazione per ciascuno schema.
+>Gli schemi personalizzati saranno cercati nelle cartelle `config/` dell'applicazione e del plugin, quindi un plugin può sovrascrivere lo schema di un'altro plugin e ci può essere più di una personalizzazione per ciascuno schema.
 >
 >Symfony unirà i due schemi basandosi su ciascuna delle tabelle `phpName`. Il processo di fusione permette di aggiungere o modificare tabelle, colonne e attributi di colonna. Per esempio, il listato seguente mostra come uno schema personalizzato possa aggiungere colonne a una tabella definita in uno schema del plugin.
 >

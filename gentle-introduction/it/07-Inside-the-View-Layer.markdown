@@ -233,7 +233,7 @@ Figura 7-2 - Il riutilizzo dei partial nei template
 
 Proprio come i template, i partial sono file che si trovano nella cartella `templates/` e contengono codice HTML con del codice PHP. Il nome file di un partial inizia sempre con un carattere di sottolineatura (`_`) e questo aiuta a distinguere i partial dai template, poiché sono situati nelle stesse cartelle `templates/`.
 
-Un template può includere partial se è nello stesso modulo , in un altro modulo, o nella cartella `templates/` globale. Includere un partial usando un helper `include_partial()` e specificare il nome del modulo e del partial come parametro (omettendo la sottolineatura e il `.php` finale), come descritto nel Listato 7-7.
+Un template può includere partial se è nello stesso modulo, in un altro modulo, o nella cartella `templates/` globale. Includere un partial usando un helper `include_partial()` e specificare il nome del modulo e del partial come parametro (omettendo la sottolineatura e il `.php` finale), come descritto nel Listato 7-7.
 
 Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
 
