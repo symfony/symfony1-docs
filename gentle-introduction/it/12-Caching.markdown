@@ -1,21 +1,21 @@
-Chapter 12 - Caching
-====================
+Capitolo 12 - Cache
+===================
 
-Uno dei metodi per velocizzare un'applicazione è quello di memorizzare porzioni di codice HTML, o anche pagine intere, per soddisfare in modo rapido richieste future. 
-Tale tecnica prende il nome di caching, e può essere utilizzata sia lato server che lato client.
+Uno dei metodi per velocizzare un'applicazione è quello di memorizzare porzioni di codice HTML o anche pagine intere, per soddisfare in modo rapido richieste future. 
+Tale tecnica prende il nome di cache, e può essere utilizzata sia lato server che lato client.
 
-Symfony offre un sistema di caching lato server molto flessibile. Permette di salvare l'intera risposta (response), il risultato di un'azione, un partial, un segmento di template in un file, attraverso una configurazione 
-molto intuitiva basata su file YAML. Se i dati dell'applicativo subissero un cambiamento, è possible eliminare facilmente parti della cache tramite linea di comando o per mezzo di un'azione designata a tale scopo. 
+Symfony offre un sistema di cache lato server molto flessibile. Permette di salvare l'intera risposta (response), il risultato di un'azione, un partial, un segmento di template in un file, attraverso una configurazione 
+molto intuitiva basata su file YAML. Se i dati dell'applicativo subissero un cambiamento, è possibile eliminare facilmente parti della cache tramite linea di comando o per mezzo di un'azione designata a tale scopo. 
 Symfony fornisce anche un semplice controllo della cache lato client tramite gli header HTTP 1.1. 
-Questo capitolo affronterà queste tematiche, e proporrà alcuni suggerimenti per monitorare i miglioramenti che il caching può portare in un'applicazione.
+Questo capitolo affronterà queste tematiche, e proporrà alcuni suggerimenti per monitorare i miglioramenti che la cache può portare in un'applicazione.
 
-Caching della risposta
-----------------------
+Cache della risposta
+--------------------
 
-Il principio del caching HTML è piuttosto semplice: porzioni o tutto il codice HTML inviato all'utente dopo una richiesta (request) può essere riutilizzato per analoghe richieste successive. 
+Il principio della cache HTML è piuttosto semplice: porzioni o tutto il codice HTML inviato all'utente dopo una richiesta (request) può essere riutilizzato per analoghe richieste successive. 
 Tale codice HTML verrà memorizzato in una cartella particolare (in symfony nella cartella `cache/`), dove il front controller effettuerà un controllo prima di eseguire un'azione. 
 Se venisse trovata una versione in cache, essa verrà inviata senza che l'azione sia eseguita, in modo tale da velocizzarne in modo considerevole il processo di costruzione della risposta da inviare all'utente. 
-Se non venisse trovata alcuna versione, l'azione verrà eseguita ed il risultato (la vista) verrà memorizzato nella cartella di cache per richieste future.
+Se non venisse trovata alcuna versione, l'azione verrà eseguita e il risultato (la vista) verrà memorizzato nella cartella di cache per richieste future.
 
 Symfony gestisce tre tipologie di cache HTML:
 
@@ -58,7 +58,7 @@ Listato 12-2 - Attivare la cache per un'azione, in frontend/modules/user/config/
       with_layout: false   # valore predefinito
       lifetime:    86400   # valore predefinito
 
-La configurazione appena mostrata definisce che la cache sarà attiva per l'azione `list`, ed il layout non verrà incluso (comportamento predefinito).
+La configurazione appena mostrata definisce che la cache sarà attiva per l'azione `list`, e il layout non verrà incluso (comportamento predefinito).
 Ciò significa che anche se una versione dell'azione venisse trovata in cache, il layout (con partial e component) verrà eseguito ugualmente. Se l'opzione `with_layout` venisse impostata a `true`,
 anche il layout verrebbe messo in cache con l'azione e non sarebbe eseguito.
 
@@ -71,7 +71,7 @@ Aggiornando la pagina si noterà che l'header è di colore giallo: significa che
 Più avanti in questo capitolo saranno approfonditi i metodi per testare e monitorare la cache.
 
 >**NOTE**
->Gli slot sono parte dei template, quindi effettuare il caching di un'azione significa anche memorizzare il valore dello slot definito dal template dell'azione. Di conseguenza la cache funziona nativamente per gli slot.
+>Gli slot sono parte dei template, quindi effettuare la cache di un'azione significa anche memorizzare il valore dello slot definito dal template dell'azione. Di conseguenza la cache funziona nativamente per gli slot.
 
 Il sistema di cache funziona anche per le pagine con argomenti. Il modulo `user` potrebbe avere, ad esempio, un'azione `show` che si aspetta un `id` per poter mostrare i dettagli di un utente. 
 Per ottenere questo comportamento occorre modificare il file `cache.yml` in modo tale da abilitare la cache anche per questa casistica, come mostrato nel Listato 12-3.
@@ -109,14 +109,14 @@ Se funzionalmente è applicabile (ovvero se il layout non si basa sulla sessione
 Sfortunatamente, il layout contiene spesso elementi dinamici (ad esempio, il nome dell'utente connesso), per cui la cache senza layout è l'impostazione più comune. 
 Comunque, i feed RSS, i pop-up, e le pagine che non dipendono dai cookie possono essere messe in cache con il rispettivo layout.
 
-### Caching di un partial, component, o component slot
+### Cache di un partial, component, o component slot
 
-Il Capitolo 7 è stato mostrato come riutilizzare frammenti di codice in diversi template, utilizzando l'helper `include_partial()`. 
+Il capitolo 7 è stato mostrato come riutilizzare frammenti di codice in diversi template, utilizzando l'helper `include_partial()`. 
 Un partial è facile da mettere in cache quanto un'azione, e l'attivazione segue le stesse regole, come mostrato in Figura 12-2.
 
-Figura 12-2 - Caching di un partial, component, o component slot
+Figura 12-2 - Cache di un partial, component, o component slot
 
-![Caching di un partial, component, o component slot](http://www.symfony-project.org/images/book/1_4/F1202.png "Cache di un partial, component, o component slot")
+![Cache di un partial, component, o component slot](http://www.symfony-project.org/images/book/1_4/F1202.png "Cache di un partial, component, o component slot")
 
 Ad esempio, il Listato 12-4 mostra come modificare il file `cache.yml` per abilitare la cache di un partial `_my_partial.php` del modulo `user`. 
 Da notare che l'opzione `with_layout` non ha senso in questo caso.
@@ -134,25 +134,25 @@ In questo modo tutti i template che utilizzino questo partial non eseguiranno ef
     [php]
     <?php include_partial('user/my_partial') ?>
 
-Come avviene per le azioni, anche il caching dei partial diventa importante quando il risultato di tale partial è dipendente da parametri. Il sistema di cache memorizzerà tante versioni del template quanti sono i parametri.
+Come avviene per le azioni, anche la cache dei partial diventa importante quando il risultato di tale partial è dipendente da parametri. Il sistema di cache memorizzerà tante versioni del template quanti sono i parametri.
 
     [php]
     <?php include_partial('user/my_other_partial', array('foo' => 'bar')) ?>
 
 >**TIP**
 >La cache di un'azione è più potente di quella di un partial, in quanto quando un'azione viene messa in cache il template non viene eseguito; se il template contenesse chiamate ai partial, tali chiamate non verranno eseguite. 
->Perciò, il caching dei partial diventa utile quando non vengono messe in cache l'azione chiamante o i partial inclusi nel layout.
+>Perciò, la cache dei partial diventa utile quando non vengono messe in cache l'azione chiamante o i partial inclusi nel layout.
 
-Un piccolo promemoria dal Capitolo 7: un component è una leggera azione situata all'inizio del partial, ed un component slot è un component per il quale l'azione cambia a seconda delle azioni chiamanti.
-Questi due tipi di inclusioni sono molto simili ai partial, e supportano il caching allo stesso modo. Ad esempio, se il layout globale includesse un component chiamato `day` 
+Un piccolo promemoria dal capitolo 7: un component è una leggera azione situata all'inizio del partial e un component slot è un component per il quale l'azione cambia a seconda delle azioni chiamanti.
+Questi due tipi di inclusioni sono molto simili ai partial, e supportano la cache allo stesso modo. Ad esempio, se il layout globale includesse un component chiamato `day` 
 con `include_component('general/day')` per mostrare la data odierna, per abilitarne la cache sarà sufficiente impostare il file `cache.yml` del modulo `general` nel seguente modo:
 
     _day:
       enabled: true
 
-Nel momento in cui venisse effetuato il caching di un component o un partial, bisognerà decidere se memorizzare una singola versione per tutti i template chiamanti oppure una versione per ognuno di essi. 
+Nel momento in cui venisse effettuata la cache di un component o un partial, bisognerà decidere se memorizzare una singola versione per tutti i template chiamanti oppure una versione per ognuno di essi. 
 Come impostazione predefinita, un component è memorizzato indipendentemente dal template invocante. 
-Ma component contestuali, ad esempio quelli che visualizzano una barra laterale differente ad ogni azione, dovrebbero essere memorizzati tante volte quanti sono i template che li invocano. 
+Ma component contestuali, ad esempio quelli che visualizzano una barra laterale differente a ogni azione, dovrebbero essere memorizzati tante volte quanti sono i template che li invocano. 
 Il sistema di cache gestisce questo caso, impostando il parametro `contextual` a `true`, nel modo seguente:
 
     _day:
@@ -163,16 +163,16 @@ Il sistema di cache gestisce questo caso, impostando il parametro `contextual` a
 >I componenti globali (quelli situati nella cartella `templates/` dell'applicazione) possono essere messi in cache, dichiarando le impostazioni nel file `cache.yml` dell'applicazione.
 
 
-### Cache di un template fragment
+### Cache di un frammento di template
 
-La cache delle azioni si applica solo ad un loro sottoinsieme. 
-Per le altre, ovvero quelle che aggiornano dati o mostrano nel template informazioni dipendenti dalla sessione, c'è ancora spazio per miglioramenti nell'utilizzo del sistema di caching, ma in modo diverso.
-Symfony mette a disposizione un terzo tipo di cache, dedicato ai fragment dei template ed abilitato direttamente al loro interno. In questa modalità, l'azione verrebbe sempre eseguita, 
- e il template verrebbe diviso in fragment ed essi messi successivamente in cache, come mostrato dalla Figura 12-3.
+La cache delle azioni si applica solo a un loro sottoinsieme. 
+Per le altre, ovvero quelle che aggiornano dati o mostrano nel template informazioni dipendenti dalla sessione, c'è ancora spazio per miglioramenti nell'utilizzo del sistema di cache, ma in modo diverso.
+Symfony mette a disposizione un terzo tipo di cache, dedicato ai frammenti dei template e abilitato direttamente al loro interno. In questa modalità, l'azione verrebbe sempre eseguita, 
+ e il template verrebbe diviso in frammento ed essi messi successivamente in cache, come mostrato dalla Figura 12-3.
 
-Figura 12-3 - Caching di un fragment
+Figura 12-3 - Cache di un frammento
 
-![Caching di un template fragment](http://www.symfony-project.org/images/book/1_4/F1203.png  "Caching di un template fragment")
+![Cache di un frammento di template](http://www.symfony-project.org/images/book/1_4/F1203.png  "Cache di un frammento di template")
 
 Ad esempio, si potrebbe avere una lista di utenti che mostrano un link all'utente che ha effettuato l'accesso per ultimo, e tale informazione è dinamica.
 L'helper `cache()` definisce le parti di una template che devono memorizzate in cache. Si veda il Listato 12-5 per dettagli sulla sintassi.
@@ -193,20 +193,20 @@ Listato 12-5 - Usare l'helper `cache()`, in `frontend/modules/user/templates/lis
 
 Il funzionamento dell'helper:
 
-  * Se venisse trovata in cache una versione del fragment '`users`', verrebbe sostituita al codice compreso tra le linee `<?php if (!cache($unique_fragment_name)): ?>` e `<?php endif; ?>`.
+  * Se venisse trovata in cache una versione del frammento '`users`', verrebbe sostituita al codice compreso tra le linee `<?php if (!cache($unique_fragment_name)): ?>` e `<?php endif; ?>`.
   * Altrimenti, il codice tra tali linee verrebbe processato e salvato in cache,  identificato con il nome `$unique_fragment_name`.
 
 Il codice non incluso tra tali linee verrebbe sempre processato e mai salvato in cache.
 
 >**CAUTION**
->L'azione (`list`nell'esempio) non deve avere la cache abilitata, altrimenti l'intero template verrebbe ignorato e la dichiarazione di cache del fragment ignorata.
+>L'azione (`list`nell'esempio) non deve avere la cache abilitata, altrimenti l'intero template verrebbe ignorato e la dichiarazione di cache del frammento ignorata.
 
-L'aumento di velocità dovuto alla cache dei fragment non è significatico quanto quello dovuto al caching delle azioni, dato che l'azione verrebbe sempre eseguita, 
-il template parzialmente processato ed il layout sempre usato per la presentazione.
+L'aumento di velocità dovuto alla cache dei frammento non è significativo quanto quello dovuto alla cache delle azioni, dato che l'azione verrebbe sempre eseguita, 
+il template parzialmente processato e il layout sempre usato per la presentazione.
 
-È possibile dichiarare fragment addizionali nello stesso template, però ocorre attribuire ad ognuno di essi un nome univoco, in modo che il sistema di cache riesca ad identificarli in seguito.
+È possibile dichiarare frammento addizionali nello stesso template, però occorre attribuire a ognuno di essi un nome univoco, in modo che il sistema di cache riesca a identificarli in seguito.
 
-Come per le azioni ed i component, anche i fragment in cache possono accettare un tempo di vita come secondo parametro, specificato in secondi, per l'helper `cache()`:
+Come per le azioni e i component, anche i frammento in cache possono accettare un tempo di vita come secondo parametro, specificato in secondi, per l'helper `cache()`:
 
     [php]
     <?php if (!cache('users', 43200)): ?>
@@ -215,7 +215,7 @@ Se non ne venisse specificato alcun valore, verrà utilizzato il valore di defau
 
 >**TIP**
 >Una modalità alternativa per rendere un'azione memorizzabile in cache è inserire delle variabili che la rendano dinamica nell'annesso pattern di routing. 
->Ad esempio, se una home page mostrasse il nome dell'utente connesso, essa non potrebbe essere messa in cache a meno che l'URL non ne contenga lo username. 
+>Ad esempio, se una pagina mostrasse il nome dell'utente connesso, essa non potrebbe essere messa in cache a meno che l'URL non ne contenga il nome utente. 
 >Un altro esempio è per le applicazioni internazionalizzate: se si volesse abilitare la cache di una pagina contenente diverse traduzioni, il codice della lingua deve in qualche modo essere incluso nell'URL. 
 >Questa scorciatoia moltiplicherà il numero delle pagine in cache, ma può essere di grande aiuto per velocizzare applicazioni pesantemente interattive.
 
@@ -224,7 +224,7 @@ Se non ne venisse specificato alcun valore, verrà utilizzato il valore di defau
 Il file `cache.yml` rappresenta una modalità per definire le impostazioni della cache, ma ha l'inconveniente di essere fisso. 
 Detto ciò, come accade spesso in symfony, è possibile utilizzare PHP al posto di YAML, e questo permette di configurare la cache dinamicamente.
 
-Perché mai si vorrebbe poter cambiare la cache dinamicamente? Un buon esempio è rapprensentato da una pagina il cui contenuto varia a seconda che un utente sia autenticato o meno, ma la sua URL rimane la stessa. 
+Perché mai si vorrebbe poter cambiare la cache dinamicamente? Un buon esempio è rappresentato da una pagina il cui contenuto varia a seconda che un utente sia autenticato o meno, ma la sua URL rimane la stessa. 
 Si immagini una pagina `article/show` con un sistema di votazione per gli articoli. Tale funzionalità di votazione sarebbe disabilitata per gli utenti non autenticati; per loro, il link della votazione porterebbe
 alla pagina di login. Questa versione della pagina potrebbe essere messa in cache. D'altra parte, per gli utenti autenticati, cliccare sul link di votazione scatenerebbe una richiesta in POST e creerebbe un nuovo voto. 
 In questo caso la cache deve essere disabilitata, in modo che symfony possa costruirla dinamicamente.
@@ -274,8 +274,8 @@ Listato 12-7 - Registrare un filtro personalizzato, in `frontend/config/filters.
 
 Rimuovendo i file in cache (per caricare il nuovo filtro) la cache condizionale è pronta. Essa abiliterà la cache delle pagine definite nel parametro `pages` solo per gli utenti non autenticati.
 
-Il metodo `addCache()` dell'oggetto `sfViewCacheManager` si aspetta il nome di un modulo, di un'azione ed un array associativo con gli stessi parametri che verrebbero definiti in un file `cache.yml`. 
-Ad esempio, se si volesse definire che l'azione `article/show` debba essere messa in cache con il layout ed un lifetime di 3600 secondi:
+Il metodo `addCache()` dell'oggetto `sfViewCacheManager` si aspetta il nome di un modulo, di un'azione e un array associativo con gli stessi parametri che verrebbero definiti in un file `cache.yml`. 
+Ad esempio, se si volesse definire che l'azione `article/show` debba essere messa in cache con il layout e un tempo di 3600 secondi:
 
     [php]
     $context->getViewCacheManager()->addCache('articlè, 'show', array(
@@ -288,7 +288,7 @@ Ad esempio, se si volesse definire che l'azione `article/show` debba essere mess
 >
 >Come impostazione predefinita, symfony memorizza i dati in file sul disco rigido del web server. 
 >è possibile voler immagazzinare i dai in memoria (ad esempio tramite `memcache`) oppure in un database 
->(specialmente se si volesse condividere la cache tra più server o velocizzarne la rimozione). Tale impostazione è mdoficabile facilemnte in quanto è definita nel file `factories.yml`.
+>(specialmente se si volesse condividere la cache tra più server o velocizzarne la rimozione). Tale impostazione è modificabile facilmente in quanto è definita nel file `factories.yml`.
 >
 >
 >Il sistema di memorizzazione di default è la classe `sfFileCache`:
@@ -301,7 +301,7 @@ Ad esempio, se si volesse definire che l'azione `article/show` debba essere mess
 >
 >è possibile sostituire il valore del parametro `class` con il sistema di memorizzazione personalizzato o con una delle classi alternative di symfony (inclusi `sfAPCCache`, `sfEAcceleratorCache`, `sfMemcacheCache`, e `sfSQLiteCache`). 
 >I parametri definiti al di sotto del parametro `param` vengono passati al costruttore della classe di cache come array associativo. 
->Ogni metodo alternativo di memorizzazione deve implementare tutti i metodi definiyi nella classe astratta `sfCache`. Per maggiori informazioni su questo argomento consultare il Capitolo 19.
+>Ogni metodo alternativo di memorizzazione deve implementare tutti i metodi definiti nella classe astratta `sfCache`. Per maggiori informazioni su questo argomento consultare il capitolo 19.
 
 > Configurazione di un backend memcache che utilizza due server memcache:
 >     view_cache:
@@ -324,25 +324,25 @@ ciò è realizzabile pagina per pagina, con una semplice chiamata a linea di com
     $ curl http://myapp.example.com/user/list.html > web/user/list.html
 
 Dopo aver effettuato ciò, ogni volta che venisse richiesta l'azione `user/list`, Apache troverebbe la corrispondente pagina `list.html` e  symfony verrebbe ignorato completamente. 
-L'altra faccia della medaglia nell'utilizzo della tecnica appena descrtitta è che non è più possibile controllare il cashing della pagina tramite symfony (lifetime, delegazione automatica e così via), ma il guadagno in velocità è sarebbe veramente impressionante.
+L'altra faccia della medaglia nell'utilizzo della tecnica appena descritta è che non è più possibile controllare la cache della pagina tramite symfony (lifetime, delegazione automatica e così via), ma il guadagno in velocità è sarebbe veramente impressionante.
 
 In alternativa, è possibile utilizzare il plugin di symfony `sfSuperCache`, che automatizza questo processo e supporta lifetime e pulizia della cache. 
-Consultare il Capitolo 17 per maggiori informazioni sui plugin.
+Consultare il capitolo 17 per maggiori informazioni sui plugin.
 
 >**SIDEBAR**
 >Altre tattiche di velocizzazione
 >
 >In aggiunta alla cache HTML, symfony possiede altri due meccanismi di cache, che sono completamente automatici e trasparenti allo sviluppatore. 
->Nell'ambiente di produzione, la configurazione e le traduzioni dei template vangono memorizzate nella cartelle `myproject/cache/config/` e `myproject/cache/i18n/` senza alcun intervento.
+>Nell'ambiente di produzione, la configurazione e le traduzioni dei template sono memorizzate nelle cartelle `myproject/cache/config/` e `myproject/cache/i18n/` senza alcun intervento.
 >
->Gli acceleratori PHP (eAccelerator, APC, XCache e così via), chiamati anche moduli di caching opcode, incrementano le performance degli script PHP mettendoli in cache in uno stato 
->compilato, in modo che l'overhead dovuto al parsing ed alla compilazione venga quasi completamente eliminato. Questo è particolarmente efficiente per le classi ORM, 
+>Gli acceleratori PHP (eAccelerator, APC, XCache e così via), chiamati anche moduli di cache opcode, incrementano le performance degli script PHP mettendoli in cache in uno stato 
+>compilato, in modo che l'overhead dovuto all'analisi e alla compilazione venga quasi completamente eliminato. Questo è particolarmente efficiente per le classi ORM, 
 >che contengono una grande quantità di codice. Questi acceleratori sono compatibili con symfony e possono facilmente triplicare la velocità di un'applicazione.
 >Essi sono raccomandati in ambienti di produzione per qualsiasi applicazione symfony che generi alto traffico.
 >
->Con un acceleratore PHP, è possibile immagazzinare manualmente dati persistenti in memoria, evitando così lo stesso processo ad ogni richiesta, tramite la classe `sfProcessCache`. 
->E se si volesse memorizzare in cache il risultato di un'operazione molto impegnativa per la CPU, èconsigliabile l'utilizzo dell'oggetto `sfFunctionCache`. 
->Consultare il Capitolo 18 per maggiori informazioni su questi meccanismi.
+>Con un acceleratore PHP, è possibile immagazzinare manualmente dati persistenti in memoria, evitando così lo stesso processo a ogni richiesta, tramite la classe `sfProcessCache`. 
+>E se si volesse memorizzare in cache il risultato di un'operazione molto impegnativa per la CPU, è consigliabile l'utilizzo dell'oggetto `sfFunctionCache`. 
+>Consultare il capitolo 18 per maggiori informazioni su questi meccanismi.
 
 
 Rimuovere elementi dalla cache
@@ -392,7 +392,7 @@ Listato 12-9 - Eliminare la cache per una data azione, in `modules/user/actions/
     [php]
     public function executeUpdate($request)
     {
-      // Aggiormento di un utente
+      // Aggiornamento di un utente
       $user_id = $request->getParameter('id');
       $user = UserPeer::retrieveByPk($user_id);
       $this->forward404Unless($user);
@@ -410,19 +410,19 @@ Listato 12-9 - Eliminare la cache per una data azione, in `modules/user/actions/
 Eliminare partial, component e component slot è leggermente più complesso. 
 Dato che è possibile passare qualsiasi tipo di parametro (inclusi oggetti), è quasi impossibile modificare la rispettiva versione in cache. 
 Di seguito verrà illustrato il meccanismo sui partial, la spiegazione vale anche per gli altri componenti del template. 
-Symfony identifica un partial in cache con un prefisso speciale (`sf_cache_partial`), il nome del modulo ed il nome del partial, più un hash di tutti i parametri utilizzato per chiamarlo, come segue:
+Symfony identifica un partial in cache con un prefisso speciale (`sf_cache_partial`), il nome del modulo e il nome del partial, più un hash di tutti i parametri utilizzato per chiamarlo, come segue:
 
     [php]
     // Un partial chiamato da
     <?php include_partial('user/my_partial', array('user' => $user) ?>
 
-    // Is identified in the cache as
+    // È identificato nella cache come
     @sf_cache_partial?module=user&action=_my_partial
       ➥ &sf_cache_key=bf41dd9c84d59f3574a5da244626dcc8
 
-Teoricamnete è possibile rimuovere un partial in cache tramite il metodo `remove()` conoscendo il valore dei parametri hash usati per identificarlo, ma ciò è veramente poco praticabile. 
+Teoricamente è possibile rimuovere un partial in cache tramite il metodo `remove()` conoscendo il valore dei parametri hash usati per identificarlo, ma ciò è veramente poco praticabile. 
 Fortunatamente, aggiungendo un parametro `sf_cache_key` alla chiamata dell'helper `include_partial()`, è possibile identificare il partial in cache con tale chiave. 
-Il Listato 12-10 mostra come eliminare la cache di un singolo partial (ad esempio per eliminare i dati in cache relativi ad uno `User` modificato) diventi una semplice operazione.
+Il Listato 12-10 mostra come eliminare la cache di un singolo partial (ad esempio per eliminare i dati in cache relativi a uno `User` modificato) diventi una semplice operazione.
 
 Listato 12-10 - Rimozione di un partial dalla cache
 
@@ -432,18 +432,18 @@ Listato 12-10 - Rimozione di un partial dalla cache
       'sf_cache_key' => $user->getId()
     ) ?>
 
-   // Viene identificato in cache come
+    // Viene identificato in cache come
     @sf_cache_partial?module=user&action=_my_partial&sf_cache_key=12
 
-    / Elimina _my_partial per uno specifico utente in cache con
+    // Elimina _my_partial per uno specifico utente in cache con
     $cacheManager->remove('@sf_cache_partial?module=user&action=_my_partial
      ➥ &sf_cache_key='.$user->getId());
 
-Per eliminare dalla cache template fragment, viene utilizzato lo stesso metodo `remove()`. 
-La chiave che identifica il fragment nella cache è lo stesso prefisso `sf_cache_partial`, il nome del modulo, quello dell'azione ed il parametro `sf_cache_key`. 
+Per eliminare dalla cache frammento di template, viene utilizzato lo stesso metodo `remove()`. 
+La chiave che identifica il frammento nella cache è lo stesso prefisso `sf_cache_partial`, il nome del modulo, quello dell'azione e il parametro `sf_cache_key`. 
 Il Listato 12-11 ne mostra un esempio.
 
-Listato 12-11 - Eliminare fragment dalla cache
+Listato 12-11 - Eliminare frammento dalla cache
 
     [php]
     <!-- Codice in cache -->
@@ -465,7 +465,7 @@ Listato 12-11 - Eliminare fragment dalla cache
 >La parte più complessa dell'operazione di pulizia della cache è capire quali azioni sono influenzate da un aggiornamento dei dati.
 >
 >Ad esempio, si immagini che l'applicazione corrente abbia un modulo `publication` dove le pubblicazioni vengano elencate (azione `list`) e descritte singolarmente (azione `show`), 
->insieme a qualche dettaglio sull'autore (istanza della classe `User`). Modificare un utente coinvolgerà tutte le descrizioni ed anche l'elenco. 
+>insieme a qualche dettaglio sull'autore (istanza della classe `User`). Modificare un utente coinvolgerà tutte le descrizioni e anche l'elenco. 
 >Ciò significa che bisogna aggiungere all'azione `update` del modulo `user` qualcosa come:
 >
 >
@@ -481,12 +481,12 @@ Listato 12-11 - Eliminare fragment dalla cache
 >     }
 >     $cacheManager->remove('publication/list');
 >
->Iniziando ad utilizzare ad usare la cache HTML, si deve avere una visione chiara delle dipendenze tra modello e azioni, in modo che non accadano errori dovuti ad incomprensioni.
->Bisonga anche ricordare che tutte le azioni che modificano il modello dovrebbero contenere una manciata di chiamate al metodo `remove()`, se la cache HTML è usata da qualche parte nell'applicazione.
+>Iniziando a utilizzare la cache HTML, si deve avere una visione chiara delle dipendenze tra modello e azioni, in modo che non accadano errori dovuti a incomprensioni.
+>Bisogna anche ricordare che tutte le azioni che modificano il modello dovrebbero contenere una manciata di chiamate al metodo `remove()`, se la cache HTML è usata da qualche parte nell'applicazione.
 >
 >Per non impazzire con analisi troppo complicate, è sempre possibile svuotare l'intera cache ogni volta che il modello viene aggiornato.
 
-### Elimanzione di diverse parti di cache
+### Eliminazione di diverse parti di cache
 
 Il metodo `remove()` accetta parametri con caratteri jolly. Permette di rimuovere diverse parti di cache con una sola chiamata. Per esempio:
 
@@ -510,7 +510,7 @@ Questo funziona anche per i partial:
 
 Il metodo `remove()` accetta due parametri in più, consentendo di definire quali host e header `Vary` si vogliono rimuovere dalla cache. 
 Questo perché symfony mantiene una versione di cache per ogni host e header `Vary`, quindi due applicazioni che condividano lo stesso codice ma non lo stesso host utilizzerebbero cache diverse.
-Questo puà essere molto utile, ad esempio, quando un'applicazione interpreta il sottodominio come parametro di richiesta (come `http://php.askeet.com` e `http://life.askeet.com`). 
+Questo può essere molto utile, ad esempio, quando un'applicazione interpreta il sotto-dominio come parametro di richiesta (come `http://php.askeet.com` e `http://life.askeet.com`). 
 Se non si volesse passare gli ultimi due parametri, symfony rimuoverà la cache per l'host corrente e per tutti gli header `Vary`. 
 Alternativamente, se si volesse pulire la cache per un altro host, basterebbe richiamare `remove()` come segue:
 
@@ -519,7 +519,7 @@ Alternativamente, se si volesse pulire la cache per un altro host, basterebbe ri
     $cacheManager->remove('user/show?id=*', 'life.askeet.com');  // Rimozione dei record di tutti gli utenti e dell'host life.askeet.com 
     $cacheManager->remove('user/show?id=*', '*');                // Rimozione dei record di tutti gli utenti e di tutti gli host 
 
-Il metodo `remove()` funziona in tutte le strategie di caching che puoi definire in `factories.yml` (non solo `sfFileCache`, ma anche `sfAPCCache`, `sfEAcceleratorCache`, `sfMemcacheCache`, `sfSQLiteCache`, e `sfXCacheCache`).
+Il metodo `remove()` funziona in tutte le strategie di cache che puoi definire in `factories.yml` (non solo `sfFileCache`, ma anche `sfAPCCache`, `sfEAcceleratorCache`, `sfMemcacheCache`, `sfSQLiteCache`, e `sfXCacheCache`).
 
 ### Eliminazione della cache tra applicazioni
 
@@ -528,8 +528,8 @@ Ma il gestore di cache `view` disponibile nell'applicazione `backend` non è a c
 Quindi non è possibile scrivere il seguente codice in `backend`:
 
     [php]
-    $cacheManager = sfContext::getInstance()->getViewCacheManager(); // Richamo dell'oggetto cache manager
-    $cacheManager->remove('user/show?id=12');                        // Il patter non verrebbe trovato in quanto il template è memorizzato nel cache del frontend
+    $cacheManager = sfContext::getInstance()->getViewCacheManager(); // Richiamo dell'oggetto cache manager
+    $cacheManager->remove('user/show?id=12');                        // Lo schema non verrebbe trovato, in quanto il template è memorizzato nella cache del frontend
 
 La soluzione è inizializzare un oggetto `sfCache` a mano, con le stesse impostazioni del gestore di cache del frontend. 
 Fortunatamente, tutte le classi della cache di symfony forniscono un metodo `removePattern` che fornisce lo stesso servizio del `remove` del gestore di cache di `view`.
@@ -538,11 +538,11 @@ Per esempio, se l'applicazione `backend` avesse bisogno di rimuovere la cache pe
 
     [php]
     $frontend_cache_dir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'frontend'.
-     ➥ DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'templatè;
+     ➥ DIRECTORY_SEPARATOR.sfConfig::get('sf_environment').DIRECTORY_SEPARATOR.'template';
     $cache = new sfFileCache(array('cache_dir' => $frontend_cache_dir)); // Utilizza la stessa configurazione definita in factories.yml del frontend
     $cache->removePattern('user/show?id=12');
 
-Per diverse strategie di caching, è necessario solamente cambiare l'inizializzazione dell'oggetto `cache`, ma il processo di eliminazione resta lo stesso: 
+Per diverse strategie di cache, è necessario solamente cambiare l'inizializzazione dell'oggetto `cache`, ma il processo di eliminazione resta lo stesso: 
 
     [php]
     $cache = new sfMemcacheCache(array('prefix' => 'frontend'));
@@ -553,37 +553,37 @@ Testare e monitorare la cache
 
 La cache HTML, se non gestita correttamente, può creare inconsistenze nella visualizzazione dei dati. Ogni volta che la cache viene disabilitata per un elemento, è necessario testarlo estensivamente e controllare la velocità di caricamento.
 
-### Creazione di un ambiente di Staging
+### Creazione di un ambiente di stage
 
-Il sistema di cache è incline ad errori nell'ambiente di produzione che non appaiono in quello di sviluppo, in quanto come impostazione predefinita la cache non è abilitata nell'ambiente di sviluppo. 
-Se si abilitasse la cache HTML per qualche azione, sarebbe necessario aggiungere un nuovo ambiente, chiamato di staging in questa sezione, con le stesse impostazioni dell'ambiente `prod` (quindi, con la cache abilitata), 
+Il sistema di cache è incline a errori nell'ambiente di produzione, che non appaiono in quello di sviluppo, in quanto come impostazione predefinita la cache non è abilitata nell'ambiente di sviluppo. 
+Se si abilitasse la cache HTML per qualche azione, sarebbe necessario aggiungere un nuovo ambiente, chiamato di stage in questa sezione, con le stesse impostazioni dell'ambiente `prod` (quindi, con la cache abilitata), 
 ma con `web_debug` impostato a `true`.
 
 Per impostarlo, occorre modificare il file `settings.yml` della applicazione aggiungendo all'inizio del file il codice del Listato 12-12.
 
-Listato 12-12 - Impostazione di un ambiente di `staging`, in `frontend/config/settings.yml`
+Listato 12-12 - Impostazione di un ambiente di `stage`, in `frontend/config/settings.yml`
 
-    staging:
+    stage:
       .settings:
         web_debug:  true
         cache:      true
 
-In aggiunta, si deve creare un nuovo front controller copiando quello di produzione (probabilmente `myproject/web/index.php`) con nome `frontend_staging.php`.
-Successivamente è necessaro modificare i valori di `SF_ENVIRONMENT` e `SF_DEBUG` come segue:
+In aggiunta, si deve creare un nuovo front controller copiando quello di produzione (probabilmente `myproject/web/index.php`) con nome `frontend_stage.php`.
+Successivamente è necessario modificare i valori di `SF_ENVIRONMENT` e `SF_DEBUG` come segue:
 
     [php]
-    $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'staging', true);
+    $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'stage', true);
 
 Tutto ciò è quello che serve per avere un nuovo ambiente da utilizzare aggiungendo il nome del front controller dopo il nome del dominio:
 
-    http://myapp.example.com/frontend_staging.php/user/list
+    http://myapp.example.com/frontend_stage.php/user/list
 
-### Monitorare le performance
+### Monitorare le prestazioni
 
-Il Capitolo 16 affronterà nel dettaglio la web debug toolbar e le sue funzioni. 
+Il capitolo 16 affronterà nel dettaglio la web debug toolbar e le sue funzioni. 
 Comunque, dato che la toolbar offre informazioni importanti riguardanti la cache, seguono alcune informazioni sulle sue funzioni relative.
 
-Durante la navigazione di una pagina che contiene elementi adatti a essere memorizzati in cache (azioni, partial, fragment e così via) 
+Durante la navigazione di una pagina che contiene elementi adatti a essere memorizzati in cache (azioni, partial, frammento e così via) 
 la web debug toolbar (nell'angolo in alto a destra) mostrerà un pulsante che permette di ignorare la cache (una freccetta verde arrotondata), 
 come mostrato in Figura 12-4. Tale pulsante ricaricherà la pagina ignorando gli elementi in cache. Questa operazione non svuoterà la cache.
 
@@ -595,13 +595,13 @@ Figura 12-4 - La web debug toolbar per pagine che usano la cache
 
 ![Web debug toolbar per pagine che utilizzano la cache](http://www.symfony-project.org/images/book/1_4/F1204.png "Web debug toolbar per pagine che utilizzano la cache")
 
-La debug toolbar mostrerà anche il numero di query eseguite durante il processo della richiesta, ed i dettagli delle durate per categoria
+La debug toolbar mostrerà anche il numero di query eseguite durante il processo della richiesta, e i dettagli delle durate per categoria
 (cliccando sul totale della durata per visualizzarne i dettagli). Monitorare tali dati, insieme alla durata totale, aiuterà a comprendere i miglioramenti dovuti alla cache.
 
-### Benchmarking
+### Benchmark
 
 La modalità di debug decrementa notevolmente la velocità della tua applicazione, dato che vengono loggati molto dati e resi disponibili alla toolbar. 
-Per cui il tempo di calcolo visualizzato quando navighi l'ambiente `staging` non è rappresentativo per quello di produzione, dove la modalità di debug è `off`.
+Per cui il tempo di calcolo visualizzato quando navighi l'ambiente `stage` non è rappresentativo per quello di produzione, dove la modalità di debug è `off`.
 
 Questi strumenti permettono il test del carico e forniscono 2 importanti tipi di informazioni: la media del tempo di caricamento di una singola pagina e la capacità massima del server sul quale è presente l'applicazione. 
 La media del tempo di caricamento è molto utile per monitorare i miglioramenti delle performance dovuti all'utilizzo della cache.
@@ -611,7 +611,7 @@ La media del tempo di caricamento è molto utile per monitorare i miglioramenti 
 Quando la web debug toolbar è abilitata, gli elementi in cache sono individuati in una pagina con un bordo rosso, ognuno avente un piccolo riquadro di informazione sull'angolo in alto a sinistra, 
 come mostrato in Figura 12-5. Il riquadro ha uno sfondo blu se l'elemento verrà eseguito, o giallo se sarà presente nella cache. 
 Cliccando sul link sarà possibile vedere l'identificatore dell'elemento in cache, il suo tempo di vita, 
-ed il tempo trascorso dall'ultima modifica. Questo aiuterà ad identificare i problemi nella gestione di elementi fuori dal contesto, per vedere quale elemento è stato creato e quale parte di una template
+ed il tempo trascorso dall'ultima modifica. Questo aiuterà a identificare i problemi nella gestione di elementi fuori dal contesto, per vedere quale elemento è stato creato e quale parte di una template
 possa effettivamente essere messo in cache.
 
 Figura 12-5 - Identificazione di un elemento in cache
@@ -624,13 +624,13 @@ HTTP 1.1 e cache lato client
 Il protocollo HTTP 1.1 definisce una manciata di header che possono essere di grande utilizzo per incrementare la velocità di un applicazione controllando il sistema di cache del browser.
 
 Le specifiche HTTP 1.1 del World Wide Web Consortium (W3C, [http://www. w3.org/Protocols/rfc2616/rfc2616-sec14.html]) descrivono tali header in dettaglio. 
-Se un'azione ha la cache abilitata, ed usa l'opzione `with_layout`, può utilizzare uno o più meccanismi descritti in questa sezione.
+Se un'azione ha la cache abilitata e usa l'opzione `with_layout`, può utilizzare uno o più meccanismi descritti in questa sezione.
 
-Anche se alcuni browser degli utenti che utilizassero l'apllicazione non supportassero HTTP 1.1, non vi è alcun rischio nell'utilizzo  delle funzionalità di cache del protocollo. 
+Anche se alcuni browser degli utenti che utilizzassero l'applicazione non supportassero HTTP 1.1, non vi è alcun rischio nell'utilizzo  delle funzionalità di cache del protocollo. 
 Un browser ignorerebbe header che conosce, perciò è consigliato l'utilizzo di meccanismi di cache HTTP 1.1.
 
 Inoltre, gli header HTTP 1.1 sono compresi anche dai proxy e dai server di cache. 
-Anche se il browser di un utente non comprendesse il protocollo, ci potrebbe essere sul percorso fino ad esso un server che se potrebbe trarre avvantaggia.
+Anche se il browser di un utente non comprendesse il protocollo, ci potrebbe essere sul percorso fino a esso un server che se potrebbe trarre avvantaggia.
 
 ### Aggiungere un header ETag per evitare di rispedire contenuto non modificato
 
@@ -639,8 +639,8 @@ Quando la funzionalità ETag è abilitata, il web server aggiungerà alla rispos
     ETag: "1A2Z3E4R5T6Y7U"
 
 Il browser dell'utente memorizzerebbe tale firma, e la spedirebbe insieme alla richiesta successiva.
-Se la nuova firma mostrasse che la pagina non è cambiata ripetto alla richiesta precedente, il browser non rimanderà indietro la risposta. 
-Inierebbe invece un header `304: Not modified`, operazione che fa risparmiare tempo di CPU (ad esempio se la compressione gzip fosse abilitata) e banda (trasferimento della pagina) al server, 
+Se la nuova firma mostrasse che la pagina non è cambiata rispetto alla richiesta precedente, il browser non rimanderà indietro la risposta. 
+Invierebbe invece un header `304: Not modified`, operazione che fa risparmiare tempo di CPU (ad esempio se la compressione gzip fosse abilitata) e banda (trasferimento della pagina) al server, 
 e tempo (trasferimento della pagina) al client. Soprattutto, le pagine in cache con ETag sono più veloci da caricare di quelle senza.
 
 In symfony, è possibile abilitare la funzionalità ETag per l'intera applicazione nel file `settings.yml`. Di seguito l'impostazione di default:
@@ -694,8 +694,8 @@ Si tratta di un grande strumento che aumenta le prestazioni delle pagine che var
   
 ### Aggiungere un header Cache-Control per abilitare la cache lato client
 
-Fino ad ora, anche aggiungendo gli header visti, il browser continuerà a spedire richieste al server anche possedendo una versione in cache di una pagina. 
-Tale comportamento si puo' evitare aggiungendo gli header `Cache-Control` ed `Expires` alla risposta. 
+Finora, anche aggiungendo gli header visti, il browser continuerà a spedire richieste al server anche possedendo una versione in cache di una pagina. 
+Tale comportamento si può evitare aggiungendo gli header `Cache-Control` ed `Expires` alla risposta. 
 Questi header per default sono disabilitati in PHP, ma symfony può farne l'override in modo da evitare richieste non necessarie al server.
 
 Come al solito, è possibile scatenare tale comportamento chiamando un metodo dell'oggetto `sfResponse`. 
@@ -709,7 +709,7 @@ In un'azione, sarà necessario definire il tempo massimo in secondi per i quali 
     [php]
     $this->getResponse()->addCacheControlHttpHeader('private=Truè);
 
-Utilizzando la direttiva HTTP `Cache-Control`, si protrà regolare i diversi meccanismi di cache tra il server ed il browser client.
+Utilizzando la direttiva HTTP `Cache-Control`, si protrà regolare i diversi meccanismi di cache tra il server e il browser client.
 Per maggiori dettagli su tali direttive, consultare le specifiche W3C di `Cache-Control`.
 
 Un ultimo header può essere spedito tramite symfony: `Expires`.
@@ -729,7 +729,7 @@ Il sistema di cache fornisce accelerazioni variabili delle performance a seconda
   * Super cache
   * Cache di azioni con layout
   * Cache di azioni senza layout
-  * Cache di fragment nelle template
+  * Cache di frammento nelle template
 
 Inoltre è possibile mettere in cache anche partial e component.
 
@@ -737,7 +737,7 @@ Se il cambiamento di dati nel modello o nella sessione obbligasse a svuotare la 
 è possibile farlo con fine granularità per ottimizzare le prestazioni, ovvero eliminando solo gli elementi che hanno subito un cambiamento e mantenendo gli altri inalterati.
 
 È da tener presente che sarà necessario testare con maggior attenzione le pagine con cache abilitata, dato che potrebbero apparire nuovi bug mettendo in cache gli elementi sbagliati o dimenticando di eliminarli quando verranno aggiornati i dati sottostanti. 
-Un ambiente di staging, dedicato al test della cache, è di grande utilità a questo scopo.
+Un ambiente di stage, dedicato al test della cache, è di grande utilità a questo scopo.
 
 Infine, si consiglia di trarre il meglio dagli header del protocollo HTTP 1.1 grazie alle funzionalità avanzate di symfony, 
-con il coinvolgimento del client nelle operazioni di caching si otterrà un ulteriore incremento delle prestazioni.
+con il coinvolgimento del client nelle operazioni di cache si otterrà un ulteriore incremento delle prestazioni.

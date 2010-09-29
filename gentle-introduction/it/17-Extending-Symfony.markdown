@@ -58,20 +58,20 @@ Listato 17-2 - Notificare un ascoltatore di eventi
       }
       
       /**
-       * Makes a query to an external web service
+       * Fa una query a un web service esterno
        */
       public function fetch($uri, $parameters = array())
       {
-        // Notify the dispatcher of the beginning of the fetch process
+        // Notifica al dispatcher l'inizio del processo di fetch
         $this->dispatcher->notify(new sfEvent($this, 'rest_request.fetch_prepare', array(
           'uri'        => $uri,
           'parameters' => $parameters
         )));
         
-        // Make the request and store the result in a $result variable
+        // Esecuzione della richiesta e memorizzazione del risultato in una variabile $result
         // ...
         
-        // Notify the dispatcher of the end of the fetch process
+        // Notica al dispatcher la fine del processo di fetch
         $this->dispatcher->notify(new sfEvent($this, 'rest_request.fetch_success', array(
           'uri'        => $uri,
           'parameters' => $parameters,

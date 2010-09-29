@@ -1,5 +1,5 @@
-Chapter 14 - Admin Generator
-============================
+Capitolo 14 - Admin Generator
+=============================
 
 Molte applicazioni sono basate su dati memorizzati in un database e offrono un'interfaccia
 per accedervi. Symfony automatizza il processo ripetitivo della creazione di un modulo
@@ -119,7 +119,7 @@ Amministrazione
 Symfony può generare moduli del backend, basati sulle definizioni delle classi del modello trovate nel
 file `schema.yml`. Si può creare un intero sito di amministrazione, composto interamente
 da moduli di amministrazione generati. Gli esempi di questa sezione descriveranno i moduli
-di amministrazione aggiunti ad un'applicazione chiamata `backend`. Se il progetto non ha
+di amministrazione aggiunti a un'applicazione chiamata `backend`. Se il progetto non ha
 ancora un'applicazione con questo nome, occorre crearla richiamando il seguente task:
 
     $ php symfony generate:app backend
@@ -687,7 +687,7 @@ definisce il valore di ciascuna linea della lista. Per esempio, il listato 14-20
 un layout `stacked` per la vista `list` del modulo `comment`. Il risultato appare in
 figura 14-12.
 
-Listato 14-20 - Using a `stacked` Layout in the `list` View, in `modules/comment/config/generator.yml`
+Listato 14-20 - Usare un layout `stacked` nella vista `list`, in `modules/comment/config/generator.yml`
 
     [yml]
     config:

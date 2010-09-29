@@ -485,7 +485,7 @@ Inoltre, il getter per le colonne di tipo data accetta un formato di data come p
 >
 >L'azione crea un oggetto della classe `Tag` dal parametro di richiesta. Poi, tutto il codice necessario alla query al database è localizzato nel metodo `getPopularArticles()` di questa classe. Rende l'azione più leggibile e il codice può essere facilmente riutilizzato in un'altra azione.
 >
->Spostare il codice nel posto più appropriato è una delle tecniche della rifattorizzazione. Se lo si fa spesso, il proprio codice sarà facilmente mantenibile e comprensibile da altri sviluppatori. Una buona convenzione sul quando rifattorizzare verso il modello consiste nel riuscire a mantenere un numero di righe di codice di un azione inferiore a dieci.
+>Spostare il codice nel posto più appropriato è una delle tecniche della rifattorizzazione. Se lo si fa spesso, il proprio codice sarà facilmente mantenibile e comprensibile da altri sviluppatori. Una buona convenzione sul quando rifattorizzare verso il modello consiste nel riuscire a mantenere un numero di righe di codice di un'azione inferiore a dieci.
 
 Connessioni al database
 -----------------------

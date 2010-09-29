@@ -509,7 +509,7 @@ Figura 16-8 - Esempio di un modello relazionale di database
 
 Questo è un esempio di come le etichette date ai record siano effettivamente utili. Per aggiungere un campo `Comment` all'articolo `first_post`, si possono semplicemente aggiungere le righe mostrate nel Listato 16-16 al file di dati `import_data.yml`.
 
-Listing 16-16 - Aggiungere un record a una tabella collegata, in `data/fixtures/import_data.yml`
+Listato 16-16 - Aggiungere un record a una tabella collegata, in `data/fixtures/import_data.yml`
 
     Comment:
       first_comment:

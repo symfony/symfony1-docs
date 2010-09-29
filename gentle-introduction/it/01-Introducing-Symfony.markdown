@@ -58,7 +58,7 @@ symfony, come segue:
     in semplici chiamate a funzioni.
   * I form supportano la validazione e la ripopolazione automatica, il che assicura una
     buona qualità dei dati nel database e una migliore esperienza dell'utente.
-  * L'escaping dell'output protegge le applicazioni da attacchi tramite dati corrotti.
+  * L'escape dell'output protegge le applicazioni da attacchi tramite dati corrotti.
   * La gestione della cache riduce l'utilizzo di banda e il carico dei server.
   * L'autenticazione e le credenziali facilitano la creazione di sezioni riservate e la
     gestione della sicurezza degli utenti.

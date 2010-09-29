@@ -983,13 +983,13 @@ Listato 7-40 - I metodi degli oggetti sotto escape accettano un parametro aggiun
     [php]
     <?php echo $test_object->testSpecialChars('&') ?>
     => &lt;&amp;&gt;
-    // The three following lines return the same value
+    // Le seguenti tre righe restituiscono lo stesso valore
     <?php echo $test_object->testSpecialChars('&', ESC_RAW) ?>
     <?php echo $sf_data->getRaw('test_object')->testSpecialChars('&') ?>
     <?php echo $sf_data->get('test_object', ESC_RAW)->testSpecialChars('&') ?>
      => <&>
 
-Se si a a che fare con oggetti nei template, sarà necessario usare spesso il trucco del parametro aggiuntivo, dal momento che è il modo più veloce per ottenere i dati grezzi in una chiamata al metodo.
+Se si ha a che fare con oggetti nei template, sarà necessario usare spesso il trucco del parametro aggiuntivo, dal momento che è il modo più veloce per ottenere i dati grezzi in una chiamata al metodo.
 
 >**CAUTION**
 >Anche le normali variabili di symfony subiscono l'escape quando si imposta a `true` l'escape dell'output. Quindi bisogna tener presente che `$sf_user`, `$sf_request`, `$sf_param` e `$sf_context` funzionano ancora, ma i loro metodi restituiscono dati sotto escape, a meno che non si aggiunga `ESC_RAW` come parametro finale alle loro chiamate di metodi.
@@ -997,7 +997,7 @@ Se si a a che fare con oggetti nei template, sarà necessario usare spesso il tr
 -
 
 >**TIP**
->Anche se l'XSS è uno degli exploit più comuni nei siti web, non è l'unico. Anche il CSRF è molto popolare e symfony fornisce una protezione automatica per i form. Si può scoprire come funziona questa protezione di sicurezza nel capitolo 10..
+>Anche se l'XSS è uno degli exploit più comuni nei siti web, non è l'unico. Anche il CSRF è molto popolare e symfony fornisce una protezione automatica per i form. Si può scoprire come funziona questa protezione di sicurezza nel capitolo 10.
 
 Riepilogo
 ---------

@@ -442,10 +442,10 @@ Listato 8-16 - Le colonne `created_at` e `updated_at` Columns sono gestite autom
 >
 >L'azione crea un oggetto  della classe `Tag` dal parametro della richiesta. Tutto il codice necessario per interrogare il database si trova nel metodo `getArticoliPopolari` di questa classe. Rende l'azione più leggibile e il codice del modello può facilmente venire riutilizzato in un'altra azione.
 >
->Spostare il codice in un posto più appropriato è una delle tecniche della rifattorizzazione. Se la si fa spesso, il codice sarà semplice da mantenere e da comprendere da parte di altri sviluppatori. Una buona regola per capire quando fare refactoring nel livello dei dati, è che il codice di una azione raramente deve contenere più di dieci righe di codice PHP.
+>Spostare il codice in un posto più appropriato è una delle tecniche della rifattorizzazione. Se la si fa spesso, il codice sarà semplice da mantenere e da comprendere da parte di altri sviluppatori. Una buona regola per capire quando rifattorizzare nel livello dei dati è che il codice di una azione raramente deve contenere più di dieci righe di codice PHP.
 
 Connessioni al database
-------------------------
+-----------------------
 
 Il modello del dati è indipendente dal database usato, ma dovrà sicuramente utilizzare un database. Le minime informazioni richieste da symfony per inviare richieste al database del progetto sono il nome, le credenziali e il tipo di database. Queste impostazioni per la connessione possono essere configurate passando il nome della sorgente dati (DSN, data source name) al task `configure:database`:
 

@@ -41,7 +41,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
 
 Il front controller di default, chiamato `index.php` e posizionato nella cartella `web/` del progetto, è un semplice file PHP come si può vedere nel Listato 6-1.
 
-Listing 6-1 - Il front controller di default per l'ambiente di produzione
+Listato 6-1 - Il front controller di default per l'ambiente di produzione
 
     [php]
     <?php
@@ -67,7 +67,7 @@ e questo URL visualizzerà la stessa pagina nell'ambiente di sviluppo:
 
 Creare un nuovo ambiente è semplice quanto creare un nuovo front controller. Per esempio, potrebbe essere necessario avere un ambiente di staging per permettere ai clienti di testare l'applicazione prima di andare in produzione. Per creare questo ambiente di staging basta copiare `web/frontend_dev.php` in `web/frontend_staging.php` e cambiare il valore del secondo argomento della chiamata a `ProjectConfiguration::getApplicationConfiguration()` in `staging`. Ora in tutti i file di configurazione è possibile aggiungere una nuova sezione `staging:` per impostare valori specifici per questo ambiente, come mostrato nel Listato 6-2.
 
-Listing 6-2 - Esempio di `app.yml` con impostazioni specifiche per l'ambiente di staging
+Listato 6-2 - Esempio di `app.yml` con impostazioni specifiche per l'ambiente di staging
 
     staging:
       mail:
@@ -93,7 +93,7 @@ Le azioni sono metodi chiamati `executeActionName` di una classe denominata `mod
 
 Listato 6-3 mostra un esempio di file `actions.class.php` con una sola azione `index` per l'intero modulo `mymodule`.
 
-Listing 6-3 - Classe di azione d'esempio, in `apps/frontend/modules/mymodule/actions/actions.class.php`
+Listato 6-3 - Classe di azione d'esempio, in `apps/frontend/modules/mymodule/actions/actions.class.php`
 
     [php]
     class mymoduleActions extends sfActions
@@ -113,7 +113,7 @@ Per poter richiedere un'azione è necessario invocare lo script del front contro
 
 Aggiungere nuove azioni significa aggiungere ulteriori metodi `execute` all'oggetto `sfActions` come mostrato nel Listato 6-4.
 
-Listing 6-4 - Classe azione con due azioni, in `frontend/modules/mymodule/actions/actions.class.php`
+Listato 6-4 - Classe azione con due azioni, in `frontend/modules/mymodule/actions/actions.class.php`
 
     [php]
     class mymoduleActions extends sfActions
@@ -134,21 +134,21 @@ Se la dimensione di una classe azione tende a crescere troppo, molto probabilmen
 Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato da spingervi a separarlo in due moduli.
 
 >**SIDEBAR**
->Symfony coding standards
+>Standard di codice di symfony
 >
 >Negli esempi di codice di questo libro, sarà balzato agli occhi il fatto che le parentesi graffe (`{` e `}`) occupano una riga ciascuna. Questo standard permette una più semplice lettura del codice.
 >
->Tra gli altri coding standard del framework ricordiamo l'indentazione che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perché le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
+>Tra gli altri standard di codice del framework, ricordiamo l'indentazione, che è sempre fatta da due spazi bianchi; le tabulazioni non vengono utilizzate. Questo perché le tabulazioni hanno spazi diversi a seconda dell'editor di testo utilizzato, inoltre codice in cui l'indentazione è mista tra tabulazioni e spazi bianchi è impossibile da leggere.
 >
->I file PHP del core e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perché non è realmente necessario e perché potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
+>I file PHP del nucleo e quelli generati da symfony non terminano con il consueto tag di chiusura `?>`. Questo è possibile perché non è realmente necessario e perché potrebbe causare problemi all'output nel caso in cui fossero presenti spazi vuoti dopo il tag stesso.
 >
->Prestando davvero molta attenzione sarà facile vedere come una riga di codice non finisca mai con uno spazio vuoto in symfony. La ragione questa volta è molto più banale: le righe che terminano con spazi vuoti si vedono molto male nell'editor di testo di Fabien.
+>Prestando davvero molta attenzione, sarà facile vedere come una riga di codice non finisca mai con uno spazio vuoto in symfony. La ragione questa volta è molto più banale: le righe che terminano con spazi vuoti si vedono molto male nell'editor di testo di Fabien.
 
 ### Sintassi alternativa per le classi azione
 
 Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del Listato 6-4 può essere scritto con i due file dei Listati 6-5 e 6-6.
 
-Listing 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAction.class.php`
+Listato 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAction.class.php`
 
     [php]
     class indexAction extends sfAction
@@ -159,7 +159,7 @@ Listing 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAc
       }
     }
 
-Listing 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAction.class.php`
+Listato 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAction.class.php`
 
     [php]
     class listAction extends sfAction
@@ -174,7 +174,7 @@ Listing 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAct
 
 La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del core di symfony. Il Listato 6-7 mostra come utilizzarli.
 
-Listing 6-7 - Metodi comuni `sfActions`
+Listato 6-7 - Metodi comuni `sfActions`
 
     [php]
     class mymoduleActions extends sfActions
@@ -236,7 +236,7 @@ Se esiste una vista predefinita da invocare (questo è il caso più comune), l'a
 
 Symfony cercherà quindi un template chiamato `actionNameSuccess.php`. Questo è definito come comportamento predefinito, quindi anche omettendo la direttiva `return` nel metodo di un'azione symfony cercherà ancora un template `actionNameSuccess.php`. Le azioni vuote scatenano lo stesso comportamento. Nel Listato 6-8 alcuni esempi di corretta conclusione delle azioni.
 
-Listing 6-8 - Azioni che invocano i template `indexSuccess.php` e `listSuccess.php`
+Listato 6-8 - Azioni che invocano i template `indexSuccess.php` e `listSuccess.php`
 
     [php]
     public function executeIndex()
@@ -269,7 +269,7 @@ Nel caso in cui non esista una vista da chiamare--per esempio nel caso in cui un
 
 Nessun template verrà eseguito in questo caso. Significa che è possibile aggirare completamente il livello della vista e impostare il codice HTML di risposta direttamente in un'azione. Come mostrato nel listato 6-9, symfony mette a disposizione uno specifico metodo `renderText()` per questo caso. Può essere utile quando si ha bisogno di un'azione estremamente responsiva, come per le interazioni Ajax, che verranno affrontate nel capitolo 11.
 
-Listing 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfView::NONE`
+Listato 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfView::NONE`
 
     [php]
     public function executeIndex()
@@ -287,7 +287,7 @@ Listing 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfV
 
 In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo successivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel Listato 6-10.
 
-Listing 6-10 - Evitare la creazione della vista inviando solamente le intestazioni
+Listato 6-10 - Evitare la creazione della vista inviando solamente le intestazioni
 
     [php]
     public function executeRefresh()
@@ -335,7 +335,7 @@ Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario 
 
 Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra a un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il Listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
 
-Listing 6-11 - Utilizzo del metodo `forward404()`
+Listato 6-11 - Utilizzo del metodo `forward404()`
 
     [php]
     public function executeShow(sfWebRequest $request)
@@ -358,7 +358,7 @@ Listing 6-11 - Utilizzo del metodo `forward404()`
 
 L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
 
-Listing 6-12 - Utilizzo del metodo `forward404If()`
+Listato 6-12 - Utilizzo del metodo `forward404If()`
 
     [php]
     // Questa azione è equivalente a quella presentata nel Listato 6-11
@@ -386,7 +386,7 @@ La convenzione per la denominazione delle azioni come `executeActionName()` (nel
 
 Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esecuzione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel Listato 6-13.
 
-Listing 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizzati nella classe azione
+Listato 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizzati nella classe azione
 
     [php]
     class mymoduleActions extends sfActions
@@ -471,7 +471,7 @@ Symfony gestisce automaticamente le sessioni utente ed è in grado di mantenere 
 
 L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente come mostrato nel Listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente anche nel caso in qui questo non fosse identificato.
 
-Listing 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati tra le richieste
+Listato 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati tra le richieste
 
     [php]
     class mymoduleActions extends sfActions
@@ -496,7 +496,7 @@ Listing 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati
 
 Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo argomento per specificare il valore predefinito da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri a cui si può accedere con il metodo `getAttributeHolder()`. Permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri come mostrato nel Listato 6-15.
 
-Listing 6-15 - Rimozione di dati dalla sessione utente
+Listato 6-15 - Rimozione di dati dalla sessione utente
 
     [php]
     class mymoduleActions extends sfActions
@@ -514,7 +514,7 @@ Listing 6-15 - Rimozione di dati dalla sessione utente
 
 Gli attributi della sessione utente sono disponibili anche nei template tramite la variabile `$sf_user` che contiene l'attuale oggetto `sfUser` come mostrato nel Listato 6-16.
 
-Listing 6-16 - Anche i template hanno accesso agli attributi della sessione utente
+Listato 6-16 - Anche i template hanno accesso agli attributi della sessione utente
 
     [php]
     <p>
@@ -557,7 +557,7 @@ La funzionalità di gestione delle sessioni di symfony maschera completamente la
 
 Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificando il file di configurazione `factories.yml` come mostrato nel Listato 6-17.
 
-Listing 6-17 - Modificare il nome del cookie di sessione, in `apps/frontend/config/factories.yml`
+Listato 6-17 - Modificare il nome del cookie di sessione, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -574,7 +574,7 @@ La gestione delle sessioni di symfony è basata sulle sessioni di PHP. Questo si
 
 Lato server symfony memorizza le sessioni utente su file come comportamento predefinito. È possibile memorizzarle sul database cambiando il valore del parametro `class` nel file `factories.yml` come mostrato nel Listato 6-18.
 
-Listing 6-18 - Cambiare server session storage, in `apps/frontend/config/factories.yml`
+Listato 6-18 - Cambiare server session storage, in `apps/frontend/config/factories.yml`
 
     all:
       storage:
@@ -593,7 +593,7 @@ La classi disponibili per il session storage sono `sfCacheSessionStorage`, `sfMy
 
 Le sessioni scadono automaticamente dopo 30 minuti. Questa impostazione predefinita può essere modificata per ogni ambiente nello stesso file di configurazione `factories.yml`, questa volta però nel factory `user` come mostrato nel Listato 6-19.
 
-Listing 6-19 - Modificare la durata delle sessioni, in `apps/frontend/config/factories.yml`
+Listato 6-19 - Modificare la durata delle sessioni, in `apps/frontend/config/factories.yml`
 
     all:
       user:
@@ -617,7 +617,7 @@ Prima di essere eseguita ogni azione passa attraverso un filtro speciale che con
 
 Restringere l'accesso a un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella cartella `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il Listato 6-20 mostra un file `security.yml` d'esempio.
 
-Listing 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mymodule/config/security.yml`
+Listato 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mymodule/config/security.yml`
 
     read:
       is_secure:   false       # Tutti gli utenti possono richiedere l'azione di lettura
@@ -644,7 +644,7 @@ Figure 6-1 - La pagina secure predefinita
 
 ![La pagina secure predefinita](http://www.symfony-project.org/images/book/1_4/F0601.jpg "La pagina secure predefinita")
 
-Listing 6-21 - Le azioni di sicurezza predefinite sono definite in in `apps/frontend/config/settings.yml`
+Listato 6-21 - Le azioni di sicurezza predefinite sono definite in in `apps/frontend/config/settings.yml`
 
     all:
       .actions:
@@ -658,7 +658,7 @@ Listing 6-21 - Le azioni di sicurezza predefinite sono definite in in `apps/fron
 
 Per accedere ad azione riservate gli utenti devono essere autenticati e/o possedere alcune credenziali. Estendere i privilegi di un utente è permesso dai metodi dell'oggetto `sfUser`. Lo stato di autenticazione di un utente è impostato dal metodo `setAuthenticated()` e può essere verificato con `isAuthenticated()`. Il Listato 6-22 mostra un semplice esempio di autenticazione.
 
-Listing 6-22 - Impostare lo stato di autenticazione di un utente
+Listato 6-22 - Impostare lo stato di autenticazione di un utente
 
     [php]
     class myAccountActions extends sfActions
@@ -679,7 +679,7 @@ Listing 6-22 - Impostare lo stato di autenticazione di un utente
 
 Le credenziali sono leggermente più complesse da utilizzare dato che si possono compiere diverse azioni su di esse come la verifica, aggiunta, rimozione e reset. Il Listato 6-23 descrive i metodi della classe `sfUser`.
 
-Listing 6-23 - Lavorare con le credenziali utente nell'azione
+Listato 6-23 - Lavorare con le credenziali utente nell'azione
 
     [php]
     class myAccountActions extends sfActions
@@ -713,7 +713,7 @@ Listing 6-23 - Lavorare con le credenziali utente nell'azione
 
 Se un utente ha la credenziale `foo`, questo sarà in grado di accedere alle azioni per le quali il `security.yml` richiede tale credenziale. Le credenziali possono anche essere utilizzate per mostrare nei template contenuti solo agli autorizzati come mostrato nel Listato 6-24.
 
-Listing 6-24 - Lavorare con le credenziali utenti in un template
+Listato 6-24 - Lavorare con le credenziali utenti in un template
 
     [php]
     <ul>
@@ -733,7 +733,7 @@ Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente
 
 La sintassi YAML utilizzata nel file `security.yml` permette di restringere l'accesso agli utenti in possesso di una combinazione di credenziali utilizzando associazioni di tipo AND o OR. Con la combinazione di queste si può costruire un complesso workflow e sistema di gestione dei privilegi--per esempio il back-office di un content management system (CMS) accessibile solo agli utenti con credenziali amministrative, dove gli articoli possono essere editati solo da utenti con la credenziale `editor` e pubblicati solo da quelli con la credenziale `publisher`. Il Listato 6-25 mostra quest'esempio.
 
-Listing 6-25 - Sintassi per la combinazione di credenziali
+Listato 6-25 - Sintassi per la combinazione di credenziali
 
     editArticle:
       credentials: [ admin, editor ]              # admin AND editor
@@ -768,7 +768,7 @@ Confrontare il Listato 6-26 per un esempio. Quindi i filtri sono divisi principa
   * Il codice prima della chiamata a `$filterChain->execute()` viene eseguito prima dell'esecuzione dell'azione.
   * Il codice dopo la chiamata a `$filterChain->execute()` viene eseguito dopo l'esecuzione dell'azione e prima del rendering.
 
-Listing 6-26 - Struttura di una classe filtro
+Listato 6-26 - Struttura di una classe filtro
 
     [php]
     class myFilter extends sfFilter
@@ -788,7 +788,7 @@ Listing 6-26 - Struttura di una classe filtro
 
 La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml`, e viene mostrato nel Listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
 
-Listing 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
+Listato 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
@@ -800,7 +800,7 @@ Listing 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
 
 Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel core di symfony. Nel core symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il Listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
 
-Listing 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
+Listato 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
 
     rendering:
       class: sfRenderingFilter   # Classe filtro
@@ -828,7 +828,7 @@ Dato che un'azione può fare il forward o il redirect a un'altra azione e conseg
 
 Questi concetti saranno più chiari con un esempio. Il Listato 6-29 mostra un filtro utilizzato per l'auto-login degli utenti con un cookie specifico `MyWebSite` che supponiamo sia creato dall'azione di login. È un modo tanto rudimentale quanto funzionante per implementare la funzionalità "remember me" offerta nei moduli di login.
 
-Listing 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFilter.class.php`
+Listato 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
@@ -867,7 +867,7 @@ In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potre
 
 Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella cartella `config/` dell'applicazione o del modulo, come mostrato nel Listato 6-30.
 
-Listing 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/frontend/config/filters.yml`
+Listato 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/frontend/config/filters.yml`
 
     rendering: ~
     security:  ~
@@ -883,7 +883,7 @@ Listing 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/f
 
 Quando attivo il filtro viene eseguito per ogni singola richiesta. Il file di configurazione di un filtro può contenere una o più definizioni di parametri sotto la chiave `param`. La classe filtro è in grado di recuperare il valore di questi parametri con il metodo `getParameter()`. Il Listato 6-31 dimostra come recuperare il valore di un parametro di un filtro.
 
-Listing 6-31 - Recuperare il valore di un parametro, in `apps/frontend/lib/rememberFilter.class.php`
+Listato 6-31 - Recuperare il valore di un parametro, in `apps/frontend/lib/rememberFilter.class.php`
 
     [php]
     class rememberFilter extends sfFilter
@@ -910,7 +910,7 @@ Il parametro `condition` viene verificato dalla catena dei filtri per capire se 
 
 La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel Listato 6-32, e attivato per ogni singolo modulo che lo richieda.
 
-Listing 6-32 - Filtro Google Analytics
+Listato 6-32 - Filtro Google Analytics
 
     [php]
     class sfGoogleAnalyticsFilter extends sfFilter
@@ -936,7 +936,7 @@ Attenzione però, questo filtro non è perfetto dato che non dovrebbe aggiungere
 
 Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste a SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel Listato 6-33.
 
-Listing 6-33 - Filtro per comunicazione sicura
+Listato 6-33 - Filtro per comunicazione sicura
 
     [php]
     class sfSecureFilter extends sfFilter
@@ -968,7 +968,7 @@ Configurazione dei moduli
 
 Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella cartella `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il Listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
 
-Listing 6-34 - Configurazione di un modulo, in `apps/frontend/modules/mymodule/config/module.yml`
+Listato 6-34 - Configurazione di un modulo, in `apps/frontend/modules/mymodule/config/module.yml`
 
     all:                  # For all environments
       enabled:            true
@@ -980,7 +980,7 @@ Il parametro `enabled` permette di disabilitare tutte le azioni di un modulo. Tu
 
 Il parametro `is_internal` permette di limitare l'esecuzione di tutte le azioni di un modulo solamente a chiamate interne. Per esempio questo è utile per azioni riguardanti le email che devono poter essere invocate da altre azioni, per mandare messaggi e-mail, ma non dall'esterno.
 
-The `view_class` parameter defines the view class. It must inherit from `sfView`. Overriding this value allows you to use other view systems, with other templating engines, such as Smarty.
+Il parametro `view_class` definisce la classe della vista. Deve ereditare da `sfView`. Sovrascrivere questo parametro consente di usare altri sistemi di viste, con altri motori di template, come Smarty.
 
 Il parametro `partial_view_class` definisce la classe della vista utilizzata per i partial del modulo in questione. Deve ereditare da `sfPartialView`.
 

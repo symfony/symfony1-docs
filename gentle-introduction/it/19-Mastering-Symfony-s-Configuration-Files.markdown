@@ -104,7 +104,7 @@ Parametro           | Descrizione                                    | Valore pr
 `i18n`              | Abilita la traduzione dell'interfaccia (si veda il capitolo 13). Impostare a `true` per applicazioni multi-lingua. | `false`
 `logging_enabled`   | Abilita il log degli eventi di symfony. Impostare a `false` se si vogliono disabilitare i log. | `true`
 `escaping_strategy` | Abilita l'escape dell'output (si veda il capitolo 7). Impostare a `true` se si vuole l'escape dei dati passati ai template. | `true`
-`cache`             | Abilita template caching (see capitolo 12). Impostare a `true` se almeno un modulo include il file `cache.yml`. Il filtro della cache (`sfCacheFilter`) è abilitato. | `false` in sviluppo, `true` in produzione
+`cache`             | Abilita la cache dei template (vedere capitolo 12). Impostare a `true` se almeno un modulo include il file `cache.yml`. Il filtro della cache (`sfCacheFilter`) è abilitato. | `false` in sviluppo, `true` in produzione
 `web_debug`         | Abilita la web debug toolbar per facilitare il debug (si veda il capitolo 16). Impostare a `true` per mostrare toolbar su ogni pagina. | `true` in sviluppo, `false` in produzione
 `check_symfony_version` | Abilita la verifica della versione di symfony a ogni richiesta. Impostare a `true` per pulire la cache automaticamente dopo un aggiornamento di symfony. Lasciare a `false` se si pulisce la cache a mano dopo un aggiornamento. | `false`
 `check_lock`        | Abilita il sistema di blocco dell'applicazione, attivato dai task `cache:clear` e `project:disable` (vedere la sezione precedente). Impostare a `true` per fare in modo che tutte le richieste ad applicazioni disabilitate siano rinviate alla pagina `sfConfig::get('sf_symfony_lib_dir')/exception/data/unavailable.php`. | `false`
@@ -417,7 +417,7 @@ callback nella classe di configurazione dell'applicazione:
     {
       public function initialize()
       {
-        parent::initialize(); // load symfony autoloading first
+        parent::initialize(); // carica prima l'autocaricamento di symfony
 
         // inserire qui le proprie funzioni o metodi di autocaricamento
         spl_autoload_register(array('myToolkit', 'autoload'));
