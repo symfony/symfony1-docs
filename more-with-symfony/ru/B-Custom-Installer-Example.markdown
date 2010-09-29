@@ -1,7 +1,7 @@
-Appendix B - Custom Installer Example
-=====================================
+Приложение B - Пример заказного установщика
+===========================================
 
-The following PHP code is a custom installer used in [Chapter 06](#chapter_06):
+Ниже приведён пример PHP-кода, реализующего заказной установщик, который используется в [Главе 06](#chapter_06):
 
     [php]
     <?php
