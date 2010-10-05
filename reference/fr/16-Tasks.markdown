@@ -379,7 +379,7 @@ C'est équivalent à l'exécution des tâches suivantes :
     ./symfony doctrine:build-sql
     ./symfony doctrine:insert-sql
 
-Vous pouvez aussi générer un unique fichier de classe en utilisant l'option raccourci
+Vous pouvez aussi générer uniquement les fichiers de classes en utilisant l'option raccourci
 `--all-classes`. Lorsque cette option est utilisée seule, la base de données ne sera pas modifiée.
 
     ./symfony doctrine:build --all-classes
