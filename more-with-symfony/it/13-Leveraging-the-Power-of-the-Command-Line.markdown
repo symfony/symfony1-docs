@@ -5,11 +5,11 @@ Sfruttare la potenza della linea di comando
 
 Symfony 1.1 ha introdotto un moderno, potente e flessibile sistema da linea di
 comando in sostituzione del vecchio sistema dei task basato su pake. Di versione
-in versione il sistema dei task è stato migliorato fino ad arrivare a ciò che è
+in versione, il sistema dei task è stato migliorato fino ad arrivare a ciò che è
 oggi.
 
 Molti sviluppatori web non vedono il valore aggiunto dei task. Spesso, questi 
-sviluppatori, non comprendono la potenza della linea di comando. In questo
+sviluppatori non comprendono la potenza della linea di comando. In questo
 capitolo approfondiremo l'argomento task, dalle basi all'uso più avanzato, 
 osservando come possono aiutare il lavoro di tutti i giorni e come ottenere
 il massimo dai task.
@@ -18,7 +18,7 @@ Task al primo sguardo
 ---------------------
 
 Un task è una porzione di codice eseguito dalla linea di comando utilizzando lo
-script `symfony` nella directory radice del progetto. Avrete di sicuro già 
+script `symfony` nella cartella radice del progetto. Avrete di sicuro già 
 incontrato i task attraverso il ben famoso `cache:clear` (conosciuto anche come
 `cc`) lanciandolo nel terminale:
 
@@ -62,7 +62,7 @@ Scrivere un proprio task
 ------------------------
 
 Iniziare a scrivere task con symfony è questione di pochi minuti. Tutto ciò che 
-c'è da fare è creare il task, dargli un nome, aggiungerci della logica, e voilà
+c'è da fare è creare il task, dargli un nome, aggiungerci della logica, e voilà:
 siete pronti a eseguire il vostro primo task personalizzato. Creiamo un 
 semplicissimo task *Hello, World!*, per esempio in `lib/task/sayHelloTask.class.php`:
 

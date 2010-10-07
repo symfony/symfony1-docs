@@ -926,7 +926,7 @@ La descrizione del formato `schema.xml` si trova nella sezione "Getting Started"
 
 Il formato YAML è stato disegnato per mantenere gli schemi semplici da leggere e da scrivere, ma il prezzo da pagare è la difficoltà di descrivere schemi più complessi con un file `schema.yml`. D'altro canto, il formato XML consente una descrizione completa dello schema, qualunque complessità esso abbia, e include impostazioni specifiche per i database, ereditarietà delle tabelle e così via.
 
-Symfony comprende anche gli schemi scritti in formato XML. Quindi, se si ha uno schema troppo complesso per la sintassi YAML o se si ha uno schema XML già esistente, non è necessario passare alla sintassi YAML. Basta mettere il proprio `schema.xml` nella cartella `config/` del progetto directory e costruire il modello.
+Symfony comprende anche gli schemi scritti in formato XML. Quindi, se si ha uno schema troppo complesso per la sintassi YAML o se si ha uno schema XML già esistente, non è necessario passare alla sintassi YAML. Basta mettere il proprio `schema.xml` nella cartella `config/` del progetto e costruire il modello.
 
 >**SIDEBAR**
 >Propel in symfony

@@ -1,7 +1,7 @@
 Capitolo 9 - Link e il sistema di routing
-========================================
+=========================================
 
-Link e URL meritano particolare attenzione in un framework per applicazioni web. Questo avviene perchè
+Link e URL meritano particolare attenzione in un framework per applicazioni web. Questo avviene perché
 l'unico entry point dell'applicazione (il front controller) e l'utilizzo degli helper all'interno dei
 template permettono una completa separazione tra il modo in cui gli URL funzionano e la loro rappresentazione.
 Questo è chiamato routing. Più di un semplice gadget il routing è un utile strumento per rendere le
@@ -18,11 +18,11 @@ Come tocco finale verranno mostrati alcuni trucchi per gestire le performance de
 Che cos'è il Routing?
 ----------------
 
-Il routing è un meccanismo che riscrive gli URL per renderli più user-friendly. Per capire perchè questa cosa è importante è necessario riflettere qualche minuto su cosa sia in effetti un URL
+Il routing è un meccanismo che riscrive gli URL per renderli più user-friendly. Per capire perché questa cosa è importante è necessario riflettere qualche minuto su cosa sia in effetti un URL
 
 ### URL come comandi per il Server
 
-Gli URL portano informazioni dal browser al server richiesto affinchè questo svolga una azione come desiderato dall'utente.
+Gli URL portano informazioni dal browser al server richiesto affinché questo svolga una azione come desiderato dall'utente.
 Per esempio, un URL tradizionale contiene il percorso ad uno script e alcuni parametri necessari a completare la richiesta, come in questo esempio:
       http://www.example.com/web/controller/article.php?id=123456&format_code=6532
 
@@ -46,12 +46,12 @@ Figura 9-1 - Gli URL compaiono in molti posti, come nei risultati della ricerca
 
 ![Gli URL compaiono in molti posti, come nei risultati della ricerca](http://www.symfony-project.org/images/book/1_4/F0901.png "Gli URL compaiono in molti posti, come nei risultati della ricerca")
 
-  * Se è necessario modificare un URL (ad esempio perchè il nome dello script o uno dei suoi parameteri viene modificato),
+  * Se è necessario modificare un URL (ad esempio perché il nome dello script o uno dei suoi parameteri viene modificato),
   ogni link a questo URL deve essere cambiato allo stesso modo. Questo significa che le modifiche alla struttura del controller
   sono pesanti e costose, che non è l'ideale nello sviluppo agile.
 
 Potrebbe essere molto peggio se symfony non usasse il pattern front controller, ovvero se l'applicazione contenesse molti script
-accessbiliti da Internet, in diverse directory, come questi:
+accessbiliti da Internet, in diverse cartelle, come questi:
 
     http://www.example.com/web/gallery/album.php?name=my%20holidays
     http://www.example.com/web/weblog/public/post/list.php
@@ -65,7 +65,7 @@ rendendo il mantenimento un incubo al cambiare della struttura.
 L'idea dietro il routing è considerare gli URL come parte dell'interfaccia. L'applicazione può formattare un URL
 per dare carte informazioni all'utente e l'utente può utilizzare l'URL per accedere alle risorse dell'applicazione.
 
-Questo è possibile nelle applicazioni symfony, perchè gli URL presentati all'utente non sono correlati alle 
+Questo è possibile nelle applicazioni symfony, perché gli URL presentati all'utente non sono correlati alle 
 istruzioni necessarie al server per eseguire la richiesta. Al contrario sono correlati alla risorsa richiesta 
 e possono essere formattati liberamente. Symfony ad esempio è in grado di comprendere il seguente URL 
 e mostrare la stessa pagina del primo URL mostrato in questo capitolo:
