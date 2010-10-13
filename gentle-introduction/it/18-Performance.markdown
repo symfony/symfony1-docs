@@ -61,7 +61,7 @@ Quando si utilizza un metodo di una classe peer per recuperare degli oggetti la 
     [php]
     $articles = ArticlePeer::doSelect(new Criteria());
 
-La variabile `$articles` ottenuta è un array di oggetti della classe `Article`. Ogni oggetto deve essere creato e inizializzato, cosa che richiede tempo. Questo ha una conseguenza principale: diversamente dalle query dirette al database la velocità delle query di Propel è direttamente proporzionale al numero di risultati che genera. Questo significa che i metodi dei modelli dovrebbero essere ottimizzati per restituire solo un numero ben preciso di risultati. Quando non sono necessari tutti i risultati restituiti da un `Criteria`, è opportuno limitarli usando i metodi `setLimit()` e `setOffset()`. Se per esempio si volessero solo le righe dalla 10 alla 20 di una specifica query si potrebbe migliorare il `Criteria` come nel Listato 18-1.
+La variabile `$articles` ottenuta è un array di oggetti della classe `Article`. Ogni oggetto deve essere creato e inizializzato, cosa che richiede tempo. Questo ha una conseguenza principale: diversamente dalle query dirette al database la velocità delle query di Propel è direttamente proporzionale al numero di risultati che genera. Questo significa che i metodi dei modelli dovrebbero essere ottimizzati per restituire solo un numero ben preciso di risultati. Quando non sono necessari tutti i risultati restituiti da un `Criteria`, è opportuno limitarli usando i metodi `setLimit()` e `setOffset()`. Se per esempio si volessero solo le righe dalla 10 alla 20 di una specifica query si potrebbe migliorare il `Criteria` come nel listato 18-1.
 
 Listato 18-1 - Limitare il numero di risultati restituito da un Criteria
 
@@ -77,7 +77,7 @@ Questo può essere automatizzato utilizzando un sistema di paginazione. L'oggett
 
 Durante lo sviluppo di un'applicazione è bene tenere sott'occhio il numero delle query inviate al database da ogni singola richiesta. La web debug toolbar visualizza il numero delle query per ogni pagina, cliccando sulla piccola icona del database è possibile analizzare il codice SQL di tutte queste query. Se il numero delle query cresce in modo anomalo è giunto il momento di valutare l'utilizzo di alcune Join.
 
-Prima di analizzare i metodi di Join rivediamo cosa accade quando si itera su un array di oggetti usando un getter di Propel per ottenere i dettagli di una classe relazionata come nel Listato 18-2. Questo esempio suppone che lo schema descriva una tabella `article` con una chiave esterna a una tabella `author`.
+Prima di analizzare i metodi di Join rivediamo cosa accade quando si itera su un array di oggetti usando un getter di Propel per ottenere i dettagli di una classe relazionata come nel listato 18-2. Questo esempio suppone che lo schema descriva una tabella `article` con una chiave esterna a una tabella `author`.
 
 Listato 18-2 - Recuperare dettagli su un classe relazionata in un loop
 
@@ -99,7 +99,7 @@ Listato 18-2 - Recuperare dettagli su un classe relazionata in un loop
     <?php endforeach; ?>
     </ul>
 
-Se l'array `$articles` contenesse dieci oggetti, il metodo `getAuthor()` verrebbe chiamato dieci volte, eseguendo quindi una query ogni volta che viene invocato per idratare un oggetto della classe `Author`, come nel Listato 18-3.
+Se l'array `$articles` contenesse dieci oggetti, il metodo `getAuthor()` verrebbe chiamato dieci volte, eseguendo quindi una query ogni volta che viene invocato per idratare un oggetto della classe `Author`, come nel listato 18-3.
 
 Listato 18-3 - Getter su chiavi esterne richiedono una query a database
 
@@ -112,11 +112,11 @@ Listato 18-3 - Getter su chiavi esterne richiedono una query a database
     FROM   author
     WHERE  author.id = ?                // ? is article.author_id
 
-Quindi la pagina del Listato 18-2 richiederà in totale 11 query: una necessaria alla creazione dell'array di oggetti `Article` più le dieci query necessarie per creare un oggetto `Author` alla volta. Si tratta di molte query per la sola visualizzazione di una lista di articoli con i relativi autori.
+Quindi la pagina del listato 18-2 richiederà in totale 11 query: una necessaria alla creazione dell'array di oggetti `Article` più le dieci query necessarie per creare un oggetto `Author` alla volta. Si tratta di molte query per la sola visualizzazione di una lista di articoli con i relativi autori.
 
 ####Come ottimizzare le query con Propel
 
-Se si stesse usando semplice SQL non dovrebbe essere molto difficile ridurre il numero di query a una sola recuperando le colonne della tabella `article` e quelle della tabella `author` nello stesso momento. Questo è esattamente il comportamento del metodo `doSelectJoinAuthor()` della classe `ArticlePeer`. Questo metodo invoca una query leggermente più complessa della semplice chiamata `doSelect()`, le colonne aggiuntive del result set permettono a Propel di idratare sia gli oggetti `Article` che gli oggetti `Author` relazionati. Il codice del Listato 18-4 mostra esattamente lo stesso risultato del Listato 18-2 ma richiede una singola query al database invece che 11 risultando così più veloce.
+Se si stesse usando semplice SQL non dovrebbe essere molto difficile ridurre il numero di query a una sola recuperando le colonne della tabella `article` e quelle della tabella `author` nello stesso momento. Questo è esattamente il comportamento del metodo `doSelectJoinAuthor()` della classe `ArticlePeer`. Questo metodo invoca una query leggermente più complessa della semplice chiamata `doSelect()`, le colonne aggiuntive del result set permettono a Propel di idratare sia gli oggetti `Article` che gli oggetti `Author` relazionati. Il codice del listato 18-4 mostra esattamente lo stesso risultato del listato 18-2 ma richiede una singola query al database invece che 11 risultando così più veloce.
 
 Listato 18-4 - Recuperare dati degli articoli e dei loro autori nella stessa query
 
@@ -140,7 +140,7 @@ Listato 18-4 - Recuperare dati degli articoli e dei loro autori nella stessa que
 
 Non c'è alcuna differenza tra il risultato fornito dalla chiamata ai metodi `doSelect()` e `doSelectJoinXXX()`; entrambi restituiscono lo stesso array di oggetti (della classe `Article` nell'esempio). La differenza appare invece quando viene utilizzato un getter su una chiave esterna di questi oggetti. Nel caso di `doSelect()` viene invocata la query e un oggetto viene idratato con il risultato; nel caso del `doSelectJoinXXX()` l'oggetto esterno esiste già e non è richiesta nessuna query, il processo è così molto più veloce. Se si è a conoscenza di dover utilizzare oggetti relazionati invocare un metodo `doSelectJoinXXX()` per ridurre il numero di query al database e migliorare le prestazioni della pagina.
 
-Il metodo `doSelectJoinAuthor()` viene generato automaticamente dalla chiamata di `propel-build-model` grazie alla relazione tra le tabelle `article` e `author`. Nel caso in cui esistessero altre chiavi esterne della struttura della tabella degli articoli, per esempio a una tabella delle categorie, la classe generata `BaseArticlePeer` avrebbe altri metodi Join come mostrato nel Listato 18-5.
+Il metodo `doSelectJoinAuthor()` viene generato automaticamente dalla chiamata di `propel-build-model` grazie alla relazione tra le tabelle `article` e `author`. Nel caso in cui esistessero altre chiavi esterne della struttura della tabella degli articoli, per esempio a una tabella delle categorie, la classe generata `BaseArticlePeer` avrebbe altri metodi Join come mostrato nel listato 18-5.
 
 Listato 18-5 - Esempio dei metodi `doSelect` disponibili nella classe `ArticlePeer`
 
@@ -187,7 +187,7 @@ Doctrine dispone di un proprio linguaggio per le interrogazioni chiamato DQL, ac
 
 ### Evitare l'utilizzo di array temporanei
 
-Anche utilizzando Propel gli oggetti vengono già idratati, quindi non c'è nessun bisogno di preparare array temporanei per i template. Gli sviluppatori non abituati all'utilizzo di un ORM spesso cadono in questa trappola. Vogliono preparare un array di stringhe o di interi nonostante il template sia in grado di utilizzare direttamente un array di oggetti esistente. Per esempio si immagini un template che mostra l'elenco di tutti i titoli degli articoli presenti nel database. Uno sviluppatore che non sfrutta l'OOP probabilmente scriverebbe del codice simile a quello riportato nel Listato 18-6.
+Anche utilizzando Propel gli oggetti vengono già idratati, quindi non c'è nessun bisogno di preparare array temporanei per i template. Gli sviluppatori non abituati all'utilizzo di un ORM spesso cadono in questa trappola. Vogliono preparare un array di stringhe o di interi nonostante il template sia in grado di utilizzare direttamente un array di oggetti esistente. Per esempio si immagini un template che mostra l'elenco di tutti i titoli degli articoli presenti nel database. Uno sviluppatore che non sfrutta l'OOP probabilmente scriverebbe del codice simile a quello riportato nel listato 18-6.
 
 Listato 18-6 - Preparare un array nell'azione è superfluo se già se ne possiede uno
 
@@ -208,7 +208,7 @@ Listato 18-6 - Preparare un array nell'azione è superfluo se già se ne possied
     <?php endforeach; ?>
     </ul>
 
-Il problema relativo a questo codice è dato dal fatto che l'idratazione è già stata fatta dalla chiamata a `doSelect()` (che costa tempo), rendendo così l'array `$titles` superfluo dato che è possibile scrivere lo stesso codice come nel Listato 18-7. In questo modo il tempo speso per costruire l'array `$titles` può essere guadagnato per migliorare le prestazioni dell'applicazione.
+Il problema relativo a questo codice è dato dal fatto che l'idratazione è già stata fatta dalla chiamata a `doSelect()` (che costa tempo), rendendo così l'array `$titles` superfluo dato che è possibile scrivere lo stesso codice come nel listato 18-7. In questo modo il tempo speso per costruire l'array `$titles` può essere guadagnato per migliorare le prestazioni dell'applicazione.
 
 Listato 18-7 - Utilizzare un array di oggetti esonera dalla creazione di un array temporaneo
 
@@ -225,7 +225,7 @@ Listato 18-7 - Utilizzare un array di oggetti esonera dalla creazione di un arra
     <?php endforeach; ?>
     </ul>
 
-Se realmente si ha la necessità di costruire un array temporaneo perché è necessaria qualche operazione sugli oggetti, il modo giusto per farlo è quello di creare un nuovo metodo nella classe del modello che restituisce direttamente quell'array. Se per esempio si avesse bisogno di un array di titoli e numero di commenti per ogni articolo l'azione e il template dovrebbero assomigliare al Listato 18-8.
+Se realmente si ha la necessità di costruire un array temporaneo perché è necessaria qualche operazione sugli oggetti, il modo giusto per farlo è quello di creare un nuovo metodo nella classe del modello che restituisce direttamente quell'array. Se per esempio si avesse bisogno di un array di titoli e numero di commenti per ogni articolo l'azione e il template dovrebbero assomigliare al listato 18-8.
 
 Listato 18-8 - Utilizzare un metodo custom per costruire un array temporaneo
 
@@ -244,7 +244,7 @@ Sta poi allo sviluppatore costruire un metodo `getArticleTitlesWithNbComments()`
 
 ### Bypassare l'ORM
 
-Quando realmente non si ha bisogno di oggetti ma solo di alcune colonne da varie tabelle, come nell'esempio precedente, si possono creare metodi specifici nel modello per bypassare completamente lo strato dell'ORM. Si può interrogare il database direttamente con PDO, per esempio, e restituire un array costruito sulla base delle proprie esigenze. Listato 18-9 illustra quest'idea.
+Quando realmente non si ha bisogno di oggetti ma solo di alcune colonne da varie tabelle, come nell'esempio precedente, si possono creare metodi specifici nel modello per bypassare completamente lo strato dell'ORM. Si può interrogare il database direttamente con PDO, per esempio, e restituire un array costruito sulla base delle proprie esigenze. listato 18-9 illustra quest'idea.
 
 Listato 18-9 - Accesso diretto tramite PDO per metodi ottimizzati nel modello, in `lib/model/ArticlePeer.php`
 
@@ -298,7 +298,7 @@ Esistono molte tecniche di ottimizzazione specificatamente per il database da ut
 >**TIP**
 >Va ricordato che la web debug toolbar mostra il tempo impiegato da ogni query su una pagina e che ogni miglioria andrebbe monitorata per determinare se realmente migliori le prestazioni.
 
-Le interrogazioni sulle tabelle sono spesso basate su colonne che non sono la chiave primaria. Per migliorare la velocità di tali interrogazioni è utile definire degli indici nello schema del database. Per aggiungere un indice a una singola colonna aggiungere la proprietà `index: true` alla definizione della stessa come nel Listato 18-10.
+Le interrogazioni sulle tabelle sono spesso basate su colonne che non sono la chiave primaria. Per migliorare la velocità di tali interrogazioni è utile definire degli indici nello schema del database. Per aggiungere un indice a una singola colonna aggiungere la proprietà `index: true` alla definizione della stessa come nel listato 18-10.
 
 Listato 18-10 - Aggiungere un index a una singola colonna, in `config/schema.yml`
 
@@ -327,7 +327,7 @@ Dopo aver aggiunto un indice allo schema andrà aggiunto anche al database stess
 >**TIP**
 >L'utilizzo degli indici tende a rendere più veloci le query di tipo `SELECT` mentre saranno più lente `INSERT`, `UPDATE` e `DELETE`. Inoltre i motori dei database utilizzano solo un indice a interrogazione e lo scelgono a ogni query basandosi su un'euristica interna. Aggiungere un indice a volte può essere controproducente in termini di prestazioni, è bene quindi verificarne il risultato.
 
-Se non diversamente specificato, in symfony ogni richiesta utilizza una singola connessione al database che viene chiusa alla fine della richiesta stessa. Si possono attivare le connessioni persistenti al database per utilizzare un pool di connessioni che restino aperte tra una query e l'altra impostando il parametro `persistent: true` nel file `databases.yml` come mostrato nel Listato 18-11.
+Se non diversamente specificato, in symfony ogni richiesta utilizza una singola connessione al database che viene chiusa alla fine della richiesta stessa. Si possono attivare le connessioni persistenti al database per utilizzare un pool di connessioni che restino aperte tra una query e l'altra impostando il parametro `persistent: true` nel file `databases.yml` come mostrato nel listato 18-11.
 
 Listato 18-11 - Abilitare il supporto per le connessioni persistenti al database, in `config/databases.yml`
 
@@ -388,7 +388,7 @@ La differenza inizia a farsi vedere quando una pagina include alcune dozzine di 
 
 ### Ignorare il template
 
-Solitamente una risposta è composta da un insieme di intestazioni e di contenuti. Alcune risposte però non necessitano di contenuto. Per esempio alcune interazioni Ajax richiedono solo alcune porzioni di dati dal server per alimentare un programma JavaScript che si occupa di aggiornare diverse parti di una pagina. Per questo tipo di risposte brevi un solo insieme di intestazioni è più veloce da trasmettere. Come visto nel capitolo 11 un azione può restiture anche solo un intestazione JSON. Listato 18-12 propone un esempio dal capitolo 11.
+Solitamente una risposta è composta da un insieme di intestazioni e di contenuti. Alcune risposte però non necessitano di contenuto. Per esempio alcune interazioni Ajax richiedono solo alcune porzioni di dati dal server per alimentare un programma JavaScript che si occupa di aggiornare diverse parti di una pagina. Per questo tipo di risposte brevi un solo insieme di intestazioni è più veloce da trasmettere. Come visto nel capitolo 11 un azione può restiture anche solo un intestazione JSON. listato 18-12 propone un esempio dal capitolo 11.
 
 Listato 18-12 - Esempio di azione che restituisce un intestazione JSON
 
@@ -403,7 +403,7 @@ Listato 18-12 - Esempio di azione che restituisce un intestazione JSON
 
 Questo esclude il template e il layout, la risposta può essere inviata singolarmente. Dato che contiene solamente intestazioni è più leggera e richiederà meno tempo per essere trasmessa all'utente.
 
-Il capitolo 6 ha mostrato un altro modo per evitare il caricamento del template restituendo del testo come contenuto dall'azione. Questo infrange la separazione MVC ma può aumentare la velocità di risposta di un'azione in modo drastico. Verificare Listato 18-13 per un esempio.
+Il capitolo 6 ha mostrato un altro modo per evitare il caricamento del template restituendo del testo come contenuto dall'azione. Questo infrange la separazione MVC ma può aumentare la velocità di risposta di un'azione in modo drastico. Verificare listato 18-13 per un esempio.
 
 Listato 18-13 - Esempio di azione che restituisce direttamente testo come contenuto
 
@@ -429,7 +429,7 @@ Durante lo sviluppo di un'applicazione è necessario ripulire la cache in divers
 
 Il problema della cancellazione dell'intera cache è rappresentato dal fatto che la richiesta successiva richiederà un tempo più lungo per essere processata perché la cache della configurazione deve essere rigenerata. Inoltre i template non modificati verranno anch'essi rimossi dalla cache perdendo i benefici delle richieste precedenti.
 
-Questo significa che è una buona idea rimuovere dalla cache solamente i file che realmente necessitano di essere rigenerati. Utilizzare le opzioni del task `cache:clear` per definire un sottoinsieme di file della cache da rimuovere come dimostrato nel Listato 18-14.
+Questo significa che è una buona idea rimuovere dalla cache solamente i file che realmente necessitano di essere rigenerati. Utilizzare le opzioni del task `cache:clear` per definire un sottoinsieme di file della cache da rimuovere come dimostrato nel listato 18-14.
 
 Listato 18-14 - Rimuovere solo parti specifiche della cache
 
@@ -503,7 +503,7 @@ Tutti e due questi metodi sono molto efficaci, e anche se sono applicabili solo 
 
 ### Mettere in cache il risultato di una chiamata a una funzione
 
-Se una funzione non utilizza valori dipendenti dal contesto o non casuali, chiamandola due volte con gli stessi parametri dovrebbe fornire lo stesso risultato. Questo significa che la seconda chiamata potrebbe davvero essere evitata nel caso un cui si fosse memorizzato il primo risultato. Questo è esattamente ciò che la classe `sfFunctionCache` si occupa di fare. Questa classe ha un metodo `call()` che si aspetta un callable e un array di parametri come argomenti. Quando invocato questo metodo crea un hash md5 con tutti gli argomenti e cerca nella cache una chiave denominata con quell'hash. Se la chiave viene trovata la funzione restituisce il risultato memorizzato nella cache. Altrimenti `sfFunctionCache` esegue la funzione, memorizza il risultato nella cache e lo restituisce. In questo modo la seconda esecuzione del Listato 18-16 sarà più veloce della prima.
+Se una funzione non utilizza valori dipendenti dal contesto o non casuali, chiamandola due volte con gli stessi parametri dovrebbe fornire lo stesso risultato. Questo significa che la seconda chiamata potrebbe davvero essere evitata nel caso un cui si fosse memorizzato il primo risultato. Questo è esattamente ciò che la classe `sfFunctionCache` si occupa di fare. Questa classe ha un metodo `call()` che si aspetta un callable e un array di parametri come argomenti. Quando invocato questo metodo crea un hash md5 con tutti gli argomenti e cerca nella cache una chiave denominata con quell'hash. Se la chiave viene trovata la funzione restituisce il risultato memorizzato nella cache. Altrimenti `sfFunctionCache` esegue la funzione, memorizza il risultato nella cache e lo restituisce. In questo modo la seconda esecuzione del listato 18-16 sarà più veloce della prima.
 
 Listato 18-16 - Mettere in cache il risultato di una funzione
 
@@ -520,7 +520,7 @@ Il costruttore della classe `sfFunctionCache` si aspetta un oggetto di tipo cach
 
 ### Mettere in cache i dati sul server
 
-Gli acceleratori PHP mettono a disposizione funzioni speciali per memorizzare dati in memoria per poterli riutilizzare su più richieste. Il problema è che hanno tutti sintassi diverse e ognuno ha il suo modo speciale di assolvere questo compito. Le classi della cache di symfony riescono ad astrarre tutte queste differenze e funzionano con qualsiasi acceleratore si decida di utilizzare. Si analizzi il Listato 18-17.
+Gli acceleratori PHP mettono a disposizione funzioni speciali per memorizzare dati in memoria per poterli riutilizzare su più richieste. Il problema è che hanno tutti sintassi diverse e ognuno ha il suo modo speciale di assolvere questo compito. Le classi della cache di symfony riescono ad astrarre tutte queste differenze e funzionano con qualsiasi acceleratore si decida di utilizzare. Si analizzi il listato 18-17.
 
 Listato 18-17 - Utilizzare un acceleratore PHP per memorizzare dati
 
@@ -549,7 +549,7 @@ Disattivare le funzionalità inutilizzate
 
 La configurazione standard di symfony attiva le funzionalità più comuni per le applicazione web. Tuttavia, se non si ha la necessità di utilizzarle tutte, sarebbe opportuno disattivarle per risparmiare il tempo necessario alla loro inizializzazione consumato a ogni richiesta.
 
-Per esempio nel caso in cui l'applicazione non utilizzi il meccanismo delle sessioni, o si volesse attivare la gestione delle sessioni manualmente, si dovrebbe modificare il valore del parametro `auto_start` impostandolo a `false` sotto la chiave `storage` nel file `factories.yml` come nel Listato 18-18.
+Per esempio nel caso in cui l'applicazione non utilizzi il meccanismo delle sessioni, o si volesse attivare la gestione delle sessioni manualmente, si dovrebbe modificare il valore del parametro `auto_start` impostandolo a `false` sotto la chiave `storage` nel file `factories.yml` come nel listato 18-18.
 
 Listato 18-18 - Disabilitare le sessioni, in `frontend/config/factories.yml`
 
@@ -559,7 +559,7 @@ Listato 18-18 - Disabilitare le sessioni, in `frontend/config/factories.yml`
         param:
           auto_start: false
 
-Lo stesso dicasi per le funzionalità del database (come descritto precedentemente nella sezione "Tweaking the Model" in questo capitolo). Se l'applicazione non utilizza un database si può disattivare per un piccolo guadagno nelle prestazioni nel file `settings.yml` (vedere Listato 18-19).
+Lo stesso dicasi per le funzionalità del database (come descritto precedentemente nella sezione "Tweaking the Model" in questo capitolo). Se l'applicazione non utilizza un database si può disattivare per un piccolo guadagno nelle prestazioni nel file `settings.yml` (vedere listato 18-19).
 
 Listato 18-19 - Disabilitare il database, in `frontend/config/settings.yml`
 
@@ -567,7 +567,7 @@ Listato 18-19 - Disabilitare il database, in `frontend/config/settings.yml`
       .settings:
         use_database:      false    # Funzionalità per database e modello
 
-Lo stesso vale per le funzionalità di sicurezza (vedere capitolo 6) che si possono disattivare nel file `filters.yml`, come mostrato nel Listato 18-20.
+Lo stesso vale per le funzionalità di sicurezza (vedere capitolo 6) che si possono disattivare nel file `filters.yml`, come mostrato nel listato 18-20.
 
 Listato 18-20 - Disabilitare funzionalità di sicurezza, in `frontend/config/filters.yml`
 
@@ -598,7 +598,7 @@ Caricare dieci file richiede più operazioni di I/O rispetto al caricamento di u
 
 Quindi fondere un grosso numero di file eliminandone i commenti contenuti è un'operazione che migliora le prestazioni. Symfony esegue già tale ottimizzazione, si chiama compilazione del core. All'inizio della prima richiesta (o dopo aver svuotato la cache) un'applicazione symfony concatena tutte le classi del core del framework (`sfActions`, `sfRequest`, `sfView`, e così via) in un unico file, riduce la dimensione del file rimuovendo commenti e doppi spazi e salva tutto nella cache in un file chiamato `config_core_compile.yml.php`. Ogni richiesta seguente caricherà solamente questo singolo file ottimizzato invece che i 30 file che lo compongono.
 
-Se l'applicazione ha classi che devono essere caricare ogni volta, specialmente se sono classi grandi con molti commenti, può essere un vantaggio aggiungerle al file compilato del core. Per fare questo basta aggiungere un file `core_compile.yml` nella cartella `config/` dell'applicazione in cui si elencheranno le classi che si vogliono aggiungere come nel Listato 18-21.
+Se l'applicazione ha classi che devono essere caricare ogni volta, specialmente se sono classi grandi con molti commenti, può essere un vantaggio aggiungerle al file compilato del core. Per fare questo basta aggiungere un file `core_compile.yml` nella cartella `config/` dell'applicazione in cui si elencheranno le classi che si vogliono aggiungere come nel listato 18-21.
 
 Listato 18-21 - Aggiungere le proprie classi al file compilato del core, in `frontend/config/core_compile.yml`
 

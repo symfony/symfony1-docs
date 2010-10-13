@@ -129,7 +129,7 @@ caratteristica:
 #### Impostazioni del routing
 
 Le impostazioni del routing (vedere capitolo 9) sono definite in `factories.yml`, sotto
-la chiave `routing`. Il Listato 19-1 mostra la configurazione predefinita del routing.
+la chiave `routing`. Il listato 19-1 mostra la configurazione predefinita del routing.
 
 Listato 19-1 - Impostazioni di configurazione del routing, in `frontend/config/factories.yml`
 
@@ -214,7 +214,7 @@ Le impostazioni della cache sono definiti per la maggior parte in `cache.yml`, t
 due impostazioni in `settings.yml`: `cache` abilita la cache e `etag` abilita la gestione
 di ETag sul server (vedere capitolo 15). Si può anche specificare quale sistema di
 memorizzazione usare per tutte le cache (della vista, del routing e di i18n) in
-`factories.yml`. Il Listato 19-2 mostra la configurazione predefinita della cache della
+`factories.yml`. Il listato 19-2 mostra la configurazione predefinita della cache della
 vista.
 
 Listato 19-2 - Impostazioni della cache della vista, in `frontend/config/factories.yml`
@@ -254,7 +254,7 @@ Per ulteriori parametri, controllare la documentazione delle API per ogni classe
 
 La vista non è l'unica parte a poter usare una cache. Sia il factory `routing` che quello
 `I18N` offrono un parametro `cache`, in cui si può impostare un factory cache, proprio
-come per la vista. Ad esempio, il Listato 19-1 mostra come il routing usi la cache
+come per la vista. Ad esempio, il listato 19-1 mostra come il routing usi la cache
 dei file per accelerare, ma la si può cambiare.
 
 #### Impostazioni di log
@@ -450,7 +450,7 @@ cliente.
 ### La struttura di base dei file
 
 Le variabili dei percorsi sono definiti nelle classi `sfProjectConfiguration` e
-`sfApplicationConfiguration` e memorizzate nell'oggetto `sfConfig`. Il Listato 19-4 mostra
+`sfApplicationConfiguration` e memorizzate nell'oggetto `sfConfig`. Il listato 19-4 mostra
 un elenco di variabili di percorsi e le relative cartelle.
 
 Listato 19-4 - Variabili predefinite della struttura dei file, definite in `sfProjectConfiguration` e `sfApplicationConfiguration`
@@ -563,7 +563,7 @@ configurazione e il codice PHP ottimizzato eseguibile a runtime.
 
 Il gestore di configurazione predefinito è memorizzato in
 `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`. Questo file
-collega i gestori ai file di configurazione, secondo un percorso di file. Il Listato 19-6
+collega i gestori ai file di configurazione, secondo un percorso di file. Il listato 19-6
 mostra un estratto di questo file.
 
 Listato 19-6 - Estratto di `sfConfig::get('sf_symfony_lib_dir')/config/config/config_handlers.yml`
@@ -624,7 +624,7 @@ struttura usata dal framework nella cartella `sfConfig::get('sf_symfony_lib_dir'
 
 Supponiamo di avere nella propria applicazione una classe `myMapAPI`, che fornisce
 un'interfaccia verso servizi di mappe di terze parti. Questa classe ha bisogno di essere
-inizializzata con un URL e un nome utente, come mostrato nel Listato 19-7.
+inizializzata con un URL e un nome utente, come mostrato nel listato 19-7.
 
 Listato 19-7 - Esempio di inizializzazione della classe `myMapAPI`
 
@@ -641,13 +641,13 @@ Il file potrebbe avere i seguenti contenuti:
       url:  map.api.example.com
       user: pippo
 
-Per poter trasformare queste impostazioni nel codice del Listato 19-7, occorre costruire
+Per poter trasformare queste impostazioni nel codice del listato 19-7, occorre costruire
 un gestore di configurazione. Ogni gestore di configurazione deve iniziare con
 `sfConfigHandler` e fornire un metodo `execute()`, che accetta come parametro un array di
 percorsi di file di configurazione e deve restituire i dati da scrivere nel file di cache.
 I gestori di file YAML dovrebbero estendere la classe `sfYamlConfigHandler`, che fornisce
 strutture aggiuntive per l'analisi del codice YAML. Per il file `map.yml`, un tipico
-gestore di configurazione potrebbe essere scritto come nel Listato 19-8.
+gestore di configurazione potrebbe essere scritto come nel listato 19-8.
 
 Listato 19-8 - Un gestore di configurazione personalizzato, in `frontend/lib/myMapConfigHandler.class.php`
 

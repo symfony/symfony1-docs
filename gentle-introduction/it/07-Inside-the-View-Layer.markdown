@@ -13,7 +13,7 @@ Ma qualunque sia il proprio ruolo, si troveranno utili strumenti per accelerare 
 I template
 ----------
 
-Il Listato 7-1 mostra un classico template di symfony. Contiene del codice HTML e un po' di codice PHP semplice, generalmente chiamate a variabili definite nell'azione (attraverso `$this->nome = 'foo';`) ed helper.
+Il listato 7-1 mostra un classico template di symfony. Contiene del codice HTML e un po' di codice PHP semplice, generalmente chiamate a variabili definite nell'azione (attraverso `$this->nome = 'foo';`) ed helper.
 
 Listato 7-1 - Un template di esempio indexSuccess.php
 
@@ -30,13 +30,13 @@ Come spiegato nel capitolo 4, nei template è preferibile la sintassi alternativ
 
 ### Gli helper
 
-Gli helper sono funzioni PHP che restituiscono codice HTML e possono essere utilizzate nei template. Nel Listato 7-1, la funzione `link_to()` è un helper. A volte gli helper servono solo per risparmiare tempo, impacchettando frammenti di codice utilizzati frequentemente nei template. Per esempio, si può facilmente immaginare la definizione della funzione di questo helper:
+Gli helper sono funzioni PHP che restituiscono codice HTML e possono essere utilizzate nei template. Nel listato 7-1, la funzione `link_to()` è un helper. A volte gli helper servono solo per risparmiare tempo, impacchettando frammenti di codice utilizzati frequentemente nei template. Per esempio, si può facilmente immaginare la definizione della funzione di questo helper:
 
     [php]
     <?php echo image_tag('photo.jpg') ?>
      => <img src="/images/photo.jpg" />
 
-Dovrebbe essere simile a quella del Listato 7-2.
+Dovrebbe essere simile a quella del listato 7-2.
 
 Listato 7-2 - Esempio di definizione di un helper
 
@@ -61,7 +61,7 @@ Gli helper facilitano il processo di scrittura dei template e generano il miglio
 
 #### Dichiarare gli helper
 
-I file di symfony contenenti le dichiarazioni degli helper non sono caricati in automatico (questo perché contengono funzioni, non classi). Gli helper sono raggruppati per scopo. Ad esempio, tutte le funzioni degli helper inerenti i testi sono definite in un file chiamato `TextHelper.php` che contiene il gruppo di helper chiamato `Text`. Se si ha bisogno di usare un helper in un template, bisogna prima caricare il relativo gruppo di helper tramite la funzione `use_helper()`. Il Listato 7-3 mostra un template usando l'helper `auto_link_text()` che fa parte del gruppo di helper `Text`.
+I file di symfony contenenti le dichiarazioni degli helper non sono caricati in automatico (questo perché contengono funzioni, non classi). Gli helper sono raggruppati per scopo. Ad esempio, tutte le funzioni degli helper inerenti i testi sono definite in un file chiamato `TextHelper.php` che contiene il gruppo di helper chiamato `Text`. Se si ha bisogno di usare un helper in un template, bisogna prima caricare il relativo gruppo di helper tramite la funzione `use_helper()`. Il listato 7-3 mostra un template usando l'helper `auto_link_text()` che fa parte del gruppo di helper `Text`.
 
 Listato 7-3 - Dichiarare l'utilizzo di un helper
 
@@ -91,7 +91,7 @@ L'elenco degli helper standard, caricato in modalità predefinita per ogni templ
 
 #### Helper utilizzati frequentemente
 
-Nei capitoli successivi verranno mostrati in dettaglio alcuni helper, in relazione con le caratteristiche prese in esame. Il Listato 7-4 dà un breve elenco degli helper predefiniti che vengono utilizzati di frequente, assieme al codice HTML che restituiscono.
+Nei capitoli successivi verranno mostrati in dettaglio alcuni helper, in relazione con le caratteristiche prese in esame. Il listato 7-4 dà un breve elenco degli helper predefiniti che vengono utilizzati di frequente, assieme al codice HTML che restituiscono.
 
 Listato 7-4 - Gli helper predefiniti più comuni
 
@@ -125,7 +125,7 @@ Le funzioni per gli helper (normali funzioni PHP che restituiscono codice HTML) 
 
 ### Layout della pagina
 
-Il template mostrato nel Listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
+Il template mostrato nel listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
 
 >**TIP**
 >Per maggiori informazioni sul decorator e gli altri design pattern, vedere *Patterns of Enterprise Application Architecture* di Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).
@@ -154,7 +154,7 @@ Listatog 7-5 - Layout predefinito, in `myproject/apps/frontend/templates/layout.
       </body>
     </html>
 
-Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempio nel Listato 7-1 la view elaborata è simile a quanto si vede nel Listato 7-6.
+Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempio nel listato 7-1 la view elaborata è simile a quanto si vede nel listato 7-6.
 
 Listato 7-6 - Il Layout, la configurazione View e il template assemblato.
 
@@ -233,7 +233,7 @@ Figura 7-2 - Il riutilizzo dei partial nei template
 
 Proprio come i template, i partial sono file che si trovano nella cartella `templates/` e contengono codice HTML con del codice PHP. Il nome file di un partial inizia sempre con un carattere di sottolineatura (`_`) e questo aiuta a distinguere i partial dai template, poiché sono situati nelle stesse cartelle `templates/`.
 
-Un template può includere partial se è nello stesso modulo, in un altro modulo, o nella cartella `templates/` globale. Includere un partial usando un helper `include_partial()` e specificare il nome del modulo e del partial come parametro (omettendo la sottolineatura e il `.php` finale), come descritto nel Listato 7-7.
+Un template può includere partial se è nello stesso modulo, in un altro modulo, o nella cartella `templates/` globale. Includere un partial usando un helper `include_partial()` e specificare il nome del modulo e del partial come parametro (omettendo la sottolineatura e il `.php` finale), come descritto nel listato 7-7.
 
 Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
 
@@ -368,7 +368,7 @@ Ora ogni volta che si avrà bisogno del componente in un template, basterà chia
     [php]
     <?php include_component('novita', 'headlines') ?>
 
-Come i partial, i componenti accettano parametri aggiuntivi nella forma di un array associativo. I parametri sono disponibili al partial con il loro nome e nel componente attraverso l'oggetto `$this`. Per un esempio, vedere il Listato 7-13.
+Come i partial, i componenti accettano parametri aggiuntivi nella forma di un array associativo. I parametri sono disponibili al partial con il loro nome e nel componente attraverso l'oggetto `$this`. Per un esempio, vedere il listato 7-13.
 
 Listato 7-13 - Passare i parametri a un componente e ai suoi template
 
@@ -398,7 +398,7 @@ Figura 7-4 - Slot layout definiti in un template
 
 ![Slot layout definiti in un template](http://www.symfony-project.org/images/book/1_4/F0704.png "Slot layout definiti in un template")
 
-Vedere un po' di codice chiarirà ulteriormente le cose. Per includere uno slot, usare l'helper `include_slot()`. L'helper `has_slot()` restituisce `true` se lo slot è stato definito in precedenza, fornendo come bonus un meccanismo di fallback. Ad esempio, definire un segnaposto per uno slot `'sidebar'` nel layout e i suoi contenuti predefiniti come mostrato nel Listato 7-14.
+Vedere un po' di codice chiarirà ulteriormente le cose. Per includere uno slot, usare l'helper `include_slot()`. L'helper `has_slot()` restituisce `true` se lo slot è stato definito in precedenza, fornendo come bonus un meccanismo di fallback. Ad esempio, definire un segnaposto per uno slot `'sidebar'` nel layout e i suoi contenuti predefiniti come mostrato nel listato 7-14.
 
 Listato 7-14 - Inclusione di uno slot `'sidebar'` nel layout
 
@@ -414,7 +414,7 @@ Listato 7-14 - Inclusione di uno slot `'sidebar'` nel layout
     <?php endif; ?>
     </div>
 
-Capita abbastanza frequentemente di dover mostrare dei contenuti predefiniti se uno slot non è definito e per questo scopo l'helper `include_slot` restituisce un valore booleano che indica se lo slot è stato definito. Il Listato 7-15 mostra come utilizzare questo valore in modo da semplificare il codice.
+Capita abbastanza frequentemente di dover mostrare dei contenuti predefiniti se uno slot non è definito e per questo scopo l'helper `include_slot` restituisce un valore booleano che indica se lo slot è stato definito. Il listato 7-15 mostra come utilizzare questo valore in modo da semplificare il codice.
 
 Listato 7-15 - Inclusione di uno slot `'sidebar'` nel layout
 
@@ -428,7 +428,7 @@ Listato 7-15 - Inclusione di uno slot `'sidebar'` nel layout
     <?php endif; ?>
     </div>
 
-Ciascun template ha la possibilità di definire i contenuti di uno slot (in realtà anche i partial sono in grado di farlo). Essendo gli slot destinati a contenere codice HTML, symfony offre un modo conveniente per definirli: basta scrivere il codice dello slot tra gli helper `slot()` e `end_slot()`, come mostrato nel Listato 7-16.
+Ciascun template ha la possibilità di definire i contenuti di uno slot (in realtà anche i partial sono in grado di farlo). Essendo gli slot destinati a contenere codice HTML, symfony offre un modo conveniente per definirli: basta scrivere il codice dello slot tra gli helper `slot()` e `end_slot()`, come mostrato nel listato 7-16.
 
 Listato 7-16 - Sovrascrivere il contenuto dello slot `'sidebar'` in un template
 
@@ -442,11 +442,11 @@ Listato 7-16 - Sovrascrivere il contenuto dello slot `'sidebar'` in un template
       <p>email: <?php echo $user->getEmail() ?></p>
     <?php end_slot() ?>
 
-Il codice tra gli helper slot è eseguito nel contesto del template, quindi ha accesso a tutte le variabili che sono state definite nell'azione. Symfony metterà automaticamente il risultato dell'esecuzione del codice nell'oggetto response. Non verrà visualizzato nel template, ma reso disponibile per future chiamate `include_slot()`, come quella mostrata nel Listato 7-14.
+Il codice tra gli helper slot è eseguito nel contesto del template, quindi ha accesso a tutte le variabili che sono state definite nell'azione. Symfony metterà automaticamente il risultato dell'esecuzione del codice nell'oggetto response. Non verrà visualizzato nel template, ma reso disponibile per future chiamate `include_slot()`, come quella mostrata nel listato 7-14.
 
 Gli slot sono molto utili per definire zone che devono mostrare dei contenuti contestuali. Possono anche essere usati per aggiungere codice HTML al layout solo per certe azioni. Ad esempio, un template che mostra l'elenco delle ultime news potrebbe volere aggiungere un link a un feed RSS nella zona `<head>` del layout. Questo si può ottenere semplicemente aggiungendo uno slot 'feed'` nel layout e sovrascrivendolo nel template dell'elenco.
 
-Se il contenuto dello slot è molto corto, per esempio come nel caso di uno slot `titolo`, si può semplicemente passare il contenuto come secondo parametro del metodo `slot()`, come mostrato nel Listato 7-17.
+Se il contenuto dello slot è molto corto, per esempio come nel caso di uno slot `titolo`, si può semplicemente passare il contenuto come secondo parametro del metodo `slot()`, come mostrato nel listato 7-17.
 
 Listato 7-17 - Usare lo `slot()` per definire un contenuto corto
 
@@ -500,7 +500,7 @@ Nella vista, tutto quello che non è HTML è chiamato configurazione della vista
 
 ### Il file `view.yml`
 
-Ogni modulo può avere un file `view.yml` per definire la configurazione delle sue viste. Questo permette di definire le impostazioni di visualizzazione per un intero modulo e vista per vista in un singolo file. Le chiavi di primo livello del file `view.yml` sono i nomi dei moduli della vista. Il Listato 7-18 mostra un esempio della configurazione della vista
+Ogni modulo può avere un file `view.yml` per definire la configurazione delle sue viste. Questo permette di definire le impostazioni di visualizzazione per un intero modulo e vista per vista in un singolo file. Le chiavi di primo livello del file `view.yml` sono i nomi dei moduli della vista. Il listato 7-18 mostra un esempio della configurazione della vista
 
 Listato 7-18 - Esempio Livello-Modulo `view.yml`
 
@@ -529,7 +529,7 @@ Le impostazioni predefinite per il modulo sono definite sotto la chiave `all:` n
 >**TIP**
 >I file `view.yml` a livello di modulo non esistono nella modalità predefinita. La prima volta che si ha necessità di modificare un parametro della configurazione della vista per un modulo, bisogna creare un file `view.yml` vuoto nella cartella `config/` del modulo stesso.
 
-Dopo aver visto il template predefinito nel Listato 7-5 e un esempio di una response finale nel Listato 7-6, c isi potrebbe chiedere da dove provengono i valori dell'header. La risposta è che sono le impostazioni predefinite per la vista, definite nel `view.yml` dell'applicazione e mostrate nel Listato 7-19.
+Dopo aver visto il template predefinito nel listato 7-5 e un esempio di una response finale nel listato 7-6, c isi potrebbe chiedere da dove provengono i valori dell'header. La risposta è che sono le impostazioni predefinite per la vista, definite nel `view.yml` dell'applicazione e mostrate nel listato 7-19.
 
 Listato 7-19 - Configurazione predefinita della vista a livello di applicazione, in `apps/frontend/config/view.yml`
 
@@ -555,7 +555,7 @@ Ciascuna di queste impostazioni verrà descritta in dettaglio nella sezione "Imp
 
 ### L'oggetto response
 
-Sebbene faccia parte del livello vista, l'oggetto response viene spesso modificato dall'azione. Le azioni possono accedere all'oggetto response di symfony, chiamato `sfResponse`, attraverso il metodo `getResponse()`. Il Listato 7-20 elenca alcuni dei metodi di `sfResponse` spesso utilizzati all'interno di un'azione.
+Sebbene faccia parte del livello vista, l'oggetto response viene spesso modificato dall'azione. Le azioni possono accedere all'oggetto response di symfony, chiamato `sfResponse`, attraverso il metodo `getResponse()`. Il listato 7-20 elenca alcuni dei metodi di `sfResponse` spesso utilizzati all'interno di un'azione.
 
 Listato 7-20 - Le azioni hanno accesso ai metodi dell'oggetto `sfResponse`
 
@@ -613,7 +613,7 @@ Ricordarsi che la configurazione a cascata cancella l'impostazione del valore un
 
 #### Configurare i meta tag
 
-Le informazioni scritte nei tag `<meta>` nella response non sono visualizzate nel browser ma sono utili per i robot e i motori di ricerca. Gestiscono anche le impostazioni della cache di tutte le pagine. Definire questi tag sotto le chiavi `http_metas:` e `metas:`, come mostrato nel listato 7-21, o con i metodi di response `addHttpMeta()` e `addMeta()` nell'azione, come mostrato nel Listato 7-22.
+Le informazioni scritte nei tag `<meta>` nella response non sono visualizzate nel browser ma sono utili per i robot e i motori di ricerca. Gestiscono anche le impostazioni della cache di tutte le pagine. Definire questi tag sotto le chiavi `http_metas:` e `metas:`, come mostrato nel listato 7-21, o con i metodi di response `addHttpMeta()` e `addMeta()` nell'azione, come mostrato nel listato 7-22.
 
 Listato 7-21 - Definizione meta come chiave: coppie di valori in `view.yml`
 
@@ -639,7 +639,7 @@ L'aggiunta di una chiave esistente sostituirà il contenuto corrente predefinito
     echo $this->getResponse()->getHttpHeader('accept-language');
      => 'en, fr'
 
-Al fine di far si che questi meta tag compaiano nella pagina finale, gli helper `include_http_metas()` e `include_metas()` devono essere chiamati nella sezione `<head>` (questo è il caso del layout predefinito; vedere il Listato 7-5). Symfony aggrega automaticamente le impostazioni di tutti i file `view.yml` (compreso quello predefinito mostrato nel Listato 7-18) e dell'attributo response per visualizzare i corretti `<meta>` tag. L'esempio del Listato 7-21 finisce come mostrato nel Listato 7-23.
+Al fine di far si che questi meta tag compaiano nella pagina finale, gli helper `include_http_metas()` e `include_metas()` devono essere chiamati nella sezione `<head>` (questo è il caso del layout predefinito; vedere il listato 7-5). Symfony aggrega automaticamente le impostazioni di tutti i file `view.yml` (compreso quello predefinito mostrato nel listato 7-18) e dell'attributo response per visualizzare i corretti `<meta>` tag. L'esempio del listato 7-21 finisce come mostrato nel listato 7-23.
 
 Listato 7-23 - Visualizzazione dei meta tag nella pagina finale
 
@@ -659,7 +659,7 @@ Come bonus, l'header HTTP della response è anche gestito dall'impostazione `htt
 
 #### Configurazione del title
 
-Il titolo della pagina è una parte chiave per l'indicizzazione dei motori di ricerca. È anche molto utile con i moderni browser che forniscono la navigazione con i tab. In HTML, il titolo è sia un tag che una informazione meta della pagina, quindi il file `view.yml` vede la chiave `title:` come un figlio della chiave `metas:`. Il Listato 7-24 mostra la definizione di title in `view.yml` e il Listato 7-25 mostra la definizione nell'azione.
+Il titolo della pagina è una parte chiave per l'indicizzazione dei motori di ricerca. È anche molto utile con i moderni browser che forniscono la navigazione con i tab. In HTML, il titolo è sia un tag che una informazione meta della pagina, quindi il file `view.yml` vede la chiave `title:` come un figlio della chiave `metas:`. Il listato 7-24 mostra la definizione di title in `view.yml` e il listato 7-25 mostra la definizione nell'azione.
 
 Listato 7-24 - La definizione di title in `view.yml`
 
@@ -672,14 +672,14 @@ Listato 7-25 - La definizione di title nell'azione (permette la creazione titoli
     [php]
     $this->getResponse()->setTitle(sprintf('%d porcellini', $number));
 
-Nella sezione `<head>` della pagina finale, la definizione del title imposta il tag `<meta name="title">` se l'helper `include_metas()` è presente e il tag `<title>` se l'helper `include_title()` è presente. Se sono presenti entrambi (come nel layout predefinito del Listato 7-5), il titolo compare due volte nel sorgente della pagina (vedere il Listato 7-6), ma questo non crea nessun problema.
+Nella sezione `<head>` della pagina finale, la definizione del title imposta il tag `<meta name="title">` se l'helper `include_metas()` è presente e il tag `<title>` se l'helper `include_title()` è presente. Se sono presenti entrambi (come nel layout predefinito del listato 7-5), il titolo compare due volte nel sorgente della pagina (vedere il listato 7-6), ma questo non crea nessun problema.
 
 >**TIP**
 >Un altro modo per gestire la definizione del title è usare gli slot, come discusso sopra. Questo metodo permette di mantenere una migliore separazione tra i controllori e i template : il titolo appartiene alla vista, non al controllore.
 
 #### Configurazione dell'inclusione dei file
 
-Aggiungere un certo foglio di stile o un file JavaScript alla vista è semplice, come mostrato nel Listato 7-26.
+Aggiungere un certo foglio di stile o un file JavaScript alla vista è semplice, come mostrato nel listato 7-26.
 
 Listato 7-26 - Inclusione dei file
 
@@ -704,7 +704,7 @@ Listato 7-26 - Inclusione dei file
 
 In ogni caso, il parametro è un nome di un file. Se il file ha una estensione logica ((`.css` per un foglio di stile e `.js` per un file JavaScript), si può ometterla. Se il file ha una collocazione logica (`/css/` per un foglio di stile e `/js/` per un file JavaScript), si può omettere anche quella. Symfony è abbastanza intelligente da aggiungere la corretta estensione o locazione.
 
-Come le definizioni di meta e title, le definizioni per includere i file richiedono l'utilizzo degli helper `include_javascripts()` e `include_stylesheets()` nel template o nel layout dove devono essere inclusi. Questo significa che le precedenti impostazioni visualizzeranno il codice HTML del Listato 7-27.
+Come le definizioni di meta e title, le definizioni per includere i file richiedono l'utilizzo degli helper `include_javascripts()` e `include_stylesheets()` nel template o nel layout dove devono essere inclusi. Questo significa che le precedenti impostazioni visualizzeranno il codice HTML del listato 7-27.
 
 Listato 7-27 - Risultato dell'inclusione dei file
 
@@ -739,7 +739,7 @@ Listato 7-30 - Visualizzazione della vista `indexSuccess`
     <link rel="stylesheet" type="text/css" media="screen" href="/css/additional.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/special.css" />
 
-Quando si ha bisogno di rimuovere un file definito a un livello più alto, basta aggiungere un segno meno (`-`) davanti al nome del file nella definizione di livello inferiore, come mostrato nel Listato 7-31.
+Quando si ha bisogno di rimuovere un file definito a un livello più alto, basta aggiungere un segno meno (`-`) davanti al nome del file nella definizione di livello inferiore, come mostrato nel listato 7-31.
 
 Listato 7-31 - Esempio con `view.yml` nel modulo. Viene rimossa un file definito nel livello applicazione
 
@@ -749,7 +749,7 @@ Listato 7-31 - Esempio con `view.yml` nel modulo. Viene rimossa un file definito
     all:
       stylesheets: [additional]
 
-Per rimuovere tutti i fogli di stile o i file JavaScript ,usare `-*` come nome del file, come mostrato nel Listato 7-32.
+Per rimuovere tutti i fogli di stile o i file JavaScript ,usare `-*` come nome del file, come mostrato nel listato 7-32.
 
 Listato 7-32 - Esempio con `view.yml` nel modulo. Vengono rimossi tutti i file definiti nel livello applicazione
 
@@ -757,7 +757,7 @@ Listato 7-32 - Esempio con `view.yml` nel modulo. Vengono rimossi tutti i file d
       stylesheets: [-*]
       javascripts: [-*]
 
-Si può lavorare con maggiore precisione e definire un parametro ulteriore per forzare  la posizione in cui includere il file (prima o ultima posizione), come mostrato nel Listato 7-33. Questo funziona sia per i fogli di stile che per i JavaScript.
+Si può lavorare con maggiore precisione e definire un parametro ulteriore per forzare  la posizione in cui includere il file (prima o ultima posizione), come mostrato nel listato 7-33. Questo funziona sia per i fogli di stile che per i JavaScript.
 
 Listato 7-33 - Definire la posizione di un file incluso
 
@@ -775,7 +775,7 @@ Listato 7-33 - Definire la posizione di un file incluso
     // In un template
     <?php use_stylesheet('special', 'first') ?>
 
-Si può anche decidere di ignorare la trasformazione dei nomi dei file, in modo che i risultanti tag `<link>` o `<script>` vengano riferiti alla esatta locazione specificata, come mostrato nel Listato 7-34.
+Si può anche decidere di ignorare la trasformazione dei nomi dei file, in modo che i risultanti tag `<link>` o `<script>` vengano riferiti alla esatta locazione specificata, come mostrato nel listato 7-34.
 
 Listato 7-34 - Inclusione di un foglio di stile con Style Sheet con nome inalterato
 
@@ -796,7 +796,7 @@ Listato 7-34 - Inclusione di un foglio di stile con Style Sheet con nome inalter
     // La vista risultante
     <link rel="stylesheet" type="text/css" href="main" />
 
-Per specificare il media relativo a una inclusione di un foglio di stile, si possono cambiare le opzioni predefinite del tag per i fogli di stile, come mostrato nel Listato 7-35.
+Per specificare il media relativo a una inclusione di un foglio di stile, si possono cambiare le opzioni predefinite del tag per i fogli di stile, come mostrato nel listato 7-35.
 
 Listato 7-35 - Inclusione di un foglio di stile specificando il media
 
@@ -826,7 +826,7 @@ Listato 7-35 - Inclusione di un foglio di stile specificando il media
 
 In base a come è progettato un sito web, è possibile avere più layout. I siti web classici ne hanno almeno due: il layout predefinito e il layout per il pop-up.
 
-Si è già visto che il layout predefinito è `mioprogetto/apps/frontend/templates/layout.php`. I layout devono essere aggiunti nella stessa cartella globale `templates/`. Se si vuole che una vista utilizzi il file `frontend/templates/mio_layout.php`, usare la sintassi mostrata nel Listato 7-36.
+Si è già visto che il layout predefinito è `mioprogetto/apps/frontend/templates/layout.php`. I layout devono essere aggiunti nella stessa cartella globale `templates/`. Se si vuole che una vista utilizzi il file `frontend/templates/mio_layout.php`, usare la sintassi mostrata nel listato 7-36.
 
 Listato 7-36 - Definizione di un layout
 
@@ -844,7 +844,7 @@ Listato 7-36 - Definizione di un layout
     // In un template
     <?php decorate_with('mio_layout') ?>
 
-Alcune viste non necessita di layout (ad esempio, pagine con testo semplice o feed RSS=. In questo caso, impostare `has_layout` a `false`, come mostrato nel Listato 7-37.
+Alcune viste non necessita di layout (ad esempio, pagine con testo semplice o feed RSS=. In questo caso, impostare `has_layout` a `false`, come mostrato nel listato 7-37.
 
 Listato 7-37 - Rimozione del layout
 
@@ -886,7 +886,7 @@ Si può eseguire l'escape dell'output manualmente racchiudendo ogni valore insic
 
 L'escape dell'output è configurata globalmente per una applicazione nel file `settings.yml`. Due parametri controllano il modo funziona l'escape dell'output: la strategia stabilisce come le variabili vengono rese disponibili alla vista e il metodo è la funzione di escape predefinita applicata ai dati.
 
-In sostanza, tutto quelllo che bisogna fare per attivare l'escape dell'output è impostare il parametro `escaping_strategy` a `true` (che è il valore predefinito), come mostrato nel Listato 7-38.
+In sostanza, tutto quelllo che bisogna fare per attivare l'escape dell'output è impostare il parametro `escaping_strategy` a `true` (che è il valore predefinito), come mostrato nel listato 7-38.
 
 Listato 7-38 - Attivazione dell'escape dell'output, in `frontend/config/settings.yml`
 
@@ -937,7 +937,7 @@ Gli helper per l'escape sono funzioni che restituiscono una versione sotto escap
 
 ### Fare l'escape di array e oggetti
 
-L'escape dell'output funziona non solo per le stringhe, ma anche per gli array e gli oggetti. Tutti i valori che sono oggetti o array passeranno il loro stato di escape ai loro figli. Assumendo che la strategia sia impostata a `true`, il Listato 7-39 mostra l'escape a cascata.
+L'escape dell'output funziona non solo per le stringhe, ma anche per gli array e gli oggetti. Tutti i valori che sono oggetti o array passeranno il loro stato di escape ai loro figli. Assumendo che la strategia sia impostata a `true`, il listato 7-39 mostra l'escape a cascata.
 
 Listato 7-39 - L'escape funziona anche per gli array e gli oggetti
 
@@ -976,7 +976,7 @@ Listato 7-39 - L'escape funziona anche per gli array e gli oggetti
 
 Questo spiega perché alcune normali funzioni PHP (come `array_shift()`, `print_r()` e altre) non funzionano più con gli array sotto escape. Ma questi possono essere acceduti utilizzando `[]`, essere attraversati usando `foreach` e restituire il corretto risultato con `count()`. E in ogni caso nei template i dati dovrebbero essere a sola lettura, quindi la maggior parte degli accessi verrà fatta utilizzando metodi che funzionano correttamente.
 	 
-C'è ancora un modo per recuperare i dati raw attraverso l'oggetto `$sf_data`. Inoltre, i metodi di oggetti sotto escape vengono alterati per accettare un parametro aggiuntivo: un metodo di escape. Così si può scegliere un metodo alternativo per fare l'escape ogni volta che si visualizza una variabile in un template, oppure optare per l'helper `ESC_RAW` per disattivare l'escape. Vedere il Listato 7-40 come esempio.
+C'è ancora un modo per recuperare i dati raw attraverso l'oggetto `$sf_data`. Inoltre, i metodi di oggetti sotto escape vengono alterati per accettare un parametro aggiuntivo: un metodo di escape. Così si può scegliere un metodo alternativo per fare l'escape ogni volta che si visualizza una variabile in un template, oppure optare per l'helper `ESC_RAW` per disattivare l'escape. Vedere il listato 7-40 come esempio.
 
 Listato 7-40 - I metodi degli oggetti sotto escape accettano un parametro aggiuntivo
 

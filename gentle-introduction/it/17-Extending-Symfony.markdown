@@ -12,7 +12,7 @@ PHP non supporta l'ereditarietà multipla, il che significa che non è possibile
 
 Alcune classi di symfony "notificano un evento al dispatcher" in vari momenti della loro vita. Per esempio, quando l'utente cambia la cultura, l'oggetto utente notifica che si è verificato un evento `change_culture`. È come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Potete fare quello che volete a questo riguardo".
 
-Si può decidere di fare qualcosa di speciale quando un evento viene generato. Per esempio, è possibile salvare la cultura utente in una tabella di database ogni volta che si verifica l'evento `change_culture`. Per fare ciò, è necessario *registrare un ascoltatore di eventi*, in altri termini è necessario dichiarare una funzione che verrà chiamata al verificarsi dell'evento. Il Listato 17-1 mostra come registrare un ascoltatore per l'evento `change_culture` dell'utente.
+Si può decidere di fare qualcosa di speciale quando un evento viene generato. Per esempio, è possibile salvare la cultura utente in una tabella di database ogni volta che si verifica l'evento `change_culture`. Per fare ciò, è necessario *registrare un ascoltatore di eventi*, in altri termini è necessario dichiarare una funzione che verrà chiamata al verificarsi dell'evento. Il listato 17-1 mostra come registrare un ascoltatore per l'evento `change_culture` dell'utente.
 
 Listato 17-1 - Registrare un ascoltatore di eventi
 
@@ -43,7 +43,7 @@ Per concludere, il sistema degli eventi permette di aggiungere capacità a una c
 
 ### Notificare un ascoltatore di eventi
 
-Proprio come le classi di symfony notificano gli eventi si sono verificati, le proprie classi possono offrire estensibilità runtime e notifire degli eventi in determinate occasioni. Per esempio, supponiamo che le propria applicazione richieda una serie di servizi web di terze parti e che si sia scritta una classe `sfRestRequest` per separare la logica REST di queste richieste. Una buona idea sarebbe quella di attivare un evento ogni volta che questa classe fa una nuova richiesta. Ciò renderebbe l'aggiunta di funzionalità di log o di caching più facile in futuro. Il Listato 17-2 mostra il codice che è necessario aggiungere a un metodo esistente `fetch()` per realizzare la notifica a un ascoltatore di eventi.
+Proprio come le classi di symfony notificano gli eventi si sono verificati, le proprie classi possono offrire estensibilità runtime e notifire degli eventi in determinate occasioni. Per esempio, supponiamo che le propria applicazione richieda una serie di servizi web di terze parti e che si sia scritta una classe `sfRestRequest` per separare la logica REST di queste richieste. Una buona idea sarebbe quella di attivare un evento ogni volta che questa classe fa una nuova richiesta. Ciò renderebbe l'aggiunta di funzionalità di log o di caching più facile in futuro. Il listato 17-2 mostra il codice che è necessario aggiungere a un metodo esistente `fetch()` per realizzare la notifica a un ascoltatore di eventi.
 
 Listato 17-2 - Notificare un ascoltatore di eventi
 
@@ -86,7 +86,7 @@ Il metodo `notify()` del dispatcher di eventi si aspetta un oggetto `sfEvent` co
 
 ### Notifica di un evento al dispatcher finché un ascoltatore lo prende in carico
 
-Usando il metodo `notify()`, si è sicuri che tutti gli ascoltatori registrati sull'evento da notificare vengono eseguiti. Tuttavia, in alcuni casi è necessario consentire a un ascoltatore di fermare l'evento e prevenire che ulteriori ascoltatori possano fare notifiche su di esso. In questo caso, si dovrebbe usare `notifyUntil()` al posto di `notify()`. Il dispatcher eseguirà tutti gli ascoltatori fino a quando uno di questi restituisce `true` e quindi fermerà la notifica degli eventi. In altre parole, `notifyUntil()` è come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Se qualcuno se ne occupa, allora non lo dirò a nessun altro". Il Listato 17-3 mostra come usare questa tecnica in combinazione con un metodo magico `__call()` per aggiungere metodi a una classe esistente in fase di runtime.
+Usando il metodo `notify()`, si è sicuri che tutti gli ascoltatori registrati sull'evento da notificare vengono eseguiti. Tuttavia, in alcuni casi è necessario consentire a un ascoltatore di fermare l'evento e prevenire che ulteriori ascoltatori possano fare notifiche su di esso. In questo caso, si dovrebbe usare `notifyUntil()` al posto di `notify()`. Il dispatcher eseguirà tutti gli ascoltatori fino a quando uno di questi restituisce `true` e quindi fermerà la notifica degli eventi. In altre parole, `notifyUntil()` è come un messaggio nello spazio del progetto che dice: "Sto facendo questo. Se qualcuno se ne occupa, allora non lo dirò a nessun altro". Il listato 17-3 mostra come usare questa tecnica in combinazione con un metodo magico `__call()` per aggiungere metodi a una classe esistente in fase di runtime.
 
 Listato 17-3 - Notifica di un evento finché l'ascoltatore restituisce true
 
@@ -110,7 +110,7 @@ Listato 17-3 - Notifica di un evento finché l'ascoltatore restituisce true
       }
     }
 
-Un ascoltatore di eventi registrato sull'evento `rest_request.method_not_found`, può verificare la richiesta `$method` e decidere di gestirla, o passare al prossimo ascoltatore di eventi callable. Nel Listato 17-4, si può vedere come una classe creata da altri può aggiungere dei metodi `put()` e `delete()` alla classe `sfRestRequest` in fase di runtime con questo trucco.
+Un ascoltatore di eventi registrato sull'evento `rest_request.method_not_found`, può verificare la richiesta `$method` e decidere di gestirla, o passare al prossimo ascoltatore di eventi callable. Nel listato 17-4, si può vedere come una classe creata da altri può aggiungere dei metodi `put()` e `delete()` alla classe `sfRestRequest` in fase di runtime con questo trucco.
 
 Listato 17-4 - Gestire un evento del tipo "notificare finché"
 
@@ -169,7 +169,7 @@ In pratica, `notifyUntil()` aggiunge funzionalità di ereditarietà multipla, o 
 
 ### Cambiare il valore di ritorno di un metodo
 
-Si può immaginare che un ascoltatore non solo possa usare le informazioni fornite da un evento, ma anche modificarle, alterando la logica originaria del notificante. Se si desidera consentire questo, si dovrebbe utilizzare il metodo `filter()` del dispatcher di eventi, piuttosto che `notify()`. Tutti gli ascoltatori di eventi sono chiamati con due parametri: l'oggetto dell'evento e il valore da filtrare. Gli ascoltatori di eventi devono restituire il valore, indipendentemente dal fatto che sia stato modificato o meno. Il Listato 17-5 mostra come `filter()` può essere usato per filtrare una risposta da un servizio Web e fare l'escape dei caratteri speciali nella risposta.
+Si può immaginare che un ascoltatore non solo possa usare le informazioni fornite da un evento, ma anche modificarle, alterando la logica originaria del notificante. Se si desidera consentire questo, si dovrebbe utilizzare il metodo `filter()` del dispatcher di eventi, piuttosto che `notify()`. Tutti gli ascoltatori di eventi sono chiamati con due parametri: l'oggetto dell'evento e il valore da filtrare. Gli ascoltatori di eventi devono restituire il valore, indipendentemente dal fatto che sia stato modificato o meno. Il listato 17-5 mostra come `filter()` può essere usato per filtrare una risposta da un servizio Web e fare l'escape dei caratteri speciali nella risposta.
 
 Listato 17-5 - Notifica e gestione di un evento filtro
 
@@ -276,7 +276,7 @@ Le classi create dallo sviluppatore possono fare lo stesso e notificare anche ev
 
 ### Dove registrare gli ascoltatori?
 
-Gli ascoltatori di eventi hanno bisogno di essere registrati all'inizio della vita di una richiesta di symfony. In pratica, il posto giusto per registrare gli ascoltatori di eventi è nella classe di configurazione dell'applicazione. Questa classe ha un riferimento al dispatcher di eventi che è possibile utilizzare nel metodo `configure()`. Il Listato 17-6 mostra come registrare un ascoltatore su uno degli eventi `rest_request` degli esempi di cui sopra.
+Gli ascoltatori di eventi hanno bisogno di essere registrati all'inizio della vita di una richiesta di symfony. In pratica, il posto giusto per registrare gli ascoltatori di eventi è nella classe di configurazione dell'applicazione. Questa classe ha un riferimento al dispatcher di eventi che è possibile utilizzare nel metodo `configure()`. Il listato 17-6 mostra come registrare un ascoltatore su uno degli eventi `rest_request` degli esempi di cui sopra.
 
 Listato 17-6 - Registrare un ascoltatore nella classe di configurazione  dell'applicazione, in `apps/frontend/config/ApplicationConfiguration.class.php`
 
@@ -298,7 +298,7 @@ Factory
 
 Factory è la definizione di una classe per un determinato compito. Symfony per le sue caratteristiche del core, come la gestione del controllore e della sessione, si basa su factory. Ad esempio, quando il framework deve creare un oggetto per un nuova richiesta, cerca nella definizione del factory il nome della classe da utilizzare a tale scopo. La definizione predefinita del factory per le richieste è `sfWebRequest`, quindi symfony crea un oggetto di questa classe, al fine di gestire le richieste. Il grande vantaggio di utilizzare una definizione del factory è che è molto facile alterare le caratteristiche core del framework: basta cambiare la definizione del factory e symfony userà la classe personalizzata per la richiesta, invece della sua.
 
-Le definizioni dei factory sono memorizzate nel file di configurazione `factories.yml`. Il Listato 17-7 mostra il file con le definizioni predefinite dei factory. Ogni definizione è costituita dal nome di una classe autocaricata e (opzionalmente) da un insieme di parametri. Per esempio, il factory per la memorizzazione delle sessioni (impostata sotto la chiave `storage:`), utilizza un parametro `session_name` per dare un nome al cookie creato sul computer client, che consente le sessioni persistenti.
+Le definizioni dei factory sono memorizzate nel file di configurazione `factories.yml`. Il listato 17-7 mostra il file con le definizioni predefinite dei factory. Ogni definizione è costituita dal nome di una classe autocaricata e (opzionalmente) da un insieme di parametri. Per esempio, il factory per la memorizzazione delle sessioni (impostata sotto la chiave `storage:`), utilizza un parametro `session_name` per dare un nome al cookie creato sul computer client, che consente le sessioni persistenti.
 
 Listato 17-7 - File predefinito per i factory, in `frontend/config/factories.yml`
 
@@ -344,7 +344,7 @@ Listato 17-7 - File predefinito per i factory, in `frontend/config/factories.yml
           cache_key_use_vary_headers: true
           cache_key_use_host_name:    true
 
-Il modo migliore per cambiare un factory è quello di creare una nuova classe che eredita dal factory predefinito e aggiungervi nuovi metodi. Per esempio, il factory della sessione utente è impostato con la classe `myUser` (che si trova in `frontend/lib/`) ed eredita da `sfUser`. Utilizzare lo stesso meccanismo per trarre beneficio dai factory esistenti. Il Listato 17-8 mostra un esempio di un nuovo factory per l'oggetto request.
+Il modo migliore per cambiare un factory è quello di creare una nuova classe che eredita dal factory predefinito e aggiungervi nuovi metodi. Per esempio, il factory della sessione utente è impostato con la classe `myUser` (che si trova in `frontend/lib/`) ed eredita da `sfUser`. Utilizzare lo stesso meccanismo per trarre beneficio dai factory esistenti. Il listato 17-8 mostra un esempio di un nuovo factory per l'oggetto request.
 
 Listato 17-8 - Sovrascrivere i factory
 
@@ -403,21 +403,21 @@ I plugin sono applicazioni installate su un singolo progetto. Tutti i metodi des
 #### Plugin PEAR
 
 I plugin elencati nella sezione plugin di symfony possono essere creati come pacchetti PEAR e resi disponibili attraverso il canale ufficiale PEAR per i plugin di symfony:
-`plugins.symfony-project.org`. Per installare un plugin, usare il task `plugin:install` con il nome di un plugin, come mostrato nel Listato 17-9.
+`plugins.symfony-project.org`. Per installare un plugin, usare il task `plugin:install` con il nome di un plugin, come mostrato nel listato 17-9.
 
 Listato 17-9 - Installare un plugin dal canale ufficiale PEAR dei plugin di symfony
 
     $ cd mioprogetto
     $ php symfony plugin:install nomePlugin
 
-In alternativa, è possibile scaricare il plugin e installarlo dal disco. In questo caso, utilizzare il percorso dell''archivio con il pacchetto, come mostrato nel Listato 17-10.
+In alternativa, è possibile scaricare il plugin e installarlo dal disco. In questo caso, utilizzare il percorso dell''archivio con il pacchetto, come mostrato nel listato 17-10.
 
 Listato 17-10 - Installare un plugin da un pacchetto PEAR scaricato
 
     $ cd mioprogetto
     $ php symfony plugin:install /home/path/to/downloads/nomePlugin.tgz
 
-Alcuni plugin sono ospitati su canali PEAR esterni. Installarli con il task `plugin:install` e non dimenticarsi di registrare il canale e indicare il nome del canale, come mostrato nel Listato 17-11.
+Alcuni plugin sono ospitati su canali PEAR esterni. Installarli con il task `plugin:install` e non dimenticarsi di registrare il canale e indicare il nome del canale, come mostrato nel listato 17-11.
 
 Listato 17-11 - Installare un plugin da un canale PEAR
 
@@ -427,7 +427,7 @@ Listato 17-11 - Installare un plugin da un canale PEAR
 
 Tutti questi tre tipi di installazione utilizzano un pacchetto PEAR, quindi il termine "plugin PEAR" verrà usato indiscriminatamente per parlare di plugin installati da un canale PEAR per i plugin di symfony, un canale PEAR esterno, o un pacchetto PEAR scaricato.
 
-Il task `plugin:install` ha anche alcune opzioni, come mostrato nel Listato 17-12.
+Il task `plugin:install` ha anche alcune opzioni, come mostrato nel listato 17-12.
 
 Listato 17-12 - Installare un plugin con alcune opzioni
 
@@ -440,7 +440,7 @@ Listato 17-12 - Installare un plugin con alcune opzioni
 
 #### Plugin come archivio di file
 
-Alcuni plugin escono come semplici archivi di file. Per installarli, basta scompattare l'archivio nella cartella `plugins/` del progetto. Se il plugin contiene una sotto cartella `web/`, non dimenticarsi di lanciare il comando `plugin:publish-assets` per creare il corrispondente link simbolico sotto la cartella principale `web/` come mostrato nel Listato 17-13. In ultimo cancellare la cache.
+Alcuni plugin escono come semplici archivi di file. Per installarli, basta scompattare l'archivio nella cartella `plugins/` del progetto. Se il plugin contiene una sotto cartella `web/`, non dimenticarsi di lanciare il comando `plugin:publish-assets` per creare il corrispondente link simbolico sotto la cartella principale `web/` come mostrato nel listato 17-13. In ultimo cancellare la cache.
 
 Listato 17-13 - Installare un plugin da un archivio
 
@@ -470,7 +470,7 @@ Listato 17-14 - Installare un plugin da un repository per il versionamento del c
 
 #### Attivare il modulo di un plugin
 
-Alcuni plugin contengono interi moduli. L'unica differenza tra i moduli dei plugin e i moduli normali è che i moduli dei plugin non compaiono nella cartella `mioprogetto/apps/frontend/modules/` (per far si che siano facilmente aggiornabili). Inoltre devono essere attivati nel file `settings.yml`, come mostrato nel Listato 17-15.
+Alcuni plugin contengono interi moduli. L'unica differenza tra i moduli dei plugin e i moduli normali è che i moduli dei plugin non compaiono nella cartella `mioprogetto/apps/frontend/modules/` (per far si che siano facilmente aggiornabili). Inoltre devono essere attivati nel file `settings.yml`, come mostrato nel listato 17-15.
 
 Listato 17-15 - Attivazione del modulo di un plugin, in `frontend/config/settings.yml`
 
@@ -485,7 +485,7 @@ Questo per evitare una situazione in cui il modulo di un plugin è erroneamente 
 
 #### Visualizzare l'elenco dei plugin installati
 
-Se uno sguardo alla cartella `plugins/` del progetto può mostrare quali plugin sono installati, il task `plugin:list` fornisce maggiori informazioni: il numero di versione e il nome del canale di ciascun plugin installato (vedere il Listato 17-16).
+Se uno sguardo alla cartella `plugins/` del progetto può mostrare quali plugin sono installati, il task `plugin:list` fornisce maggiori informazioni: il numero di versione e il nome del canale di ciascun plugin installato (vedere il listato 17-16).
 
 Listato 17-16 - Visualizzare l'elenco dei plugin installati
 
@@ -499,7 +499,7 @@ Listato 17-16 - Visualizzare l'elenco dei plugin installati
 
 #### Aggiornare e disinstallare i plugin
 
-Per disinstallare un plugin PEAR, chiamare il task `plugin:uninstall` dalla cartella principale del progetto, come mostrato nel Listato 17-17. Bisogna prefissare il nome del plugin con il suo canale di installazione  se è diverso dal canale predefinito `symfony` (usare il task `plugin:list` per determinare questo canale).
+Per disinstallare un plugin PEAR, chiamare il task `plugin:uninstall` dalla cartella principale del progetto, come mostrato nel listato 17-17. Bisogna prefissare il nome del plugin con il suo canale di installazione  se è diverso dal canale predefinito `symfony` (usare il task `plugin:list` per determinare questo canale).
 
 Listato 17-17 - Disinstallare un plugin
 
@@ -517,7 +517,7 @@ I plugin sono scritti usando il linguaggio PHP. Se si sa come è organizzata una
 
 #### La struttura dei file di un plugin
 
-La cartella di un plugin è organizzata più o meno come quella della cartella di un progetto. I file del plugin devono essere nelle cartelle giuste per poter essere caricati automaticamente da symfony quando necessario. Dare un'occhiata alla descrizione della struttura dei plugin nel Listato 17-18.
+La cartella di un plugin è organizzata più o meno come quella della cartella di un progetto. I file del plugin devono essere nelle cartelle giuste per poter essere caricati automaticamente da symfony quando necessario. Dare un'occhiata alla descrizione della struttura dei plugin nel listato 17-18.
 
 Listato 17-18 - La strutura dei file di un plugin
 
@@ -560,7 +560,7 @@ Listato 17-18 - La strutura dei file di un plugin
 
 I plugin possono contenere molte cose. Il loro contenuto è automaticamente preso in considerazione dall'applicazione in fase di runtime e quando si chiamano i task tramite riga di comando. Ma perché i plugin funzionino correttamente, è necessario rispettare alcune convenzioni:
 
-  * Gli schemi per il database vengono rilevati dai task `propel-`. Quando nel proprio progetto si chiamano `propel:build --classes` o `doctrine:build --classes`, si ricreano i modelli del progetto e con esso tutti i modelli dei plug-in. Si noti che lo schema di un plugin Propel deve sempre avere un attributo package sotto forma di `plugins.nomePlugin`. `lib.model`, come mostrato nel Listato 17-19. Se si utilizza Doctrine, il task di genererà automaticamente le classi nella cartella dei plugin.
+  * Gli schemi per il database vengono rilevati dai task `propel-`. Quando nel proprio progetto si chiamano `propel:build --classes` o `doctrine:build --classes`, si ricreano i modelli del progetto e con esso tutti i modelli dei plug-in. Si noti che lo schema di un plugin Propel deve sempre avere un attributo package sotto forma di `plugins.nomePlugin`. `lib.model`, come mostrato nel listato 17-19. Se si utilizza Doctrine, il task di genererà automaticamente le classi nella cartella dei plugin.
 
 Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin, in `mioPlugin/config/schema.yml`
 
@@ -607,7 +607,7 @@ Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin
 
 Ci sono alcuni elementi che il task `plugin:install` non può gestire da solo e che richiedono una impostazione manuale durante l'installazione:
 
-  * Configurazione personalizzate dell'applicazione possono essere utilizzate nel codice del plugin (ad esempio, utilizzando `sfConfig::get('app_myplugin_foo')`), ma non si possono mettere i valori predefiniti in un file `app.yml` che si trova nella cartella `config/` del plugin. Per gestire i valori predefiniti, si usa il secondo argomento del metodo `sfConfig::get()`. Le impostazioni possono comunque essere sovrascritte a livello di applicazione (vedere il Listato 17-25 per un esempio).
+  * Configurazione personalizzate dell'applicazione possono essere utilizzate nel codice del plugin (ad esempio, utilizzando `sfConfig::get('app_myplugin_foo')`), ma non si possono mettere i valori predefiniti in un file `app.yml` che si trova nella cartella `config/` del plugin. Per gestire i valori predefiniti, si usa il secondo argomento del metodo `sfConfig::get()`. Le impostazioni possono comunque essere sovrascritte a livello di applicazione (vedere il listato 17-25 per un esempio).
   * Le regole personalizzate delle rotte devono essere aggiunte manualmente nel file `routing.yml` dell'applicazione.
   * I filtri personalizzati devono essere aggiunti manualmente nel file `filters.yml` dell'applicazione.
   * I factory personalizzati devono essere aggiunti manualmente nel file `factories.yml` dell'applicazione.
@@ -618,7 +618,7 @@ In generale, tutta la configurazione che dovrebbe finire in uno dei file di conf
 
 Ogni volta che si desidera personalizzare un plug-in, non modificare mai il codice che si trova nella cartella `plugins/`. Se lo si fa, quando si aggiorna il plugin si perderanno tutte le modifiche. Per esigenze di personalizzazione, i plugin forniscono impostazioni personalizzate e supportano la sovrascrittura del codice.
 
-I plugin ben progettati permettono di usare impostazioni che possono essere modificate nel file `app.yml` dell'applicazione, come dimostra il Listato 17-20.
+I plugin ben progettati permettono di usare impostazioni che possono essere modificate nel file `app.yml` dell'applicazione, come dimostra il listato 17-20.
 
 Listato 17-20 - Personalizzazione di un plugin che usa la configurazione dell'applicazione
 
@@ -635,7 +635,7 @@ Le impostazioni del modulo e i loro valori predefiniti spesso sono descritti nel
 		
 Si possono sostituire i contenuti predefiniti del modulo di un plugin, creando un modulo dello stesso nome nella propria applicazione. Non è una vera e propria sovrascrittura del codice, perché gli elementi presenti nell'applicazione sono usati al posto di quelli del plugin. Funziona correttamente se si creano file di template e di configurazione con lo stesso nome di quelli dei plugin.
 
-D'altra parte, se un plugin vuole mettere a disposizione un modulo che abbia la possibilità di far sovrascrivere le proprie azioni, il file `actions.class.php` nel modulo del plugin deve essere vuoto ed ereditare da una classe in autocaricamento, così che il metodo di questa classe può essere ereditato anche da `actions.class.php` del modulo dell'applicazione. Per un esempio, vedere il Listato 17-21.
+D'altra parte, se un plugin vuole mettere a disposizione un modulo che abbia la possibilità di far sovrascrivere le proprie azioni, il file `actions.class.php` nel modulo del plugin deve essere vuoto ed ereditare da una classe in autocaricamento, così che il metodo di questa classe può essere ereditato anche da `actions.class.php` del modulo dell'applicazione. Per un esempio, vedere il listato 17-21.
 
 Listato 17-21 - Personalizzare l'azione di un plugin
 
@@ -736,7 +736,7 @@ Solo i plugin pacchettizzati con PEAR possono essere installati con il task `plu
 
 #### Organizzazione dei file
 
-Supponiamo di avere sviluppato una nuova funzionalità e di volerla pacchettizzare come plugin. Il primo passo è quello di organizzare logicamente i file in modo che i meccanismi di caricamento di symfony possano trovare tutto il necessario. A tale scopo, bisogna seguire la struttura fornita nel Listato 17-18. Il Listato 17-22 mostra un esempio di struttura dei file per un plugin `sfEsempioPlugin`.
+Supponiamo di avere sviluppato una nuova funzionalità e di volerla pacchettizzare come plugin. Il primo passo è quello di organizzare logicamente i file in modo che i meccanismi di caricamento di symfony possano trovare tutto il necessario. A tale scopo, bisogna seguire la struttura fornita nel listato 17-18. Il listato 17-22 mostra un esempio di struttura dei file per un plugin `sfEsempioPlugin`.
 
 Listato 17-22 - Esempio di un elenco di file da pacchettizzare come plugin
 
@@ -773,14 +773,14 @@ Listato 17-22 - Esempio di un elenco di file da pacchettizzare come plugin
         images/
           sfEsempioImage.png
 
-Per la creazione, la posizione della cartella del plugin (`sfEsempioPlugin/` nel Listato 17-22) non è importante. Può trovarsi in una qualunque cartella del disco.
+Per la creazione, la posizione della cartella del plugin (`sfEsempioPlugin/` nel listato 17-22) non è importante. Può trovarsi in una qualunque cartella del disco.
 
 >**TIP**
 >Prendere esempio dai plugin esistenti e per il primo tentativo di creazione di un plugin provare a seguire la loro struttura di file e le loro convenzioni per i nomi.
 
 #### Creazione del file package.xml
 
-Il prossimo passo nella creazione del plugin è quello di aggiungere un file package.xml nella radice della cartella con il plugin. Il file `package.xml` segue la sintassi di PEAR. Dare un'occhiata a un tipico `package.xml` di un plugin di symfony nel Listato 17-23.
+Il prossimo passo nella creazione del plugin è quello di aggiungere un file package.xml nella radice della cartella con il plugin. Il file `package.xml` segue la sintassi di PEAR. Dare un'occhiata a un tipico `package.xml` di un plugin di symfony nel listato 17-23.
 
 Listato 17-23 - Esempio di file `package.xml` per un plugin di symfony
 
@@ -884,7 +884,7 @@ Le parti più interessanti sono i tag `<contents>` e `<dependencies>`, descritti
 
 #### Il tag contents
 
-Nel tag `<contents>` bisogna descrivere la struttura dei file del plugin. In quest modo PEAR saprà quali file copiare e dove. Descrivere la struttura dei file con i tag `<dir>` e `<file>`. Tutti i tag `<file>` devono avere un attributo `role="data"`. La parte `<contents>` del Listato 17-23 descrive l'esatta struttura delle cartelle del Listato 17-22.
+Nel tag `<contents>` bisogna descrivere la struttura dei file del plugin. In quest modo PEAR saprà quali file copiare e dove. Descrivere la struttura dei file con i tag `<dir>` e `<file>`. Tutti i tag `<file>` devono avere un attributo `role="data"`. La parte `<contents>` del listato 17-23 descrive l'esatta struttura delle cartelle del listato 17-22.
 
 >**NOTE**
 >L'uso dei tag `<dir>` non è obbligatorio, dato che è possibile utilizzare i percorsi relativi come valori `name` nei tag `<file>`. Tuttavia, è raccomandato il loro utilizzo perché in questo modo il file `package.xml` rimane leggibile.
@@ -903,7 +903,7 @@ Se si specificano plugin come dipendenze, gli utenti saranno in grado di install
 
 #### Realizzare il plugin
 
-Il componente PEAR ha un comando (`pear package`) che crea l'archivio `.tgz` del pacchetto, purché si chiami il comando mostrato nel Listato 17-24 da una cartella contenente un file `package.xml`.
+Il componente PEAR ha un comando (`pear package`) che crea l'archivio `.tgz` del pacchetto, purché si chiami il comando mostrato nel listato 17-24 da una cartella contenente un file `package.xml`.
 
 Listato 17-24 - Creare il pacchetto PEAR di un plugin
 
@@ -912,7 +912,7 @@ Listato 17-24 - Creare il pacchetto PEAR di un plugin
 
     Package sfEsempioPlugin-1.0.0.tgz done
 
-Una volta che il plugin è stato creato, verificare il funzionamento installandolo sulla propria macchina, come mostrato nel Listato 17-25.
+Una volta che il plugin è stato creato, verificare il funzionamento installandolo sulla propria macchina, come mostrato nel listato 17-25.
 
 Listato 17-25 - Installare il plugin
 
@@ -920,7 +920,7 @@ Listato 17-25 - Installare il plugin
     $ cd /home/production/mioprogetto/
     $ php symfony plugin:install sfEsempioPlugin-1.0.0.tgz
 
-In base alla descrizione contenuta nel tag `<contents>`, i file del pacchetto andranno nelle diverse cartelle del progetto. Il Listato 17-26 mostra dove dovrebbero andare i file del plugin `sfEsempioPlugin` dopo l'installazione.
+In base alla descrizione contenuta nel tag `<contents>`, i file del pacchetto andranno nelle diverse cartelle del progetto. Il listato 17-26 mostra dove dovrebbero andare i file del plugin `sfEsempioPlugin` dopo l'installazione.
 
 Listato 17-26 - Il file del plugin vengono installati nelle cartelle `plugins/` e `web/`
 

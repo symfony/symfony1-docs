@@ -12,7 +12,7 @@ I database sono relazionali. PHP 5 e symfony sono orientati agli oggetti. Per po
 
 Il vantaggio principale di un ORM è la riusabilità, che consente ai metodi di un oggetto di tipo dato, di essere chiamato da varie parti dell'applicazione, anche da diverse applicazioni. Il livello ORM incapsula anche la logica dei dati, ad esempio, il calcolo del punteggio degli utenti di un forum basato su quanti contributi sono stati fatti e quanto sono popolari. Quando una pagina deve visualizzare un tale punteggio degli utenti, basta chiamare semplicemente un metodo nel modello dei dati, senza preoccuparsi dei dettagli del calcolo. Se in seguito bisogna modificare il calcolo, sarà sufficiente modificare il metodo nel modello, lasciando il resto dell'applicazione invariata.
 
-Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo di accesso alla classe `Cliente`, come si può vedere nel Listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome` e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
+Usare oggetti al posto di record e classi al posto di tabelle, ha un altro vantaggio: la possibilità di aggiungere agli oggetti nuove funzioni di accesso che non necessariamente corrispondono a una colonna in una tabella. Per esempio, se si ha una tabella chiamata `cliente` con due campi chiamati `nome` e `cognome`, si potrebbe volere la possibilità di chiedere solo il `Nome`. In un mondo orientato agli oggetti, basta aggiungere un nuovo metodo di accesso alla classe `Cliente`, come si può vedere nel listato 8-1. Dal punto di vista dell'applicativo, non vi è alcuna differenza tra `Nome`, `Cognome` e `NomePersona`: sono tutti attributi della classe `Cliente`. Solo la classe stessa può determinare quali attributi corrispondono a una colonna del database.
 
 Listato 8-1 - Il metodo di accesso maschera la struttura della tabella in una classe del modello
 
@@ -22,7 +22,7 @@ Listato 8-1 - Il metodo di accesso maschera la struttura della tabella in una cl
       return $this->getFirstName().' '.$this->getLastName();
     }
 
-Tutte le funzioni ripetute di accesso ai dati e la business logic dei dati stessi, possono essere tenute in tali oggetti. Supponiamo di avere una classe `ShoppingCart` in cui si tenere gli `Articoli` (che sono oggetti). Per ottenere l'importo totale del carrello della spesa, necessario per il pagamento, bisogna scrivere un metodo personalizzato per incapsulare il calcolo effettivo, come mostrato nel Listato 8-2.
+Tutte le funzioni ripetute di accesso ai dati e la business logic dei dati stessi, possono essere tenute in tali oggetti. Supponiamo di avere una classe `ShoppingCart` in cui si tenere gli `Articoli` (che sono oggetti). Per ottenere l'importo totale del carrello della spesa, necessario per il pagamento, bisogna scrivere un metodo personalizzato per incapsulare il calcolo effettivo, come mostrato nel listato 8-2.
 
 Listato 8-2 - Il metodo accessor maschera la logica dei dati
 
@@ -65,7 +65,7 @@ Figura 8-1 - Struttura delle tabelle del database di un blog
 
 ![Struttura delle tabelle del database di un blog](http://www.symfony-project.org/images/book/1_4/F0801.png "Struttura delle tabelle del database di un blog")
 
-Il relativo file `schema.yml` dovrebbe apparire come nel Listato 8-3.
+Il relativo file `schema.yml` dovrebbe apparire come nel listato 8-3.
 
 Listato 8-3 - Esempio di file `schema.yml`
 
@@ -99,7 +99,7 @@ Una tabella può avere attributi speciali, incluso `phpName` (il nome della clas
 
 Una tabella contiene colonne. Il valore delle colonne può essere definito in tre differenti modi:
 
-  * Se non si definisce nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel Listato 8-3 non ha bisogno di essere definita: symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non occorre specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
+  * Se non si definisce nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel listato 8-3 non ha bisogno di essere definita: symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non occorre specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
 
   * Se si definisce soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri occorre usare il valore `longvarchar`, che non ha lunghezza (ma non può eccedere 65KB in MySQL).
 
@@ -138,13 +138,13 @@ Sono stati definiti solo due modelli e ci si ritrova con otto file. Non c'è nul
 
 Perché tenere due versioni dello stesso modello a oggetti dei dati, in due diverse cartelle?
 
-Probabilmente si avrà bisogno di aggiungere metodi e proprietà agli oggetti del modello (pensiamo al metodo `getNome()` nel Listato 8-1). Mano a mano che il progetto si evolve, si vorranno aggiungere tabelle o colonne. Ogni volta che si cambia il file `schema.yml`, bisogna rigenerare le classi del modello a oggetti facendo una nuova chiamata di propel:build-model. Se i metodi personalizzati venissero scritti nelle classi generate, sarebbero cancellati dopo ogni rigenerazione.
+Probabilmente si avrà bisogno di aggiungere metodi e proprietà agli oggetti del modello (pensiamo al metodo `getNome()` nel listato 8-1). Mano a mano che il progetto si evolve, si vorranno aggiungere tabelle o colonne. Ogni volta che si cambia il file `schema.yml`, bisogna rigenerare le classi del modello a oggetti facendo una nuova chiamata di propel:build-model. Se i metodi personalizzati venissero scritti nelle classi generate, sarebbero cancellati dopo ogni rigenerazione.
 
 Le classi `Base` presenti nella cartella `lib/model/om/` sono le uniche effettivamente generate dallo schema. Non bisogna mai modificarle, dal momento che nuove ricostruzioni del modello cancelleranno completamente questi file.
 
 D'altra parte, le classi di oggetti personalizzati presenti nella cartella `lib/model/`, di fatto ereditano da quelle Base`. Quando il task `propel:build-model` è chiamato su un modello esistente, queste classi non vengono modificate. Quindi questo è il posto dove aggiungere i metodi personalizzati.
 
-Il Listato 8-4 mostra un esempio di una classe personalizzata del modello, così come viene creata dopo la prima chiamata del task `propel:build-model`.
+Il listato 8-4 mostra un esempio di una classe personalizzata del modello, così come viene creata dopo la prima chiamata del task `propel:build-model`.
 
 Listato 8-4 - Esempio di file di una classe del modello, in `lib/model/Article.php`
 
@@ -159,7 +159,7 @@ Il meccanismo delle classi personalizzate che estendono delle classi base consen
 
 ### Oggetti e classi Peer
 
-`Article` e `Comment` sono classi oggetto che rappresentano una riga nel database. Danno accesso alle colonne di una riga e colonne collegate. Questo significa che sarai capace di conoscere il titolo di un articolo chiamando un metodo sull'oggetto `Article`, come nell'esempio mostrato nel Listato 8-5.
+`Article` e `Comment` sono classi oggetto che rappresentano una riga nel database. Danno accesso alle colonne di una riga e colonne collegate. Questo significa che sarai capace di conoscere il titolo di un articolo chiamando un metodo sull'oggetto `Article`, come nell'esempio mostrato nel listato 8-5.
 
 Listato 8-5 - Getter per colonne dei record sono disponibili nelle classi oggetto
 
@@ -168,7 +168,7 @@ Listato 8-5 - Getter per colonne dei record sono disponibili nelle classi oggett
     // ...
     $title = $article->getTitle();
 
-`ArticlePeer` e `CommentPeer` sono classi peer; ovvero, classi che contengono metodi statici che operano sulle tabelle. Possono fornire un modo per recuperare righe dalle tabelle. I loro metodi restituiscono solitamente un oggetto o collezione di oggetti della collegata classe oggetto, come mostrato nel Listato 8-6.
+`ArticlePeer` e `CommentPeer` sono classi peer; ovvero, classi che contengono metodi statici che operano sulle tabelle. Possono fornire un modo per recuperare righe dalle tabelle. I loro metodi restituiscono solitamente un oggetto o collezione di oggetti della collegata classe oggetto, come mostrato nel listato 8-6.
 
 Listato 8-6 - Metodi statici per recuperare record sono disponibili nelle classi peer
 
@@ -196,7 +196,7 @@ Campo, colonna| Proprietà
 
 ### Recuperare il valore della colonna
 
-Quando symfony costruisce il modello, crea una classe base di un oggetto per ciascuno dei modelli definiti nel file `schema.yml`. Ciascuna di queste classi è dotata di accessori e modificatori predefiniti generati in base alle definizioni della colonna: i metodi `new`, `getXXX()` e `setXXX()` aiutano a creare oggetti e forniscono accesso alle proprietà dell'oggetto, come mostrato nel Listato 8-7.
+Quando symfony costruisce il modello, crea una classe base di un oggetto per ciascuno dei modelli definiti nel file `schema.yml`. Ciascuna di queste classi è dotata di accessori e modificatori predefiniti generati in base alle definizioni della colonna: i metodi `new`, `getXXX()` e `setXXX()` aiutano a creare oggetti e forniscono accesso alle proprietà dell'oggetto, come mostrato nel listato 8-7.
 
 Listato 8-7 - Metodi generati nella classe dell'oggetto
 
@@ -211,7 +211,7 @@ Listato 8-7 - Metodi generati nella classe dell'oggetto
 >**NOTE**
 >La classe oggetto generata si chiama `Article`, che è il `phpName` dato alla tabella `blog_article`. Se `phpName` non è stato definito nello schema, la classe sarebbe stata chiamata `BlogArticle`. Gli accessori e modificatori usano una variante camelCase del nome delle colonne, quindi il metodo `getTitle()` resituirà il valore della colonna `title`.
 
-Per impostare diversi valori in una sola volta, si può usare il metodo `fromArray()`, generato per ogni classe oggetto, come mostrato nel Listato 8-8.
+Per impostare diversi valori in una sola volta, si può usare il metodo `fromArray()`, generato per ogni classe oggetto, come mostrato nel listato 8-8.
 
 Listato 8-8 - Il metodo `fromArray()` è un setter multiplo
 
@@ -234,7 +234,7 @@ La colonna `blog_article_id` nella tabella `blog_comment` definisce implicitamen
   * `$comment->setArticleId($id)`: Per impostare il relativo oggetto `Article` tramite il suo ID
   * `$article->getComments()`: Per ottenere un array con i relativi oggetti `Comment`
 
-I metodi `getArticleId()` e `setArticleId()` mostrano che si può considerare la colonna `blog_article_id` come una colonna normale e impostare le relazioni a mano, ma non sono molto interessanti. Il beneficio dell'approccio orientato agli oggetti è molto più evidente negli altri tre metodi. Il Listato 8-9 mostra come usare il setter generati.
+I metodi `getArticleId()` e `setArticleId()` mostrano che si può considerare la colonna `blog_article_id` come una colonna normale e impostare le relazioni a mano, ma non sono molto interessanti. Il beneficio dell'approccio orientato agli oggetti è molto più evidente negli altri tre metodi. Il listato 8-9 mostra come usare il setter generati.
 
 Listato 8-9 - Le chiavi esterne sono tradotte in speciali setter
 
@@ -250,7 +250,7 @@ Listato 8-9 - Le chiavi esterne sono tradotte in speciali setter
     // Ha senso soltanto se l'oggetto è già salvato nel database
     $comment->setArticleId($article->getId());
 
-Il Listato 8-10 mostra come usare i getter generati. Può inoltre dimostrare come concatenare chiamate ai metodi di oggetti del modello.
+Il listato 8-10 mostra come usare i getter generati. Può inoltre dimostrare come concatenare chiamate ai metodi di oggetti del modello.
 
 Listato 8-10 - Chiavi esterne sono trasformate in speciali getter
 
@@ -284,7 +284,7 @@ L'ORM è intelligente abbastanza da capire le relazioni tra gli oggetti, quindi 
 >**TIP**
 >Si può controllare se un oggetto è nuovo chiamando `isNew()`. E se ti domandi se un oggetto è stato modificato e necessita del salvataggio, si può usare il metodo `isModified()`.
 
-Leggendo i commenti agli articoli, si potrebbe cambiare idea riguardo il pubblicare contenuti su Internet. E se non si apprezza l'ironia dei lettori, si possono cancellare semplicemente i commenti con il metodo `delete()`, come mostrato nel Listato 8-11.
+Leggendo i commenti agli articoli, si potrebbe cambiare idea riguardo il pubblicare contenuti su Internet. E se non si apprezza l'ironia dei lettori, si possono cancellare semplicemente i commenti con il metodo `delete()`, come mostrato nel listato 8-11.
 
 Listato 8-11 - Cancellare righe dal database con il metodo `delete()` dell'oggetto
 
@@ -316,7 +316,7 @@ Quando si vuole recuperare più di un record, occorre utilizzare il metodo `doSe
 
 Il primo parametro del metodo `doSelect()` è un oggetto della classe `Criteria`, che è una semplice classe per la costruzione delle query, senza l'utilizzo di SQL per mantenere l'astrazione dal database.
 
-Un oggetto `Criteria` vuoto restituisce tutti gli oggetti della classe. Per esempio, il codice mostrato nel Listato 8-12 restituisce tutti gli articoli.
+Un oggetto `Criteria` vuoto restituisce tutti gli oggetti della classe. Per esempio, il codice mostrato nel listato 8-12 restituisce tutti gli articoli.
 
 Listato 8-12 - Recuperare record usando Criteria e `doSelect()`--Criteria vuoto
 
@@ -334,7 +334,7 @@ Listato 8-12 - Recuperare record usando Criteria e `doSelect()`--Criteria vuoto
 >
 >La chiamata a `::doSelect()` è a dir la verità molto più potente di una semplice query SQL. Per prima cosa, il codice SQL generato è ottimizzato per il DBMS scelto. Secondo, su ogni valore passato a `Criteria` viene effettuato l'escape prima di venir intergrato nel codice SQL, che previene rischi di SQL injection. Terzo, questo metodo restituisce un array di oggetti piuttosto che una risorsa PHP. L'ORM crea automaticamente gli oggetti basandosi sulla risorsa restituita dal database. Questo processo è chiamato idratazione.
 
-Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY e altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruire un `Criteria` come mostrato nel Listato 8-13.
+Per una selezione più complessa, avrai bisogno degli equivalenti di WHERE, ORDER BY, GROUP BY e altre istruzioni SQL. L'oggetto `Criteria` ha metodi e parametri per tutte queste condizioni. Per esempio, per ottenere tutti i commenti scritti da Steve, ordinati per data, costruire un `Criteria` come mostrato nel listato 8-13.
 
 Listato 8-13 - Recuperare record usando Criteria e `doSelect()` (Criteria con condizioni)
 
@@ -382,7 +382,7 @@ SQL                                                          | Criteria
 >**TIP**
 >Il modo migliore per scoprire e capire quali metodi sono disponibili nelle classi generate è guardare ai file `Base` nella cartella `lib/model/om/` dopo la generazione. I nomi dei metodi sono abbastanza espliciti, ma se servono dei commenti in essi si può impostare il parametro `propel.builder.addComments` a `true` nel file `config/propel.ini` e ricostruire il modello.
 
-Il Listato 8-14 mostra un altro esempio di `Criteria` con condizioni multiple. Recupera tutti i commenti di Steve sugli articoli contenenti la parola "enjoy", ordinati per data.
+Il listato 8-14 mostra un altro esempio di `Criteria` con condizioni multiple. Recupera tutti i commenti di Steve sugli articoli contenenti la parola "enjoy", ordinati per data.
 
 Listato 8-14 - Un altro esempio di record recuperato con Criteria e `doSelect()`--Criteria con condizioni
 
@@ -427,7 +427,7 @@ Una query al database con PHP Data Objects richiede i seguentii passi:
   3. Usarla per creare uno "statement"
   4. Ciclare sul risultato dell'esecuzione dello statement
 
-Se queste sembrano parole campate in aria, il codice del Listato 8-15 probabilmente sarà più esplicito.
+Se queste sembrano parole campate in aria, il codice del listato 8-15 probabilmente sarà più esplicito.
 
 Listato 8-15 - Query SQL personalizzata con PDO
 
@@ -450,7 +450,7 @@ Proprio come le selezioni con Propel, le query con PDO sono complesse quando si 
 
 Di solito, quando una tabella ha una colonna chiamata `created_at`, è usata per salvare il timestamp della data di quando il record è stato creato. Lo stesso succede per le colonne `updated_at`, che saranno aggiornate ogni volta che il record stesso viene aggiornato.
 
-La buona notizia è che symfony riconoscerà i nomi di queste colonne e gestirà il loro autonomamente. Non servirò impostare manualmente i valori di `created_at` e `updated_at`, saranno aggiornati automaticamente, come mostrato nel Listato 8-16. Lo stesso succede per le colonne chiamate `created_on` e `updated_on`.
+La buona notizia è che symfony riconoscerà i nomi di queste colonne e gestirà il loro autonomamente. Non servirò impostare manualmente i valori di `created_at` e `updated_at`, saranno aggiornati automaticamente, come mostrato nel listato 8-16. Lo stesso succede per le colonne chiamate `created_on` e `updated_on`.
 
 Listato 8-16 - Le colonne `created_at` e `updated_at` sono gestite in automatico
 
@@ -502,11 +502,11 @@ Questa configurazione può inoltre venir sovrascritta per ogni applicazione. Per
 
     $ php symfony configure:database --app=frontend "mysql:host=localhost;dbname=blog" root mYsEcret
 
-Per ogni ambiente, si possono definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione predefinita si chiama `propel` e si riferisce allo schema `propel` nel Listato 8-3. L'opzione `name` consente di creare un altra connessione:
+Per ogni ambiente, si possono definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione predefinita si chiama `propel` e si riferisce allo schema `propel` nel listato 8-3. L'opzione `name` consente di creare un altra connessione:
 
     $ php symfony configure:database --name=main "mysql:host=localhost;dbname=example" root mYsEcret
 
-Si possono inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml` collocato nella cartella `config/`. Il Listato 8-17 mostra un esempio di questo file e il Listato 8-18 mostra lo stesso esempio con la notazione estesa.
+Si possono inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml` collocato nella cartella `config/`. Il listato 8-17 mostra un esempio di questo file e il listato 8-18 mostra lo stesso esempio con la notazione estesa.
 
 Listato 8-17 - Notazione semplice per la connessione al database
 
@@ -552,7 +552,7 @@ I valori consentiti per il parametri `phptype` sono quelli dei database supporta
 
 Per sovrascrivere la configurazione per applicazione, avrai bisogno di modificare il file specifico dell'applicazione, come `apps/frontend/config/databases.yml`.
 
-Se usi un database SQLite, il parametro `hostspec` deve essere impostato al percorso del file del database. Per esempio, se si tieni il proprio blog in `data/blog.db`, il file `databases.yml` sarà come quello nel Listato 8-19.
+Se usi un database SQLite, il parametro `hostspec` deve essere impostato al percorso del file del database. Per esempio, se si tieni il proprio blog in `data/blog.db`, il file `databases.yml` sarà come quello nel listato 8-19.
 
 Listato 8-19 - Connessione al database specifica per SQLite usando un percorso file come host
 
@@ -573,7 +573,7 @@ I metodi generati del modello sono ottimi, ma spesso non sufficienti. Al momento
 
 Si possono aggiungere nuovi metodi alle classi del modello vuote generate nella cartella `lib/model`. Usare `$this` per chiamare metodi sull'oggetto corrente e usare `self::` per chiamare metodi statici sulla classe corrente. Si ricordi che le classi personalizzate ereditano i metodi dalle classi `Base` collocate nella cartella `lib/model/om`.
 
-Per esempio, per l'oggetto `Article` generato basato sul Listato 8-3, si può aggiungere un metodo magico `__toString()` per far sì che un comando `echo` su un oggetto di classe `Article` mostri il suo titolo, come mostrato nel Listato 8-20.
+Per esempio, per l'oggetto `Article` generato basato sul listato 8-3, si può aggiungere un metodo magico `__toString()` per far sì che un comando `echo` su un oggetto di classe `Article` mostri il suo titolo, come mostrato nel listato 8-20.
 
 Listato 8-20 - Personalizzazione del modello, in `lib/model/Article.php`
 
@@ -586,7 +586,7 @@ Listato 8-20 - Personalizzazione del modello, in `lib/model/Article.php`
       }
     }
 
-Si possono inoltre estendere le classi peer, per esempio, per aggiungere un metodo per recuperare tutti gli articoli ordinati per data di creazione, come mostrato nel Listato 8-21.
+Si possono inoltre estendere le classi peer, per esempio, per aggiungere un metodo per recuperare tutti gli articoli ordinati per data di creazione, come mostrato nel listato 8-21.
 
 Listato 8-21 - Personalizzazione del modello, in `lib/model/ArticlePeer.php`
 
@@ -602,7 +602,7 @@ Listato 8-21 - Personalizzazione del modello, in `lib/model/ArticlePeer.php`
       }
     }
 
-I nuovi metodi sono disponibili nello stesso modo di quelli generati, come mostrato nel Listato 8-22.
+I nuovi metodi sono disponibili nello stesso modo di quelli generati, come mostrato nel listato 8-22.
 
 Listato 8.22 - Usare i metodi personalizzati è come usare i metodi generati
 
@@ -616,7 +616,7 @@ Listato 8.22 - Usare i metodi personalizzati è come usare i metodi generati
 
 Se alcuni dei metodi generati nelle classi `Base` non soddisfano i requisiti, si può comunque sovrascriverli nelle classi personalizzate. Assicurarsi che abbiano la stessa firma (ovvero lo stesso numero di parametri).
 
-Per esempio, il metodo `$article->getComments()` restituisce un array di oggetti `Comment`, senza alcun ordine particolare. Se si vogliono i risultati ordinati per data di creazione, con gli ultimi commenti per primi, sovrascrivere il metodo `getComments()`, come mostrato nel Listato 8-23. Attenzione: il metodo originale `getComments()` (collocato in `lib/model/om/BaseArticle.php`) si aspetta un oggetto `Criteria` e una connessione come parametri, quindi la nuova funzione deve fare lo stesso.
+Per esempio, il metodo `$article->getComments()` restituisce un array di oggetti `Comment`, senza alcun ordine particolare. Se si vogliono i risultati ordinati per data di creazione, con gli ultimi commenti per primi, sovrascrivere il metodo `getComments()`, come mostrato nel listato 8-23. Attenzione: il metodo originale `getComments()` (collocato in `lib/model/om/BaseArticle.php`) si aspetta un oggetto `Criteria` e una connessione come parametri, quindi la nuova funzione deve fare lo stesso.
 
 Listato 8-23 - Sovrascrivere metodi esistenti del modello, in `lib/model/Article.php`
 
@@ -658,18 +658,18 @@ Non c'è nessun behavior incluso in symfony di default, ma possono essere instal
 
 Dopo aver ricostruito il modello, gli oggetti `Article` eliminati resteranno nel database, invisibile alle query create usando l'ORM, a meno che non si disabiliti temporaneamente il behavior con `sfPropelParanoidBehavior::disable()`.
 
-In alternativa, si possono dichiarare i behavior direttamente dentro allo `schema.yml`, aggiungendoli all'interno della chiave `_behaviors` (vedere il Listato 8-34 di seguito).
+In alternativa, si possono dichiarare i behavior direttamente dentro allo `schema.yml`, aggiungendoli all'interno della chiave `_behaviors` (vedere il listato 8-34 di seguito).
 
 Controllare la lista dei plugin di symfony sul [repository](http://www.symfony-project.org/plugins/) ufficiale per trovare i behavior. Ognuno ha la sua documentazione e guida di installazione.
 
 Sintassi estesa dello schema
 ----------------------------
 
-Un file `schema.yml` può essere semplice, come mostrato nel Listato 8-3. Ma i modelli relazionali sono spesso complessi. Per questo lo schema ha una sinstassi estesa, che consente di gestire quasi tutti i casi.
+Un file `schema.yml` può essere semplice, come mostrato nel listato 8-3. Ma i modelli relazionali sono spesso complessi. Per questo lo schema ha una sinstassi estesa, che consente di gestire quasi tutti i casi.
 
 ### Attributi
 
-Le connessioni e le tabelle possono avere attributi specifici, come mostrato nel Listato 8-24. Questi sono sotto la chiave `_attributes`.
+Le connessioni e le tabelle possono avere attributi specifici, come mostrato nel listato 8-24. Questi sono sotto la chiave `_attributes`.
 
 Listato 8-24 - Attributi per connessioni e tabelle
 
@@ -685,7 +685,7 @@ L'attributo `package` è come un namespace: esso determina il percorso in cui me
 
 Abbiamo già visto l'attributo delle tabelle `phpName`, usato per impostare il nome della classe generata riferita a una tabella.
 
-Le tabelle contenenti dati localizzati (cioè diverse versioni dello stesso contenuto, in una tabella correlata, per l'internazionalizzazione) posso accettare due ulteriori parametri (si veda il capitolo 13 per i dettagli), come mostrato nel Listato 8-25.
+Le tabelle contenenti dati localizzati (cioè diverse versioni dello stesso contenuto, in una tabella correlata, per l'internazionalizzazione) posso accettare due ulteriori parametri (si veda il capitolo 13 per i dettagli), come mostrato nel listato 8-25.
 
 Listato 8-25 - Attributi per le tabelle i18n
 
@@ -743,7 +743,7 @@ Listato 8-25 - Attributi per le tabelle i18n
 
 ### Dettagli delle colonne
 
-La sintassi di base fornisce due scelte: lasciare che symfony deduca le caratteristiche delle colonne dal loro nome (dando un valore vuoto) o definire il tipo con una della chiavi. Il Listato 8-26 mostra queste scelte.
+La sintassi di base fornisce due scelte: lasciare che symfony deduca le caratteristiche delle colonne dal loro nome (dando un valore vuoto) o definire il tipo con una della chiavi. Il listato 8-26 mostra queste scelte.
 
 Listato 8-26 - Attributi di base delle colonne
 
@@ -753,7 +753,7 @@ Listato 8-26 - Attributi di base delle colonne
         id:    ~            # symfony fa da solo
         title: varchar(50)  # specificato
 
-Ma si può definire di più per una colonna. Se si vuole, occorre definire le impostazioni della colonna come array associativo, come mostrato nel Listato 8-27.
+Ma si può definire di più per una colonna. Se si vuole, occorre definire le impostazioni della colonna come array associativo, come mostrato nel listato 8-27.
 
 Listato 8-27 - Attributi complessi delle colonne
 
@@ -782,7 +782,7 @@ I parametri delle colonne sono i seguenti:
 
 ### Chiavi esterne
 
-Come alternativa agli attributi `foreignTable` e `foreignReference` delle colonne, si può usare la chiave `_foreignKeys:` in una tabella. Lo schema nel Listato 8-28 crea una chiave esterna per la colonna `user_id` verso la colonna `id` della tabella `blog_user`.
+Come alternativa agli attributi `foreignTable` e `foreignReference` delle colonne, si può usare la chiave `_foreignKeys:` in una tabella. Lo schema nel listato 8-28 crea una chiave esterna per la colonna `user_id` verso la colonna `id` della tabella `blog_user`.
 
 Listato 8-28 - Sintassi alternativa per le chiavi esterne
 
@@ -799,7 +799,7 @@ Listato 8-28 - Sintassi alternativa per le chiavi esterne
             references:
               - { local: user_id, foreign: id }
 
-La sintassi alternativa è utile per chiavi esterne multiple e per dare un nome alle chiavi esterne, come mostrato nel Listato 8-29.
+La sintassi alternativa è utile per chiavi esterne multiple e per dare un nome alle chiavi esterne, come mostrato nel listato 8-29.
 
 Listato 8-29 - Sintassi alternativa per le chiavi esterne applicata a chiavi esterne multiple
 
@@ -813,7 +813,7 @@ Listato 8-29 - Sintassi alternativa per le chiavi esterne applicata a chiavi est
 
 ### Indici
 
-Come alternativa all'attributo `index` di una colonna, si possono aggiungere indici sotto la chiave `_indexes:` in una tabella. Se si vogliono definire chiavi univoche, occorre invece usare `_uniques:`. Per colonne che richiedono una dimensione, perché sono colonne testuali, la dimensione dell'indice è specificata nello stesso modo della lunghezza delle colonne, usando le parentesi. Il Listato 8-30 mostra la sintassi alternativa per gli indici.
+Come alternativa all'attributo `index` di una colonna, si possono aggiungere indici sotto la chiave `_indexes:` in una tabella. Se si vogliono definire chiavi univoche, occorre invece usare `_uniques:`. Per colonne che richiedono una dimensione, perché sono colonne testuali, la dimensione dell'indice è specificata nello stesso modo della lunghezza delle colonne, usando le parentesi. Il listato 8-30 mostra la sintassi alternativa per gli indici.
 
 Listato 8-30 - Sintassi alternativa per indici e chiavi univoche
 
@@ -832,7 +832,7 @@ La sintassi alternativa è utile solo per indici su più colonne.
 
 ### Colonne vuote
 
-Quando incontra una colonna senza valori, symfony fa alcune magie per aggiungere i suoi valori. Si veda il Listato 8-31 per i dettagli aggiunti alle colonne vuote.
+Quando incontra una colonna senza valori, symfony fa alcune magie per aggiungere i suoi valori. Si veda il listato 8-31 per i dettagli aggiunti alle colonne vuote.
 
 Listato 8-31 - Dettagli delle colonne dedotti dal nome della colonna
 
@@ -853,7 +853,7 @@ Per le chiavi esterne, symfony cercherà una tabella con lo stesso `phpName` del
 
 Symfony supporta l'internazionalizzazione dei contenuti tramite tabelle dedicate. Questo significa che quando si ha un contenuto da internazionalizzare, viene memorizzato in due tabelle separate: una per le colonne che non cambiano e una per le colonne da internazionalizzare.
 
-In un file `schema.yml`, tutto è implicito quando si dà il nome `pippo_i18n` a una tabella. Per esempio, lo schema mostrato nel Listato 8-32 verrà automaticamente completato con colonne e attributi per far funzionare il meccanismo di internazionalizzazione. Internamente, symfony lo interpreterà come se fosse scritto come nel Listato 8-33. Il capitolo 13 contiene maggiori informazioni su i18n.
+In un file `schema.yml`, tutto è implicito quando si dà il nome `pippo_i18n` a una tabella. Per esempio, lo schema mostrato nel listato 8-32 verrà automaticamente completato con colonne e attributi per far funzionare il meccanismo di internazionalizzazione. Internamente, symfony lo interpreterà come se fosse scritto come nel listato 8-33. Il capitolo 13 contiene maggiori informazioni su i18n.
 
 Listato 8-32 - Meccanismo i18n implicito
 
@@ -882,7 +882,7 @@ Listato 8-33 - Meccanismo i18n esplicito
 
 ### Comportamenti
 
-I comportamenti sono modificatori dei modelli forniti da plugin, che aggiungono nuove capacità alle classi di Propel. Il capitolo 17 parla più approfonditamente dei comportamenti. I comportamenti si possono definire nello schema, elencandoli per ciascuna tabella, insieme con i loro parametri, sotto la chiave `_behaviors`. Il Listato 8-34 fornisce un esempio estendendo la classe `BlogArticle` con il comportamento `paranoid`.
+I comportamenti sono modificatori dei modelli forniti da plugin, che aggiungono nuove capacità alle classi di Propel. Il capitolo 17 parla più approfonditamente dei comportamenti. I comportamenti si possono definire nello schema, elencandoli per ciascuna tabella, insieme con i loro parametri, sotto la chiave `_behaviors`. Il listato 8-34 fornisce un esempio estendendo la classe `BlogArticle` con il comportamento `paranoid`.
 
 Listato 8-34 - Dichiarazione dei comportamenti
 
@@ -897,9 +897,9 @@ Listato 8-34 - Dichiarazione dei comportamenti
 
 Di fatto, il formato `schema.yml` è interno a symfony. Quando si richiama un comando di Propel, symfony traduce tale file in un file `generated-schema.xml`, che è il tipo di file che Propel si aspetta per eseguire effettivamente ciò che deve fare sul modello.
 
-Il file `schema.xml` contiene le stesse informazioni del suo equivalente YAML. Per esempio, il Listato 8-3 viene convertito nel file XML mostrato nel Listato 8-35.
+Il file `schema.xml` contiene le stesse informazioni del suo equivalente YAML. Per esempio, il listato 8-3 viene convertito nel file XML mostrato nel listato 8-35.
 
-Listato 8-35 - Esempio di `schema.xml`, corrispondente al Listato 8-3
+Listato 8-35 - Esempio di `schema.xml`, corrispondente al listato 8-3
 
     [xml]
     <?xml version="1.0" encoding="UTF-8"?>

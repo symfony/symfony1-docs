@@ -14,7 +14,7 @@ L'unico modo per capire cosa è andato storto durante l'esecuzione di una richie
 
 ### I log di PHP
 
-PHP ha un parametro `error_reporting`, definito in `php.ini`, che specifica quali eventi devono essere registrati nel log. Symfony consente di sovrascrivere questo valore, per applicazione e ambiente, nel file `settings.yml`, come mostrato nel Listato 16-1.
+PHP ha un parametro `error_reporting`, definito in `php.ini`, che specifica quali eventi devono essere registrati nel log. Symfony consente di sovrascrivere questo valore, per applicazione e ambiente, nel file `settings.yml`, come mostrato nel listato 16-1.
 
 Listato 16-1 - Impostazione del livello di segnalazione degli errori, in `frontend/config/settings.yml`
 
@@ -34,7 +34,7 @@ La posizione del file di log PHP dipendono dalla configurazione nel file `php.in
 
 In aggiunta ai log standard di PHP, symfony può registrare molti eventi personalizzati. È possibile trovare tutti i log di symfony sotto la cartella `mioprogetto/log/`. C'è un file per applicazione e ambiente. Per esempio, il file di log dell'ambiente di sviluppo dell'applicazione `frontend` si chiama `frontend_dev.log`, quello di produzione si chiama `frontend_prod.log` e così via.
 
-Se si dispone di un'applicazione in esecuzione di symfony, si può dare un'occhiata al suo file di log. La sintassi è molto semplice. Per ogni evento, viene aggiunta una riga al file di log dell'applicazione. Ogni linea include l'ora esatta dell'evento, la natura dell'evento, l'oggetto che è stato processato e ogni altro dettaglio rilevante. Il Listato 16-2 mostra un esempio del contenuto di un file log di symfony.
+Se si dispone di un'applicazione in esecuzione di symfony, si può dare un'occhiata al suo file di log. La sintassi è molto semplice. Per ogni evento, viene aggiunta una riga al file di log dell'applicazione. Ogni linea include l'ora esatta dell'evento, la natura dell'evento, l'oggetto che è stato processato e ogni altro dettaglio rilevante. Il listato 16-2 mostra un esempio del contenuto di un file log di symfony.
 
 Listato 16-2 - Esempio del contenuto di un file log di symfony, in `log/frontend_dev.log`
 
@@ -49,7 +49,7 @@ Listato 16-2 - Esempio del contenuto di un file log di symfony, in `log/frontend
 Si possono trovare molti dettagli in questi file, comprese le query SQL effettive inviate al database, i template chiamati, la catena di chiamate tra gli oggetti e così via.
 
 >**NOTE**
->Il formato dei file di log è configurabile sovrascrivendo le impostazioni `format` e/o `time_format` presenti in `factories.yml` come mostrato nel Listato 16-3.
+>Il formato dei file di log è configurabile sovrascrivendo le impostazioni `format` e/o `time_format` presenti in `factories.yml` come mostrato nel listato 16-3.
 
 Listato 16-3 - Cambiare il formato del log
 
@@ -63,7 +63,7 @@ Listato 16-3 - Cambiare il formato del log
 
 #### Configurazione del livello di log di symfony
 
-Ci sono otto livelli per i messaggi di log di symfony: `emerg`, `alert`, `crit`, `err`, `warning`, `notice`, `info` e `debug`, che sono gli stessi dei livelli dei pacchetti [`PEAR::Log`](http://pear.php.net/package/Log/). Si può configurare il livello massimo che deve essere nei log per ciascun ambiente nel file di configurazione `factories.yml` di ciascuna applicazione, come mostrato nel Listato 16-4.
+Ci sono otto livelli per i messaggi di log di symfony: `emerg`, `alert`, `crit`, `err`, `warning`, `notice`, `info` e `debug`, che sono gli stessi dei livelli dei pacchetti [`PEAR::Log`](http://pear.php.net/package/Log/). Si può configurare il livello massimo che deve essere nei log per ciascun ambiente nel file di configurazione `factories.yml` di ciascuna applicazione, come mostrato nel listato 16-4.
 
 Listato 16-4 - Configurazione predefinita del log, in `frontend/config/factories.yml`
 
@@ -81,7 +81,7 @@ Nel file `factories.yml` si può cambiare il livello dei log per ciascun ambient
 
 #### Aggiungere un messaggio di log
 
-È possibile aggiungere manualmente un messaggio nel file di log di symfony dal codice utilizzando una delle tecniche descritte nel Listato 16-5.
+È possibile aggiungere manualmente un messaggio nel file di log di symfony dal codice utilizzando una delle tecniche descritte nel listato 16-5.
 
 Listato 16-5 - Aggiungere un messaggio di log personalizzato
 
@@ -96,7 +96,7 @@ Listato 16-5 - Aggiungere un messaggio di log personalizzato
 
 `$level` può avere gli stessi valori dei messaggi di log.
 
-In alternativa, per scrivere un messaggio nel log da qualsiasi punto della propria applicazione, si possono utilizzare direttamente i metodi `sfLogger`, come mostrato nel Listato 16-6. I metodi disponibili portano i nomi stessi dei livelli di log.
+In alternativa, per scrivere un messaggio nel log da qualsiasi punto della propria applicazione, si possono utilizzare direttamente i metodi `sfLogger`, come mostrato nel listato 16-6. I metodi disponibili portano i nomi stessi dei livelli di log.
 
 Listato 16-6 - Aggiungere un messaggio di log personalizzato da qualsiasi parte
 
@@ -141,7 +141,7 @@ Non bisogna dimenticare di eliminare periodicamente la cartella `log/` delle app
 
     $ php symfony log:clear
 
-Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni e uno `storico` (numero di copie di backup) di `10`, come mostrato nel Listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup, e il backup più vecchio viene cancellato.
+Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni e uno `storico` (numero di copie di backup) di `10`, come mostrato nel listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup, e il backup più vecchio viene cancellato.
 
 Listato 16-7 - Avviare la rotazione dei log
 
@@ -169,7 +169,7 @@ Al contrario, quando la modalità debug è disattivata, l'elaborazione viene ges
   * Per eseguire una rielaborazione della configuazione, è necessario cancellare manualmente la cache della configurazione.
   * Un errore durante l'elaborazione della richiesta restituisce una risposta con codice 500 (errore interno del server), senza nessuna spiegazione su quale possa essere la causa del problema.
 
-La modalità debug è attivata per applicazione nel front controller. Viene gestita dal valore del terzo argomento passato nella chiamata del metodo `getApplicationConfiguration()`, come mostrato nel Listato 16-8.
+La modalità debug è attivata per applicazione nel front controller. Viene gestita dal valore del terzo argomento passato nella chiamata del metodo `getApplicationConfiguration()`, come mostrato nel listato 16-8.
 
 Listato 16-8 - Esempio di front controller con la modalità di debug attivata, in `web/frontend_dev.php`
 
@@ -209,7 +209,7 @@ Per le piattaforme Windows, l'attivazione di Xdebug è gestita da questa linea:
 
     extension=php_xdebug.dll
 
-Il Listato 16-9 mostra un esempio della configurazione di Xdebug, che deve essere aggiunto nel file `php.ini`.
+Il listato 16-9 mostra un esempio della configurazione di Xdebug, che deve essere aggiunto nel file `php.ini`.
 
 Listato 16-9 - Esempio di configurazione di Xdebug
 
@@ -241,7 +241,7 @@ Il colore di sfondo della barra di debug dipende dal più alto livello di messag
 >**NOTE**
 >Non bisogna confondere la modalità di debug con la barra web per il debug. La barra per il debug può essere visualizzata anche nella modalità di debug impostata a off, anche se in questo caso mostrerà molte meno informazioni.
 
-Per attivare la barra web di debug per una applicazione, aprire il file `settings.yml` e cercare la chiave `web_debug`. Negli ambienti prod` e `test`, il valore predefinito per `web_debug` è `false`, per cui se la si vuole utilizzare bisogna abilitarla manualmente. Nell'ambiente `dev` la configurazione predefinita è impostata a `true`, come mostrato nel Listato 16-10.
+Per attivare la barra web di debug per una applicazione, aprire il file `settings.yml` e cercare la chiave `web_debug`. Negli ambienti prod` e `test`, il valore predefinito per `web_debug` è `false`, per cui se la si vuole utilizzare bisogna abilitarla manualmente. Nell'ambiente `dev` la configurazione predefinita è impostata a `true`, come mostrato nel listato 16-10.
 
 Listato 16-10 - Attivazione della barra web per il debug, in `frontend/config/settings.yml`
 
@@ -317,7 +317,7 @@ Figura 16-6 - L'icona con l'orologio mostra il tempo di esecuzione per categoria
 
 È bello avere l'accesso ai messaggi di debug del framework, ma è ancora meglio essere in grado di accedere ai propri messaggi. Symfony fornisce scorciatoie, accessibili sia dalle azioni che dai modelli, per aiutare a traccaire eventi e/o valori durante l'esecuzione della richiesta.
 
-I messaggi di log personalizzati vengono salvati nel file di log di symfony e compaiono nella barra web per il debug. (Il Listato 16-5 fornisce un esempio della sintassi per un messaggio di log personalizzato. Un messaggio personalizzato è un buon modo per controllare il valore di una variabile da un template, ad esempio. Il Listato 16-11 mostra come usare la barra web per il debug per avere il feedback da un template (da una azione invece, si può utilizzare `$this->logMessage()`).
+I messaggi di log personalizzati vengono salvati nel file di log di symfony e compaiono nella barra web per il debug. (Il listato 16-5 fornisce un esempio della sintassi per un messaggio di log personalizzato. Un messaggio personalizzato è un buon modo per controllare il valore di una variabile da un template, ad esempio. Il listato 16-11 mostra come usare la barra web per il debug per avere il feedback da un template (da una azione invece, si può utilizzare `$this->logMessage()`).
 
 Listato 16-11 - Inserire un messaggio nel log a scopo di debug
 
@@ -342,7 +342,7 @@ Si può volere eseguire uno script da riga di comando (o tramite cron) che abbia
 
 ### File batch
 
-L'inizializzazione di symfony richiede solo un paio di righe di codice PHP. È possibile usufruire di tutte le funzionalità di symfony creando un file PHP, per esempio sotto la cartella `lib/` del progetto, scrivendo le linee mostrate nel Listato 16-12.
+L'inizializzazione di symfony richiede solo un paio di righe di codice PHP. È possibile usufruire di tutte le funzionalità di symfony creando un file PHP, per esempio sotto la cartella `lib/` del progetto, scrivendo le linee mostrate nel listato 16-12.
 
 Listato 16-12 - Esempio di script batch, in `lib/mioScript.php`
 
@@ -371,7 +371,7 @@ Per eseguire il codice, basta chiamare lo script dalla riga di comando:
 
 Un modo alternativo per creare script personalizzati a riga di comando è scrivere un **task symfony**. Proprio come i task `cache:clear` e `propel:build-model`, è possibile lanciare i propri task personalizzati dalla linea di comando con `php symfony`. I task personalizzati traggono vantaggio della capacità di analizzare argomenti e opzioni della linea di comando, possono incorporare i promi messaggi di aiuto e possono estendere task esistenti.
 
-Un task personalizzato è solo una classe che estende `sfBaseTask` situata in una cartella `lib/task/`, o sotto la root del progetto, o in una cartella di un plugin. Il nome del file deve terminare con 'Task.class.php'. Il Listato 16-13 mostra un esempio di task presonalizzato.
+Un task personalizzato è solo una classe che estende `sfBaseTask` situata in una cartella `lib/task/`, o sotto la root del progetto, o in una cartella di un plugin. Il nome del file deve terminare con 'Task.class.php'. Il listato 16-13 mostra un esempio di task presonalizzato.
 
 Listato 16-13 - Esempio di task, in `lib/task/testCiaoTask.class.php`
 
@@ -406,7 +406,7 @@ Invece che scrivere manualmente lo scheletro del task, si può usare il task sym
 
     $ php symfony help generate:task
 
-I task possono accettare argomenti (parametri obbligatori, in un ordine predefinito) e opzioni (parametri opzionali non ordinati). Il Listato 16-14 mostra un task più completo, che sfrutta tutte queste caratteristiche.
+I task possono accettare argomenti (parametri obbligatori, in un ordine predefinito) e opzioni (parametri opzionali non ordinati). Il listato 16-14 mostra un task più completo, che sfrutta tutte queste caratteristiche.
 
 Listato 16-14 - Un esempio di task più completo, in `lib/task/mioSecondoTask.class.php`
 
@@ -456,7 +456,7 @@ Nel processo di sviluppo delle applicazioni, gli sviluppatori devono spesso affr
 ### Sintassi del file per le fixture
 
 Symfony è in grado di leggere file di dati che seguono una sintassi molto semplice chiamata YAML, a condizione che si trovino sotto la cartella `data/fixtures/`. I file con le fixture sono organizzati per classi e ogni sezione di una classe inizia con il nome della classe come intestazione. Per ciascuna classe, i record etichettati con una stringa univoca sono definiti da una serie di coppie `nomecampo: valore`.
-Il Listato 16-15 mostra un esempio di un file di dati per popolare il database.
+Il listato 16-15 mostra un esempio di un file di dati per popolare il database.
 
 Listato 16-15 - Esempio di un file fixture, in `data/fixtures/import_data.yml`
 
@@ -507,7 +507,7 @@ Figura 16-8 - Esempio di un modello relazionale di database
 
 ![Esempio di un modello relazionale di database](http://www.symfony-project.org/images/book/1_4/F1608.png "Esempio di un modello relazionale di database")
 
-Questo è un esempio di come le etichette date ai record siano effettivamente utili. Per aggiungere un campo `Comment` all'articolo `first_post`, si possono semplicemente aggiungere le righe mostrate nel Listato 16-16 al file di dati `import_data.yml`.
+Questo è un esempio di come le etichette date ai record siano effettivamente utili. Per aggiungere un campo `Comment` all'articolo `first_post`, si possono semplicemente aggiungere le righe mostrate nel listato 16-16 al file di dati `import_data.yml`.
 
 Listato 16-16 - Aggiungere un record a una tabella collegata, in `data/fixtures/import_data.yml`
 
@@ -522,7 +522,7 @@ Il task `propel:data-load` riconosce l'etichetta che è stata data precedentemen
 L'unico vincolo per i record collegati è che gli oggetti chiamati in una chiave esterna devono essere definiti in precedenza nel file; il che è come si farebbe se si definissero uno per uno. I file di dati vengono analizzati dall'alto verso il basso e l'ordine in cui sono scritti i record è importante.
 
 Questo metodo funziona anche per le relazioni molti a molti, dove due classi sono collegate attraverso una terza classe. Ad esempio, un `Article` può avere molti `Authors` e un `Author` può avere molti `Articles`. Di solito per fare questo si utilizza la classe `ArticleAuthor`, corrispondente a una tabella `article_author` con una colonna `article_id` e una colonna `author_id`.
-Il Listato 16-17 mostra come scrivere un file fixture per definire relazioni molti a molti con questo modello. Notare il nome della tabella in plurale che è stato usato qui. Questo è ciò che fa scattare la voglia di avere una classe intermedia.
+Il listato 16-17 mostra come scrivere un file fixture per definire relazioni molti a molti con questo modello. Notare il nome della tabella in plurale che è stato usato qui. Questo è ciò che fa scattare la voglia di avere una classe intermedia.
 
 Listato 16-17 - Aggiungere un record a una tabella collegata con una relazione molti a molti, in `data/fixtures/import_data.yml`
 
@@ -555,9 +555,9 @@ L'invio della cartella principale di un progetto tramite FTP va bene per il prim
 
 La soluzione supportata da symfony è la sincronizzazione rsync attraverso SSH. [Rsync] (http://samba.anu.edu.au/rsync/) è una utility a riga di comando che consente il trasferimento incrementale di file in modo veloce ed è open source. Con il trasferimento incrementale, solo i dati modificati verranno inviati. Se un file non è stato modificato, non sarà inviato all'host. Se un file è stato modificato solo in parte, sarà inviata solo la parte cambiata. Il vantaggio principale è che la sincronizzazione con rsync trasferire solo una piccola quantità di dati ed è molto veloce.
 
-Symfony aggiunge l'SSH ad rsync per mettere in sicurezza il trasferimento dei dati. Sempre più host commerciali supportano un tunnel SSH per mettere in sicurezza l'upload dei file sui loro server e questa è una buona pratica per evitare problemi di sicurezza.
+Symfony aggiunge SSH a rsync per mettere in sicurezza il trasferimento dei dati. Sempre più host commerciali supportano un tunnel SSH per mettere in sicurezza l'upload dei file sui loro server e questa è una buona pratica per evitare problemi di sicurezza.
 
-Il client SSH chiamato da symfony, utilizza le impostazioni di connessione del file `config/properties.ini`. Il Listato 16-18 fornisce un esempio di impostazioni di connessione per un server di produzione. Scrivere le impostazioni del proprio server di produzione in questo file prima di ogni sincronizzazione. È anche possibile definire una impostazione unica dei parametri per fornire dei propri parametri per la riga di comando rsync.
+Il client SSH chiamato da symfony utilizza le impostazioni di connessione del file `config/properties.ini`. Il listato 16-18 fornisce un esempio di impostazioni di connessione per un server di produzione. Scrivere le impostazioni del proprio server di produzione in questo file prima di ogni sincronizzazione. È anche possibile definire una impostazione unica dei parametri per fornire dei propri parametri per la riga di comando rsync.
 
 Listato 16-18 - Esempio di impostazioni di connessione per una concronizzazione con il server, in `mioprogetto/config/properties.ini`
 
@@ -617,7 +617,7 @@ Quando si sincronizza il progetto symfony con un host di produzione, alcuni file
   * Le cartelle `cache/` e `log/` del progetto nel server host non devono essere cancellate ogni volta che si fa una sincronizzazione. Queste cartelle devono essere ignorate. Se si ha una cartella `stats/`, anche questa probabilmente dovrebbe essere trattata allo stesso modo.
   * I file caricati  dagli utenti non dovrebbero essere trasferiti. Una delle buone pratiche per i progetti symfony è di memorizzare i file caricati nella cartella `web/uploads/`. Questo permette di escludere tutti questi file dalla sincronizzazione indicando una sola cartella.
 
-Per escludere dei file dalla sincronizzazione con rsync, aprire e modificare il file `rsync_exclude.txt` presente nella cartella `mioprogetto/config/`. Ogni linea può contenere un file, una cartella o un pattern. La struttura dei file di symfony è organizzata logicamente e progettata per ridurre al minimo il numero di file o di cartelle da escludere manualmente dalla sincronizzazione. Vedere il Listato 16-19 per un esempio.
+Per escludere dei file dalla sincronizzazione con rsync, aprire e modificare il file `rsync_exclude.txt` presente nella cartella `mioprogetto/config/`. Ogni linea può contenere un file, una cartella o un pattern. La struttura dei file di symfony è organizzata logicamente e progettata per ridurre al minimo il numero di file o di cartelle da escludere manualmente dalla sincronizzazione. Vedere il listato 16-19 per un esempio.
 
 Listato 16-19 - Esempio di configurazione di esclusione file con rsync, in `mioprogetto/config/rsync_exclude.txt`
 

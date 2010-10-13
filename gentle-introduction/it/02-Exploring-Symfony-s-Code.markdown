@@ -41,7 +41,7 @@ Un perfetto esempio è dato da una lista di post di un web blog.
 #### Programmazione "piatta"
 
 Se si volesse mostrare una lista di record estratti da un database utilizzando un unico script PHP 
-si utilizzerebbe del codice simile a quello mostrato nel Listato 2-1
+si utilizzerebbe del codice simile a quello mostrato nel listato 2-1
 
 Listato 2-1 - Un'unico Script
 
@@ -95,10 +95,10 @@ I maggiori problemi che si possono incontrare utilizzando questo codice e questo
 
 #### Isolare la presentazione
 
-Le chiamate `echo` e `printf` presenti nel Listato 2-1 rendono il codice difficile da leggere. 
+Le chiamate `echo` e `printf` presenti nel listato 2-1 rendono il codice difficile da leggere. 
 Diventerebbe un'operazione onerosa e complessa modificare il codice HTML per migliorarne la presentazione. 
 Il codice può essere spezzato in due parti. 
-La prima parte, lo script controllore, conterrà puro codice PHP con tutta la logica di business, come mostrato nel Listato 2-2.
+La prima parte, lo script controllore, conterrà puro codice PHP con tutta la logica di business, come mostrato nel listato 2-2.
 
 Listato 2-2 - Il Controllore, in `index.php`
 
@@ -125,7 +125,7 @@ Listato 2-2 - Il Controllore, in `index.php`
     // Richiesta della vista
     require('view.php');
 
-Il codice HTML, contenente sintassi PHP adatta al template, risiede in uno script di vista, come mostrato nel Listato 2-3
+Il codice HTML, contenente sintassi PHP adatta al template, risiede in uno script di vista, come mostrato nel listato 2-3
 
 Listato 2-3 - La Vista, in `view.php`
 
@@ -168,7 +168,7 @@ E se si decidesse di modificare il nome della tabella del database da  `post` a 
 E se si volesse utilizzare un database diverso da MYSQL, as esempio PostgresSQL?
 Per rendere tutto ciò possibile bisogna rimuovere la parte di manipolazione dei dati presente nel controllore 
 e spostarla un un altro script
-come mostrato nel Listato 2-4
+come mostrato nel listato 2-4
 
 Listato 2-4 - Il modello, in `model.php`
 
@@ -197,7 +197,7 @@ Listato 2-4 - Il modello, in `model.php`
       return $posts;
     }
 
-Il controllore rivisto e riscritto è mostrato nel Listato 2-5
+Il controllore rivisto e riscritto è mostrato nel listato 2-5
 
 Listato 2-5,- Il controllore, rivisto, in `index.php`
 
@@ -239,8 +239,8 @@ In questo modo, le funzioni di accesso ai dati non utilizzeranno query dipendent
 ma chiameranno altre funzioni che eseguiranno quelle particolari query. 
 Se si cambiasse il database scelto, sarà necessario aggiornare solamente il livello di astrazione del database.
 
-Un esempio specifico di accesso ai dati tramite un database MySQL è mostrato nel Listato 2-6
-seguito da un esempio di un livello di astrazione dell'accesso stesso nel Listato 2-7.
+Un esempio specifico di accesso ai dati tramite un database MySQL è mostrato nel listato 2-6
+seguito da un esempio di un livello di astrazione dell'accesso stesso nel listato 2-7.
 
 
 Listato 2-6 - Componente di astrazione del database
@@ -315,7 +315,7 @@ Il layout è solitamente globale nell'applicativo o comunque accomuna un gruppo 
 Il template si occupa di mostrare i valori delle variabili messe a disposizione dal controllore.
 È necessaria della logica per poter far in modo che queste componenti lavorino insieme, e questa logica di presentazione è
 gestita appunto dalla vista.
-In base a questi principi, la parta di vista del Listato 2-3 può essere separate in tre parti,
+In base a questi principi, la parta di vista del listato 2-3 può essere separate in tre parti,
 come mostrato dai Listati 2-8, 2-9 e 2-10.
 
 
@@ -464,7 +464,7 @@ Listato 2-12 - Template `list`, in `myproject/apps/myapp/modules/weblog/template
     <?php endforeach; ?>
     </table>
 
-Si dovrà definire un layout, come mostrato nel Listato 2-13, ma esso sarà riutilizzato diverse volte.
+Si dovrà definire un layout, come mostrato nel listato 2-13, ma esso sarà riutilizzato diverse volte.
 
 Listato 2-13 - Layout, in `myproject/apps/myapp/templates/layout.php`
 
@@ -478,7 +478,7 @@ Listato 2-13 - Layout, in `myproject/apps/myapp/templates/layout.php`
       </body>
     </html>
 
-Quello appena mostrato è l'esatto e unico codice richiesto per mostrare la stessa pagina che si otterrebbe con lo script del Listato 2-1. 
+Quello appena mostrato è l'esatto e unico codice richiesto per mostrare la stessa pagina che si otterrebbe con lo script del listato 2-1. 
 Il resto (rendere possibile che tutti i componenti interagiscano tra loro) è gestito da symfony.
 Se si contassero le linee di codice, si noterà che creare la lista di post in un'architettura MVC con symfony 
 non richieda più tempo o codice rispetto a scrivere la stessa cosa su un unico file.
@@ -710,7 +710,7 @@ Tra queste ci sono: contenitori dei parametri, costanti e caricamento automatico
 Molte delle classi che compongono il framework symfony sono dei contenitori di parametri. 
 È un modo conveniente di incapsulare gli attributi con dei metodi getter e setter chiari e puliti.
 Ad esempio, la classe `sfRequest` ha al suo interno un contenitore di parametri richiamabile attraverso il metodo `getParameterHolder()`.
-Ogni contenitore di parametri immagazzina i dati nello stesso modo, come viene mostrato nel Listato 2-14.
+Ogni contenitore di parametri immagazzina i dati nello stesso modo, come viene mostrato nel listato 2-14.
 
 Listato 2-14 - Utilizzo del contenitore di parametri della classe `sfRequest`
 
@@ -721,7 +721,7 @@ Listato 2-14 - Utilizzo del contenitore di parametri della classe `sfRequest`
 
 La maggior parte delle classi che utilizza un contenitore di parametri fornisce un metodo proxy per fornire dei metodi 
 più corti per le operazioni di get e set.
-Questo è il caso dell'oggetto `sfRequest`, in modo tale che sia possibile fare quando mostrato nel Listato 2-14 con il codice del Listato 2-15.
+Questo è il caso dell'oggetto `sfRequest`, in modo tale che sia possibile fare quando mostrato nel listato 2-14 con il codice del listato 2-15.
 
 Listato 2-15 - Utilizzo del metodo proxy del contenitore dei parametri dell'oggetto `sfRequest`
 
@@ -732,7 +732,7 @@ Listato 2-15 - Utilizzo del metodo proxy del contenitore dei parametri dell'ogge
 
 Il metodo getter del contenitore di parametri accetta un valore predefinito come secondo argomento.
 Tutto ciò fornisce un utile meccanismo di fallback che risulta molto più conciso rispetto a un blocco condizionale.
-Si veda come esempio il Listato 2-16.
+Si veda come esempio il listato 2-16.
 
 Listato 2-16 - Utilizzo del valore predefinito 
 
@@ -793,9 +793,9 @@ Listato 2-18 - Aggiungere un contenitore dei parametri a una classe
 
 ### Costanti
 
-Non sono presenti costanti in symfony perché le loro vera natura è tale da non poter cambiarne i valori qualora siano definiti.
-Symfony utilizza un proprio oggetto di configurazione, chiamato `sfConfig` che rimpiazza l'uso delle costanti.
-Esso fornisce metodi statici per accedere ovunque ai vari parametri. Il Listato 2-19 mostra l'utilizo dei metodi `sfConfig`.
+Non sono presenti costanti in symfony, perché le loro vera natura è tale da non poter cambiarne i valori qualora siano definiti.
+Symfony utilizza un proprio oggetto di configurazione, chiamato `sfConfig`, che rimpiazza l'uso delle costanti.
+Esso fornisce metodi statici per accedere ovunque ai vari parametri. Il listato 2-19 mostra l'utilizo dei metodi `sfConfig`.
 
 Listato 2-19 - Utilizzo dei metodi di `sfConfig` al posto delle costanti
 

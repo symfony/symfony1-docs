@@ -33,7 +33,7 @@ Tenendo conto di questi svantaggi, symfony utilizza file di configurazione solo 
 
 Per la sua configurazione, symfony utilizza il formato YAML, invece dei più tradizionali INI e XML. YAML mostra la struttura tramite indentazione ed è veloce da scrivere. I vantaggi e le regole di base sono già state mostrate nel capitolo 1. Comunque, occorre tenere a mente qualche convenzione quando si scrivono file YAML. Questa sezione introduce diverse convenzioni tra le più importanti. Per approfondimenti, visitare il [sito web di YAML](http://www.yaml.org/).
 
-Prima di tutto non sono ammessi caratteri di tabulazione in YAML: occorre usare spazi vuoti. I parser YAML non capiscono le tabulazioni, per cui si devono utilizzare spazi vuoti per l'indentazione (la convenzione in symfony è di due spazi), come mostrato nel Listato 5-1.
+Prima di tutto non sono ammessi caratteri di tabulazione in YAML: occorre usare spazi vuoti. I parser YAML non capiscono le tabulazioni, per cui si devono utilizzare spazi vuoti per l'indentazione (la convenzione in symfony è di due spazi), come mostrato nel listato 5-1.
 
 Listato 5-1 - YAML vieta l'utilizzo delle tabulazioni
 
@@ -48,7 +48,7 @@ Listato 5-1 - YAML vieta l'utilizzo delle tabulazioni
         webmaster: webmaster@example.com
 
 
-Se i parametri sono stringhe che cominciano o finiscono con spazi vuoti, contengono caratteri speciali (come # o ,) o sono parole chiave come "true, false" (intese come una stringa), occorre incapsulare il valore tra singoli apici, come mostrato nel Listato 5-2.
+Se i parametri sono stringhe che cominciano o finiscono con spazi vuoti, contengono caratteri speciali (come # o ,) o sono parole chiave come "true, false" (intese come una stringa), occorre incapsulare il valore tra singoli apici, come mostrato nel listato 5-2.
 
 Listato 5-2 - Stringhe non standard dovrebbero essere incapsulate tra singoli apici
 
@@ -59,7 +59,7 @@ Listato 5-2 - Stringhe non standard dovrebbero essere incapsulate tra singoli ap
     i18n:   'false' # se togliamo gli apici, viene restituito un valore booleano false
 
 
-Si possono definire stringhe lunghe in più righe e anche stringhe con più di una linea, con gli header speciali di stringa (> e |) più una indentazione addizionale. Il Listato 5-3 illustra questa convenzione.
+Si possono definire stringhe lunghe in più righe e anche stringhe con più di una linea, con gli header speciali di stringa (> e |) più una indentazione addizionale. Il listato 5-3 illustra questa convenzione.
 
 Listato 5-3 - Definizione di stringhe lunghe e su più righe
 
@@ -77,7 +77,7 @@ Listato 5-3 - Definizione di stringhe lunghe e su più righe
       65 Home Runs
       0.278 Batting Average
 
-Per definire un valore come array, racchiudere gli elementi tra parentesi quadre, oppure usare la sintassi estesa con i trattini, come mostrato nel Listato 5-4.
+Per definire un valore come array, racchiudere gli elementi tra parentesi quadre, oppure usare la sintassi estesa con i trattini, come mostrato nel listato 5-4.
 
 Listato 5-4 - Sintassi di array in YAML
 
@@ -90,7 +90,7 @@ Listato 5-4 - Sintassi di array in YAML
       - Sammy Sosa
       - Ken Griffey
 
-Per definire un valore come array associativo, o hash, racchiudere gli elementi tra parentesi graffe e inserire sempre uno spazio tra la chiave e il valore nella coppia 'key: value' e separare gli elementi della lista con delle virgole. Si può anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel Listato 5-5.
+Per definire un valore come array associativo, o hash, racchiudere gli elementi tra parentesi graffe e inserire sempre uno spazio tra la chiave e il valore nella coppia 'key: value' e separare gli elementi della lista con delle virgole. Si può anche utilizzare la sintassi estesa, aggiungendo indentazione e ritorno a capo per ogni chiave, come mostrato nel listato 5-5.
 
 Listato 5-5 - Array associativi in YAML
 
@@ -114,7 +114,7 @@ Listato 5-6 - Sintassi YAML per valori booleani
     true_value: true
     false_value: false
 
-Si possono aggiungere commenti (che devono cominciare con il cancelletto #) e spazi aggiuntivi, per rendere ancora più leggibili i file YAML, come mostrato nel Listato 5-7.
+Si possono aggiungere commenti (che devono cominciare con il cancelletto #) e spazi aggiuntivi, per rendere ancora più leggibili i file YAML, come mostrato nel listato 5-7.
 
 Listato 5-7 - Sintassi dei commenti e allineamento dei valori in YAML
 
@@ -124,7 +124,7 @@ Listato 5-7 - Sintassi dei commenti e allineamento dei valori in YAML
       contact:   contact@example.com
       admin:     admin@example.com # gli spazi aggiuntivi permettono un migliore allineamento dei valori
 
-In qualche file di configurazione di symfony capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione predefinita, ereditata da altri file YAML che si trovano nel core, è ripetuta in linee commentate nella propria applicazione per pura informazione. Se si vuole cambiare uno di tali parametri, occorre innanzitutto scommentare la linea, come mostrato nel Listato 5-8.
+In qualche file di configurazione di symfony capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione predefinita, ereditata da altri file YAML che si trovano nel core, è ripetuta in linee commentate nella propria applicazione per pura informazione. Se si vuole cambiare uno di tali parametri, occorre innanzitutto scommentare la linea, come mostrato nel listato 5-8.
 
 Listato 5-8 - La configurazione predefinita è mostrata commentata
 
@@ -136,7 +136,7 @@ Listato 5-8 - La configurazione predefinita è mostrata commentata
     settings:
       cache: true
 
-Qualche volta symfony raggruppa le definizioni dei parametri in categorie. Tutte le impostazioni relative a una data categoria appaiono indentati sotto il suo header. Strutturare lunghe liste di coppie chiave/valore raggruppandole in categorie aumenta la leggibilità della configurazione. Gli header di categoria cominciano con un punto (.). Il Listato 5-9 mostra un esempio di categorie.
+Qualche volta symfony raggruppa le definizioni dei parametri in categorie. Tutte le impostazioni relative a una data categoria appaiono indentati sotto il suo header. Strutturare lunghe liste di coppie chiave/valore raggruppandole in categorie aumenta la leggibilità della configurazione. Gli header di categoria cominciano con un punto (.). Il listato 5-9 mostra un esempio di categorie.
 
 Listato 5-9 - Gli header di categoria sembrano chiavi, ma cominciano con un un punto
 
@@ -147,7 +147,7 @@ Listato 5-9 - Gli header di categoria sembrano chiavi, ma cominciano con un un p
           mail:
             webmaster: webmaster@example.com
 
-In questo esempio, `mail` è una chiave e `general` è solo un header di categoria. Tutto funziona come se l'header non esistesse, come mostrato nel Listato 5-10. Il parametro `tax` è effettivamente un figlio diretto della chiave `all`. Tuttavia l'uso delle categorie aiuta symfony a trattare con gli array che sono sotto la chiave `all`.
+In questo esempio, `mail` è una chiave e `general` è solo un header di categoria. Tutto funziona come se l'header non esistesse, come mostrato nel listato 5-10. Il parametro `tax` è effettivamente un figlio diretto della chiave `all`. Tuttavia l'uso delle categorie aiuta symfony a trattare con gli array che sono sotto la chiave `all`.
 
 Listato 5-10 - Gli header di categoria esistono solo per una questione di leggibilità e sono in effetti ignorati
 
@@ -223,7 +223,7 @@ La maggior parte della configurazione è occupata dall'applicazione. È definita
 
 #### Configurazione del front controller
 
-La prima configurazione dell'applicazione in assoluto si trova nel front controller. Si tratta del primo script eseguito da una richiesta. Si veda codice di `web/index.php` mostrato nel Listato 5-11.
+La prima configurazione dell'applicazione in assoluto si trova nel front controller. Si tratta del primo script eseguito da una richiesta. Si veda codice di `web/index.php` mostrato nel listato 5-11.
 
 Listato 5-11 - Il front controller predefinito
 
@@ -354,7 +354,7 @@ Infatti, ci sono diversi livelli di configurazione in symfony:
     * Specifico per un ambiente
     * Per tutti gli ambienti
 
-Di tutte le proprietà che possono essere personalizzate, diverse sono dipendenti dall'ambiente. Conseguentemente, diversi file di configurazione YAML sono divisi per ambiente, più una sezione di coda per tutti gli ambienti. Il risultato di una tipica configurazione symfony è mostrato nel Listato 5-12.
+Di tutte le proprietà che possono essere personalizzate, diverse sono dipendenti dall'ambiente. Conseguentemente, diversi file di configurazione YAML sono divisi per ambiente, più una sezione di coda per tutti gli ambienti. Il risultato di una tipica configurazione symfony è mostrato nel listato 5-12.
 
 Listato 5-12 - Struttura dei file di configurazione di symfony 
 
@@ -379,7 +379,7 @@ Listato 5-12 - Struttura dei file di configurazione di symfony
     all:
       ...
 
-In più, il framework stesso definisce dei valori predefinite in file che non sono situati nell'albero del progetto, bensì nella cartella `sfConfig::get('sf_symfony_lib_dir')/config/config/` dell'installazione di symfony. Questa configurazione è mostrata nel Listato 5-13 e tali impostazioni sono ereditate da tutte le applicazioni. 
+In più, il framework stesso definisce dei valori predefinite in file che non sono situati nell'albero del progetto, bensì nella cartella `sfConfig::get('sf_symfony_lib_dir')/config/config/` dell'installazione di symfony. Questa configurazione è mostrata nel listato 5-13 e tali impostazioni sono ereditate da tutte le applicazioni. 
 
 Listato 5-13 - La configurazione predefinita, in `sfConfig::get('sf_symfony_lib_dir')/config/config/settings.yml`
 
@@ -391,7 +391,7 @@ Listato 5-13 - La configurazione predefinita, in `sfConfig::get('sf_symfony_lib_
          default_action:        index
          ...
 
-Queste configurazioni predefinite sono ripetute nei file di configurazione di progetti, applicazioni e moduli come commenti, come mostrato nel Listato 5-14, così che si possa conoscere quali sono i parametri predefiniti e modificarli. 
+Queste configurazioni predefinite sono ripetute nei file di configurazione di progetti, applicazioni e moduli come commenti, come mostrato nel listato 5-14, così che si possa conoscere quali sono i parametri predefiniti e modificarli. 
 
 Listato 5-14 - Configurazione predefinita, ripetuta per informazione, in frontend/config/settings.yml
 
@@ -469,7 +469,7 @@ Il nome del parametro è una concatenazione di diversi elementi, separati da un 
 
 L'ambiente non è incluso, dato che il codice PHP avrà accesso unicamente ai valori definiti per l'ambiente in cui è eseguito.
 
-Ad esempio, se si avesse bisogno di accedere ai parametri definiti in `app.yml` mostrato nel Listato 5-15, occorrerà il codice mostrato nel Listato 5-16.
+Ad esempio, se si avesse bisogno di accedere ai parametri definiti in `app.yml` mostrato nel listato 5-15, occorrerà il codice mostrato nel listato 5-16.
 
 Listato 5-15 - Un esempio di configurazione di `app.yml`
 
@@ -501,7 +501,7 @@ Listato 5-16 - Accedere alle impostazioni di configurazione di PHP nell'ambiente
 
 In tal maniera, le impostazioni di configurazione di symfony hanno tutti i vantaggi delle costanti di PHP, ma non gli svantaggi, in quanto i loro valori possono essere modificati.
 
-Tenendo a mente questo concetto, il file `settings.yml`, nel quale si possono impostare i parametri del framework per l'applicazione, è equivalente a una lista di chiamate `sfConfig::set()`. Il Listato 5-17 è interpretato come nel Listato 5-18.
+Tenendo a mente questo concetto, il file `settings.yml`, nel quale si possono impostare i parametri del framework per l'applicazione, è equivalente a una lista di chiamate `sfConfig::set()`. Il listato 5-17 è interpretato come nel listato 5-18.
 
 Listato 5-17 - Estratto di `settings.yml`
 
@@ -525,7 +525,7 @@ Il significato dei parametri del file `settings.yml` è spiegato nel capitolo 19
 
 ### Impostazioni dell'applicazione personalizzati e `app.yml`
 
-La maggior parte delle impostazioni delle funzioni di un'applicazione dovrebbero essere definiti in `app.yml`, dentro la cartella `progetto/apps/frontend/config/`. Questo file dipende dall'ambiente e di base è vuoto. Impostare in questo file tutti i parametri che si vogliono cambiare facilmente e usare la classe `sfConfig` per accedere a tali parametri dal codice. Il Listato 5-19 mostra un esempio.
+La maggior parte delle impostazioni delle funzioni di un'applicazione dovrebbero essere definiti in `app.yml`, dentro la cartella `progetto/apps/frontend/config/`. Questo file dipende dall'ambiente e di base è vuoto. Impostare in questo file tutti i parametri che si vogliono cambiare facilmente e usare la classe `sfConfig` per accedere a tali parametri dal codice. Il listato 5-19 mostra un esempio.
 
 Listato 5-19 - Un esempio di app.yml per definire operazioni su carta di credito 
     
@@ -579,7 +579,7 @@ C'è qualche trucco ancora da imparare prima di scrivere dei file YAML. Servirà
 
 ### Utilizzare costanti nei file YAML
 
-Certi parametri di configurazione si basano sul valore di altri. Per evitare di duplicare i valori, symfony supporta le costanti in YAML. Quando il gestore della configurazione incontra un parametro (accessibile tramite tramite `sfConfig::get()`) in maiuscolo e racchiuso tra simboli `%`, esso lo sostituisce con il suo valore effettivo. Il Listato 5-20 ne mostra un esempio.
+Certi parametri di configurazione si basano sul valore di altri. Per evitare di duplicare i valori, symfony supporta le costanti in YAML. Quando il gestore della configurazione incontra un parametro (accessibile tramite tramite `sfConfig::get()`) in maiuscolo e racchiuso tra simboli `%`, esso lo sostituisce con il suo valore effettivo. Il listato 5-20 ne mostra un esempio.
 
 Listato 5-20 - Utilizzo delle costanti in YAML, esempio da `autoload.yml`
 
@@ -597,7 +597,7 @@ Tutte le costanti disponibili sono descritte nella [guida di riferimento a symfo
 
 ### Utilizzare codice nella configurazione
 
-Potrebbe succedere che la propria configurazione si debba basare su parametri esterni (database o un altro file di configurazione). Per gestire questi casi particolari, viene analizzato il file di configurazione di symfony da PHP prima che essi vengano passati al parser YAML. Questo significa che i file YAML possono contenere codice PHP, come mostrato nel Listato 5-21.
+Potrebbe succedere che la propria configurazione si debba basare su parametri esterni (database o un altro file di configurazione). Per gestire questi casi particolari, viene analizzato il file di configurazione di symfony da PHP prima che essi vengano passati al parser YAML. Questo significa che i file YAML possono contenere codice PHP, come mostrato nel listato 5-21.
 
 Listato 5-21 - I file YAML possono contenere codice PHP
 
@@ -620,7 +620,7 @@ Inoltre, siccome il costrutto `echo` non aggiunge un ritorno a capo, è necessar
 
 ### Navigare i propri file YAML personali
 
-Ogni qualvolta si voglia leggere un file YAML direttamente, si può usare la classe `sfYaml`. Si tratta di un parser YAML che trasforma i file in array associativi di PHP. Il Listato 5-22 presenta un file YAML di esempio, mentre il Listato 5-23 mostra come analizzarlo.
+Ogni qualvolta si voglia leggere un file YAML direttamente, si può usare la classe `sfYaml`. Si tratta di un parser YAML che trasforma i file in array associativi di PHP. Il listato 5-22 presenta un file YAML di esempio, mentre il listato 5-23 mostra come analizzarlo.
 
 Listato 5-22 - File di esempio `test.yml`
 

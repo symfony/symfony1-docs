@@ -24,7 +24,7 @@ La riga di comando di symfony automatizza la creazione di moduli. Basta eseguire
     >> tokens    ~/mioprogetto/apps/frontend/modules/contenuto/actions/actions.class.php
     >> tokens    ~/mioprogetto/apps/frontend/modules/contenuto/templates/indexSuccess.php
 
-A parte le cartelle `actions/` e `templates/`, questo comando crea solo tre file. Il primo si trova nella cartella `test/`, riguarda i test funzionali e non si ha bisogno di farci caso fino al capitolo 15. `actions.class.php` (mostrato nel Listato 4-1) esegue il forward al modulo predefinito con la pagina di congratulazioni. Il file `templates/indexSuccess.php` è vuoto.
+A parte le cartelle `actions/` e `templates/`, questo comando crea solo tre file. Il primo si trova nella cartella `test/`, riguarda i test funzionali e non si ha bisogno di farci caso fino al capitolo 15. `actions.class.php` (mostrato nel listato 4-1) esegue il forward al modulo predefinito con la pagina di congratulazioni. Il file `templates/indexSuccess.php` è vuoto.
 
 Listato 4-1 - L'azione predefinita generata in `actions/actions.class.php`
 
@@ -53,7 +53,7 @@ L'azione predefinita `index` non verrà usata in questo capitolo, quindi si può
 
 Figura 4-1 - La pagina index creata in modo predefinito
 
-![La pagina index creata in modo predefinito](http://www.symfony-project.org/images/book/1_4/F0401.jpg "The default generated index page")
+![La pagina index creata in modo predefinito](http://www.symfony-project.org/images/book/1_4/F0401.jpg "La pagina index creata in modo predefinito")
 
 Aggiungere una pagina
 ---------------------
@@ -62,7 +62,7 @@ In symfony, la logica che sta dietro alle pagine è memorizzata nell'azione, men
 
 ### Aggiungere un'azione
 
-La pagina "Buongiorno, mondo!" sarà accessibile attraverso un'azione `show`. Per crearla, è sufficiente aggiungere un metodo `executeShow` alla classe `contenutoActions`, come mostrato nel Listato 4-2.
+La pagina "Buongiorno, mondo!" sarà accessibile attraverso un'azione `show`. Per crearla, è sufficiente aggiungere un metodo `executeShow` alla classe `contenutoActions`, come mostrato nel listato 4-2.
 
 Listato 4-2 - Aggiungere un'azione vuol dire aggiungere un metodo Execute alla classe Action
 
@@ -112,14 +112,14 @@ symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È n
 
 L'azione si attende un template per visualizzare se stessa. Un template è un file localizzato nella cartella `templates/` di un modulo, nominato in base all'azione e alla azione di terminazione. L'azione di terminazione predefinita è "success", quindi il file del template che deve essere creato per l'azione `show` deve essere chiamato `showSuccess.php`.
 
-I template devono contenere solo codice di presentazione, quindi al loro interno bisogna utilizzare meno codice PHP possibile. Una pagina che mostra la scritta "Buongiorno, mondo!" può avere un template tanto semplice quanto quello mostrato nel Listato 4-3.
+I template devono contenere solo codice di presentazione, quindi al loro interno bisogna utilizzare meno codice PHP possibile. Una pagina che mostra la scritta "Buongiorno, mondo!" può avere un template tanto semplice quanto quello mostrato nel listato 4-3.
 
 Listato 4-3 - Il template `contenuto/templates/showSuccess.php`
 
     [php]
     <p>Buongiorno, mondo!</p>
 
-Se è necessario eseguire del codice PHP nel template, bisogna evitare di utilizzare la normale sintassi PHP, come mostrato nel Listato 4-4. Per i template è meglio utilizzare la sintassi PHP alternativa, come mostrato nel Listato 4-5, in modo da rendere il codice più comprensibile anche per chi non è un programmatore PHP. Non solo il codice finale sarà perfettamente indentato, ma aiuterà anche a tenere il codice PHP complesso nell'azione, in quanto solo le istruzioni di controllo (`if`, `foreach`, `while` e così via) hanno una sintassi alternativa.
+Se è necessario eseguire del codice PHP nel template, bisogna evitare di utilizzare la normale sintassi PHP, come mostrato nel listato 4-4. Per i template è meglio utilizzare la sintassi PHP alternativa, come mostrato nel listato 4-5, in modo da rendere il codice più comprensibile anche per chi non è un programmatore PHP. Non solo il codice finale sarà perfettamente indentato, ma aiuterà anche a tenere il codice PHP complesso nell'azione, in quanto solo le istruzioni di controllo (`if`, `foreach`, `while` e così via) hanno una sintassi alternativa.
 
 Listato 4-4 - L'suale sintassi PHP, buona per le azioni, ma cattiva per i template
 
@@ -179,7 +179,7 @@ Notare che l'utilizzo del tag breve di apertura (`<?=`, equivalente a `<?php ech
 Link a un'altra azione
 ----------------------
 
-Sappiamo già che c'è un disaccoppiamento totale tra il nome di una azione e l'URL utilizzata per chiamarla. Quindi se in un template si crea un link a `update` come nel Listato 4-8, funzionerà solo con le rotte in modalità predefinita. Se successivamente si decide di cambiare il modo in cui gli URL devono apparire, sarà necessario rivedere tutti i template per modificare i collegamenti ipertestuali.
+Sappiamo già che c'è un disaccoppiamento totale tra il nome di una azione e l'URL utilizzata per chiamarla. Quindi se in un template si crea un link a `update` come nel listato 4-8, funzionerà solo con le rotte in modalità predefinita. Se successivamente si decide di cambiare il modo in cui gli URL devono apparire, sarà necessario rivedere tutti i template per modificare i collegamenti ipertestuali.
 
 Listato 4-8 - Collegamenti ipertestuali, il modo classico
 
@@ -190,7 +190,7 @@ Listato 4-8 - Collegamenti ipertestuali, il modo classico
 
 Per evitare questo problema, nel creare collegamenti ipertestuali con le azioni dell'applicazione si dovrebbe sempre usare l'helper `link_to()`. Quando si vuole generare unicamente la parte dell'URL senza l'HTML, allora si può utilizzare l'helper `url_for()`.
 
-Un helper è una funzione PHP definita da symfony con lo scopo di essere usata all'interno dei template. Restituisce del codice HTML ed è più veloce da usare rispetto a scrivere il codice HTML a mano. Il Listato 4-9 mostra l'uso degli helper per i collegamenti ipertestuali.
+Un helper è una funzione PHP definita da symfony con lo scopo di essere usata all'interno dei template. Restituisce del codice HTML ed è più veloce da usare rispetto a scrivere il codice HTML a mano. Il listato 4-9 mostra l'uso degli helper per i collegamenti ipertestuali.
 
 Listato 4-9 - Gli helper `link_to()` e `url_for()`
 
@@ -210,7 +210,7 @@ L'HTML risultante sarà lo stesso del precedente, eccetto che quando si cambiano
 
 L'utilizzo dei form merita un capitolo a sé stante, dato che symfony fornisce molti strumenti per renderli ancora più facili. Si imparerà di più su questi helper nel capitolo 10.
 
-L'helper `link_to()`, così come altri helper, accetta un altro parametro per opzioni speciali e addizionali attributi per i tag. Il Listato 4-10 mostra un esempio di opzioni passate come parametro e dell'HTML risultante. Le opzioni possono essere sia un array associativo che una semplice stringa con coppie `chiave=valore` separate da spazi.
+L'helper `link_to()`, così come altri helper, accetta un altro parametro per opzioni speciali e addizionali attributi per i tag. Il listato 4-10 mostra un esempio di opzioni passate come parametro e dell'HTML risultante. Le opzioni possono essere sia un array associativo che una semplice stringa con coppie `chiave=valore` separate da spazi.
 
 Listato 4-10 - Molti helper accettano opzioni come parametri
 
@@ -232,7 +232,7 @@ Listato 4-10 - Molti helper accettano opzioni come parametri
         href="http://localhost/frontend_dev.php/contenuto/update/nome/anonymous">
         Non dirò mai il mio nome</a>
 
-Ogni volta che si utilizza un helper di symfony che genera un tag HTML, è possibile inserire ulteriori attributi al tag (come l'attributo `class` nell'esempio del Listato 4-10) nelle opzioni. Questi attributi si possono anche scrivere nel modo "sporco e veloce" dell'HTML 4.0 (senza i doppi apici) e symfony li mostrerà con una formattazione XHTML. Questa è un'altra ragione per cui gli helper sono più veloci da scrivere rispetto all'HTML.
+Ogni volta che si utilizza un helper di symfony che genera un tag HTML, è possibile inserire ulteriori attributi al tag (come l'attributo `class` nell'esempio del listato 4-10) nelle opzioni. Questi attributi si possono anche scrivere nel modo "sporco e veloce" dell'HTML 4.0 (senza i doppi apici) e symfony li mostrerà con una formattazione XHTML. Questa è un'altra ragione per cui gli helper sono più veloci da scrivere rispetto all'HTML.
 
 >**NOTE**
 >Essendo necessaria una ulteriore analisi e trasformazione, la sintassi con stringa è un po' più lenta della sintassi con gli array.
@@ -242,7 +242,7 @@ Come tutti gli helper di symfony, gli helper per i link sono numerosi e hanno mo
 Ottenere informazioni dalla Request
 -----------------------------------
 
-Se l'utente invia informazioni tramite un form (di solito in una richiesta POST) o tramite l'URL (richiesta GET), è possibile recuperare i dati relativi dall'azione con il metodo `getParameter()` dell'oggetto `sfRequest`. Il Listato 4-11 mostra come in `update`, si recupera il valore del parametro `nome`.
+Se l'utente invia informazioni tramite un form (di solito in una richiesta POST) o tramite l'URL (richiesta GET), è possibile recuperare i dati relativi dall'azione con il metodo `getParameter()` dell'oggetto `sfRequest`. Il listato 4-11 mostra come in `update`, si recupera il valore del parametro `nome`.
 
 Listato 4-11 - Recuperari i dati dal parametro Request dell'azione
 
@@ -263,7 +263,7 @@ Per convenienza, tutti i metodi `executeXxx()` prendono come primo parametro l'o
 
 Se l'elaborazione dei dati è semplice, non si avrà nemmeno bisogno di usare l'azione per recuperare i parametri della richiesta. Il template ha accesso a un oggetto chiamato $sf_params`, che offre un  metodo ``get`() per recuperare i parametri di richiesta, proprio come il `getParameter()` nell'azione.
 
-Se `executeUpdate()` fossero vuoti, il Listato 4-12 mostra come il template `updateSuccess.php`  dovrebbe recuperare lo stesso parametro `nome`.
+Se `executeUpdate()` fossero vuoti, il listato 4-12 mostra come il template `updateSuccess.php`  dovrebbe recuperare lo stesso parametro `nome`.
 
 Listato 4-12 - Recuperare i dati dei parametri della Request direttamente nel template
 
@@ -273,7 +273,7 @@ Listato 4-12 - Recuperare i dati dei parametri della Request direttamente nel te
 >**NOTE**
 >Perché non usare invece le variabili `$_POST`, `$_GET`, o `$_REQUEST`? Perché allora l'URL verrà formattato in modo diverso (come in `http://localhost/articles/europe/france/finance.html`, senza `?` nè `=`), le normali variabili PHP non funzionano più e solo il sistema delle rotte sarà in grado di recuperare i parametri di richiesta. E si potrebbe voler aggiungere un filtro in ingresso per impedire l'iniezione di codice maligno, che è possibile solo se si mantengono tutti i parametri di richiesta in un solo contenitore di parametri.
 
-L'oggetto $sf_params` è più potente di un semplice getter equivalente a un array. Ad esempio, se si vuole fare il test dell'esistenza di un parametro di richiesta, si può semplicemente usare il metodo $sf_params->has()` invece di verificare l'effettivo valore con `get()`, come nel Listato 4-13.
+L'oggetto $sf_params` è più potente di un semplice getter equivalente a un array. Ad esempio, se si vuole fare il test dell'esistenza di un parametro di richiesta, si può semplicemente usare il metodo $sf_params->has()` invece di verificare l'effettivo valore con `get()`, come nel listato 4-13.
 
 Listato 4-13 - Fare il test dell'esistenza di un parametro richiesta nel template
 

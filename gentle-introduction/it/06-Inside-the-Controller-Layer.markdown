@@ -39,7 +39,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
 
 ### Il front controller di default
 
-Il front controller di default, chiamato `index.php` e posizionato nella cartella `web/` del progetto, è un semplice file PHP come si può vedere nel Listato 6-1.
+Il front controller di default, chiamato `index.php` e posizionato nella cartella `web/` del progetto, è un semplice file PHP come si può vedere nel listato 6-1.
 
 Listato 6-1 - Il front controller di default per l'ambiente di produzione
 
@@ -65,7 +65,7 @@ e questo URL visualizzerà la stessa pagina nell'ambiente di sviluppo:
 
     http://localhost/frontend_dev.php/mymodule/index
 
-Creare un nuovo ambiente è semplice quanto creare un nuovo front controller. Per esempio, potrebbe essere necessario avere un ambiente di staging per permettere ai clienti di testare l'applicazione prima di andare in produzione. Per creare questo ambiente di staging basta copiare `web/frontend_dev.php` in `web/frontend_staging.php` e cambiare il valore del secondo argomento della chiamata a `ProjectConfiguration::getApplicationConfiguration()` in `staging`. Ora in tutti i file di configurazione è possibile aggiungere una nuova sezione `staging:` per impostare valori specifici per questo ambiente, come mostrato nel Listato 6-2.
+Creare un nuovo ambiente è semplice quanto creare un nuovo front controller. Per esempio, potrebbe essere necessario avere un ambiente di staging per permettere ai clienti di testare l'applicazione prima di andare in produzione. Per creare questo ambiente di staging basta copiare `web/frontend_dev.php` in `web/frontend_staging.php` e cambiare il valore del secondo argomento della chiamata a `ProjectConfiguration::getApplicationConfiguration()` in `staging`. Ora in tutti i file di configurazione è possibile aggiungere una nuova sezione `staging:` per impostare valori specifici per questo ambiente, come mostrato nel listato 6-2.
 
 Listato 6-2 - Esempio di `app.yml` con impostazioni specifiche per l'ambiente di staging
 
@@ -107,11 +107,11 @@ Listato 6-3 - Classe di azione d'esempio, in `apps/frontend/modules/mymodule/act
 >**CAUTION**
 >Anche se i nomi dei metodi non sono case-sensitive in PHP, questi lo sono in symfony. Perciò è importante non dimenticare che i metodi delle azioni devono iniziare con un `execute` minuscolo seguito dallo stesso identico nome dell'azione con la prima lettera maiuscola.
 
-Per poter richiedere un'azione è necessario invocare lo script del front controller passando come parametri i nomi di un modulo e di un'azione. L'impostazione predefinita non fa altro che appendere la coppia `module_name`/`action_name` allo script. Questo significa che l'azione definita nel Listato 6-4 può essere richiamata con questo URL:
+Per poter richiedere un'azione è necessario invocare lo script del front controller passando come parametri i nomi di un modulo e di un'azione. L'impostazione predefinita non fa altro che appendere la coppia `module_name`/`action_name` allo script. Questo significa che l'azione definita nel listato 6-4 può essere richiamata con questo URL:
 
     http://localhost/index.php/mymodule/index
 
-Aggiungere nuove azioni significa aggiungere ulteriori metodi `execute` all'oggetto `sfActions` come mostrato nel Listato 6-4.
+Aggiungere nuove azioni significa aggiungere ulteriori metodi `execute` all'oggetto `sfActions` come mostrato nel listato 6-4.
 
 Listato 6-4 - Classe azione con due azioni, in `frontend/modules/mymodule/actions/actions.class.php`
 
@@ -146,7 +146,7 @@ Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato
 
 ### Sintassi alternativa per le classi azione
 
-Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del Listato 6-4 può essere scritto con i due file dei Listati 6-5 e 6-6.
+Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del listato 6-4 può essere scritto con i due file dei Listati 6-5 e 6-6.
 
 Listato 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAction.class.php`
 
@@ -172,7 +172,7 @@ Listato 6-6 - File azione singolo, in `frontend/modules/mymodule/actions/listAct
 
 ### Recuperare informazioni nell'azione
 
-La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del core di symfony. Il Listato 6-7 mostra come utilizzarli.
+La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del core di symfony. Il listato 6-7 mostra come utilizzarli.
 
 Listato 6-7 - Metodi comuni `sfActions`
 
@@ -234,7 +234,7 @@ Se esiste una vista predefinita da invocare (questo è il caso più comune), l'a
     [php]
     return sfView::SUCCESS;
 
-Symfony cercherà quindi un template chiamato `actionNameSuccess.php`. Questo è definito come comportamento predefinito, quindi anche omettendo la direttiva `return` nel metodo di un'azione symfony cercherà ancora un template `actionNameSuccess.php`. Le azioni vuote scatenano lo stesso comportamento. Nel Listato 6-8 alcuni esempi di corretta conclusione delle azioni.
+Symfony cercherà quindi un template chiamato `actionNameSuccess.php`. Questo è definito come comportamento predefinito, quindi anche omettendo la direttiva `return` nel metodo di un'azione symfony cercherà ancora un template `actionNameSuccess.php`. Le azioni vuote scatenano lo stesso comportamento. Nel listato 6-8 alcuni esempi di corretta conclusione delle azioni.
 
 Listato 6-8 - Azioni che invocano i template `indexSuccess.php` e `listSuccess.php`
 
@@ -285,7 +285,7 @@ Listato 6-9 - Aggirare la vista facendo l'echo della risposta e restituendo `sfV
       return $this->renderText("<html><body>Hello, World!</body></html>");
     }
 
-In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo successivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel Listato 6-10.
+In alcuni casi è necessario inviare una risposta vuota ma con alcune intestazioni definite in essa (specialmente l'intestazione `X-JSON`). Definire le intestazioni tramite l'oggetto `sfResponse`, di cui si parlerà nel capitolo successivo, e restituire la costante `sfView::HEADER_ONLY`, come mostrato nel listato 6-10.
 
 Listato 6-10 - Evitare la creazione della vista inviando solamente le intestazioni
 
@@ -333,7 +333,7 @@ La scelta tra un redirect e un forward a volte può essere difficoltosa. Per sce
 
 Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario ricorrere **sempre** a un redirect. Il vantaggio principale è che se l'utente rinfresca la pagina con la risposta il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
 
-Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra a un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il Listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
+Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra a un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
 
 Listato 6-11 - Utilizzo del metodo `forward404()`
 
@@ -356,12 +356,12 @@ Listato 6-11 - Utilizzo del metodo `forward404()`
 >Se siete in cerca dell'azione e del template per l'errore 404, sappiate che si trova nella cartella `$sf_symfony_ lib_dir/controller/default/`. 
 >È possibile personalizzare questa pagina creando un nuovo modulo `default` nell'applicazione, sovrascrivendo quella proposta dal framework e definendo al suo interno un'azione `error404` e un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
-L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel Listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel Listato 6-12.
+L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel listato 6-12.
 
 Listato 6-12 - Utilizzo del metodo `forward404If()`
 
     [php]
-    // Questa azione è equivalente a quella presentata nel Listato 6-11
+    // Questa azione è equivalente a quella presentata nel listato 6-11
     public function executeShow(sfWebRequest $request)
     {
       $article = Doctrine::getTable('Article')->find($request->getParameter('id'));
@@ -384,7 +384,7 @@ Utilizzare questi metodi oltre a mantenere il codice compatto permette di render
 
 La convenzione per la denominazione delle azioni come `executeActionName()` (nel caso delle classi `sfActions`) o `execute()` (nel caso delle classi `sfAction`) garantisce che symfony possa trovare il metodo dell'azione. Permette anche di aggiungere altri metodi che non verranno considerati come azioni a patto che non inizino con `execute`.
 
-Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esecuzione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel Listato 6-13.
+Esiste un'altra utile convenzione quando è necessario ripetere diverse dichiarazioni in ogni azione prima della reale esecuzione. È possibile spostare queste dichiarazioni nel metodo `preExecute()` della classe azione. Allo stesso modo è possibile ripetere delle dichiarazioni dopo l'esecuzione di ogni azione: basta spostarle nel metodo `postExecute()`. La sintassi di questi metodi è visibile nel listato 6-13.
 
 Listato 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizzati nella classe azione
 
@@ -432,29 +432,29 @@ Il primo argomento passato a ogni metodo di un'azione è l'oggetto della richies
 
 Table 6-1 - Metodi dell'oggetto `sfWebRequest`
 
-Nome                             | Funzione                               |  Output d'esempio
--------------------------------- | -------------------------------------- | -----------------------------------------------------------------------
-**Informazioni della richiesta** |                                        |
-`isMethod($method)`              | È una post o una get?                  | true o false
-`getMethod()`                    | Nome del metodo della richiesta        | `'POST'`
-`getHttpHeader('Server')`        | Valore di un'intestazione HTTP         | `'Apache/2.0.59 (Unix) DAV/2 PHP/5.1.6'`
-`getCookie('foo')`               | Valore di un cookie                    | `'bar'`
-`isXmlHttpRequest()`*            | È una richiesta Ajax?                  | `true`
-`isSecure()`                     | È una richiesta SSL?                   | `true`
-**Parametri della richiesta**    |                                        |
-`hasParameter('foo')`            | Questo parametro è nella richiesta?    | `true`
-`getParameter('foo')`            | Valore di un parametro                 | `'bar'`
-`getParameterHolder()->getAll()` | Array  dei parametri della richiesta   |
-**Informazioni relative URI**    |                                        |
-`getUri()`                       | URI completo                           | `'http://localhost/frontend_dev.php/mymodule/myaction'`
-`getPathInfo()`                  | Path info                              | `'/mymodule/myaction'`
-`getReferer()`**                 | Referrer                               | `'http://localhost/frontend_dev.php/'`
-`getHost()`                      | Host name                              | `'localhost'`
-`getScriptName()`                | Front controller path e nome           | `'frontend_dev.php'`
-**Informazioni Client Browser**  |                                        |
-`getLanguages()`                 | Array delle lingue accettate           | `Array( ` ` [0] => fr ` ` [1] => fr_FR ` ` [2] => en_US ` ` [3] => en )`
-`getCharsets()`                  | Array dei charsets accettati           | `Array( ` ` [0] => ISO-8859-1 ` ` [1] => UTF-8 ` ` [2] => * )`
-getAcceptableContentTypes()      | Array dei content type accettati       | `Array( [0] => text/xml [1] => text/html`
+Nome                             | Funzione                             |  Output d'esempio
+-------------------------------- | ------------------------------------ | -------------------------------------------------------
+**Informazioni della richiesta** |                                      |
+`isMethod($method)`              | È una post o una get?                | true o false
+`getMethod()`                    | Nome del metodo della richiesta      | `'POST'`
+`getHttpHeader('Server')`        | Valore di un'intestazione HTTP       | `'Apache/2.0.59 (Unix) DAV/2 PHP/5.1.6'`
+`getCookie('foo')`               | Valore di un cookie                  | `'bar'`
+`isXmlHttpRequest()`*            | È una richiesta Ajax?                | `true`
+`isSecure()`                     | È una richiesta SSL?                 | `true`
+**Parametri della richiesta**    |                                      |
+`hasParameter('foo')`            | Questo parametro è nella richiesta?  | `true`
+`getParameter('foo')`            | Valore di un parametro               | `'bar'`
+`getParameterHolder()->getAll()` | Array  dei parametri della richiesta |
+**Informazioni relative a URI**  |                                      |
+`getUri()`                       | URI completo                         | `'http://localhost/frontend_dev.php/mymodule/myaction'`
+`getPathInfo()`                  | Path info                            | `'/mymodule/myaction'`
+`getReferer()`**                 | Referrer                             | `'http://localhost/frontend_dev.php/'`
+`getHost()`                      | Host name                            | `'localhost'`
+`getScriptName()`                | Front controller path e nome         | `'frontend_dev.php'`
+**Informazioni Client Browser**  |                                      |
+`getLanguages()`                 | Array delle lingue accettate         | `Array( [0] => fr [1] => fr_FR [2] => en_US [3] => en )`
+`getCharsets()`                  | Array dei charset accettati          | `Array( [0] => ISO-8859-1 [1] => UTF-8 [2] => * )`
+getAcceptableContentTypes()      | Array dei content type accettati     | `Array( [0] => text/xml [1] => text/html`
 
 `*` *Funziona con prototype, Prototype, Mootools e jQuery*
 
@@ -469,7 +469,7 @@ Symfony gestisce automaticamente le sessioni utente ed è in grado di mantenere 
 
 ### Accedere alla sessione utente
 
-L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente come mostrato nel Listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente anche nel caso in qui questo non fosse identificato.
+L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente come mostrato nel listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente anche nel caso in qui questo non fosse identificato.
 
 Listato 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati tra le richieste
 
@@ -494,7 +494,7 @@ Listato 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati
 >**CAUTION**
 >È possibile memorizzare oggetti nella sessione utente ma è una pratica fermamente sconsigliata. Questo perché l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti" nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
 
-Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo argomento per specificare il valore predefinito da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri a cui si può accedere con il metodo `getAttributeHolder()`. Permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri come mostrato nel Listato 6-15.
+Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo argomento per specificare il valore predefinito da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri a cui si può accedere con il metodo `getAttributeHolder()`. Permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri come mostrato nel listato 6-15.
 
 Listato 6-15 - Rimozione di dati dalla sessione utente
 
@@ -512,7 +512,7 @@ Listato 6-15 - Rimozione di dati dalla sessione utente
       }
     }
 
-Gli attributi della sessione utente sono disponibili anche nei template tramite la variabile `$sf_user` che contiene l'attuale oggetto `sfUser` come mostrato nel Listato 6-16.
+Gli attributi della sessione utente sono disponibili anche nei template tramite la variabile `$sf_user` che contiene l'attuale oggetto `sfUser` come mostrato nel listato 6-16.
 
 Listato 6-16 - Anche i template hanno accesso agli attributi della sessione utente
 
@@ -555,7 +555,7 @@ Gli attributi flash sono un modo pulito per passare informazioni alla richiesta 
 
 La funzionalità di gestione delle sessioni di symfony maschera completamente la memorizzazione degli ID di sessione lato client e lato server nei confronti dello sviluppatore. Tuttavia nel caso in cui si volesse modificare il comportamento predefinito dei meccanismi di gestione delle sessioni si sappia che è comunque possibile. Questa è una cosa principalmente per utenti avanzati.
 
-Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificando il file di configurazione `factories.yml` come mostrato nel Listato 6-17.
+Lato client le sessioni sono gestite da cookie. Il cookie di sessione di symfony è chiamato `symfony`, è possibile cambiare questo nome modificando il file di configurazione `factories.yml` come mostrato nel listato 6-17.
 
 Listato 6-17 - Modificare il nome del cookie di sessione, in `apps/frontend/config/factories.yml`
 
@@ -572,7 +572,7 @@ La gestione delle sessioni di symfony è basata sulle sessioni di PHP. Questo si
 
     session.use_trans_sid = 1
 
-Lato server symfony memorizza le sessioni utente su file come comportamento predefinito. È possibile memorizzarle sul database cambiando il valore del parametro `class` nel file `factories.yml` come mostrato nel Listato 6-18.
+Lato server symfony memorizza le sessioni utente su file come comportamento predefinito. È possibile memorizzarle sul database cambiando il valore del parametro `class` nel file `factories.yml` come mostrato nel listato 6-18.
 
 Listato 6-18 - Cambiare server session storage, in `apps/frontend/config/factories.yml`
 
@@ -591,7 +591,7 @@ L'impostazione `database` definisce quale connessione al database utilizzare. Sy
 
 La classi disponibili per il session storage sono `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage` e `sfPDOSessionStorage`; l'ultima è quella da preferire. Per disabilitare totalmente il session storage si può utilizzaree la classe `sfNoStorage`.
 
-Le sessioni scadono automaticamente dopo 30 minuti. Questa impostazione predefinita può essere modificata per ogni ambiente nello stesso file di configurazione `factories.yml`, questa volta però nel factory `user` come mostrato nel Listato 6-19.
+Le sessioni scadono automaticamente dopo 30 minuti. Questa impostazione predefinita può essere modificata per ogni ambiente nello stesso file di configurazione `factories.yml`, questa volta però nel factory `user` come mostrato nel listato 6-19.
 
 Listato 6-19 - Modificare la durata delle sessioni, in `apps/frontend/config/factories.yml`
 
@@ -615,7 +615,7 @@ Prima di essere eseguita ogni azione passa attraverso un filtro speciale che con
   * Le azioni sicure richiedono che l'utente si autenticato.
   * Le credenziali sono determinati privilegi di sicurezza che permettono l'organizzazione della sicurezza in gruppi.
 
-Restringere l'accesso a un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella cartella `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il Listato 6-20 mostra un file `security.yml` d'esempio.
+Restringere l'accesso a un'azione viene fatto semplicemente creando e modificando un file di configurazione YAML chiamato `security.yml` nella cartella `config/` del modulo. In questo file si possono specificare i requisiti di sicurezza che l'utente deve soddisfare per ogni singola azione o per tutte le azioni. Il listato 6-20 mostra un file `security.yml` d'esempio.
 
 Listato 6-20 - Impostare le restrizioni d'accesso, in `apps/frontend/modules/mymodule/config/security.yml`
 
@@ -638,7 +638,7 @@ Le azioni non sono sicure in modo predefinito, quindi quando non è presente un 
   * Se l'utente non viene riconosciuto viene rediretto all'azione di login predefinita.
   * Se l'utente viene riconosciuto ma non detiene le sufficienti credenziali viene rediretto all'azione secure predefinita, mostrata in Figura 6-1.
 
-Le pagine predefinite di login e secure sono molto semplici, molto probabilmente si avrà la necessità di personalizzarle. È possibile configurare quali azioni chiamare in caso di privilegi insufficienti nell'applicazione nel file `settings.yml` cambiando il valore delle proprietà mostrate nel Listato 6-21.
+Le pagine predefinite di login e secure sono molto semplici, molto probabilmente si avrà la necessità di personalizzarle. È possibile configurare quali azioni chiamare in caso di privilegi insufficienti nell'applicazione nel file `settings.yml` cambiando il valore delle proprietà mostrate nel listato 6-21.
 
 Figure 6-1 - La pagina secure predefinita
 
@@ -656,7 +656,7 @@ Listato 6-21 - Le azioni di sicurezza predefinite sono definite in in `apps/fron
 
 ### Assegnare l'accesso
 
-Per accedere ad azione riservate gli utenti devono essere autenticati e/o possedere alcune credenziali. Estendere i privilegi di un utente è permesso dai metodi dell'oggetto `sfUser`. Lo stato di autenticazione di un utente è impostato dal metodo `setAuthenticated()` e può essere verificato con `isAuthenticated()`. Il Listato 6-22 mostra un semplice esempio di autenticazione.
+Per accedere ad azione riservate gli utenti devono essere autenticati e/o possedere alcune credenziali. Estendere i privilegi di un utente è permesso dai metodi dell'oggetto `sfUser`. Lo stato di autenticazione di un utente è impostato dal metodo `setAuthenticated()` e può essere verificato con `isAuthenticated()`. Il listato 6-22 mostra un semplice esempio di autenticazione.
 
 Listato 6-22 - Impostare lo stato di autenticazione di un utente
 
@@ -677,7 +677,7 @@ Listato 6-22 - Impostare lo stato di autenticazione di un utente
       }
     }
 
-Le credenziali sono leggermente più complesse da utilizzare dato che si possono compiere diverse azioni su di esse come la verifica, aggiunta, rimozione e reset. Il Listato 6-23 descrive i metodi della classe `sfUser`.
+Le credenziali sono leggermente più complesse da utilizzare dato che si possono compiere diverse azioni su di esse come la verifica, aggiunta, rimozione e reset. Il listato 6-23 descrive i metodi della classe `sfUser`.
 
 Listato 6-23 - Lavorare con le credenziali utente nell'azione
 
@@ -711,7 +711,7 @@ Listato 6-23 - Lavorare con le credenziali utente nell'azione
       }
     }
 
-Se un utente ha la credenziale `foo`, questo sarà in grado di accedere alle azioni per le quali il `security.yml` richiede tale credenziale. Le credenziali possono anche essere utilizzate per mostrare nei template contenuti solo agli autorizzati come mostrato nel Listato 6-24.
+Se un utente ha la credenziale `foo`, questo sarà in grado di accedere alle azioni per le quali il `security.yml` richiede tale credenziale. Le credenziali possono anche essere utilizzate per mostrare nei template contenuti solo agli autorizzati come mostrato nel listato 6-24.
 
 Listato 6-24 - Lavorare con le credenziali utenti in un template
 
@@ -731,7 +731,7 @@ Come per lo stato di autenticato le credenziali sono spesso assegnate all'utente
 
 ### Credenziali complesse
 
-La sintassi YAML utilizzata nel file `security.yml` permette di restringere l'accesso agli utenti in possesso di una combinazione di credenziali utilizzando associazioni di tipo AND o OR. Con la combinazione di queste si può costruire un complesso workflow e sistema di gestione dei privilegi--per esempio il back-office di un content management system (CMS) accessibile solo agli utenti con credenziali amministrative, dove gli articoli possono essere editati solo da utenti con la credenziale `editor` e pubblicati solo da quelli con la credenziale `publisher`. Il Listato 6-25 mostra quest'esempio.
+La sintassi YAML utilizzata nel file `security.yml` permette di restringere l'accesso agli utenti in possesso di una combinazione di credenziali utilizzando associazioni di tipo AND o OR. Con la combinazione di queste si può costruire un complesso workflow e sistema di gestione dei privilegi--per esempio il back-office di un content management system (CMS) accessibile solo agli utenti con credenziali amministrative, dove gli articoli possono essere editati solo da utenti con la credenziale `editor` e pubblicati solo da quelli con la credenziale `publisher`. Il listato 6-25 mostra quest'esempio.
 
 Listato 6-25 - Sintassi per la combinazione di credenziali
 
@@ -763,7 +763,7 @@ Figure 6-3 - Catena di filtri d'esempio
 ![Catena di filtri d'esempio](http://www.symfony-project.org/images/book/1_4/F0603.png "Catena di filtri d'esempio")
 
 Questo processo giustifica la struttura delle classi dei filtri. Tutte quante estendono la classe `sfFilter` e contengono un metodo `execute()` che si aspetta un oggetto di tipo `$filterChain` come parametro. Ad un certo punto in questo in questo metodo il filtro passa il controllo al filtro successivo invocando`$filterChain->execute()`.
-Confrontare il Listato 6-26 per un esempio. Quindi i filtri sono divisi principalmente in due parti:
+Confrontare il listato 6-26 per un esempio. Quindi i filtri sono divisi principalmente in due parti:
 
   * Il codice prima della chiamata a `$filterChain->execute()` viene eseguito prima dell'esecuzione dell'azione.
   * Il codice dopo la chiamata a `$filterChain->execute()` viene eseguito dopo l'esecuzione dell'azione e prima del rendering.
@@ -786,7 +786,7 @@ Listato 6-26 - Struttura di una classe filtro
       }
     }
 
-La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml`, e viene mostrato nel Listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
+La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml`, e viene mostrato nel listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
 
 Listato 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
 
@@ -798,7 +798,7 @@ Listato 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
     cache:     ~
     execution: ~
 
-Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel core di symfony. Nel core symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il Listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
+Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel core di symfony. Nel core symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
 
 Listato 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
 
@@ -822,11 +822,11 @@ La catena dei filtri può essere personalizzata in varie maniere:
 
 ### Costruire i propri filtri
 
-Costruire un proprio filtro è una cosa piuttosto semplice. Creare una classe definita in modo simile a quanto mostrato nel Listato 6-26 e posizionarla in una delle cartelle `lib/` del progetto per sfruttare i vantaggi dell'autoloading.
+Costruire un proprio filtro è una cosa piuttosto semplice. Creare una classe definita in modo simile a quanto mostrato nel listato 6-26 e posizionarla in una delle cartelle `lib/` del progetto per sfruttare i vantaggi dell'autoloading.
 
 Dato che un'azione può fare il forward o il redirect a un'altra azione e conseguentemente rilanciare l'intera catena di filtri potrebbe essere necessario limitare l'esecuzione dei propri filtri solamente alla prima azione chiamata dalla richiesta. Il metodo `isFirstCall()` della classe `sfFilter` restituisce un Booleano per questo scopo. Questa chiamata ha senso solamente prima dell'esecuzione dell'azione.
 
-Questi concetti saranno più chiari con un esempio. Il Listato 6-29 mostra un filtro utilizzato per l'auto-login degli utenti con un cookie specifico `MyWebSite` che supponiamo sia creato dall'azione di login. È un modo tanto rudimentale quanto funzionante per implementare la funzionalità "remember me" offerta nei moduli di login.
+Questi concetti saranno più chiari con un esempio. Il listato 6-29 mostra un filtro utilizzato per l'auto-login degli utenti con un cookie specifico `MyWebSite` che supponiamo sia creato dall'azione di login. È un modo tanto rudimentale quanto funzionante per implementare la funzionalità "remember me" offerta nei moduli di login.
 
 Listato 6-29 - Classe filtro d'esempio, salvata in `apps/frontend/lib/rememberFilter.class.php`
 
@@ -865,7 +865,7 @@ In alcuni casi, invece che continuare l'esecuzione della catena di filtri, potre
 
 ### Attivazione dei filtri e parametri
 
-Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella cartella `config/` dell'applicazione o del modulo, come mostrato nel Listato 6-30.
+Creare il file di un filtro non è una condizione sufficiente per attivarlo. Il filtro va aggiunto alla catena di filtri, va dichiarata la classe in `filters.yml`, raggiungibile nella cartella `config/` dell'applicazione o del modulo, come mostrato nel listato 6-30.
 
 Listato 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/frontend/config/filters.yml`
 
@@ -881,7 +881,7 @@ Listato 6-30 - File d'esempio per l'attivazione di un filtro, salvato in `apps/f
     cache:     ~
     execution: ~
 
-Quando attivo il filtro viene eseguito per ogni singola richiesta. Il file di configurazione di un filtro può contenere una o più definizioni di parametri sotto la chiave `param`. La classe filtro è in grado di recuperare il valore di questi parametri con il metodo `getParameter()`. Il Listato 6-31 dimostra come recuperare il valore di un parametro di un filtro.
+Quando attivo il filtro viene eseguito per ogni singola richiesta. Il file di configurazione di un filtro può contenere una o più definizioni di parametri sotto la chiave `param`. La classe filtro è in grado di recuperare il valore di questi parametri con il metodo `getParameter()`. Il listato 6-31 dimostra come recuperare il valore di un parametro di un filtro.
 
 Listato 6-31 - Recuperare il valore di un parametro, in `apps/frontend/lib/rememberFilter.class.php`
 
@@ -901,14 +901,14 @@ Listato 6-31 - Recuperare il valore di un parametro, in `apps/frontend/lib/remem
       }
     }
 
-Il parametro `condition` viene verificato dalla catena dei filtri per capire se il filtro in questione debba essere eseguito. Quindi le dichiarazioni dei filtri possono contare su una configurazione dell'applicazione proprio uguale a quella del Listato 6-30. Il filtro remember verrà eseguito solamente se nell'applicazione il file `app.yml` contiene questo:
+Il parametro `condition` viene verificato dalla catena dei filtri per capire se il filtro in questione debba essere eseguito. Quindi le dichiarazioni dei filtri possono contare su una configurazione dell'applicazione proprio uguale a quella del listato 6-30. Il filtro remember verrà eseguito solamente se nell'applicazione il file `app.yml` contiene questo:
 
     all:
       enable_remember_me: true
 
 ### Filtri d'esempio
 
-La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel Listato 6-32, e attivato per ogni singolo modulo che lo richieda.
+La funzionalità dei filtri è utile per ripetere del codice per ogni azione. Per esempio, se si utilizzasse un sistema di statistiche esterno, molto probabilmente sarebbe necessario inserire una porzione di codice in grado di richiamare uno script tracker esterno in ogni pagina. Questo codice potrebbe essere inserito nel layout globale, tuttavia in questo modo sarebbe attivo per tutta l'applicazione. Altrimenti si potrebbe inserire in un filtro, come mostrato nel listato 6-32, e attivato per ogni singolo modulo che lo richieda.
 
 Listato 6-32 - Filtro Google Analytics
 
@@ -934,7 +934,7 @@ Listato 6-32 - Filtro Google Analytics
 
 Attenzione però, questo filtro non è perfetto dato che non dovrebbe aggiungere il codice del tracker nelle risposte non HTML.
 
-Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste a SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel Listato 6-33.
+Un altro esempio potrebbe essere rappresentato da un filtro che cambia le richieste a SSL nel caso non lo fossero già, per rendere più sicura la comunicazione, come nel listato 6-33.
 
 Listato 6-33 - Filtro per comunicazione sicura
 
@@ -966,7 +966,7 @@ I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di 
 Configurazione dei moduli
 -------------------------
 
-Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella cartella `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il Listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
+Alcuni comportamenti dei moduli dipendono dalla configurazione. Per modificarli è necessario creare un file `module.yml` nella cartella `config/` del modulo e definirvi le impostazioni per ogni singolo ambiente (oppure nell'intestazione `all:` per tutti gli ambienti). Il listato 6-34 mostra un esempio di file `module.yml` per il modulo `mymodule`.
 
 Listato 6-34 - Configurazione di un modulo, in `apps/frontend/modules/mymodule/config/module.yml`
 

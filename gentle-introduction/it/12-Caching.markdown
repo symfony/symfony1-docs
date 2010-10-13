@@ -28,7 +28,7 @@ Le prima due tipologie sono gestite tramite file YAML. La terza, cache di un fra
 ### Impostazioni globali della cache
 
 Per ogni applicazione di un progetto, il meccanismo di cache HTML può essere abilitato o disabilitato (impostazione predefinita), per ambiente, nell'impostazione `cache` del file `settings.yml`.
-Il Listato 12-1 mostra come abilitarla.
+Il listato 12-1 mostra come abilitarla.
 
 Listato 12-1 - Attivazione della cache, in `frontend/config/settings.yml`
 
@@ -49,7 +49,7 @@ Ad esempio: si consideri un'azione `user/list` che restituisce la lista degli ut
 A meno che un utente venga modificato, aggiunto o rimosso (e questo argomento sarà discusso in seguito nella sezione "Rimuovere oggetti dalla cache"), la lista sarà sempre la stessa, 
 per cui è una buona candidata per essere memorizzata in cache.
 
-L'attivazione e le impostazioni della cache, azione per azione, sono definite nel file cache.yml, all'interno della cartella `config/` del modulo. Il Listato 12-2 ne mostra un esempio.
+L'attivazione e le impostazioni della cache, azione per azione, sono definite nel file cache.yml, all'interno della cartella `config/` del modulo. Il listato 12-2 ne mostra un esempio.
 
 Listato 12-2 - Attivare la cache per un'azione, in frontend/modules/user/config/cache.yml
 
@@ -74,9 +74,9 @@ Più avanti in questo capitolo saranno approfonditi i metodi per testare e monit
 >Gli slot sono parte dei template, quindi effettuare la cache di un'azione significa anche memorizzare il valore dello slot definito dal template dell'azione. Di conseguenza la cache funziona nativamente per gli slot.
 
 Il sistema di cache funziona anche per le pagine con argomenti. Il modulo `user` potrebbe avere, ad esempio, un'azione `show` che si aspetta un `id` per poter mostrare i dettagli di un utente. 
-Per ottenere questo comportamento occorre modificare il file `cache.yml` in modo tale da abilitare la cache anche per questa casistica, come mostrato nel Listato 12-3.
+Per ottenere questo comportamento occorre modificare il file `cache.yml` in modo tale da abilitare la cache anche per questa casistica, come mostrato nel listato 12-3.
 
-Per organizzare i vari file `cache.yml`, sarà sufficiente ragruppare le impostazioni comuni a tutte le azioni di un modulo sotto la chiave `all:`, anch'essa mostrata nel Listato 12-3.
+Per organizzare i vari file `cache.yml`, sarà sufficiente ragruppare le impostazioni comuni a tutte le azioni di un modulo sotto la chiave `all:`, anch'essa mostrata nel listato 12-3.
 
 Listato 12-3 - Esempio di `cache.yml, in frontend/modules/user/config/cache.yml`
 
@@ -118,7 +118,7 @@ Figura 12-2 - Cache di un partial, component, o component slot
 
 ![Cache di un partial, component, o component slot](http://www.symfony-project.org/images/book/1_4/F1202.png "Cache di un partial, component, o component slot")
 
-Ad esempio, il Listato 12-4 mostra come modificare il file `cache.yml` per abilitare la cache di un partial `_my_partial.php` del modulo `user`. 
+Ad esempio, il listato 12-4 mostra come modificare il file `cache.yml` per abilitare la cache di un partial `_my_partial.php` del modulo `user`. 
 Da notare che l'opzione `with_layout` non ha senso in questo caso.
 
 Listato 12-4 - Cache di un partial, in `frontend/modules/user/config/cache.yml`
@@ -175,7 +175,7 @@ Figura 12-3 - Cache di un frammento
 ![Cache di un frammento di template](http://www.symfony-project.org/images/book/1_4/F1203.png  "Cache di un frammento di template")
 
 Ad esempio, si potrebbe avere una lista di utenti che mostrano un link all'utente che ha effettuato l'accesso per ultimo, e tale informazione è dinamica.
-L'helper `cache()` definisce le parti di una template che devono memorizzate in cache. Si veda il Listato 12-5 per dettagli sulla sintassi.
+L'helper `cache()` definisce le parti di una template che devono memorizzate in cache. Si veda il listato 12-5 per dettagli sulla sintassi.
 
 Listato 12-5 - Usare l'helper `cache()`, in `frontend/modules/user/templates/listSuccess.php`
 
@@ -232,7 +232,7 @@ In questo caso la cache deve essere disabilitata, in modo che symfony possa cost
 
 Il posto giusto per definire le impostazioni della cache dinamica è in un filtro eseguito prima di `sfCacheFilter`. 
 Infatti, in symfony la cache non è altro che un filtro, proprio come la web debug toolbar e le funzionalità di sicurezza. 
-Per abilitare la cache per la pagina `article/show` solo se l'utente non è autenticato, è sufficiente creare un `conditionalCacheFilter` nella cartella `lib/` dell'applicazione, come mostrato nel Listato 12-6.
+Per abilitare la cache per la pagina `article/show` solo se l'utente non è autenticato, è sufficiente creare un `conditionalCacheFilter` nella cartella `lib/` dell'applicazione, come mostrato nel listato 12-6.
 
 Listato 12-6 - Configurare la cache in PHP, in `frontend/lib/conditionalCacheFilter.class.php`
 
@@ -256,7 +256,7 @@ Listato 12-6 - Configurare la cache in PHP, in `frontend/lib/conditionalCacheFil
       }
     }
 
-Occorre registrare questo filtro nel file `filters.yml` prima di `sfCacheFilter`, come mostrato nel Listato 12-7.
+Occorre registrare questo filtro nel file `filters.yml` prima di `sfCacheFilter`, come mostrato nel listato 12-7.
 
 Listato 12-7 - Registrare un filtro personalizzato, in `frontend/config/filters.yml`
 
@@ -354,7 +354,7 @@ Per evitare incoerenze e bug, è possibile eliminare elementi dalla cache in div
 ### Eliminare l'intera cache
 
 Il task `cache:clear` della linea di comando di symfony elimina l'intera cache (HTML, configurazione e i18N). 
-è possibile passare degli argomenti per eliminare solo alcune parti, come mostrato dal Listato 12-8. Deve essere invocato solo dalla root di un progetto symfony.
+è possibile passare degli argomenti per eliminare solo alcune parti, come mostrato dal listato 12-8. Deve essere invocato solo dalla root di un progetto symfony.
 
 Listato 12-8 - Eliminare la cache
 
@@ -385,7 +385,7 @@ Esso si aspetta come argomento una URI interna (lo stesso tipo di parametro che 
 
 Ad esempio, si ipotizzi che l'azione `update` del modulo `user` modifichi le colonne dell'oggetto `User`. 
 La versione in cache delle azioni `list` e `show` avrebbero bisogno di essere eliminate, altrimenti esse, con dati erronei, verrebbero visualizzate. 
-Per gestire questo caso, è necessario il metodo `remove()`, come mostrato nel Listato 12-9.
+Per gestire questo caso, è necessario il metodo `remove()`, come mostrato nel listato 12-9.
 
 Listato 12-9 - Eliminare la cache per una data azione, in `modules/user/actions/actions.class.php`
 
@@ -422,7 +422,7 @@ Symfony identifica un partial in cache con un prefisso speciale (`sf_cache_parti
 
 Teoricamente è possibile rimuovere un partial in cache tramite il metodo `remove()` conoscendo il valore dei parametri hash usati per identificarlo, ma ciò è veramente poco praticabile. 
 Fortunatamente, aggiungendo un parametro `sf_cache_key` alla chiamata dell'helper `include_partial()`, è possibile identificare il partial in cache con tale chiave. 
-Il Listato 12-10 mostra come eliminare la cache di un singolo partial (ad esempio per eliminare i dati in cache relativi a uno `User` modificato) diventi una semplice operazione.
+Il listato 12-10 mostra come eliminare la cache di un singolo partial (ad esempio per eliminare i dati in cache relativi a uno `User` modificato) diventi una semplice operazione.
 
 Listato 12-10 - Rimozione di un partial dalla cache
 
@@ -441,7 +441,7 @@ Listato 12-10 - Rimozione di un partial dalla cache
 
 Per eliminare dalla cache frammento di template, viene utilizzato lo stesso metodo `remove()`. 
 La chiave che identifica il frammento nella cache è lo stesso prefisso `sf_cache_partial`, il nome del modulo, quello dell'azione e il parametro `sf_cache_key`. 
-Il Listato 12-11 ne mostra un esempio.
+Il listato 12-11 ne mostra un esempio.
 
 Listato 12-11 - Eliminare frammento dalla cache
 
@@ -493,7 +493,7 @@ Il metodo `remove()` accetta parametri con caratteri jolly. Permette di rimuover
     [php]
     $cacheManager->remove('user/show?id=*');    // Rimuove tutti i record relativi
 
-Un altro buon esempio è la gestione di applicazioni con diverse lingue, dove i codici delle lingue appaiono in tutte le URL. L'URL della pagina di un profilo utente dovrebbe essere così:
+Un altro buon esempio è la gestione di applicazioni con diverse lingue, dove i codici delle lingue appaiono in tutti gli URL. L'URL della pagina di un profilo utente dovrebbe essere così:
 
     http://www.myapp.com/en/user/show/id/12
 
@@ -559,7 +559,7 @@ Il sistema di cache è incline a errori nell'ambiente di produzione, che non app
 Se si abilitasse la cache HTML per qualche azione, sarebbe necessario aggiungere un nuovo ambiente, chiamato di stage in questa sezione, con le stesse impostazioni dell'ambiente `prod` (quindi, con la cache abilitata), 
 ma con `web_debug` impostato a `true`.
 
-Per impostarlo, occorre modificare il file `settings.yml` della applicazione aggiungendo all'inizio del file il codice del Listato 12-12.
+Per impostarlo, occorre modificare il file `settings.yml` della applicazione aggiungendo all'inizio del file il codice del listato 12-12.
 
 Listato 12-12 - Impostazione di un ambiente di `stage`, in `frontend/config/settings.yml`
 
@@ -600,8 +600,8 @@ La debug toolbar mostrerà anche il numero di query eseguite durante il processo
 
 ### Benchmark
 
-La modalità di debug decrementa notevolmente la velocità della tua applicazione, dato che vengono loggati molto dati e resi disponibili alla toolbar. 
-Per cui il tempo di calcolo visualizzato quando navighi l'ambiente `stage` non è rappresentativo per quello di produzione, dove la modalità di debug è `off`.
+La modalità di debug decrementa notevolmente la velocità della propria applicazione, dato che molti dati vengono messi in log e resi disponibili alla toolbar. 
+Per cui il tempo di calcolo visualizzato quando si naviga l'ambiente `stage` non è rappresentativo di quello di produzione, dove la modalità di debug è `false`.
 
 Questi strumenti permettono il test del carico e forniscono 2 importanti tipi di informazioni: la media del tempo di caricamento di una singola pagina e la capacità massima del server sul quale è presente l'applicazione. 
 La media del tempo di caricamento è molto utile per monitorare i miglioramenti delle performance dovuti all'utilizzo della cache.
@@ -609,9 +609,9 @@ La media del tempo di caricamento è molto utile per monitorare i miglioramenti 
 ### Identificare parti della cache
 
 Quando la web debug toolbar è abilitata, gli elementi in cache sono individuati in una pagina con un bordo rosso, ognuno avente un piccolo riquadro di informazione sull'angolo in alto a sinistra, 
-come mostrato in Figura 12-5. Il riquadro ha uno sfondo blu se l'elemento verrà eseguito, o giallo se sarà presente nella cache. 
+come mostrato in figura 12-5. Il riquadro ha uno sfondo blu se l'elemento verrà eseguito, o giallo se sarà presente nella cache. 
 Cliccando sul link sarà possibile vedere l'identificatore dell'elemento in cache, il suo tempo di vita, 
-ed il tempo trascorso dall'ultima modifica. Questo aiuterà a identificare i problemi nella gestione di elementi fuori dal contesto, per vedere quale elemento è stato creato e quale parte di una template
+e il tempo trascorso dall'ultima modifica. Questo aiuterà a identificare i problemi nella gestione di elementi fuori dal contesto, per vedere quale elemento è stato creato e quale parte di una template
 possa effettivamente essere messo in cache.
 
 Figura 12-5 - Identificazione di un elemento in cache

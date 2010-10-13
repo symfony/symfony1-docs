@@ -9,31 +9,31 @@ applicazioni web ancora più user-friendly e sicure. Questo capitolo mostrerà q
 sapere per gestire gli URL in una applicazione symfony:
 
   * Cos'è il sistema di routing e come funziona
-  * Come utilizzare gli helper dei link nei template ed abilitare il routing di URL uscenti
-  * Come configurare le regole di routing per modificare la reppresentazione degli url
+  * Come utilizzare gli helper dei link nei template e abilitare il routing di URL uscenti
+  * Come configurare le regole di routing per modificare la rappresentazione degli url
 
 Come tocco finale verranno mostrati alcuni trucchi per gestire le performance del sistema di routing.
 
 
-Che cos'è il Routing?
-----------------
+Che cos'è il routing?
+---------------------
 
 Il routing è un meccanismo che riscrive gli URL per renderli più user-friendly. Per capire perché questa cosa è importante è necessario riflettere qualche minuto su cosa sia in effetti un URL
 
 ### URL come comandi per il Server
 
 Gli URL portano informazioni dal browser al server richiesto affinché questo svolga una azione come desiderato dall'utente.
-Per esempio, un URL tradizionale contiene il percorso ad uno script e alcuni parametri necessari a completare la richiesta, come in questo esempio:
+Per esempio, un URL tradizionale contiene il percorso a uno script e alcuni parametri necessari a completare la richiesta, come in questo esempio:
       http://www.example.com/web/controller/article.php?id=123456&format_code=6532
 
 Questo URL espone informazioni sull'architettura dell'applicazione e il database. Gli sviluppatori 
 di solito nascondono l'infrastuttura dell'applicazione nell'interfaccia (es esempio, scegliendo come 
 titoli di pagina "Profilo" piuttosto che "QZ7.65"). Rivelare i dettagli del funzionamento interno dell'
-applicazione nel URL va contro questo sforzo ed ha diversi svantaggi:
+applicazione nel URL va contro questo sforzo e ha diversi svantaggi:
 
   * I dati contenuti nel URL creano potenziali falle di sicurezza. Nell'esempio precedente, cosa accade se
   un utente malintenzionato cambia il valore del parametro `id`? Significa che l'applicazione offre un interfaccia
-  direttamente verso il database? Cosa accade se l'utente prova ad utilizzare un diverso nome per lo script, come 
+  direttamente verso il database? Cosa accade se l'utente prova a utilizzare un diverso nome per lo script, come 
   `admin.php` per divertimento? In conclusione, gli URL "raw" offrono un modo facile per hackerare una applicazione
   e gestire la sicurezza con quest'ultimi è quasi impossibile.
   * L'incomprensibilità degli URL li rendono ingombranti ovunque appaiono e smorzano l'impatto del contenuto che li
@@ -51,7 +51,7 @@ Figura 9-1 - Gli URL compaiono in molti posti, come nei risultati della ricerca
   sono pesanti e costose, che non è l'ideale nello sviluppo agile.
 
 Potrebbe essere molto peggio se symfony non usasse il pattern front controller, ovvero se l'applicazione contenesse molti script
-accessbiliti da Internet, in diverse cartelle, come questi:
+accessibili da Internet, in diverse cartelle, come questi:
 
     http://www.example.com/web/gallery/album.php?name=my%20holidays
     http://www.example.com/web/weblog/public/post/list.php
@@ -72,321 +72,340 @@ e mostrare la stessa pagina del primo URL mostrato in questo capitolo:
 
     http://www.example.com/articles/finance/2010/activity-breakdown.html
 
-The benefits are immense:
+I benefici sono immensi:
 
-  * URLs actually mean something, and they can help the users decide if the page behind a link contains what they expect. A link can contain additional details about the resource it returns. This is particularly useful for search engine results. Additionally, URLs sometimes appear without any mention of the page title (think about when you copy a URL in an e-mail message), and in this case, they must mean something on their own. See Figure 9-2 for an example of a user-friendly URL.
-  * The technical implementation is hidden to the users : they do not know which script is used, they cannot guess an `id` or similar parameter: your application is less vulnerable to a potential security breach. More, you can totally change what happen behind the scene without affecting their experience (they won't have a 404 error or a permanent redirect).
+  * Le URL assumono effettivamente un significato ben preciso, e possono aiutare l'utente a comprendere se la pagina ottenuta da un determinato link contiene ciò che ci si aspetta. 
+  Un link può contenere maggiori dettagli riguardanti la risorsa alla quale esso è legato. Questo è particolarmente utile per i risultati forniti dai motori di ricerca. 
+  Inoltre, può capitare che gli URL appaiano senza alcun riferimento al titolo della pagina (si pensi a quando si copia un link da spedire via e-mail), 
+  e in tale caso, devono assumere un significato ben preciso. La Figura 9-2 mostra un esempio di URL user-friendly.
+  
+   * L'implementazione tecnica è nascosta all'utente: non viene reso noto quale script venga utilizzato, non è possibile cercar di indovinare un id o parametri simile: l'applicazione è meno vulnerabile a potenziale attacchi.
+    Inoltre è possibile modificare quello che avviene "dietro le quinte" senza che gli utenti ne risentano (non ci sarà un 404 o un redirect permanente) 
+Figura 9-2 - Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione
 
-Figure 9-2 - URLs can convey additional information about a page, like the publication date
+![Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione](http://www.symfony-project.org/images/book/1_1/F0902.png "Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione")
 
-![URLs can convey additional information about a page, like the publication date](http://www.symfony-project.org/images/book/1_4/F0902.png "URLs can convey additional information about a page, like the publication date")
+  * Le URL scritte su documenti di carta sono più facili da scrivere e ricordare. Se una azienda compare su biglietti da visita come `http://www.example.com/controller/web/index.jsp?id=ERD4`, probabilmente non riceverà molte visite.
+  * Le URL possono diventare un modo di eseguire comandi, per recuperare informazioni in modo intuitivo. Le applicazioni che offrono tale possibilità sono più veloci da utilizzare per utenti avanzati.
 
-  * URLs written in paper documents are easier to type and remember. If your company website appears as `http://www.example.com/controller/web/index.jsp?id=ERD4` on your business card, it will probably not receive many visits.
-  * The URL can become a command-line tool of its own, to perform actions or retrieve information in an intuitive way. Applications offering such a possibility are faster to use for power users.
-
-        // List of results: add a new tag to narrow the list of results
+        // Lista di risultati: aggiungi un nuovo tag per raffinare il risultato
         http://del.icio.us/tag/symfony+ajax
-        // User profile page: change the name to get another user profile
+        // Pagina profilo utente: cambia il nome per vedere il profilo di un altro utente
         http://www.askeet.com/user/francois
 
-  * You can change the URL formatting and the action name/parameters independently, with a single modification. It means that you can develop first, and format the URLs afterwards, without totally messing up your application.
-  * Even when you reorganize the internals of an application, the URLs can remain the same for the outside world. It makes URLs persistent, which is a must because it allows bookmarking on dynamic pages.
-  * Search engines tend to skip dynamic pages (ending with `.php`, `.asp`, and so on) when they index websites. So you can format URLs to have search engines think they are browsing static content, even when they meet a dynamic page, thus resulting in better indexing of your application pages.
-  * It is safer. Any unrecognized URL will be redirected to a page specified by the developer, and users cannot browse the web root file structure by testing URLs. The actual script name called by the request, as well as its parameters, is hidden.
-
-The correspondence between the URLs presented to the user and the actual script name and request parameters is achieved by a routing system, based on patterns that can be modified through configuration.
+  * È possibile cambiare la formattazione degli URL e il nome/parametri dell'azione in modo indipendente, con una singola modifica. Significa che è possibile prima sviluppare, e alla fine formattare gli URL senza creare confusione.
+  * Anche quando si riorganizza l'applicazione, gli URL possono rimanere le stesse per il mondo esterno. Ciò rende gli URL persistenti, che è vitale in quanto rende possibile i bookmark di pagine dinamiche.
+  * I motori di ricerca tendono a evitare pagine dinamiche (che terminano con `.php`, `.asp` e così via) quando indicizzano i siti. È così possibile formattare gli URL in modo che i motori di ricerca pensino di stare navigando su un sito statico, 
+    anche quando incontrano pagine dinamiche, in modo da migliorare il ranking delle pagine stesse.
+  * È più sicuro. Un URL non riconosciuto verrà redirezionato a una pagina specificata dallo sviluppatore, e gli utenti non possono navigare la struttura radice provando indirizzi a caso. Il nome effettivo dello script, così come i suoi parametri, sono nascosti.
+  
+La corrispondenza tra URL presentata all'utente e il nome effettivo dello script e i suoi parametri viene conseguita dal sistema di routing, basato su pattern che possono essere modificati tramite configurazione.
 
 >**NOTE**
->How about assets? Fortunately, the URLs of assets (images, style sheets, and JavaScript) don't appear much during browsing, so there is no real need for routing for those. In symfony, all assets are located under the `web/` directory, and their URL matches their location in the file system. However, you can manage dynamic assets (handled by actions) by using a generated URL inside the asset helper. For instance, to display a dynamically generated image, use `image_tag(url_for('captcha/image?key='.$key))`.
+>E le risorse? Fortunatamente, gli URL delle risorse (immagini, fogli di stile e script JavaScript) non compaiono frequentemente durante la navigazione, per cui non c'è un grande bisogno del motore di routing. 
+>In symfony, tutte le risorse sono situate all'interno della cartella `web/`, e le loro URL coincidono con le loro posizioni nel filesystem. Comunque, è possibile gestire risorse dinamiche (dalle azioni) utilizzando URL generate nei relativi helper. Ad esempio, per visualizzare un'immagine generata dinamicamente, è sufficiente utilizzare `image_tag(url_for('captcha/image?key='.$key))`.
 
-### How It Works
+### Come funziona
 
-Symfony disconnects the external URL and its internal URI. The correspondence between the two is made by the routing system. To make things easy, symfony uses a syntax for internal URIs very similar to the one of regular URLs. Listing 9-1 shows an example.
+Symfony scollega gli URL esterni dai propri URI interni. La corrispondenza tra le due viene eseguita dal sistema di routing. Per facilitare le cose, symfony utilizza per le URI interne una sintassi molto simile a quella degli URL normali. Il listato 9-1 ne mostra un esempio.
 
-Listing 9-1 - External URL and Internal URI
+Listato 9-1 - URL esterni e URI interni
 
-    // Internal URI syntax
+    // Sintassi URI interne
     <module>/<action>[?param1=value1][&param2=value2][&param3=value3]...
 
-    // Example internal URI, which never appears to the end user
-    article/permalink?year=2010&subject=finance&title=activity-breakdown
+    // Esempio di URI interna, non compare mai all'utente finale
+    article/permalink?year=2006&subject=finance&title=activity-breakdown
 
-    // Example external URL, which appears to the end user
-    http://www.example.com/articles/finance/2010/activity-breakdown.html
+    // Esempio di URL interna, che compare all'utente finale
+    http://www.example.com/articles/finance/2006/activity-breakdown.html
 
-The routing system uses a special configuration file, called `routing.yml`, in which you can define routing rules. Consider the rule shown in Listing 9-2. It defines a pattern that looks like `articles/*/*/*` and names the pieces of content matching the wildcards.
+Il sistema di routing utilizza un file di configurazione speciale, chiamato `routing.yml`, nel quale è possibile definire le regole. Si consideri la regola mostrata nel listato 9-2. Definisce un pattern come `articles/*/*/*` e da un nome alle parti di codice che coincidono con i caratteri jolly.
 
-Listing 9-2 - A Sample Routing Rule
+Listato 9-2 - Esempio di regola di routing
 
     article_by_title:
       url:    articles/:subject/:year/:title.html
       param:  { module: article, action: permalink }
 
-Every request sent to a symfony application is first analyzed by the routing system (which is simple because every request is handled by a single front controller). The routing system looks for a match between the request URL and the patterns defined in the routing rules. If a match is found, the named wildcards become request parameters and are merged with the ones defined in the `param:` key. See how it works in Listing 9-3.
+Ogni richiesta per un'applicazione symfony viene prima di tutto analizzata dal sistema di routing (la qual cosa risulta piuttosto semplice, in quanto ogni richiesta viene gestita da un unico front controller). Il sistema di routing cerca una corrispondenza tra l'URL della richiesta e gli schemi definiti nelle regole di routing. Se una viene trovata, i caratteri jolly diventano parametri di richiesta e vengono uniti a quelli definiti nella chiave `param:`. Il listato 9-3 ne mostra il funzionamento.
 
-Listing 9-3 - The Routing System Interprets Incoming Request URLs
+Listato 9-3 - Il sistema di routing interpreta gli URL della richiesta
 
-    // The user types (or clicks on) this external URL
-    http://www.example.com/articles/finance/2010/activity-breakdown.html
+    // L'utente scrive (o clicca su) questo URL esterno
+    http://www.example.com/articles/finance/2006/activity-breakdown.html
 
-    // The front controller sees that it matches the article_by_title rule
-    // The routing system creates the following request parameters
+    // Il front controller trova una corrispondenza con la regola article_by_title
+    // Il sistema di routing crea i parametri seguenti
       'module'  => 'article'
       'action'  => 'permalink'
       'subject' => 'finance'
-      'year'    => '2010'
+      'year'    => '2006'
       'title'   => 'activity-breakdown'
+      
+La richiesta viene quindi passata all'azione `permalink` del modulo `article`, il quale in questo modo ha tutti i parametri necessari a mostrare l'articolo richiesto.
 
-The request is then passed to the `permalink` action of the `article` module, which has all the required information in the request parameters to determine which article is to be shown.
+Ma questo meccanismo deve anche funzionare in senso opposto. Dato che l'applicazione deve mostrare gli URL esterni nei propri link, devi fornire al sistema di routing abbastanza informazioni affinché esso possa comprendere quale regola applicare.
+Inoltre non si deve assolutamente scrivere nei template i link con i tag `<a>`, direttamente, perché in tal modo non verrebbe ignorato completamente il sistema di routing; si deve invece utilizzare un helper speciale, come mostrato nel listato 9-4.
 
-But the mechanism also must work the other way around. For the application to show external URLs in its links, you must provide the routing system with enough data to determine which rule to apply to it. You also must not write hyperlinks directly with `<a>` tags--this would bypass routing completely--but with a special helper, as shown in Listing 9-4.
-
-Listing 9-4 - The Routing System Formats Outgoing URLs in Templates
+Listato 9-4 - Il sistema di routing formatta gli URL nei template
 
     [php]
-    // The url_for() helper transforms an internal URI into an external URL
-    <a href="<?php echo url_for('article/permalink?subject=finance&year=2010&title=activity-breakdown') ?>">click here</a>
+    // L'helper url_for() trasforma una URI interna in un URL esterno
+    <a href="<?php echo url_for('article/permalink?subject=finance&year=2006&title=activity-breakdown') ?>">click here</a>
 
-    // The helper sees that the URI matches the article_by_title rule
-    // The routing system creates an external URL out of it
-     => <a href="http://www.example.com/articles/finance/2010/activity-breakdown.html">click here</a>
+    // L'helper riconosce che la URI soddisfa la regola article_by_title
+    // Per cui il sistema di routing crea l'URL
+     => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">click here</a>
 
-    // The link_to() helper directly outputs a hyperlink
-    // and avoids mixing PHP with HTML
+    // L'helper link_to() stampa in output un hyperlink evitando di mischiare PHP con HTML
     <?php echo link_to(
       'click here',
-      'article/permalink?subject=finance&year=2010&title=activity-breakdown'
+      'article/permalink?subject=finance&year=2006&title=activity-breakdown'
     ) ?>
 
-    // Internally, link_to() will make a call to url_for() so the result is the same
-    => <a href="http://www.example.com/articles/finance/2010/activity-breakdown.html">click here</a>
+    // Internamente, link_to() chiamerà url_for() in modo che il risultato sia lo stesso
+    => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">click here</a>
 
-So routing is a two-way mechanism, and it works only if you use the `link_to()` helper to format all your links.
+Quindi il routing è un meccanismo che funziona in due direzioni, e funziona solo se si utilizza l'helper `link_to()` per formattare i link.
 
-URL Rewriting
--------------
+URL Rewrite
+-----------
 
-Before getting deeper into the routing system, one matter needs to be clarified. In the examples given in the previous section, there is no mention of the front controller (`index.php` or `frontend_dev.php`) in the internal URIs. The front controller, not the elements of the application, decides the environment. So all the links must be environment-independent, and the front controller name can never appear in internal URIs.
+Prima di approfondire il sistema di routing, c'è un'altra questione che va chiarita. 
+Negli esempi precedenti non è stata fatta menzione del front controller (`index.php` o `frontend_dev.php`) nelle URI interne. 
+Il front controller decide l'ambiente, non gli elementi dell'applicazione. Per cui tutti i link devono essere indipendenti dall'ambiente e il nome del front controller non deve mai apparire negli URI interni.
 
-There is no script name in the examples of generated URLs either. This is because generated URLs don't contain any script name in the production environment by default. The `no_script_name` parameter of the `settings.yml` file precisely controls the appearance of the front controller name in generated URLs. Set it to `false`, as shown in Listing 9-5, and the URLs output by the link helpers will mention the front controller script name in every link.
+Negli esempi non c'è traccia del nome dello script nemmeno negli URL. Questo perché per default nell'ambiente di produzione gli URL generati non contengono il nome dello script. Il parametro `no_script_name` nel file `settings.yml` controlla esattamente questo comportamento; impostandolo su `false`, come nel listato 9-5, ogni URL stampata tramite gli helper dei link conterrà il nome dello script del front controller.
 
-Listing 9-5 - Showing the Front Controller Name in URLs, in `apps/frontend/config/settings.yml`
+Listato 9-5 - Mostrare il nome del front controller negli URL, in `apps/frontend/settings.yml`
 
     prod:
-      .settings
+      .settings:
         no_script_name:  false
 
-Now, the generated URLs will look like this:
+Così facendo gli URL generati appariranno nel modo seguente:
 
-      http://www.example.com/index.php/articles/finance/2010/activity-breakdown.html
+    http://www.example.com/index.php/articles/finance/2006/activity-breakdown.html
 
-In all environments except the production one, the `no_script_name` parameter is set to `false` by default. So when you browse your application in the development environment, for instance, the front controller name always appears in the URLs.
+In tutti gli ambienti diversi da quello di produzione, il parametro `no_script_name` è impostato su `false` come impostazione predefinita. Per cui quando si naviga l'applicazione nell'ambiente di sviluppo, il nome del front controller risulta sempre negli URL.
 
-      http://www.example.com/frontend_dev.php/articles/finance/2010/activity-breakdown.html
+    http://www.example.com/frontend_dev.php/articles/finance/2006/activity-breakdown.html
 
-In production, the `no_script_name` is set to `true`, so the URLs show only the routing information and are more user-friendly. No technical information appears.
+In produzione, `no_script_name` è impostato su `on`, così gli URL mostreranno solo le informazioni di routing e risulteranno più user-friendly. Non apparirà alcuna informazione tecnica.
 
-    http://www.example.com/articles/finance/2010/activity-breakdown.html
+    http://www.example.com/articles/finance/2006/activity-breakdown.html
 
-But how does the application know which front controller script to call? This is where URL rewriting comes in. The web server can be configured to call a given script when there is none in the URL.
+Ma come fa l'applicazione a sapere quale front controller chiamare? Qui è dove entra in gioco l'URL rewrite. Il web server può essere configurato per invocare un determinato script qualora non venga specificato nell'URL.
 
-In Apache, this is possible once you have the `mod_rewrite` extension activated. Every symfony project comes with an `.htaccess` file, which adds `mod_rewrite` settings to your server configuration for the `web/` directory. The default content of this file is shown in Listing 9-6.
+In Apache, ciò è possibile solo dopo aver attivato l'estensione `mod_rewrite`. Ogni progetto symfony è dotato di un file `.htaccess`, che aggiunge alcune impostazioni `mod_rewrite` per la cartella `web/` alla configurazione del tuo server. Il contenuto di default di tale file è mostrato nel listato 9-6.
 
-Listing 9-6 - Default Rewriting Rules for Apache, in `myproject/web/.htaccess`
+Listato 9-6 - Regole di rewrite predefinite per Apache, in `myproject/web/.htaccess`
 
     <IfModule mod_rewrite.c>
       RewriteEngine On
 
-      # uncomment the following line, if you are having trouble
-      # getting no_script_name to work
-      #RewriteBase /
+      # salta tutti i file che inizia con un punto
+      RewriteCond %{REQUEST_URI} \..+$
+      RewriteCond %{REQUEST_URI} !\.html$
+      RewriteRule .* - [L]
 
-      # we skip all files with .something
-      #RewriteCond %{REQUEST_URI} \..+$
-      #RewriteCond %{REQUEST_URI} !\.html$
-      #RewriteRule .* - [L]
-
-      # we check if the .html version is here (caching)
+      # controllo se esiste la versione .html (caching)
       RewriteRule ^$ index.html [QSA]
       RewriteRule ^([^.]+)$ $1.html [QSA]
       RewriteCond %{REQUEST_FILENAME} !-f
 
-      # no, so we redirect to our front web controller
+      # se no, redirige al nostro front web controller
       RewriteRule ^(.*)$ index.php [QSA,L]
     </IfModule>
 
-The web server inspects the shape of the URLs it receives. If the URL does not contain a suffix (commented out by default) and if there is no cached version of the page available (Chapter 12 covers caching), then the request is handed to `index.php`.
+Il web server controlla gli URL che riceve. Se l'URL non contiene un suffisso e se non c'è già una versione disponibile in cache della pagina (consultare il capitolo 12 riguardante la cache), allora la richiesta viene gestita dallo script `index.php`.
 
-However, the `web/` directory of a symfony project is shared among all the applications and environments of the project. It means that there is usually more than one front controller in the web directory. For instance, a project having a `frontend` and a `backend` application, and a `dev` and `prod` environment, contains four front controller scripts in the `web/` directory:
+Comunque, la cartella `web/` di un progetto symfony è condivisa da tutte le applicazioni e da tutti gli ambienti del progetto. Ciò significa che spesso esisterà più di un front controller in tale cartella. Ad esempio, un progetto che abbia un'applicazione di `frontend` e una di `backend`, 
+un ambiente `dev` e uno `prod` conterrà quattro script per i front controller nella cartella `web/`:
 
     index.php         // frontend in prod
     frontend_dev.php  // frontend in dev
     backend.php       // backend in prod
     backend_dev.php   // backend in dev
 
-The `mod_rewrite` settings can specify only one default script name. If you set `no_script_name` to `true` for all the applications and environments, all URLs will be interpreted as requests to the `frontend` application in the `prod` environment. This is why you can have only one application with one environment taking advantage of the URL rewriting for a given project.
+Le impostazioni mod_rewrite possono specificare il nome di un solo front controller di default. Se si imposta `no_script_name` a `true` per tutte le applicazioni e tutti gli ambienti, tutti gli URL saranno interpretati come richieste per l'applicazione `frontend` nell'ambiente `prod`. Ecco perché, per ogni progetto, si può avere solo una applicazione e un ambiente che sfruttino il vantaggio dell'URL rewrite.
 
 >**TIP**
->There is a way to have more than one application with no script name. Just create subdirectories in the web root, and move the front controllers inside them. Change the path to the `ProjectConfiguration` file accordingly, and create the `.htaccess` URL rewriting configuration that you need for each application.
+>In effetti c'è un modo per avere più di un'applicazione senza script name. È sufficiente creare sottocartelle nella cartella web, e collocarci i vari front controller. È necessario cambiare il percorso del file `ProjectConfiguration` di conseguenza e creare le configurazioni `.htaccess` necessarie a ogni applicazione.
 
-Link Helpers
-------------
+Helper Link 
+-----------
 
-Because of the routing system, you should use link helpers instead of regular `<a>` tags in your templates. Don't look at it as a hassle, but rather as an opportunity to keep your application clean and easy to maintain. Besides, link helpers offer a few very useful shortcuts that you don't want to miss.
+Per trarre maggior vantaggio dal sistema di routing, si dovrebbe utilizzare gli helper dei link invece dei tag `<a>` nei template. Non bisogna pensare a ciò come uno svantaggio, bensì come un modo per mantenere l'applicazione pulita e facile da manutenere. Inoltre, questi helper offrono qualche scorciatoia molto utile.
 
-### Hyperlinks, Buttons, and Forms
+### Hyperlink, pulsanti e form
 
-You already know about the `link_to()` helper. It outputs an XHTML-compliant hyperlink, and it expects two parameters: the element that can be clicked and the internal URI of the resource to which it points. If, instead of a hyperlink, you want a button, use the `button_to()` helper. Forms also have a helper to manage the value of the `action` attribute. You will learn more about forms in the next chapter. Listing 9-7 shows some examples of link helpers.
+È stato già precedentemente mostrato l'helper `link_to()`. Esso stampa in output un hyperlink che rispetta la sintassi XHTML, e si aspetta due parametri: l'elemento che deve essere cliccato e l'URI interna. Se invece di un link si volesse un pulsante, è sufficiente utilizzare l'helper `button_to()`. 
+Anche le form sono provviste di un helper per gestire il valore dell'attributo `action`. Maggiori informazioni sulle form nel prossimo capitolo. Il listato 9-7 mostra alcuni esempi di helper per i link.
 
-Listing 9-7 - Link Helpers for `<a>`, `<input>`, and `<form>` Tags
+Listato 9-7 - Alcuni esempi di helper per i tag `<a>, <input>, e <form>`
 
     [php]
-    // Hyperlink on a string
+    // Hyperlink su una stringa
     <?php echo link_to('my article', 'article/read?title=Finance_in_France') ?>
      => <a href="/routed/url/to/Finance_in_France">my article</a>
 
-    // Hyperlink on an image
+    // Hyperlink su un'immagine
     <?php echo link_to(image_tag('read.gif'), 'article/read?title=Finance_in_France') ?>
      => <a href="/routed/url/to/Finance_in_France"><img src="/images/read.gif" /></a>
 
-    // Button tag
+    // Pulsante
     <?php echo button_to('my article', 'article/read?title=Finance_in_France') ?>
      => <input value="my article" type="button"onclick="document.location.href='/routed/url/to/Finance_in_France';" />
 
-    // Form tag
+    // Form
     <?php echo form_tag('article/read?title=Finance_in_France') ?>
      => <form method="post" action="/routed/url/to/Finance_in_France" />
 
-Link helpers can accept internal URIs as well as absolute URLs (starting with `http://`, and skipped by the routing system) and anchors. Note that in real-world applications, internal URIs are built with dynamic parameters. Listing 9-8 shows examples of all these cases.
+Tali helper accettano sia URI interni che URL assoluti (che cominciano con `http://`, e vengono ignorate dal sistema di routing) e ancore. Da notare che in applicazioni reali, gli URI interni vengono costruiti con parametri dinamici. Il listato 9-8 mostra un esempio di tali casi.
 
-Listing 9-8 - URLs Accepted by Link Helpers
+Listato 9-8 - URL accettate dagli helper dei link
 
     [php]
-    // Internal URI
+    // URI interne
     <?php echo link_to('my article', 'article/read?title=Finance_in_France') ?>
      => <a href="/routed/url/to/Finance_in_France">my article</a>
 
-    // Internal URI with dynamic parameters
+    // URI interne con parametri dinamici
     <?php echo link_to('my article', 'article/read?title='.$article->getTitle()) ?>
 
-    // Internal URI with anchors
+    // URI interne con anchor
     <?php echo link_to('my article', 'article/read?title=Finance_in_France#foo') ?>
      => <a href="/routed/url/to/Finance_in_France#foo">my article</a>
 
-    // Absolute URL
+    // URL assolute
     <?php echo link_to('my article', 'http://www.example.com/foobar.html') ?>
      => <a href="http://www.example.com/foobar.html">my article</a>
 
-### Link Helper Options
+### Opzioni degli helper dei link
 
-As explained in Chapter 7, helpers accept an additional options argument, which can be an associative array or a string. This is true for link helpers, too, as shown in Listing 9-9.
+Come spiegato precedentemente nel capitolo 7, gli helper accettano un ulteriore argomento opzionale, che può essere un array associativo o una stringa. Questo è vero anche per gli helper dei link, come mostrato nel listato 9-9.
 
-Listing 9-9 - Link Helpers Accept Additional Options
+Listato 9-9 - Gli helper dei link accettano un parametro addizionale
 
     [php]
-    // Additional options as an associative array
+    // Opzione aggiuntiva come array associativo
     <?php echo link_to('my article', 'article/read?title=Finance_in_France', array(
       'class'  => 'foobar',
       'target' => '_blank'
     )) ?>
 
-    // Additional options as a string (same result)
+    // Opzione aggiuntiva come stringa (stesso risultato)
     <?php echo link_to('my article', 'article/read?title=Finance_in_France','class=foobar target=_blank') ?>
      => <a href="/routed/url/to/Finance_in_France" class="foobar" target="_blank">my article</a>
 
-You can also add one of the symfony-specific options for link helpers: `confirm` and `popup`. The first one displays a JavaScript confirmation dialog box when the link is clicked, and the second opens the link in a new window, as shown in Listing 9-10.
+È possibile anche aggiungere una delle opzioni specifiche di symfony, per gli helper dei link: `confirm` e `popup`. La prima mostra una finestra di dialogo di conferma JavaScript che appare quando si clicca sul link, mentre la seconda apre il link in una nuova finestra, come mostrato nel listato 9-10.
 
-Listing 9-10 - `'confirm'` and `'popup'` Options for Link Helpers
+Listato 9-10 - Le opzioni '`confirm`' e '`popup`' per gli helper dei link
 
     [php]
     <?php echo link_to('delete item', 'item/delete?id=123', 'confirm=Are you sure?') ?>
      => <a onclick="return confirm('Are you sure?');"
-           href="/routed/url/to/delete/123.html">delete item</a>
+           href="/routed/url/to/delete/123.html">add to cart</a>
 
     <?php echo link_to('add to cart', 'shoppingCart/add?id=100', 'popup=true') ?>
      => <a onclick="window.open(this.href);return false;"
            href="/fo_dev.php/shoppingCart/add/id/100.html">add to cart</a>
 
     <?php echo link_to('add to cart', 'shoppingCart/add?id=100', array(
-      'popup' => array('popupWindow', 'width=310,height=400,left=320,top=0')
+      'popup' => array('Window title', 'width=310,height=400,left=320,top=0')
     )) ?>
-     => <a onclick="window.open(this.href,'popupWindow',
-           'width=310,height=400,left=320,top=0');return false;"
+     => <a onclick="window.open(this.href,'Window title','width=310,height=400,left=320,top=0');return false;"
            href="/fo_dev.php/shoppingCart/add/id/100.html">add to cart</a>
 
-These options can be combined.
+Tali opzioni possono essere anche usate insieme.
 
-### Fake GET and POST Options
+### Opzioni GET e POST non reali
 
-Sometimes web developers use GET requests to actually do a POST. For instance, consider the following URL:
+Può capitare a volte che gli sviluppatori web utilizzino richieste GET per utilizzarle in POST. Ad esempio, si consideri la seguente URL:
 
     http://www.example.com/index.php/shopping_cart/add/id/100
 
-This request will change the data contained in the application, by adding an item to a shopping cart object, stored in the session or in a database. This URL can be bookmarked, cached, and indexed by search engines. Imagine all the nasty things that might happen to the database or to the metrics of a website using this technique. As a matter of fact, this request should be considered as a POST, because search engine robots do not do POST requests on indexing.
+Questa richiesta cambierà i dati contenuti nell'applicazione, aggiungendo un oggetto al carrello, memorizzato in sessione o nel database. Questo URL potrebbe essere messo nei bookmark, in cache e indicizzato dai motori di ricerca. 
+Si immagini tutti gli effetti poco puliti o chiari che potrebbero accadere al database od alla metrica di un sito utilizzando questa tecnica. In effetti, questa richiesta dovrebbe essere considerata come una POST, in quanto i motori di ricerca non indicizzano tali richieste.
 
-Symfony provides a way to transform a call to a `link_to()` or `button_to()` helper into an actual POST. Just add a `post=true` option, as shown in Listing 9-11.
+Symfony fornisce un modo per trasformare effettivamente una chiamata agli helper `link_to()` o `button_to()` in una POST. Aggiungendo semplicemente un'opzione `post=true`, come mostrato nel listato 9-11.
 
-Listing 9-11 - Making a Link Call a POST Request
+Listato 9-11 - Trasformare un link in una richiesta in POST
 
     [php]
-    <?php echo link_to('go to shopping cart', 'shoppingCart/add?id=100', array('post' => true)) ?>
+    <?php echo link_to('go to shopping cart', 'shoppingCart/add?id=100', 'post=true') ?>
      => <a onclick="f = document.createElement('form'); document.body.appendChild(f);
                     f.method = 'POST'; f.action = this.href; f.submit();return false;"
            href="/shoppingCart/add/id/100.html">go to shopping cart</a>
 
-This `<a>` tag has an `href` attribute, and browsers without JavaScript support, such as search engine robots, will follow the link doing the default GET. So you must also restrict your action to respond only to the POST method, by adding something like the following at the beginning of the action:
+Il tag `<a>` generato dal codice appena mostrato possiede un attributo `href` e i browser senza supporto a JavaScript, come i robot dei motori di ricerca, seguiranno il link come una chiamata in GET. 
+È quindi necessario che l'azione risponda solo a comandi in POST, ad esempio aggiungendo qualcosa come:
 
     [php]
-    $this->forward404Unless($this->getRequest()->isMethod('post'));
+    $this->forward404Unless($request->getRequest()->isMethod('post'));
 
-Just make sure you don't use this option on links located in forms, since it generates its own `<form>` tag.
+all'inizio dell'azione. È sufficiente essere sicuri di non utilizzare questi link all'interno di form, in quanto essi generano il proprio tag `<form>`.
 
-It is a good habit to tag as POST the links that actually post data.
+È buona abitudine trasformare in POST tutte le chiamate che in effetti spediscono dati.
 
-### Forcing Request Parameters As GET Variables
+### Forzare parametri di richiesta come variabili GET
 
-According to your routing rules, variables passed as parameters to a `link_to()` are transformed into patterns. If no rule matches the internal URI in the `routing.yml` file, the default rule transforms `module/action?key=value` into `/module/action/key/value`, as shown in Listing 9-12.
+A seconda delle regole di routing impostate, le variabili passate come parametri a `link_to()` vengono trasformate in pattern. Se nessuna regola del file `routing.yml` coincidesse con la URI interna, la regola di default trasforma `module/action?key=value` in `/module/action/key/value`, come mostrato nel listato 9-12.
 
-Listing 9-12 - Default Routing Rule
+Listato 9-12 - Regola di routing predefinita
 
     [php]
     <?php echo link_to('my article', 'article/read?title=Finance_in_France') ?>
     => <a href="/article/read/title/Finance_in_France">my article</a>
 
-If you actually need to keep the GET syntax--to have request parameters passed under the ?key=value form--you should put the variables that need to be forced outside the URL parameter, in the `query_string` option.
-As this would conflict also with an anchor in the URL, you have to put it into the `anchor` option instead of prepending it to the internal URI. All the link helpers accept these options, as demonstrated in Listing 9-13.
+Se si avesse bisogno effettivamente di mantenere la sintassi GET, per avere parametri di richiesta nella forma `?key=value`, si deve forzare tali variabili fuori dall'URL, nell'opzione `query_string`. 
+Dato che ciò andrebbe in conflitto con un'ancora nell'URL, lo si devi collocare nell'opzione dell'ancora invece che prependerlo alla URI interna. Tutti gli helper dei link accettano questa opzione, come dimostrato nel listato 9-13.
 
-Listing 9-13 - Forcing GET Variables with the `query_string` Option
+Listato 9-13 - Forzare parametri in GET con l'opzione `query_string`
 
     [php]
     <?php echo link_to('my article', 'article/read', array(
-      'query_string' => 'title=Finance_in_France',
-      'anchor' => 'foo'
+      'query_string' => 'title=Finanza_in_Francia',
+      'anchor'       => 'pippo',
     )) ?>
-    => <a href="/article/read?title=Finance_in_France#foo">my article</a>
+    => <a href="/article/read?title=Finanza_in_Francia#pippo">il mio articolo</a>
 
-A URL with request parameters appearing as GET variables can be interpreted by a script on the client side, and by the `$_GET` and `$_REQUEST` variables on the server side.
+Un URL con parametri di richiesta in GET può venire interpretata da uno script lato client e dalle variabili $_GET e $_POST lato server.
 
 >**SIDEBAR**
->Asset helpers
+>Helper per le risorse
 >
->Chapter 7 introduced the asset helpers `image_tag()`, `stylesheet_tag()`, and `javascript_include_ tag()`, which allow you to include an image, a style sheet, or a JavaScript file in the response. The paths to such assets are not processed by the routing system, because they link to resources that are actually located under the public web directory.
+>Il capitolo 7 ha introdotto gli helper `image_tag()`, `stylesheet_tag()`, e `javascript_include_ tag()`, che permettono di includere un'immagine, un foglio di stile od uno script JavaScript nella risposta. 
+>I percorsi di tali asset non vengono processati dal sistema di routing, in quanto puntano a risorse situate nella cartella web pubblica.
 >
->You don't need to mention a file extension for an asset. Symfony automatically adds `.png`, `.js`, or `.css` to an image, JavaScript, or style sheet helper call. Also, symfony will automatically look for those assets in the `web/images/`, `web/js/`, and `web/css/` directories. Of course, if you want to include a specific file format or a file from a specific location, just use the full file name or the full file path as an argument.
+>Non c'è bisogno di menzionare l'estensione per un asset. Symfony aggiungerà automaticamente `.png`, `.js`, o `.css` a un'immagine, JavaScript o foglio di stile. 
+>Inoltre, symfony cercherà automaticamente le risorse nelle cartelle `web/images/`, `web/js/`, e `web/css/`. Ovviamente, se si volesse inserire un file situato in una particolare cartella, è possibile utilizzare come argomento il percorso completo. 
+>E non bisogna preoccuparsi di specificare l'attributo `alt` se l'immagine ha un nome esplicito, in quanto ci penserà symfony stesso.
 >
->To fix the size of an image, use the `size` attribute. It expects a width and a height in pixels, separated by an `x`.
+>     [php]
+>     <?php echo image_tag('test') ?>
+>     <?php echo image_tag('test.gif') ?>
+>     <?php echo image_tag('/my_images/test.gif') ?>
+>      => <img href="/images/test.png" alt="Test" />
+>         <img href="/images/test.gif" alt="Test" />
+>         <img href="/my_images/test.gif" alt="Test" />
+>
+>Per fissare la dimensione di un'immagine, è sufficiente utilizzare l'attributo `size`. Esso si aspetta un'altezza e una larghezza in pixel, separate da una `x`.
 >
 >     [php]
 >     <?php echo image_tag('test', 'size=100x20')) ?>
->      => <img href="/images/test.png" width="100" height="20"/>
+>      => <img href="/images/test.png" alt="Test" width="100" height="20"/>
 >
->If you want the asset inclusion to be done in the `<head>` section (for JavaScript files and style sheets), you should use the `use_stylesheet()` and `use_javascript()` helpers in your templates, instead of the `_tag()` versions in the layout. They add the asset to the response, and these assets are included before the `</head>` tag is sent to the browser.
+>Se si volesse che l'inclusione della risorsa avvenga all'interno della sezione `</head>` (per fogli di stile e JavaScript) basta utilizzare nei template gli helper `use_stylesheet()` e `use_javascript()`, invece delle rispettive versioni `*_tag()` del layout. 
+>Essi aggiungono le risorse alla risposta, e tali risorse vengono incluse prima che la chiusura della sezione `</head>` sia generata e spedita al browser.
 
-### Using Absolute Paths
+### Utilizzare path assoluti
 
-The link and asset helpers generate relative paths by default. To force the output to absolute paths, set the `absolute` option to `true`, as shown in Listing 9-14. This technique is useful for inclusions of links in an e-mail message, RSS feed, or API response.
+Gli helper dei link e delle risorse per default generano link relativi. Per forzarli assoluti, si deve utilizzare l'opzione `absolute` impostandola a `true`, come mostrato nel listato 9-14.
 
-Listing 9-14 - Getting Absolute URLs Instead of Relative URLs
+Listato 9-14 - Link assoluti invece di relativi
 
     [php]
     <?php echo url_for('article/read?title=Finance_in_France') ?>
@@ -399,16 +418,16 @@ Listing 9-14 - Getting Absolute URLs Instead of Relative URLs
     <?php echo link_to('finance', 'article/read?title=Finance_in_France','absolute=true') ?>
      => <a href=" http://www.example.com/routed/url/to/Finance_in_France">finance</a>
 
-    // The same goes for the asset helpers
+    // Lo stesso funziona per gli asset
     <?php echo image_tag('test', 'absolute=true') ?>
     <?php echo javascript_include_tag('myscript', 'absolute=true') ?>
 
 >**SIDEBAR**
->The Mail helper
+>L'helper Mail
 >
->Nowadays, e-mail-harvesting robots prowl about the Web, and you can't display an e-mail address on a website without becoming a spam victim within days. This is why symfony provides a `mail_to()` helper.
+> Quotidianamente i robot raccolgono indirizzi e-mail e invadono la rete, e non si può lasciare tranquillamente l'indirizzo della propria applicazione web senza diventare vittima dello spam entro pochi giorni. Per tale motivo symfony mette a disposizione un helper `mail_to()`.
 >
->The `mail_to()` helper takes two parameters: the actual e-mail address and the string that should be displayed. Additional options accept an `encode` parameter to output something pretty unreadable in HTML, which is understood by browsers but not by robots.
+>L'helper `mail_to()` accetta due parametri: l'indirizzo e-mail effettivo e la stringa che deve essere visualizzata. Opzioni aggiuntive accettano un parametro `encode` per stampare codice non leggibile dai robot ma comprensibile dal browser.
 >
 >     [php]
 >     <?php echo mail_to('myaddress@mydomain.com', 'contact') ?>
@@ -416,57 +435,59 @@ Listing 9-14 - Getting Absolute URLs Instead of Relative URLs
 >     <?php echo mail_to('myaddress@mydomain.com', 'contact', 'encode=true') ?>
 >      => <a href="&#109;&#x61;... &#111;&#x6d;">&#x63;&#x74;... e&#115;&#x73;</a>
 >
->Encoded e-mail messages are composed of characters transformed by a random decimal and hexadecimal entity encoder. This trick stops most of the address-harvesting spambots for now, but be aware that the harvesting techniques evolve rapidly.
+>Tali messaggi e-mail sono composti da caratteri trasformati da un encoder decimale/esadecimale casuale. Questo trucco ferma la maggior parte degli spambot attuali, ma bisogna comunque porre attenzione al fatto che essi evolvono rapidamente.
 
-Routing Configuration
----------------------
+Configurazione del routing
+--------------------------
 
-The routing system does two things:
+Il sistema di routing si preoccupa di eseguire due cose:
 
-  * It interprets the external URL of incoming requests and transforms it into an internal URI, to determine the module/action and the request parameters.
-  * It formats the internal URIs used in links into external URLs (provided that you use the link helpers).
+  * Interpreta l'URL esterno di una richiesta e lo trasforma in un URI interno per capire quale modulo/azione chiamare e i suoi parametri.
+  * Formatta gli URI interni usati nei link in URL esterni (se si usano gli helper).
 
-The conversion is based on a set of routing rules. These rules are stored in a `routing.yml` configuration file located in the application `config/` directory. Listing 9-15 shows the default routing rules, bundled with every symfony project.
+La conversione avviene sulla base di una serie di regole di routing. Tali regole sono memorizzate nel file di configurazione `routing.yml` dentro la cartella `config/` dell'applicazione. Il listato 9-15 mostra le regole di routing di default, incluse in ogni progetto symfony.
 
-Listing 9-15 - The Default Routing Rules, in `frontend/config/routing.yml`
+Listato 9-15 - Regole di routing di default, in `frontend/config/routing.yml`
 
-    # default rules
+    # regole di default
     homepage:
       url:   /
       param: { module: default, action: index }
 
-    # generic rules
-    # please, remove them by adding more specific rules
+    default_symfony:
+      url:   /symfony/:action/*
+      param: { module: default }
+
     default_index:
       url:   /:module
       param: { action: index }
 
     default:
       url:   /:module/:action/*
+      
 
-### Rules and Patterns
+### Regole e pattern
 
-Routing rules are bijective associations between an external URL and an internal URI. A typical rule is made up of the following:
+Le regole di routing sono associazioni biiettive tra URI interni e URL esterni. Una regola tipica è composta da:
 
-  * A unique label, which is there for legibility and speed, and can be used by the link helpers
-  * A pattern to be matched (`url` key)
-  * An array of request parameter values (`param` key)
+  * Una label unica, presente per questioni di velocità e leggibilità, e può essere usata dagli helper dei link
+  * Uno schema di cui fare il match (chiave `url`)
+  * Un array di parametri di richiesta (chiave `param`)
 
-Patterns can contain wildcards (represented by an asterisk, `*`) and named wildcards (starting with a colon, `:`). A match to a named wildcard becomes a request parameter value. For instance, the `default` rule defined in Listing 9-15 will match any URL like `/foo/bar`, and set the `module` parameter to `foo` and the `action` parameter to `bar`.
+Gli schemi possono contenere caratteri jolly (rappresentati da un asterisco, `*`), anche con nomi (che cominciano con i due punti, `:`). Una coincidenza con un carattere jolly con nome diventa il valore di un parametro di richiesta. Ad esempio, la regola `default` definita nel listato 9-15 corrisponde a ogni URL tipo `/foo/bar` e imposta il parametro `module` a `foo` e il parametro `action` a `bar`. Nella regola `default_symfony`, `symfony` è una parola chiave, e `action` un carattere jolly con nome.
 
 >**NOTE**
->Named wildcards can be separated by a slash or a dot, so you can write a pattern like:
+> I caratteri jolly possono essere separati da una barra o da un punto, quindi è possibile scrivere uno schema come questo:
 >
->     my_rule:
->       url:   /foo/:bar.:format
->       param: { module: mymodule, action: myaction }
+>    my_rule:
+>      url:   /foo/:bar.:format
+>      param: { module: mymodule, action: myaction }
 >
->That way, an external URL like 'foo/12.xml' will match `my_rule` and execute `mymodule/myaction` with two parameters: `$bar=12` and `$format=xml`.
->You can add more separators by changing the `segment_separators` parameters value in the `sfPatternRouting` factory configuration (see chapter 19).
+>In questo modo, un URL esterno come 'foo/12.xml' corrisponderà a `my_rule` ed eseguirà `mymodule/myaction` con due parametri: `$bar=12` e `$format=xml`. Si può aggiungere più separatori cambiandi il parametro `segment_separators` nella configurazione del factory `sfPatternRouting` (si veda il capitolo 19).
 
-The routing system parses the `routing.yml` file from the top to the bottom and stops at the first match. This is why you must add your own rules on top of the default ones. For instance, the URL `/foo/123` matches both of the rules defined in Listing 9-16, but symfony first tests `my_rule:`, and as that rule matches, it doesn't even test the `default:` one. The request is handled by the `mymodule/myaction` action with `bar` set to `123` (and not by the `foo/123` action).
+Il sistema di routing analizza il file `routing.yml` dall'inizio alla fine e si ferma alla prima corrispondenza trovata. Per tale motivo si dovrebbero aggiungere le proprie regole all'inizio, prima di quelle predefinite. Ad esempio, l'URL `/foo/123` corrisponde a entrambe le regole definite nel listato 9-16, ma symfony testa prima `my_rule:` e, dato che questa corrisponde, non prova nemmeno ad andare avanti. La richiesta viene gestita dall'azione `mymodule/myaction` con il parametro `bar` impostato a `123` (e non dall'azione `foo/123`).
 
-Listing 9-16 - Rules Are Parsed Top to Bottom
+Listato 9-16 - Analisi delle regole procede dall'inizio alla fine
 
     my_rule:
       url:   /foo/:bar
@@ -477,47 +498,50 @@ Listing 9-16 - Rules Are Parsed Top to Bottom
       url:   /:module/:action/*
 
 >**NOTE**
->When a new action is created, it does not imply that you must create a routing rule for it. If the default module/action pattern suits you, then forget about the `routing.yml` file. If, however, you want to customize the action's external URL, add a new rule above the default one.
+>La creazione di una nuova azione non implica solamente che si debba creare anche una corrispondente regola di routing. Lo schema predefinito modulo/azione funziona, per cui si può evitare di pensare al file `routing.yml`. 
+>Comunque, qualora si volesse personalizzare gli URL esterni delle azioni, è necessario aggiungere le nuove regole prima di quelle predefinite.
 
-Listing 9-17 shows the process of changing the external URL format for an article/read action.
+Il listato 9-17 mostra il processo di modifica del formato dell'URL esterno per un'azione `article/read`.
 
-Listing 9-17 - Changing the External URL Format for an `article/read` Action
+Listato 9-17 - Cambiare il formato dell'URL esterna per un'azione `article/read`
 
     [php]
-    <?php echo url_for('article/read?id=123') ?>
-     => /article/read/id/123       // Default formatting
+    <?php echo url_for('my article', 'article/read?id=123) ?>
+     => /article/read/id/123       // Formato predefinito
 
-    // To change it to /article/123, add a new rule at the beginning
-    // of your routing.yml
+    // Per cambiare in /article/123 aggiungere una nuova regola all'inizio
+    // del file routing.yml
     article_by_id:
       url:   /article/:id
       param: { module: article, action: read }
+      
+Il problema è che la regola `article_by_id` del listato 9-17 interrompe il routing di default per tutte le altre azioni del modulo `article`. 
+Infatti, un URL tipo `article/delete` corrisponderà anch'essa a questa regola, invece che a quella di default, e chiamerà l'azione `read` con il parametro `id` con valore `delete` invece dell'azione `delete`. Per evitare ciò, si deve aggiungere un vincolo in modo che la regola `article_by_id` coincida solo con URL dove il carattere jolly `id` sia un intero.
 
-The problem is that the `article_by_id` rule in Listing 9-17 breaks the default routing for all the other actions of the `article` module. In fact, a URL like `article/delete` will match this rule instead of the `default` one, and call the `read` action with `id` set to `delete` instead of the `delete` action. To get around this difficulty, you must add a pattern constraint so that the `article_by_id` rule matches only URLs where the `id` wildcard is an integer.
+### Vincoli di schema
 
-### Pattern Constraints
+Quando un URL può corrispondere a più regole, si deve raffinare le regole aggiungendo vincoli, o requisiti, allo schema. Un requisito è un insieme di espressioni regolari a cui i caratteri jolly devono corrispondere, perché tutta la regola coincida.
 
-When a URL can match more than one rule, you must refine the rules by adding constraints, or requirements, to the pattern. A requirement is a set of regular expressions that must be matched by the wildcards for the rule to match.
+Ad esempio, per modificare la regola `article_by_id` in modo che coincida solo con URL che abbiano il parametro `id` intero, bisogna aggiungere una linea come mostrato nel listato 9-18.
 
-For instance, to modify the `article_by_id` rule so that it matches only URLs where the `id` parameter is an integer, add a line to the rule, as shown in Listing 9-18.
-
-Listing 9-18 - Adding a Requirement to a Routing Rule
+Listato 9-18 - Aggiungere un requisito a una regola di routing
 
     article_by_id:
       url:   /article/:id
       param: { module: article, action: read }
       requirements: { id: \d+ }
 
-Now an `article/delete` URL can't match the `article_by_id` rule anymore, because the `'delete'` string doesn't satisfy the requirements. Therefore, the routing system will keep on looking for a match in the following rules and finally find the `default` rule.
+In questo modo un URL `article/delete` non può più corrispondere alla regola `article_by_id`, perché la stringa `delete` non soddisfa il requisito. Perciò il sistema di routing continuerà a cercare una regola adatta e troverà così la `default`.
 
 >**SIDEBAR**
->Permalinks
+>Permalink
 >
->A good security guideline for routing is to hide primary keys and replace them with significant strings as much as possible. What if you wanted to give access to articles from their title rather than from their ID? It would make external URLs look like this:
+>Una buona linea guida per la sicurezza del routing è quella di nascondere le chiavi primarie il più possibile e sostituirle con stringhe significative.
+>E se si volesse mostrare gli articoli tramite il titolo invece che l'ID? Implicherebbe URL esterni nel seguente formato:
 >
 >     http://www.example.com/article/Finance_in_France
 >
->To that extent, you need to create a new `permalink` action, which will use a `slug` parameter instead of an `id` one, and add a new rule for it:
+>Per fare ciò, bisogna creare una nuova azione `permalink`, che utilizzerà un parametro `slug` invece di un `id`, e aggiungere una nuova regola di routing:
 >
 >     article_by_id:
 >       url:          /article/:id
@@ -528,123 +552,128 @@ Now an `article/delete` URL can't match the `article_by_id` rule anymore, becaus
 >       url:          /article/:slug
 >       param:        { module: article, action: permalink }
 >
->The `permalink` action needs to determine the requested article from its title, so your model must provide an appropriate method.
+>L'azione `permalink` ha bisogno di determinare l'articolo richiesto dal titolo, per cui il modello associato deve fornire un metodo appropriato:
 >
 >     [php]
->     public function executePermalink($request)
+>     public function executePermalink($reques)
 >     {
 >       $article = ArticlePeer::retrieveBySlug($request->getParameter('slug');
->       $this->forward404Unless($article);  // Display 404 if no article matches slug
->       $this->article = $article;          // Pass the object to the template
+>       $this->forward404Unless($article);  // Mostra un 404 se non trova alcun articolo corrispondente a slug
+>       $this->article = $article;          // Passa l'oggetto al template
 >     }
 >
->You also need to replace the links to the `read` action in your templates with links to the `permalink` one, to enable correct formatting of internal URIs.
+>Si deve anche sostituire i link all'azione `read` nei template con quelli alla `permalink`, per abilitare la formattazione degli URI interni.
 >
 >     [php]
->     // Replace
+>     // Sostituire
 >     <?php echo link_to('my article', 'article/read?id='.$article->getId()) ?>
 >
->     // With
+>     // con
 >     <?php echo link_to('my article', 'article/permalink?slug='.$article->getSlug()) ?>
+>Grazie alla linea `requirements`, un URL esterno come `/article/Finance_in_France` corrisponderà alla regola `article_by_slug`, anche se la regola `article_by_id` appare prima.
 >
->Thanks to the `requirements` line, an external URL like `/article/Finance_in_France` matches the `article_by_slug` rule, even though the `article_by_id` rule appears first.
->
->Note that as articles will be retrieved by slug, you should add an index to the `slug` column in the `Article` model description to optimize database performance.
+>Da notare che dato che gli articoli verranno recuperati tramite slug, si dovrà aggiungere un indice alla colonna `slug` della tabella `Article` per ottimizzare le performance del database.
 
-### Setting Default Values
+### Impostare valori predefiniti
 
-You can give named wildcards a default value to make a rule work, even if the parameter is not defined. Set default values in the `param:` array.
+È possibile assegnare ai parametri dei valori predefiniti, in modo che la regola funzioni anche se il parametro non è definito, impostando tali valori nell'array `param:`.
 
-For instance, the `article_by_id` rule doesn't match if the `id` parameter is not set. You can force it, as shown in Listing 9-19.
+Ad esempio, la regola `article_by_id` non coincide se il parametro `id` non è definito. Lo si può forzare come mostrato nel listato 9-19.
 
-Listing 9-19 - Setting a Default Value for a Wildcard
+Listato 9-19 - Impostare valori di default per wildcard
 
     article_by_id:
       url:          /article/:id
       param:        { module: article, action: read, id: 1 }
 
-The default parameters don't need to be wildcards found in the pattern. In Listing 9-20, the `display` parameter takes the value `true`, even if it is not present in the URL.
+Nel listato 9-20, il parametro `display` assume il valore `true` anche se non è presente nell'URL.
 
-Listing 9-20 - Setting a Default Value for a Request Parameter
+Listato 9-20 - Impostare un valore di default per un parametro di rihiesta
 
     article_by_id:
       url:          /article/:id
       param:        { module: article, action: read, id: 1, display: true }
 
-If you look carefully, you can see that `article` and `read` are also default values for `module` and `action` variables not found in the pattern.
+Se si guarda attentamente, si può notare che anche `article` e `read` sono valori di default per le variabili `module` e `action` non presenti nello schema.
 
 >**TIP**
->You can define a default parameter for all the routing rules by calling the `sfRouting::setDefaultParameter()` method. For instance, if you want all the rules to have a `theme` parameter set to `default` by default, add  `$this->context->getRouting()->setDefaultParameter('theme', 'default');` to one of your global filters.
+>Si Può definire un parametro predefinito per tutte le regole di routing chiamando il metodo `sfRouting::setDefaultParameter()`. Ad esempio, se si volesse che tutti gli URL abbiano per default un parametro `theme` impostato a `default` come parametro predefinito, basta aggiungere la linea `$this->context->getRouting()->setDefaultParameter('theme', 'default');` a uno dei filtri globali.
 
-### Speeding Up Routing by Using the Rule Name
+### Velocizzare il routing utilizzando i nomi delle regole
 
-The link helpers accept a rule label instead of a module/action pair if the rule label is preceded by an 'at' sign (@), as shown in Listing 9-21.
+Gli helper dei link accettano un'etichetta invece di una coppia modulo/azione se tale etichetta è preceduta dalla chiocciola (@), come mostrato nel listato 9-21.
 
-Listing 9-21 - Using the Rule Label Instead of the Module/Action
+Listato 9-21 - Utilizzare label invece di modulo/azione
 
     [php]
     <?php echo link_to('my article', 'article/read?id='.$article->getId()) ?>
 
-    // can also be written as
+    // può anche essere scritto
     <?php echo link_to('my article', '@article_by_id?id='.$article->getId()) ?>
-    // or the fastest one (does not need extra parsing):
-    <?php echo link_to('my article', 'article_by_id', array('id' => $article->getId())) ?>
-    
 
-There are pros and cons to this trick. The advantages are as follows:
+Ci sono pro e contro nella scelta di tal metodo. I vantaggi sono i seguenti:
 
-  * The formatting of internal URIs is done faster, since symfony doesn't have to browse all the rules to find the one that matches the link. In a page with a great number of routed hyperlinks, the boost will be noticeable if you use rule labels instead of module/action pairs.
-  * Using the rule label helps to abstract the logic behind an action. If you decide to change an action name but keep the URL, a simple change in the `routing.yml` file will suffice. All of the `link_to()` calls will still work without further change.
-  * The logic of the call is more apparent with a rule name. Even if your modules and actions have explicit names, it is often better to call `@display_article_by_slug` than `article/display`.
-  * You know exactly which actions are enabled by reading the routing.yml file
+  * La formattazione di URI interne avviene più velocemente, in quanto symfony non dovrà cercare tutte le regole per trovare quella che corrisponde al link. In pagine in cui il numero di link è elevato, sarà possibile notare la differenza di velocità utilizzando label al posto di coppie modulo/azione.
+  * Usare le label aiuta ad astrarre la logica dietro un'azione. Se si decidesse di cambiare il nome dell'azione ma non l'URL associata, infatti, sarà sufficiente una piccola modifica del file `routing.yml`. Tutte le chiamate `link_to()` continueranno a funzionare senza ulteriori cambiamenti.
+  * La logica della chiamata è più evidente se si utilizzasse una label. Anche se i moduli e azioni possiedono nomi espliciti, spesso è più evidente richiamare `@display_article_by_slug` di `article/display`.
+  * Si sa esattamente quali azioni sono abilitate, leggendo il file routing.yml
 
-On the other hand, a disadvantage is that adding new hyperlinks becomes less self-evident, since you always need to refer to the `routing.yml` file to find out which label is to be used for an action. And in a big project, you will certainly end with a lot a routings rules, making a bit hard to maintain them. In this case, you should package your application in several plugins, each one defining a limited set of features.
+D'altra parte, uno svantaggio è che aggiungendo nuovi link è meno intuitivo, dato che si deve sempre controllare il file `routing.yml` per controllare il nome della label.
+In un progetto di grandi dimensioni si avranno sicuramente un gran numero di regole di routing e risulterà leggermente complesso mantenerle.
+In quest'ultimo caso si dovrebbe pacchettizzare l'applicazione in diversi plugin, ognuno con limitato e preciso set di funzionalità.
 
-However, the experience states that using routing rules is the best choice in the long run.
+La scelta di quale metodo utilizzare dipende dal progetto, ma è stato constatato che alla lunga la miglior scelta è quella di utilizzare delle etichette.
 
 >**TIP**
->During your tests (in the `dev` environment), if you want to check which rule was matched for a given request in your browser, develop the "logs" section of the web debug toolbar and look for a line specifying "matched route XXX". You will find more information about the web debug mode in Chapter 16.
+>Se si volesse controllare nel browser quale regola di routing è stata utilizzata per una data richiesta, è sufficiente controllare la sezione "logs" della web debug toolbar e cercare la riga "matched route XXX".
+>Maggiori informazioni riguardanti la modalità web debug si possono trovare nel capitolo 16.
 
-### Creating Rules Without `routing.yml`
+### Creare regole senza routing.yml
 
-As is true of most of the configuration files, the `routing.yml` is a solution to define routing rules, but not the only one. You can define rules in PHP, but before the call to `dispatch()`, because this method determines the action to execute according to the present routing rules. Defining rules in PHP authorizes you to create dynamic rules, depending on configuration or other parameters.
+Come per la maggior parte dei file di configurazione, `routing.yml` è la soluzione per definire regole di routing, ma non l'unica. È possibile definire regole scritte in PHP, sia nel file `config.php` dell'applicazione che nello script del front controller, ma prima della chiamata a `dispatch()`, perché tale metodo determinerà l'azione da eseguire secondo le regole di routing correnti. Definire regole in PHP permette di creare regole dinamiche, dipendenti dalla configurazione o dai parametri.
 
-The object that handles the routing rules is the `sfPatternRouting` factory. It is available from every part of the code by requiring `sfContext::getInstance()->getRouting()`. Its `prependRoute()` method adds a new rule on top of the existing ones defined in `routing.yml`. It expects two parameters: a route name and a `sfRoute` object. For instance, the `routing.yml` rule definition shown in Listing 9-18 is equivalent to the PHP code shown in Listing 9-22.
+L'oggetto che gestisce le regole di routing è il factory `sfPatternRouting`. Essa è disponibile in qualsiasi punto dell'applicazione tramite `sfRouting::getInstance()`. Il suo metodo `prependRoute()` aggiunge una nuova regola prima di tutte quelle definite in `routing.yml`. Si aspetta quattro parametri, che sono gli stessi per le regole di routing: etichette, schemi, array associativo di valori di default e array associativo per i requisiti. Ad esempio, la definizione delle regole del listato 9-18 è equivalente al codice PHP del listato 9-24.
 
-Listing 9-22 - Defining a Rule in PHP
+>**NOTE**
+>La classe di routing è configurabile nel file di configurazione `factories.yml` (per cambiare la classe di routing di default si consulti il capitolo 17). Questo capitolo illustra la classe `sfPatternRouting`, che è la classe di routing predefinita.
+
+Listato 9-24 - Definire una regola in PHP
 
     [php]
     sfContext::getInstance()->getRouting()->prependRoute(
-      'article_by_id',                                  // Route name
-      new sfRoute('/article/:id', array('module' => 'article', 'action' => 'read'), array('id' => '\d+')),                         // Route object
+      'article_by_id',                                  // Nome rotta
+      '/article/:id',                                   // Schema rotta
+      array('module' => 'article', 'action' => 'read'), // Valori di default
+      array('id' => '\d+'),                             // Requisiti
     );
 
-The `sfRoute` class constructor takes three arguments: a pattern, an associative array of default values, and another associative array for requirements.
-
-The `sfPatternRouting` class has other useful methods for handling routes by hand: `clearRoutes()`, `hasRoutes()` and so on. Refer to the [API documentation](http://www.symfony-project.org/api/1_4/) to learn more.
+Il costruttore della classe `sfRoute` richiede tre parametri: uno schema, un array associativo di valori predefiniti e un altro array associativo per i requisiti.
+La classe `sfPatternRouting` possiede altri metodi per la gestione manuale del routing: `clearRoutes()`, `hasRoutes()` e così via. 
+Per maggiori informazioni in merito puoi consultare le [API](http://www.symfony-project.org/api/1_4/).
 
 >**TIP**
->Once you start to fully understand the concepts presented in this book, you can increase your understanding of the framework by browsing the online API documentation or, even better, the symfony source. Not all the tweaks and parameters of symfony can be described in this book. The online documentation, however, is limitless.
+>Una volta compresi a fondo i concetti presentati in questa guida, si può aumentare la comprensione del framework consultando le API o, ancora meglio, i sorgenti di symfony. Non tutti i parametri e i trucchi di symfony possono essere spiegati in questa guida. In ogni caso la documentazione online è illimitata.
 
 -
 
 >**NOTE**
->The routing class is configurable in the `factories.yml` configuration file (to change the default routing class, see chapter 17). This chapter talks about the `sfPatternRouting` class, which is the routing class configured by default.
+>La classe di routing è configurabile attraverso il file di configurazione `factories.yml` (per modificare la classe di routing predefinita si consulti il capitolo 17). Questo capitolo mostra la classe `sfPatternRouting`, che è la classe predefinita.
 
-Dealing with Routes in Actions
-------------------------------
+Gestire le rotte nelle azioni
+-----------------------------
 
-If you need to retrieve information about the current route--for instance, to prepare a future "back to page xxx" link--you should use the methods of the `sfPatternRouting` object. The URIs returned by the `getCurrentInternalUri()` method can be used in a call to a `link_to()` helper, as shown in Listing 9-23.
+Se si avesse bisogno di avere informazioni sulla rotta corrente, ad esempio in preparazione di un futuro link "Ritorna alla pagina XXX", si dovrebbe usare i metodi dell'oggetto `sfPatternRouting`. 
+Gli URI restituiti dal metodo `getCurrentInternalUri()` possono essere utilizzati in una chiamata `link_to()`, come mostrato nel listato 9-25.
 
-Listing 9-23 - Using `sfRouting` to Get Information About the Current Route
+Listato 9-25 - Utilizzare `sfRouting` per avere informazioni sulla route corrente
 
     [php]
-    // If you require a URL like
+    // Se serve un URL come
     http://myapp.example.com/article/21
 
-    $routing = $this->getContext()->getRouting();
+    $routing = sfContext::getInstance()->getRouting();
 
-    // Use the following in article/read action
+    // Usare il codice seguente nell'azione in article/read
     $uri = $routing->getCurrentInternalUri();
      => article/read?id=21
 
@@ -654,14 +683,14 @@ Listing 9-23 - Using `sfRouting` to Get Information About the Current Route
     $rule = $routing->getCurrentRouteName();
      => article_by_id
 
-    // If you just need the current module/action names,
-    // remember that they are actual request parameters
+    // Se servono semplicemente i nomi del modulo/azione corrente,
+    // si ricordi che essi sono parametri di richiesta effettivi
     $module = $request->getParameter('module');
     $action = $request->getParameter('action');
 
-If you need to transform an internal URI into an external URL in an action--just as `url_for()` does in a template--use the `genUrl()` method of the sfController object, as shown in Listing 9-24.
+Se si avesse bisogno di trasformare una URI in un URL esterno in un'azione, come avviene con `url_for()` nei template, bisogna usare il metodo `genUrl()` dell'oggetto sfController, come mostrato nel listato 9-26.
 
-Listing 9-24 - Using `sfController` to Transform an Internal URI
+Listato 9-26 - Utilizzare `sfController` per trasformare una URI interna
 
     [php]
     $uri = 'article/read?id=21';
@@ -672,7 +701,11 @@ Listing 9-24 - Using `sfController` to Transform an Internal URI
     $url = $this->getController()->genUrl($uri, true);
     => http://myapp.example.com/article/21
 
-Summary
--------
+Sommario
+--------
 
-Routing is a two-way mechanism designed to allow formatting of external URLs so that they are more user-friendly. URL rewriting is required to allow the omission of the front controller name in the URLs of one of the applications of each project. You must use link helpers each time you need to output a URL in a template if you want the routing system to work both ways. The `routing.yml` file configures the rules of the routing system and uses an order of precedence and rule requirements. The `settings.yml` file contains additional settings concerning the presence of the front controller name and a possible suffix in external URLs.
+Il routing è un meccanismo bidirezionale pensato per permettere la formattazione di URL esterni in modo che siano più comprensibili e intuitive. 
+La riscrittura degli URL è necessaria per permettere l'omissione del nome del front controller nell'URL di una delle applicazioni di ogni progetto. 
+Si deve utilizzare gli helper dei link ogni qualvolta si avesse bisogno di stampare un URL in un template, se si vuole che il sistema di routing funzioni in entrambe le direzioni. 
+Il file `routing.yml` configura le regole del sistema di routing e utilizza un ordine di precedenza e requisiti. 
+Il file `settings.yml` contiene impostazioni addizionali riguardanti la presenza del nome del front controller e possibili suffissi in URL esterni.

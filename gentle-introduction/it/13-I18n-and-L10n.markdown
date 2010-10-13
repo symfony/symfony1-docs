@@ -1,4 +1,4 @@
-Capitolo 13 - i18n e l10n
+Capitolo 13 - I18n e l10n
 =========================
 
 Se qualcuno ha mai sviluppato un'applicazione internazionale, sicuramente sa quale
@@ -45,7 +45,7 @@ le pagine.
 
 Per impostazione predefinita, la cultura dei nuovi utenti è `default_culture`. Si può
 modificare questa impostazione nel file di configurazione `settings.yml`, come mostrato
-nel Listato 13-1.
+nel listato 13-1.
 
 Listato 13-1 - Impostare la cultura predefinita, in `frontend/config/settings.yml`
 
@@ -72,7 +72,7 @@ La cultura di un utente può essere cambiata durante la sessione, ad esempio qua
 utente decide di passare dalla versione inglese a quella italiana dell'applicazione,
 oppure quando un utente entra nell'applicazione e usa la lingua impostata nelle sue
 preferenze. È per questo che la classe `sfUser` offre dei metodi getter e setter per la
-cultura. Il Listato 13-2 mostra come usare questi metodi in un'azione.
+cultura. Il listato 13-2 mostra come usare questi metodi in un'azione.
 
 Listato 13-2 - Impostare e recuperare la cultura in un'azione
 
@@ -176,7 +176,7 @@ Listato 13-3 - Mostrare un numero per la cultura dell'utente
      => '12000,10'
 
 Non occorre passare esplicitamente la cultura agli helper. Essi la cercano nell'oggetto
-sessione corrente. Il Listato 13-4 elenca gli helper che tengono conto della cultura
+sessione corrente. Il listato 13-4 elenca gli helper che tengono conto della cultura
 dell'utente nel loro output.
 
 Listato 13-4 - Helper dipendenti dalla cultura
@@ -239,7 +239,7 @@ input semplici.
 
 Per le date, tuttavia, spesso non è possibile. Gli utenti sono abituati a inserire le
 date nel loro formato culturale e occorre convertire queste date in un formato interno
-(e internazionale). Qui si applica la classe `sfI18N`. Il Listato 13-5 mostra come usare
+(e internazionale). Qui si applica la classe `sfI18N`. Il listato 13-5 mostra come usare
 questa classe.
 
 Listato 13-5 - Ottenere una data da un formato localizzato in un'azione
@@ -271,7 +271,7 @@ senza alcuna colonna i18n e un'altra con le sole colonne i18n. Le due tabelle so
 da una relazione uno-a-uno. Questa configurazione consente di aggiungere altre lingue
 senza dover cambiare il modello. Consideriamo un esempio, usando una tabella `Product`.
 
-Innanzitutto, creare le tabelle nel file `schema.yml`, come mostrato nel Listato 13-6.
+Innanzitutto, creare le tabelle nel file `schema.yml`, come mostrato nel listato 13-6.
 
 Listato 13-6 - Schema di esempio per dati i18n Data con Propel, in `config/schema.yml`
 
@@ -306,7 +306,7 @@ tabella che contiene i dati internazionalizzati ha lo stesso nome della tabella
 principale con `_i18n` come suffisso e se sono collegate con una colonna `id` in entrambe,
 si possono omettere le colonne `id` e `culture` nella tabella `_i18n` e gli attributi
 specifici nella tabella principale: symfony li inferirà. Questo vuol dire che symfony
-vedrà lo schema nel Listato 13-8 come quello nel Listato 13-6.
+vedrà lo schema nel listato 13-8 come quello nel listato 13-6.
 
 Listato 13-8 - Schema di esempio per dati i18n, versione breve, in `config/schema.yml`
 
@@ -323,7 +323,7 @@ Listato 13-8 - Schema di esempio per dati i18n, versione breve, in `config/schem
 
 Una volta costruiti i corrispondente oggetti del modello (non dimenticare di richiamare
 il task `propel:build --model` dopo ogni modifica a `schema.yml`), si può usare la classe
-`Product` con supporto i18n, come se fosse una sola tabella, come mostrato nel Listato
+`Product` con supporto i18n, come se fosse una sola tabella, come mostrato nel listato
 13-9.
 
 Listato 13-9 - Trattare gli oggetti i18n
@@ -344,7 +344,7 @@ Listato 13-9 - Trattare gli oggetti i18n
 
 Come per le query con oggetti peer, si possono restringere i risultati a oggetti che
 abbiamo la traduzione per la cultura corrente, usando il metodo `doSelectWithI18n`,
-invece del solito `doSelect`, come mostrato nel Listato 13-10. Inoltre, esso creerà gli
+invece del solito `doSelect`, come mostrato nel listato 13-10. Inoltre, esso creerà gli
 oggetti i18n correlati contemporaneamente a quelli normali, riducendo così il numero di
 query necessarie per ottenere tutti i contenuti (fare riferimento al capitolo 18 per
 maggiori informazioni sugli impatti positivi di questo metodo sulle prestazioni).
@@ -388,7 +388,7 @@ Listato 13-11 - Attivare l'interfaccia di traduzione, in `frontend/config/settin
 
 Supponiamo di voler creare un sito in inglese e italiano, con l'inglese come lingua
 predefinita. Prima ancora di pensare di avere il sito tradotto, probabilmente si
-scriverà nei template qualcosa come l'esempio mostrato nel Listato 13-12.
+scriverà nei template qualcosa come l'esempio mostrato nel listato 13-12.
 
 Listato 13-12 - Un template mono-lingua
 
@@ -398,8 +398,8 @@ Listato 13-12 - Un template mono-lingua
 Per fare in modo che symfony possa tradurre le frasi di un template, queste devono
 essere identificate come testo da tradurre. Questo è lo scopo dell'helper `__()` (due
 trattini bassi), un membro del gruppo di helper I18N. Quindi, tutti i template hanno
-bisogno di racchiudere le frasi da tradurre in chiamate a questa funzione. Il Listato
-13-11, ad esempio, può essere modificato come nel Listato 13-13 (come si vedrà nella
+bisogno di racchiudere le frasi da tradurre in chiamate a questa funzione. Il listato
+13-11, ad esempio, può essere modificato come nel listato 13-13 (come si vedrà nella
 sezione successiva "Gestire esigenze complesse di traduzione", c'è un modo migliore per
 richiamare l'helper di traduzione in questo esempio).
 
@@ -438,8 +438,8 @@ creando una nuova traduzione XLIFF.
 >per dizionari: gettext, MySQL e SQLite. Si faccia riferimento alla documentazione delle
 >API per maggiori informazioni sulla configurazione di questi sistemi.
 
-Il Listato 13-14 mostra un esempio di sintassi XLIFF col file `messages.it.xml`
-necessario per tradurre il Listato 13-14 in italiano.
+Il listato 13-14 mostra un esempio di sintassi XLIFF col file `messages.it.xml`
+necessario per tradurre il listato 13-14 in italiano.
 
 Listato 13-14 - Un dizionario XLIFF, in `frontend/i18n/messages.it.xml`
 
@@ -466,9 +466,9 @@ predefinita. Ogni traduzione è scritta in un tag `trans-unit` con un attributo 
 `id`.
 
 Con la cultura predefinita (`en_US`), le frasi non sono tradotte e sono mostrati i
-parametri delle chiamate `__()`, così come sono. Il risultato del Listato 13-12 è allora
-simile al Listato 13-11. Se tuttavia si cambia cultura in `it_IT` o `it_CH`, sono invece
-mostrate le traduzioni del file `messages.it.xml` e il risultato appare come nel Listato
+parametri delle chiamate `__()`, così come sono. Il risultato del listato 13-12 è allora
+simile al listato 13-11. Se tuttavia si cambia cultura in `it_IT` o `it_CH`, sono invece
+mostrate le traduzioni del file `messages.it.xml` e il risultato appare come nel listato
 13-15.
 
 Listato 13-15 - Un template tradotto
@@ -562,7 +562,7 @@ se occorrono delle formattazioni o delle variabili mescolate con parole, si può
 tentati di dividere le frasi in pezzi, quindi richiamare l'helper su frasi senza senso.
 Fortunatamente, l'helper `__()` offre una soluzione basata su token, che aiutano a
 mantenere un dizionario sensato, che è più facile da gestire per i traduttori.
-Anche la formattazione HTML può essere lasciata nell'helper. Il Listato 13-16 mosta un
+Anche la formattazione HTML può essere lasciata nell'helper. Il listato 13-16 mosta un
 esempio.
 
 Listato 13-16 - Traduzione di frasi che contengono codice
@@ -589,12 +589,12 @@ sostituzione usata dall'helper di traduzione è `strtr()`.
 
 Uno dei problemi più comuni con la traduzione è l'uso di forme plurali. A seconda del
 numero di risultati, il testo cambia, ma non nello stesso modo in ogni lingua. Ad esempio,
-l'ultima frase del Listato 13-15 è sbagliata, se `count_logged()` restituisce 0 o 1. Si
+l'ultima frase del listato 13-15 è sbagliata, se `count_logged()` restituisce 0 o 1. Si
 potrebbe aggiungere una condizione sul valore restituito dalla funzione e scegliere la
 frase giusta da usare, ma richiederebbe molto codice. Inoltre, lingue diverse hanno regole
 grammatiche diverse e quindi le regole di declinazione del plurale potrebbero essere
 molto complesse. Essendo il problema molto comune, symfony fornisce un helper per
-risolverlo, chiamato `format_number_choice()`. Il Listato 13-17 mostra come usare questo
+risolverlo, chiamato `format_number_choice()`. Il listato 13-17 mostra come usare questo
 helper.
 
 Listato 13-17 - Traduzione di frasi in base al valore dei parametri
@@ -621,7 +621,7 @@ Qualsiasi combinazione non vuota di delimitatori con parentesi tonde e quadre è
 accettabile.
 
 Il messaggio deve comparire esplicitamente nel file XLIFF per poter avere la giusta
-traduzione. Il Listato 13-18 mostra un esempio.
+traduzione. Il listato 13-18 mostra un esempio.
 
 Listato 13-18 - Dizionario XLIFF per `format_number_choice()`
 
@@ -656,7 +656,7 @@ Listato 13-18 - Dizionario XLIFF per `format_number_choice()`
 
 Non tutti il testo mostrato in una pagina deriva da template. Per questo spesso occorre
 richiamare l'helper `__()` in altre parti dell'applicazione: azioni, filtri, classi del
-modello, ecc. Il Listato 13-19 mostra come richiamare l'helper in un'azione, recuperando
+modello, ecc. Il listato 13-19 mostra come richiamare l'helper in un'azione, recuperando
 l'istanza corrente dell'oggetti `I18N` attraverso il contesto.
 
 Listato 13-19 - Richiamare `__()` in un'azione
