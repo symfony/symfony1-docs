@@ -198,11 +198,11 @@ Le Générateur CRUD
 ------------------
 
 Maintenant que nous avons généré les classes de formulaire, voyons comment créer un module symfony pour manipuler les objets depuis un navigateur. Nous souhaitons pouvoir créer, modifier et supprimer les objets des classes `Article`, `Author`, `Category` et `Tag`.
-Voyons dans un premier temps la création du module pour la classe `Author`. Même s'il est possible de créer le module manuellement, le plugin Propel propose la tâche `propel:generate-crud` qui permet de générer un module CRUD basé sur une classe Propel en utilisant le formulaire généré dans la section précédente :
+Voyons dans un premier temps la création du module pour la classe `Author`. Même s'il est possible de créer le module manuellement, le plugin Propel propose la tâche `propel:generate-module` qui permet de générer un module CRUD basé sur une classe Propel en utilisant le formulaire généré dans la section précédente :
 
-    $ ./symfony propel:generate-crud frontend author Author
+    $ ./symfony propel:generate-module frontend author Author
 
-La tâche `propel:generate-crud` prend trois arguments :
+La tâche `propel:generate-module` prend trois arguments :
 
   * `frontend` : le nom de l'application dans laquelle il faut créer le module
   * `author`   : le nom du module à créer
@@ -263,9 +263,9 @@ Listing 4-4 - Classe `authorActions` générée par la Tâche
       }
     }
 
-Dans ce module, le cycle de vie du formulaire est géré par trois méthodes : `create`, `edit` et `update`. Il est également possible de demander à la tâche `propel:generate-crud` de ne générer qu'une seule méthode reprenant les fonctionnalités des trois méthodes précédentes en lui passant l'option `--non-atomic-actions` :
+Dans ce module, le cycle de vie du formulaire est géré par trois méthodes : `create`, `edit` et `update`. Il est également possible de demander à la tâche `propel:generate-module` de ne générer qu'une seule méthode reprenant les fonctionnalités des trois méthodes précédentes en lui passant l'option `--non-atomic-actions` :
 
-    $ ./symfony propel:generate-crud frontend author Author --non-atomic-actions
+    $ ./symfony propel:generate-module frontend author Author --non-atomic-actions
 
 Le code généré utilisant `--non-atomic-actions` (Listing 4-5) est plus concis et moins redondant.
 
@@ -307,7 +307,7 @@ Listing 4-5 - Classe `authorActions` générée avec l'option `--non-atomic-acti
 
 La tâche a également généré deux templates, `indexSuccess` et `editSuccess`. Le template `editSuccess` a été généré sans utiliser l'instruction `<?php echo $form ?>`. Il est possible de changer ce comportement en utilisant l'option `--non-verbose-templates` :
 
-    $ ./symfony propel:generate-crud frontend author Author --non-verbose-templates
+    $ ./symfony propel:generate-module frontend author Author --non-verbose-templates
 
 L'utilisation de cette option est utile pour les phases de prototypage comme le montre le Listing 4-6.
 
@@ -352,7 +352,7 @@ Figure 4-2 - Edition d'un Auteur avec Erreurs de Validation
 
 Nous pouvons maintenant répéter l'opération pour la classe `Article` :
 
-    $ ./symfony propel:generate-crud frontend article Article --non-verbose-templates --non-atomic-actions
+    $ ./symfony propel:generate-module frontend article Article --non-verbose-templates --non-atomic-actions
 
 Le code généré est très similaire à celui de la classe `Author`. Mais si vous essayez de créer un nouvel article, le code génère une erreur fatale comme le montre la Figure 4-3.
 
@@ -387,7 +387,7 @@ Figure 4-4 - Création d'un Article
 La Personnalisation des Formulaires générés
 -------------------------------------------
 
-Les tâches `propel:build-forms` et `propel:generate-crud` nous ont permis de créer des modules symfony fonctionnels permettant de lister, de créer, d'éditer et de supprimer les objets du modèle. Ces modules prennent en compte non seulement les règles de validation du modèle mais également les relations entre les tables. Et tout cela sans écrire une seule ligne de code !
+Les tâches `propel:build-forms` et `propel:generate-module` nous ont permis de créer des modules symfony fonctionnels permettant de lister, de créer, d'éditer et de supprimer les objets du modèle. Ces modules prennent en compte non seulement les règles de validation du modèle mais également les relations entre les tables. Et tout cela sans écrire une seule ligne de code !
 
 Il est maintenant temps de personnaliser le code qui a été généré. En effet, si les classes de formulaires prennent déjà en compte de nombreux éléments, certains aspects nécessitent néanmois une personnalisation.
 
@@ -679,12 +679,12 @@ L'utilisation de la tâche `propel:build-forms` permet donc de générer automat
 
   * De plus, lors de la mise à jour du schéma de base de données, les formulaires générés vont se mettre à jour automatiquement. Le développeur n'aura qu'à ajuster la personnalisation qu'il a réalisé.
 
-La section suivante va maintenant décrire la personnalisation des actions et des templates générés par la tâche `propel:generate-crud`.
+La section suivante va maintenant décrire la personnalisation des actions et des templates générés par la tâche `propel:generate-module`.
 
 La Sérialisation des Formulaires
 --------------------------------
 
-La section précédente nous a permis de personnaliser les formulaires générés par la tâche `propel:build-forms`. Dans cette section, nous allons personnaliser le cycle de vie des formulaires en se basant sur le code généré par la tâche `propel:generate-crud`.
+La section précédente nous a permis de personnaliser les formulaires générés par la tâche `propel:build-forms`. Dans cette section, nous allons personnaliser le cycle de vie des formulaires en se basant sur le code généré par la tâche `propel:generate-module`.
 
 ### Les valeurs par défaut
 
@@ -901,12 +901,12 @@ Listing 4-27 - Surcharge de la Méthode `save()` de la classe `ArticleForm`
       }
     }
 
-Après le déplacement du code vers le formulaire, l'action `edit` est identique au code généré initialement par la tâche `propel:generate-crud`.
+Après le déplacement du code vers le formulaire, l'action `edit` est identique au code généré initialement par la tâche `propel:generate-module`.
 
 >**SIDEBAR**
 >Refactoriser son Code dans le Modèle ou dans le Formulaire
 >
->Les actions générées par la tâche `propel:generate-crud` n'ont généralement pas à être modifiées.
+>Les actions générées par la tâche `propel:generate-module` n'ont généralement pas à être modifiées.
 >
 >La logique que vous pourriez ajouter dans l'action `edit`, notamment lors de la sérialisation du formulaire, doit généralement être déplacée dans les classes du modèle ou dans la classe de formulaire.
 >

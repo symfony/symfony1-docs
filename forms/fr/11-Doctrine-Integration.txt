@@ -204,11 +204,11 @@ Le générateur CRUD
 ------------------
 
 Maintenant qu'il y a des classes de formulaires générées, voyons comment il est facilement possible de créer un module symfony pour gérer les objets depuis un navigateur. Nous souhaitons créer, modifier et supprimer des objets des classes `Article`, `Author`, `Category`, et `Tag`.
-Commençons par la création pour la classe `Author`. Même si nous pouvons créer manuellement un module, le plugin Doctrine fournit la tâche `doctrine:generate-crud` qui génère un module CRUD basé sur une classe du modèle objet Doctrine, utilisant le formulaire généré dans la section précédente :
+Commençons par la création pour la classe `Author`. Même si nous pouvons créer manuellement un module, le plugin Doctrine fournit la tâche `doctrine:generate-module` qui génère un module CRUD basé sur une classe du modèle objet Doctrine, utilisant le formulaire généré dans la section précédente :
 
-    $ ./symfony doctrine:generate-crud frontend author Author
+    $ ./symfony doctrine:generate-module frontend author Author
 
-`doctrine:generate-crud` prend trois arguments :
+`doctrine:generate-module` prend trois arguments :
 
   * `frontend` : nom de l'application où vous voulez créer un module
   * `author`  : nom du module à créer
@@ -325,7 +325,7 @@ La tâche génère également trois templates et un partial, `indexSuccess`,
 sans la déclaration `<?php echo $form ?>`. Nous pouvons modifier ce comportement,
 en utilisant `--non-verbose-templates` :
 
-    $ ./symfony doctrine:generate-crud frontend author Author --non-verbose-templates
+    $ ./symfony doctrine:generate-module frontend author Author --non-verbose-templates
 
 Cette option est utile lors de la phase de prototypage, comme le montre le Listing 4-6.
 
@@ -379,7 +379,7 @@ Figure 4-2 - Édition d'un auteur avec erreurs de validation
 
 Nous pouvons maintenant répéter l'opération avec la classe `Article` :
 
-    $ ./symfony doctrine:generate-crud frontend article Article --non-verbose-templates
+    $ ./symfony doctrine:generate-module frontend article Article --non-verbose-templates
 
 Le formulaire `ArticleForm` utilise le widget `sfWidgetFormDoctrineSelect` pour représenter
 la relation entre l'objet `Article` et l'objet `Author`. Ce widget crée une liste déroulante
@@ -428,7 +428,7 @@ Figure 4-4 - Création d'un article
 Personnalisation des formulaires générés
 ----------------------------------------
 
-Les tâches `doctrine:build-forms` et `doctrine:generate-crud` permettent de créer des modules symfony fonctionnels pour lister, créer, éditer et supprimer des objets modèle. Ces modules prennent en compte non seulement les règles de validation du modèle, mais également les relations entre les tables. Tout ceci se produit sans écrire la moindre ligne de code !
+Les tâches `doctrine:build-forms` et `doctrine:generate-module` permettent de créer des modules symfony fonctionnels pour lister, créer, éditer et supprimer des objets modèle. Ces modules prennent en compte non seulement les règles de validation du modèle, mais également les relations entre les tables. Tout ceci se produit sans écrire la moindre ligne de code !
 
 Le temps est maintenant venu de personnaliser le code généré. Si les classes de formulaires prennent déjà en considération beaucoup d'éléments, certains aspects devront être personnalisés.
 
@@ -769,7 +769,7 @@ est utile pour plusieurs raisons :
     ses personnalisations.
 
 La prochaine section décrira la personnalisation des actions et des templates
-générés par la tâche `doctrine:generate-crud`.
+générés par la tâche `doctrine:generate-module`.
 
 Sérialisation des formulaires
 -----------------------------
@@ -777,7 +777,7 @@ Sérialisation des formulaires
 La précédente section nous montre comment personnaliser les formulaires générés par la tâche
 `doctrine:build-forms`. Dans la section courante, nous allons personnaliser le cycle
 de vie des formulaires, en commençant par le code généré par
-`doctrine:generate-crud`.
+`doctrine:generate-module`.
 
 ### Valeurs par défaut
 
@@ -987,7 +987,7 @@ plus d'informations concernant la gestion d'envois de fichiers).
 >     [PHP]
 >     <?php if ($form->isMultipart() echo 'enctype="multipart/form-data" '; ?>
 >
->Ce code est automatiquement ajoutée lorsque votre formulaire est créé par la tâche generate-crud.
+>Ce code est automatiquement ajoutée lorsque votre formulaire est créé par la tâche generate-module.
 
 Le Listing 4-26 montre les modifications à appliquer lors de l'enregistrement du formulaire pour enregistrer le fichier sur le serveur et stocker son chemin dans l'objet `article`.
 
@@ -1046,12 +1046,12 @@ Listing 4-27 - Surcharge de la méthode `save()` de la classe `ArticleForm`
       }
     }
 
-Après avoir déplacé le code dans le formulaire, l'action `edit` est identique au code généré par `doctrine:generate-crud`.
+Après avoir déplacé le code dans le formulaire, l'action `edit` est identique au code généré par `doctrine:generate-module`.
 
 >**SIDEBAR**
 >Refactoriser le code dans le modèle ou dans le formulaire
 >
->Les actions générées par la tâche `doctrine:generate-crud` ne devraient généralement pas être modifiées.
+>Les actions générées par la tâche `doctrine:generate-module` ne devraient généralement pas être modifiées.
 >
 >La logique que vous pourriez ajouter dans l'action `edit`, particulièrement durant la sérialisation du
 >formulaire, doit souvent être déplacée dans les classes du modèle ou dans les classes du formulaire.

@@ -274,13 +274,13 @@ creare un modulo symfony per gestire gli oggetti da un browser. Vogliamo
 creare, modificare, cancellare gli oggetti delle classi `Article`, `Author`,
 `Category`, `Tag`. Iniziamo con la creazione del modulo per la classe
 `Author`. Anche se potremmo creare manualmente un modulo, il plugin Doctrine
-fornisce il task `doctrine:generate-crud`, che genera un modulo CRUD basato
+fornisce il task `doctrine:generate-module`, che genera un modulo CRUD basato
 sulle classi dei modelli degli oggetti Doctrine. Usando il form che abbiamo
 generato nella sezione precedente:
 
-    $ ./symfony doctrine:generate-crud frontend author Author
+    $ ./symfony doctrine:generate-module frontend author Author
 
-`doctrine:generate-crud` accetta tre parametri:
+`doctrine:generate-module` accetta tre parametri:
 
   * `frontend` : nome dell'applicazione in cui vuoi creare il modulo
   * `author` : nome del modulo che vuoi creare
@@ -399,7 +399,7 @@ Il task genera anche tre template e un partial: `indexSuccess`, `editSuccess`,
 `<?php echo $form ?>`. Possiamo modificare questo comportamento, usando
 `--non-verbose-templates`:
 
-    $ ./symfony doctrine:generate-crud frontend author Author --non-verbose-templates
+    $ ./symfony doctrine:generate-module frontend author Author --non-verbose-templates
 
 Questa opzione è utile durante la fase di prototipizzazione, come mostra
 il Listato 4-6.
@@ -454,7 +454,7 @@ Figura 4-2 - Modifica di un autore con errori di validazione
 
 Possiamo ora ripetere l'operazione con la classe `Article`:
 
-    $ ./symfony doctrine:generate-crud frontend article Article --non-verbose-templates
+    $ ./symfony doctrine:generate-module frontend article Article --non-verbose-templates
 
 Il form `ArticleForm` usa il widget `sfWidgetFormDoctrineSelect` per
 rappresentare la relazione tra l'oggetto `Article` e l'oggetto `Author`.
@@ -503,7 +503,7 @@ Figura 4-4 - Creare un articolo
 Personalizzare i form generati
 -------------------------------
 
-I task `doctrine:build-forms` e `doctrine:generate-crud` ci consentono di
+I task `doctrine:build-forms` e `doctrine:generate-module` ci consentono di
 creare moduli funzionali in symfony per elencare, creare, modificare e
 cancellare gli oggetti del modello. Questi moduli tengono in considerazione
 non solo le regole di validazione del modello, ma anche le relazioni tra
@@ -874,14 +874,14 @@ automatizzazione è utile per diverse ragioni:
     personalizzazione che ha già eseguito.
 
 La prossima sezione descriverà la personalizzazione delle azioni e dei
-template generati dal task `doctrine:generate-crud`.
+template generati dal task `doctrine:generate-module`.
 
 Serializzazione dei form
 --------------------------
 
 La sezione precedente ci ha mostrato come personalizzare i form generate
 dal task `doctrine:build-forms`. In questa sezione personalizzeremo il ciclo
-di vita dei form, iniziando dal codice generato dal task `doctrine:generate-crud`.
+di vita dei form, iniziando dal codice generato dal task `doctrine:generate-module`.
 
 ### Valori di default
 
@@ -1180,12 +1180,12 @@ Listato 4-27 - Sovrascrivere il metodo `save()` della classe `ArticleForm`
     }
 
 Dopo aver spostato il codice al form, l'azione `edit` è identica al codice
-generato inzialmente dal task `doctrine:generate-crud`.
+generato inzialmente dal task `doctrine:generate-module`.
 
 >**SIDEBAR**
 >Rifattorizzare il codice del modello nel form
 >
->Le azioni generati dal task `doctrine:generate-crud` non dovrebbero
+>Le azioni generati dal task `doctrine:generate-module` non dovrebbero
 >solitamente essere modificate.
 >
 >La logica che si potrebbe aggiungere nell'azione `edit`, specialmente durante
