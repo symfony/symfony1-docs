@@ -152,11 +152,11 @@ Event Dispatcher の `notify()` メソッドは `sfEvent` オブジェクトを�
         switch ($event['method'])
         {
           case 'put':
-            self::put($event->getSubject(), $event['arguments'])
+            self::put($event->getSubject(), $event['arguments']);
 
             return true;
           case 'delete':
-            self::delete($event->getSubject(), $event['arguments'])
+            self::delete($event->getSubject(), $event['arguments']);
 
             return true;
           default:
