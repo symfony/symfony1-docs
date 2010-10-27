@@ -133,11 +133,11 @@ Listato 17-4 - Gestire un evento del tipo "notificare finché"
         switch ($event['method'])
         {
           case 'put':
-            self::put($event->getSubject(), $event['arguments'])
+            self::put($event->getSubject(), $event['arguments']);
 
             return true;
           case 'delete':
-            self::delete($event->getSubject(), $event['arguments'])
+            self::delete($event->getSubject(), $event['arguments']);
 
             return true;
           default:
