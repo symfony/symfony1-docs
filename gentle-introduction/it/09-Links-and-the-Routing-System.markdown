@@ -662,7 +662,7 @@ Per maggiori informazioni in merito puoi consultare le [API](http://www.symfony-
 Gestire le rotte nelle azioni
 -----------------------------
 
-Se si avesse bisogno di avere informazioni sulla rotta corrente, ad esempio in preparazione di un futuro link "Ritorna alla pagina XXX", si dovrebbe usare i metodi dell'oggetto `sfPatternRouting`. 
+Se si avesse bisogno di avere informazioni sulla rotta corrente, ad esempio in preparazione di un futuro link "Torna alla pagina XXX", si dovrebbe usare i metodi dell'oggetto `sfPatternRouting`. 
 Gli URI restituiti dal metodo `getCurrentInternalUri()` possono essere utilizzati in una chiamata `link_to()`, come mostrato nel listato 9-25.
 
 Listato 9-25 - Utilizzare `sfRouting` per avere informazioni sulla route corrente
