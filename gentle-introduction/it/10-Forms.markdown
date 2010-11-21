@@ -317,7 +317,7 @@ Il widget `choice` si attende come minimo un parametro `choices` costituito da u
     [php]
     // in modules/pippo/actions/actions.class.php
     $this->form = new sfForm();
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
 ### I widget per le Foreign Keys
 
@@ -602,7 +602,7 @@ Fortunatamente, symfony offre un modo per denominare tutti gli input del form us
     [php]
     // in modules/pippo/actions/actions.class.php
     // Definizione del form
-    $this->form->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
 
 In questo modo tutti gli input vengono generati con un nome del tipo `form[NOME_WIDGET]` anziché semplicemente `NOME_WIDGET`:
 
@@ -891,8 +891,8 @@ Con tutte le opzioni dei widget, i validatori e i parametri dei form, la definiz
     // in modules/pippo/actions/actions.class.php
     // Definizione del form
     $this->form = new sfForm();
-    $this->form->setNameFormat('contact[%s]');
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
     $this->form->setWidgets(array(
       'name'    => new sfWidgetFormInputText(),
@@ -917,8 +917,8 @@ La migliore prassi consiste nel creare una classe form con le stesse proprietà 
 
       public function configure()
       {
-        $this->setNameFormat('contact[%s]');
-        $this->setIdFormat('my_form_%s');
+        $this->widgetSchema->setNameFormat('contact[%s]');
+        $this->widgetSchema->setIdFormat('my_form_%s');
         $this->setWidgets(array(
           'name'    => new sfWidgetFormInputText(),
           'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
@@ -1171,7 +1171,7 @@ Il file `lib/form/base/BaseArticleForm.class.php` generato contiene la traduzion
         $this->setPostValidator(
           new sfValidatorPropelUnique(array('model' => 'Article', 'column' => array('slug')))
         );
-        $this->setNameFormat('article[%s]');
+        $this->widgetSchema->setNameFormat('article[%s]');
         parent::setup();
       }
 
