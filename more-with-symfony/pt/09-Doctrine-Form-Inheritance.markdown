@@ -510,7 +510,7 @@ relacionados à objetos de vídeo, tais como `formato` (4/3, 16/9 ...) ou `durac
 o modelo `PDF` contém o número de `paginas` ou `orientacao` do documento. 
 Vamos construir esse modelo e gerar os formulários correspondentes.
 
-    $php symfony doctrine:build-all
+    $php symfony doctrine:build --all
 
 A seção seguinte descreve como tirar vantagem da herança de tabelas
 em classes de formulário graças ao novo método ~`setupInheritance()`~, método 
@@ -747,7 +747,7 @@ Isso pode ser feito de uma só vez, graças a tarefa ~`doctrine:build`~
 
 O cache symfony deve ser limpo e os *assets* do plugin linkados no diretório `web` para concluir o processo:
 
-    $ php symfony cache: clear
+    $ php symfony cache:clear
     $ php symfony plugin:publish-assets
 
 A seção seguinte explica como construir os módulos do backend com a
