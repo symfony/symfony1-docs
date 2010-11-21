@@ -39,9 +39,9 @@ symfonyフレームワークにはいくつかの安定ブランチが存在しs
 アーカイブをダウンロードし`lib/vendor/`ディレクトリの下に設置し再度展開します:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.4.0.tgz
-    $ mv symfony-1.4.0 symfony
-    $ rm symfony-1.4.0.tgz
+    $ tar zxpf symfony-1.4.8.tgz
+    $ mv symfony-1.4.8 symfony
+    $ rm symfony-1.4.8.tgz
 
 Windows環境ではzipファイルをエクスプローラで展開できます。
 ディレクトリを`symfony`にリネームすると、ディレクトリのフルパスは`c:\dev\sfproject\lib\vendor\symfony`になります。

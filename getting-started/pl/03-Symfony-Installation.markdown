@@ -70,9 +70,9 @@ lub `.zip`. Pobierz plik archiwum i umieść go w nowo utworzonym katalogu
 `lib/vendor/`, rozpakuj go i zmień nazwę katalogu na `symfony`:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.4.0.tgz
-    $ mv symfony-1.4.0 symfony
-    $ rm symfony-1.4.0.tgz
+    $ tar zxpf symfony-1.4.8.tgz
+    $ mv symfony-1.4.8 symfony
+    $ rm symfony-1.4.8.tgz
 
 W Windowsie, możesz rozpakować plik zip, korzystając Explorera Windows.
 Po zmianie nazwy katalogu na `symfony`, struktura katalogów powinna być
@@ -96,7 +96,7 @@ dostęp do konfiguracji zewnętrznego repozytorium Subversion.
 Jeśli jesteś tradycjonallistą, możesz również ograniczyć się do ściśle określonego
 wydania (subversion tag):
 
-    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_8 symfony
 
 Za każdym razem, gdy zostanie wydana nowa wersja (dowiesz się o tym na oficjalnym
 [blogu](http://www.symfony-project.org/blog/)), wtedy będziesz musiał/a zmienić adres URL
@@ -104,7 +104,7 @@ na nową wersję.
 
 Jeśli chcesz zaufać naszym aktualizacjion, skorzystać z branchy 1.4:
 
-    svn checkout http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony
 
 Korzystając z branchy, ustrzeżesz projekt od odkrytych błędów dzięki automatycznej
 aktualizacji, za każdym razem gdy wywołasz `svn update`.
