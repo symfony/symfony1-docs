@@ -369,7 +369,7 @@ contenant les noms de pays traduits dans une langue donnée :
 Vous pouvez au besoin restreindre les noms de pays listés au moyen de l'option `countries` :
 
     [php]
-    $countries = array('fr', 'en', 'es', 'de', 'nl');
+    $countries = array('FR', 'EN', 'ES', 'DE', 'NL');
     $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture'   => 'fr',
                                                                              'countries' => $countries));
 

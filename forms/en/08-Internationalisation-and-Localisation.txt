@@ -369,7 +369,7 @@ The country names are translated in the given language:
 You can also restrict the countries in the select box, thanks to the `countries` option:
 
     [php]
-    $countries = array('fr', 'en', 'es', 'de', 'nl');
+    $countries = array('FR', 'EN', 'ES', 'DE', 'NL');
     $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture'   => 'fr',
                                                                              'countries' => $countries));
 
