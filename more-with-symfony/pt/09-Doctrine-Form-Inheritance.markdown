@@ -548,7 +548,7 @@ a classe `ArquivoForm` para que ela possa ser usada em qualquer subformulário d
       {
         parent:: setupInheritance();
 
-        $this->useFields(array('nome_do_arquivo', descricao'));
+        $this->useFields(array('nome_do_arquivo', 'descricao'));
 
         $this->widgetSchema['nome_do_arquivo'] = new sfWidgetFormInputFile();
         $this->validatorSchema['nome_do_arquivo'] = new sfValidatorFile(array(
