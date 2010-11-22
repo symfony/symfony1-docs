@@ -485,9 +485,11 @@ function with the value of the following options:
 
 ### ~`session_cache_limiter`~
 
-If the `session_cache_limiter` option is set, PHP's
-[`session_cache_limiter()`](http://www.php.net/session_cache_limiter)
-function is called and the option value is passed as an argument.
+If the `session_cache_limiter` option is set to `null` (which is the default),
+the session cache limiter value will be set by PHP automatically according to
+the `php.ini` configuration file. For all other values, PHP's
+[`session_cache_limiter()`](http://www.php.net/session_cache_limiter) function
+is called and the option value is passed as an argument.
 
 ### Database Storage-specific Options
 
