@@ -650,6 +650,28 @@ section above):
       $mailer->registerPlugin($plugin);
     }
 
+Some plugins should be triggered when the emails are actually sent out
+(AntiFlood, BandwithMonitor, Throttler). They should be registered for the 
+realtime transport only. Otherwise they would be triggered when email is queued
+rather than when the queue is flushed.
+
+In order for those plugins to have the expected behavior, the code below should
+always be used to register the plugins when a spool is used. Note than this code
+is still valid when the mailer doesn't use a spool.
+
+    [php]
+    public function configureMailer(sfEvent $event)
+    {
+      $mailer = $event->getSubject();      
+      $transport = $mailer->getRealtimeTransport();
+
+      $transport->registerPlugin(new Swift_Plugins_ThrottlerPlugin(
+        100, Swift_Plugins_ThrottlerPlugin::MESSAGES_PER_MINUTE
+      ));
+
+      $transport->registerPlugin(Swift_Plugins_AntiFloodPlugin(30));
+    }
+
 >**TIP**
 >The ["Plugins"](http://swiftmailer.org/docs/plugins) section of the
 >Swift Mailer official documentation describes all you need to know about the
