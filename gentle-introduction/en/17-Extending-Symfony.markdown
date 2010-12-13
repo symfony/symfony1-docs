@@ -520,7 +520,8 @@ Listing 17-18 - File Structure of a Plug-In
 
     pluginName/
       config/
-        routing.yml        // Application config file
+        routing.yml        // Routing config file
+        app.yml            // Plugin default settings      
         *schema.yml        // Data schema
         *schema.xml
         config.php         // Specific plug-in configuration
@@ -598,16 +599,21 @@ Listing 17-19 - Example of Propel Schema Declaration in a Plug-In, in `myPlugin/
 >     }
 >
 
+>**TIP**: Defining the default settings in `config/app.yml`
+>The plugin own default settings can be defined in its `config/app.yml` file.
+>However overriding settings defined in an other plugin is not safe as the final value would depends on the `app.yml` files loading order.
+>Custom application configuration can be used in the plug-in code (for instance, by using `sfConfig::get('app_myplugin_foo')`) and the settings can be overridden at the application level (see Listing 17-20 for an example)
+>Handling of the default values can be done by using the second argument of the `sfConfig::get()` method or by defining it in the plugin `app.yml` file.
+
 #### Manual Plug-In Setup
 
 There are some elements that the `plugin:install` task cannot handle on its own, and which require manual setup during installation:
 
-  * Custom application configuration can be used in the plug-in code (for instance, by using `sfConfig::get('app_myplugin_foo')`), but you can't put the default values in an `app.yml` file located in the plug-in `config/` directory. To handle default values, use the second argument of the `sfConfig::get()` method. The settings can still be overridden at the application level (see Listing 17-25 for an example).
-  * Custom routing rules have to be added manually to the application `routing.yml`.
+  * Custom routing should be added either by the plugin code on the `routing.load_configuration` event or manually to the application `routing.yml`.
   * Custom filters have to be added manually to the application `filters.yml`.
   * Custom factories have to be added manually to the application `factories.yml`.
 
-Generally speaking, all the configuration that should end up in one of the application configuration files has to be added manually. Plug-ins with such manual setup should embed a `README` file describing installation in detail.
+Plug-ins with such manual setup should embed a `README` file describing installation in detail.
 
 #### Customizing a Plug-In for an Application
 
