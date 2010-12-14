@@ -669,7 +669,7 @@ is still valid when the mailer doesn't use a spool.
         100, Swift_Plugins_ThrottlerPlugin::MESSAGES_PER_MINUTE
       ));
 
-      $transport->registerPlugin(Swift_Plugins_AntiFloodPlugin(30));
+      $transport->registerPlugin(new Swift_Plugins_AntiFloodPlugin(30));
     }
 
 >**TIP**
