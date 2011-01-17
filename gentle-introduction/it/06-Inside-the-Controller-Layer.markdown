@@ -35,7 +35,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
   8. Esegue i filtri, primo passaggio.
   9. Esegue l'azione e rende la vista.
   10. Esegue i filtri, secondo passaggio.
-  11. Ritorna la risposta.
+  11. Restituisce la risposta.
 
 ### Il front controller di default
 

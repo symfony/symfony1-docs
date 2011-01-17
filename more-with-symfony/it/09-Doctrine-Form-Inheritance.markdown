@@ -776,9 +776,9 @@ classe ~`ProjectConfiguration`~, presente nel file `config/ProjectConfiguration.
 
 Ora il database, il modello, le classi dei form e dei filtri possono essere generate e le
 fixture caricate nel database per riempire le nuove tabelle create. Tutte queste cose
-possono essere realizzate in una volta grazie al task ~`doctrine:build-all-reload`~.
+possono essere realizzate in una volta grazie al task ~`doctrine:build --all --and-load`~.
 
-    $ php symfony doctrine:build-all-reload --no-confirmation
+    $ php symfony doctrine:build --all --and-load --no-confirmation
 
 Per terminare il processo, la cache di symfony deve essere pulita  e le risorse del plugin
 devono essere copiate sotto la cartella `web/`:

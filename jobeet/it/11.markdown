@@ -87,7 +87,7 @@ dati validi al form:
       with('request')->begin()->
         isParameter('module', 'job')->
         isParameter('action', 'new')->
-      end()
+      end()->
 
       click('Preview your job', array('job' => array(
         'company'      => 'Sensio Labs',

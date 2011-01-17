@@ -52,9 +52,9 @@ Dưới mục "**Download as an Archive**", bạn sẽ thấy file nén ở đ�
 `.tgz` hoặc `.zip`. Tải file nén về, đặt nó vào trong thư mục `lib/vendor/` và giải nén:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.4.0.tgz
-    $ mv symfony-1.4.0 symfony
-    $ rm symfony-1.4.0.tgz
+    $ tar zxpf symfony-1.4.8.tgz
+    $ mv symfony-1.4.8 symfony
+    $ rm symfony-1.4.8.tgz
 
 Đổi tên thư mục thành `symfony`
 `c:\dev\sfproject\lib\vendor\symfony`.
@@ -75,13 +75,13 @@ Nếu mọi thứ chạy đúng, lệnh này sẽ mở một editor để bạn 
 Nếu bạn là người thận trọng, hãy sử dụng một phiên bản cụ thể (một subversion
 tag):
 
-    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_8 symfony
 
 Mỗi khi có một phiên bản mới (được thông báo ở [blog](http://www.symfony-project.org/blog/)), bạn sẽ cần đổi URL để cập nhật phiên bản mới.
 
 Bạn cũng có thể dùng branch 1.4:
 
-    svn checkout http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony
 
 Sử dụng branch bạn sẽ cập nhật được các bản vá lỗi khi chạy lệnh `svn update`.
 

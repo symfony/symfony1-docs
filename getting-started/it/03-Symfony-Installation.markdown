@@ -71,9 +71,9 @@ Nella sezione "**Download as an Archive**" sono disponibili gli archivi nei form
 `lib/vendor/`, scompattarlo e rinominare la cartella in `symfony`:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.4.0.tgz
-    $ mv symfony-1.4.0 symfony
-    $ rm symfony-1.4.0.tgz
+    $ tar zxpf symfony-1.4.8.tgz
+    $ mv symfony-1.4.8 symfony
+    $ rm symfony-1.4.8.tgz
 
 In ambienti Windows, il file zip può essere estratto con explorer. Dopo aver
 rinominato la cartella in `symfony`, dovrebbe esserci una cartella chiamata
@@ -96,7 +96,7 @@ per poter configurare i sorgenti esterni di Subversion.
 Per un approccio conservativo, legare il progetto a un rilascio specifico
 (un tag di Subversion):
 
-    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_8 symfony
 
 Ogni volta che esce un nuovo rilascio (come annunciato sul
 [blog](http://www.symfony-project.org/blog/) di symfony), occorrerà
@@ -104,7 +104,7 @@ modificare l'URL.
 
 Se si preferisce la strada dell'aggiornamento continuo, usare il ramo 1.4:
 
-    svn checkout http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony
 
 L'uso del ramo apporta ai progetti i benefici dei bug risolti ogni volta
 che si esegue il comando `svn update`.

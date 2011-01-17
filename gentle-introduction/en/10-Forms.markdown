@@ -310,12 +310,12 @@ The `choice` widget expects at least a `choices` parameter with an associative a
       <li><input type="checkbox" name="interests[]" id="interests_1" value="1"><label for="interests_1">Other</label></li>
     </ul>
 
->**Tip**: You probably noticed that symfony automatically defines an `id` attribute for each form input, based on a combination of the name and value of the widget. You can override the `id` attribute widget by widget, or alternatively set a global rule for the whole form with the `setIdFormat()` method:
+>**Tip**: You probably noticed that symfony automatically defines an `id` attribute for each form input, based on a combination of the name and value of the widget. You can override the `id` attribute widget by widget, or alternatively set a global rule for the whole form with the `setIdFormat()` method of the `sfWidgetForm` class:
 
     [php]
     // in modules/foo/actions/actions.class.php
     $this->form = new sfForm();
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
 ### Foreign Key Widgets
 
@@ -599,7 +599,7 @@ Fortunately, symfony offers a way to name all form inputs using an array syntax.
     [php]
     // in modules/foo/actions/actions.class.php
     // Define the form
-    $this->form->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
 
 That way, all the generated form inputs render with a name like `form[WIDGET_NAME]` instead of just `WIDGET_NAME`:
 
@@ -888,8 +888,8 @@ With all the widget options, validators and form parameters, the contact form de
     // in modules/foo/actions/actions.class.php
     // Define the form
     $this->form = new sfForm();
-    $this->form->setNameFormat('contact[%s]');
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
     $this->form->setWidgets(array(
       'name'    => new sfWidgetFormInputText(),
@@ -914,8 +914,8 @@ The best practice is to create a form class with the same properties and instant
 
       public function configure()
       {
-        $this->setNameFormat('contact[%s]');
-        $this->setIdFormat('my_form_%s');
+        $this->widgetSchema->setNameFormat('contact[%s]');
+        $this->widgetSchema->setIdFormat('my_form_%s');
         $this->setWidgets(array(
           'name'    => new sfWidgetFormInputText(),
           'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
@@ -1167,7 +1167,7 @@ The generated `lib/form/base/BaseArticleForm.class.php` contains the translation
         $this->setPostValidator(
           new sfValidatorPropelUnique(array('model' => 'Article', 'column' => array('slug')))
         );
-        $this->setNameFormat('article[%s]');
+        $this->widgetSchema->setNameFormat('article[%s]');
         parent::setup();
       }
 

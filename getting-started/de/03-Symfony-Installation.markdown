@@ -73,9 +73,9 @@ Verzeichnis `lib/vendor`, entpacken es und benennen das Verzeichnis um zu
 `symfony`:
 
     $ cd lib/vendor
-    $ tar zxpf symfony-1.4.0.tgz
-    $ mv symfony-1.4.0 symfony
-    $ rm symfony-1.4.0.tgz
+    $ tar zxpf symfony-1.4.8.tgz
+    $ mv symfony-1.4.8 symfony
+    $ rm symfony-1.4.8.tgz
 
 Mit Windows kann die zip-Datei mit dem Windows Explorer entpackt werden. Nachdem 
 Sie das Verzeichnis zu `symfony` umbenannt haben, sollte die Verzeichnis-Struktur 
@@ -99,7 +99,7 @@ Ihnen die Möglichkeit geben, die externen Subversion-Sourcen zu konfigurieren.
 Wenn Sie eher vorsichtig eingestellt sind, knüpfen Sie Ihr Projekt an eine 
 bestimmte Release (ein Subversion-Tag):
 
-    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_0
+    svn checkout http://svn.symfony-project.com/tags/RELEASE_1_4_8 symfony
 
 Immer dann, wenn eine neue Release erscheint (angekündigt im symfony 
 [Blog](http://www.symfony-project.org/blog/), müssen Sie die URL auf die neue 
@@ -108,7 +108,7 @@ Version setzen.
 Wollen Sie den Weg an der vordersten Front gehen, dann verwenden Sie den 
 1.4-Branch:
 
-    svn checkout http://svn.symfony-project.com/branches/1.4/
+    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony
 
 Durch die Verwendung des Branch profitiert Ihr Projekt automatisch von den 
 Bugfixes, sobald Sie ein `svn update` starten.

@@ -648,7 +648,7 @@ di ciascuna rotta sottostante. Ora che ciascuna di queste rotte sottostanti è
 una rotta `acClientObjectRoute`, l'implementazione è effettivamente fatta. Ad
 esempio, `http://pete.sympalbuilder.com/backend.php/pages` ora mostrerà solo *una* pagina:
 la pagina `location` del Pet Shop di Pete. Grazie alla classe di rotte
-personalizzata, l'azione index ritorna solo oggetti `Page` legati al `Client`
+personalizzata, l'azione index restituisce solo oggetti `Page` legati al `Client`
 corretto, sulla base del sottodominio della richiesta. Con poche righe di codice,
 si è creato un intero modulo backend che può tranquillamente essere utilizzato
 da più clienti.
@@ -657,7 +657,7 @@ da più clienti.
 
 Attualmente, nel backend, quando si creano o si modificano oggetti `Page`,
 compare un select box `Client`. Invece di consentire agli utenti di scegliere
-il `Client` (che sarebbe un rischio per la sicurezza), è meglio fare impostare
+il `Client` (che sarebbe un rischio per la sicurezza), è meglio impostare
 automaticamente il `Client` in base al sottodominio corrente della richiesta.
 
 Per prima cosa, aggiornare l'oggetto `PageForm` presente in `lib/form/PageForm.class.php`.
@@ -720,7 +720,7 @@ Personalizzare una collezione di oggetti di rotte
 -------------------------------------------------
 
 Utilizzando il framework delle rotte, è stato facilmente risolto il problema
-della creazione dell'applicazione Sympal Builder. Al cresce della domanda, lo
+della creazione dell'applicazione Sympal Builder. Al crescere della domanda, lo
 sviluppatore sarà in grado di riutilizzare le rotte personalizzate per altri
 moduli dell'area di backend (ad esempio in modo che ogni `Client` possa gestire
 le proprie gallerie di foto).
@@ -728,7 +728,7 @@ le proprie gallerie di foto).
 Un altro motivo comune per creare una collezione personalizzata di rotte è quello
 di aggiungere rotte usate di frequente. Per esempio, supponiamo che un progetto
 impieghi molti modelli, ciascuno con una colonna `is_active`. Nell'area
-di amministrazione, ci deve essere un modo facile per attivare/disattivare il
+di amministrazione ci deve essere un modo facile per attivare/disattivare il
 valore `is_active` per qualunque particolare oggetto. In primo luogo, modificare
 `acClientObjectRouteCollection` e istruirlo al fine di aggiungere una nuova rotta
 alla collezione:

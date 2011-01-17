@@ -426,7 +426,7 @@ con una lista di paesi. I nomi dei paesi sono tradotti nel linguaggio dato:
 Si possono anche restringere i paesi nel select, grazie all'opzione `countries`:
 
     [php]
-    $countries = array('fr', 'en', 'es', 'de', 'nl');
+    $countries = array('FR', 'EN', 'ES', 'DE', 'NL');
     $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture'   => 'fr',
                                                                              'countries' => $countries));
 

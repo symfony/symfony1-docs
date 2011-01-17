@@ -512,7 +512,7 @@ si aggiorna la pagina del browser e si seleziona l'azione extend, symfony genere
 un'eccezione dicendo di creare il metodo `executeBatchExtend()`:
 
     [php]
-    // apps/backend/modules/category/actions/actions.class.php
+    // apps/backend/modules/job/actions/actions.class.php
     class jobActions extends autoJobActions
     {
       public function executeBatchExtend(sfWebRequest $request)

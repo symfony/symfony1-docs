@@ -315,7 +315,7 @@ symfony では、フォームはオブジェクトです。アクションで定
     [php]
     // modules/foo/actions/actions.class.php 内
     $this->form = new sfForm();
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
 ### 外部キーウィジェット
 
@@ -599,7 +599,7 @@ symfony により、送信された値を、事前に定義したルールで自
     [php]
     // modules/foo/actions/actions.class.php 内
     // フォームを定義
-    $this->form->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
 
 こうすると、生成されたフォームの入力要素は、すべて単純な `WIDGET_NAME` ではなく、`form[WIDGET_NAME]` という形式になります:
 
@@ -888,8 +888,8 @@ symfony には非常に多くのバリデーターがあります。各バリデ
     // modules/foo/actions/actions.class.php内
     // フォームの定義
     $this->form = new sfForm();
-    $this->form->setNameFormat('contact[%s]');
-    $this->form->setIdFormat('my_form_%s');
+    $this->form->getWidgetSchema()->setNameFormat('contact[%s]');
+    $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
     $this->form->setWidgets(array(
       'name'    => new sfWidgetFormInputText(),
@@ -914,8 +914,8 @@ symfony には非常に多くのバリデーターがあります。各バリデ
 
       public function configure()
       {
-        $this->setNameFormat('contact[%s]');
-        $this->setIdFormat('my_form_%s');
+        $this->widgetSchema->setNameFormat('contact[%s]');
+        $this->widgetSchema->setIdFormat('my_form_%s');
         $this->setWidgets(array(
           'name'    => new sfWidgetFormInputText(),
           'email'   => new sfWidgetFormInput(array('default' => 'me@example.com')),
@@ -1167,7 +1167,7 @@ symfony では、スキーマに基づいて、モデル編集用フォームで
         $this->setPostValidator(
           new sfValidatorPropelUnique(array('model' => 'Article', 'column' => array('slug')))
         );
-        $this->setNameFormat('article[%s]');
+        $this->widgetSchema->setNameFormat('article[%s]');
         parent::setup();
       }
 
