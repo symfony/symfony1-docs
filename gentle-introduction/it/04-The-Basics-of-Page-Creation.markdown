@@ -200,7 +200,7 @@ Listato 4-9 - Gli helper `link_to()` e `url_for()`
       <p>O dovrei dire buona sera? Sono già le <?php echo $hour ?>.</p>
     <?php endif; ?>
     <form method="post" action="<?php echo url_for('contenuto/update') ?>">
-      <label for="name">Qual'è il tuo nome?</label>
+      <label for="name">Qual è il tuo nome?</label>
       <input type="text" name="name" id="nome" value="" />
       <input type="submit" value="Ok" />
       <?php echo link_to('Non dirò mai il mio nome', 'contenuto/update?nome=anonymous') ?>

@@ -198,7 +198,7 @@ In produzione, `no_script_name` è impostato su `on`, così gli URL mostreranno 
 
 Ma come fa l'applicazione a sapere quale front controller chiamare? Qui è dove entra in gioco l'URL rewrite. Il web server può essere configurato per invocare un determinato script qualora non venga specificato nell'URL.
 
-In Apache, ciò è possibile solo dopo aver attivato l'estensione `mod_rewrite`. Ogni progetto symfony è dotato di un file `.htaccess`, che aggiunge alcune impostazioni `mod_rewrite` per la cartella `web/` alla configurazione del tuo server. Il contenuto di default di tale file è mostrato nel listato 9-6.
+In Apache, ciò è possibile solo dopo aver attivato l'estensione `mod_rewrite`. Ogni progetto symfony è dotato di un file `.htaccess`, che aggiunge alcune impostazioni `mod_rewrite` per la cartella `web/` alla configurazione del server. Il contenuto predefinito di tale file è mostrato nel listato 9-6.
 
 Listato 9-6 - Regole di rewrite predefinite per Apache, in `myproject/web/.htaccess`
 

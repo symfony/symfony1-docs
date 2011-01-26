@@ -19,11 +19,11 @@ Il framework symfony applica questi principi anche a se stesso. Le parti interne
 
 I test unitari confermano che un componente di codice unitario fornisce l'output corretto per un dato input. Verificano che metodi e funzioni si comportino correttamente in ogni caso. I test unitari lavorano con un caso alla volta, quindi per esempio un singolo metodo più avere molteplici test unitari se si comporta diversamente in alcune situazioni.
 
-I test funzionali non validano una conversione da input-output, ma una caratteristica completa. Per esempio, il sistema di cache può essere validato solo da un test funzionale, poiché è composto da più di un solo step. La prima volta che una pagina è richiesta, è renderizzata; la seconda volta, è presa dalla cache. Quindi i test funzionali validano un processo e necessitano di uno scenario per farlo. In symfony bisognerebbe scrivere un test funzionale per tutte le azioni
+I test funzionali non validano una conversione da input-output, ma una caratteristica completa. Per esempio, il sistema di cache può essere validato solo da un test funzionale, poiché è composto da più di uno step. La prima volta che una pagina è richiesta, è resa; la seconda volta, è presa dalla cache. Quindi i test funzionali validano un processo e necessitano di uno scenario per farlo. In symfony bisognerebbe scrivere un test funzionale per tutte le azioni
 
 Per le interazioni più complesse, questi due tipi di test possono risultare inefficaci. Per esempio le interazioni Ajax richiedono un browser web per eseguire JavaScript, quindi per automatizzare questo tipo di test sono necessari strumenti di terze parti. Inoltre, gli effetti visivi possono essere validati solo da un essere umano.
 
-Se si necessita di un approccio completo all'automazione dei test, probabilmente si avrà  bisogno di usare in combinazione tutti i metodi messi a disposizione. Come linea guida, ricordarsi di mantenere i test semplici e leggibili.
+Se si necessita di un approccio completo all'automazione dei test, probabilmente si avrà bisogno di usare in combinazione tutti i metodi messi a disposizione. Come linea guida, ricordarsi di mantenere i test semplici e leggibili.
 
 >**NOTA**
 >I test automatici funzionano basandosi sulla comparazione di un risultato con un output atteso. In altre parole valutano le asserzioni (espressioni come `$a == 2`). Il valore di un asserzione è o`vero` o `falso` e stabilisce se il test passa o fallisce. La parola asserzione è normalmente utilizzata quando si fa riferimento a tecniche di testing
