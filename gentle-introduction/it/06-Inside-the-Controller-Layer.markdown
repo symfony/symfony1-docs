@@ -146,7 +146,7 @@ Nonostante questo il numero di azioni in un modulo potrebbe essere così elevato
 
 ### Sintassi alternativa per le classi azione
 
-Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del listato 6-4 può essere scritto con i due file dei Listati 6-5 e 6-6.
+Una sintassi alternativa per l'azione è a disposizione per distribuire le azioni in file separati, un file per azione. In questo caso ogni classe azione estende `sfAction` (invece di `sfActions`) ed è chiamata `actionNameAction`. L'attuale metodo azione è semplicemente chiamato `execute`. Il nome del file è lo stesso della classe. Questo significa che l'equivalente del listato 6-4 può essere scritto con i due file dei listati 6-5 e 6-6.
 
 Listato 6-5 - File azione singolo, in `frontend/modules/mymodule/actions/indexAction.class.php`
 
@@ -356,7 +356,7 @@ Listato 6-11 - Utilizzo del metodo `forward404()`
 >Se siete in cerca dell'azione e del template per l'errore 404, sappiate che si trova nella cartella `$sf_symfony_ lib_dir/controller/default/`. 
 >È possibile personalizzare questa pagina creando un nuovo modulo `default` nell'applicazione, sovrascrivendo quella proposta dal framework e definendo al suo interno un'azione `error404` e un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
-L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()`, e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel listato 6-12.
+L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()` e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel listato 6-12.
 
 Listato 6-12 - Utilizzo del metodo `forward404If()`
 
@@ -636,7 +636,7 @@ Le azioni non sono sicure in modo predefinito, quindi quando non è presente un 
 
   * Se l'utente è autenticato e detiene le credenziali corrette, l'azione viene eseguita.
   * Se l'utente non viene riconosciuto viene rediretto all'azione di login predefinita.
-  * Se l'utente viene riconosciuto ma non detiene le sufficienti credenziali viene rediretto all'azione secure predefinita, mostrata in Figura 6-1.
+  * Se l'utente viene riconosciuto ma non detiene le sufficienti credenziali viene rediretto all'azione secure predefinita, mostrata in figura 6-1.
 
 Le pagine predefinite di login e secure sono molto semplici, molto probabilmente si avrà la necessità di personalizzarle. È possibile configurare quali azioni chiamare in caso di privilegi insufficienti nell'applicazione nel file `settings.yml` cambiando il valore delle proprietà mostrate nel listato 6-21.
 
@@ -756,7 +756,7 @@ Il processo di sicurezza può essere interpretato come un filtro dal quale devon
 
 ### La catena dei filtri
 
-Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La Figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola e ipotetica catena di filtri (quella reale ne contiene molti di più).
+Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola e ipotetica catena di filtri (quella reale ne contiene molti di più).
 
 Figure 6-3 - Catena di filtri d'esempio
 
@@ -786,7 +786,7 @@ Listato 6-26 - Struttura di una classe filtro
       }
     }
 
-La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml`, e viene mostrato nel listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
+La catena dei filtri predefinita è impostata in un file di configurazione dell'applicazione chiamato `filters.yml` e viene mostrata nel listato 6-27. Questo file elenca i filtri da eseguire per ogni richiesta.
 
 Listato 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
 

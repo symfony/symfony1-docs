@@ -42,7 +42,7 @@ C'è un altro punto importante da considerare quando si realizzano delle procedu
 
 Il principale vantaggio del livello di astrazione è la portabilità, perché rende possibile il passaggio a un'altra base di dati, anche nel bel mezzo di un progetto. Si supponga di dover scrivere rapidamente un prototipo per un'applicazione, ma il cliente non ha ancora deciso quale sistema di base dati può essere la più adatto alle sue esigenze. Si può cominciare a costruire l'applicazione con SQLite, per esempio e passare a MySQL, PostgreSQL, Oracle quando il cliente ha fatto la scelta. Per fare il cambiamento, basta cambiare una riga in un file di configurazione.
 
-Symfony usa Propel o Doctrine come ORM, e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
+Symfony usa Propel o Doctrine come ORM e questi usano oggetti PHP per l'astrazione dei dati del database. Queste due componenti di terze parti, entrambi sviluppati dal team di Propel e Doctrine, sono perfettamente integrati in symfony ed è possibile considerarli come parte del framework. La loro sintassi e le loro convenzioni, descritte in questo capitolo, sono state adattate in modo da differenziarsi il meno possibile da quelle di symfony.
 
 >**NOTE**
 >In un progetto symfony, tutte le applicazioni condividono lo stesso modello. Questo è un punto fondamentale a livello di progetto: raggruppare le applicazioni che si basano su regole di business comuni. Questa è la ragione per cui il modello è indipendente dalle applicazioni e i file del modello sono memorizzati in una cartella `lib/model/` nella radice del progetto.
@@ -59,7 +59,7 @@ La sintassi di symfony per gli schemi utilizza il formato YAML. I file `schema.y
 
 ### Esempio di schema
 
-Come tradurre la struttura del database in uno schema? Un esempio è il modo migliore per capirlo. Immaginiamo di avere il database di un blog con due tabelle: `blog_articolo` e `blog_commento`, con la struttura mostrata in Figura 8-1.
+Come tradurre la struttura del database in uno schema? Un esempio è il modo migliore per capirlo. Immaginiamo di avere il database di un blog con due tabelle: `blog_articolo` e `blog_commento`, con la struttura mostrata in figura 8-1.
 
 Figura 8-1 - Struttura delle tabelle del database di un blog
 
@@ -89,7 +89,7 @@ Notare che il nome del database (`blog`) non compare nel file `schema.yml`. Il d
 
 ### Sintassi di base dello schema
 
-In un file `schema.yml`, la prima chiave rappresenta un nome della connessione. Può contenere diverse tabelle, ognuna con un set di colonne. In base alla sintassi YAML, le chiavi terminano con un simbolo di due punti, e la struttura è mostrata tramite indentazione (uno o più spazi, non tabulazioni).
+In un file `schema.yml`, la prima chiave rappresenta un nome della connessione. Può contenere diverse tabelle, ognuna con un set di colonne. In base alla sintassi YAML, le chiavi terminano con un simbolo di due punti e la struttura è mostrata tramite indentazione (uno o più spazi, non tabulazioni).
 
 Una tabella può avere attributi speciali, incluso `phpName` (il nome della classe che verrà generata). Se non si vuole usare un `phpName` per una tabella, symfony lo creerà in base alla versione camelCase del nome della tabella stessa.
 
@@ -101,11 +101,11 @@ Una tabella contiene colonne. Il valore delle colonne può essere definito in tr
 
   * Se non si definisce nulla (`~` in YAML equivale a `null` in PHP), symfony indovinerà i migliori attributi in base al nome della colonna e alcune convenzioni che saranno descritte nella sezione "Colonne vuote" più avanti in questo capitolo. Per esempio, la colonna `id` nel listato 8-3 non ha bisogno di essere definita: symfony la renderà un intero auto incrementale, chiave primaria della tabella. La colonna `blog_article_id` nella tabella `blog_comment` sarà capita come una chiave esterna verso la tabella `blog_article` (le colonne che terminano con `_id` sono considerate chiave esterne e la tabella collegata è determinata automaticamente a seconda della prima parte del nome della colonna). Le colonne chiamate `created_at` sono automaticamente impostate al tipo `timestamp`. Per queste colonne, non occorre specificare nessun tipo. Questo è il motivo per cui `schema.yml` è così semplice da scrivere.
 
-  * Se si definisce soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL), e così via. Per stringhe superiori ai 256 caratteri occorre usare il valore `longvarchar`, che non ha lunghezza (ma non può eccedere 65KB in MySQL).
+  * Se si definisce soltanto un attributo, questo sarà il tipo della colonna. Symfony conosce i classici tipi: `boolean`, `integer`, `float`, `date`, `varchar(lunghezza)`, `longvarchar` (convertito, per esempio, a `text` in MySQL) e così via. Per stringhe superiori ai 256 caratteri occorre usare il valore `longvarchar`, che non ha lunghezza (ma non può eccedere 65KB in MySQL).
 
-  * Se occorre definire altri attributi (come il valore di default, se il campo è obbligatorio, e così via), si dovrebbero scrivere gli attributi della colonna come un insieme di `chiave: valore`. Questa sintassi estesa è spiegata più avanti nel capitolo.
+  * Se occorre definire altri attributi (come il valore di default, se il campo è obbligatorio e così via), si dovrebbero scrivere gli attributi della colonna come un insieme di `chiave: valore`. Questa sintassi estesa è spiegata più avanti nel capitolo.
 
-Le colonne possono avere un attributi `phpName`, che è la versione con prima lettera maiuscola del nome (`Id`, `Title`, `Content`, e così via) e non ha bisogno di essere specificata nella maggior parte dei casi.
+Le colonne possono avere un attributi `phpName`, che è la versione con prima lettera maiuscola del nome (`Id`, `Title`, `Content` e così via) e non ha bisogno di essere specificata nella maggior parte dei casi.
 
 Le tabelle possono inoltre contenere esplicite chiavi esterne e indici, come anche alcune definizioni specifiche per alcuni database. Controlla la sezione `Sintassi estesa dello schema` più avanti in questo capitolo per saperne di più.
 
@@ -498,7 +498,7 @@ Le impostazioni di connessione dipendono dall'ambiente. Si possono definire conf
 
     $ php symfony configure:database --env=dev "mysql:host=localhost;dbname=blog_dev" root mYsEcret
 
-Questa configurazione può inoltre venir sovrascritta per ogni applicazione. Per esempio, si può usare questo approccio per avere differenti polizze di sicurezza per le tue applicazioni frontend o backend, e definire utenti del database differenti con privilegi diversi per gestire tutto ciò:
+Questa configurazione può inoltre essere sovrascritta per ogni applicazione. Per esempio, si può usare questo approccio per avere differenti politiche di sicurezza per le applicazioni frontend e backend, e definire utenti del database differenti con privilegi diversi per gestire tutto ciò:
 
     $ php symfony configure:database --app=frontend "mysql:host=localhost;dbname=blog" root mYsEcret
 
@@ -506,7 +506,7 @@ Per ogni ambiente, si possono definire differenti connessioni. Ogni connessione 
 
     $ php symfony configure:database --name=main "mysql:host=localhost;dbname=example" root mYsEcret
 
-Si possono inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml` collocato nella cartella `config/`. Il listato 8-17 mostra un esempio di questo file e il listato 8-18 mostra lo stesso esempio con la notazione estesa.
+Si possono inoltre inserire queste impostazioni di connessione manualmente nel file `databases.yml`, collocato nella cartella `config/`. Il listato 8-17 mostra un esempio di questo file e il listato 8-18 mostra lo stesso esempio con la notazione estesa.
 
 Listato 8-17 - Notazione semplice per la connessione al database
 

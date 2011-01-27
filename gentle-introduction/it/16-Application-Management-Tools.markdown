@@ -141,7 +141,7 @@ Non bisogna dimenticare di eliminare periodicamente la cartella `log/` delle app
 
     $ php symfony log:clear
 
-Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni e uno `storico` (numero di copie di backup) di `10`, come mostrato nel listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup, e il backup più vecchio viene cancellato.
+Sia per questioni di prestazioni che di sicurezza, probabilmente si vorrà memorizzare i log di symfony in diversi piccoli file invece di un singolo file di grandi dimensioni. La strategia di memorizzazione ideale per i file di log è quella di eseguire il backup e svuotare il file di log principale regolarmente, ma di tenere solo un numero limitato di backup. È possibile attivare un tale rotazione dei log con un `periodo` di `7` giorni e uno `storico` (numero di copie di backup) di `10`, come mostrato nel listato 16-7. Si potrebbe lavorare con un file di log attivo più dieci file di backup contenenti sette giorni di storia per ciascuno. Ogni volta che il prossimo periodo di sette giorni termina, il file di registro corrente va nel backup e il backup più vecchio viene cancellato.
 
 Listato 16-7 - Avviare la rotazione dei log
 
@@ -188,7 +188,7 @@ Listato 16-8 - Esempio di front controller con la modalità di debug attivata, i
 
 Quando si verifica un'eccezione nella modalità di debug, symfony mostra un'utile informazione dull'eccezione che contiene tutto quello di cui si ha bisogno per trovare la causa del problema.
 
-I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in Figura 16-1. È possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati gli argomenti che sono stati passati ai metodi.
+I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in figura 16-1. È possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati gli argomenti che sono stati passati ai metodi.
 
 >**NOTE**
 >Symfony si basa proprio sulle eccezioni PHP per la segnalazione degli errori. Ad esempio, l'errore 404 può essere lanciato da un `sfError404Exception`.
@@ -230,7 +230,7 @@ Bisogna riavviare il web server perché la modalità Xdebug venga attivata.
 
 I file di log contengono informazioni interessanti, ma non sono molto facili da leggere. L'azione più semplice, che è quella di trovare le linee di log per una particolare richiesta, può diventare molto complicata se si hanno molti utenti che utilizzano contemporaneamente l'applicazione e un lungo storico con gli eventi. Questo è il momento in cui si comincia a sentire il bisogno di una barar web per il debug.
 
-Questa barra appare come una finestra semitrasparente sovrapposta al normale contenuto del browser, nell'angolo in alto a destra della finestra, come mostrato nella Figura 16-2. Offre l'accesso al log degli eventi di symfony, alla configurazione corrente, alle proprietà degli oggetti request e response, ai dettagli delle query al database inviate durante la richiesta e a un grafico dei tempi di elaborazione legati alla richiesta.
+Questa barra appare come una finestra semitrasparente sovrapposta al normale contenuto del browser, nell'angolo in alto a destra della finestra, come mostrato nella figura 16-2. Offre l'accesso al log degli eventi di symfony, alla configurazione corrente, alle proprietà degli oggetti request e response, ai dettagli delle query al database inviate durante la richiesta e a un grafico dei tempi di elaborazione legati alla richiesta.
 
 Figura 16-2 - La barra web per il debug appare nell'angolo in alto a destra della finestra
 
@@ -252,14 +252,14 @@ Listato 16-10 - Attivazione della barra web per il debug, in `frontend/config/se
 Quando presente, la barra web per il debug, rende disponibili molte informazioni:
 
   * Cliccare sul logo di symfony per ridurre la visibilità della barra. Quando è ridotta, la barra non nasconde più gli elementi posizionati nella zona alta della pagina.
-  * Cliccare sulla sezione "config" per visualizzare i dettagli di request, response, settings, globals e proprità PHP, come mostrato nella Figura 16-3. La linea in alto racchiude le impostazioni delle configurazioni importanti, come la modalità di debug, la cache e la presenza di un acceleratore PHP (appaiono in rosso se sono disattivati e in verde se sono attivati).
+  * Cliccare sulla sezione "config" per visualizzare i dettagli di request, response, settings, globals e proprità PHP, come mostrato nella figura 16-3. La linea in alto racchiude le impostazioni delle configurazioni importanti, come la modalità di debug, la cache e la presenza di un acceleratore PHP (appaiono in rosso se sono disattivati e in verde se sono attivati).
 
 Figura 16-3 - La sezione "config" mostra tutte le variabili e costanti della request
 
 ![La sezione "config" mostra tutte le variabili e costanti della request](http://www.symfony-project.org/images/book/1_4/F1603.png "La sezione config mostra tutte le variabili e costanti della request")
 
   * Quando la cache è abilitata, nella barra appare una freccia verde. Cliccare questa freccia per rieseguire la pagina, indipendentemente da cosa è memorizzato nella cache (la cache non viene cancellata).
-  * Cliccare nella sezione "logs" per visualizzare i messaggi di log della richiesta corrente, come mostrato nella Figura 16-4. Secondo l'importanza degli eventi, vengono visualizzati in righe grigie, gialle o rosse. È possibile filtrare in base alla categoria gli eventi che vengono visualizzati, utilizzando i link presenti all'inizio dell'elenco.
+  * Cliccare nella sezione "logs" per visualizzare i messaggi di log della richiesta corrente, come mostrato nella figura 16-4. Secondo l'importanza degli eventi, vengono visualizzati in righe grigie, gialle o rosse. È possibile filtrare in base alla categoria gli eventi che vengono visualizzati, utilizzando i link presenti all'inizio dell'elenco.
 
 Figura 16-4 - La sezione "logs" visualizza i messaggi di log per la richiesta corrente
 
@@ -268,8 +268,8 @@ Figura 16-4 - La sezione "logs" visualizza i messaggi di log per la richiesta co
 >**NOTE**
 >Quando l'azione corrente proviene da una redirezione, nel pannello "logs" sono presenti solo i log dell'utlima richiesta, quindi i file di log rimangono indispensabili per fare il debug.
 
-  * Quando ci sono richieste di esecuzione di query SQL, appare l'icona di un database nella barra degli strumenti. Cliccare per vedere il dettaglio delle query, come mostrato nella Figura 16-5.
-  * Alla destra dell'icona dell'orologio c'è il tempo totale necessario per elaborare la richiesta. Bisogna tener conto che la barra web per il debug e la modalità stessa di debug rallentano l'esecuzione della richiesta, quindi non bisogna considerare i tempi in sé, ma prestare attenzione solo alle differenze tra i tempi di esecuzione di due pagine diverse. Fare clic sull'icona dell'orologio per visualizzare i dettagli dei tempi di elaborazione categoria per categoria, come mostrato nella Figura 16-6. Symfony visualizza il tempo trascorso in diversi momenti dell'elaborazione della richiesta. Solo i tempi relativi alla richiesta corrente hanno un senso per l'ottimizzazione, quindi il tempo impiegato dal core di symfony non viene visualizzato. Ecco perché la somma di questi tempi non è uguale al tempo totale.
+  * Quando ci sono richieste di esecuzione di query SQL, appare l'icona di un database nella barra degli strumenti. Cliccare per vedere il dettaglio delle query, come mostrato nella figura 16-5.
+  * Alla destra dell'icona dell'orologio c'è il tempo totale necessario per elaborare la richiesta. Bisogna tener conto che la barra web per il debug e la modalità stessa di debug rallentano l'esecuzione della richiesta, quindi non bisogna considerare i tempi in sé, ma prestare attenzione solo alle differenze tra i tempi di esecuzione di due pagine diverse. Fare clic sull'icona dell'orologio per visualizzare i dettagli dei tempi di elaborazione categoria per categoria, come mostrato nella figura 16-6. Symfony visualizza il tempo trascorso in diversi momenti dell'elaborazione della richiesta. Solo i tempi relativi alla richiesta corrente hanno un senso per l'ottimizzazione, quindi il tempo impiegato dal core di symfony non viene visualizzato. Ecco perché la somma di questi tempi non è uguale al tempo totale.
   * Fare clic sulla x rossa all'estremità destra della barra degli strumenti, per nascondere la barra stessa.
 
 Figura 16-5 - La sezione query del database, mostra le query eseguite nella richiesta corrente
@@ -329,7 +329,7 @@ Listato 16-11 - Inserire un messaggio nel log a scopo di debug
       ...
     <?php endif ?>
 
-L'utilizzo del livello `err` garantisce che l'evento sarà ben visibile nell'elenco dei messaggi, come mostrato nella Figura 16-7.
+L'utilizzo del livello `err` garantisce che l'evento sarà ben visibile nell'elenco dei messaggi, come mostrato nella figura 16-7.
 
 Figura 16-7 - Un messaggio di log personalizzato visualizzato nella sezione "logs" della barra web per il debug
 
@@ -501,7 +501,7 @@ Nella chiamata è possibile specificare un'altra cartella per le fixture. In que
 
 Si è imparato come aggiungere record a una singola tabella, ma come si fa ad aggiungere record con chiavi esterne a un'altra tabella? Dal momento che la chiave primaria non è inclusa nei dati delle fixture, c'è bisogno di un modo alternativo per relazionare dei record con altri.
 
-Torniamo all'esempio del capitolo 8, dove la tabella `blog_article` è collegata alla tabella `blog_comment`, come mostrato in Figura 16-8.
+Torniamo all'esempio del capitolo 8, dove la tabella `blog_article` è collegata alla tabella `blog_comment`, come mostrato in figura 16-8.
 
 Figura 16-8 - Esempio di un modello relazionale di database
 
@@ -617,7 +617,7 @@ Quando si sincronizza il progetto symfony con un host di produzione, alcuni file
   * Le cartelle `cache/` e `log/` del progetto nel server host non devono essere cancellate ogni volta che si fa una sincronizzazione. Queste cartelle devono essere ignorate. Se si ha una cartella `stats/`, anche questa probabilmente dovrebbe essere trattata allo stesso modo.
   * I file caricati  dagli utenti non dovrebbero essere trasferiti. Una delle buone pratiche per i progetti symfony è di memorizzare i file caricati nella cartella `web/uploads/`. Questo permette di escludere tutti questi file dalla sincronizzazione indicando una sola cartella.
 
-Per escludere dei file dalla sincronizzazione con rsync, aprire e modificare il file `rsync_exclude.txt` presente nella cartella `mioprogetto/config/`. Ogni linea può contenere un file, una cartella o un pattern. La struttura dei file di symfony è organizzata logicamente e progettata per ridurre al minimo il numero di file o di cartelle da escludere manualmente dalla sincronizzazione. Vedere il listato 16-19 per un esempio.
+Per escludere dei file dalla sincronizzazione con rsync, aprire e modificare il file `rsync_exclude.txt` presente nella cartella `mioprogetto/config/`. Ogni linea può contenere un file, una cartella o uno schema. La struttura dei file di symfony è organizzata logicamente e progettata per ridurre al minimo il numero di file o di cartelle da escludere manualmente dalla sincronizzazione. Vedere il listato 16-19 per un esempio.
 
 Listato 16-19 - Esempio di configurazione di esclusione file con rsync, in `mioprogetto/config/rsync_exclude.txt`
 
@@ -681,6 +681,6 @@ Il task `project:enable` riabilita l'applicazione e cancella la cache.
 Riepilogo
 ---------
 
-Combinando i log di PHP con quelli di symfony, è possibile monitorare ed eseguire il debug dell'applicazione facilmente. Durante lo sviluppo, la modalità di debug, le eccezioni, e la barra web di debug aiutano a individuare i problemi. Per facilitare il debug è anche possibile inserire messaggi personalizzati nei file di log o nella barra degli strumenti.
+Combinando i log di PHP con quelli di symfony, è possibile monitorare ed eseguire il debug dell'applicazione facilmente. Durante lo sviluppo, la modalità di debug, le eccezioni e la barra web di debug aiutano a individuare i problemi. Per facilitare il debug è anche possibile inserire messaggi personalizzati nei file di log o nella barra degli strumenti.
 
 L'interfaccia a riga di comando fornisce un gran numero di strumenti che facilitano la gestione delle applicazioni, durante le fasi di sviluppo e di produzione. Tra gli altri, i task per il popolamento dei dati e quello per la sincronizzazione fanno risparmiare molto tempo.

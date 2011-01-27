@@ -196,7 +196,7 @@ come la mail appaia effettivamente in un programma di posta.
 
 >**TIP**
 >Se si avesse bisogno di verificare i destinatari `to`, `cc` e `bcc`, essi sono
->disponibili come valori dei seguenti header: `X-Swift-To`, `X-Swift-Cc`, e `X-Swift-Bcc`.
+>disponibili come valori dei seguenti header: `X-Swift-To`, `X-Swift-Cc` e `X-Swift-Bcc`.
 
 I messaggi email vengono inviati con lo stesso mezzo di trasporto utilizzato nella
 strategia `realtime`.
@@ -348,7 +348,7 @@ Il mezzo di trasporto delle mail
 --------------------------------
 
 I messaggi mail sono inviati da un mezzo di trasporto. Esso può essere configurato
-nel file di configurazione `factories.yml`, e i valori predefiniti utilizzano
+nel file di configurazione `factories.yml` e i valori predefiniti utilizzano
 l'SMTP server della macchina locale:
 
     [yml]

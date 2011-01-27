@@ -125,7 +125,7 @@ Le funzioni per gli helper (normali funzioni PHP che restituiscono codice HTML) 
 
 ### Layout della pagina
 
-Il template mostrato nel listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del decorator design pattern, mostrata in Figura 7-1.
+Il template mostrato nel listato 7-1 non è un documento XHTML valido. Mancano la definizione del `DOCTYPE` e i tag `<html>` e `<body>`. Questo perché vengono memorizzati in un'altra parte dell'applicazione, in un file chiamato `layout.php`, che contiene il layout della pagina. Questo file, chiamato anche template globale, memorizza il codice HTML che è comune a tutte le pagine dell'applicazione per evitare di ripeterlo per ciascun template. Il contenuto del template è integrato nel layout o, cambiando il punto di vista, il layout "decora" il template. Questa è una applicazione del pattern decorator design, mostrata in figura 7-1.
 
 >**TIP**
 >Per maggiori informazioni sul decorator e gli altri design pattern, vedere *Patterns of Enterprise Application Architecture* di Martin Fowler (Addison-Wesley, ISBN: 0-32112-742-0).
@@ -225,7 +225,7 @@ L'inserimento di questi frammenti si ottiene con gli helper del gruppo `Partial`
 
 ### Partial
 
-Un partial è un pezzo di codice del template riutilizzabile. Ad esempio, in una applicazione per pubblicare articoli, il codice del template che mostra un articolo è usato nella pagina con l'articolo completo, nell'elenco dei migliori articoli e nell'elenco degli ultimi articoli. Questo codice è un candidato perfetto per un partial, come mostrato nella Figura 7-2.
+Un partial è un pezzo di codice del template riutilizzabile. Ad esempio, in una applicazione per pubblicare articoli, il codice del template che mostra un articolo è usato nella pagina con l'articolo completo, nell'elenco dei migliori articoli e nell'elenco degli ultimi articoli. Questo codice è un candidato perfetto per un partial, come mostrato nella figura 7-2.
 
 Figura 7-2 - Il riutilizzo dei partial nei template
 
@@ -251,7 +251,7 @@ Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
     // È considerato parte del modulo 'global'
     <?php include_partial('global/miopartial3') ?>
 
-I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come parametro. Ad esempio, se si vuole che un partial abbia accesso a una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo parametro della chiamata `include_partial()`, come mostrato nei Listati 7-8, 7-9 e 7-10.
+I partial hanno accesso ai normali helper di symfony e alle scorciatoie dei template. Ma poiché i partial possono essere chiamati da qualsiasi punto dell'applicazione, non hanno accesso automatico alle variabili definite nelle azioni che chiamano i template stessi, a meno che non siano esplicitamente passate come parametro. Ad esempio, se si vuole che un partial abbia accesso a una variabile `$totale`, l'azione deve passarla ai template e poi il template  all'helper come secondo parametro della chiamata `include_partial()`, come mostrato nei listati 7-8, 7-9 e 7-10.
 
 Listato 7-8 - L'azione definisce una variabile, in `miomodulo/actions/actions.class.php`
 
@@ -317,7 +317,7 @@ Nomi dei file con la presentazione   | `miaAzioneSuccess.php` | `_mioComponente.
 
 Per esempio, supponiamo di avere una barra laterale che mostra le ultime notizie di un dato soggetto, a seconda del profilo dell'utente, che viene riutilizzato in diverse pagine. Le query necessarie a ottenere le notizie sono troppo complesse per apparire in una semplice partial, quindi hanno bisogno di essere spostate in un qualcosa simile a una azione, un componente. La figura 7-3 mostra questo esempio
 
-Per questo esempio, mostrato nei Listati 7-11 e 7-12, il componente verrà tenuto nel proprio modulo (chiamato `novita`), ma si possono mischiare componenti e azioni in un singolo modulo se questo ha senso da un punto di vista funzionale.
+Per questo esempio, mostrato nei listati 7-11 e 7-12, il componente verrà tenuto nel proprio modulo (chiamato `novita`), ma si possono mischiare componenti e azioni in un singolo modulo se questo ha senso da un punto di vista funzionale.
 
 Figura 7-3 - Usare i componenti nei template
 
@@ -476,7 +476,7 @@ Listato 7-17 - Usare lo `slot()` per definire un contenuto corto
 >
 >Tutte le altre cartelle possono essere ignorate.
 >
->Quando si trova un `include_partial()`, i web designer devono sapere che solo il primo parametro è importante. Il pattern di questo parametro è `nome_modulo/nome_partial` e ciò significa che il codice di presentazione si trova in `modules/nome_modulo/templates/_nome_partial.php`.
+>Quando si trova un `include_partial()`, i web designer devono sapere che solo il primo parametro è importante. Lo schema di questo parametro è `nome_modulo/nome_partial` e ciò significa che il codice di presentazione si trova in `modules/nome_modulo/templates/_nome_partial.php`.
 >
 >Per l'helper `include_component()`, il nome del modulo e il nome del partial sono i primi due parametri. Per il resto, un'idea generale su cosa sono gli helper e su quali helper sono più utili nei template dovrebbe essere sufficiente per iniziare a progettare template per le applicazioni symfony.
 
@@ -717,7 +717,7 @@ Listato 7-27 - Risultato dell'inclusione dei file
     </script>
     </head>
 
-Ricordarsi che vengono applicati i principi di configurazione a cascata, quindi qualunque inclusione di file definita nel `view.yml` dell'applicazione verrà applicata in ogni pagina dell'applicazione. I Listati 7-28, 7-29 e 7-30 mostrano questo principio.
+Ricordarsi che vengono applicati i principi di configurazione a cascata, quindi qualunque inclusione di file definita nel `view.yml` dell'applicazione verrà applicata in ogni pagina dell'applicazione. I listati 7-28, 7-29 e 7-30 mostrano questo principio.
 
 Listato 7-28 - Esempio di `view.yml` nell'applicazione
 

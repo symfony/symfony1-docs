@@ -103,7 +103,7 @@ Listato 15-1 - Esempio di file di un test unitario in `test/unit/strtolowerTest.
     $t->is(strtolower(''), 'foo',
         'strtolower() transforms empty strings into foo');
 
-Lanciamo l'insieme di test dalla linea di comando con il task `test:unit`. L'output della linea di comando è molto esplicito e aiuta a capire quale test è fallito e quale è passato. Vediamo l'output dei test del Listato 15-2
+Lanciamo l'insieme di test dalla linea di comando con il task `test:unit`. L'output della linea di comando è molto esplicito e aiuta a capire quale test è fallito e quale è passato. Vediamo l'output dei test del listato 15-2
 
 Listato 15-2 - Lanciamo un singolo test unitario dalla linea di comando:
 
@@ -124,7 +124,7 @@ Listato 15-2 - Lanciamo un singolo test unitario dalla linea di comando:
     # Looks like you failed 1 tests of 7.
 
 >**Suggerimento**
->La dichiarazione `include` all'inizio del Listato 15-1 è opzionale. Il suo utilizzo rende lo script PHP indipendente in modo che possa essere eseguito anche senza gli strumenti da linea di comando messi a disposizione da symfony, chiamando `php test/unit/strtolowerTest.php`.
+>La dichiarazione `include` all'inizio del listato 15-1 è opzionale. Il suo utilizzo rende lo script PHP indipendente in modo che possa essere eseguito anche senza gli strumenti da linea di comando messi a disposizione da symfony, chiamando `php test/unit/strtolowerTest.php`.
 
 
 ### Metodi del test unitario
@@ -155,7 +155,7 @@ Metodo                                        | Descrizione
 `error($msg)`                                 | Restituisce un messaggio di errore ma non esegue test
 `info($msg)`                                  | Restituisce un messaggio informativo ma non esegue test
 
-La sintassi è molto semplice; notare che la maggior parte dei metodi fornisce un messaggio come ultimo parametro. Questo messaggio è mostrato nell'output quando il test passa. Attualmente, il miglior modo per apprendere questi metodo è quello di utilizzarli, quindi vediamo il Listato 15-3, che li usa tutti.
+La sintassi è molto semplice; notare che la maggior parte dei metodi fornisce un messaggio come ultimo parametro. Questo messaggio è mostrato nell'output quando il test passa. Attualmente, il miglior modo per apprendere questi metodo è quello di utilizzarli, quindi vediamo il listato 15-3, che li usa tutti.
 
 Listato 15-3 - Testiamo i metodi dell'oggetto `lime_test`, in `test/unit/exampleTest.php`
 
@@ -224,7 +224,7 @@ Si troveranno molti altri esempi dell'utilizzo di questi metodi nei test unitari
 
 ### Parametri di test
 
-L'inizializzazione dell'oggetto `lime_test` prende come primo parametro il numero di test che dovranno essere eseguiti. Se il numero dei test eseguiti alla fine differisce da questo numero, lime ci fornirà un avviso a tal riguardo. Per esempio i test del Listato 15-3 forniscono il risultato del Listato 15-4. L'inizializzazione stabilisce che saranno eseguiti 16 test, ma solo 15 sono eseguiti, quindi saremo avvisati a tal riguardo. 
+L'inizializzazione dell'oggetto `lime_test` prende come primo parametro il numero di test che dovranno essere eseguiti. Se il numero dei test eseguiti alla fine differisce da questo numero, lime ci fornirà un avviso a tal riguardo. Per esempio i test del listato 15-3 forniscono il risultato del listato 15-4. L'inizializzazione stabilisce che saranno eseguiti 16 test, ma solo 15 sono eseguiti, quindi saremo avvisati a tal riguardo. 
 
 Listato 15-4 - Il conteggio dei test da eseguire aiuta nella pianificazione dei test
     $ php symfony test:unit example
@@ -257,7 +257,7 @@ Una buona strategia di test deve prevedere un numero definito di test. Si trover
 
 ### Il task test:unit
 
-Il task `test:unit` che lancia i test unitari da linea di comando, si aspetta una lista di nomi o pattern di file. Vedere il Listato 15-5 per maggiori dettagli.
+Il task `test:unit`, che lancia i test unitari da linea di comando, si aspetta una lista di nomi o schemi di file. Vedere il listato 15-5 per maggiori dettagli.
 
 Listato 15-5 - Avviare i test unitari
 
@@ -276,7 +276,7 @@ Listato 15-5 - Avviare i test unitari
 
 ### Stubs, Fixtures e autocaricamento
 
-In un test unitario la caratteristica dell'autocaricamento non è abilitato di default. Ogni classe che si usa in un test deve essere definita in un file di test o richiesta come dipendenza esterna. È il motivo per il quale molti file di test cominciano con una serie di inclusione di file, come mostrato nel Listato 15-6
+In un test unitario la caratteristica dell'autocaricamento non è abilitato di default. Ogni classe che si usa in un test deve essere definita in un file di test o richiesta come dipendenza esterna. È il motivo per il quale molti file di test cominciano con una serie di inclusione di file, come mostrato nel listato 15-6
 
 Listato 15-6 - Includere classi nei test unitari
 
@@ -337,7 +337,7 @@ Listato 15-7 - Utilizzo di stub nei test unitari
 
     $t->is($myMap->getMapSize(testWebService::fetch(), 100));
 
-I dati di prova possono essere più complessi di una stringa o una di una chiamata a un metodo. Test data complessi sono spesso definiti come fixture. Per maggiore chiarezza nel codice, spesso è meglio tenere le fixture il file separati, soprattutto se sono utilizzati da più di un file di test unitari. Inoltre, non bisogna dimenticare che symfony può trasformare facilmente un file YAML in un array con il metodo `sfYaml::load ()`. Ciò significa che invece di scrivere un'ampio array PHP in, è possibile scrivere i test data in un file YAML, come mostrato nel Listato 15-8.
+I dati di prova possono essere più complessi di una stringa o una di una chiamata a un metodo. Test data complessi sono spesso definiti come fixture. Per maggiore chiarezza nel codice, spesso è meglio tenere le fixture il file separati, soprattutto se sono utilizzati da più di un file di test unitari. Inoltre, non bisogna dimenticare che symfony può trasformare facilmente un file YAML in un array con il metodo `sfYaml::load ()`. Ciò significa che invece di scrivere un'ampio array PHP in, è possibile scrivere i test data in un file YAML, come mostrato nel listato 15-8.
 
 Listato 15-8 - Usare file di fixture nei test unitari
 
@@ -400,7 +400,7 @@ Per fortuna, è abbastanza facile, perché symfony fornisce già tutto il necess
   * Per ottenere una connessione al database, è necessario inizializzare la classe `sfDatabaseManager`
   * Per caricare alcuni dati di prova, è possibile utilizzare la classe `sfPropelData`
 
-Un tipico file di test di Propel mostrato nel Listato 15-9
+Un tipico file di test di Propel mostrato nel listato 15-9
 
 Listato 15-9 - Testare le classi di Propel
 
@@ -421,7 +421,7 @@ Listato 15-9 - Testare le classi di Propel
     $t->is($user->getLastName(), 'Potencier', '->retrieveByUsername() returns the User for the given username');
 
 
-Un tipico file di test di Doctrine mostrato nel Listato 15-9.
+Un tipico file di test di Doctrine mostrato nel listato 15-9.
     
 Listato 15-10 - Testare le classi di Doctrine
 
@@ -451,7 +451,7 @@ Si potrebbero eseguire test funzionali con un browser testuale e molte espressio
 
 Tipicamente un test funzionale comincia con l'inizializzazione di un oggetto browser. Questo oggetto fa una richiesta a una azione e verifica che alcuni elementi siano presenti nella risposta.
 
-Per esempio, ogni volta che si genera un modulo dello skeleton con il comando `generate:module` o con `propel:generate-module`, symfony crea un test funzionale di base per questo modulo. Il test fa una richiesta all'azione di default del modulo e verifica il codice di stato della risposta, il modulo e l'azione calcolati dal sistema di routing, la presenza di alcuni  elementi nel contenuto della risposta. Per il modulo `foobar`, il file generato `foobarActionsTest.php` è simile al Listato !5-11.
+Per esempio, ogni volta che si genera un modulo dello skeleton con il comando `generate:module` o con `propel:generate-module`, symfony crea un test funzionale di base per questo modulo. Il test fa una richiesta all'azione di default del modulo e verifica il codice di stato della risposta, il modulo e l'azione calcolati dal sistema di routing, la presenza di alcuni  elementi nel contenuto della risposta. Per il modulo `foobar`, il file generato `foobarActionsTest.php` è simile al listato !5-11.
 
 Listato 15-11 - Test funzionale di dafault per un nuovo modulo, in `tests/functional/frontend/foobarActionsTest.php`
 
@@ -572,7 +572,7 @@ Listato 15-15 - Simulare gli input del form con l'oggetto `sfBrowser`
 >**NOTA**
 >Con la seconda e la terza opzione, i valori di default del form sono automaticamente inclusi nell'invio del form e non è necessario stabilire il target del form.
 
-Quando un azione si conclude con il `redirect()`, il browser non è automaticamente in grado di seguire il redirezionamento; è necessario seguirlo manualmente con il metodo `followRedirect()`, come mostrato nel Listato 15-16.
+Quando un azione si conclude con il `redirect()`, il browser non è automaticamente in grado di seguire il redirezionamento; è necessario seguirlo manualmente con il metodo `followRedirect()`, come mostrato nel listato 15-16.
 
 Listato 15-16 - Il Browser non segue automaticamente i redirezionamenti
 
@@ -692,7 +692,7 @@ Listato 15-19 - Testare il redirezionamento con `sfTestFunctional`
 
 Molti dei test funzionali validano la correttezza di una pagina controllando la presenza di un testo nel contenuto. Con l'aiuto delle espressioni regolari nel metodo `matches()` si può controllare il testo mostrato, gli attributi dei tag o i valori. Ma non appena si desidera controllare qualcosa di più profondo nel DOM della risposta, le espressioni regolari non sono ideali. 
 
-Motivo per il quale l'oggetto `sfTestFunctional` supporta il metodo `getResponseDom()`. Restituisce un oggetto libXML2 DOM che è molto più facilmente interpretabile dal parser e dai test rispetto a un testo piatto. Fare riferimento al Listato 15-20 per un esempio di utilizzo di questo metodo. 
+Motivo per il quale l'oggetto `sfTestFunctional` supporta il metodo `getResponseDom()`. Restituisce un oggetto libXML2 DOM che è molto più facilmente interpretabile dal parser e dai test rispetto a un testo piatto. Fare riferimento al listato 15-20 per un esempio di utilizzo di questo metodo. 
 
 Listato 15-20 - Il test Browser fornisce accesso al Contenuto della risposta come oggetto DOM
 
@@ -714,7 +714,7 @@ Listato 15-21 - Il Test Browser fornisce accesso al contenuto della risposta com
     $b->test()->is($c->getValues('form textarea[name="text1"]'), array('foo'));
     $b->test()->is($c->getValues('form input[type="submit"]'), array(''));
 
-Nella sua costante ricerca della praticità e chiarezza, symfony mette a disposizione una via più rapida: il metodo proxy `checkElement()` del gruppo di tester `response`. Nel listato 15-22 viene mostrato come sarebbe il Listato 15-21 usando questo metodo.
+Nella sua costante ricerca della praticità e chiarezza, symfony mette a disposizione una via più rapida: il metodo proxy `checkElement()` del gruppo di tester `response`. Nel listato 15-22 viene mostrato come sarebbe il listato 15-21 usando questo metodo.
 
 Listato 15-22 - Il Browser test fornisce acceso agli elementi della risposta con i selettori CSS
 
@@ -733,10 +733,10 @@ Il comportamento del metodo `checkElement()` dipendono dal tipo del secondo argo
   * Se si tratta di un booleano, controlla che esista un corrispondente selettore CSS.
   * Se si tratta di un intero, verifica che il selettore CSS restituisca il numero dei risultati.
   * Se si tratta di una espressione regolare, verifica che il primo elemento trovato dal selettore CSS sia il suo corrispondente.
-  Se si tratta di una espressione regolare preceduta da `!`, verifica che il prima elemento non corrisponda con il pattern cercato.
+  Se si tratta di una espressione regolare preceduta da `!`, verifica che il prima elemento non corrisponda allo schema cercato.
   * Per altri casi, confronta le stringhe tra il primo elemento trovato dal selettore CSS e il secondo parametro.
 
-Il metodo accetta un terzo parametro opzionale: un array associativo. Permette di effettuare test non sul primo elemento trovato dal selettore, ma su l'elemento che si trova in una specifica posizione (indicata nell'array), come mostrato nel Listato 15-23
+Il metodo accetta un terzo parametro opzionale: un array associativo. Permette di effettuare test non sul primo elemento trovato dal selettore, ma su l'elemento che si trova in una specifica posizione (indicata nell'array), come mostrato nel listato 15-23
 
 Listato 15-23 - Utilizzo dell'opzione posizione per verificare la corrispondenza con l'oggetto in una determinata posizione
 
@@ -749,7 +749,7 @@ Listato 15-23 - Utilizzo dell'opzione posizione per verificare la corrispondenza
       end()
     ;
 
-L'array passato nel parametro opzionale può anche essere usato per eseguire due test contemporaneamente. Si può testare che ci sia l'elemento corrispondente al selettore e quanti ce ne sono, come mostrato nel Listato 15-24
+L'array passato nel parametro opzionale può anche essere usato per eseguire due test contemporaneamente. Si può testare che ci sia l'elemento corrispondente al selettore e quanti ce ne sono, come mostrato nel listato 15-24
 
 Listato 15-24 - Utilizzo dell'opzione Count per contare il numero di oggetti corrispondenti
 
@@ -758,7 +758,7 @@ Listato 15-24 - Utilizzo dell'opzione Count per contare il numero di oggetti cor
     $b->get('/foobar/edit?id=1')->
       with('response')->checkElement('form input', true, array('count' => 3));
 
-Lo strumento selettore è molto potente. Accetta molti dei selettori CSS 3 e si possono usare per query complesse come mostrato nel Listato 15-25.
+Lo strumento selettore è molto potente. Accetta molti dei selettori CSS 3 e si possono usare per query complesse come mostrato nel listato 15-25.
 
 Listato 15-25 - Esempi di selettori CSS accettati da `checkElement()`
 
@@ -772,7 +772,7 @@ Listato 15-25 - Esempi di selettori CSS accettati da `checkElement()`
 
 ### Testare gli errori
 
-A volte, le azioni o il modello generano eccezioni apposite (ad esempio per visualizzare una pagina 404). Anche se è possibile utilizzare un selettore CSS per controllare uno specifico messaggio di errore nel codice HTML generato, è meglio utilizzare `throwsException` per verificare che l'eccezione è stata generata come mostrato in Listato 15-26.
+A volte, le azioni o il modello generano eccezioni apposite (ad esempio per visualizzare una pagina 404). Anche se è possibile utilizzare un selettore CSS per controllare uno specifico messaggio di errore nel codice HTML generato, è meglio utilizzare `throwsException` per verificare che l'eccezione è stata generata come mostrato in listato 15-26.
 
 Listato 15-26 - Testare le eccezioni
 
@@ -787,7 +787,7 @@ Listato 15-26 - Testare le eccezioni
 
 ### Lavorare nell'ambiente di test
 
-L'oggetto `sfTestFunctional`  utilizza un front controller speciale impostato sull'ambiente `test`. La configurazione di default per questo ambiente appare nel Listato 15-27.
+L'oggetto `sfTestFunctional`  utilizza un front controller speciale impostato sull'ambiente `test`. La configurazione di default per questo ambiente appare nel listato 15-27.
 
 Listato 15-27 - Configurazione di default dell'ambiente di test in `frontend/config/settings.yml`
 
@@ -801,7 +801,7 @@ Listato 15-27 - Configurazione di default dell'ambiente di test in `frontend/con
 
 In questo ambiente la cache e la web debug toolbar sono impostate a `false`. Tuttavia, l'esecuzione del codice lascia ancora tracce in un file di log, diverso dai file di log `dev` e `prod`, in modo da poter controllare in modo indipendente l'esecuzione (`myproject / log / frontend_test.log»). In questo ambiente le eccezioni non interrompono l'esecuzione degli script - in modo che sia possibile eseguire tutta una serie di test anche se uno non riesce. Si possono avere delle specifiche impostazioni di connessione per il database, per esempio, per usare un altro database che contenga i dati di test.
 
-Prima di utilizzare l'oggetto `sfBrowser` è necessario inizializzarlo. Se necessario, è possibile specificare un hostname per l'applicazione e un indirizzo IP per il client - nel caso l'applicazione dovesse fare controlli su questi due parametri. Vediamo come si fa nel Listato 15-28.
+Prima di utilizzare l'oggetto `sfBrowser` è necessario inizializzarlo. Se necessario, è possibile specificare un hostname per l'applicazione e un indirizzo IP per il client - nel caso l'applicazione dovesse fare controlli su questi due parametri. Vediamo come si fa nel listato 15-28.
 
 Listato 15-28 - Impostare il browser con un hostname e un IP
 
@@ -837,7 +837,7 @@ Buone pratiche per la nomenclatura dei test
 
 Questa sezione mostra alcune buone pratiche per mantenere i test organizzati e facili da mantenere. I suggerimenti riguardano l'organizzazione dei file dei test unitari e di quelli funzionali.
 
-Per quanto riguarda la struttura dei file, è necessario che che il nome del file del test unitario utilizzi il nome della classe che si ha intenzione di testare e il nome del file del test funzionale abbia il nome del modulo o dello scenario che si vuole testare. Vedere nel Listato 15-30 per un esempio. La cartella `test/` conterrà molti file e se non si seguono queste linee guida potrebbe risultare difficile trovare un test
+Per quanto riguarda la struttura dei file, è necessario che che il nome del file del test unitario utilizzi il nome della classe che si ha intenzione di testare e il nome del file del test funzionale abbia il nome del modulo o dello scenario che si vuole testare. Vedere nel listato 15-30 per un esempio. La cartella `test/` conterrà molti file e se non si seguono queste linee guida potrebbe risultare difficile trovare un test
 
 Listato 15-30 - Esempio di nomenclatura dei test
 
@@ -854,7 +854,7 @@ Listato 15-30 - Esempio di nomenclatura dei test
         backend/
           myOtherScenarioTest.php
 
-Per i test unitari una buona pratica è quella di raggruppare i test per funzione o metodo e iniziare ogni gruppo di test con la chiamata `diag()`. Il messaggio di ogni test unitario dovrebbe contenere il nome della funzione o del metodo da testare seguito da un verbo e una proprietà in modo che il risultato dei test sembri una frase che descrive una proprietà di un oggetto. Il Listato 15-31 mostra un esempio
+Per i test unitari una buona pratica è quella di raggruppare i test per funzione o metodo e iniziare ogni gruppo di test con la chiamata `diag()`. Il messaggio di ogni test unitario dovrebbe contenere il nome della funzione o del metodo da testare seguito da un verbo e una proprietà in modo che il risultato dei test sembri una frase che descrive una proprietà di un oggetto. Il listato 15-31 mostra un esempio
 
 Listato 15-31 - Esempio di nomenclatura corretta dei test unitari
 
@@ -868,7 +868,7 @@ Listato 15-31 - Esempio di nomenclatura corretta dei test unitari
     ok 1 - strtolower() returns a string
     ok 2 - strtolower() transforms the input to lowercase
 
-I test funzionali dovrebbero essere raggruppati per pagina e iniziare con una richiesta. Il Listato 15-32 mostra questa pratica.
+I test funzionali dovrebbero essere raggruppati per pagina e iniziare con una richiesta. Il listato 15-32 mostra questa pratica.
 
 Listato 15-32 - Esempio di nomenclatura corretta dei test funzionali
 
@@ -901,7 +901,7 @@ I strumenti messi a disposizione da symfony per i test funzionali e per i test u
 ### Lanciare un insieme di test
 
 I task `test: unit` e `test: functional` possono eseguire un test singolo o una serie di test. Ma se si chiamano questi task senza alcun parametro si lanciano tutti i test unitari e funzionali che si trovano nella cartella `test /` . Attraverso un particolare meccanismo viene garantito che ogni file di test venga eseguito in un ambiente isolato al fine di evitare possibili combinazioni tra i test.
-Inoltre poiché non avrebbe senso tenere lo stesso tipo di output, come nel test di un singolo file (l'output sarebbe lungo migliaia di linee), il risultato è compresso in una vista sintetica. Ecco perché l'esecuzione di un gran numero di file di test utilizza un framework di test con speciali caratteristiche. L'insieme di test è legato a un componente del framework lime chiamato `lime_harness`, il quale mostra lo stato un test file per file. Mostra, inoltre, un resoconto sul numero dei test falliti sul totale dei test come mostrato nel Listato 15-33.
+Inoltre poiché non avrebbe senso tenere lo stesso tipo di output, come nel test di un singolo file (l'output sarebbe lungo migliaia di linee), il risultato è compresso in una vista sintetica. Ecco perché l'esecuzione di un gran numero di file di test utilizza un framework di test con speciali caratteristiche. L'insieme di test è legato a un componente del framework lime chiamato `lime_harness`, il quale mostra lo stato un test file per file. Mostra, inoltre, un resoconto sul numero dei test falliti sul totale dei test come mostrato nel listato 15-33.
 
 Listato 15-33 - Lanciare un insieme di test
 
@@ -918,7 +918,7 @@ Listato 15-33 - Lanciare un insieme di test
 
 I test sono eseguiti allo stesso modo di quando sono chiamati singolarmente, solo l'output è sintetico per maggiore utilità. In particolare, il resoconto finale focalizza su i test che hanno fallito e aiuta a trovarli.
 
-Si possono lanciare tutti i test con una sola chiamata utilizzando il task `test:all` come mostrato nel Listato 15-34. Questa attività andrebbe fatta ogni volta che si trasferiscono i file all'ambiente di produzione per garantire che non ci siano comparsi errori di regressione dopo l'ultima release
+Si possono lanciare tutti i test con una sola chiamata utilizzando il task `test:all` come mostrato nel listato 15-34. Questa attività andrebbe fatta ogni volta che si trasferiscono i file all'ambiente di produzione per garantire che non ci siano comparsi errori di regressione dopo l'ultima release
 
 Listato 15-34 - Lanciare tutti i test del progetto
 
@@ -926,7 +926,7 @@ Listato 15-34 - Lanciare tutti i test del progetto
 
 ### Accesso al database
 
-I test unitari spesso hanno necessità di accedere al database. La connessione al database è automaticamente instanziato quando si chiama `sfBrowser::get()` per la prima volta. Comunque, se si vuole l'accesso al database anche prima dell'utilizzo di `sfBrowser` è necessario inizializzare manualmente l'oggetto `sfDabataseManager` come mostrato nel Listato 15-35
+I test unitari spesso hanno necessità di accedere al database. La connessione al database è automaticamente instanziato quando si chiama `sfBrowser::get()` per la prima volta. Comunque, se si vuole l'accesso al database anche prima dell'utilizzo di `sfBrowser` è necessario inizializzare manualmente l'oggetto `sfDabataseManager` come mostrato nel listato 15-35
 
 Listato 15-35 - Inizializzazione del database in un test
 
@@ -937,7 +937,7 @@ Listato 15-35 - Inizializzazione del database in un test
     // Optionally, you can retrieve the current database connection
     $con = Propel::getConnection();
 
-Si consiglia di popolare il database con le fixture prima di iniziare i test. Tale procedura può essere fatta con l'oggetto `sfPropelData`. Quest'ultimo può caricare dati da un file proprio come il task `propel:data-load` oppure da un array, come mostrato nel Listato 15-36
+Si consiglia di popolare il database con le fixture prima di iniziare i test. Tale procedura può essere fatta con l'oggetto `sfPropelData`. Quest'ultimo può caricare dati da un file proprio come il task `propel:data-load` oppure da un array, come mostrato nel listato 15-36
 
 Listato 15-36 - Popolare il database dal file di test
 
@@ -970,7 +970,7 @@ Quindi, utilizzare gli oggetti Propel come si farebbe in una normale applicazion
 
 Quando si attiva la cache per un'applicazione i test funzionali dovrebbero verificare che le azioni della cache funzionino come ci si aspetti.
 
-La prima cosa da fare consiste nell'abilitare la cache per l'ambiente di test (nel file `settings.yml`). Poi, se si vuole verificare se una pagina deriva dalla cache oppure se è stata generata bisogna utilizzare il metodo `isCached()` del gruppo di test `view_cache`. Il Listato 15-37 mostra come usare questo metodo.
+La prima cosa da fare consiste nell'abilitare la cache per l'ambiente di test (nel file `settings.yml`). Poi, se si vuole verificare se una pagina deriva dalla cache oppure se è stata generata bisogna utilizzare il metodo `isCached()` del gruppo di test `view_cache`. Il listato 15-37 mostra come usare questo metodo.
 
 
 Listato 15-37 - Testare la cache con il metodo `isCached()`
@@ -1002,7 +1002,7 @@ Selenium non è distribuito di default con symfony. Per installarlo, è necessar
 >**ATTENZIONE**
 >Attenzione a non trasferire la cartella `selenium/` nel server di produzione, poiché permetterà l'accesso come root a tutti i documenti web attraverso il browser.
 
-I test di Selenium sono scritti in HTML e si trovano nella cartella `web/selenium/tests/`. Per esempio, il Listato 15-38 mostra un test funzionale nel quale la pagina è caricata, il link "click me" è cliccato e il testo "Hello, World" è mostrato come risposta. Notare bebe che per poter accedere all'applicazione in ambiente `test`, si deve specificare il controller `frontend_test.php`.
+I test di Selenium sono scritti in HTML e si trovano nella cartella `web/selenium/tests/`. Per esempio, il listato 15-38 mostra un test funzionale nel quale la pagina è caricata, il link "click me" è cliccato e il testo "Hello, World" è mostrato come risposta. Notare bene che, per poter accedere all'applicazione in ambiente `test`, si deve specificare il controller `frontend_test.php`.
 
 Listato 15-38 - Un semplice test con Selenium, in `web/selenium/test/testIndex.html`
 

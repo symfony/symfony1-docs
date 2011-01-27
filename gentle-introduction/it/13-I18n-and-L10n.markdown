@@ -60,7 +60,7 @@ Listato 13-1 - Impostare la cultura predefinita, in `frontend/config/settings.ym
 >cancellare i cookie di dominio o riavviare il browser.
 
 Mantenere sia la lingua che il paese è necessario, perché si potrebbero avere diverse
-traduzioni italiane per utenti dell'Italia o della Svizzera, e diversi contenuti
+traduzioni italiane per utenti dell'Italia o della Svizzera e diversi contenuti
 spagnoli per gli utenti dalla Spagna o dal Messico. La lingua è codificata in due
 caratteri minuscoli, secondo lo standard ISO 639-1 (ad esempio, `en` per inglese). Il
 paese è codificato in due caratteri maiuscoli, secondo lo standard ISO 3166-1 (ad esempio,

@@ -1,7 +1,7 @@
 Capitolo 4 - Le basi per la creazione delle pagine
 ==================================================
 
-Curiosamente, il primo tutorial che i programmatori seguono quando devono imparare una nuovo linguaggio o un framework è quello che permette di visualizzare "Buongiorno, mondo!" sullo schermo. È strano pensare al computer come un qualcosa che può salutare il mondo intero, dal momento che ogni tentativo nel campo dell'intelligenza artificiale ha finora ottenuto scarse capacità di conversazione. Ma symfony non è più stupido di qualsiasi altro programma, e la prova è che è possibile creare una pagina che dice "Buongiorno, `<Il Tuo Nome>`".
+Curiosamente, il primo tutorial che i programmatori seguono quando devono imparare una nuovo linguaggio o un framework è quello che permette di visualizzare "Buongiorno, mondo!" sullo schermo. È strano pensare al computer come un qualcosa che può salutare il mondo intero, dal momento che ogni tentativo nel campo dell'intelligenza artificiale ha finora ottenuto scarse capacità di conversazione. Ma symfony non è più stupido di qualsiasi altro programma e la prova è che è possibile creare una pagina che dice "Buongiorno, `<Il Tuo Nome>`".
 
 Questo capitolo spiegherà come creare un modulo, che è un elemento strutturale che raggruppa le pagine. Si potrà anche imparare a creare una pagina, che è divisa in una azione e un template, a causa dell'utilizzo del pattern MVC. Collegamenti e form sono le interazioni web di base; si vedrà come inserirli in un template e gestirli in un'azione.
 
@@ -42,7 +42,7 @@ Listato 4-1 - L'azione predefinita generata in `actions/actions.class.php`
 >**NOTE**
 >Se si guarda nel file `actions.class.php`, si troveranno altre righe, compresi molti commenti. Questo perché symfony consiglia l'uso dei commenti PHP per documentare i progetti e predispone ciascun file con classi a essere compatibile con lo [strumento phpDocumentor](http://www.phpdoc.org/).
 
-Per ogni nuovo modulo, symfony crea una azione `index` predefinita. Questa si compone di un metodo azione chiamato `executeIndex` e un file template chiamato `indexSuccess.php`. Il significato del prefisso `execute` e del suffisso `Success` verrà spiegato rispettivamente nei Capitoli 6 e 7. Nel frattempo, si può considerare che questa nomenclatura è una convenzione. Si può vedere la pagina corrispondente (riprodotta in Figura 4-1) aprendo il seguente URL:
+Per ogni nuovo modulo, symfony crea una azione `index` predefinita. Questa si compone di un metodo azione chiamato `executeIndex` e un file template chiamato `indexSuccess.php`. Il significato del prefisso `execute` e del suffisso `Success` verrà spiegato rispettivamente nei Capitoli 6 e 7. Nel frattempo, si può considerare che questa nomenclatura è una convenzione. Si può vedere la pagina corrispondente (riprodotta in figura 4-1) aprendo il seguente URL:
 
     http://localhost/frontend_dev.php/contenuto/index
 
@@ -104,7 +104,7 @@ symfony si lamenterà per il fatto che manca il template `showSuccess.php`. È n
 >
 >     http://localhost/articles/tagged/finance+france+euro
 >
->Symfony sa come analizzare e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da una URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il capitolo 9.
+>Symfony sa come analizzare e generare URL intelligenti per l'utente. Il sistema per le rotte estrapola automaticamente i parametri della richiesta da un URL intelligente e li rende disponibili all'azione. Formatta anche i link inclusi nella risposta in modo che vengano mostrati in modo "intelligente". Per saperne di più su questa caratteristica, leggere il capitolo 9.
 >
 >Nel complesso, questo significa che il modo in cui si dà un nome alle azioni delle applicazioni non dovrebbe essere influenzato dal modo in cui scegliamo l'URL per chiamarli, ma dalle funzioni delle azioni nell'applicazione. Il nome di una azione deve descrivere cosa fa l'azione reale e spesso è spesso un verbo in forma all'infinito (come `show`, `list`, `edit` e così via). I nomi delle azioni possono essere del tutto invisibili all'utente finale, quindi non bisogna aver paura di utilizzare nomi di azioni espliciti (come `listByName` or `showWithComments`). In questo modo si può risparmiare sui commenti del codice atti a spiegare la funzione dell'azione e inoltre il codice sarà molto più facile da leggere.
 
@@ -147,7 +147,7 @@ Listato 4-5 - La sintassi alternativa PHP, buona per i template
 
 ### Passare informazioni dall'azione al template
 
-Il compito dell'azione è quello di fare tutte le elaborazioni complicate, il recupero dei dati, i controlli e assegnare variabili per il template che verranno visualizzate o verificate con istruzioni di controllo. Symfony rende gli attributi delle classi di azioni (accessibili attraverso `$this->nomeVariabile` nell'azione) direttamente accessibili al template nello spazio dei nomi globali (attraverso `$nomeVariabile`). I Listati 4-6 e 4-7 mostrano come passare informazioni dall'azione al template.
+Il compito dell'azione è quello di fare tutte le elaborazioni complicate, il recupero dei dati, i controlli e assegnare variabili per il template che verranno visualizzate o verificate con istruzioni di controllo. Symfony rende gli attributi delle classi di azioni (accessibili attraverso `$this->nomeVariabile` nell'azione) direttamente accessibili al template nello spazio dei nomi globali (attraverso `$nomeVariabile`). I listati 4-6 e 4-7 mostrano come passare informazioni dall'azione al template.
 
 Listato 4-6 - Impostare l'attributo di una azione nell'azione per renderlo disponibile nel template
 

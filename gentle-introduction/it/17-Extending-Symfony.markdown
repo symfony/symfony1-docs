@@ -893,7 +893,7 @@ Nel tag `<contents>` bisogna descrivere la struttura dei file del plugin. In que
 
 I plug-in sono progettati per funzionare con un dato insieme di versioni di PHP, PEAR, symfony, pacchetti PEAR, o altri plugin. Dichiarare queste dipendenze nel tag <dependencies>` chiede a PEAR di verificare che i pacchetti richiesti siano già installati e di sollevare un'eccezione in caso contrario.
 
-È sempre necessario dichiarare le dipendenze da PHP, PEAR e symfony, almeno quelle corrispondenti alla propria installazione, come requisito minimo. Se non si sa cosa mettere, aggiungere un requisito per PHP 5.2.4, PEAR 1.4, e symfony 1.3.
+È sempre necessario dichiarare le dipendenze da PHP, PEAR e symfony, almeno quelle corrispondenti alla propria installazione, come requisito minimo. Se non si sa cosa mettere, aggiungere un requisito per PHP 5.2.4, PEAR 1.4 e symfony 1.3.
 
 Si raccomanda inoltre di aggiungere un numero massimo di versione symfony per ogni plugin. Ciò causerà un messaggio di errore quando si tenta di utilizzare un plugin con una versione più avanzata del framework e questo obbligherà l'autore del plugin ad assicurarsi che il plug-in funzioni correttamente con questa versione prima del nuovo rilascio. È meglio avere una segnalazione e scaricare un aggiornamento piuttosto che avere un plugin che fallisce silenziosamente.
 

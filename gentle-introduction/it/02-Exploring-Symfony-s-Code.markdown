@@ -11,17 +11,17 @@ dell'applicativo symfony con nessun'altra.
 Pattern MVC
 -----------
 
-Symfony è basato sul classico web design pattern conosciuto come architettura MVC, che consiste di tre livelli:
+Symfony è basato sul classico pattern di web design, conosciuto come architettura MVC, che consiste di tre livelli:
 
-  * Il modello (Model) rappresenta le informazioni sulle quali opera l'applicativo--la sua business logic.
+  * Il modello (Model) rappresenta le informazioni sulle quali opera l'applicativo, la sua business logic.
   * La vista (View) presenta il modello su una pagina web in modo da renderla interattiva per l'utente.
   * Il controllore (Controller) risponde alle azioni dell'utente e invoca in modo appropriato i cambiamenti sul modello o sulla vista.
 
-La Figura 2-1 illustra il pattern MVC
+La figura 2-1 illustra il pattern MVC
 
 L'architettura MVC separa la business logic (modello) e la presentazione (vista), 
 in questo modo si ottiene grande manutenibilità. 
-Per esempio: se l'applicativo dovesse essere eseguito sia su un browser web standard sia su un palmare, 
+Per esempio: se l'applicativo dovesse essere eseguito sia su un classico browser web sia su un palmare, 
 basterà creare una nuova vista; il controllore originale e il modello non verranno modificati. 
 Il controllore aiuta a nascondere i dettagli del protocollo utilizzato per la richiesta (HTTP, modalità console, mail etc.) 
 dal modello e dalla vista.
@@ -215,7 +215,7 @@ Listato 2-5,- Il controllore, rivisto, in `index.php`
 
 In questo modo diventa più semplice leggere il codice del controllore.
 Il suo unico scopo è quello di ottenere i dati dal modello e passarli alla vista.
-In un'applicazione più complessa, il controllore controlla anche con la richiesta, la sessione utente, l'autenticazione, e così via.
+In un'applicazione più complessa, il controllore controlla anche con la richiesta, la sessione utente, l'autenticazione e così via.
 L'utilizzo di nomi espliciti per le funzioni del modello rende addirittura non necessario l'utilizzo dei commenti 
 nel controllore.
 
@@ -299,10 +299,10 @@ Inoltre, le funzioni create nel componente di astrazione del database posso esse
 che richiedano accesso al database.
 
 >**NOTE**
->Gli esempi mostrati nei Listati 2-6 e 2-7 non risultano ancora del tutto soddisfacenti in quanto ci sarebbe ancora del codice da scrivere
+>Gli esempi mostrati nei listati 2-6 e 2-7 non risultano ancora del tutto soddisfacenti in quanto ci sarebbe ancora del codice da scrivere
 >per poter ottenere una completa e reale astrazione del database (astrazione del codice SQL attraverso un costruttore di query,
-> spostamento di tutte le funzioni in una classe, e così via). Ma lo scopo di questa guida non è mostrare come si debba scrivere
-> tutto questo codice, e verrà mostrato nel capitolo 8 come symfony fornisce già elegantemente questa astrazione.
+>spostamento di tutte le funzioni in una classe e così via). Ma lo scopo di questa guida non è mostrare come si debba scrivere
+>tutto questo codice e verrà mostrato nel capitolo 8 come symfony fornisce già elegantemente questa astrazione.
 
 
 ### Elementi della Vista
@@ -313,10 +313,10 @@ il layout grafico, il footer e il menù di navigazione. In generale soltanto le 
 Per questo motivo la vista è separata in altri due livelli: layout e template.
 Il layout è solitamente globale nell'applicativo o comunque accomuna un gruppo di pagine.
 Il template si occupa di mostrare i valori delle variabili messe a disposizione dal controllore.
-È necessaria della logica per poter far in modo che queste componenti lavorino insieme, e questa logica di presentazione è
+È necessaria della logica per poter far in modo che queste componenti lavorino insieme e questa logica di presentazione è
 gestita appunto dalla vista.
 In base a questi principi, la parta di vista del listato 2-3 può essere separate in tre parti,
-come mostrato dai Listati 2-8, 2-9 e 2-10.
+come mostrato dai listati 2-8, 2-9 e 2-10.
 
 
 
@@ -359,7 +359,7 @@ Listato 2-10 - La parte di layout della vista
 Il controllore mostrato nell'esempio precedente non effettua molte operazioni, ma in una applicazione web reale, esso deve svolgere molti compiti. 
 Un compito importante e comune a tutti i controllori dell'applicativo.
 Un compito comune include la gestione della richiesta, sicurezza, caricamento delle configurazione e faccende simili.
-Questo è il motivo per cui spesso il controllore è suddiviso in un front controller, che è unico in tutto l'applicativo, e azioni
+Questo è il motivo per cui spesso il controllore è suddiviso in un front controller, che è unico in tutta l'applicazione, e azioni
 che contengono solamente il codice del controllore specifico di una pagina.
 
 Uno dei grandi vantaggi nell'avere un front controller è che viene offerto un unico punto di accesso per tutto l'applicativo.
@@ -389,7 +389,7 @@ le classi di modello e trasformare tutte le funzioni degli esempi precedenti in 
 ### Implementazione del pattern MVC di symfony
 
 Ricapitolando: per una semplice pagine che mostra i post di un weblog, quanti componenti sono richiesti?
-Come mostrato nella Figura 2-2, sono presenti le seguenti parti:
+Come mostrato nella figura 2-2, sono presenti le seguenti parti:
 
   * Model layer
   * Livello del Modello
@@ -433,7 +433,7 @@ Figura 2-2 - Flusso di lavoro di symfony
 ![Flusso di lavoro di symfony](http://www.symfony-project.org/images/book/1_4/F0202.png "Flusso di lavoro di symfony")
 
 Questo significa che per quanto riguarda la lista dei post descritta in precedenza saranno necessari solamente tre file
-come mostrato nei Listati 2-11, 2-12, e 2-13.
+come mostrato nei listati 2-11, 2-12 e 2-13.
 
 Listato 2-11 - Azione `list`, in `myproject/apps/myapp/modules/weblog/actions/actions.class.php`
 
@@ -525,7 +525,7 @@ un'applicazione per ogni sito. Da notare che i link tra le applicazioni devono e
 
 Ogni applicazione è un insieme di uno o più moduli.
 Un modulo di solito rappresenta una pagina o un gruppo di pagina che hanno in comune lo stesso scopo.
-Ad esempio si potrebbe avere dei moduli `home`, `articoli`, `help`, `carrelloDellaSpesa`, `account`, e così via.
+Ad esempio si potrebbe avere dei moduli `home`, `articoli`, `help`, `carrelloDellaSpesa`, `account` e così via.
 
 I moduli contengono le azioni, le quali rappresentano le varie azioni che possono essere eseguite all'interno di un modulo.
 Per esempio, un modulo nominato `carrelloDellaSpesa` può contenere le azioni `aggiungi`, `mostra` e aggiorna.
@@ -539,7 +539,7 @@ possano risultare nella stessa pagina (ad esempio, aggiungendo un commento a un 
 >Come descritto nel capitolo 1, l'operazione di riscrivere il codice per migliorare la struttura e la leggibilità dello stesso (ma preservando il suo comportamento)
 >viene comunemente chiamato 'rifattorizzazione' e questo viene fatto frequentemente applicando i principi RAD.
 
-La Figura 2-3 mostra un esempio di codice per un progetto di un blog, in una struttura `project/application/module/action`.
+La figura 2-3 mostra un esempio di codice per un progetto di un blog, in una struttura `project/application/module/action`.
 
 Figura 2-3 - Esempio di organizzazione del codice
 
@@ -596,7 +596,7 @@ Tabella 2-1 - Cartelle di base
 Cartella   | Descrizione
 ---------- | -----------
 `apps/`    | Contiene una  cartella per ogni applicazione del progetto (tipicamente, `frontend` e `backend`).
-`cache/`   | Contiene la versione cache della configurazione, e (se attivata) la versione cache delle azioni e dei template del progetto. Il meccanismo di cache (descritto nel capitolo 12) utilizza questi file per velocizzare i tempi di risposta dell'applicativo. Ciascuna applicazione avrà una sotto-cartella, contenente file PHP pre-processati e file HTML.
+`cache/`   | Contiene la versione cache della configurazione e (se attivata) la versione cache delle azioni e dei template del progetto. Il meccanismo di cache (descritto nel capitolo 12) utilizza questi file per velocizzare i tempi di risposta dell'applicativo. Ciascuna applicazione avrà una sotto-cartella, contenente file PHP pre-processati e file HTML.
 `config/`  | Contiene la configurazione generale del progetto.
 `data/`    | Contiene i file dati del progetto come lo schema del database, un file SQL per la creazione delle tabelle o anche un file SQLite.
 `doc/`     | Contiene la documentazione del progetto
@@ -757,7 +757,7 @@ Listato 2-16 - Utilizzo del valore predefinito
      => default
 
 Alcune classi del nucleo di symfony utilizzano un contenitore di parametri che supporta i namespace (grazie alla classe  `sfNamespacedParameterHolder`).
-Se viene specificato un terzo argomento al setter o al getter, esso viene utilizzato come namespace, e il parametro verrà definito esclusivamente all'interno del namespace.
+Se viene specificato un terzo argomento al setter o al getter, esso viene utilizzato come namespace e il parametro verrà definito esclusivamente all'interno del namespace.
 Listato 2-17 ne mostra un esempio.
 
 Listato 2-17 - Utilizzo dei namespace con il contenitore dei parametri di `sfUser`
@@ -821,7 +821,7 @@ la definizione di tale classe:
     $myObject = new MyClass();
 
 In un progetto di grosse dimensione con molte classi e una profonda e articolata struttura di cartelle, tener traccia di tutti i file delle vari classi e i percorsi delle stesse può diventare una perdita di tempo.
-Symfony fornisce una funzione `spl_autoload_register()` che rende superfluo l'utilizzo della direttiva `include_once`, e che permette di scrivere direttamente:
+Symfony fornisce una funzione `spl_autoload_register()`, che rende superfluo l'utilizzo della direttiva `include_once` e che permette di scrivere direttamente:
 
     [php]
     $myObject = new MyClass();
@@ -836,7 +836,7 @@ Sommario
 --------
 
 L'utilizzo di un framework MVC obbliga lo sviluppatore a organizzare il codice in accordo con le convenzioni del framework stesso.
-Il codice di presentazione appartiene alla vista, la manipolazione dei dati appartiene al modello, e la logica della richiesta appartiene al controllore.
+Il codice di presentazione appartiene alla vista, la manipolazione dei dati appartiene al modello e la logica della richiesta appartiene al controllore.
 
 Symfony è un framework MVC scritto in PHP.
 La sua struttura permette di ottenere il meglio grazie all'utilizzo del pattern MVC, mantenendo al contempo una praticità e semplicità d'utilizzo.

@@ -364,7 +364,7 @@ Lo stesso discorso vale per gli slot, la differenza in termini di prestazioni è
 
 ### Accelerare il routing
 
-Come spiegato nel capitolo 9, ogni chiamata a un helper per i link in un template richiede al sistema delle rotte di processare un URI interno in un URL esterno. Questo avviene trovando una corrispondenza tra l'URI e i pattern del file `routing.yml`. Symfony lo fa in modo molto semplice: verifica se c'è corrispondenza tra la prima regola e l'URI, se non è così prova con la seguente e così via. Dato che ogni verifica coinvolge le espressioni regolari questa è un'operazione piuttosto pesante in termini di risorse.
+Come spiegato nel capitolo 9, ogni chiamata a un helper per i link in un template richiede al sistema delle rotte di processare un URI interno in un URL esterno. Questo avviene trovando una corrispondenza tra l'URI e gli schemi del file `routing.yml`. Symfony lo fa in modo molto semplice: verifica se c'è corrispondenza tra la prima regola e l'URI, se non è così prova con la seguente e così via. Dato che ogni verifica coinvolge le espressioni regolari, questa è un'operazione piuttosto pesante in termini di risorse.
 
 Esiste una semplice scappatoia: utilizzare il nome della rotta invece che la coppia modulo/azione. Questo dirà a symfony quale regola utilizzare e il sistema delle rotte non perderà tempo cercando una corrispondenza con tutte le regole precedenti.
 
@@ -499,7 +499,7 @@ Forse il modo migliore per velocizzare symfony è quello di aggirarlo completame
 
 Un paio di suggerimenti descritti nel capitolo 12 permettono di aggirare symfony totalmente per alcune pagine. Il primo coinvolge l'utilizzo delle intestazioni HTTP 1.1 per chiedere ai proxy e ai browser client di mettere in cache le pagine in modo autonomo, così non le richiederanno la prossima volta che la pagina sarà necessaria. Il secondo suggerimento è la super fast cache (automatizzata dal plug-in `sfSuperCachePlugin`), che consiste nel memorizzare una copia della risposta nella cartella `web/`, modificando le regole di rewrite per fare in modo che Apache cerchi una versione in cache prima di inoltrare la richiesta a symfony.
 
-Tutti e due questi metodi sono molto efficaci, e anche se sono applicabili solo a pagine statiche, si fanno carico della gestione di queste pagine senza coinvolgere symfony permettendo così al server di essere completamente disponibile per le richieste più complesse.
+Tutti e due questi metodi sono molto efficaci e, anche se sono applicabili solo a pagine statiche, si fanno carico della gestione di queste pagine senza coinvolgere symfony, permettendo così al server di essere completamente disponibile per le richieste più complesse.
 
 ### Mettere in cache il risultato di una chiamata a una funzione
 
@@ -596,7 +596,7 @@ Ottimizzare il proprio codice
 
 Caricare dieci file richiede più operazioni di I/O rispetto al caricamento di un grande file, specialmente su dischi lenti. Caricare un file molto grande richiede più risorse rispetto a caricarne uno più piccolo, specialmente se grossa parte del contenuto del file non è di alcun interesse per il parser PHP, è il caso dei commenti.
 
-Quindi fondere un grosso numero di file eliminandone i commenti contenuti è un'operazione che migliora le prestazioni. Symfony esegue già tale ottimizzazione, si chiama compilazione del core. All'inizio della prima richiesta (o dopo aver svuotato la cache) un'applicazione symfony concatena tutte le classi del core del framework (`sfActions`, `sfRequest`, `sfView`, e così via) in un unico file, riduce la dimensione del file rimuovendo commenti e doppi spazi e salva tutto nella cache in un file chiamato `config_core_compile.yml.php`. Ogni richiesta seguente caricherà solamente questo singolo file ottimizzato invece che i 30 file che lo compongono.
+Quindi fondere un grosso numero di file eliminandone i commenti contenuti è un'operazione che migliora le prestazioni. Symfony esegue già tale ottimizzazione, si chiama compilazione del core. All'inizio della prima richiesta (o dopo aver svuotato la cache) un'applicazione symfony concatena tutte le classi del core del framework (`sfActions`, `sfRequest`, `sfView` e così via) in un unico file, riduce la dimensione del file rimuovendo commenti e doppi spazi e salva tutto nella cache in un file chiamato `config_core_compile.yml.php`. Ogni richiesta seguente caricherà solamente questo singolo file ottimizzato invece che i 30 file che lo compongono.
 
 Se l'applicazione ha classi che devono essere caricare ogni volta, specialmente se sono classi grandi con molti commenti, può essere un vantaggio aggiungerle al file compilato del core. Per fare questo basta aggiungere un file `core_compile.yml` nella cartella `config/` dell'applicazione in cui si elencheranno le classi che si vogliono aggiungere come nel listato 18-21.
 

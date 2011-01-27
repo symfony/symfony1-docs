@@ -36,7 +36,7 @@ operazioni CRUD, in modo da accelerare la parte iniziale delle interfacce di bac
 Lungo questo capitolo, i listati dimostreranno le capacità dell'admin generator di symfony
 basandosi su un semplice esempio, che ricorderà il capitolo 8. Questo è il ben noto
 esempio dell'applicazione blog, contenente le due classi `BlogArticle` e `BlogComment`.
-Il listato 14-1 mostra lo schema, illustrato in Figura 14-1.
+Il listato 14-1 mostra lo schema, illustrato in figura 14-1.
 
 Listato 14-1 - Schema Propel dell'esempio di applicazione blog
 

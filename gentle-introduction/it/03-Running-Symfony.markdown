@@ -26,7 +26,7 @@ può evitare possibili problemi successivi.
 Prima di tutto è necessario controllare che il computer abbia un ambiente
 di lavoro amichevole per lo sviluppo web. Come minimo, è necessario un web server (Apache,
 per esempio), un motore di database (MySQL, PostgreSQL, SQLite, o qualsiasi
-[PDO](http://www.php.net/PDO)-motore di database compatibile), e PHP 5.2.4 o
+[PDO](http://www.php.net/PDO)-motore di database compatibile) e PHP 5.2.4 o
 successivo.
 
 ### CLI - Interfaccia a riga di comando
@@ -52,7 +52,7 @@ configurazione di PHP soddisfi i requisiti minimi di symfony.
 In primo luogo, assicurarsi di avere installato come minimo PHP 5.2.4 utilizzando la
 funzione PHP `phpinfo()` o eseguendo `php -v` da linea di comando. Bisogna tenere
 presente che su alcune configurazioni, è possibile avere installate due diverse versioni
-di PHP: una per la linea di comando, e un'altra per il web.
+di PHP: una per la linea di comando e un'altra per il web.
 
 Dopo, scaricare lo script per la verifica della configurazione di symfony al seguente URL:
 
@@ -126,7 +126,7 @@ sito web di symfony.
 progetto. Quest'ultimo è l'approccio consigliato, perché in questo modo i progetti saranno
 totalmente indipendenti l'uno dall'altro e l'aggiornamento della singola installazione di
 symfony non influirà su altri progetti. Inoltre in questo modo si è in grado di
-avere progetti che utilizzano diverse versioni di symfony, e aggiornarle una alla volta
+avere progetti che utilizzano diverse versioni di symfony e aggiornarle una alla volta
 in base alle esigenze.
 
 Come buona pratica, molte persone installano i file del framework symfony nella
@@ -501,7 +501,7 @@ di symfony o ai seguenti URL:
 
     http://www.symfony-project.org/get/sf_sandbox_1_4.zip
 
-Scompattare i file da qualche parte sotto la radice della cartella web, e si è
+Scompattare i file da qualche parte sotto la cartella radice del web e si è
 pronti. Il progetto symfony ora è accessibile chiamando `web/index.php`
 da un browser.
 

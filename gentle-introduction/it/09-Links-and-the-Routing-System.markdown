@@ -40,7 +40,7 @@ applicazione nel URL va contro questo sforzo e ha diversi svantaggi:
   circonda. Oggi gli URL non compaiono solo nella barra degli indirizzi. Sono visibili quando un utente 
   passa il mouse sopra un link così come nei risultati di una ricerca. Quando un utente cerca informazioni bisogna cercare 
   di fornirgli indizi facilmente comprensibili riguardo quello che ha trovato invece di un URL confuso come quello
-  mostrato in Figura 9-1.
+  mostrato in figura 9-1.
 
 Figura 9-1 - Gli URL compaiono in molti posti, come nei risultati della ricerca
 
@@ -74,36 +74,36 @@ e mostrare la stessa pagina del primo URL mostrato in questo capitolo:
 
 I benefici sono immensi:
 
-  * Le URL assumono effettivamente un significato ben preciso, e possono aiutare l'utente a comprendere se la pagina ottenuta da un determinato link contiene ciò che ci si aspetta. 
+  * Le URL assumono effettivamente un significato ben preciso e possono aiutare l'utente a comprendere se la pagina ottenuta da un determinato link contiene ciò che ci si aspetta. 
   Un link può contenere maggiori dettagli riguardanti la risorsa alla quale esso è legato. Questo è particolarmente utile per i risultati forniti dai motori di ricerca. 
-  Inoltre, può capitare che gli URL appaiano senza alcun riferimento al titolo della pagina (si pensi a quando si copia un link da spedire via e-mail), 
-  e in tale caso, devono assumere un significato ben preciso. La Figura 9-2 mostra un esempio di URL user-friendly.
+  Inoltre, può capitare che gli URL appaiano senza alcun riferimento al titolo della pagina (si pensi a quando si copia un link da spedire via e-mail) 
+  e, in tale caso, devono assumere un significato ben preciso. La figura 9-2 mostra un esempio di URL user-friendly.
   
-   * L'implementazione tecnica è nascosta all'utente: non viene reso noto quale script venga utilizzato, non è possibile cercar di indovinare un id o parametri simile: l'applicazione è meno vulnerabile a potenziale attacchi.
-    Inoltre è possibile modificare quello che avviene "dietro le quinte" senza che gli utenti ne risentano (non ci sarà un 404 o un redirect permanente) 
-Figura 9-2 - Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione
+   * L'implementazione tecnica è nascosta all'utente: non viene reso noto quale script venga utilizzato, non è possibile cercare di indovinare un id o parametri simili: l'applicazione è meno vulnerabile a potenziale attacchi.
+    Inoltre è possibile modificare quello che avviene "dietro le quinte", senza che gli utenti ne risentano (non ci sarà un 404 o un redirect permanente) 
+Figura 9-2 - Gli URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione
 
-![Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione](http://www.symfony-project.org/images/book/1_1/F0902.png "Le URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione")
+![Gli URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione](http://www.symfony-project.org/images/book/1_1/F0902.png "Gli URL possono contenere informazioni aggiuntive alla pagina, ad esempio la data di pubblicazione")
 
-  * Le URL scritte su documenti di carta sono più facili da scrivere e ricordare. Se una azienda compare su biglietti da visita come `http://www.example.com/controller/web/index.jsp?id=ERD4`, probabilmente non riceverà molte visite.
-  * Le URL possono diventare un modo di eseguire comandi, per recuperare informazioni in modo intuitivo. Le applicazioni che offrono tale possibilità sono più veloci da utilizzare per utenti avanzati.
+  * Gli URL scritti su documenti di carta sono più facili da scrivere e ricordare. Se una azienda compare su biglietti da visita come `http://www.example.com/controller/web/index.jsp?id=ERD4`, probabilmente non riceverà molte visite.
+  * Gli URL possono diventare un modo di eseguire comandi, per recuperare informazioni in modo intuitivo. Le applicazioni che offrono tale possibilità sono più veloci da utilizzare per utenti avanzati.
 
         // Lista di risultati: aggiungi un nuovo tag per raffinare il risultato
         http://del.icio.us/tag/symfony+ajax
         // Pagina profilo utente: cambia il nome per vedere il profilo di un altro utente
         http://www.askeet.com/user/francois
 
-  * È possibile cambiare la formattazione degli URL e il nome/parametri dell'azione in modo indipendente, con una singola modifica. Significa che è possibile prima sviluppare, e alla fine formattare gli URL senza creare confusione.
+  * È possibile cambiare la formattazione degli URL e il nome/parametri dell'azione in modo indipendente, con una singola modifica. Significa che è possibile prima sviluppare e alla fine formattare gli URL senza creare confusione.
   * Anche quando si riorganizza l'applicazione, gli URL possono rimanere le stesse per il mondo esterno. Ciò rende gli URL persistenti, che è vitale in quanto rende possibile i bookmark di pagine dinamiche.
   * I motori di ricerca tendono a evitare pagine dinamiche (che terminano con `.php`, `.asp` e così via) quando indicizzano i siti. È così possibile formattare gli URL in modo che i motori di ricerca pensino di stare navigando su un sito statico, 
     anche quando incontrano pagine dinamiche, in modo da migliorare il ranking delle pagine stesse.
-  * È più sicuro. Un URL non riconosciuto verrà redirezionato a una pagina specificata dallo sviluppatore, e gli utenti non possono navigare la struttura radice provando indirizzi a caso. Il nome effettivo dello script, così come i suoi parametri, sono nascosti.
+  * È più sicuro. Un URL non riconosciuto verrà redirezionato a una pagina specificata dallo sviluppatore e gli utenti non possono navigare la struttura radice provando indirizzi a caso. Il nome effettivo dello script, così come i suoi parametri, sono nascosti.
   
-La corrispondenza tra URL presentata all'utente e il nome effettivo dello script e i suoi parametri viene conseguita dal sistema di routing, basato su pattern che possono essere modificati tramite configurazione.
+La corrispondenza tra l'URL presentato all'utente e il nome effettivo dello script e i suoi parametri viene conseguita dal sistema di routing, basato su schemi che possono essere modificati tramite configurazione.
 
 >**NOTE**
 >E le risorse? Fortunatamente, gli URL delle risorse (immagini, fogli di stile e script JavaScript) non compaiono frequentemente durante la navigazione, per cui non c'è un grande bisogno del motore di routing. 
->In symfony, tutte le risorse sono situate all'interno della cartella `web/`, e le loro URL coincidono con le loro posizioni nel filesystem. Comunque, è possibile gestire risorse dinamiche (dalle azioni) utilizzando URL generate nei relativi helper. Ad esempio, per visualizzare un'immagine generata dinamicamente, è sufficiente utilizzare `image_tag(url_for('captcha/image?key='.$key))`.
+>In symfony, tutte le risorse sono situate all'interno della cartella `web/` e il loro URL coincidono con le loro posizioni nel filesystem. Comunque, è possibile gestire risorse dinamiche (dalle azioni) utilizzando URL generati nei relativi helper. Ad esempio, per visualizzare un'immagine generata dinamicamente, è sufficiente utilizzare `image_tag(url_for('captcha/image?key='.$key))`.
 
 ### Come funziona
 
@@ -120,7 +120,7 @@ Listato 9-1 - URL esterni e URI interni
     // Esempio di URL interna, che compare all'utente finale
     http://www.example.com/articles/finance/2006/activity-breakdown.html
 
-Il sistema di routing utilizza un file di configurazione speciale, chiamato `routing.yml`, nel quale è possibile definire le regole. Si consideri la regola mostrata nel listato 9-2. Definisce un pattern come `articles/*/*/*` e da un nome alle parti di codice che coincidono con i caratteri jolly.
+Il sistema di routing utilizza un file di configurazione speciale, chiamato `routing.yml`, nel quale è possibile definire le regole. Si consideri la regola mostrata nel listato 9-2. Definisce uno schema come `articles/*/*/*` e dà un nome alle parti di codice che coincidono con i caratteri jolly.
 
 Listato 9-2 - Esempio di regola di routing
 
@@ -151,14 +151,14 @@ Inoltre non si deve assolutamente scrivere nei template i link con i tag `<a>`, 
 Listato 9-4 - Il sistema di routing formatta gli URL nei template
 
     [php]
-    // L'helper url_for() trasforma una URI interna in un URL esterno
+    // L'helper url_for() trasforma un URI interno in un URL esterno
     <a href="<?php echo url_for('article/permalink?subject=finance&year=2006&title=activity-breakdown') ?>">click here</a>
 
-    // L'helper riconosce che la URI soddisfa la regola article_by_title
+    // L'helper riconosce che l'URI soddisfa la regola article_by_title
     // Per cui il sistema di routing crea l'URL
      => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">click here</a>
 
-    // L'helper link_to() stampa in output un hyperlink evitando di mischiare PHP con HTML
+    // L'helper link_to() restituisce un link, evitando di mischiare PHP con HTML
     <?php echo link_to(
       'click here',
       'article/permalink?subject=finance&year=2006&title=activity-breakdown'
@@ -167,7 +167,7 @@ Listato 9-4 - Il sistema di routing formatta gli URL nei template
     // Internamente, link_to() chiamerà url_for() in modo che il risultato sia lo stesso
     => <a href="http://www.example.com/articles/finance/2006/activity-breakdown.html">click here</a>
 
-Quindi il routing è un meccanismo che funziona in due direzioni, e funziona solo se si utilizza l'helper `link_to()` per formattare i link.
+Quindi il routing è un meccanismo che funziona in due direzioni e funziona solo se si utilizza l'helper `link_to()` per formattare i link.
 
 URL Rewrite
 -----------
@@ -232,26 +232,26 @@ un ambiente `dev` e uno `prod` conterrà quattro script per i front controller n
 Le impostazioni mod_rewrite possono specificare il nome di un solo front controller di default. Se si imposta `no_script_name` a `true` per tutte le applicazioni e tutti gli ambienti, tutti gli URL saranno interpretati come richieste per l'applicazione `frontend` nell'ambiente `prod`. Ecco perché, per ogni progetto, si può avere solo una applicazione e un ambiente che sfruttino il vantaggio dell'URL rewrite.
 
 >**TIP**
->In effetti c'è un modo per avere più di un'applicazione senza script name. È sufficiente creare sottocartelle nella cartella web, e collocarci i vari front controller. È necessario cambiare il percorso del file `ProjectConfiguration` di conseguenza e creare le configurazioni `.htaccess` necessarie a ogni applicazione.
+>In effetti c'è un modo per avere più di un'applicazione senza script name. È sufficiente creare sottocartelle nella cartella web e collocarci i vari front controller. È necessario cambiare il percorso del file `ProjectConfiguration` di conseguenza e creare le configurazioni `.htaccess` necessarie a ogni applicazione.
 
 Helper Link 
 -----------
 
-Per trarre maggior vantaggio dal sistema di routing, si dovrebbe utilizzare gli helper dei link invece dei tag `<a>` nei template. Non bisogna pensare a ciò come uno svantaggio, bensì come un modo per mantenere l'applicazione pulita e facile da manutenere. Inoltre, questi helper offrono qualche scorciatoia molto utile.
+Per trarre maggior vantaggio dal sistema di routing, si dovrebbe utilizzare gli helper dei link invece dei tag `<a>` nei template. Non bisogna pensare a ciò come uno svantaggio, bensì come a un modo per mantenere l'applicazione pulita e facile da manutenere. Inoltre, questi helper offrono qualche scorciatoia molto utile.
 
-### Hyperlink, pulsanti e form
+### Link, pulsanti e form
 
-È stato già precedentemente mostrato l'helper `link_to()`. Esso stampa in output un hyperlink che rispetta la sintassi XHTML, e si aspetta due parametri: l'elemento che deve essere cliccato e l'URI interna. Se invece di un link si volesse un pulsante, è sufficiente utilizzare l'helper `button_to()`. 
-Anche le form sono provviste di un helper per gestire il valore dell'attributo `action`. Maggiori informazioni sulle form nel prossimo capitolo. Il listato 9-7 mostra alcuni esempi di helper per i link.
+È stato già precedentemente mostrato l'helper `link_to()`. Esso restituisce un link che rispetta la sintassi XHTML e si aspetta due parametri: l'elemento che deve essere cliccato e l'URI interno. Se invece di un link si volesse un pulsante, è sufficiente utilizzare l'helper `button_to()`. 
+Anche i form sono provvisti di un helper per gestire il valore dell'attributo `action`. Maggiori informazioni sui form nel prossimo capitolo. Il listato 9-7 mostra alcuni esempi di helper per i link.
 
 Listato 9-7 - Alcuni esempi di helper per i tag `<a>, <input>, e <form>`
 
     [php]
-    // Hyperlink su una stringa
+    // Link su una stringa
     <?php echo link_to('my article', 'article/read?title=Finance_in_France') ?>
      => <a href="/routed/url/to/Finance_in_France">my article</a>
 
-    // Hyperlink su un'immagine
+    // Link su un'immagine
     <?php echo link_to(image_tag('read.gif'), 'article/read?title=Finance_in_France') ?>
      => <a href="/routed/url/to/Finance_in_France"><img src="/images/read.gif" /></a>
 
@@ -285,7 +285,7 @@ Listato 9-8 - URL accettate dagli helper dei link
 
 ### Opzioni degli helper dei link
 
-Come spiegato precedentemente nel capitolo 7, gli helper accettano un ulteriore argomento opzionale, che può essere un array associativo o una stringa. Questo è vero anche per gli helper dei link, come mostrato nel listato 9-9.
+Come spiegato precedentemente nel capitolo 7, gli helper accettano un ulteriore parametro opzionale, che può essere un array associativo o una stringa. Questo è vero anche per gli helper dei link, come mostrato nel listato 9-9.
 
 Listato 9-9 - Gli helper dei link accettano un parametro addizionale
 
@@ -352,7 +352,7 @@ all'inizio dell'azione. È sufficiente essere sicuri di non utilizzare questi li
 
 ### Forzare parametri di richiesta come variabili GET
 
-A seconda delle regole di routing impostate, le variabili passate come parametri a `link_to()` vengono trasformate in pattern. Se nessuna regola del file `routing.yml` coincidesse con la URI interna, la regola di default trasforma `module/action?key=value` in `/module/action/key/value`, come mostrato nel listato 9-12.
+A seconda delle regole di routing impostate, le variabili passate come parametri a `link_to()` sono trasformate in schemi. Se nessuna regola del file `routing.yml` coincide con l'URI interno, la regola predefinita trasforma `module/action?key=value` in `/module/action/key/value`, come mostrato nel listato 9-12.
 
 Listato 9-12 - Regola di routing predefinita
 
@@ -360,8 +360,8 @@ Listato 9-12 - Regola di routing predefinita
     <?php echo link_to('my article', 'article/read?title=Finance_in_France') ?>
     => <a href="/article/read/title/Finance_in_France">my article</a>
 
-Se si avesse bisogno effettivamente di mantenere la sintassi GET, per avere parametri di richiesta nella forma `?key=value`, si deve forzare tali variabili fuori dall'URL, nell'opzione `query_string`. 
-Dato che ciò andrebbe in conflitto con un'ancora nell'URL, lo si devi collocare nell'opzione dell'ancora invece che prependerlo alla URI interna. Tutti gli helper dei link accettano questa opzione, come dimostrato nel listato 9-13.
+Se si avesse bisogno effettivamente di mantenere la sintassi GET, per avere parametri di richiesta nella forma `?key=value`, si devono forzare tali variabili fuori dall'URL, nell'opzione `query_string`. 
+Dato che ciò andrebbe in conflitto con un'ancora nell'URL, lo si devi collocare nell'opzione dell'ancora invece che prependerlo all'URI interno. Tutti gli helper dei link accettano questa opzione, come dimostrato nel listato 9-13.
 
 Listato 9-13 - Forzare parametri in GET con l'opzione `query_string`
 
@@ -372,16 +372,16 @@ Listato 9-13 - Forzare parametri in GET con l'opzione `query_string`
     )) ?>
     => <a href="/article/read?title=Finanza_in_Francia#pippo">il mio articolo</a>
 
-Un URL con parametri di richiesta in GET può venire interpretata da uno script lato client e dalle variabili $_GET e $_POST lato server.
+Un URL con parametri di richiesta in GET può essere interpretata da uno script lato client e dalle variabili $_GET e $_POST lato server.
 
 >**SIDEBAR**
 >Helper per le risorse
 >
->Il capitolo 7 ha introdotto gli helper `image_tag()`, `stylesheet_tag()`, e `javascript_include_ tag()`, che permettono di includere un'immagine, un foglio di stile od uno script JavaScript nella risposta. 
+>Il capitolo 7 ha introdotto gli helper `image_tag()`, `stylesheet_tag()` e `javascript_include_ tag()`, che permettono di includere un'immagine, un foglio di stile od uno script JavaScript nella risposta. 
 >I percorsi di tali asset non vengono processati dal sistema di routing, in quanto puntano a risorse situate nella cartella web pubblica.
 >
->Non c'è bisogno di menzionare l'estensione per un asset. Symfony aggiungerà automaticamente `.png`, `.js`, o `.css` a un'immagine, JavaScript o foglio di stile. 
->Inoltre, symfony cercherà automaticamente le risorse nelle cartelle `web/images/`, `web/js/`, e `web/css/`. Ovviamente, se si volesse inserire un file situato in una particolare cartella, è possibile utilizzare come argomento il percorso completo. 
+>Non c'è bisogno di menzionare l'estensione per un asset. Symfony aggiungerà automaticamente `.png`, `.js` o `.css` a un'immagine, JavaScript o foglio di stile. 
+>Inoltre, symfony cercherà automaticamente le risorse nelle cartelle `web/images/`, `web/js/` e `web/css/`. Ovviamente, se si volesse inserire un file situato in una particolare cartella, è possibile utilizzare come parametro il percorso completo. 
 >E non bisogna preoccuparsi di specificare l'attributo `alt` se l'immagine ha un nome esplicito, in quanto ci penserà symfony stesso.
 >
 >     [php]
@@ -466,15 +466,15 @@ Listato 9-15 - Regole di routing di default, in `frontend/config/routing.yml`
       url:   /:module/:action/*
       
 
-### Regole e pattern
+### Regole e schemi
 
 Le regole di routing sono associazioni biiettive tra URI interni e URL esterni. Una regola tipica è composta da:
 
   * Una label unica, presente per questioni di velocità e leggibilità, e può essere usata dagli helper dei link
-  * Uno schema di cui fare il match (chiave `url`)
+  * Uno schema a cui corrispondere (chiave `url`)
   * Un array di parametri di richiesta (chiave `param`)
 
-Gli schemi possono contenere caratteri jolly (rappresentati da un asterisco, `*`), anche con nomi (che cominciano con i due punti, `:`). Una coincidenza con un carattere jolly con nome diventa il valore di un parametro di richiesta. Ad esempio, la regola `default` definita nel listato 9-15 corrisponde a ogni URL tipo `/foo/bar` e imposta il parametro `module` a `foo` e il parametro `action` a `bar`. Nella regola `default_symfony`, `symfony` è una parola chiave, e `action` un carattere jolly con nome.
+Gli schemi possono contenere caratteri jolly (rappresentati da un asterisco, `*`), anche con nomi (che cominciano con i due punti, `:`). Una coincidenza con un carattere jolly con nome diventa il valore di un parametro di richiesta. Ad esempio, la regola `default` definita nel listato 9-15 corrisponde a ogni URL tipo `/foo/bar` e imposta il parametro `module` a `foo` e il parametro `action` a `bar`. Nella regola `default_symfony`, `symfony` è una parola chiave e `action` un carattere jolly con nome.
 
 >**NOTE**
 > I caratteri jolly possono essere separati da una barra o da un punto, quindi è possibile scrivere uno schema come questo:
@@ -516,11 +516,11 @@ Listato 9-17 - Cambiare il formato dell'URL esterna per un'azione `article/read`
       param: { module: article, action: read }
       
 Il problema è che la regola `article_by_id` del listato 9-17 interrompe il routing di default per tutte le altre azioni del modulo `article`. 
-Infatti, un URL tipo `article/delete` corrisponderà anch'essa a questa regola, invece che a quella di default, e chiamerà l'azione `read` con il parametro `id` con valore `delete` invece dell'azione `delete`. Per evitare ciò, si deve aggiungere un vincolo in modo che la regola `article_by_id` coincida solo con URL dove il carattere jolly `id` sia un intero.
+Infatti, un URL tipo `article/delete` corrisponderà anch'essa a questa regola, invece che a quella predefinita, e chiamerà l'azione `read` con il parametro `id` con valore `delete`, invece dell'azione `delete`. Per evitare ciò, si deve aggiungere un vincolo in modo che la regola `article_by_id` coincida solo con URL in cui il carattere jolly `id` sia un intero.
 
 ### Vincoli di schema
 
-Quando un URL può corrispondere a più regole, si deve raffinare le regole aggiungendo vincoli, o requisiti, allo schema. Un requisito è un insieme di espressioni regolari a cui i caratteri jolly devono corrispondere, perché tutta la regola coincida.
+Quando un URL può corrispondere a più regole, si devono raffinare le regole, aggiungendo vincoli o requisiti allo schema. Un requisito è un insieme di espressioni regolari, a cui i caratteri jolly devono corrispondere perché tutta la regola coincida.
 
 Ad esempio, per modificare la regola `article_by_id` in modo che coincida solo con URL che abbiano il parametro `id` intero, bisogna aggiungere una linea come mostrato nel listato 9-18.
 
@@ -688,9 +688,9 @@ Listato 9-25 - Utilizzare `sfRouting` per avere informazioni sulla route corrent
     $module = $request->getParameter('module');
     $action = $request->getParameter('action');
 
-Se si avesse bisogno di trasformare una URI in un URL esterno in un'azione, come avviene con `url_for()` nei template, bisogna usare il metodo `genUrl()` dell'oggetto sfController, come mostrato nel listato 9-26.
+Se si avesse bisogno di trasformare un URI in un URL esterno in un'azione, come avviene con `url_for()` nei template, bisogna usare il metodo `genUrl()` dell'oggetto sfController, come mostrato nel listato 9-26.
 
-Listato 9-26 - Utilizzare `sfController` per trasformare una URI interna
+Listato 9-26 - Utilizzare `sfController` per trasformare un URI interno
 
     [php]
     $uri = 'article/read?id=21';

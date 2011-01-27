@@ -1,7 +1,7 @@
 Capitolo 10 - I form
 ====================
 
-La visualizzazione degli input di un form, la validazione dei dati inseriti in un form e tutta la casistica particolare del trattamento dei form è uno dei compiti più complessi nello sviluppo web. Fortunatamente, symfony fornisce un'interfaccia semplice verso un potente sottosistema dedicato ai form, e facilita la creazione e la manipolazione con poche linee di codice di form di qualsiasi livello di complessità.
+La visualizzazione degli input di un form, la validazione dei dati inseriti in un form e tutta la casistica particolare del trattamento dei form è uno dei compiti più complessi nello sviluppo web. Fortunatamente, symfony fornisce un'interfaccia semplice verso un potente sottosistema dedicato ai form e facilita la creazione e la manipolazione con poche linee di codice di form di qualsiasi livello di complessità.
 
 Visualizzazione di un form
 --------------------------
@@ -84,7 +84,7 @@ Ogni widget viene convertito nella riga di una tabella contenente un tag <label>
 Personalizzare la visualizzazione del form
 ------------------------------------------
 
-L'uso di `echo $form` è ottimo per la prototipazione, ma probabilmente si desidera controllare esattamente il codice HTML risultante. L'oggetto form contiene un array di campi, e la chiamata `echo $form` di fatto itera attraverso i campi e li genera uno per uno. Per avere un controllo ulteriore, è possibile iterare manualmente attraverso i campi, e richiamare `renderRow()` per ogni campo. Il listato che segue produce esattamente lo stesso codice HTML del precedente, ma il template scrive ogni campo individualmente:
+L'uso di `echo $form` è ottimo per la prototipazione, ma probabilmente si desidera controllare esattamente il codice HTML risultante. L'oggetto form contiene un array di campi e la chiamata `echo $form` di fatto itera attraverso i campi e li genera uno per uno. Per avere un controllo ulteriore, è possibile iterare manualmente attraverso i campi e richiamare `renderRow()` per ogni campo. Il listato che segue produce esattamente lo stesso codice HTML del precedente, ma il template scrive ogni campo individualmente:
 
     [php]
     // in modules/pippo/templates/contactSuccess.php
@@ -102,7 +102,7 @@ L'uso di `echo $form` è ottimo per la prototipazione, ma probabilmente si desid
       </table>
     </form>
 
-Generare i campi uno alla volta permette di cambiare l'ordine nel quale essi sono visualizzati, e inoltre di personalizzare il loro aspetto. `renderRow()` si aspetta una lista di attributi HTML come primo parametro, così è possibile definire una classe, un id o l'handler JavaScript di un evento per ogni istanza. Il secondo parametro di `render Row()` è una label opzionale che sovrascrive quella dedotta dal nome del widget. Segue un esempio di personalizzazione del form di contatto:
+Generare i campi uno alla volta permette di cambiare l'ordine nel quale essi sono visualizzati e inoltre di personalizzare il loro aspetto. `renderRow()` si aspetta una lista di attributi HTML come primo parametro, così è possibile definire una classe, un id o l'handler JavaScript di un evento per ogni istanza. Il secondo parametro di `render Row()` è una label opzionale che sovrascrive quella dedotta dal nome del widget. Segue un esempio di personalizzazione del form di contatto:
 
     [php]
     // in modules/pippo/templates/contactSuccess.php
@@ -169,7 +169,7 @@ L'HTML generato è il seguente:
     </form>
 
 >**TIP**
->Il campo di una riga è la rappresentazione di tutti gli elementi di un campo form (label, messaggio di errore, testo di help, form input) usando un formattatore. Per default, symfony usa un formattatore "tabella", e questo è il motivo per cui `renderRow()` restituisce un insieme di tag `<tr>`, `<th>` e `<td>`. Alternativamente, è possibile ottenere lo stesso codice HTML di cui sopra semplicemente specificando il formattatore alternativo "list" per il form, come segue:
+>Il campo di una riga è la rappresentazione di tutti gli elementi di un campo form (label, messaggio di errore, testo di help, form input) usando un formattatore. Per default, symfony usa un formattatore "tabella" e questo è il motivo per cui `renderRow()` restituisce un insieme di tag `<tr>`, `<th>` e `<td>`. Alternativamente, è possibile ottenere lo stesso codice HTML di cui sopra semplicemente specificando il formattatore alternativo "list" per il form, come segue:
 
     [php]
     // in modules/pippo/templates/contactSuccess.php
@@ -209,7 +209,7 @@ Symfony usa questi parametri per mostrare il widget, ma è ancora possibile sovr
 
 ### I widget standard
 
-Nel seguito viene presentata una lista dei tipi di widget disponibili, e di come essi vengono tradotti in HTML attraverso `renderRow()`:
+Nel seguito viene presentata una lista dei tipi di widget disponibili e di come essi vengono tradotti in HTML attraverso `renderRow()`:
 
     [php]
     // Text input
@@ -223,8 +223,7 @@ Nel seguito viene presentata una lista dei tipi di widget disponibili, e di come
       <textarea name="address" id="address" cols="20" rows="5">Enter your address here</textarea>
 
     // Password input
-    // Note that 'password' type widgets don't take a 'default' parameter for security reasons
-    Notare che il tipo di widget'password'
+    // Si noti che i widget 'password' non accettano un parametro 'default', per motivi di sicurezza
     $form->setWidget('pwd', new sfWidgetFormInputPassword());
       <label for="pwd">Pwd</label>
       <input type="password" name="pwd" id="pwd" />
@@ -242,27 +241,27 @@ Ci sono altre opzioni disponibili per ogni widget: fare riferimento alla documen
 
 ### Widget di tipo lista
 
-Ogni volta che gli utenti devono fare una scelta tra una lista di valori, e se essi possono selezionare una o più opzioni in questa lista, un singolo widget risponde a tutte le esigenze: il widget `choice`. 
+Ogni volta che gli utenti devono fare una scelta tra una lista di valori e se essi possono selezionare una o più opzioni in questa lista, un singolo widget risponde a tutte le esigenze: il widget `choice`. 
 In base alle impostazioni di due parametri opzionali (`multiple` e `expanded`), questo widget genera l'HTML in maniera differente:
 
                       | multiple=false        | multiple=true
                       | (default)             |
       ----------------|-----------------------|---------------------
-      expanded=false  |    Dropdown list      |    Dropdown box
+      expanded=false  |    Menù a tendina     |    Menù box
       (default)       |    (`<select>`)       | (`<select multiple>`)
       ----------------|-----------------------|----------------------
       expanded=true   | Lista di Radiobuttons | Lista di checkboxes
                       |                       |
 
-Il widget `choice` si attende come minimo un parametro `choices` costituito da un array associativo che definisca il valore e il testo di ogni opzione. Segue un esempio per ogni sintassi:
+Il widget `choice` si attende come minimo un parametro `choices`, costituito da un array associativo, che definisca il valore e il testo di ogni opzione. Segue un esempio per ogni sintassi:
 
     [php]
-    // Dropdown list (select)
+    // Menù a tendina (select)
     $form->setWidget('country', new sfWidgetFormChoice(array(
       'choices'   => array('' => 'Seleziona dalla lista', 'us' => 'USA', 'ca' => 'Canada', 'uk' => 'UK', 'altro'),
       'default'   => 'uk'
     )));
-    // symfony rende il widget in HTML come segue:
+    // symfony rende il widget in HTML come segue
     <label for="country">Country</label>
     <select id="country" name="country">
       <option value="">Seleziona dalla lista</option>
@@ -272,13 +271,13 @@ Il widget `choice` si attende come minimo un parametro `choices` costituito da u
       <option value="0">altro</option>
     </select>
     
-    // Dropdown box a scelta multipla
+    // Menù box a scelta multipla
     $form->setWidget('languages', new sfWidgetFormChoice(array(
       'multiple' => 'true',
       'choices'  => array('en' => 'English', 'fr' => 'French', 'other'),
       'default'  => array('en', 0)
     )));
-    // symfony render il widget in HTML come segue:
+    // symfony rende il widget in HTML come segue
     <label for="languages">Language</label>
     <select id="languages" multiple="multiple" name="languages[]">
       <option value="en" selected="selected">English</option>
@@ -292,7 +291,7 @@ Il widget `choice` si attende come minimo un parametro `choices` costituito da u
       'choices'  => array('m' => 'Maschile', 'f' => 'Femminile'),
       'class'    => 'gender_list'
     )));
-    // symfony renders the widget in HTML as
+    // symfony rende il widget in HTML come segue
     <label for="gender">Gender</label>
     <ul class="gender_list">
       <li><input type="radio" name="gender" id="gender_m" value="m"><label for="gender_m">Maschile</label></li>
@@ -305,23 +304,23 @@ Il widget `choice` si attende come minimo un parametro `choices` costituito da u
       'expanded' => true,
       'choices' => array('Programmazione', 'Altro')
     )));
-    // symfony renders the widget in HTML as
+    // symfony rende il widget in HTML come segue
     <label for="interests">Interests</label>
     <ul class="interests_list">
       <li><input type="checkbox" name="interests[]" id="interests_0" value="0"><label for="interests_0">Programmazione</label></li>
       <li><input type="checkbox" name="interests[]" id="interests_1" value="1"><label for="interests_1">Altro</label></li>
     </ul>
 
->**Tip**: Si noti che symfony definisce automaticamente un attributo `id` per ogni input del form, basato su una combinazione del nome e del valore del widget. È possibile sovrascrivere l'attributo `id` widget per widget, o alternativamente impostare una regola globale per l'intero form usando il metodo 'setIdFormat()':
+>**Tip**: Si noti che symfony definisce automaticamente un attributo `id` per ogni input del form, basato su una combinazione del nome e del valore del widget. È possibile sovrascrivere l'attributo `id` widget per widget o alternativamente impostare una regola globale per l'intero form, usando il metodo 'setIdFormat()':
 
     [php]
     // in modules/pippo/actions/actions.class.php
     $this->form = new sfForm();
     $this->form->getWidgetSchema()->setIdFormat('my_form_%s');
 
-### I widget per le Foreign Keys
+### I widget per le chiavi esterne
 
-Quando si modificano gli oggetti del modello attraverso un form, si presenta sempre una particolare lista di scelte: la lista di oggetti che possono essere messi in relazione con quello attuale. Questo accade quando i modelli sono in relazione uno-a-molti o molti-a-molti. Fortunatamente, il plugin `sfPropelPlugin` distribuito insieme a symfony, offre un widget `sfWidgetFormPropelChoice` utile proprio in questi casi (e naturalmente `sfDoctrinePlugin` offre un analogo widget `sfWidgetFormDoctrineChoice`).
+Quando si modificano gli oggetti del modello attraverso un form, si presenta sempre una particolare lista di scelte: la lista di oggetti che possono essere messi in relazione con quello attuale. Questo accade quando i modelli sono in relazione uno-a-molti o molti-a-molti. Fortunatamente, il plugin `sfPropelPlugin`, distribuito insieme a symfony, offre un widget `sfWidgetFormPropelChoice`, utile proprio in questi casi (e naturalmente `sfDoctrinePlugin` offre un analogo widget `sfWidgetFormDoctrineChoice`).
 
 Ad esempio, se una `Section` ha molti `Articles`, si dovrebbe essere in grado di scelte una sezione tra quelle esistenti quando si edita un articolo. Per fare questo, un `ArticleForm` dovrebbe usare il widget `sfWidgetFormPropelChoice`:
 
@@ -336,7 +335,7 @@ Ad esempio, se una `Section` ha molti `Articles`, si dovrebbe essere in grado di
       )
     )));
 
-Questo mostra una lista delle sezioni esistenti... purché si sia definito un metodo `__toString()` nella classe del modello `Section`. Questo perché symfony prima richiama gli oggetti `Section` disponibili, e popola un widget `choice` con essi, tentando di convertirli in stringa con `__toString()`. Il modello `Section` dunque dovrebbe definire almeno il seguente metodo:
+Questo mostra una lista delle sezioni esistenti... purché si sia definito un metodo `__toString()` nella classe del modello `Section`. Questo perché symfony prima richiama gli oggetti `Section` disponibili e popola un widget `choice` con essi, tentando di convertirli in stringa con `__toString()`. Il modello `Section` dunque dovrebbe definire almeno il seguente metodo:
 
     [php]
     // in lib/model/Section.php
@@ -351,7 +350,7 @@ Se si desidera ordinare la lista di scelte in un modo particolare o filtrarle in
 
 ### I widget per le date
 
-I widget per data e ora restituiscono un insieme di liste drop-down, popolate con i valori disponibili per il giorno, il mese, l'anno, l'ora o il minuto.
+I widget per data e ora restituiscono un insieme di menù a tendina, popolati con i valori disponibili per il giorno, il mese, l'anno, l'ora o il minuto.
 
     [php]
     // Data
@@ -409,13 +408,13 @@ I widget per data e ora restituiscono un insieme di liste drop-down, popolate co
     $form->setWidget('end', new sfWidgetFormDateTime(array('default' => '01/01/2008 12:00')));
     // symfony rende il widget in HTML come 5 liste dropdown per mese, giorno,anno, ora e minuto
 
-Naturalmente, si può personalizzare il formato della data per mostrarla in stile Europeo anziché Internazionale (`%day%/%month%/%year%` invece di `%month%/%day%/%year%`), si può scegliere l'orario a 12 ore anziché 24, si possono definire valori personalizzati per la prima opzione di ogni dropdown box, e si possono definire limiti per i possibili valori. Ancora una volta, si rimanda alla documentazione delle API per maggiori dettagli riguardo le opzioni di questi widget.
+Naturalmente, si può personalizzare il formato della data per mostrarla in stile Europeo anziché Internazionale (`%day%/%month%/%year%` invece di `%month%/%day%/%year%`), si può scegliere l'orario a 12 ore anziché 24, si possono definire valori personalizzati per la prima opzione di ogni menù a tendina e si possono definire limiti per i possibili valori. Ancora una volta, si rimanda alla documentazione delle API per maggiori dettagli riguardo le opzioni di questi widget.
 
-I widget data sono un buon esempio della potenza dei widget in symfony. Un widget non è semplicemente l'input di un form. Esso può essere una combinazione di più input, che symfony può rendere e leggere in maniera trasparente.
+I widget delle date sono un buon esempio della potenza dei widget in symfony. Un widget non è semplicemente l'input di un form. Esso può essere una combinazione di più input, che symfony può rendere e leggere in maniera trasparente.
 
 ### I widget I18n
 
-Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa localizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla `culture` dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un `month_format` per visualizzare una lista drop-down con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
+Nelle applicazioni multilingua, le date devono essere mostrare in un formato che si accordi con la cultura dell'utente (si veda il capitolo 13 per dettagli riguardo cultura e localizzazione). Per facilitare questa localizzazione nei form, symfony offre un widget `sfWidgetFormI18nDate`, che si basa sulla `culture` dell'utente per stabilire i parametri di formattazione delle date. È anche possibile specificare un `month_format` per visualizzare un menù a tendina con i nomi dei mesi (nella lingua dell'utente) invece dei numeri.
 
     [php]
     // Data
@@ -452,7 +451,7 @@ Nelle applicazioni multilingua, le date devono essere mostrare in un formato che
 
 Dei widget simili esistono per ora (`sfWidgetFormI18nTime`) e data/ora `sfWidgetFormI18nDateTime`).
 
-Ci sono due liste drop-down che appaiono in molti form e che dipendono anch'essi dalla cultura: i selettori di paese e di lingua. Symfony fornisce due widget specifici per questi scopi. Non sarà necessario definire le 'choices' in questi widget, in quanto symfony le popolerà con una lista di nazioni e lingue nella lingua dell'utente (purché l'utente parli una delle 250 lingue supportate da symfony).
+Ci sono due menù a tendina che appaiono in molti form e che dipendono anch'essi dalla cultura: i selettori di paese e di lingua. Symfony fornisce due widget specifici per questi scopi. Non sarà necessario definire le 'choices' in questi widget, in quanto symfony le popolerà con una lista di nazioni e lingue nella lingua dell'utente (purché l'utente parli una delle 250 lingue supportate da symfony).
 
     [php]
     // Elenco di paesi
@@ -806,7 +805,7 @@ Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un 
       'pattern' => '^[0-9]{3}\.[0-9]{3}\.[0-9]{2}\.[0-9]{3}$'
     )));
 
-Sebbene alcuni controlli form (come le liste drop-down, i checkbox, i gruppi di radio-button) restringano le scelte possibili, un utente malevolo può sempre tentare di intaccare i form manipolando la pagina con Firebug o inviando un'interrogazione con un linguaggio di scripting. Di conseguenza si dovrebbero validare anche i campi che accettano un array limitato di valori:
+Sebbene alcuni controlli form (come i menù a tendina, i checkbox, i gruppi di radio-button) restringano le scelte possibili, un utente malevolo può sempre tentare di intaccare i form manipolando la pagina con Firebug o inviando un'interrogazione con un linguaggio di scripting. Di conseguenza si dovrebbero validare anche i campi che accettano un array limitato di valori:
 
     [php]
     // validatore booleano
@@ -955,7 +954,7 @@ Quando si usa la definizione di una classe form, il form è definito al di fuori
 
 È anche possibile sovrascrivere i widget esistenti o le impostazioni dei validatori richiamando `setWidget()` o `setValidator()` su un nome di campo esistente.
 
-Del resto i widget e i validatori sono oggetti in symfony, e offrono un'API molto pulita per modificare le loro proprietà:
+Del resto i widget e i validatori sono oggetti in symfony e offrono un'API molto pulita per modificare le loro proprietà:
 
     [php]
     // in modules/pippo/actions/actions.class.php
@@ -980,7 +979,7 @@ Del resto i widget e i validatori sono oggetti in symfony, e offrono un'API molt
 Classi widget e validator personalizzate
 ----------------------------------------
 
-Un widget personalizzato è semplicemente una classe che estende `sfWidgetForm`, e fornisce dei metodi `configure()` e `render()`. Si scorra il codice delle classi widget esistenti per una comprensione approfondita del sistema dei widget. Il listato che segue mostra il codice del widget `sfWidgetFormInput` per illustrare la struttura del widget:
+Un widget personalizzato è semplicemente una classe che estende `sfWidgetForm` e fornisce dei metodi `configure()` e `render()`. Si scorra il codice delle classi widget esistenti per una comprensione approfondita del sistema dei widget. Il listato che segue mostra il codice del widget `sfWidgetFormInput` per illustrare la struttura del widget:
 
     [php]
     class sfWidgetFormInputText extends sfWidgetForm
@@ -1187,7 +1186,7 @@ Si noti che, anche se la colonna `id` è un intero, symfony controlla che l'id p
 
 È possibile personalizzare le classi dei form generati per l'intero progetto aggiungendo del codice al metodo `ArticleForm::configure()`, inizialmente vuoto.
 
-Segue un esempio di manipolazione del model form in un'azione. In questo form, il validatore `slug` è modificato per rendere il campo opzionale, e il widget `author_id` è personalizzato per mostrare solo un sottoinsieme degli autori: solo quelli attivi.
+Segue un esempio di manipolazione del model form in un'azione. In questo form, il validatore `slug` è modificato per rendere il campo opzionale e il widget `author_id` è personalizzato per mostrare solo un sottoinsieme degli autori: solo quelli attivi.
 
     [php]
     // in lib/form/ArticleForm.class.php
