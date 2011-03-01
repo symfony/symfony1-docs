@@ -328,7 +328,7 @@ Può capitare a volte che gli sviluppatori web utilizzino richieste GET per util
     http://www.example.com/index.php/shopping_cart/add/id/100
 
 Questa richiesta cambierà i dati contenuti nell'applicazione, aggiungendo un oggetto al carrello, memorizzato in sessione o nel database. Questo URL potrebbe essere messo nei bookmark, in cache e indicizzato dai motori di ricerca. 
-Si immagini tutti gli effetti poco puliti o chiari che potrebbero accadere al database od alla metrica di un sito utilizzando questa tecnica. In effetti, questa richiesta dovrebbe essere considerata come una POST, in quanto i motori di ricerca non indicizzano tali richieste.
+Si immagini tutti gli effetti poco puliti o chiari che potrebbero accadere al database o alla metrica di un sito, utilizzando questa tecnica. In effetti, questa richiesta dovrebbe essere considerata come POST, in quanto i motori di ricerca non indicizzano tali richieste.
 
 Symfony fornisce un modo per trasformare effettivamente una chiamata agli helper `link_to()` o `button_to()` in una POST. Aggiungendo semplicemente un'opzione `post=true`, come mostrato nel listato 9-11.
 
@@ -377,21 +377,11 @@ Un URL con parametri di richiesta in GET può essere interpretata da uno script 
 >**SIDEBAR**
 >Helper per le risorse
 >
->Il capitolo 7 ha introdotto gli helper `image_tag()`, `stylesheet_tag()` e `javascript_include_ tag()`, che permettono di includere un'immagine, un foglio di stile od uno script JavaScript nella risposta. 
+>Il capitolo 7 ha introdotto gli helper `image_tag()`, `stylesheet_tag()` e `javascript_include_ tag()`, che permettono di includere un'immagine, un foglio di stile o uno script JavaScript nella risposta. 
 >I percorsi di tali asset non vengono processati dal sistema di routing, in quanto puntano a risorse situate nella cartella web pubblica.
 >
->Non c'è bisogno di menzionare l'estensione per un asset. Symfony aggiungerà automaticamente `.png`, `.js` o `.css` a un'immagine, JavaScript o foglio di stile. 
+>Non c'è bisogno di specificare l'estensione per un asset. Symfony aggiungerà automaticamente `.png`, `.js` o `.css` a un'immagine, JavaScript o foglio di stile. 
 >Inoltre, symfony cercherà automaticamente le risorse nelle cartelle `web/images/`, `web/js/` e `web/css/`. Ovviamente, se si volesse inserire un file situato in una particolare cartella, è possibile utilizzare come parametro il percorso completo. 
->E non bisogna preoccuparsi di specificare l'attributo `alt` se l'immagine ha un nome esplicito, in quanto ci penserà symfony stesso.
->
->     [php]
->     <?php echo image_tag('test') ?>
->     <?php echo image_tag('test.gif') ?>
->     <?php echo image_tag('/my_images/test.gif') ?>
->      => <img href="/images/test.png" alt="Test" />
->         <img href="/images/test.gif" alt="Test" />
->         <img href="/my_images/test.gif" alt="Test" />
->
 >Per fissare la dimensione di un'immagine, è sufficiente utilizzare l'attributo `size`. Esso si aspetta un'altezza e una larghezza in pixel, separate da una `x`.
 >
 >     [php]
@@ -399,11 +389,11 @@ Un URL con parametri di richiesta in GET può essere interpretata da uno script 
 >      => <img href="/images/test.png" alt="Test" width="100" height="20"/>
 >
 >Se si volesse che l'inclusione della risorsa avvenga all'interno della sezione `</head>` (per fogli di stile e JavaScript) basta utilizzare nei template gli helper `use_stylesheet()` e `use_javascript()`, invece delle rispettive versioni `*_tag()` del layout. 
->Essi aggiungono le risorse alla risposta, e tali risorse vengono incluse prima che la chiusura della sezione `</head>` sia generata e spedita al browser.
+>Essi aggiungono le risorse alla risposta e tali risorse vengono incluse prima che la chiusura della sezione `</head>` sia generata e inviata al browser.
 
 ### Utilizzare path assoluti
 
-Gli helper dei link e delle risorse per default generano link relativi. Per forzarli assoluti, si deve utilizzare l'opzione `absolute` impostandola a `true`, come mostrato nel listato 9-14.
+Gli helper dei link e delle risorse, per impostazione predefinita, generano link relativi. Per forzare link assoluti, si deve utilizzare l'opzione `absolute` impostandola a `true`, come mostrato nel listato 9-14.
 
 Listato 9-14 - Link assoluti invece di relativi
 
@@ -425,7 +415,7 @@ Listato 9-14 - Link assoluti invece di relativi
 >**SIDEBAR**
 >L'helper Mail
 >
-> Quotidianamente i robot raccolgono indirizzi e-mail e invadono la rete, e non si può lasciare tranquillamente l'indirizzo della propria applicazione web senza diventare vittima dello spam entro pochi giorni. Per tale motivo symfony mette a disposizione un helper `mail_to()`.
+>Quotidianamente, i robot raccolgono indirizzi e-mail e invadono la rete e non si può lasciare tranquillamente l'indirizzo della propria applicazione web senza diventare vittima dello spam entro pochi giorni. Per tale motivo symfony mette a disposizione un helper `mail_to()`.
 >
 >L'helper `mail_to()` accetta due parametri: l'indirizzo e-mail effettivo e la stringa che deve essere visualizzata. Opzioni aggiuntive accettano un parametro `encode` per stampare codice non leggibile dai robot ma comprensibile dal browser.
 >

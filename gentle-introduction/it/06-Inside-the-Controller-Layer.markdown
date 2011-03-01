@@ -756,14 +756,14 @@ Il processo di sicurezza può essere interpretato come un filtro dal quale devon
 
 ### La catena dei filtri
 
-Symfony attualmente vede il processare una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. Ad un certo punto questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito quello procedente può terminare, e via così fino al filtro di rendering. La figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola e ipotetica catena di filtri (quella reale ne contiene molti di più).
+Symfony in realtà vede il processo di una richiesta come una catena di filtri. Quando una richiesta viene ricevuta dal framework, il primo filtro (che è sempre il `sfRenderingFilter`) viene eseguito. A un certo punto, questo chiama il prossimo filtro nella catena, poi il successivo e via dicendo. Quando l'ultimo filtro (che è sempre `sfExecutionFilter`) viene eseguito, quello procedente può terminare e via così fino al filtro di rendering. La figura 6-3 illustra l'idea di fondo con un diagramma di sequenza, utilizzando una piccola e ipotetica catena di filtri (quella reale ne contiene molti di più).
 
 Figure 6-3 - Catena di filtri d'esempio
 
 ![Catena di filtri d'esempio](http://www.symfony-project.org/images/book/1_4/F0603.png "Catena di filtri d'esempio")
 
-Questo processo giustifica la struttura delle classi dei filtri. Tutte quante estendono la classe `sfFilter` e contengono un metodo `execute()` che si aspetta un oggetto di tipo `$filterChain` come parametro. Ad un certo punto in questo in questo metodo il filtro passa il controllo al filtro successivo invocando`$filterChain->execute()`.
-Confrontare il listato 6-26 per un esempio. Quindi i filtri sono divisi principalmente in due parti:
+Questo processo giustifica la struttura delle classi dei filtri. Tutte quante estendono la classe `sfFilter` e contengono un metodo `execute()`, che si aspetta un oggetto di tipo `$filterChain` come parametro. A un certo punto, in questo in questo metodo il filtro passa il controllo al filtro successivo, invocando`$filterChain->execute()`.
+Confrontare il listato 6-26 per un esempio. I filtri sono quindi divisi principalmente in due parti:
 
   * Il codice prima della chiamata a `$filterChain->execute()` viene eseguito prima dell'esecuzione dell'azione.
   * Il codice dopo la chiamata a `$filterChain->execute()` viene eseguito dopo l'esecuzione dell'azione e prima del rendering.
