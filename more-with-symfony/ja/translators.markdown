@@ -71,10 +71,18 @@ Yoshihiro TAKAHARA (高原 芳浩)
 
 **Twitter**: *http://twitter.com/tumf*
 
+Tomohiro MITSUMUNE (光宗 朋宏)
+------------------------------
+[株式会社カカクコム](http://corporate.kakaku.com/)のエンジニア。[写真共有サイトPHOTOHITO](http://photohito.com/)のメイン開発者。symfony には0.6.4の頃から触れている。そろそろ新しいフレームワークを触ってみたいと思っており、Symfony2 と Ruby on Rails3.0 が気になっている。
+
+**Web サイト**: *http://d.hatena.ne.jp/Kiske*
+
+**Twitter**: *http://twitter.com/Kiske*
+
 Masaki Kagaya (加賀谷 昌樹)
 ---------------------------
 
-PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。2010年より PHP 公式マニュアルの翻訳を始める。
+PHP エンジニアおよび翻訳者としての修行を積むために MediaWiki、symfony および Doctrine の公式マニュアルの翻訳に携わる。
 
 **Web サイト**: *http://sarabande.jp*
 
