@@ -9,7 +9,7 @@ essere cambiati.
 
 La configurazione `autoload.yml` determina quali cartelle necessitano di essere
 autocaricate da symfony. Ogni cartella è scansionata per classi e 
-interfaccie PHP.
+interfacce PHP.
 
 Come discusso in sede di introduzione, il file `autoload.yml` trae beneficio dal
 [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata) e
@@ -58,17 +58,17 @@ consente di sovrascrivere la configurazione predefinita.
 Diverse chiavi possono essere usate per personalizzare il comportamento dell'autocaricamento:
 
  * `name`: Una descrizione
- * `path`: Il percorso da autocaricare
+ * `path`: Il percorso da caricare automaticamente
  * `recursive`: Per cercare le classi PHP nelle sotto-cartelle
  * `exclude`: Un array di nomi di cartelle da escludere nella ricerca
- * `prefix`: Assegnare a `true` se le classi trovate nel percorso devono essere autocaricate solo per un dato modulo (valore predefinito `false`)
- * `files`: Un array di file di cui fare il parsing esplicitamente per le classi PHP
+ * `prefix`: `true` se le classi trovate nel percorso devono essere caricate solo per un dato modulo (valore predefinito `false`)
+ * `files`: Un array di file in cui cercare esplicitamente delle classi PHP
  * `ext`: L'estensione delle classi PHP (valore predefinito `.php`)
 
 Per esempio, se si incorpora una grossa libreria all'interno del progetto sotto la
 cartella `lib/` e se essa già supporta l'autocaricamento, si può escluderla
 dal sistema di autocaricamento predefinito di symfony per beneficiare di un aumento
-delle prestazioni, modificando la configurazione `project` di autocaricamento:
+delle prestazioni, modificando la configurazione di autocaricamento di `project`:
 
     [yml]
     autoload:
@@ -92,7 +92,7 @@ di configurazione `settings.yml`:
       param:
         prefix: sf_
 
-Ogni file di configurazione è definito da una classe (la entry `class`) e può essere
+Ogni file di configurazione è definito da una classe (la chiave `class`) e può essere
 ulteriormente personalizzato definendo alcuni parametri sotto la sezione `param`.
 
 >**TIP**
@@ -100,32 +100,32 @@ ulteriormente personalizzato definendo alcuni parametri sotto la sezione `param`
 >sia il nome della classe che il percorso completo del file sorgente del
 >gestore, rispettivamente sotto le voci `class` e `file`.
 >Questo perché la configurazione viene inizializzata prima del meccanismo
->di autoload in sfApplicationConfiguration.
+>di autocaricamento in sfApplicationConfiguration.
 
 Il file predefinito `config_handlers.yml` definisce le classi da analizzare come segue:
 
- | File di configurazione | Config classe Handler              |
- | ---------------------- | ---------------------------------- |
- | `autoload.yml`         | `sfAutoloadConfigHandler`          |
- | `databases.yml`        | `sfDatabaseConfigHandler`          |
- | `settings.yml`         | `sfDefineEnvironmentConfigHandler` |
- | `app.yml`              | `sfDefineEnvironmentConfigHandler` |
- | `factories.yml`        | `sfFactoryConfigHandler`           |
- | `core_compile.yml`     | `sfCompileConfigHandler`           |
- | `filters.yml`          | `sfFilterConfigHandler`            |
- | `routing.yml`          | `sfRoutingConfigHandler`           |
- | `generator.yml`        | `sfGeneratorConfigHandler`         |
- | `view.yml`             | `sfViewConfigHandler`              |
- | `security.yml`         | `sfSecurityConfigHandler`          |
- | `cache.yml`            | `sfCacheConfigHandler`             |
- | `module.yml`           | `sfDefineEnvironmentConfigHandler` |
+ | File di configurazione | Classe di gestione della configurazione |
+ | ---------------------- | --------------------------------------- |
+ | `autoload.yml`         | `sfAutoloadConfigHandler`               |
+ | `databases.yml`        | `sfDatabaseConfigHandler`               |
+ | `settings.yml`         | `sfDefineEnvironmentConfigHandler`      |
+ | `app.yml`              | `sfDefineEnvironmentConfigHandler`      |
+ | `factories.yml`        | `sfFactoryConfigHandler`                |
+ | `core_compile.yml`     | `sfCompileConfigHandler`                |
+ | `filters.yml`          | `sfFilterConfigHandler`                 |
+ | `routing.yml`          | `sfRoutingConfigHandler`                |
+ | `generator.yml`        | `sfGeneratorConfigHandler`              |
+ | `view.yml`             | `sfViewConfigHandler`                   |
+ | `security.yml`         | `sfSecurityConfigHandler`               |
+ | `cache.yml`            | `sfCacheConfigHandler`                  |
+ | `module.yml`           | `sfDefineEnvironmentConfigHandler`      |
 
 ~`core_compile.yml`~
 --------------------
 
 Il file di configurazione `core_compile.yml` descrive i file PHP che sono
 uniti in un unico grosso file nell'ambiente `prod`, per velocizzare il tempo
-necessario a symfony per caricare. Per impostazione predefinita, le principali classi del core di symfony
+necessario a symfony per caricare. Per impostazione predefinita, le principali classi del nucleo di symfony
 sono definite in questo file di configurazione. Se l'applicazione si basa su alcune classi
 che necessitano di essere caricate per ogni richiesta, è possibile creare un file di
 configurazione `core_compile.yml` nel progetto o applicazione e aggiungerli a esso. Questo è
@@ -172,5 +172,5 @@ Il parametro `view_class` definisce la classe vista usata da tutte le azioni del
 modulo (senza il suffisso `View`). Essa deve ereditare da `sfView`.
 
 Il parametro `partial_view_class` definisce la classe vista usata per i partial di
-questo modulo (senza il suffisso `PartialView`). ssa deve ereditare da
+questo modulo (senza il suffisso `PartialView`). Essa deve ereditare da
 `sfPartialView`.

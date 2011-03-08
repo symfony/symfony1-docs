@@ -148,7 +148,7 @@ che non esiste ancora in `JobeetJobTable`.
       }
     }
 
-Come si può vedere, abbiamo eseguito la rifattorizzazione di tutto il codice di 
+Come si può vedere, abbiamo rifattorizzato tutto il codice di 
 `JobeetJobPeer` per introdurre un nuovo metodo condiviso `addActiveJobsCriteria()`
 per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </propel>
@@ -189,7 +189,7 @@ per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.o
       }
     }
 
-Come si può vedere, abbiamo eseguito la rifattorizzazione di tutto il codice di 
+Come si può vedere, abbiamo rifattorizzato tutto il codice di 
 `JobeetJobTable` per introdurre un nuovo metodo condiviso `addActiveJobsQuery()`,
 per rendere il codice più [~DRY~ (Don't Repeat Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </doctrine>
@@ -605,7 +605,7 @@ una lista di metodi `sfPropelPager` usati in questo template:
   * `getNextPage()`: Restituisce il numero della pagina successiva
   * `getLastPage()`: Restituisce il numero dell'ultima pagina
 
-Poiché `sfPropelPager` implementa anche le interfaccie `Iterator` e `Countable`,
+Poiché `sfPropelPager` implementa anche le interfacce `Iterator` e `Countable`,
 si può usare la funzione `count()` per ottenere il numero dei risultati, invece del 
 metodo `getNbResults()`.
 
