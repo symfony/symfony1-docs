@@ -1,9 +1,9 @@
 14日目: フィード
 ================
 
-昨日、あなたは自身の symfony アプリケーションの開発を始めました。今やめないでください。symfony をさらに学ぶにしたがい、アプリケーションに新しい機能を追加しようとし、どこかでそれをホストしようとし、コミュニティと共有しようとしてください。
+昨日、あなたは自身の symfony アプリケーションの開発を始めました。今やめないでください。symfony をさらに学ぶにつれて、アプリケーションに新しい機能を追加したり、どこかでそれをホストしたり、コミュニティと共有しようとしてください。
 
-今日から全く違うことをします。求人情報を探している場合、新しいものが投稿されるとすぐに知らせてくれることが望ましいでしょう。1時間ごとに Web サイトを確認するのはあまり便利ではないので、Jobeet のユーザーに最新情報を提供するために求人情報のフィードを追加します。
+今日からまったく違うことをします。求人情報を探している場合、新しいものが投稿されるとすぐに知らせてくれることが望ましいでしょう。1時間ごとに Web サイトを確認するのはあまり便利ではないので、Jobeet のユーザーに最新情報を提供するために求人情報のフィードを追加します。
 
 フォーマット
 ------------
@@ -23,7 +23,12 @@ symfony フレームワークはフォーマットと mime-yype を標準サポ�
 
     http://www.jobeet.com.localhost/frontend_dev.php/job.html
 
-両方の URL は同等です。<propel>`sfPropelRouteCollection`</propel><doctrine>`sfDoctrineRouteCollection`</doctrine> クラスによって生成されたルートは拡張子として `sf_format` を持ち、`html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行すれば自身で確認できます:
+<propel>
+両方の URL は同等です。`sfPropelRouteCollection` クラスによって生成されたルートは拡張子として `sf_format` を持ち、`html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行すれば自身で確認できます:
+</propel>
+<doctrine>
+両方の URL は同等です。`sfDoctrineRouteCollection` クラスによって生成されたルートは拡張子として `sf_format` を持ち、`html` はデフォルトのフォーマットだからです。`app:routes` タスクを実行すれば自身で確認できます:
+</doctrine>
 
 ![Cli](http://www.symfony-project.org/images/jobeet/1_4/15/cli.png)
 
@@ -118,7 +123,13 @@ Atom テンプレートのヘッダーを次のコードで置き換えます:
     </author>
     <id><?php echo sha1(url_for('job', array('sf_format' => 'atom'), true)) ?></id>
 
-タイムスタンプを日付として得るための <propel>`getCreatedAt()`</propel><doctrine>`format()`</doctrine> の引数として使う `U` の使い方に気が付いてください。最新の投稿に日付を得るために、`getLatestPost()` を作ります:
+<propel>
+タイムスタンプを日付として得るための `getCreatedAt()` の引数として使う `U` の使い方にご注目ください。
+</propel>
+<doctrine>
+タイムスタンプを日付として得るための `format()` の引数として使う `U` の使い方にご注目ください。
+</doctrine>
+最新の投稿に日付を得るために、`getLatestPost()` メソッドを作ります:
 
 <propel>
     [php]

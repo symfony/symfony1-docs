@@ -396,7 +396,12 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 バックエンドのセキュリティ
 --------------------------
 
-それぞれのプラグインには設定方法を説明している<propel>[README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme)</propel><doctrine>[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)</doctrine>ファイルがあります。
+<propel>
+それぞれのプラグインには設定方法を説明している[README](http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme) ファイルがあります。
+</propel>
+<doctrine>
+それぞれのプラグインには設定方法を説明している[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)ファイルがあります。
+</doctrine>
 
 新しいプラグインの設定方法を見てみましょう。ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります:
 
@@ -407,8 +412,14 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
     $ php symfony doctrine:build --all --and-load --no-confirmation
 </doctrine>
 
+<propel>
 >**TIP**
-><propel>`propel:build --all --and-load`</propel><doctrine>`doctrine:build --all --and-load`</doctrine> タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。これを避けるには、モデル、フォーム、フィルタをビルドしてから、`data/sql/` に保存されている、生成された SQL 文を実行して新しいテーブルを作成します。
+>`propel:build --all --and-load` タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。これを避けるには、モデル、フォーム、フィルタをビルドしてから、`data/sql/` に保存されている、生成された SQL 文を実行して新しいテーブルを作成します。
+</propel>
+<doctrine>
+>**TIP**
+>`doctrine:build --all --and-load` タスクは既存のすべてのテーブルを再生成する前にこれらを削除することを覚えておいてください。これを避けるには、モデル、フォーム、フィルタをビルドしてから、`data/sql/` に保存されている、生成された SQL 文を実行して新しいテーブルを作成します。
+</doctrine>
 
 <propel>
 `sfGuardPlugin` はユーザークラスにいくつかのメソッドを追加するので、`myUser` の基底クラスを `sfGuardSecurityUser` に変更する必要があります:
