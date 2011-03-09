@@ -1971,7 +1971,7 @@ ambiente:
 
 ### ~`project::optimize`~
 
-Il task `project::optimize` ottimizza un progetto per migliorare le performance:
+Il task `project::optimize` ottimizza un progetto per migliorare le prestazioni:
 
     $ php symfony project:optimize  applicazione [ambiente]
 
@@ -1986,7 +1986,7 @@ Il task `project::optimize` ottimizza un progetto per migliorare le performance:
 
 
 
-`project:optimize` ottimizza un progetto per migliorare le performance:
+`project:optimize` ottimizza un progetto per migliorare le prestazioni:
 
     ./symfony project:optimize frontend prod
 

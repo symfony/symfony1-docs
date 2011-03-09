@@ -698,7 +698,7 @@ può fare degradare le prestazioni.
 L'impostazione `lookup_cache_dedicated_keys` determina come la cache del routing è
 costruita. Quando impostata a `false`, la cache è memorizzata come un solo grande valore; quando
 è impostata a `true`, ciascuna rotta ha la sua memorizzazione nella cache. Questa impostazione è
-per ottimizzare le performance.
+per ottimizzare le prestazioni.
 
 Come regola generale, l'impostazione a `false` è migliore quando si usa una classe cache
 basata su file (per esempio `sfFileCache`), l'impostazione a `true` è migliore
