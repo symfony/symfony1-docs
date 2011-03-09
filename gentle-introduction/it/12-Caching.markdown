@@ -335,7 +335,7 @@ Consultare il capitolo 17 per maggiori informazioni sui plugin.
 >In aggiunta alla cache HTML, symfony possiede altri due meccanismi di cache, che sono completamente automatici e trasparenti allo sviluppatore. 
 >Nell'ambiente di produzione, la configurazione e le traduzioni dei template sono memorizzate nelle cartelle `myproject/cache/config/` e `myproject/cache/i18n/` senza alcun intervento.
 >
->Gli acceleratori PHP (eAccelerator, APC, XCache e così via), chiamati anche moduli di cache opcode, incrementano le performance degli script PHP mettendoli in cache in uno stato 
+>Gli acceleratori PHP (eAccelerator, APC, XCache e così via), chiamati anche moduli di cache opcode, incrementano le prestazioni degli script PHP mettendoli in cache in uno stato 
 >compilato, in modo che l'overhead dovuto all'analisi e alla compilazione venga quasi completamente eliminato. Questo è particolarmente efficiente per le classi ORM, 
 >che contengono una grande quantità di codice. Questi acceleratori sono compatibili con symfony e possono facilmente triplicare la velocità di un'applicazione.
 >Essi sono raccomandati in ambienti di produzione per qualsiasi applicazione symfony che generi alto traffico.
@@ -603,7 +603,7 @@ La modalità di debug decrementa notevolmente la velocità della propria applica
 Per cui il tempo di calcolo visualizzato quando si naviga l'ambiente `stage` non è rappresentativo di quello di produzione, dove la modalità di debug è `false`.
 
 Questi strumenti permettono il test del carico e forniscono 2 importanti tipi di informazioni: la media del tempo di caricamento di una singola pagina e la capacità massima del server sul quale è presente l'applicazione. 
-La media del tempo di caricamento è molto utile per monitorare i miglioramenti delle performance dovuti all'utilizzo della cache.
+La media del tempo di caricamento è molto utile per monitorare i miglioramenti delle prestazioni dovuti all'utilizzo della cache.
 
 ### Identificare parti della cache
 
@@ -718,12 +718,12 @@ Un ultimo header può essere spedito tramite symfony: `Expires`.
 
 >**CAUTION**
 >La conseguenza principale dell'abilitazione del meccanismo `Cache-Control` è che il server non mostrerà tutte le richieste eseguite dagli utenti, 
->ma solo quelle ricevute effettivamente. Se le performance migliorassero, l'apparente popolarità del sito potrebbe diminuire nelle statistiche.
+>ma solo quelle ricevute effettivamente. Se le prestazioni migliorassero, l'apparente popolarità del sito potrebbe diminuire nelle statistiche.
 
 Sommario
 --------
 
-Il sistema di cache fornisce accelerazioni variabili delle performance a seconda del tipo di cache scelta. Dal maggior guadagno al minimo, i tipi di cache sono i seguenti:
+Il sistema di cache fornisce accelerazioni variabili delle prestazioni a seconda del tipo di cache scelta. Dal maggior guadagno al minimo, i tipi di cache sono i seguenti:
 
   * Super cache
   * Cache di azioni con layout

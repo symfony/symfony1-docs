@@ -12,7 +12,7 @@ sapere per gestire gli URL in una applicazione symfony:
   * Come utilizzare gli helper dei link nei template e abilitare il routing di URL uscenti
   * Come configurare le regole di routing per modificare la rappresentazione degli url
 
-Come tocco finale verranno mostrati alcuni trucchi per gestire le performance del sistema di routing.
+Come tocco finale verranno mostrati alcuni trucchi per gestire le prestazioni del sistema di routing.
 
 
 Che cos'è il routing?
@@ -464,24 +464,24 @@ Le regole di routing sono associazioni biiettive tra URI interni e URL esterni. 
   * Uno schema a cui corrispondere (chiave `url`)
   * Un array di parametri di richiesta (chiave `param`)
 
-Gli schemi possono contenere caratteri jolly (rappresentati da un asterisco, `*`), anche con nomi (che cominciano con i due punti, `:`). Una coincidenza con un carattere jolly con nome diventa il valore di un parametro di richiesta. Ad esempio, la regola `default` definita nel listato 9-15 corrisponde a ogni URL tipo `/foo/bar` e imposta il parametro `module` a `foo` e il parametro `action` a `bar`. Nella regola `default_symfony`, `symfony` è una parola chiave e `action` un carattere jolly con nome.
+Gli schemi possono contenere caratteri jolly (rappresentati da un asterisco, `*`), anche con nomi (che cominciano con i due punti, `:`). Una corrispondenza con un carattere jolly con nome diventa il valore di un parametro di richiesta. Ad esempio, la regola `default` definita nel listato 9-15 corrisponde a ogni URL del tipo `/pippo/pluto` e imposta il parametro `module` a `pippo` e il parametro `action` a `pluto`.
 
 >**NOTE**
 > I caratteri jolly possono essere separati da una barra o da un punto, quindi è possibile scrivere uno schema come questo:
 >
->    my_rule:
->      url:   /foo/:bar.:format
->      param: { module: mymodule, action: myaction }
+>     mia_regola:
+>       url:   /pippo/:pluto.:format
+>       param: { module: miomodulo, action: miaazione }
 >
->In questo modo, un URL esterno come 'foo/12.xml' corrisponderà a `my_rule` ed eseguirà `mymodule/myaction` con due parametri: `$bar=12` e `$format=xml`. Si può aggiungere più separatori cambiandi il parametro `segment_separators` nella configurazione del factory `sfPatternRouting` (si veda il capitolo 19).
+>In questo modo, un URL esterno come 'pippo/12.xml' corrisponderà a `mia_regola` ed eseguirà `miomodulo/miaazione` con due parametri: `$pluto=12` e `$format=xml`. Si possono aggiungere più separatori, cambiando il parametro `segment_separators` nella configurazione del factory `sfPatternRouting` (si veda il capitolo 19).
 
-Il sistema di routing analizza il file `routing.yml` dall'inizio alla fine e si ferma alla prima corrispondenza trovata. Per tale motivo si dovrebbero aggiungere le proprie regole all'inizio, prima di quelle predefinite. Ad esempio, l'URL `/foo/123` corrisponde a entrambe le regole definite nel listato 9-16, ma symfony testa prima `my_rule:` e, dato che questa corrisponde, non prova nemmeno ad andare avanti. La richiesta viene gestita dall'azione `mymodule/myaction` con il parametro `bar` impostato a `123` (e non dall'azione `foo/123`).
+Il sistema di routing analizza il file `routing.yml` dall'inizio alla fine e si ferma alla prima corrispondenza trovata. Per tale motivo si dovrebbero aggiungere le proprie regole all'inizio, prima di quelle predefinite. Ad esempio, l'URL `/pippo/123` corrisponde a entrambe le regole definite nel listato 9-16, ma symfony testa prima `mia_regola:` e, dato che questa corrisponde, non prova nemmeno ad andare avanti. La richiesta viene gestita dall'azione `miomodulo/miaazione` con il parametro `pluto` impostato a `123` (e non dall'azione `pippo/123`).
 
 Listato 9-16 - Analisi delle regole procede dall'inizio alla fine
 
-    my_rule:
-      url:   /foo/:bar
-      param: { module: mymodule, action: myaction }
+    mia_regola:
+      url:   /pippo/:pluto
+      param: { module: miomodulo, action: miaazione }
 
     # default rules
     default:
@@ -505,7 +505,7 @@ Listato 9-17 - Cambiare il formato dell'URL esterna per un'azione `article/read`
       url:   /article/:id
       param: { module: article, action: read }
       
-Il problema è che la regola `article_by_id` del listato 9-17 interrompe il routing di default per tutte le altre azioni del modulo `article`. 
+Il problema è che la regola `article_by_id` del listato 9-17 rompe il routing di default per tutte le altre azioni del modulo `article`. 
 Infatti, un URL tipo `article/delete` corrisponderà anch'essa a questa regola, invece che a quella predefinita, e chiamerà l'azione `read` con il parametro `id` con valore `delete`, invece dell'azione `delete`. Per evitare ciò, si deve aggiungere un vincolo in modo che la regola `article_by_id` coincida solo con URL in cui il carattere jolly `id` sia un intero.
 
 ### Vincoli di schema
@@ -562,7 +562,7 @@ In questo modo un URL `article/delete` non può più corrispondere alla regola `
 >     <?php echo link_to('my article', 'article/permalink?slug='.$article->getSlug()) ?>
 >Grazie alla linea `requirements`, un URL esterno come `/article/Finance_in_France` corrisponderà alla regola `article_by_slug`, anche se la regola `article_by_id` appare prima.
 >
->Da notare che dato che gli articoli verranno recuperati tramite slug, si dovrà aggiungere un indice alla colonna `slug` della tabella `Article` per ottimizzare le performance del database.
+>Da notare che dato che gli articoli verranno recuperati tramite slug, si dovrà aggiungere un indice alla colonna `slug` della tabella `Article` per ottimizzare le prestazioni del database.
 
 ### Impostare valori predefiniti
 
