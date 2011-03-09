@@ -49,7 +49,7 @@ finché tutto non sia a posto in **entrambi** gli ambienti.
 ### ~Acceleratore~ PHP
 
 Per il server di produzione, probabilmente si vorranno le migliori
-performance possibili. Installare un
+prestazioni possibili. Installare un
 [acceleratore PHP](http://en.wikipedia.org/wiki/PHP_accelerator)
 fornirà il miglioramento ottimale per i vostri soldi.
 

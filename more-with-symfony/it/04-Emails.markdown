@@ -23,8 +23,8 @@ file di configurazione `factories.yml` ed è sempre disponibile tramite le conte
     $mailer = sfContext::getInstance()->getMailer();
 
 >**TIP**
->Diversamente da altre factory, il mailer è inizializzato e caricato solo su richiesta. 
->Quindi se non usato non inficierà le performance in nessun modo.
+>Diversamente da altri factory, il mailer è inizializzato e caricato solo su richiesta. 
+>Quindi, se non usato, non inficierà le prestazioni in nessun modo.
 
 Questo tutorial spiega l'integrazione di SwiftMailer in symfony. Se si vuole conoscere ogni
 singolo dettaglio della libreria, si consiglia di fare riferimento alla

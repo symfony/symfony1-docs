@@ -321,7 +321,7 @@ configurazioni per tutte le azioni di un modulo con la sezione speciale `all`.
 >
 >Nell'esecuzione, il sistema di configurazione unisce tutti i valori dei
 >differenti file se esistono e crea un copia cache dei risultati per migliorare
->le performance.
+>le prestazioni.
 
 Solitamente, quando qualcosa è configurabile tramite un file di configurazione,
 lo è anche tramite codice PHP. al posto di create un file `view.yml` per il modulo

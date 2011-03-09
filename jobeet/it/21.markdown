@@ -5,10 +5,10 @@ Oggi parleremo della ~cache|Cache~. Il framework symfony ha molte strategie di c
 da offrire. Per esempio i file di ~configurazione|Configurazione~ ~YAML~ sono prima convertiti
 in PHP e poi memorizzati in cache sul filesystem. Abbiamo visto inoltre che
 i moduli generati dall'admin generator sono salvati in cache per avere
-migliori ~performance|Performance~.
+migliori ~prestazioni|Prestazioni~.
 
 Ma oggi parleremo di un altro tipo di cache: la cache HTML. Per migliorare le
-performance del sitoi, si possono inserire in cache tutte le pagine HTML o
+prestazioni del sitoi, si possono inserire in cache tutte le pagine HTML o
 solo parte di esse.
 
 Creare un nuovo ambiente
@@ -184,7 +184,7 @@ future symfony invierà la risposta in cache senza richiamare il controllore:
 
 ![Flusso della cache di una paginaw](http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png)
 
-Questo ha un grosso impatto sulle ~performance|Performance~, come si può constatare personalmente
+Questo ha un grosso impatto sulle ~prestazioni|Prestazioni~, come si può constatare personalmente
 usando strumenti come [JMeter](http://jakarta.apache.org/jmeter/).
 
 >**NOTE**

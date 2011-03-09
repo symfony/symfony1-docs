@@ -44,7 +44,7 @@ non sia incluso due volte.
 
 >**NOTE**
 >Per
->[motivi di ~performance|Performance~](http://developer.yahoo.com/performance/rules.html#js_bottom),
+>[motivi di ~prestazioni|Prestazioni~](http://developer.yahoo.com/performance/rules.html#js_bottom),
 >si potrebbe voler spostare la chiamata all'helper `include_javascripts()`
 >subito prima della chiusura del tag `</body>`.
 
