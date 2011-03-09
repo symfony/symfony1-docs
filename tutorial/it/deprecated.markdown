@@ -179,7 +179,7 @@ state rimosse da symfony 1.3:
   * `max_forwards`: Questa impostazione controlla il numero di rinvii consentiti
     prima che symfony lanci un'eccezione. La configurabilità non ha valore.
     Se si necessita di più di 5 rinvii, si ha un problema sia di concetto che di
-    performance.
+    prestazioni.
 
   * `sf_lazy_cache_key`: Introdotta come una grossa miglioria alle prestazioni in
     symfony 1.2.6, questa impostazione consentiva di attivare la generazione di
