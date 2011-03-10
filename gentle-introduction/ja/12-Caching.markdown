@@ -96,7 +96,7 @@ symfony は3つの異なるタイプの HTML キャッシュを扱います:
 
 図12-2 - パーシャル、コンポーネントをキャッシュする
 
-![パーシャル、コンポーネントをキャッシュする](http://github.com/masakielastic/symfonybook-ja/raw/master/images/F1202.png "パーシャル、コンポーネントをキャッシュする")
+![パーシャル、コンポーネントをキャッシュする](http://www.symfony-project.org/images/book/1_4/F1202.png "パーシャル、コンポーネントをキャッシュする")
 
 たとえば、リスト12-4は `user` モジュールに設置された `_my_partial.php` 上でキャッシュを有効にするために `cache.yml` ファイルを編集する方法を示しています。この場合において `with_layout` 設定は意味をなさないことを覚えておいてください。
 
