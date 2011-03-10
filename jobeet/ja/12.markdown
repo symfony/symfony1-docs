@@ -53,7 +53,7 @@
 
     $ php symfony doctrine:generate-admin backend JobeetJob --module=job
     $ php symfony doctrine:generate-admin backend JobeetCategory
-    
+
 </doctrine>
 
 これら2つのコマンドは `JobeetJob` と `JobeetCategory` モデルクラスに対してそれぞれ `job` と `category` モジュールを生成します。
@@ -82,7 +82,6 @@
 <propel>
  `sfPropelRouteCollection` であるのは驚くことではありません。
 </propel>
-
 <doctrine>
  `sfDoctrineRouteCollection` であるのは驚くことではありません。
 </doctrine>
@@ -140,7 +139,7 @@
 現在、sfDoctrinePlugin からのアセットが
 </doctrine>
  web/ フォルダに置かれていません。
- 
+
 `plugin:publish-assets` によって web/ フォルダの下に配置します。
 
     $ php symfony plugin:publish-assets
@@ -422,7 +421,7 @@ list は異なるレイアウトで表示されます。デフォルトのレイ
 
 ### 「バーチャル」カラム
 
-この設定によって、`%%category_id%%` セグメントはカテゴリの主キーによって置き換えられます。しかし、カテゴリの名前を表示するほうがより分かりやすくなるでしょう。
+この設定によって、`%%category_id%%` セグメントはカテゴリの主キーによって置き換えられます。しかし、カテゴリの名前を表示するほうがよりわかりやすくなるでしょう。
 
 `%%` の表記を使うときは、変数はデータベーススキーマの実際にカラムに一致する必要はありません。アドミンジェネレータはモデルクラスに関連する getter が見つかることだけを必要とします。
 
@@ -1014,7 +1013,7 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         singular:              ~
         plural:                ~
         route_prefix:          jobeet_job
-        
+
 <propel>
         with_propel_route:   true
 </propel>
@@ -1083,7 +1082,7 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         singular:              ~
         plural:                ~
         route_prefix:          jobeet_category
-        
+
 <propel>
         with_propel_route:   true
 </propel>
