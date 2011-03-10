@@ -1,0 +1,1079 @@
+第4章 - Propel との統合
+=======================
+
+Web プロジェクトにおいて、たいていのフォームはモデルオブジェクトを作るもしくは修正するために使われます。
+ORM のおかげでこれらのオブジェクトは通常はデータベースでシリアライズされます。symfony のフォームシステムは symfony に組み込まれている Propel と連動する追加レイヤーを提供し、これらのモデルオブジェクトに基づいたフォームの実装をより簡単にします。
+
+この章ではフォームを Propel のオブジェクトモデルと統合する方法を詳しく検討します。Propel と symfony との統合機能に習熟していることが大いに推奨されます。そうではない場合、「A Gentle Introduction to symfony」の[モデルレイヤーの内側 (Propel)](http://www.symfony-project.org/gentle-introduction/1_4/ja/A-Inside-the-Model-Layer-Propel)の章をご参照ください。
+
+始める前に
+----------
+
+この章では、記事の管理システムを作ります。データベースのスキーマから始めましょう。
+リスト4-1で示されるように、これは次の5つのテーブル: `article`、`author`、`category`、`tag` と `article_tag` から構成されます。
+
+リスト4-1 - データベーススキーマ
+
+    [yml]
+    // config/schema.yml
+    propel:
+      article:
+        id:           ~
+        title:        { type: varchar(255), required: true }
+        slug:         { type: varchar(255), required: true }
+        content:      longvarchar
+        status:       varchar(255)
+        author_id:    { type: integer, required: true, foreignTable: author, foreignReference: id, OnDelete: cascade }
+        category_id:  { type: integer, required: false, foreignTable: category, foreignReference: id, onDelete: setnull }
+        published_at: timestamp
+        created_at:   ~
+        updated_at:   ~
+        _uniques:
+          unique_slug: [slug]
+
+      author:
+        id:           ~
+        first_name:   varchar(20)
+        last_name:    varchar(20)
+        email:        { type: varchar(255), required: true }
+        active:       boolean
+
+      category:
+        id:           ~
+        name:         { type: varchar(255), required: true }
+
+      tag:
+        id:           ~
+        name:         { type: varchar(255), required: true }
+
+      article_tag:
+        article_id:   { type: integer, foreignTable: article, foreignReference: id, primaryKey: true, onDelete: cascade }
+        tag_id:       { type: integer, foreignTable: tag, foreignReference: id, primaryKey: true, onDelete: cascade }
+
+テーブル間のリレーションは下記の通りです:
+
+  * `article` テーブルと `author` テーブル間の一対多のリレーション: 記事は1人の執筆者だけが書く
+  * `article` テーブルと `category` テーブル間の一対多のリレーション: 記事は1つのカテゴリに所属するもしくは所属しない
+  * `article` と `tag` テーブル間の多対多のリレーション
+
+フォームクラスを生成する
+-----------------------
+
+`article`、`author`、`category` と `tag` テーブルの情報を編集したい場合を考えます。
+そのためには、これらのテーブルのそれぞれにリンクするフォームを作りデータベースのスキーマに関連するウィジェットとバリデータを設定する必要があります。
+これらのフォームを手動で作ることが可能であっても、長く退屈なタスクで、全体的に、複数のファイルで同じ種類の情報 (カラムとフィールド名、カラムとフィールドの最大サイズ・・・) の反復作業が強制されます。
+さらに、モデルを変更するたびに、関連するフォームクラスも変更しなければなりません。
+幸いにして、Propel のプラグインはオブジェクトモデルに関連するフォームを生成する処理を自動化する組み込みの `propel:build-forms` タスクを用意しています:
+
+    $ ./symfony propel:build-forms
+
+フォーム生成の間、タスクはテーブル間のリレーションを考慮しモデルのイントロスペクト機能を使用してテーブルごとの1つのクラスとそれぞれのカラム用のウィジェットを作ります。
+
+>**Note**
+>`propel:build-all` と `propel:build-all-load` は `propel:build-forms` タスクを自動的に起動させてフォームクラスも更新します。
+
+これらのタスクを実行した後で、ファイル構造は `lib/form/` ディレクトリに作られます。
+私たちの例題のスキーマ用に作られたファイルは下記のとおりです:
+
+    lib/
+      form/
+        BaseFormPropel.class.php
+        ArticleForm.class.php
+        ArticleTagForm.class.php
+        AuthorForm.class.php
+        CategoryForm.class.php
+        TagForm.class.php
+        base/
+          BaseArticleForm.class.php
+          BaseArticleTagForm.class.php
+          BaseAuthorForm.class.php
+          BaseCategoryForm.class.php
+          BaseTagForm.class.php
+
+`propel:build-forms` タスクはスキーマのそれぞれのテーブルに対して2つのクラスを生成し、1つの基底クラスは `lib/form/base` ディレクトリに、もう1つのクラスは `lib/form/` ディレクトリに存在します。
+たとえば `author` テーブルは、`lib/form/base/BaseAuthorForm.class.php` と `lib/form/AuthorForm.class.php` ファイルに生成された `BaseAuthorForm` と `AuthorForm` クラスで構成されます。
+
+>**SIDEBAR**
+>フォーム生成のディレクトリ
+>
+>`propel:build-forms` タスクは Propel の構造に似た構造でこれらのファイルを生成します。
+>Propel スキーマの `package` 属性によってテーブルのサブセットを論理的にまとめることができます。
+>デフォルトのパッケージは `lib.model` なので、Propel は `lib/model/` ディレクトリでこれらのファイルを生成し `lib/form` ディレクトリでフォームが生成されます。
+>下記の例のように `lib.model.cms` パッケージを使うことで、Propel のクラスは `lib/model/cms/` ディレクトリに生成されフォームクラスは `lib/form/cms/` ディレクトリに生成されます。
+>
+>     [php]
+>     propel:
+>       _attributes: { noXsd: false, defaultIdMethod: none, package: lib.model.cms }
+>       # ...
+>
+>5章で見るようにパッケージはデータベースのスキーマを分割してプラグインの範囲内でフォームを配信するために役立ちます。
+>
+>Propel のパッケージに関する詳しい情報は、「The Definitive Guide to symfony」の[モデルレイヤーの内側](http://www.symfony-project.org/book/1_1/08-Inside-the-Model-Layer)の章をご参照ください。
+
+下記のテーブルは `AuthorForm` フォームの定義に必要な異なるクラス間の階層をまとめています。
+
+  | **クラス**      | **パッケージ**   | **対象者**       | **説明**
+  | --------------- | ---------------- | ---------------- | ---------------
+  | AuthorForm      | project          | developer        | 生成したフォームを上書きする
+  | BaseAuthorForm  | project          | symfony          | スキーマに基づき `propel:build-forms` タスクの実行ごとに上書きされる
+  | BaseFormPropel  | project          | developer        | Propel フォームのグローバルなカスタマイゼーションを可能にする
+  | sfFormPropel    | Propel plugin    | symfony          | Propel フォームのベース
+  | sfForm          | symfony          | symfony          | symfony フォームのベース
+
+`Author` クラスからオブジェクトを作るもしくは編集するには、リスト4-2で説明されるように、`AuthorForm` クラスを使います。お気づきのように、このクラスは設定を通して生成された `BaseAuthorForm` を継承するのでメソッドを持ちません。
+`AuthorForm` クラスはフォームの設定をカスタマイズしてオーバーライドするために使うクラスです。
+
+リスト4-2 - `AuthorForm` クラス
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+      }
+    }
+
+リスト4-3は `author` テーブル用のモデルをイントロスペクトするバリデータと生成されたウィジェットを持つ `BaseAuthorForm` クラスを表示します。
+
+リスト4-3 - `author` テーブルのためのフォームを表す `BaseAuthorForm` クラス
+
+    [php]
+    class BaseAuthorForm extends BaseFormPropel
+    {
+      public function setup()
+      {
+        $this->setWidgets(array(
+          'id'         => new sfWidgetFormInputTextHidden(),
+          'first_name' => new sfWidgetFormInputText(),
+          'last_name'  => new sfWidgetFormInputText(),
+          'email'      => new sfWidgetFormInputText(),
+        ));
+
+        $this->setValidators(array(
+          'id'         => new sfValidatorPropelChoice(array('model' => 'Author', 'column' => 'id', 'required' => false)),
+          'first_name' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'last_name'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'email'      => new sfValidatorString(array('max_length' => 255)),
+        ));
+
+        $this->widgetSchema->setNameFormat('author[%s]');
+
+        $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+        parent::setup();
+      }
+
+      public function getModelName()
+      {
+        return 'Author';
+      }
+    }
+
+生成クラスは以前の章ですでに作成したフォームと非常に似ていますが、下記の内容が異なります:
+
+  * 基底クラスは `BaseForm` の代わりに `BaseFormPropel` です
+  * バリデータとウィジェットの設定は `configure()` メソッドの代わりに `setup()` メソッドです
+  * `getModelName()` メソッドはこのフォームに関連する Propel クラスを返します
+
+>**SIDEBAR**
+>Propel フォームのグローバルなカスタマイズ
+>
+>それぞれのテーブル用の生成クラスに加えて、`propel:build-forms` は `BaseFormPropel` クラスも生成します。
+この空のクラスは `lib/form/base/` ディレクトリに生成された他のすべてのクラスの基底クラスでこれによってすべての Propel フォームのビヘイビアをグローバルに設定できます。
+>たとえば、すべての Propel フォームに対してデフォルトのフォーマッターを変更することは簡単にできます:
+>
+>     [php]
+>     abstract class BaseFormPropel extends sfFormPropel
+>     {
+>       public function setup()
+>       {
+>         sfWidgetFormSchema::setDefaultFormFormatterName('div');
+>       }
+>     }
+>
+>`BaseFormPropel` クラスは `sfFormPropel` クラスを継承することがわかります。
+>このクラスは Propel とフォームに投稿された値からデータベース内でオブジェクトシリアライズを扱う別の機能の間で固有な機能と連携します。
+
+-
+
+>**TIP**
+>基底クラスは設定に対して `configure()` メソッドの代わりに `setup()` メソッドを使います。
+>この機能によって開発者は `parent::configure()` 呼び出しを対処せずに空の生成クラスの設定をオーバーライドできます。
+
+フォームのフィールドはスキーマで設定したカラム名: `id`、`first_name`、`last_name`、`email` と全く同じです。
+
+`author` テーブルのそれぞれのカラムのために、`propel:build-forms` タスクはスキーマの定義に従ってウィジェットとバリデータを生成します。
+タスクは常に可能な限り最もセキュアなバリデータを生成します。
+`id` フィールドを考えてみましょう。
+値が有効な整数であるかどうかチェックできます。
+代わりにここで生成されたバリデータによって (既存のオブジェクトを編集するために)識別子が実際に存在するかどうかもしくは(新しいオブジェクトが作れるように) 識別子が空であることをバリデートできます。これはより強いバリデーションです。
+
+生成されたフォームは即座に利用できます。
+`<?php echo $form ?>` ステートメントを追加すれば、これによって**一行のコードを書かずに**バリデーションで機能を持つフォームを作成できます。
+
+素早くプロトタイプを作る機能を越えて、生成クラスを修正せずに生成フォームを拡張するのが楽です。
+これは基底とフォームクラスの継承メカニズムのおかげです。
+
+最終的に、データベーススキーマを改良するたびにカスタマイズを上書きすることなくスキーマの変更を考慮するフォームを再生成することが可能となります。
+
+CRUD ジェネレータ
+-----------------
+
+これで生成フォームクラスが用意されたので、ブラウザからオブジェクトを処理するsymfonyモジュールを作るのがどれだけ簡単か見てみましょう。
+`Article`、`Author`、`Category` と `Tag` クラスからオブジェクトを作る、修正する、削除することを考えます。
+`Author` クラス用のモジュールを作ることから始めましょう。
+手作業でモジュールを作ることができても、Propel のプラグインは Propel のオブジェクトモデルクラスに基づいて CRUD モジュールを生成する `propel:generate-crud` タスクを提供します。
+以前のセクションで生成したフォームを使います:
+
+    $ ./symfony propel:generate-crud frontend author Author
+
+`propel:generate-crud` は3つの引数を受け取ります:
+
+  * `frontend` : 作りたいモジュールを含むアプリケーションの名前
+  * `author`  : 作りたいモジュールの名前
+  * `Author`  : 作りたいモジュールのためのモデルクラスの名前
+
+>**Note**
+>CRUD は Creation/Retrieval/Update/Deletion を表しモデルデータを実行する基本的な4つのオペレーションを要約しています。
+
+リスト4-4において、`Author` クラスのオブジェクトを表示する (`index`)、作る(`create`)、修正する (`edit`)、保存する (`update`) そして削除する (`delete`) ことができる5つのアクションをタスクが生成されたことを見ます。
+
+リスト4-4 - タスクによって生成された `authorActions` クラス
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->authorList = AuthorPeer::doSelect(new Criteria());
+      }
+
+      public function executeCreate()
+      {
+        $this->form = new AuthorForm();
+
+        $this->setTemplate('edit');
+      }
+
+      public function executeEdit($request)
+      {
+        $this->form = new AuthorForm(AuthorPeer::retrieveByPk($request->getParameter('id')));
+      }
+
+      public function executeUpdate($request)
+      {
+        $this->forward404Unless($request->isMethod('post'));
+
+        $this->form = new AuthorForm(AuthorPeer::retrieveByPk($request->getParameter('id')));
+
+        $this->form->bind($request->getParameter('author'));
+        if ($this->form->isValid())
+        {
+          $author = $this->form->save();
+
+          $this->redirect('author/edit?id='.$author->getId());
+        }
+
+        $this->setTemplate('edit');
+      }
+
+      public function executeDelete($request)
+      {
+        $this->forward404Unless($author = AuthorPeer::retrieveByPk($request->getParameter('id')));
+
+        $author->delete();
+
+        $this->redirect('author/index');
+      }
+    }
+
+このモジュールにおいて、フォームのライフサイクルは3つのメソッド: `create`、`edit` と `update`によって対処されます。
+`--non-atomic-actions` オプションによって、propel:generate-crud` タスクに以前の3つのメソッドの機能を変換する1つのメソッドのみを生成することを`求めることも可能です:
+
+    $ ./symfony propel:generate-crud frontend author Author --non-atomic-actions
+
+`--non-atomic-actions` (リスト4-5) を使用して生成されたコードはより簡潔で冗長ではありません。
+
+リスト4-5 - `--non-atomic-actions` オプションで生成された `authorActions` クラス
+
+    [php]
+    class authorActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->authorList = AuthorPeer::doSelect(new Criteria());
+      }
+
+      public function executeEdit($request)
+      {
+        $this->form = new AuthorForm(AuthorPeer::retrieveByPk($request->getParameter('id')));
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('author'));
+          if ($this->form->isValid())
+          {
+            $author = $this->form->save();
+
+            $this->redirect('author/edit?id='.$author->getId());
+          }
+        }
+      }
+
+      public function executeDelete($request)
+      {
+        $this->forward404Unless($author = AuthorPeer::retrieveByPk($request->getParameter('id')));
+
+        $author->delete();
+
+        $this->redirect('author/index');
+      }
+    }
+
+タスクは2つのテンプレート、`indexSuccess` と `editSuccess` も生成しました。
+`editSuccess` テンプレートは `<?php echo $form ?>` ステートメントを使わずに生成されました。
+`--non-verbose-templates` を利用して、このふるまいを修正できます:
+
+    $ ./symfony propel:generate-crud frontend author Author --non-verbose-templates
+
+リスト4-6が示すように、このオプションはプロトタイプのフェーズで役に立ちます。
+
+リスト4-6 - `editSuccess` テンプレート
+
+    [php]
+    // apps/frontend/modules/author/templates/editSuccess.php
+    <?php $author = $form->getObject() ?>
+    <h1><?php echo $author->isNew() ? 'New' : 'Edit' ?> Author</h1>
+
+    <form action="<?php echo url_for('author/edit'.(!$author->isNew() ? '?id='.$author->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+      <table>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              &nbsp;<a href="<?php echo url_for('author/index') ?>">Cancel</a>
+              <?php if (!$author->isNew()): ?>
+                &nbsp;<?php echo link_to('Delete', 'author/delete?id='.$author->getId(), array('post' => true, 'confirm' => 'Are you sure?')) ?>
+              <?php endif; ?>
+              <input type="submit" value="Save" />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <?php echo $form ?>
+        </tbody>
+      </table>
+    </form>
+
+>**TIP**
+>`--with-show` オプションによってオブジェクトを閲覧する (読み込みのみ) ために利用できるアクションとテンプレートが生成されます。
+
+生成モジュールを閲覧するためにブラウザで `/frontend_dev.php/author` のURLを開くことができます(図4-1と図4-2)。
+インターフェイスを少し遊んでみてください。
+生成モジュールのおかげで著者の一覧を表示する、新しい著者を追加する、編集、修正、削除することさえできます。
+バリデーションルールが機能していることもおわかり頂けるでしょう。
+
+図4-1 - 著者のリスト
+
+![著者のリスト](/images/forms_book/en/04_01.png "著者のリスト")
+
+図4-2 - バリデーションエラーがある著者を編集する
+
+![バリデーションエラーがある著者を編集する](/images/forms_book/en/04_02.png "バリデーションエラーがある著者を編集する")
+
+`Article`クラスでオペレーションを繰り返すことができます:
+
+    $ ./symfony propel:generate-crud frontend article Article --non-verbose-templates --non-atomic-actions
+
+生成コードは `Author` クラスのコードとよく似ています。
+しかしながら、新しい記事を作ろうとすると、図4-3で見られるように致命的なエラーが投げられます。
+
+図4-3 - リンクされたテーブルは `__toString()` メソッドを定義しなければならない
+
+![リンクされたテーブルは __toString() メソッドを定義しなければならない](/images/forms_book/en/04_03.png "リンクされたテーブルは __toString() メソッドを定義しなければならない")
+
+`ArticleForm` フォームは `Article` オブジェクトと `Author` オブジェクト間のリレーションを表現するために `sfWidgetFormPropelSelect` ウィジェットを使用します。
+このウィジェットは著者のドロップダウンリストを作ります。
+表示の間、`Author` オブジェクトは `__toString()` マジックメソッドを使って文字の文字列に変換されます。
+リスト4-7で示されるように、`Author` クラスで定義されなければなりません。
+
+リスト4-7 - `Author` クラス用の `__toString()` メソッドを実装する
+
+    [php]
+    class Author extends BaseAuthor
+    {
+      public function __toString()
+      {
+        return $this->getFirstName().' '.$this->getLastName();
+      }
+    }
+
+`Author` クラスのように、モデルの他のクラス: `Article`、`Category`、`Tag` 用に`__toString()` メソッドを作ることができます。
+
+>**Tip**
+>`sfWidgetFormPropelSelect` ウィジェットの `method` オプションはテキストフォーマットでオブジェクトを表現するために使われるメソッドを変更します。
+
+図4-4は`__toString()` メソッドで実装した後に記事を作る方法を示しています。
+
+図4-4 - 記事を作る
+
+![記事を作る](/images/forms_book/en/04_04.png "記事を作る")
+
+生成されたフォームをカスタマイズする
+--------------------------------------
+
+`propel:build-forms` と `propel:generate-crud` タスクによってモデルオブジェクトを表示する、作成する、編集し、削除する機能を持つ symfony モジュールを作ることができます。
+これらのモジュールはモデルのバリデーションルールだけでなくテーブル間のリレーションも考慮します。
+一行も書かずにこれらすべてが行われます！
+
+生成コードをカスタマイズする段階に来ました。
+フォームクラスがすでに多くの要素を考慮しているのであれば、いくつかの面をカスタマイズする必要があります。
+
+### バリデータとウィジェットを設定する
+
+デフォルトで生成されたバリデータとウィジェットを設定することから始めましょう。
+
+`ArticleForm` フォームは `slug` フィールドを持ちます。スラッグは記事をURLで一意的に表現する文字の文字列です。
+たとえば、タイトルが「Optimize the developments with symfony」である記事のスラッグは `12-optimize-the-developments-with-symfony` で、`12`は記事の `id` です。
+このフィールドは `title` に依存しており、オブジェクトが保存されたときに自動的に算出されますが、ユーザーによって明示的に上書きされる可能性があります。
+このフィールドがスキーマに必要な場合でも、フォームに必須にはなることはありません。
+リスト4-8のように、バリデータを修正してオプションにしている理由はそういうわけです。
+`content` フィールドもサイズを増やして少なくともユーザーが五文字を入力するようにカスタマイズします。
+
+リスト4-8 - バリデータとウィジェットをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+      }
+    }
+
+ここでは `validatorSchema` と `widgetSchema` オブジェクトをPHP配列として使います。
+これらの配列はフィールドの名前をキーとして取りそれぞれのバリデータオブジェクトと関連するウィジェットオブジェクトを返します。
+個別のフィールドとウィジェットをカスタマイズできます。
+
+>**Note**
+>オブジェクトを PHP 配列として利用できるようにするために、`sfValidatorSchema` と `sfWidgetFormSchema` クラスは PHP 5 以降で利用できる `ArrayAccess` インターフェイスを実装します。
+
+2つの記事が同じ `slug` を持たないことを確認するために、ユニーク制約がスキーマの定義に追加されました。`sfValidatorPropelUnique` バリデータを利用することでデータベースレベルでのこの制約は `ArticleForm` フォームに反映されました。
+このバリデータは任意のフォームフィールドの独自性をチェックできます。
+たとえば、ログインのEメールアドレスの一意性のチェックなどに役立ちます。
+リスト4-9は `ArticleForm` フォームでこれを使う方法を示しています。
+
+リスト4-9 - フィールドの唯一性をチェックするために `sfValidatorPropelUnique` バリデータを使う
+
+    [php]
+    class BaseArticleForm extends BaseFormPropel
+    {
+      public function setup()
+      {
+        // ...
+
+        $this->validatorSchema->setPostValidator(
+          new sfValidatorPropelUnique(array('model' => 'Article', 'column' => array('slug')))
+        );
+      }
+    }
+
+`sfValidatorPropelUnique` バリデータはそれぞれのフィールドのバリデーションの後でデータ全体を扱う `postValidator` です。`slug` がユニークであることをバリデートするために、バリデータは `slug` の値だけでなくプライマリキーの値にもアクセスできなければなりません。
+スラッグは記事の更新の間は同じ値を保つことができるのでバリデーションルールは作成と編集を通して本当に異なります。
+
+著者がアクティブであるか知るために使われる `author` テーブルの `active` フィールドをカスタマイズしてみましょう。
+リスト4-10は `author_id` フィールドに接続した `sfWidgetPropelSelect` ウィジェットの `criteria` オプションを修正することで `ArticleForm` フォームからアクティブではない著者を除外する方法を示しています。
+`criteria` オプションは Propel の Criteria オブジェクトを受け取ることで、ローリングリスト内で利用可能なオプションのリストを絞ることが可能にします。
+
+リスト4-10 - `sfWidgetPropelSelect` ウィジェットをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $authorCriteria = new Criteria();
+        $authorCriteria->add(AuthorPeer::ACTIVE, true);
+
+        $this->widgetSchema['author_id']->setOption('criteria', $authorCriteria);
+      }
+    }
+
+ウィジェットをカスタマイズすることで利用可能なオプションの一覧を絞るることができるとしても、リスト4-11で示されるように、バリデータレベルでこの範囲の絞り込みを考慮することを忘れてはなりません。
+`sfWidgetProperSelect` ウィジェットのように、`sfValidatorPropelChoice` バリデータはフィールドに対して有効なオプションを絞るために `criteria` オプションを受け取ります。
+
+リスト4-11 - `sfValidatorPropelChoice` バリデータをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $authorCriteria = new Criteria();
+        $authorCriteria->add(AuthorPeer::ACTIVE, true);
+
+        $this->widgetSchema['author_id']->setOption('criteria', $authorCriteria);
+        $this->validatorSchema['author_id']->setOption('criteria', $authorCriteria);
+      }
+    }
+
+前の例で、`configure()` メソッドの中で `Criteria` オブジェクトを直接定義しました。
+私たちのプロジェクトにおいて、この Criteria は他の状況で確実に役立つので、リスト4-12が示すように `AuthorPeer` クラスの範囲内で `getActiveAuthorsCriteria()` メソッドを作り`ArticleForm`からこのメソッドを呼び出すほうがベターです。
+
+リスト4-12 - モデルの `Criteria` をリファクタリングする
+
+    [php]
+    class AuthorPeer extends BaseAuthorPeer
+    {
+      static public function getActiveAuthorsCriteria()
+      {
+        $criteria = new Criteria();
+        $criteria->add(AuthorPeer::ACTIVE, true);
+
+        return $criteria;
+      }
+    }
+
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $authorCriteria = AuthorPeer::getActiveAuthorsCriteria();
+        $this->widgetSchema['author_id']->setOption('criteria', $authorCriteria);
+        $this->validatorSchema['author_id']->setOption('criteria', $authorCriteria);
+      }
+    }
+
+
+### バリデータを変更する
+
+スキーマで `email` が `varchar(255)` として定義されたので、symfony は最大長を255文字に制限する `sfValidatorString()` バリデータを作りました。
+このフィールドは妥当なEメールを受け取るようになっており、リスト4-14は生成されたバリデータを `sfValidatorEmail` バリデータで置き換えています。
+
+リスト4-13 - `AuthorForm` クラスの `email` フィールドバリデータを変更する
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorEmail();
+      }
+    }
+
+### バリデータを追加する
+
+前の章で生成されたバリデータを修正する方法を見ました。
+しかし `email` フィールドの場合、これは最大長のバリデーションの維持に役立ちます。
+リスト4-14において、Eメールの妥当性を保証してフィールドに対して許容される最大長をチェックするために `sfValidatorAnd` バリデータを使います。
+
+リスト4-14 - 複数のバリデータを使う
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          new sfValidatorString(array('max_length' => 255)),
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+以前の例は完全なものではありません。
+データベーススキーマで `email` フィールドの長さを後で修正することを決める場合、この作業をフォームでも行うことを考慮しなければなりません。
+生成されたバリデータを置き換える代わりに、リスト4-15で示されるように、バリデータスキーマを追加するほうがよいです。
+
+リスト4-15 - バリデータを追加する
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+### ウィジェットを変更する
+
+データベーススキーマにおいて、`article` テーブルの `status` フィールドは記事のステータスを文字列として保存します。リスト4-16で示されるように、可能な値は `ArticePeer` クラスで定義されました。
+
+リスト4-16 - `ArticlePeer` クラスで利用可能なステータスを定義する
+
+    [php]
+    class ArticlePeer extends BaseArticlePeer
+    {
+      static protected $statuses = array('draft', 'online', 'offline');
+
+      static public function getStatuses()
+      {
+        return self::$statuses;
+      }
+
+      // ...
+    }
+
+記事を編集する際に、`status` フィールドはテキストフィールドの代わりにドロップダウンのリストとして表現されなければなりません。
+そのためには、リスト4-17で示されるように、使用したウィジェットを変更してみましょう。
+
+リスト4-17 - `status` フィールド用のウィジェットを変更する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticlePeer::getStatuses()));
+      }
+    }
+
+徹底的にするために、選択されたステータスが実際に利用可能なオプションのリストに所属することを確認するバリデータも変更しなければなりません (リスト4-18)。
+
+リスト4-18 - `status` フィールドバリデータを修正する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $statuses = ArticlePeer::getStatuses();
+        
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => $statuses));
+
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys($statuses)));
+      }
+    }
+
+### フィールドを削除する
+
+`article` テーブルは2つの特別なカラム、`created_at` と `updated_at` を持ち、これらのカラムの更新は Propel によって自動的に処理されます。
+リスト4-19で示されるように、ユーザーがこれらを修正できないようにするために、フォームからこれらを削除しなければなりません。
+
+リスト4-19 - フィールドを削除する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        unset($this->validatorSchema['created_at']);
+        unset($this->widgetSchema['created_at']);
+
+        unset($this->validatorSchema['updated_at']);
+        unset($this->widgetSchema['updated_at']);
+      }
+    }
+
+フィールドを削除するには、バリデータとウィジェットを削除することが必要です。
+リスト4-20はフォームをPHP配列として使い、1つのアクションで両方を削除することも可能であることを示しています。
+
+リスト4-20 - フォームを利用して PHP 配列としてフィールドを削除する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        unset($this['created_at'], $this['updated_at']);
+      }
+    }
+
+### まとめ
+
+まとめるために、リスト4-21とリスト4-22はカスタマイズする `ArticleForm` と `AuthorForm` フォームを示しています。
+
+リスト4-21 - `ArticleForm` フォーム
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $authorCriteria = AuthorPeer::getActiveAuthorsCriteria();
+
+        // ウィジェット
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticlePeer::getStatuses()));
+        $this->widgetSchema['author_id']->setOption('criteria', $authorCriteria);
+
+        // バリデータ
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys(ArticlePeer::getStatuses())));
+        $this->validatorSchema['author_id']->setOption('criteria', $authorCriteria);
+
+        unset($this['created_at']);
+        unset($this['updated_at']);
+      }
+    }
+
+リスト4-22 - `AuthorForm` フォーム
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+`propel:build-forms` を利用することでフォームにオブジェクトモデルをイントロスペクトさせるたいていの要素を自動的に生成できます。この自動処理はいくつかの理由から役立ちます:
+
+  * 退屈で反復される作業をしなくて済むので、開発者の生活が楽になります。プロジェクト固有のビジネスルールに従ってバリデータとウィジェットのカスタマイズに焦点を当てることができます。
+
+  * 加えて、データベーススキーマが更新されたとき、生成フォームは自動的に更新されます。開発者がしなければならないのは行ったカスタマイズの調整だけです。
+
+次のセクションでは `propel:generate-crud` タスクによって生成されたアクションとテンプレートのカスタマイズ方法を説明します。
+
+フォームのシリアライズ
+----------------------
+
+前のセクションでは `propel:build-forms` タスクによって生成されたフォームをカスタマイズする方法が示されました。
+現在のセクションにおいて、`propel:generate-crud` タスクによって生成されたコードから始めることで、フォームのライフサイクルをカスタマイズします。
+
+### デフォルトの値
+
+**Propel フォームのインスタンスは Propel オブジェクトに接続します**。
+リンクされた Propel オブジェクトは常に `getModelName()` メソッドによって返されたクラスに所属します。
+たとえば、`AuthorForm` フォームは `Author` クラスに所属するオブジェクトのみにリンクできます。
+このオブジェクトは空のオブジェクト (`Author` クラスの空インスタンス)、もしくは最初の引数としてコンストラクタに送り出されるオブジェクトです。
+「平均的な」フォームのコンストラクタが値の配列を最初の引数として受け取る一方で、
+Propel フォームのコンストラクタは Propel オブジェクトを受け取ります。このオブジェクトはそれぞれのフィールドのデフォルト値を定義するために使われます。
+`getObject()` メソッドは現在のインスタンスに関連するオブジェクトを返し `isNew()` メソッドによってコンストラクタ経由でオブジェクトが送り出されたかどうかを知ることができます:
+
+    [php]
+    // 新しいオブジェクトを作成する
+    $authorForm = new AuthorForm();
+
+    print $authorForm->getObject()->getId(); // nullを出力する
+    print $authorForm->isNew();              // trueを出力する
+
+    // 既存のオブジェクトを修正する
+    $author = AuthorPeer::retrieveByPk(1);
+    $authorForm = new AuthorForm($author);
+
+    print $authorForm->getObject()->getId(); // 1を出力する
+    print $authorForm->isNew();              // falseを出力する
+
+### ライフサイクルを扱う
+
+章の始めで見たように、リスト4-23で示される、`edit` アクションはフォームのライフサイクルを扱います。
+
+リスト4-23 - `author` モジュールの `executeEdit` メソッド
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      // ...
+
+      public function executeEdit($request)
+      {
+        $author = AuthorPeer::retrieveByPk($request->getParameter('id'));
+        $this->form = new AuthorForm($author);
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('author'));
+          if ($this->form->isValid())
+          {
+            $author = $this->form->save();
+
+            $this->redirect('author/edit?id='.$author->getId());
+          }
+        }
+      }
+    }
+
+`edit` アクションが以前の章で説明したアクションのような場合でも、わずかな違いを指摘できます:
+
+  * `Author` クラスからの Propel オブジェクトは最初の引数としてフォームコンストラクタに送り出される:
+
+        [php]
+        $author = AuthorPeer::retrieveByPk($request->getParameter('id'));
+        $this->form = new AuthorForm($author);
+
+  * 関連テーブル (`author`) から名づけられた PHP 配列の入力データを読み取れるようにウィジェットの `name` 属性フォーマットは自動的にカスタマイズされます:
+
+        [php]
+        $this->form->bind($request->getParameter('author'));
+
+  * フォームが有効なとき、`save()` メソッドを呼び出すだけではフォームに関連する Propel オブジェクトが作成もしくは更新されます:
+
+        [php]
+        $author = $this->form->save();
+
+### Propel オブジェクトを作成して修正する
+
+リスト4-23のコードは `Author` クラスからオブジェクトの作成と修正を行う単独のメソッドを扱います:
+
+  * 新しい `Author` オブジェクトの作成:
+
+      * `index` アクションは `id` パラメータなしで呼び出されます (`$request->getParameter('id')` が `null`)
+
+      * `retrieveByPk()` への呼び出しはそれゆえ `null` を送り出します
+
+      * そして `form` オブジェクトは Propel オブジェクトである空の `Author` にリンクされます
+
+      * 有効なフォームが投稿されたとき `$this->form->save()` を呼び出すことで結果として `Author` オブジェクトが作成されます
+
+  * 既存の `Author` オブジェクトの修正:
+
+      * `index` アクションが `id` パラメータで呼び出されます (`Author` オブジェクトが修正される予定のプライマリキーを表す `$request->getParameter('id')`)
+
+      * `retriveByPk()` メソッドの呼び出しはプライマリキーに関連する `Author` オブジェクトを返します
+
+      * `form` オブジェクトは以前見つかったオブジェクトにリンクされます
+
+      * 有効なフォームが投稿されたとき `$this->form->save()` の呼び出しによって `Author` オブジェクトが更新されます
+
+### save() メソッド
+
+Propel フォームが有効なとき、`save()` メソッドは関連オブジェクトを更新してデータベースに保存します。
+実際にはこのメソッドはメインオブジェクトだけでなく潜在的に関連するオブジェクトも保存します。
+たとえば、`ArticleForm` フォームは記事に結びつけられたタグを更新します。
+`article` テーブルと `tag` テーブル間の多対多のリレーションでは、記事に関連するタグは (生成された `saveArticleTagList()` メソッドを利用して) `article_tag` テーブルに保存されます。
+一貫したシリアライズを保証するために、`save()` メソッドは1つのトランザクション内ですべての更新を含みます。
+
+>**Note**
+>9章で見るように `save()` メソッドは国際化テーブルも自動的に更新します。
+
+-
+
+>**SIDEBAR**
+>`bindAndSave()` メソッドを利用する
+>
+>`bindAndSave()` メソッドはユーザーがフォームに投稿した入力データをバインドし、このフォームをバリデートしてデータベース内で関連するオブジェクト、およびすべてを1つのオペレーションで更新します: 
+>
+>     [php]
+>     class articleActions extends sfActions
+>     {
+>       public function executeCreate(sfWebRequest $request)
+>       {
+>         $this->form = new ArticleForm();
+>
+>         if ($request->isMethod('post') && $this->form->bindAndSave($request->getParameter('article')))
+>         {
+>           $this->redirect('article/created');
+>         }
+>       }
+>     }
+
+### ファイルのアップロードを扱う
+
+`save()` メソッドは自動的に Propel オブジェクトを更新しますが、ファイルのアップロードを管理するなどの他の要素を扱うことはできません。
+
+ファイルをそれぞれの記事に添付する方法を見てみましょう。
+リスト4-24で示されるように、ファイルは `web/uploads` ディレクトリに保存されファイルパスへの参照は `article` テーブルの `file` フィールドに保持されます。
+
+リスト4-24 - 関連ファイルを持つ `article` テーブル用のスキーマ
+
+    [yml]
+    // config/schema.yml
+    propel:
+      article:
+        // ...
+        file: varchar(255)
+
+すべてのスキーマを更新した後、オブジェクトモデル、データベースと関連するフォームを更新する必要があります:
+
+    $ ./symfony propel:build-all
+
+>**Caution**
+>`propel:build-all` タスクは再生成するためにすべてのスキーマテーブを削除することを必ず覚えておいてください。
+>それゆえテーブル内のデータは上書きされます。
+>これがそれぞれのモデルを修正時に再びダウンロードするテストデータ (`fixtures`) を作ることが大切である理由です。
+
+リスト4-25はウィジェットとバリデータを `file` フィールドにリンクするために `ArticleForm` クラスを修正する方法を示します。
+
+リスト4-25 - `ArticleForm` フォームの `file` フィールドを修正する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->widgetSchema['file'] = new sfWidgetFormInputTextFile();
+        $this->validatorSchema['file'] = new sfValidatorFile();
+      }
+    }
+
+ファイルをアップロードするすべてのフォームに関しては、`enctype` 属性をテンプレートの `form` タグに追加することもお忘れなく (ファイルのアップロード管理に関する詳細な情報は2章をご参照ください)。
+
+リスト4-26はファイルをサーバーにアップロードしてパスを `article` オブジェクトに保存するために適用する修正方法を示しています。
+
+リスト4-26 - `article` オブジェクトとアップロードされたファイルをアクションに保存する
+
+    [php]
+    public function executeEdit($request)
+    {
+      $author = ArticlePeer::retrieveByPk($request->getParameter('id'));
+      $this->form = new ArticleForm($author);
+
+      if ($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('article'), $request->getFiles('article'));
+        if ($this->form->isValid())
+        {
+          $file = $this->form->getValue('file');
+          $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+          $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+          $article = $this->form->save();
+
+          $this->redirect('article/edit?id='.$article->getId());
+        }
+      }
+    }
+
+アップロードしたファイルをファイルシステムに保存することで `sfValidatedFile` オブジェクトはファイルへの絶対パスを知ることができます。
+`save()` メソッドを呼び出す間、フィールドの値は関連オブジェクトを更新するために使われ、`file` フィールドに関して、`__toString()` メソッドのおかげで `sfValidatedFile` オブジェクトは文字列に変換され、ファイルへの絶対パスを送り返します。`article` テーブルの `file` カラムはこの絶対パスを保存します。
+
+>**TIP**
+>`sfConfig::get('sf_upload_dir')` ディレクトリへの相対パスを保存したい場合、`sfValidatedFile` を継承するクラスを作り、 `sfValidatorFile` バリデータに新しいクラスの名前を送り出すために `validated_file_class` オプションを使うことが可能です。
+>バリデータはクラスのインスタンスを返します。
+>この章の残りの部分で、オブジェクトをデータベースに保存する前に `file` カラムの値を修正する作業で成り立つ別のアプローチを見ることになります。
+
+### save() メソッドをカスタマイズする
+
+前の章でアップロードされたファイルを `edit` アクションで保存する方法を見ました。
+オブジェクト指向プログラミングの原則の1つはクラスのカプセル化によるコードの再利用です。
+`ArticleForm` フォームを利用してそれぞれのアクションでファイルを保存するために使われるコードを重複させるよりも、コードを `ArticleForm` クラスに移動させるほうがよいです。
+リスト4-27はファイルを保存して可能であれば既存のファイルを削除するために `save()` メソッドをオーバーライドする方法を示しています。
+
+リスト4-27 - `ArticleForm` クラスの `save()` メソッドをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormPropel
+    {
+      // ...
+     
+      public function save(PropelPDO $con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+   
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+   
+        return parent::save($con);
+      }
+    }
+
+コードをフォームに移動させた後、`edit` アクションは `propel:generate-crud` タスクによって初期に生成されたコードにとって理想的なものです。
+
+>**SIDEBAR**
+>フォームの中でモデルのコードをリファクタリングする
+>
+>`propel:generate-crud` タスクによって生成されたアクションを通常は修正すべきではありません。
+>
+>`edit` アクションに追加できるロジックは、とりわけフォームのシリアライゼーションの間、通常はモデルクラスもしくはフォームクラスに移動させなければなりません。
+>
+>アップロードされたファイルを考慮するためにフォームクラスでリファクタリングする例を丁度調べました。
+>モデルに関連する別の例を考えましょう。
+>`ArticleForm` フォームは `slug` フィールドを持ちます。
+>このフィールドが潜在的にユーザーによって上書きされる `title` フィールドから自動的に計算されるべきであることを理解しました。
+>このロジックはフォームに依存しません。
+>それゆえ、次のコードが示すように、これはモデルに所属します:
+>
+>     [php]
+>     class Article extends BaseArticle
+>     {
+>       public function save(PropelPDO $con = null)
+>       {
+>         if (!$this->getSlug())
+>         {
+>           $this->setSlugFromTitle();
+>         }
+>
+>         return parent::save($con);
+>       }
+>
+>       protected function setSlugFromTitle()
+>       {
+>         // ...
+>       }
+>     }
+>
+>これらのリファクタリングの主要な目的は、アプリケーションレイヤーの分離と、とりわけ開発の再利用性を尊重することです。
+
+### doSave() メソッドをカスタマイズする
+
+保存に関連するそれぞれのオペレーションが正しく処理されることを保証するためにオブジェクトの保存はトランザクションの範囲内で行われたことを見ました。
+アップロードしたファイルを保存するために以前のセクションで行ったように `save()` メソッドをオーバーライドするとき、実行コードはこのトランザクションから独立しています。
+
+リスト4-28はグローバルトランザクションにおいてアップロードしたファイルを保存するコードを挿入するために `doSave()` メソッドを使う方法を示しています。
+
+リスト4-28 - `ArticleForm` フォームの `doSave()` メソッドをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormPropel
+    {
+      // ...
+     
+      protected function doSave($con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+        return parent::doSave($con);
+      }
+    }
+
+`doSave()` メソッドは `save()` メソッドによって作られたトランザクションの中で呼び出されるので、`file()` オブジェクトの `save()` メソッドを呼び出した際に例外が投げられるとき、オブジェクトは保存されません。
+
+### updateObject() メソッドをカスタマイズする
+
+データベースの更新と保存の間にフォームに接続するオブジェクトを修正することがときどき必要です。
+
+ファイルのアップロードの例に関しては、アップロードされたファイルへの絶対パスを`file`カラムに保存する代わりに、`sfConfig::get('sf_upload_dir')` ディレクトリへの相対パスを保存したい場合を考えます。
+
+リスト4-29は自動的な更新の後で保存する前に `file` カラムの値を作るために `ArticleForm` フォームの `updateObject()` メソッドをオーバーライドする方法を示します。
+
+リスト4-29 - `updateObject()` メソッドと `ArticleForm` クラスをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormPropel
+    {
+      // ...
+
+      public function updateObject($values = null)
+      {
+        $object = parent::updateObject($value);
+
+        $object->setFile(str_replace(sfConfig::get('sf_upload_dir').'/', '', $object->getFile()));
+
+        return $object;
+      }
+    }
+
+オブジェクトをデータベースに保存する前に `updateObject()` メソッドは `doSave()` メソッドによって呼び出されます。

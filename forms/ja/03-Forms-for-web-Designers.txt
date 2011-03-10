@@ -1,0 +1,640 @@
+第3章 - Webデザイナーのためのフォーム
+========================================
+
+1章と2章でウィジェットとバリデーションのルールを作る方法を見ました。
+これらを表示するために `<?php echo $form ?>` ステートメントを使いました。
+このステートメントのおかげで開発者は最終的にどのように表示されるのか考えなくてもアプリケーションのコードを書けます。フィールド (名前、ウィジェット・・・) を変更もしくは追加するたびにテンプレートを変更する必要はありません。
+開発者がモデルとビジネスロジックに重点的に取り組まなければならないとき、このステートメントは試作と初期の開発フェーズに適しています。
+
+いったんオブジェクトモデルが安定してスタイルのガイドラインの準備ができれば、Web デザイナーはさまざまなアプリケーションのフォームに戻り整えることができます。
+
+この章を始める前に、symfony のテンプレートシステムとビューレイヤーに精通しなければならなりません。
+そのためには、"Definitive Guide to symfony" の[ビューレイヤーの内側](http://www.symfony-project.org/book/1_2/07-Inside-the-View-Layer)の章をご覧ください。
+
+>**Note**
+>symfony のフォームシステムは MVC モデルに従って開発されます。
+>MVC パターンの助けによって開発チームのすべてのタスクは分離されます: 開発者はフォームを作りそれらのライフサイクルに対処し、Web デザイナーはそれらを整え飾ります。
+>関心の分離 (separation of concerns) はプロジェクトチーム内のコミュニケーションの置き換えになることはありません。
+
+始める前に
+----------
+
+1章と2章で作り込んだコンタクトフォームを復習します(図3-1)。
+この章だけを読む Web デザイナーのための技術情報の要約は下記のとおりです:
+
+  * フォームは4つのフィールド: `name`、`email`、`subject` と `message` で構成される
+
+  * フォームは `contact` モジュールによって処理される。
+
+  * `index` アクションはテンプレートのフォームを表す `form` 変数に伝える
+
+この章ではフォームを表示するために使用したプロトタイプのテンプレートをカスタマイズする方法をできる限り多く示すことを目的とします (リスト3-1)。
+
+図3-1 - コンタクトフォーム
+
+![コンタクトフォーム](/images/forms_book/en/03_01.png "コンタクトフォーム")
+
+リスト3-1 - コンタクトフォームを表示するプロトタイプのテンプレート
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSuccess.php
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+>**SIDEBAR**
+>ファイルのアップロード
+>
+>フォームでファイルをアップロードするためにフィールドを利用するときは、`enctype` 属性を `form` タグに追加しなければなりません:
+>
+>     [php]
+>     <Form action="<?php echo url_for('contact/index') ?>" method="POST" enctype="multipart/data">
+>
+>この属性を必要とする場合 `form` オブジェクトの `isMultipart()` メソッドはフォームが `true` を返します:
+>
+>     [php]
+>     <Form action="<?php echo url_for('contact/index') ?>" method="POST" <?php $form->isMultipart() and print 'enctype="multipart/form-data"' ?>>
+
+プロトタイプのテンプレート
+--------------------------
+
+今のところ、フォームの表示に必要なHTMLを自動的に生成するためにプロトタイプのテンプレートで `<?php echo $form ?>` ステートメントを使いました。
+
+フォームはフィールドで構成されます。
+テンプレートレベルでは、それぞれのフィールドは3つの要素で構成されます:
+
+  * ラベル
+
+  * フォームタグ
+
+  * 内在するエラーメッセージ
+
+リスト3-2で示されるように、無効な投稿の場合 `<?php echo $form ?>` ステートメントは自動的にこれらすべての要素を生成します。
+
+リスト3-2 - 無効な投稿の場合に生成されるテンプレート
+
+    [php]
+    <form action="/frontend_dev.php/contact" method="POST">
+      <table>
+        <tr>
+          <th><label for="contact_name">Name</label></th>
+          <td><input type="text" name="contact[name]" id="contact_name" /></td>
+        </tr>
+        <tr>
+          <th><label for="contact_email">Email</label></th>
+          <td>
+            <ul class="error_list">
+              <li>This email address is invalid.</li>
+            </ul>
+            <input type="text" name="contact[email]" value="fabien" id="contact_email" />
+          </td>
+        </tr>
+        <tr>
+          <th><label for="contact_subject">Subject</label></th>
+          <td>
+            <select name="contact[subject]" id="contact_subject">
+              <option value="0" selected="selected">Subject A</option>
+              <option value="1">Subject B</option>
+              <option value="2">Subject C</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="contact_message">Message</label></th>
+          <td>
+            <ul class="error_list">
+              <li>The message "foo" is too short. It must be of 4 characters at least.</li>
+            </ul>
+            <textarea rows="4" cols="30" name="contact[message]" id="contact_message">foo</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+>**TIP**
+>フォームに対して開きフォームタグを生成する追加のショートカット: `echo $form->renderFormTag(url_for('contact/index'))`があります。
+>配列を提供することでフォームタグにたくさんの追加属性をより楽に渡すことも可能になります。
+>このショートカットを利用する際の不利な点はデザインツールがフォームを適切に検出するのがより難しくなることです。
+
+このコードを分解してみましょう。
+図3-2はそれぞれのフィールドに対して生み出された`<tr>`の列を強調しています。
+
+図3-2 - フィールドによるフォームの分割
+
+![フィールドによるフォームの分割](/images/forms_book/en/03_02.png "フィールドによるフォームの分割")
+
+HTML コードの3つのピースはそれぞれのフィールドに対して生成され(図3-3)、フィールドの3つの要素に対応しています。
+`email` フィールドに対して生成された HTML コードは下記のとおりです:
+
+  * **ラベル**
+
+        [php]
+        <label for="contact_email">Email</label>
+
+  * **フォームタグ**
+
+        [php]
+        <input type="text" name="contact[email]" value="fabien" id="contact_email" />
+
+  * **エラーメッセージ**
+
+        [php]
+        <ul class="error_list">
+          <li>The email address is invalid.</li>
+        </ul>
+
+図3-3 - `email` フィールドの分解
+
+![email フィールドの分解](/images/forms_book/en/03_03.png "email フィールドの分解")
+
+>**TIP**
+>すべてのフィールドは `id` 生成属性を持ち、これによって開発者が CSS もしくは JavaScript のふるまいを簡単に追加できます。
+
+プロトタイプのテンプレートのカスタマイズ
+----------------------------------------
+
+コンタクトフォームのようなシンプルなフォームに対しては `<?php echo $form ?>` ステートメントで十分です。
+そして、当然ながら、これは `<?php echo $form->render() ?>` ステートメントの単なるショートカットです。
+
+`render()` メソッドを利用することでそれぞれのフィールドに対して HTML 属性を引数として渡すことができます。
+リスト3-3は `email` フィールドにクラスを追加する方法を表示します。
+
+リスト3-3 - `render()` メソッドを利用した HTML 属性のカスタマイズ
+
+    [php]
+    <?php echo $form->render(array('email' => array('class' => 'email'))) ?>
+    
+    // 生成された HTML
+    <input type="text" name="contact[email]" value="" id="contact_email" class="email" />
+
+これによってフォームスタイルをカスタマイズできますがページ内のフィールドの編成をカスタマイズするために必要なレベルの柔軟性は提供されません。
+
+表示のカスタマイズ
+------------------
+
+`render()` メソッドによって可能なグローバルなカスタマイズを越えて、柔軟性を得るためにそれぞれのフィールドの表示を乗り越える方法を見てみましょう。
+
+### フィールド上でrenderRow()メソッドを利用する
+
+これを行う最初の方法はすべてのフィールドを個別に生成することです。
+実際、リスト3-4で示されるように、`<?php echo $form ?>` ステートメントはフォーム上で `renderRow()` メソッドを4倍呼び出すことと同等です。
+
+リスト3-4 - `renderRow()` の使い方
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <?php echo $form['name']->renderRow() ?>
+        <?php echo $form['email']->renderRow() ?>
+        <?php echo $form['subject']->renderRow() ?>
+        <?php echo $form['message']->renderRow() ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+`form` オブジェクトを PHP 配列として利用してそれぞれのフィールドにアクセスします。
+`email` フィールドは `$form['email']` を通してアクセスできます。
+`renderRow()` メソッドはフィールドを HTML テーブルの列として表示します。
+`$form['email']->renderRow()` の表記は `email` フィールド用の列を生成します。
+`subject`、`email` と `message` の3つの他のフィールドに対して同じ種類のコードを繰り返すことで、フォームの表示を完成させます。
+
+>**SIDEBAR**
+>オブジェクトが配列のようにふるまうには？
+>
+>PHP 5 以降では、オブジェクトは PHP の配列以外のふるまいを行うことができます。
+>`sfForm` クラスはシンプルで短い構文を利用してそれぞれのフィールドに対してアクセスする権限を与える ArrayAccess のふるまいを実装します。
+>配列のキーはフィールド名で戻り値は関連ウィジェットのオブジェクトです:
+>
+>     [php]
+>     <?php echo $form['email'] ?>
+>     
+>     // sfForm が ArrayAccess インターフェイスを実装しなかった場合に使われてきた構文。
+>     <?php echo $form->getField('email') ?>
+>
+>しかしながら、すべての変数はテンプレート内で読み込みのみでなければならないので、フィールドを修正しようとすると `LogicException` の例外が投げられます:
+>
+>     [php]
+>     <?php $form['email'] = ... ?>
+>     <?php unset($form['email']) ?>
+
+使い始めたこの現在のテンプレートとオリジナルのテンプレートは機能の面では理想的です。
+しかしながら、表示が同じ場合、カスタマイズはより簡単です。
+`renderRow()` メソッドは2つの引数: HTML 属性の配列とラベル名を受け取ります。
+リスト3-5のコードはフォームをカスタマイズするためにこれら2つの引数を使います (図3-4はレンダリングの結果を表示します)。
+
+リスト3-5 - 表示をカスタマイズするために `renderRow()` メソッドの引数を使う
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <?php echo $form['name']->renderRow() ?>
+        <?php echo $form['email']->renderRow(array('class' => 'email')) ?>
+        <?php echo $form['subject']->renderRow() ?>
+        <?php echo $form['message']->renderRow(array(), 'Your message') ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+図3-4 - `renderRow()` メソッドを利用したフォーム表示のカスタマイズ
+
+![renderRow() メソッドを利用したフォーム表示のカスタマイズ](/images/forms_book/en/03_04.png "renderRow() メソッドを利用したフォーム表示のカスタマイズ")
+
+`email` フィールドを生成するために `renderRow()` に送り出される引数をじっくり見てみましょう:
+
+  * `array('class' => 'email')` は `email` クラスを `<input>` タグに追加する
+
+これは `message` フィールドメッセージで同じように機能します:
+
+  * `array()` は HTML 属性を `<textarea>` タグに追加したくないことを意味する
+  * `'Your message'` はデフォルトのラベル名に置き換えられる
+
+すべての `renderRow()` メソッドの引数はオプションで、`name` と `subject` フィールドに対して行ったようなことは必要としません。
+
+`renderRow()` メソッドがそれぞれのフィールド要素のカスタマイズの手助けになりますが、図3-5で示されるように、レンダリングはこれらの要素を装飾する HTML コードによって制限されます。
+
+図3-5 - `renderRow()` と `render()` によって使用される HTML の構造
+
+![renderRow() と render() によって使われる HTML の構造](/images/forms_book/en/03_05.png "renderRow() と render() によって使用されるHTMLの構造")
+
+>**SIDEBAR**
+>プロトタイプで使われた構造のフォーマットを変更するには？
+>
+>デフォルトでは、symfony はフォームを表示するために HTML の配列を使います。
+>このふるまいは特定の*フォーマッター*によって変更できます。
+>これらは組み込みもしくはプロジェクトに適合させるために特別に開発されます。
+>フォーマッターを作るには、5章で説明されているクラスを作る必要があります。
+
+この構造から自由になるために、図3-6で示されるように、それぞれのフィールドは要素を生成するメソッドを持ちます:
+
+  * `renderLabel()` : ラベル(フィールドに結びつけられた ` <label>` タグ)
+  * `render()`      : フィールドタグそのもの(たとえば `<input>` タグ)
+  * `renderError()` : エラーメッセージ (`<ul class="error_list">` リストとして)
+
+図3-6 - フィールドをカスタマイズするために利用できるメソッド
+
+![フィールドをカスタマイズするために利用できるメソッド](/images/forms_book/en/03_06.png "フィールドをカスタマイズするために利用できるメソッド")
+
+これらのメソッドはこの章の終わりの方で説明されます。
+
+### フィールド上で render() メソッドを利用する
+
+2つのカラムを持つフォームを表示することを考えてみましょう。
+図3-7で示されるように、`subject` と `message` フィールドがそれら独自の列を表すとき、`name` と `email` フィールドはそれら独自の列を表します。
+
+図3-7 - さまざまな列でフォームを表示する
+
+![さまざまな列でフォームを表示する](/images/forms_book/en/03_07.png "さまざまな列でフォームを表示する")
+
+これを行うにはフィールドのそれぞれの要素を個別に生成できるようにしなければなりません。
+フィールドにアクセスするために、`form` オブジェクトを連想配列として使用し、フィールド名をキーとして使用できることをすでに見ました。
+たとえば、`email` フィールドは `$form['email']` でアクセスできます。
+リスト3-6は2つの列を持つフォームを実装する方法を示しています。
+
+リスト3-6 - 2つのカラムで表示方法をカスタマイズする
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><?php echo $form['name']->render() ?></td>
+          <th>Email:</th>
+          <td><?php echo $form['email']->render() ?></td>
+        </tr>
+        <tr>
+          <th>Subject:</th>
+          <td colspan="3"><?php echo $form['subject']->render() ?></td>
+        </tr>
+        <tr>
+          <th>Message:</th>
+          <td colspan="3"><?php echo $form['message']->render() ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+`<?php echo $form ?>` を利用する際に必須ではないフィールド上で `render()` メソッドを明示的に使うこととまったく同じように、リスト3-7のようにテンプレートを書き換えることができます。
+
+リスト3-7 - 2つのカラムのカスタマイズ作業を簡略化する
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><?php echo $form['name'] ?></td>
+          <th>Email:</th>
+          <td><?php echo $form['email'] ?></td>
+        </tr>
+        <tr>
+          <th>Subject:</th>
+          <td colspan="3"><?php echo $form['subject'] ?></td>
+        </tr>
+        <tr>
+          <th>Message:</th>
+          <td colspan="3"><?php echo $form['message'] ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+フォームのように、それぞれのフィールドは `render()` メソッドに HTML s属性の配列を渡すことでカスタマイズできます。
+リスト3-8は `email` フィールドの HTML 属性を修正する方法を示しています。
+
+リスト3-8 - `render()` メソッドを利用して HTML 属性を修正する
+
+    [php]
+    <?php echo $form['email']->render(array('class' => 'email')) ?>
+
+    // 生成されたHTML
+    <input type="text" name="contact[email]" class="email" id="contact_email" />
+
+### フィールド上で renderLabel() メソッドを利用する
+
+以前のパラグラフでカスタマイズしているあいだラベルを生成しませんでした。
+リスト3-9はそれぞれのフィールドに対応するラベルを生成するために `renderLabel()` メソッドを使います。
+
+リスト3-9 - `renderLabel()` を使う
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <tr>
+          <th><?php echo $form['name']->renderLabel() ?>:</th>
+          <td><?php echo $form['name'] ?></td>
+          <th><?php echo $form['email']->renderLabel() ?>:</th>
+          <td><?php echo $form['email'] ?></td>
+        </tr>
+        <tr>
+          <th><?php echo $form['subject']->renderLabel() ?>:</th>
+          <td colspan="3"><?php echo $form['subject'] ?></td>
+        </tr>
+        <tr>
+          <th><?php echo $form['message']->renderLabel() ?>:</th>
+          <td colspan="3"><?php echo $form['message'] ?></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+ラベルの名前フィールド名から自動的に生成されます。
+リスト3-10で示されるように `renderLabel()` メソッドに引数を渡すことでカスタマイズできます。
+
+リスト3-10 - ラベル名を修正する
+
+    [php]
+    <?php echo $form['message']->renderLabel('Your message') ?>
+
+    // 生成される HTML
+    <label for="contact_message">Your message</label>
+
+ラベルの名前を引数として送信する場合 `renderLabel()` メソッドには何の意味があるのでしょうか？
+なぜシンプルな HTML の `label` タグを使わないのでしょうか？
+これは `renderLabel()` メソッドは `label` タグを生成しリンクつきフィールド (`id`) の識別子にセットされる `for` 属性を自動的に追加するからです。
+このことは フィールドがアクセス可能であることを保証します; ラベルをクリックするとき、フィールドは自動的に
+焦点を合わせます:
+
+    [php]
+    <label for="contact_email">Email</label>
+    <input type="text" name="contact[email]" id="contact_email" />
+
+さらに、`renderLabel()` メソッドに2番目の引数を渡すことで HTML 属性を追加できます:
+
+    [php]
+    <?php echo $form['send_notification']->renderLabel(null, array('class' => 'inline')) ?>
+
+    // 生成された HTML
+    <label for="contact_send_notification" class="inline">Send notification</label>
+
+この例では、最初の引数は `null` なのでラベルテキストの自動生成は保存されます。
+
+### フィールド上で renderError() メソッドを利用する
+
+現在のテンプレートはエラーメッセージを処理しません。
+リスト3-11は `renderError()` メソッドを利用してそれらのメッセージを復元しています。
+
+リスト3-11 - `renderError()` メソッドを利用してエラーメッセージを表示する
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <tr>
+          <th><?php echo $form['name']->renderLabel() ?>:</th>
+          <td>
+            <?php echo $form['name']->renderError() ?>
+            <?php echo $form['name'] ?>
+          </td>
+          <th><?php echo $form['email']->renderLabel() ?>:</th>
+          <td>
+            <?php echo $form['email']->renderError() ?>
+            <?php echo $form['email'] ?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo $form['subject']->renderLabel() ?>:</th>
+          <td colspan="3">
+            <?php echo $form['subject']->renderError() ?>
+            <?php echo $form['subject'] ?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo $form['message']->renderLabel() ?>:</th>
+          <td colspan="3">
+            <?php echo $form['message']->renderError() ?>
+            <?php echo $form['message'] ?>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+### エラーメッセージのきめ細かいカスタマイズ
+
+`renderError()` メソッドはフィールドに関連するエラーのリストを生成します。
+フィールドが何かのエラーを持つ場合のみこのメソッドは HTML コードを生成します。
+デフォルトでは、リストは並べ替えられていない HTML リスト (`<ul>`) として生成されます。
+
+これは一般的なほとんどの問題に適していますが、`hasError()` と `getError()` メソッドを使うことによってエラーに直接アクセスできます。
+リスト3-12は `email` フィールド用のエラーメッセージをカスタマイズする方法を示しています。
+
+リスト3-12 - エラーメッセージにアクセスする
+
+    [php]
+    <?php if ($form['email']->hasError()): ?>
+      <ul class="error_list">
+        <?php foreach ($form['email']->getError() as $error): ?>
+          <li><?php echo $error ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+
+この例では、生成されたコードは `renderError()` メソッドによって生成されたコードとまったく同じです。
+
+### 隠しフィールドを扱う
+
+`referrer` 隠しフィールドがフォームの必須フィールドとして存在すると仮定します。
+フォームにアクセスするときにこのフィールドはユーザーページのリファラを保存します。
+リスト3-13で示されるように、最後の可視フィールドが生成されるときに `<?php echo $form ?>` ステートメントは隠しフィールド用の HTML コードを生成し追加します。
+
+リスト3-13 - 隠しフィールドのコードを生成する
+
+    [php]
+    <tr>
+      <th><label for="contact_message">Message</label></th>
+      <td>
+        <textarea rows="4" cols="30" name="contact[message]" id="contact_message"></textarea>
+        <input type="hidden" name="contact[referrer]" id="contact_referrer" />
+      </td>
+    </tr>
+
+`referrer` 隠しフィールドに対して生成されたコードでお気づきのように、タグ要素だけが出力に追加されました。
+ラベルを生成しないために役立ちます。
+このフィールドで起きる可能性のある潜在的なエラーはどうでしょうか？
+隠しフィールドであったとしても、故意にもしくはコード内にエラーが存在するため、このフィールドが処理の間に汚染される可能性があります。
+これらのエラーは `referrer` フィールドに直接接続されていませんが、グローバルエラーに集約されます。
+5章でグローバルエラーの概念が他の問題にも拡張されることを見ることになります。
+図3-8は `referrer` フィールド上でエラーが発生したときにエラーメッセージが表示される方法を示し、リスト3-14はこれらのエラーに対して生成されたコードを示しています。
+
+`renderHiddenFields()` メソッドを使用することですべての隠しフィールド (CSRF のものも含む) を一度にレンダリングできます。 
+
+図3-8 - グローバルエラーメッセージを表示する
+
+![グローバルエラーメッセージを表示する](/images/forms_book/en/03_08.png "グローバルエラーメッセージを表示する")
+
+リスト3-14 - グローバルエラーメッセージを生成する
+
+    [php]
+    <tr>
+      <td colspan="2">
+        <ul class="error_list">
+          <li>Referrer: Required.</li>
+        </ul>
+      </td>
+    </tr>
+
+>**Caution**
+>フォームをカスタマイズするとき、隠しフィールド(フォーム用に有効にした保護がある場合は CSRF のものをお忘れなく)とグローバルエラーメッセージを実装することをお忘れなく
+
+### グローバルエラーを扱う
+
+フォームに対して3種類のエラーが存在します:
+
+  * 特定のフィールドに関連するエラー
+  * グローバルエラー
+  * 隠しフィールからのエラーもしくは実際にはフォームに表示されないフィールド。これらはグローバルエラーにまとめられる。
+
+フィールドに関連するエラーメッセージの実装方法をすでに調べたので、リスト3-15はグローバルエラーメッセージの実装方法を示します。
+
+リスト3-15 - グローバルエラーメッセージを実装する
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+      <table>
+        <tr>
+          <td colspan="4">
+            <?php echo $form->renderGlobalErrors() ?>
+          </td>
+        </tr>
+
+        // ...
+      </table>
+
+`renderGlobalErrors()` メソッドを呼び出すとグローバルエラーのリストを表示します。
+リスト3-16で示されるように、`hasGlobalErrors()` と `getGlobalErrors()` メソッドを利用してグローバルエラーにアクセスすることも可能です。
+
+リスト3-16 - `hasGlobalErrors()` と `getGlobalErrors()` メソッドによるグローバルエラーのカスタマイズ
+
+    [php]
+    <?php if ($form->hasGlobalErrors()): ?>
+      <tr>
+        <td colspan="4">
+          <ul class="error_list">
+            <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
+              <li><?php echo $name.': '.$error ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </td>
+      </tr>
+    <?php endif; ?>
+
+それぞれのグローバルエラーは名前 (`name`) とメッセージ (`error`) を持ちます。
+「本物の」グローバルエラーが存在するときは名前は空ですが、隠しフィールドに対するエラーもしくは表示されないフィールドが存在するとき、`name` はフィールドのラベル名です。
+
+テンプレートが先述のテンプレート (図3-8) と技術的に同等なものであったとしても、こちらはカスタマイズ可能です。
+
+図3-8 - フィールドメソッドを利用してカスタマイズされたフォーム
+
+![フィールドメソッドを利用してカスタマイズされたフォーム](/images/forms_book/en/03_08.png "フィールドメソッドを利用してカスタマイズされたフォーム")
+
+国際化
+------
+
+ラベルとエラーメッセージといった、すべてのフォーム要素は symfony の国際化システムによって自動的に扱われます。
+Web デザイナーはフォームを国際化したい、`renderLabel()` メソッドでラベルを明示的に上書きするときでも、特別なことを行う必要がないことを意味します。
+翻訳機能は自動的に考慮されます。
+国際化機能に関する詳細な情報に関しては、9章をご参照ください。
+
+開発者と交流する
+----------------
+
+symfony を利用した代表的なフォームの開発の説明についてこの章を終わらせましょう:
+
+  * 開発チームはフォームのクラスとアクションで実装を始めます。テンプレートは基本的にプロトタイプの `<?php echo $form ?>` ステートメントでしかありません。
+
+  * その間、デザイナーはフォームに適用するスタイルのガイドラインと表示ルール: グローバル構造、ルールを表示するエラーメッセージなどを設計します。
+
+  * ビジネスルールが定まりスタイルのガイドラインが固まったら、Web デザイナーのチームはフォームテンプレートを修正してカスタマイズできます。チームはフォームのライフサイクルに対処するために必要なフィールドとアクションの名前だけ知っていれば十分です。
+
+最初のサイクルが過ぎたら、ビジネスルールのとテンプレートの両方の両方を同時に実行できます。
+
+テンプレートに影響を与えずに、それゆえデザイナーチームに介入せずに、開発チームは次のことができます:
+
+  * フォームのウィジェットを修正する
+  * エラーメッセージをカスタマイズする
+  * バリデーションルールを編集、追加もしくは削除する
+
+同じように、デザイナーチームは開発チームに頼らずに自由にエルゴノミックもしくはグラフィックな変更を実行できます。
+
+次の活動はチーム間の調整を必要とします:
+
+  * フィールドをリネームする
+  * フィールドを追加もしくは削除する
+
+ビジネスルールとフォームの表示で変更が必要な場合にこのルールは意味をなします、
+この章の最初で始めたように、フォームシステムがきれいにタスクを分割していても、チーム間のコミュニケーションに優ることはありません。

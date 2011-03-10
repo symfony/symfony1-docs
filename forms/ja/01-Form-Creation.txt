@@ -1,0 +1,593 @@
+第1章 - フォームの作成
+======================
+
+フォームは、隠し入力、テキスト入力、セレクトボックスおよびチェックボックスのようなフィールドで構成されます。
+この章では symfony のフォームフレームワークを利用してフォームを作成し、フォームフィールドを管理する方法を説明します。
+
+この章を読むにあたり、symfony 1.3/1.4 が必要です。また、読み進めるにはプロジェクトおよび `frontend` アプリケーションを作成する必要があります。
+symfony プロジェクトの作成方法に関する詳細な情報は、入門の手引きをご参照ください。
+
+始める前に
+----------
+
+問い合わせフォームを symfony アプリケーションに追加することから始めます。
+
+図1-1は、ユーザーがメッセージを送りたい場合に表示される問い合わせフォームです。
+
+図1-1 - 問い合わせフォーム
+
+![問い合わせフォーム](/images/forms_book/en/01_01.png "問い合わせフォーム")
+
+このフォームに3つのフィールドを作成します: ユーザーの名前、ユーザーのEメールおよび送信するメッセージです。
+この練習では、図1-2のようにフォームに投稿された情報を単に表示するのが目的です。
+
+図1-2 - お礼のページ
+
+![お礼のページ](/images/forms_book/en/01_02.png "お礼ページ")
+
+図1-3 - アプリケーションとユーザーのあいだのやりとり
+
+![ユーザーのスキーマとのやりとり](/images/forms_book/en/01_03.png "ユーザーのスキーマとのやりとり")
+
+ウィジェット
+------------
+
+### sfForm クラスと sfWidget クラス
+
+ユーザーはフォームを構成するフィールドに情報を入力します。
+symfony では、フォームは `sfForm` クラスを継承するオブジェクトです。
+この例では、`sfForm` クラスを継承する `ContactForm` クラスを作成します。
+
+>**Note**
+>`sfForm` はすべてのフォームの基底クラスで、フォームの設定とライフサイクルの管理を簡単にします。
+
+`configure()`メ ソッドに**ウィジェット**を追加するコードを記述することからフォームの設定を始めましょう。
+
+**ウィジェット**はフォームフィールドを表します。この例のフォームでは、3つのフィールド: `name`、`email` および `message` を表す3つのウィジェットを追加する必要があります。
+リスト1-1で `ContactForm` クラスの最初の実装を示します。
+
+リスト1-1 - 3つのフィールドがあるフォームの `ContactForm` クラス
+
+    [php]
+    // lib/form/ContactForm.class.php
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+      }
+    }
+
+>**NOTE**
+>この本では、スペースの節約のために純粋な PHP コードの例では `<?php` 開きステートメントは使いません。
+>新しい PHP ファイルを作るときには開きタグを追加してください。
+
+ウィジェットは `configure()` メソッド内で定義します。
+このメソッドは、`sfForm` クラスのコンストラクタによって自動的に呼び出されます。
+
+`setWidgets()` メソッドは、フォームで使用するウィジェットを定義するために使われます。
+`setWidgets()` メソッドは、キーがフィールド名で値がウィジェットのオブジェクトである連想配列を受け取ります。
+それぞれのウィジェットは `sfWidget` クラスを継承するオブジェクトです。
+この例では2種類のウィジェットを使いました:
+
+  * `sfWidgetFormInputText`  : このウィジェットは `input` フィールドを表します
+  * `sfWidgetFormTextarea`: このウィジェットは `textarea` フィールドを表します
+
+>**Note**
+>慣習として、フォームクラスを `lib/form/` ディレクトリに保存します。
+>これらのフォームクラスは、symfony のオートローディングメカニズムで管理される任意のディレクトリに保存できます。
+>後の章で説明するように、モデルオブジェクトからフォームを生成するために symfony は `lib/form/` ディレクトリを利用します。
+
+### フォームを表示する
+
+フォームを使う準備ができました。
+フォームを表示するための symfony のモジュールを作成しましょう:
+
+    $ cd ~/PATH/TO/THE/PROJECT
+    $ php symfony generate:module frontend contact
+
+`contact` モジュールで、フォームのインスタンスをテンプレートに渡すよう、リスト1-2のように `index` アクションを修正しましょう。
+
+リスト1-2 - `contact` モジュールのアクションクラス
+
+    [php]
+    // apps/frontend/modules/contact/actions/actions.class.php
+    class contactActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->form = new ContactForm();
+      }
+    }
+
+フォームがインスタンス化される際に、リスト1-1で定義した `configure()` メソッドは自動的に呼び出されます。
+
+アクションの修正に合わせてフォームを表示するために、リスト1-3のようなテンプレートを作成する必要があります。
+
+リスト1-3 - フォームを表示するテンプレート
+
+    [php]
+    // apps/frontend/modules/contact/templates/indexSuccess.php
+    <form action="<?php echo url_for('contact/submit') ?>" method="POST">
+      <table>
+        <?php echo $form ?>
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+symfony のフォームは、情報をユーザーに表示するウィジェットのみを扱います。
+`indexSuccess` テンプレートにおいて、`<?php echo $form ?>` の行は3つのフィールドを表示するのみです。
+`form` タグや投稿ボタンなどの別の要素は、開発者が追加する必要があります。
+これは最初自明ではないかもしれませんが、フォームの埋め込みを行う場合に便利で簡単な方法であることを、後に説明します。
+
+プロトタイプを作成する場合や、フォームを定義する場合に、`<?php echo $form ?>` 構文はとても便利です。
+これによって、開発者は視覚的な面に悩むことなく、ビジネスロジックに集中できるようになります。
+第3章では、テンプレートとフォームレイアウトをパーソナライズする方法を説明します。
+
+>**Note**
+`<?php echo $form ?>` を利用してオブジェクトを表示するとき、PHP エンジンは実際には `$form` オブジェクトのテキスト表現を表示します。オブジェクトを文字列に変換するために、PHP は `__toString()` マジックメソッドを実行しようとします。それぞれのウィジェットには、オブジェクトを HTML コードに変換するためにこのマジックメソッドが実装されています。`<?php echo $form ?>` を呼び出すことは、`<?php echo $form->__toString() ?>` を呼び出すことと同等です。
+
+ブラウザでフォームを表示してみます(図1-4)。
+`contact/index` アクションのアドレス (`/frontend_dev.php/contact`) を入力して、結果をチェックしましょう。
+
+図1-4 - 生成された問い合わせフォーム
+
+![生成された問い合わせフォーム](/images/forms_book/en/01_04.png "生成された問い合わせフォーム")
+
+リスト1-4は、テンプレートによって生成されたコードです。
+
+    [html]
+    <form action="/frontend_dev.php/contact/submit" method="POST">
+      <table>
+        
+        <!-- Beginning of generated code by <?php echo $form ?> -->
+        <tr>
+          <th><label for="name">Name</label></th>
+          <td><input type="text" name="name" id="name" /></td>
+        </tr>
+        <tr>
+          <th><label for="email">Email</label></th>
+          <td><input type="text" name="email" id="email" /></td>
+        </tr>
+        <tr>
+          <th><label for="message">Message</label></th>
+          <td><textarea rows="4" cols="30" name="message" id="message"></textarea></td>
+        </tr>
+        <!-- End of generated code by <?php echo $form ?> -->
+
+        <tr>
+          <td colspan="2">
+            <input type="submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+フォームオブジェクトが HTML テーブルの `<tr>` 行3つとして表示されていることがわかります。
+このため、フォームを `<table>` タグで囲んでおく必要があります。
+それぞれの行には、`<label>` タグおよび `<input>` や `<textarea>` といったフォームタグが含まれます。
+
+### ラベル
+
+それぞれのフィールドのラベルは自動的に生成されます。
+デフォルトでは、ラベルは次の2つのルールにしたがって、フィールド名から変換されます。
+先頭は大文字に、アンダースコアはスペースに置き換えられます。フィールドの名前が「_id」で終わる場合、サフィックスはラベルから削除されます。例:
+
+    [php]
+    $this->setWidgets(array(
+      'first_name' => new sfWidgetFormInputText(), // 生成されるラベル: "First name"
+      'last_name'  => new sfWidgetFormInputText(), // 生成されるラベル: "Last name"
+      'author_id'  => new sfWidgetFormInputText(), // 生成されるラベル: "Author"
+    ));
+ 
+自動的なラベルの生成はとても便利ですが、フレームワークでは、`setLabels()` メソッドを使用してパーソナライズされたラベルを定義することもできます:
+
+    [php]
+    $this->widgetSchema->setLabels(array(
+      'name'    => 'Your name',
+      'email'   => 'Your email address',
+      'message' => 'Your message',
+    ));
+
+`setLabel()` メソッドを使用して単独のラベルのみを修正することもできます。
+
+    [php]
+    $this->widgetSchema->setLabel('email', 'Your email address');
+
+最後に、3章ではフォームをより細かくカスタマイズするために、テンプレートからラベルを拡張する方法を説明します。
+
+>**Sidebar**
+>ウィジェットのスキーマ
+>
+>`setWidgets()` メソッドを利用すると、symfony によって `sfWidgetFormSchema` オブジェクトが作成されます。
+>このオブジェクトは、一連のウィジェットを表すウィジェットです。
+>この例の `ContactForm` フォームでは、`setWidgets()` メソッドを呼び出しました。
+>これは次のコードと同等です。
+>
+>     [php]
+>     $this->setWidgetSchema(new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     )));
+>
+>     // は次のコードとほとんど同等です
+>
+>     $this->widgetSchema = new sfWidgetFormSchema(array(
+>       'name'    => new sfWidgetFormInputText(),
+>       'email'   => new sfWidgetFormInputText(),
+>       'message' => new sfWidgetFormTextarea(),
+>     ));
+>
+>`setLabels()` メソッドは、`widgetSchema` オブジェクトに含まれるウィジェットのコレクションに適用されます。
+>
+>5章では、埋め込みフォームの管理がかんたんになる「スキーマウィジェット」の概念を説明します。
+
+### 生成されたテーブルを越えて
+
+フォームの表示はデフォルトで HTML のテーブルですが、レイアウトのフォーマットは変更できます。`sfWidgetFormSchemaFormatter` を継承するクラスで、異なるタイプのレイアウトフォーマットが定義されています。
+デフォルトでは、フォームは `sfWidgetFormSchemaFormatterTable` クラスで定義された `table` フォーマットを利用します。`list` フォーマットも利用できます:
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setFormFormatterName('list');
+      }
+    }
+
+これらの2つのフォーマットはデフォルトで組み込まれています。
+独自のフォーマットクラスを作成する方法は、5章で説明します。フォームを表示できたので、投稿を管理する方法へ進みましょう。
+
+### フォームを投稿する
+
+リスト1-3のフォームを表示するテンプレートでは、`form` タグ内で、フォームを投稿するための内部 URL として `contact/submit` を使いました。
+したがって、`submit` アクションを `contact` モジュールに追加する必要があります。
+リスト1-5では、ユーザーが入力した情報をアクションで取得し、`thank you` ページにリダイレクトして単にこの情報をユーザーに表示する方法を示します。
+
+リスト1-5 - `contact` モジュールの `submit` アクションの使い方
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+
+      $params = array(
+        'name'    => $request->getParameter('name'),
+        'email'   => $request->getParameter('email'),
+        'message' => $request->getParameter('message'),
+      );
+
+      $this->redirect('contact/thankyou?'.http_build_query($params));
+    }
+
+    public function executeThankyou()
+    {
+    }
+
+    // apps/frontend/modules/contact/templates/thankyouSuccess.php
+    <ul>
+      <li>Name:    <?php echo $sf_params->get('name') ?></li>
+      <li>Email:   <?php echo $sf_params->get('email') ?></li>
+      <li>Message: <?php echo $sf_params->get('message') ?></li>
+    </ul>
+
+>**Note**
+>`http_build_query` は、パラメータの配列から URL エンコードされたクエリ文字列を生成する PHP の組み込み関数です。
+
+`executeSubmit()` メソッドは3つのアクションを実行します:
+
+  * セキュリティを考慮して、HTTP `POST` メソッドを利用してページが投稿されたことをチェックします。`POST` メソッドを利用して送信されていない場合は、ユーザーは404ページにリダイレクトされます。`indexSuccess` テンプレートにおいて、投稿メソッドを `POST` として宣言しました (`<form ... method="POST">`):
+
+        [php]
+        $this->forward404Unless($request->isMethod('post'));
+
+  * 次に、ユーザーの入力値を取得して `params` テーブルに保存します:
+
+        [php]
+        $params = array(
+          'name'    => $request->getParameter('name'),
+          'email'   => $request->getParameter('email'),
+          'message' => $request->getParameter('message'),
+        );
+
+  * 最後に、ユーザーを Thank you ページ (`contact/thankyou`) にリダイレクトして、入力された情報を表示します:
+
+        [php]
+        $this->redirect('contact/thankyou?'.http_build_query($params));
+
+ユーザーを別のページにリダイレクトする代わりに `submitSuccess.php` テンプレートを作る選択肢もありますが、`POST` メソッドによるリクエストの後でユーザーを常にリダイレクトするほうがよい習慣です。
+
+  * ユーザーが Thank you ページをリロードする場合に再投稿を妨げます。
+
+  * ユーザーが戻るボタンをクリックしても、フォームを再投稿するポップアップが表示されません。
+
+>**Tip**
+>`executeSubmit()` が `executeIndex()` と異なることにお気づきになられたでしょうか。
+>これらのメソッドを呼び出すとき、symfony は `executeXXX()` メソッドに最初の引数として現在の `sfRequest` オブジェクトを渡します。
+>PHP ではすべてのパラメータを定義する必要はなく、また `executeIndex()` では `request` 変数は必要なかったため、定義しませんでした。
+
+図1-5で、ユーザーとやりとりするときのメソッドのワークフローを示します。
+
+図1-5 - メソッドのワークフロー
+
+![メソッドのワークフロー](/images/forms_book/en/01_05.png "メソッドのワークフロー")
+
+>**Note**
+>テンプレート内でユーザーの入力を再表示するとき、XSS (クロスサイトスクリプティング) 攻撃のリスクにさらされます。
+>XSSのリスクを回避するためのエスケープ処理の実装に関する詳細な情報は、「A Gentle Introduction to symfony」 の[ビューレイヤーの内側](http://www.symfony-project.org/gentle-introduction/1_4/ja/07-Inside-the-View-Layer#chapter_07_21bde87ccbcb1bc9a11ee6f60075d30dea3621d2)の章をご参照ください。
+
+フォームを投稿すると、図1-6のようなページが表示されます。
+
+図1-6 - フォームを投稿した後に表示されるページ
+
+![フォームを投稿した後に表示されるページ](/images/forms_book/en/01_06.png "フォームを投稿した後に表示されるページ")
+
+`params` 配列を作る代わりに、ユーザーの入力情報を配列に直接取得すると便利です。
+リスト1-6のようにすると、フィールドの値を `contact` 配列に保存するように、ウィジェットが出力する HTML の `name` 属性を修正できます。
+
+リスト1-6 - ウィジェットが出力する HTML の `name` 属性の修正
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+
+`setNameFormat()` を呼び出すことで、すべてのウィジェットが出力する HTML の `name` 属性を修正できます。
+フォームを生成するとき、`%s` は自動的にフィールドの名前に置き換えられます。
+たとえば `email` フィールドでは、`name` 属性は `contact[email]` になります。
+PHP では、`contact[email]` のようなフォーマットを含むリクエストの値に対して、配列が自動的に作成されます。
+このようすると、フィールドの値を `contact` 配列として利用できます。
+
+リスト1-7で示すように、`request` オブジェクトから直接 `contact` 配列を取得できます。
+
+リスト1-7 - アクションウィジェット内の `name` 属性の新しいフォーマット
+
+    [php]
+    public function executeSubmit($request)
+    {
+      $this->forward404Unless($request->isMethod('post'));
+
+      $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+    }
+
+フォームの HTML ソースを表示すると、`name` 属性だけでなく、フィールド名とフォーマットに依存した `id` 属性も symfony によって生成されていることが分かります。
+`id` 属性は、`name` 属性から禁止されている文字をアンダースコア (`_`) に置き換えることで自動的に作成されます:
+
+  | **名前**  | **`name` 属性**     | **`id` 属性**       |
+  | --------- | -------------------- | ------------------- |
+  | name      | contact[name]        | contact_name        |
+  | email     | contact[email]       | contact_email       |
+  | message   | contact[message]     | contact_message     |
+
+### 別の解決方法
+
+この例では、フォームを管理するために2つのアクション: 表示に対して `index`、投稿に対して `submit` を使いました。
+フォームは `GET` メソッドで表示され `POST` メソッドで投稿されることを利用して、リスト1-8で示されるように2つのメソッドを `index` メソッドにマージすることもできます。
+
+リスト1-8 - フォームで使われる2つのアクションをマージする
+
+    [php]
+    class contactActions extends sfActions
+    {
+      public function executeIndex($request)
+      {
+        $this->form = new ContactForm();
+
+        if ($request->isMethod('post'))
+        {
+          $this->redirect('contact/thankyou?'.http_build_query($request->getParameter('contact')));
+        }
+      }
+    }
+
+`indexSuccess.php` テンプレート内のフォームの `action` 属性も変更します:
+
+    [php]
+    <form action="<?php echo url_for('contact/index') ?>" method="POST">
+
+後で説明するように、より短くより首尾一貫してわかりやすいのでこの構文を使うことが望ましいです。
+
+ウィジェットを設定する
+-----------------------
+
+### ウィジェットのオプション
+
+Web サイトが複数人の Web マスターによって管理されている場合、質問内容に応じてメッセージをリダイレクトできるように、分類のドロップダウンリストを追加したいでしょう(図1-7)。
+リスト1-9では、`sfWidgetFormSelect` ウィジェットを利用して、ドロップダウンリストの `subject` を追加します。
+
+図1-7 - `subject` フィールドをフォームに追加する
+
+![subject フィールドをフォームに追加する](/images/forms_book/en/01_07.png "subject フィールドをフォームに追加する")
+
+リスト1-9 - `subject` フィールドをフォームに追加する
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      protected static $subjects = array('Subject A', 'Subject B', 'Subject C');
+
+      public function configure()
+      {
+        $this->setWidgets(array(
+          'name'    => new sfWidgetFormInputText(),
+          'email'   => new sfWidgetFormInputText(),
+          'subject' => new sfWidgetFormSelect(array('choices' => self::$subjects)),
+          'message' => new sfWidgetFormTextarea(),
+        ));
+
+        $this->widgetSchema->setNameFormat('contact[%s]');
+      }
+    }
+
+>**SIDEBAR**
+>`sfWidgetFormSelect` ウィジェットの `choices` オプション
+>
+>PHP は配列と連想配列を区別しないので、サブジェクトのリストに対して使った配列は次のコードと全く同じです:
+>
+>     [php]
+>     $subjects = array(0 => 'Subject A', 1 => 'Subject B', 2 => 'Subject C');
+>
+>生成されたウィジェットでは、`option` タグの `value` 属性として配列のキーを使い、`option` タグの内容としてキーに対応する値を使います:
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="0">Subject A</option>
+>       <option value="1">Subject B</option>
+>       <option value="2">Subject C</option>
+>     </select>
+>
+>`value` 属性を変更するには、配列のキーを定義する必要があります:
+>
+>     [php]
+>     $subjects = array('A' => 'Subject A', 'B' => 'Subject B', 'C' => 'Subject C');
+>
+>次のような HTML テンプレートが生成されます:
+>
+>     [php]
+>     <select name="contact[subject]" id="contact_subject">
+>       <option value="A">Subject A</option>
+>       <option value="B">Subject B</option>
+>       <option value="C">Subject C</option>
+>     </select>
+
+`sfWidgetFormSelect` ウィジェットは、すべてのウィジェットと同じように、最初の引数としてオプションのリストを受け取ります。
+オプションは必須もしくはオプションです。
+`sfWidgetFormSelect` ウィジェットでは、`choices` オプションは必須です。これまでに見てきたウィジェットで利用可能なオプションは下記のとおりです:
+
+  | **ウィジェット**       | **必須のオプション** | **追加のオプション**           |
+  | ---------------------- | --------------------- | -------------------------------- |
+  | `sfWidgetFormInputText`    | -                     | `type` (デフォルトは `text`)       |
+  |                        |                       | `is_hidden` (デフォルトは `false`) |
+  | `sfWidgetFormSelect`   | `choices`             | `multiple` (デフォルトは `false`)  |
+  | `sfWidgetFormTextarea` | -                     | -                                   |
+
+>**Tip**
+>ウィジェットのすべてのオプションを知りたければ、([http://www.symfony-project.org/api/1_4/](http://www.symfony-project.org/api/1_4/))で、オンラインで利用できる完全な API ドキュメントを参照できます。
+>追加のオプションやデフォルト値も合わせて、すべてのオプションが説明されています。
+>たとえば `sfWidgetFormSelect` のすべてのオプションは、次のURLで調べることができます: ([http://www.symfony-project.org/api/1_4/sfWidgetFormSelect](http://www.symfony-project.org/api/1_4/sfWidgetFormSelect)).
+
+### ウィジェットの HTML 属性
+
+それぞれのウィジェットは、HTML 属性のリストを2番目のオプション引数で受け取ることもできます。
+これは、生成するタグのデフォルトの HTML 属性を定義するために非常に役立ちます。
+リスト1-10では、`class` 属性を `email` フィールドに追加する方法を示しています。
+
+リスト1-10 - ウィジェットに対して属性を定義する
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email'));
+
+    // 生成されたHTML
+    <input type="text" name="contact[email]" class="email" id="contact_email" />
+
+リスト1-11で示されるように、HTML 属性を使用すると、自動的に生成された `id` 属性を上書きできます。
+
+リスト1-11 - `id` 属性を上書きする
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('class' => 'email', 'id' => 'email'));
+
+    // 生成された HTML
+    <input type="text" name="contact[email]" class="email" id="email" />
+
+リスト1-12で示されるように、`value` 属性を利用してデフォルト値をフィールドに設定することも可能です。
+
+リスト1-12 - HTML 属性経由のウィジェットのデフォルト値
+
+    [php]
+    $emailWidget = new sfWidgetFormInputText(array(), array('value' => 'Your Email Here'));
+
+    // 生成されたHTML
+    <input type="text" name="contact[email]" value="Your Email Here" id="contact_email" />
+
+このオプションは `input` ウィジェットに対して利用できますが、`checkbox` や `radio` ウィジェットでは正しく機能せず、`textarea` ウィジェットでは利用できません。
+`sfForm` クラスには、任意のタイプのウィジェットに対して統一された方法で、それぞれのフィールドのデフォルト値を定義する特別なメソッドがあります。
+
+
+>**Note**
+>第3章で説明するレイヤーの分離を保持するために、(可能であっても) HTML 属性をフォームクラスで定義するのではなく、テンプレートで定義することを推奨します。
+
+### フィールドに対してデフォルトの値を定義する
+
+それぞれのフィールドに対してデフォルト値を定義しておくと便利です。
+たとえば、ユーザーがフィールドにフォーカスを移すと消えるヘルプメッセージを、フィールド内に表示するときです。
+リスト1-13では、`setDefault()` と `setDefaults()` メソッドを利用してデフォルト値を定義する方法を示しています。
+
+リスト1-13 - `setDefault()` と `setDefaults()` メソッド経由のウィジェットのデフォルト値
+
+    [php]
+    class ContactForm extends BaseForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->setDefault('email', 'Your Email Here');
+
+        $this->setDefaults(array('email' => 'Your Email Here', 'name' => 'Your Name Here'));
+      }
+    }
+
+`setDefault()` と `setDefaults()` メソッドは同じフォームクラスのすべてのインスタンスに対して理想的なデフォルト値を定義するためにとても便利です。
+フォームを使用する既存のオブジェクトを修正したい場合、デフォルトの値はインスタンスに依存するので、それゆえこれらは動的でなければなりません。
+リスト1-14は `sfForm` コンストラクタがデフォルトの値を動的に設定する最初の引数を持つことを示します。
+
+リスト1-14 - `sfForm` のコンストラクタでウィジェットのデフォルト値を設定する
+
+    [php]
+    public function executeIndex($request)
+    {
+      $this->form = new ContactForm(array('email' => 'Your Email Here', 'name' => 'Your Name Here'));
+
+      // ...
+    }
+
+>**SIDEBAR**
+>XSS (クロスサイトスクリプティング) の対策
+>
+>ウィジェットに対してHTML属性を設定するか、デフォルト値を定義すると、`sfForm` クラスでは HTML コードを生成する際に XSS 攻撃に対してこれらの値を自動的に保護します。
+>この保護は `settings.yml` ファイルの `escaping_strategy` 設定に依存しません。
+>内容が別のメソッドによってすでに保護された場合、保護は再度適用されません。
+>
+>この処理で、生成された HTML を無効にする可能性がある `'` と `"` の文字も保護します。
+>
+>下記のコードはこの保護方法の例です:
+>
+>     [php]
+>     $emailWidget = new sfWidgetFormInputText(array(), array(
+>       'value' => 'Hello "World!"',
+>       'class' => '<script>alert("foo")</script>',
+>     ));
+>     
+>     // 生成されたHTML
+>     <input
+>       value="Hello &quot;World!&quot;"
+>       class="&lt;script&gt;alert(&quot;foo&quot;)&lt;/script&gt;"
+>       type="text" name="contact[email]" id="contact_email"
+>     />

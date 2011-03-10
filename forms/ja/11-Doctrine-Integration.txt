@@ -1,0 +1,1121 @@
+第11章 - Doctrine との統合
+===========================
+
+Web プロジェクトにおいて、たいていのフォームはモデルオブジェクトを作成もしくは修正するために使われます。
+これらのオブジェクトは ORM のおかげで通常はシリアライズされデータベースに保存されます。
+symfony のフォームシステムは symfony の組み込みの ORM である Doctrine とやりとりするための追加レイヤーを提供します。 
+これによってこれらのモデルオブジェクトに基づくフォームの実装が楽になります。
+
+この章ではフォームと Doctrine のオブジェクトモデルを統合する方法の詳細を説明します。
+Doctrine と symfony の統合機能に慣れていることが大いに推奨されます。
+そうでなければ、「symfony and Doctrine book：(http://www.symfony-project.org/doctrine/1_2/ja/)をご参照ください。
+
+始める前に
+----------
+
+この章において、記事の管理システムを作ります。
+データベースのスキーマから始めてみましょう。
+これはリスト4-1で示されるような5つのテーブル:`article`、`author`、`category`、`tag` と `article_tag` で構成されます。
+
+リスト4-1 - データベーススキーマ
+
+    [yml]
+    // config/doctrine/schema.yml
+    Article:
+      actAs: [Sluggable, Timestampable]
+      columns:
+        title:
+          type: string(255)
+          notnull: true
+        content:
+          type: clob
+        status: string(255)
+        author_id: integer
+        category_id: integer
+        published_at: timestamp
+      relations:
+        Author:
+          foreignAlias: Articles
+        Category:
+          foreignAlias: Articles
+        Tags:
+          class: Tag
+          refClass: ArticleTag
+          foreignAlias: Articles
+    Author:
+      columns:
+        first_name: string(20)
+        last_name: string(20)
+        email: string(255)
+        active: boolean
+    Category:
+      columns:
+        name: string(255)
+    Tag:
+      columns:
+        name: string(255)
+    ArticleTag:
+      columns:
+        article_id:
+          type: integer
+          primary: true
+        tag_id:
+          type: integer
+          primary: true
+      relations:
+        Article:
+          onDelete: CASCADE
+        Tag:
+          onDelete: CASCADE
+
+テーブル間のリレーションは次のとおりです:
+
+  * `article` と `author` テーブルは一対多のリレーション: 記事は1人の著者によってのみ書かれる
+  * `article` と `category` テーブルは一対多のリレーション: 記事は1つのカテゴリに所属するもしくはまったく所属しない
+  * `article` と `tag` テーブル間の多対多のリレーション
+
+フォームクラスを生成する
+------------------------
+
+`article`、`author`、`category` と `tag` テーブルの情報を編集することを考えます。
+これを行うには、これらのそれぞれのテーブルにリンクされたフォームを作りデータベースのスキーマに関連するウィジェットとスキーマを設定する必要があります。
+これらのフォームをマニュアル通りに作ることは可能ですが、長く退屈なタスクで、結局のところ、複数のファイルにおいて同じ種類の情報の反復が強制させられます (カラムとフィールド名、カラムとフィールドの最大サイズ・・・)。
+さらに、モデルを変更するたびに、関連するフォームクラスも変更しなければなりません。
+幸いにして、Doctrine プラグインに組み込まれている `doctrine:build-forms` タスクはオブジェクトモデルに関連するフォームを生成するこの作業を自動化します:
+
+    $ ./symfony doctrine:build-forms
+
+フォーム生成の間に、タスクはモデルのイントロスペクションを利用しテーブル間のリレーションを考慮してテーブルごとにそれぞれのカラム用のバリデータとウィジェットを持つ1つのクラスを作ります。
+
+>**Note**
+>`doctrine:build-all` と `doctrine:build-all-load` は `doctrine:build-forms` タスクを自動的に起動させてフォームクラスも更新します。
+
+これらのタスクを実行した後で、ファイル構造が `lib/form/` ディレクトリの中に作られます。
+上記の例のスキーマのために作られたファイルは次のとおりです:
+
+    lib/
+      form/
+        doctrine/
+          ArticleForm.class.php
+          ArticleTagForm.class.php
+          AuthorForm.class.php
+          CategoryForm.class.php
+          TagForm.class.php
+          base/
+            BaseArticleForm.class.php
+            BaseArticleTagForm.class.php
+            BaseAuthorForm.class.php
+            BaseCategoryForm.class.php
+            BaseFormDoctrine.class.php
+            BaseTagForm.class.php
+
+`doctrine:build-forms` タスクはスキーマのそれぞれのテーブル用の2つのクラスを生成し、1つの基底クラスは `lib/form/base` ディレクトリに、もう1つの基底クラスは `lib/form/` ディレクトリです。
+たとえば、`author` テーブルは `BaseAuthorForm` と `AuthorForm` クラスで構成され、これらのクラスは `lib/form/base/BaseAuthorForm.class.php` と `lib/form/AuthorForm.class.php` ファイルに生成されました。
+
+下記のテーブルは `AuthorForm` フォームの定義に関連する異なったクラス間の階層をまとめています。
+
+**クラス**       | **パッケージ**  | **対象**  | **説明**
+---------------- | --------------- | --------- | --------------------------------
+AuthorForm       | project         | developer | 生成フォームをオーバーライドする
+BaseAuthorForm   | project         | symfony   | スキーマに基づき `doctrine:build-forms` タスクの実行ごとにオーバーライドされる
+BaseFormDoctrine | project         | developer | Doctrine フォームのグローバルなカスタマイズを許可する
+sfFormDoctrine   | Doctrine plugin | symfony   | Doctrine フォームの基底クラス
+sfForm           | symfony         | symfony   | symfony フォームの基底クラス
+
+`Author` クラスからオブジェクトを作成もしくは編集するために、リスト4-2で説明された `AuthorForm` クラスを使います。
+お気づきのように、このクラスは設定を通して生成された `BaseAuthorForm` を継承していますが、メソッドを含みません。`AuthorForm` クラスは設定をカスタマイズしてオーバーライドするために使うクラスです。
+
+リスト4-2 - `AuthorForm` クラス
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+      }
+    }
+
+リスト4-3は `author` テーブル用のモデルをイントロスペクトして生成されたバリデータとウィジェットを持つ `BaseAuthorForm` クラスを示しています。
+
+リスト4-3 - `author` テーブルのためのフォームを表す `BaseAuthorForm` クラス
+
+    [php]
+    class BaseAuthorForm extends BaseFormDoctrine
+    {
+      public function setup()
+      {
+        $this->setWidgets(array(
+          'id'         => new sfWidgetFormInputHidden(),
+          'first_name' => new sfWidgetFormInputText(),
+          'last_name'  => new sfWidgetFormInputText(),
+          'email'      => new sfWidgetFormInputText(),
+        ));
+
+        $this->setValidators(array(
+          'id'         => new sfValidatorDoctrineChoice(array('model' => 'Author', 'column' => 'id', 'required' => false)),
+          'first_name' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'last_name'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+          'email'      => new sfValidatorString(array('max_length' => 255)),
+        ));
+
+        $this->widgetSchema->setNameFormat('author[%s]');
+
+        $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+        parent::setup();
+      }
+
+      public function getModelName()
+      {
+        return 'Author';
+      }
+    }
+
+生成クラスはわずかな違いを除いて、以前の章ですでに作成されたフォームによく似ています:
+
+  * 基底クラスは `sfForm` の代わりに `BaseFormDoctrine`
+  * バリデータとウィジェットの設定は `configure()` メソッドの代わりに、`setup()` メソッドによって行われる
+  * `getModelName()` メソッドはこのフォームに関連する Doctrine クラスを返す
+
+>**SIDEBAR**
+>Doctrine フォームのグローバルなカスタマイズ
+>
+>それぞれのテーブル用に生成されたクラスに加えて、`doctrine:build-forms` は `BaseFormDoctrine` クラスも生成します。
+>この空のクラスは `lib/form/base/` ディレクトリのなかの他のすべての生成クラスの基底クラスであり、Doctrine のすべてのフォームのふるまいをグローバルに設定することを可能にします。
+>たとえば、すべての Doctrine フォーム用のデフォルトのフォーマッターを簡単に変更できます:
+>
+>     [php]
+>     abstract class BaseFormDoctrine extends sfFormDoctrine
+>     {
+>       public function setup()
+>       {
+>         sfWidgetFormSchema::setDefaultFormFormatterName('div');
+>       }
+>     }
+>
+>`BaseFormDoctrine` クラスが `sfFormDoctrine` クラスを継承することがわかります。
+>このクラスは Doctrine 固有の機能に連動せずデータベースにおいてフォームに投稿された値からのオブジェクトのシリアライズを処理します。
+
+-
+
+>**TIP**
+>基底クラスは設定のために `configure` メソッドの代わりに `setup()` メソッドを使います。
+>これによって開発者は `parent::configure()` の呼び出しに対処せずに空の生成クラスの設定をオーバーライドできます。
+
+フォームのフィールド名はスキーマ: `id`、`first_name`、`last_name` と `email` に設定するカラム名に対して理想的なものです。
+
+`author` テーブルのそれぞれのカラムに対して、`doctrine:build-forms` タスクはスキーマの定義に従ってウィジェットとバリデータを生成します。
+タスクは可能な限り常に最も安全なバリデータを生成します。`id`フィールドを考えてみましょう。
+値が有効な整数であるかチェックできます。
+代わりにここで生成されたバリデータによって (既存のオブジェクトを編集するために) 識別子が実際に存在するもしくは (新しいオブジェクトを作ることができるように) 識別子が空であることをバリデートできます。
+これはより強いバリデーションです。
+
+生成フォームは即座に使うことができます。
+`<?php echo $form ?>` ステートメントを追加すれば、**コードを一行も書かずに**バリデーション機能を持つフォームを作ることができます。
+
+プロトタイプを素早く作る機能を越えて、生成クラスを修正しなくても生成フォームを拡張するのは簡単です。
+これは基底とフォームクラスの継承システムのおかげです。
+
+最後にデータベースのスキーマを拡張するたびに、タスクによって、以前行ったカスタマイズを上書きせずに、スキーマの修正を考慮するためにフォームを再生成することができます。
+
+CRUD ジェネレーター
+------------------
+
+これでフォームクラスが生成されたので、ブラウザからオブジェクトを扱うために symfony モジュールを作る作業がどんなに簡単なことであるか見てみましょう。
+`Article`、`Author`、`Category` と `Tag` クラスからオブジェクトの作成、修正、削除を行うことを考えてみます。
+`Author` クラス用のモジュールを作ることを始めましょう。
+手作業でモジュールを作るとしても、Doctrine のプラグインはオブジェクトモデルに基づいて CRUD モジュールを生成する `doctrine:generate-crud` タスクを提供します。
+以前のセクションで生成したフォームを使います:
+
+    $ ./symfony doctrine:generate-crud frontend author Author
+
+`doctrine:generate-crud` タスクは3つの引数を受け取ります:
+
+  * `frontend` : モジュールを作りたいアプリケーションの名前
+  * `author`  : 作りたいモジュールの名前
+  * `Author`  : モジュールのために作りたいモデルクラスの名前
+
+>**Note**
+>CRUD は Creation/Retrieval/Update/Deletion を表しモデルのデータで実行できる基本的な4つのオペレーションを要約しています。
+
+リスト4-4において、`Author` クラスのオブジェクトを一覧表示 (`index`)、修正 (`edit`)、保存 (`update`) と削除 (`delete`) できるようにする5つのアクションをタスクが生成したことを見ます。
+
+リスト4-4 - タスクによって生成された `authorActions` クラス
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->authorList = $this->getAuthorTable()->findAll();
+      }
+
+      public function executeCreate()
+      {
+        $this->form = new AuthorForm();
+
+        $this->setTemplate('edit');
+      }
+
+      public function executeEdit($request)
+      {
+        $this->form = $this->getAuthorForm($request->getParameter('id'));
+      }
+
+      public function executeUpdate($request)
+      {
+        $this->forward404Unless($request->isMethod('post'));
+
+        $this->form = $this->getAuthorForm($request->getParameter('id'));
+
+        $this->form->bind($request->getParameter('author'));
+        if ($this->form->isValid())
+        {
+          $author = $this->form->save();
+
+          $this->redirect('author/edit?id='.$author->get('id'));
+        }
+
+        $this->setTemplate('edit');
+      }
+
+      public function executeDelete($request)
+      {
+        $this->forward404Unless($author = $this->getAuthorById($request->getParameter('id')));
+
+        $author->delete();
+
+        $this->redirect('author/index');
+      }
+
+      private function getAuthorTable()
+      {
+        return Doctrine::getTable('Author');
+      }
+
+      private function getAuthorById($id)
+      {
+        return $this->getAuthorTable()->find($id);
+      }
+
+      private function getAuthorForm($id)
+      {
+        $author = $this->getAuthorById($id);
+
+        if ($author instanceof Author)
+        {
+          return new AuthorForm($author);
+        }
+        else
+        {
+          return new AuthorForm();
+        }
+      }
+    }
+
+このモジュールにおいて、フォームのライフサイクルは3つのメソッド: `create`、`edit` と `update` メソッドによって対処されます。`--non-atomic-actions` オプションをつけることで、`doctrine:generate-crud` タスクに以前の3つのメソッドの機能のみをカバーする1つのメソッドだけを生成するように頼むこともできます:
+
+    $ ./symfony doctrine:generate-crud frontend author Author --non-atomic-actions
+
+`--non-atomic-actions` (リスト4-5) を利用して生成されたコードはより簡潔でより冗長ではありません。
+
+リスト4-5 - `--non-atomic-actions` オプションで生成された `authorActions` クラス
+
+    [php]
+    class authorActions extends sfActions
+    {
+      public function executeIndex()
+      {
+        $this->authorList = $this->getAuthorTable()->findAll();
+      }
+
+      public function executeEdit($request)
+      {
+        $this->form = new AuthorForm(Doctrine::getTable('Author')->find($request->getParameter('id')));
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('author'));
+          if ($this->form->isValid())
+          {
+            $author = $this->form->save();
+
+            $this->redirect('author/edit?id='.$author->getId());
+          }
+        }
+      }
+
+      public function executeDelete($request)
+      {
+        $this->forward404Unless($author = Doctrine::getTable('Author')->find($request->getParameter('id')));
+
+        $author->delete();
+
+        $this->redirect('author/index');
+      }
+    }
+
+タスクは `indexSuccess` と `editSuccess` の2つのテンプレートも生成しました。
+`<?php echo $form ?>` ステートメントを使わずに `editSuccess` テンプレートが生成されました。
+`--non-verbose-templates` を指定して、このふるまいを修正できます:
+
+    $ ./symfony doctrine:generate-crud frontend author Author --non-verbose-templates
+
+リスト4-6が示すように、このオプションはプロトタイプの期間で便利です。
+
+リスト4-6 - `editSuccess` テンプレート
+
+    [php]
+    // apps/frontend/modules/author/templates/editSuccess.php
+    <?php $author = $form->getObject() ?>
+    <h1><?php echo $author->isNew() ? 'New' : 'Edit' ?> Author</h1>
+
+    <form action="<?php echo url_for('author/edit'.(!$author->isNew() ? '?id='.$author->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+      <table>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              &nbsp;<a href="<?php echo url_for('author/index') ?>">Cancel</a>
+              <?php if (!$author->isNew()): ?>
+                &nbsp;<?php echo link_to('Delete', 'author/delete?id='.$author->getId(), array('post' => true, 'confirm' => 'Are you sure?')) ?>
+              <?php endif; ?>
+              <input type="submit" value="Save" />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <?php echo $form ?>
+        </tbody>
+      </table>
+    </form>
+
+>**TIP**
+>`--with-show` オプションによってオブジェクトを閲覧する (読み込みだけ) ために使うアクションとテンプレートを生成できます。 
+
+生成モジュール (図4-1と図4-2) を見るために `/frontend_dev.php/author` の URL をブラウザで開くことができます。
+インターフェイスで少し遊んでみてください。
+生成モジュールのおかげで著者の一覧を見る、新しい筆者を追加、修正、削除することさえできます。
+バリデーションのルールも機能していることもわかります。
+
+図4-1 - 著者の一覧
+
+![図の一覧](/images/forms_book/en/04_01.png "著者の一覧")
+
+図4-2 - バリデーションエラーがある著者を編集する
+
+![バリデーションエラーがある著者を編集する](/images/forms_book/en/04_02.png "バリデーションエラーがある著者を編集する")
+
+`Article` クラスでこのオペレーションを繰り返すことができます:
+
+    $ ./symfony doctrine:generate-crud frontend article Article --non-verbose-templates --non-atomic-actions
+
+生成コードは `Author` クラスのコードとよく似ています。
+しかしながら、新しい記事を作ろうとすると、コードは図4-3で見られるような致命的エラーが投げられます。
+
+図4-3 - リンクされたテーブルは `__toString()` メソッドを定義しなければならない
+
+![リンクされたテーブルは __toString() メソッドを定義しなければならない](/images/forms_book/en/04_03.png "リンクされたテーブルは __toString() メソッドを定義しなければならない")
+
+`ArticleForm` フォームは `Article` オブジェクトと `Author` オブジェクトの間のリレーションを表現するために `sfWidgetFormDoctrineSelect` ウィジェットを使います。
+このウィジェットは著者のドロップダウンリストを作ります。
+表示の間、`__toString()` マジックメソッドを使って `Author` オブジェクトは文字列に変換されます。
+リスト4-7で示されるように`__toString()` マジックメソッドは `Author` クラスの中で定義しなけばなりません。
+
+リスト4-7 - `Author` クラスのために `__toString()` メソッドを実装する
+
+    [php]
+    class Author extends BaseAuthor
+    {
+      public function __toString()
+      {
+        return $this->getFirstName().' '.$this->getLastName();
+      }
+    }
+
+`Author` クラスのように、他のモデルのクラス: `Article`、`Category` と `Tag` 用の `__toString()` メソッドを作ることができます
+
+>**Note**
+>sfDoctrineRecord は 基底の `__toString()` が指定されていない場合それを推測しようとします。文字列の表現として使うために、これはタイトル、名前、題目、などの名前を持つカラムをチェックします。
+
+-
+
+>**Tip**
+>`sfWidgetFormDoctrineSelect` ウィジェットの `method` オプションはオブジェクトをテキスト形式で表現するために使われるメソッドを変更します。
+
+図4-4は `__toString()` メソッドを実装した後で記事を作る方法を示します。
+
+図4-4 - 記事を作る
+
+![記事を作る](/images/forms_book/en/04_04.png "Articleを作る")
+
+生成フォームをカスタマイズする
+------------------------------
+
+`doctrine:build-forms` と `doctrine:generate-crud` タスクによってモデルオブジェクトの一覧を表示、作成、編集する機能を持つモジュールを作ることができます。
+これらのモジュールはモデルのバリデーションルールだけでなくテーブル間のリレーションも考慮されます。
+これらすべては一行のコードを書かずに行われます！
+
+生成コードをカスタマイズしましょう。
+フォームクラスがすでに多くの要素を考慮しているのであれば、いくつかの面でカスタマイズする必要があります。
+
+### バリデータとウィジェットを設定する
+
+デフォルトで生成されたバリデータとウィジェットを設定することを始めましょう。
+
+`ArticleForm` フォームは `slug` フィールドを持ちます。
+スラッグは URL の中で記事を一意的に表す文字列です。
+たとえば、タイトルが「Optimize the developments with symfony」である記事のスラッグは `12-optimize-the-developments-with-symfony` で、`12`は記事の `id` です。
+オブジェクトが保存されたときこのフィールドは `title` に従って自動的に算出されますが、これは明らかにユーザーによって上書きされる可能性があります。
+このフィールドがスキーマに必要であるとしても、フォームに必須なものになることはありません。
+リスト4-8で示されるように、これがバリデータを修正してオプションを追加する理由です。
+`content` フィールドのサイズを増やしてユーザーが少なくとも5文字を入力するようにもカスタマイズします。
+
+リスト4-8 - バリデータとウィジェットをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+      }
+    }
+
+ここでは `validatorSchema` と `widgetSchema` オブジェクトを PHP 配列として使います。
+これらの配列はフィールドの名前をキーとしてとり、バリデータオブジェクトとウィジェットの関連オブジェクトをそれぞれ返します。
+フィールドとウィジェットを個別にカスタマイズできます。
+
+>**Note**
+>オブジェクトを PHP 配列として使うために、`sfValidatorSchema` と `sfWidgetFormSchema` クラスが PHP 5 以降で利用可能な `ArrayAccess` インターフェイスを実装します。
+
+2つの記事が同じ `slug` を持たないことを確認するために、一意性の制約がスキーマの定義に追加されました。
+データベースレベルでのこの制約は `sfValidatorDoctrineUnique` バリデータを使って `ArticleForm` フォームに反映されます。このバリデータは任意のフォームフィールドの一意性をチェックできます。
+これはとりわけログインのメールアドレスの一意性をチェックするために役立ちます。
+リスト4-9は `ArticleForm` フォームの中でこれを使う方法を示しています。
+
+リスト4-9 - フィールドの一意性をチェックするために `sfValidatorDoctrineUnique` バリデータを使う
+
+    [php]
+    class BaseArticleForm extends BaseFormDoctrine
+    {
+      public function setup()
+      {
+        // ...
+
+        $this->validatorSchema->setPostValidator(
+          new sfValidatorDoctrineUnique(array('model' => 'Article', 'column' => array('slug')))
+        );
+      }
+    }
+
+`sfValidatorDoctrineUnique` バリデータはそれぞれのフィールドの個別のバリデーションを行った後にデータ全体に実行する `postValidator` です。
+`slug` の一意性をバリデートするには、バリデータは `slug` の値だけでなくプライマリキーにもアクセスできなければなりません。
+スラッグは記事の更新の間は同じ状態を保つことができるので記事の作成と編集のすべての間においてバリデーションのルールは本当に異なります。
+
+著者がアクティブであるか知るために使われる `author` テーブルの `active` フィールドをカスタマイズしてみましょう。
+リスト4-10は `author_id` に接続される `FormDoctrineSelect` ウィジェットの `query` オプションを修正することで、`ArticleForm` フォームからアクティブではない著者を除外する方法を示しています。
+`query` オプションは Doctrine Query オブジェクトを受け取り、ローリングリストの利用可能なリストを絞り込むことができます。
+
+リスト4-10 - `sfWidgetFormDoctrineSelect` ウィジェットをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+        $this->widgetSchema['author_id']->setOption('query', $query);
+      }
+    }
+
+ウィジェットのカスタマイズによって利用可能なオプションのリストの範囲を絞ることができるとしても、リスト4-11で示されるように、バリデータレベル上で絞るこれを忘れてはなりません。
+`sfWidgetProperSelect` ウィジェットのように、`sfValidatorDoctrineChoice` バリデータはフィールドに対して有効なオプションの範囲を絞るために `query` オプションを受け取ります。
+
+リスト4-11 - `sfValidatorDoctrineChoice` バリデータをカスタマイズする
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+
+        $this->widgetSchema['author_id']->setOption('query', $query);
+        $this->validatorSchema['author_id']->setOption('query', $query);
+      }
+    }
+
+前の例では`configure()`メソッドの中で`Query`オブジェクトを直接定義しました。
+私たちのプロジェクトにおいて、このクエリは他の状況においても必ず役に立ちますので、リスト4-12が示すように`AuthorPeer`クラスの範囲内で`getActiveAuthorsQuery()`メソッドを作り`ArticleForm`からこのメソッドを呼び出すほうがよいです。
+
+リスト4-12 - モデルの`Query`をリファクタリングする
+
+    [php]
+    class AuthorTable extends Doctrine_Table
+    {
+      public function getActiveAuthorsQuery()
+      {
+        $query = Doctrine_Query::create()
+          ->from('Author a')
+          ->where('a.active = ?', true);
+
+        return $query;
+      }
+    }
+
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $authorQuery = Doctrine::getTable('Author')->getActiveAuthorsQuery();
+        $this->widgetSchema['author_id']->setOption('query', $authorQuery);
+        $this->validatorSchema['author_id']->setOption('query', $authorQuery);
+      }
+    }
+
+### バリデータを変更する
+
+`email` はスキーマの中で `string(255)` として定義されたので、symfony は文字数の最大長を255字に制限する `sfValidatorString()` バリデータを作りました。
+このフィールドは有効なメールを受け取ることにもなっており、リスト4-14は生成されたバリデータを `sfValidatorEmail` バリデータに置き換えます。
+
+リスト4-13 - `AuthorForm` クラスの `email` フィールドのバリデータを変更する
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorEmail();
+      }
+    }
+
+### バリデータを追加する
+
+前の章で生成されたバリデータを修正する方法を観察しました。
+`email` フィールドの場合、これは最大長のバリデーションを維持するために便利です。リスト4-14において、Eメールの妥当性を保証してフィールドに対して許容される最大の長さをチェックするために `sfValidatorAnd` バリデータを使います。
+
+リスト4-14 - 複数のバリデータを使う
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          new sfValidatorString(array('max_length' => 255)),
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+以前の例は完璧ではありません。
+データベースのスキーマ内の `email` フィールドの長さを後で修正することを決める場合、フォームの中でもこれを考えなければならなくなるからです。
+生成されたバリデータを置き換える代わりに、リスト4-15で示されるように、バリデータを追加するほうがよいです。
+
+リスト4-15 - バリデータを追加する
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+### ウィジェットを変更する
+
+データベースのスキーマにおいて、`article` テーブルの `status` フィールドは記事のステータスを文字列として保存します。
+リスト4-16で示されるように、利用可能な値は `ArticePeer` クラスの中で定義されました。
+
+リスト4-16 - 利用可能なステータスを `ArticlePeer` クラスの中で定義する
+
+    [php]
+    class ArticleTable extends Doctrine_Table
+    {
+      static protected $statuses = array('draft', 'online', 'offline');
+
+      static public function getStatuses()
+      {
+        return self::$statuses;
+      }
+
+      // ...
+    }
+
+記事を編集するとき、`status` フィールドはテキストフィールドの代わりにドロップダウンのリストとして表されなければなりません。こ
+れを行うには、リスト4-17で示されるように、先ほど使用したウィジェットを変更してみましょう。
+
+リスト4-17 - `status` フィールドのためのウィジェットを変更する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticleTable::getStatuses()));
+      }
+    }
+
+完全にするために、選択されたステータスが実際に可能なオプションのリストに所属することを確かめるためにバリデータも変更しなければなりません (リスト4-18)。
+
+リスト4-18 - `status` フィールドバリデータを修正する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $statuses = ArticleTable::getStatuses();
+        
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => $statuses));
+
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys($statuses)));
+      }
+    }
+
+### フィールドを削除する
+
+`article` テーブルは `created_at` と `updated_at` の特別なカラムを2つ持ちます。
+それぞれのカラムは Doctrine によって自動的に扱われます。
+リスト4-19が示すように、ユーザーがこれらのカラムを修正しないように、これらのカラムをフォームから削除しなければなりません。
+
+リスト4-19 - フィールドを削除する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+      
+        unset($this->validatorSchema['created_at']);
+        unset($this->widgetSchema['created_at']);
+     
+        unset($this->validatorSchema['updated_at']);
+        unset($this->widgetSchema['updated_at']);
+
+        unset($this->validatorSchema['published_at']);
+        unset($this->widgetSchema['published_at']);
+      }
+    }
+
+フィールドを削除するには、フィールドのバリデータとウィジェットを削除することが必要です。
+フォームを PHP 配列として使うことで、両方を一度に削除することも可能であることを示しています。
+
+リスト4-20 - フォームを PHP 配列として使用してフィールドを削除する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        unset($this['created_at'], $this['updated_at'], $this['published_at']);
+      }
+    }
+
+### 要約
+
+要約するために、リスト4-21とリスト4-22はカスタマイズする `ArticleForm` と `AuthorForm` フォームを示します。
+
+リスト4-21 - `ArticleForm` フォーム
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        $authorQuery = Doctrine::getTable('Author')->getActiveAuthorsQuery();
+
+        // ウィジェット
+        $this->widgetSchema['content']->setAttributes(array('rows' => 10, 'cols' => 40));
+        $this->widgetSchema['status'] = new sfWidgetFormSelect(array('choices' => ArticleTable::getStatuses()));
+        $this->widgetSchema['author_id']->setOption('query', $authorQuery);
+
+        // バリデータ
+        $this->validatorSchema['slug']->setOption('required', false);
+        $this->validatorSchema['content']->setOption('min_length', 5);
+        $this->validatorSchema['status'] = new sfValidatorChoice(array('choices' => array_keys(ArticleTable::getStatuses())));
+        $this->validatorSchema['author_id']->setOption('query', $authorQuery);
+
+        unset($this['created_at'], $this['updated_at'], $this['published_at']);
+      }
+    }
+
+リスト4-22 - `AuthorForm` フォーム
+
+    [php]
+    class AuthorForm extends BaseAuthorForm
+    {
+      public function configure()
+      {
+        $this->validatorSchema['email'] = new sfValidatorAnd(array(
+          $this->validatorSchema['email'],
+          new sfValidatorEmail(),
+        ));
+      }
+    }
+
+`doctrine:build-forms` を使うことでフォームはオブジェクトモデルをイントロスペクトしてたいていの要素を自動的に生成できます。
+この自動化はいくつかの理由から役に立ちます:
+
+  * これによって繰り返される冗長な作業をしなくても済むので、開発者の生活が楽になります。開発者はプロジェクト固有のビジネスルールに従ってバリデータとウィジェットのカスタマイズに集中できます。
+
+  * 加えて、データベースのスキーマが更新されたとき、生成されたフォームは自動的に更新されます。開発者は自らが行ったカスタマイズを調整しなければなりません。
+
+次のセクションではアクションのカスタマイズと `doctrine:generate-crud` タスクによって生成されたテンプレートを説明します。
+
+フォームのシリアライズ
+-----------------------
+
+以前の章では `doctrine:build-forms` タスクによって生成されたフォームをカスタマイズする方法を示しました。
+現在のセクションにおいて、`doctrine:generate-crud` タスクで生成されたコードから始めて、フォームのライフサイクルをカスタマイズすることにします。
+
+### デフォルトの値
+
+**Doctrine フォームのインスタンスは常に Doctrine オブジェクトに接続されます**。
+リンクされた Doctrine オブジェクトは `getModelName()` メソッドによって返されたクラスに常に所属します。
+たとえば、`AuthorForm` フォームは `Author` クラスに所属するオブジェクトのみにリンクできます。
+このオブジェクトは空のオブジェクト (`Author` クラスの空のインスタンス)、もしくはコンストラクタに最初の引数として送り出されるオブジェクトのどちらかです。
+"平均的な"フォームのコンストラクタは値の配列を最初の引数として受け取るのに対して、Doctrine フォームのコンストラクタは Doctrine のオブジェクトを受け取ります。
+このオブジェクトはそれぞれのフィールドのデフォルトの値を定義するために使われます。
+`getObject()` メソッドは現在のインスタンスに関連するオブジェクトを返し `isNew()` メソッドによってオブジェクトがコンストラクタを通して送り出されたことを知ることができます:
+
+    [php]
+    // 新しいオブジェクトを作る
+    $authorForm = new AuthorForm();
+
+    print $authorForm->getObject()->getId(); // null を出力する
+    print $authorForm->isNew();              // true を出力する
+
+    // 既存のオブジェクトを修正する
+    $author = Doctrine::getTable('Author')->find(1);
+    $authorForm = new AuthorForm($author);
+
+    print $authorForm->getObject()->getId(); // 1を出力する
+    print $authorForm->isNew();              // false を出力する
+
+### ライフサイクルに対処する
+
+この章の始めで見たように、リスト4-23で示される、`edit` アクションは、フォームのライフサイクルに対処します。
+
+リスト4-23 - `author` モジュールの `executeEdit` メソッド
+
+    [php]
+    // apps/frontend/modules/author/actions/actions.class.php
+    class authorActions extends sfActions
+    {
+      // ...
+
+      public function executeEdit($request)
+      {
+        $author = Doctrine::getTable('Author')->find($request->getParameter('id'));
+        $this->form = new AuthorForm($author);
+
+        if ($request->isMethod('post'))
+        {
+          $this->form->bind($request->getParameter('author'));
+          if ($this->form->isValid())
+          {
+            $author = $this->form->save();
+
+            $this->redirect('author/edit?id='.$author->getId());
+          }
+        }
+      }
+    }
+
+`edit` アクションが以前の章で説明されたアクションのように見えるとしても、わずかな違いを指摘できます:
+
+  * `Author` クラスからの Doctrine オブジェクトはフォームコンストラクタに最初の引数として送り出されます:
+
+        [php]
+        $author = Doctrine::getTable('Author')->find($request->getParameter('id'));
+        $this->form = new AuthorForm($author);
+
+  * 関連テーブル (`author`) から名づけられた PHP 配列形式で入力データを取得できるようにウィジェットの `name` 属性のフォーマットは自動的にカスタマイズされます:
+
+        [php]
+        $this->form->bind($request->getParameter('author'));
+
+  * フォームが有効なとき、`save()` メソッドを呼び出すだけでフォームに関連した Doctrine のオブジェクトが作成もしくは更新されます:
+
+        [php]
+        $author = $this->form->save();
+
+### Doctrine オブジェクトを作り修正する
+
+リスト4-23のコードは `Author` クラスからのオブジェクトの単独のメソッドの作成と修正を扱います:
+
+  * 新しい`Author` オブジェクトを作る:
+
+      * `index` アクションは `id` パラメータなしで呼び出される (`$request->getParameter('id')` が `null`)
+
+      * それゆえ `find()` の呼び出しは `null` を送り出す
+
+      * `form` オブジェクトは Doctrine の空の `Author` オブジェクトにリンクされる
+
+      * 有効なフォームが投稿されたときに `$this->form->save()` の呼び出しは結果として新しい `Author` オブジェクトを作る
+
+  * 既存の `Author` オブジェクトの修正:
+
+      * `index` アクションは `id` パラメータで呼び出される (`$request->getParameter('id')` は `Author` オブジェクトが修正するプライマリキーを表す)
+
+      * `find()` メソッド呼び出しはプライマリキーに関連する `Author` オブジェクトを返す
+
+      * `form` オブジェクトはそれゆえ以前に見つかったオブジェクトにリンクされる
+
+      * 有効なフォームが投稿されたとき `$this->form->save()` 呼び出しは `Author` オブジェクトを更新する
+
+### save() メソッド
+
+Doctrine のフォームが有効なとき、`save()` メソッドは関連オブジェクトを更新してそれをデータベースに保存します。
+このメソッドはメインのオブジェクトだけでなく潜在的に関連するオブジェクトも実際に保存します。
+たとえば、`ArticleForm` フォームは記事に関連するタグを更新します。
+` article` テーブルと `tag` テーブルのリレーションは多対多なので、(生成された `saveArticleTagList()` メソッドを利用して) 記事に関連するタグは `article_tag` テーブルに保存されます。
+
+一貫したシリアライゼーションを保証するために、`save()` メソッドは1つのトランザクションの中のすべての更新を含みます。
+
+>**Note**
+>9章で `save()` メソッドが国際化テーブルも自動的に更新することを見ることになります。
+
+-
+
+>**SIDEBAR**
+>`bindAndSave()` メソッドを使う
+>
+>`bindAndSave()` メソッドはユーザーがフォームに投稿した入力データをバインドし、このフォームをバリデートしてデータベースの中の関連オブジェクトを更新します。
+>すべてが1つのオペレーションで行われます:
+>
+>     [php]
+>     class articleActions extends sfActions
+>     {
+>       public function executeCreate(sfWebRequest $request)
+>       {
+>         $this->form = new ArticleForm();
+>
+>         if ($request->isMethod('post') && $this->form->bindAndSave($request->getParameter('article')))
+>         {
+>           $this->redirect('article/created');
+>         }
+>       }
+>     }
+
+### ファイルのアップロードを扱う
+
+`save()` メソッドは Doctrine のオブジェクトを自動的に更新しますがファイルアップロードを管理するその他の要素を扱うことはできません。
+
+ファイルをそれぞれの記事に添付する方法を見てみましょう。
+リスト4-24で示されるように、ファイルは `web/uploads` ディレクトリに保存されファイルパスへの参照は `article` テーブルの `file` フィールドに保存されます。
+
+リスト4-24 - 関連するファイルを持つ `article` テーブルのスキーマ
+
+    [yml]
+    // config/schema.yml
+    doctrine:
+      article:
+        // ...
+        file: string(255)
+
+すべてのスキーマを更新した後で、オブジェクトモデル、データベースと関連フォームを更新する必要があります:
+
+    $ ./symfony doctrine:build-all
+
+>**Caution**
+>`doctrine:build-all` タスクはすべてのスキーマテーブルを再生成するためにこれらを削除することに気をつけてください。
+>テーブル内のデータはそれゆえ上書きされます。
+>これがそれぞれのモデルを修正するたびに再びダウンロードできるテストデータ (`fixtures`) を作ることが重要である理由です。
+
+リスト4-25はウィジェットとバリデータを `file` フィールドにリンクするために `ArticleForm` クラスを修正する方法を示しています。
+
+リスト4-25 - `ArticleForm` フォームの `file` フィールドを修正する
+
+    [php]
+    class ArticleForm extends BaseArticleForm
+    {
+      public function configure()
+      {
+        // ...
+
+        $this->widgetSchema['file'] = new sfWidgetFormInputFile();
+        $this->validatorSchema['file'] = new sfValidatorFile();
+      }
+    }
+
+ファイルのアップロードを許可するフォームに関しては、`enctype` 属性をテンプレートの `form` タグに追加することも忘れないでください (ファイルのアップロード管理に関する詳細な情報は2章を参照)。
+
+リスト4-26はファイルをサーバー上にアップロードしてそのパスを `article` オブジェクトに保存するときに適用する修正方法を示しています。
+
+リスト4-26 - `article` オブジェクトとアクションの中でアップロードされたファイルを保存する
+
+    [php]
+    public function executeEdit($request)
+    {
+      $author = Doctrine::getTable('Author')->find($request->getParameter('id'));
+      $this->form = new ArticleForm($author);
+
+      if ($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('article'), $request->getFiles('article'));
+        if ($this->form->isValid())
+        {
+          $file = $this->form->getValue('file');
+          $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+          $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+          $article = $this->form->save();
+
+          $this->redirect('article/edit?id='.$article->getId());
+        }
+      }
+    }
+
+アップロードされたファイルをファイルシステム上に保存すれば `sfValidatedFile` オブジェクトはファイルへの絶対パスを知ることができます。
+`save()` メソッドを呼び出している間に、関連オブジェクトを更新するためにフィールドの値が使われ、`file` フィールドに関しては、ファイルへの絶対パスを送り返しながら、`__toString()` メソッドのおかげで `sfValidatedFile` オブジェクトは文字列に変換されます。
+`article` テーブルの `file` カラムはこの絶対パスを保存します。
+
+>**TIP**
+>`sfConfig::get('sf_upload_dir')` ディレクトリへの相対パスを保存したいのであれば、`sfValidatedFile` を継承するクラスを作り `sfValidatorFile` バリデータに新しいクラスの名前を送り出すために `validated_file_class` オプションを使うことができます。
+>バリデータはクラスのインスタンスを返します。この章の残りで別のアプローチを見ることになります。
+>こちらのアプローチはオブジェクトをデータベースに保存する前に `file` カラムの値の修正作業で構成されます。
+
+### save() メソッドをカスタマイズする
+
+以前のセクションで `edit` アクションの中でアップロードされたファイルを保存する方法を見ました。
+オブジェクト指向プログラミングの原則の1つはクラスのカプセル化によるコードの再利用です。
+ファイルを保存するために `ArticleForm` フォームを利用してそれぞれのアクションごとにコードを重複させる代わりに、コードを `ArticleForm` クラスに移動させるほうがよいです。
+リスト4-27はファイルの保存と場合によって既存のファイルを削除するために `save()` メソッドをオーバーライドする方法を示しています。
+
+リスト4-27 - `ArticleForm` クラスの `save()` メソッドをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+     
+      public function save($con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+   
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+   
+        return parent::save($con);
+      }
+    }
+
+コードをフォームに移動させた後で、`edit` アクションは `doctrine:generate-crud` タスクによって初期に生成されたコードとまったく同じです。
+
+>**SIDEBAR**
+>フォームのモデルのコードをリファクタリングする
+>
+>`doctrine:generate-crud` タスクによって生成されたアクションは通常は修正すべきではありません。
+>
+>`edit` アクションに追加できるアクションは、とりわけフォームのシリアライズの間に、通常はモデルクラスもしくはフォームクラスに移動させなければなりません。
+>
+>アップロードしたファイルを保存する方法を考えるためにフォームクラスのリファクタリングの例を先ほど見直しました。
+>モデルに関連する別の例を考えてみましょう。
+>`ArticleForm` フォームは `slug` フィールドを持ちます。
+>ユーザーによって上書きされる潜在的な可能性がある `title` フィールドの名前からこのフィールドは自動的に算出されることを見ました。
+>このロジックはフォームに依存しません。
+>それゆえ次のコードで示されるように、フォームはモデルに所属します:
+>
+>     [php]
+>     class Article extends BaseArticle
+>     {
+>       public function save($con = null)
+>       {
+>         if (!$this->getSlug())
+>         {
+>           $this->setSlugFromTitle();
+>         }
+>
+>         return parent::save($con);
+>       }
+>
+>       protected function setSlugFromTitle()
+>       {
+>         // ...
+>       }
+>     }
+>
+>これらのリファクタリングの主な目的はアプリケーションレベルでの分離、そしてとりわけ開発の再利用性を尊重することです。
+
+### doSave() メソッドをカスタマイズする
+
+保存に関連するそれぞれのオペレーションが正しく処理されることを保証するためにオブジェクトの保存はトランザクションの範囲内で行われたことを見ました。
+アップロードされたファイルを保存するために私たちが以前のセクションで行ったように `save()` メソッドをオーバーライドするとき、実行されたコードはこのトランザクションから独立しています。
+
+リスト4-28はアップロードされたファイルを保存するグローバルなトランザクションのコードに挿入する `doSave()` メソッドを方法を示しています。
+
+リスト4-28 - `ArticleForm` フォームの中の `doSave()` メソッドをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+     
+      protected function doSave($con = null)
+      {
+        if (file_exists($this->getObject()->getFile()))
+        {
+          unlink($this->getObject()->getFile());
+        }
+
+        $file = $this->getValue('file');
+        $filename = sha1($file->getOriginalName()).$file->getExtension($file->getOriginalExtension());
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+        return parent::doSave($con);
+      }
+    }
+
+`doSave()` メソッドは `save()` メソッドによって作られたトランザクションの中で呼び出され、`file()` オブジェクトの `save()` メソッドへの呼び出しが例外を投げる場合、オブジェクトは保存されません。
+
+### updateObject() メソッドをカスタマイズする
+
+ときにはデータベースの更新と保存の間にフォームに接続されるオブジェクトを修正することが必要です。 
+
+私たちのファイルのアップロードの例において、アップロードされたファイルへの絶対パスを `file` カラムに保存する代わりに、`sfConfig::get('sf_upload_dir')` ディレクトリへの相対パスを保存したい場合を考えます。
+
+リスト4-29はオブジェクトが自動的に更新された後に保存される前に `file` カラムの値を変更するために `ArticleForm` フォームの `updateObject()` メソッドをオーバーライドする方法を示しています。
+
+リスト4-29 - `updateObject()` メソッドと `ArticleForm` クラスをオーバーライドする
+
+    [php]
+    class ArticleForm extends BaseFormDoctrine
+    {
+      // ...
+
+      public function updateObject($values = null)
+      {
+        $object = parent::updateObject($values);
+
+        $object->setFile(str_replace(sfConfig::get('sf_upload_dir').'/', '', $object->getFile()));
+
+        return $object;
+      }
+    }
+
+`updateObject()` メソッドはオブジェクトをデータベースに保存する前に `doSave()` メソッドによって呼び出されます。
