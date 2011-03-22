@@ -81,8 +81,8 @@ di email come secondo parametro del metodo:
 
 ### Modalità flessibile
 
-Se si desiderasse maggior flessibilità è possibile utilizzare il metodo ~`sfAction::compose()`~
-per creare il messaggio, personalizzarlo nella maniera più appropriata e eventualmente inviarlo
+Se si desiderasse maggior flessibilità, è possibile utilizzare il metodo ~`sfAction::compose()`~
+per creare il messaggio, personalizzarlo nella maniera più appropriata ed eventualmente inviarlo.
 Ciò è utile, per esempio, qualora si avesse bisogno di aggiungere un ~allegato~, come mostrato di seguito:
 
     [php]
@@ -119,7 +119,7 @@ Ciò è utile, per esempio, qualora si avesse bisogno di aggiungere un ~allegato
 ### Utilizzo della vista di symfony
 
 L'invio delle email dall'azione permette di far leva in modo piuttosto semplice sulla potenza
-dei partial e component:
+di partial e component:
 
     [php]
     $message->setBody($this->getPartial('partial_name', $arguments));
@@ -147,7 +147,7 @@ nel file di configurazione `factories.yml'. La configurazione predefinita è la 
             password:   ~
 
 Quando viene creata una nuova applicazione, il file di configurazione locale `factories.yml`
-sovrascrive la configurazione predefinita con dei valore predefiniti in base
+sovrascrive la configurazione predefinita con dei valori predefiniti in base
 agli ambienti `prod`, `env` e `test`:
 
     [yml]
@@ -169,7 +169,7 @@ la strategia d'invio. Essa permette di indicare a symfony
 come inviare i messaggi email ed è configurata tramite il il parametro ~`delivery_strategy`~
 del file `factories.yml`. La strategia cambia il comportamento
 del metodo ~`send()`|`sfMailer::send()`~. Sono disponibili quattro diverse strategie predefinite,
-che dovrebbero soddisfare esigenze comuni:
+che dovrebbero soddisfare le esigenze più comuni:
 
  * `realtime`:       I messaggi vengono inviati in tempo reale.
  * `single_address`: I messaggi vengono inviati a un singolo indirizzo.
@@ -311,7 +311,7 @@ Il task `project:send-emails` può ricevere due parametri opzionali:
 
  * `time-limit`: Tempo limite utile per l'invio dei messaggi (in secondi).
 
-Entrambe le opzioni possono essere utilizate contemporaneamente:
+Entrambe le opzioni possono essere utilizzate contemporaneamente:
 
   $ php symfony project:send-emails --message-limit=10 --time-limit=20
 
