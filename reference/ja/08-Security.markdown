@@ -10,9 +10,9 @@ security.yml 設定ファイル
 
     [yml]
     default:
-      is_secure: off
+      is_secure: false
 
-[設定ファイルの原則の章](#chapter_03)で述べたように、`security.yml` ファイルでは、**コンフィギュレーションカスケード**のメカニズムがはたらいており、**定数**を定義することができます。
+[**コンフィギュレーションカスケード**](#chapter_03_configuration_cascade)で述べたように、`security.yml` ファイルでは、**コンフィギュレーションカスケード**のメカニズムがはたらいており、[**定数**](#chapter_03_constants)を定義することができます。
 
 アプリケーションのデフォルトコンフィギュレーションをオーバーライドするには、 `security.yml` ファイルをモジュールの `config/` ディレクトリに配置します。メインキーはアクションの名前で、プレフィックスの `execute` はつけません (たとえば `executeIndex` メソッドであれば `index`)。
 

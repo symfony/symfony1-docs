@@ -6,7 +6,7 @@
 バックエンドの作成
 ------------------
 
-一番最初のステップは `backend` アプリケーションを作ることです。記憶力が良ければ、`generate:app` タスクでこれを行う方法を覚えていることでしょう。
+一番最初のステップは `backend` アプリケーションを作ることです。記憶力のよい方は `generate:app` タスクでこれを行う方法を覚えていることでしょう。
 
     $ php symfony generate:app backend
 
@@ -19,14 +19,14 @@
 `propel:data-load`
 </propel>
 <doctrine>
-'doctrine:data-load`
+`doctrine:data-load`
 </doctrine> タスクでデータフィクスチャをリロードしようとしても、動かないでしょう。`JobeetJob::save()` メソッドは `frontend` アプリケーションの ~`app.yml`~ 設定ファイルにアクセスすることが必要とするからです。今は2つのアプリケーションがあるので、symfony は最初に見つかるアプリケーションである `backend` アプリケーションを使います。
 
 しかし8日目でみたように、異なるレベルで設定を変更できます。`apps/frontend/config/app.yml` ファイルの内容を `config/app.yml` ファイルに移動させることで、すべてのアプリケーションの間で設定は共有され問題は解決されます。アドミンジェネレータでモデルクラスを広範囲で使うので、今変更しましょう。また、バックエンドアプリケーションの `app.yml` ファイルで定義される変数が必要になります。
 
 <propel>
 >**TIP**
->`propel:data-load` タスクは `--application` オプションもとります。ですので、あるアプリケーションから特定の設定が必要な場合、次のように実行します:
+>`propel:data-load` タスクは `--application` オプションもとります。ですので、あるアプリケーションから特定の設定が必要な場合、次のように実行します。
 >
 >     $ php symfony propel:data-load --application=frontend
 </propel>
@@ -53,12 +53,12 @@
 
     $ php symfony doctrine:generate-admin backend JobeetJob --module=job
     $ php symfony doctrine:generate-admin backend JobeetCategory
-    
+
 </doctrine>
 
 これら2つのコマンドは `JobeetJob` と `JobeetCategory` モデルクラスに対してそれぞれ `job` と `category` モジュールを生成します。
 
-`--module` オプションを追加するとタスクによってデフォルトで生成される `module` の名前がオーバーライドされます (そうしなければ `JobeetJob` クラスに対して `jobeet_job` になります)。
+`--module` オプションを追加すると、タスクによってデフォルトで生成される `module` の名前がオーバーライドされます (そうしなければ `JobeetJob` クラスに対して `jobeet_job` になります)。
 
 モジュール作成の裏側では、タスクはそれぞれのモジュール用のカスタムのルートも作成しました。
 
@@ -82,7 +82,6 @@
 <propel>
  `sfPropelRouteCollection` であるのは驚くことではありません。
 </propel>
-
 <doctrine>
  `sfDoctrineRouteCollection` であるのは驚くことではありません。
 </doctrine>
@@ -140,7 +139,7 @@
 現在、sfDoctrinePlugin からのアセットが
 </doctrine>
  web/ フォルダに置かれていません。
- 
+
 `plugin:publish-assets` によって web/ フォルダの下に配置します。
 
     $ php symfony plugin:publish-assets
@@ -240,7 +239,6 @@ symfony のキャッシュ
 
 アドミンジェネレータの動作は既知の動作と良く似ています。実際、これはモデルとフォームクラスに関してすでに学んだこととよく似ています。モデルスキーマの定義に基づいて、symfony はモデルとフォームクラスを生成します。アドミンジェネレータの場合、生成されたモジュールを module フォルダ内の `config/generator.yml` ファイルを編集することで設定できます。
 
-<propel>
     [yml]
     # apps/backend/modules/job/config/generator.yml
     generator:
@@ -268,7 +266,6 @@ symfony のキャッシュ
           form:    ~
           edit:    ~
           new:     ~
-</propel>
 
 `generator.yml` ファイルを更新するたびに、symfony はキャッシュを再生成します。後で見るように、アドミンジェネレータに生成されたモジュールをカスタマイズするのは簡単で、早く、楽しいことです。
 
@@ -424,7 +421,7 @@ list は異なるレイアウトで表示されます。デフォルトのレイ
 
 ### 「バーチャル」カラム
 
-この設定によって、`%%category_id%%` セグメントはカテゴリの主キーによって置き換えられます。しかし、カテゴリの名前を表示するほうがより分かりやすくなるでしょう。
+この設定によって、`%%category_id%%` セグメントはカテゴリの主キーによって置き換えられます。しかし、カテゴリの名前を表示するほうがよりわかりやすくなるでしょう。
 
 `%%` の表記を使うときは、変数はデータベーススキーマの実際にカラムに一致する必要はありません。アドミンジェネレータはモデルクラスに関連する getter が見つかることだけを必要とします。
 
@@ -551,13 +548,13 @@ list は異なるレイアウトで表示されます。デフォルトのレイ
       // ...
     }
 
-すべての求人の有効期間が延長された後で、ユーザーは`job`モジュールのホームページにリダイレクトされます。
+すべての求人の有効期間が延長された後で、ユーザーは `job` モジュールのホームページにリダイレクトされます。
 
 ![カスタムのバッチアクション](http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png)
 
 ### `object_actions`
 
-list には、単独のオブジェクトで実行できるアクション用の追加カラムがあります。`category` モジュールで、カテゴリの名前には編集するためのリンクがあり、リストから直接削除できる必要がないので、これらを削除しましょう:
+list には、単独のオブジェクトで実行できるアクション用の追加カラムがあります。`category` モジュールで、カテゴリの名前には編集するためのリンクがあり、リストから直接削除できる必要がないので、これらを削除しましょう。
 
     [yml]
     # apps/backend/modules/category/config/generator.yml
@@ -1016,7 +1013,7 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         singular:              ~
         plural:                ~
         route_prefix:          jobeet_job
-        
+
 <propel>
         with_propel_route:   true
 </propel>
@@ -1085,7 +1082,7 @@ Jobeet の admin の最終的なコンフィギュレーションは次のとお
         singular:              ~
         plural:                ~
         route_prefix:          jobeet_category
-        
+
 <propel>
         with_propel_route:   true
 </propel>

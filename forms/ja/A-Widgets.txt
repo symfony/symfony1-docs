@@ -1,0 +1,1151 @@
+付録 A - ウィジェット
+=====================
+
+はじめに
+--------
+
+symfony フォームフレームワークはたくさんの便利なウィジェットを搭載してやってきます。
+これらのウィジェットはたいていのプロジェクトの共通のニーズをカバーします。
+この章では symfony に搭載されたデフォルトのフォームウィジェットを説明します。
+`sfFormExtraPlugin`、`sfPropelPlugin` と `sfDoctrinePlugin` プラグインからもいくつかのフォームウィジェットが含まれます。
+これらのプラグインはコアチームによってサポートされとても便利なウィジェットをいくつか含みます。
+
+>**TIP**
+>symfony MVC フレームワークを使わない場合でも、プロジェクトのどこかに `widget/` ディレクトリを設置することで
+>[`sfFormExtraPlugin`](http://svn.symfony-project.com/plugins/sfFormExtraPlugin)、`sfPropelPlugin` と `sfDoctrinePlugin` プラグインで定義されたウィジェットを利用できます。
+
+それぞれのウィジェットの詳細内容に飛び込む前に、ウィジェットが共通に持つ機能を見てみましょう。
+
+### `sfWidget` 基底クラス
+
+すべての symfony ウィジェットは `sfWidget` 基底クラスを継承します。
+この基底クラスはいくつかのデフォルト機能をすべてのウィジェットに提供します。
+
+デフォルトでは、すべてのウィジェットは XHTML としてレンダリングされます。
+`setXhtml()` メソッドを呼び出せば HTML に切り替えられます:
+
+    [php]
+    sfWidget::setXhtml(false);
+
+ウィジェットシステムはエスケープされた HTML 属性と気の利いた内容で自動的に構成されます。
+効率よくするには、システムにプロジェクトで使用される文字セットを伝えることが必要です。
+デフォルトでは文字セットは `UTF-8` で、`setCharset()` メソッドを呼び出すことで文字セットを設定できます:
+
+    [php]
+    sfWidget::setCharset('ISO-8859-1');
+
+>**NOTE**
+>symfony MVC フレームワークで symfony ウィジェットを使う場合、`settings.yml` の charset に従って文字セットは自動的に設定されます。
+
+ウィジェットが JavaScript ファイルもしくは/かつスタイルシートに依存する場合、`getJavaScripts()` と `getStylesheets()` メソッドをそれぞれオーバーライドできます:
+
+    [php]
+    class Widget extends sfWidget
+    {
+      public function getStylesheets()
+      {
+        // 配列のキーはファイルで
+        // 値はコロン(,)で分割されたメディアの名前
+        return array(
+          '/path/to/file.css' => 'all',
+          '/another/file.css' => 'screen,print',
+        );
+      }
+
+      public function getJavaScripts()
+      {
+        return array('/path/to/file.js', '/another/file.js');
+      }
+    }
+
+### `sfWidgetForm` 基底クラス
+
+このセクションでは、フォームウィジェットだけを説明します。
+これらすべては `sfWidgetForm` 基底クラスを継承し、追加のデフォルト機能をいくつか提供するためにこの基底クラスは `sfWidget` クラスを継承します。
+
+ウィジェットを作るとき、追加の引数としてオプションと HTML 属性を渡すことができます:
+
+    [php]
+    $w = new sfWidgetFormInputText(
+      array('default' => 'Fabien'),
+      array('class' => 'foo')
+    );
+
+オプションと HTML 属性は `setOptions()` と `setAttributes()` メソッドを使うことでも設定できます:
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    $w->setOptions(array('default' => 'Fabien'));
+    $w->setAttributes(array('class' => 'foo'));
+
+`setOption()` と `setAttribute()` メソッドによって個別のオプションもしくは HTML 属性を設定できます:
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    $w->setOption('default', 'Fabien');
+    $w->setAttribute('class', 'foo');
+
+`render()`メソッドを呼び出すことでウィジェットをレンダリングできます:
+
+    [php]
+    $w->render('name', 'value', array('class' => 'foo'));
+
+`render()` メソッドは次の引数をとります:
+
+  * ウィジェットの名前
+  * ウィジェットの値
+  * オプションのいくつかの HTML 属性 (これらはコンストラクションが行われるときに
+  定義されたデフォルトにマージされます)
+
+>**NOTE**
+>ウィジェットはステーレスなので、単独のウィジェットインスタンスは望む限りの異なる数の引数だけレンダリングできます。
+
+上記のウィジェットは次のようにレンダリングします:
+
+    [php]
+    <input class="foo" type="text" name="bar" id="bar" value="value"/>
+
+`sfWidgetForm` で定義されるデフォルトのオプションは次のとおりです:
+
+| オプション        | 説明
+| ----------------- | -----------
+| `is_hidden`       | フォームウィジェットが hidden であることが必須であれば `true` そうでなければ `false` (デフォルトは `false`)
+| `needs_multipart` | ウィジェットがマルチパートフォームを必要とするのであれば `true`、そうでなければ `false` (デフォルトは `false`)
+| `default`         | ウィジェットをレンダリングする際に使うデフォルト値
+| `label`           | ウィジェットがウィジェットスキーマによってレンダリングされるときに使うラベル
+| `id_format`       | 生成される HTML id 属性用のフォーマット (デフォルトは `%s`)
+
+>**NOTE**
+>デコレーションなしで隠しウィジェットをレンダリングするためにウィジェットフォームスキーマクラスが `is_hidden` オプションを使います。
+>`form` タグがレンダリングされるときに `enctype="multipart/form-data"` 属性を追加するためにフォームクラスが `needs_multipart` オプションを使います。
+
+`sfWidgetForm` クラスはすべてのオプションに対してアクセサーメソッドも提供します:
+
+  * `is_hidden`:       `isHidden()`、`setHidden()`
+  * `needs_multipart`: `needsMultipartForm()`
+  * `default`:         `getValue()`、`setValue()`
+  * `label`:           `getLabel()`、`setLabel()`
+  * `id_format`:       `getIdFormat()`、`setIdFormat()`
+
+### ウィジェットスキーマ
+
+フォームウィジェットスキーマは1つもしくはいくつかの別のウィジェット用のラッパーウィジェットです。
+
+次のセクションでは、ウィジェットは複数のカテゴリに再分類されます。
+
+<div class="pagebreak"></div>
+
+ウィジェット
+------------
+
+ * [`sfWidgetFormChoice`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormDate`](A-Widgets#chapter_a_sub_sfwidgetformdate)
+ * [`sfWidgetFormDateRange`](A-Widgets#chapter_a_sub_sfwidgetformdaterange)
+ * [`sfWidgetFormDateTime`](A-Widgets#chapter_a_sub_sfwidgetformdatetime)
+ * [`sfWidgetFormDoctrineChoice`](A-Widgets#chapter_a_sub_choice_bound_to_a_doctrine_model)
+ * [`sfWidgetFormFilterInput`](A-Widgets#chapter_a_sub_sfwidgetformfilterinput)
+ * [`sfWidgetFormFilterDate`](A-Widgets#chapter_a_sub_sfwidgetformfilterdate)
+ * [`sfWidgetFormI18nChoiceCountry`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicecountry)
+ * [`sfWidgetFormI18nChoiceLanguage`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicelanguage)
+ * [`sfWidgetFormI18nChoiceCurrency`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicecurrency)
+ * [`sfWidgetFormI18nChoiceTimezone`](A-Widgets#chapter_a_sub_sfwidgetformi18nchoicetimezone)
+ * [`sfWidgetFormI18nDate`](A-Widgets#chapter_a_sub_sfwidgetformi18ndate)
+ * [`sfWidgetFormI18nDateTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ndatetime)
+ * [`sfWidgetFormI18nTime`](A-Widgets#chapter_a_sub_sfwidgetformi18ntime)
+ * [`sfWidgetFormInput`](A-Widgets#chapter_a_sub_sfwidgetforminput)
+ * [`sfWidgetFormInputCheckbox`](A-Widgets#chapter_a_sub_sfwidgetforminputcheckbox)
+ * [`sfWidgetFormInputFile`](A-Widgets#chapter_a_sub_sfwidgetforminputfile)
+ * [`sfWidgetFormInputFileEditable`](A-Widgets#chapter_a_sub_sfwidgetforminputfileeditable)
+ * [`sfWidgetFormInputHidden`](A-Widgets#chapter_a_sub_sfwidgetforminputhidden)
+ * [`sfWidgetFormInputPassword`](A-Widgets#chapter_a_sub_sfwidgetforminputpassword)
+ * [`sfWidgetFormJQueryAutocompleter`](A-Widgets#chapter_a_sub_autocomplete)
+ * [`sfWidgetFormJQueryDate`](A-Widgets#chapter_a_sub_sfwidgetformjquerydate)
+ * [`sfWidgetFormPropelChoice`](A-Widgets#chapter_a_sub_choice_bound_to_a_propel_model)
+ * [`sfWidgetFormReCaptcha`](A-Widgets#chapter_a_captcha_widget)
+ * [`sfWidgetFormSchema`](A-Widgets#chapter_a_sfwidgetformschema)
+ * [`sfWidgetFormSchemaDecorator`](A-Widgets#chapter_a_sub_sfwidgetformschemadecorator)
+ * [`sfWidgetFormSelect`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectDoubleList`](A-Widgets#chapter_a_sub_double_list_representation)
+ * [`sfWidgetFormSelectMany`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectCheckbox`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormSelectRadio`](A-Widgets#chapter_a_choice_widgets)
+ * [`sfWidgetFormTextarea`](A-Widgets#chapter_a_sub_sfwidgetformtextarea)
+ * [`sfWidgetFormTextareaTinyMCE`](A-Widgets#chapter_a_sub_sfwidgetformtextareatinymce)
+ * [`sfWidgetFormTime`](A-Widgets#chapter_a_sub_sfwidgetformtime)
+
+<div class="pagebreak"></div>
+
+入力ウィジェット
+----------------
+
+### ~`sfWidgetFormInput`~
+
+`input` タグはおそらくもっともシンプルなフォームタグで `sfWidgetFormInput` クラスによって表現されます。
+
+| オプション | 説明
+| ---------- | -----------------------------------------
+| `type`     | HTML `type` 属性の値(デフォルトは `text`)
+
+    [php]
+    $w = new sfWidgetFormInputText();
+    echo $w->render('foo');
+
+    # <input type="text" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputCheckbox`~
+
+`sfWidgetFormInputCheckbox` は `type` が `checkbox` である入力ウィジェットです。
+
+    [php]
+    $w = new sfWidgetFormInputCheckbox();
+    echo $w->render('foo');
+
+    # <input type="checkbox" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputHidden`~
+
+`sfWidgetFormInputHidden` は `type` が `hidden` である入力ウィジェットです。
+`is_hidden` オプションは `true` にセットされます。
+
+    [php]
+    $w = new sfWidgetFormInputHidden();
+    echo $w->render('foo');
+
+    # <input type="hidden" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputPassword`~
+
+`sfWidgetFormInputPassword` は `type` が `password` である入力ウィジェットです。
+
+    [php]
+    $w = new sfWidgetFormInputPassword();
+    echo $w->render('foo');
+
+    # <input type="password" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputFile`~
+
+`sfWidgetFormInputFile` は `type` が `file` である入力ウィジェットです。
+`needs_multipart` オプションは自動的に `true` にセットされます。
+
+    [php]
+    $w = new sfWidgetFormInputFile();
+    echo $w->render('foo');
+
+    # <input type="file" name="foo" id="foo" />
+
+### ~`sfWidgetFormInputFileEditable`~
+
+`sfWidgetFormInputFileEditable` は入力ファイルウィジェットで、以前アップロードされたファイルを表示もしくは削除する機能を追加するために、`sfWidgetFormInputFile` ウィジェットを拡張します。
+
+
+| オプション     | 説明
+| -------------- | -----------
+| `file_src`     | 現在の画像の web ソースのパス(必須)
+| `edit_mode`    | ブール値: 編集モードを有効にするには `true`、そうでなければ `false`
+| `is_image`     | ファイルが表示可能なファイルであるかどうか
+| `with_delete`  | 削除のチェックボックスを追加するかどうか
+| `delete_label` | テンプレートによって使用される削除ラベル
+| `template`     | このウィジェットをレンダリングするために使用する HTML テンプレート
+|                | 利用可能なプレースホルダ:
+|                |   * `input` (画像のアップロードウィジェット)
+|                |   * `delete` (削除のチェックボックス)
+|                |   * `delete_label` (削除ラベルのテキスト)
+|                |   * `file` (ファイルタグ)
+
+>**CAUTION**
+>`edit` モードにおいて、このウィジェットは「_delete」を接尾辞とするファイルアップロードウィジェットから名づけられた追加ウィジェットをレンダリングします。
+>ですので、フォームを作る際には、この追加フィールド用のバリデータを追加することをお忘れなく。
+
+### ~`sfWidgetFormTextarea`~
+
+`sfWidgetFormTextarea` ウィジェットは必須の HTML の `rows` と `cols` 属性に対して自動的にデフォルト値を設定します。
+
+
+    [php]
+    $w = new sfWidgetFormTextarea();
+    echo $w->render('foo');
+
+    # <textarea rows="4" cols="30" name="foo" id="foo"></textarea>
+
+### ~`sfWidgetFormTextareaTinyMCE`~
+
+WYSIWYG エディタウィジェットをレンダリングしたい場合、`sfWidgetFormTextareaTinyMCE` を使用できます:
+
+    [php]
+    $w = new sfWidgetFormTextareaTinyMCE(
+      array(),
+      array('class' => 'foo')
+    );
+
+>**CAUTION**
+>このウィジェットは symfony の `sfFormExtraPlugin` プラグインの一部です。
+
+プラグインにはTinyMCE の JavaScript ファイルが搭載されていないので、自分でインストールして含めなければなりません。
+
+| オプション | 説明
+| ---------- | ----------------------------------------
+| `theme`    | TinyMCE のテーマ (デフォルトは `advanced`)
+| `width`    | 幅
+| `height`   | 高さ
+| `config`   | JavaScript 固有の設定の配列
+
+選択ウィジェット
+----------------
+
+### 選択の表現
+
+ユーザーに選択可能なもののリストから選択を行わせたい場合、HTMLは選択を表現する方法をいくつか提供します:
+
+ * `select` タグ:
+
+   ![ドロップダウンリスト](/images/forms_book/en/A_01.png)
+
+ * `multiple` 属性を持つ `select` タグ:
+
+   ![ドロップダウンボックス](/images/forms_book/en/A_02.png)
+
+ * ``type` が `radio` である `input` タグのリスト:
+
+   ![ラジオボタンのリスト](/images/forms_book/en/A_03.png)
+
+ * `type` が `checkbox` である `input` タグのリスト:
+
+   ![チェックボックスのリスト](/images/forms_book/en/A_04.png)
+
+しかし究極的には、これらすべてはユーザーが有限の選択肢の範囲で単独もしくは複数の選択を行うことを許可します。
+
+~`sfWidgetFormChoice`~ ウィジェットは1つのウィジェットの範囲内でこれらすべての実現可能なものを標準化します。
+このウィジェットは選択をこれまで見てきた4つの HTML 表現のどれかにレンダリングできます。
+後で見るようにこれによって独自の表現を定義することもできます。
+
+`sfWidgetFormChoice` はレンダリング作業を別のウィジェットにデリゲートする特別なウィジェットです。
+レンダリングは2つのオプション: `expanded` と `multiple` で制御されます:
+
+ |                          | `expanded` が `false`    | `expanded` が `true`
+ | ------------------------ | ------------------------ | ----------------------------
+ | `multiple` が `false`    | `sfWidgetFormSelect`     | `sfWidgetFormSelectRadio`
+ | `multiple` が `true`     | `sfWidgetFormSelectMany` | `sfWidgetFormSelectCheckbox`
+
+>**NOTE**
+>それ自身をレンダリングする ~`sfWidgetFormChoice`~ によって使用される ~`sfWidgetFormSelect`~、~`sfWidgetFormSelectMany`~、~`sfWidgetFormSelectCheckbox`~ と ~`sfWidgetFormSelectRadio`~ ウィジェットは他のウィジェットと同じくプレーンなもので直接利用できます。
+>たいていの場合、このセクションではこれらのドキュメントは作成されていないので、より柔軟な `sfWidgetFormChoice` ウィジェットを使うほうがよいです。
+
+それぞれを実現するための HTML 表現は次の通りです:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices' => array('Fabien Potencier', 'Fabian Lange'),
+    ));
+
+![ドロップダウンリスト](/images/forms_book/en/A_01.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'multiple' => true,
+      'choices'  => array('PHP', 'symfony', 'Doctrine', 'Propel', 'model'),
+    ));
+
+![ドロップダウンリスト](/images/forms_book/en/A_02.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'expanded' => true,
+      'choices'  => array('published', 'draft', 'deleted'),
+    ));
+
+![ラジオボタンのリスト](/images/forms_book/en/A_03.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'expanded' => true,
+      'multiple' => true,
+      'choices'  => array('A week of symfony', 'Call the expert', 'Community'),
+    ));
+
+![ラジオボックスのリスト](/images/forms_book/en/A_04.png)
+
+### 選択のグループ化
+
+`choices` オプションに配列の配列を渡すことで選択のグループをサポートする組み込みの機能を `sfWidgetFormChoice` ウィジェットは持ちます:
+
+    [php]
+    $choices = array(
+      'Europe'  => array('France' => 'France', 'Spain' => 'Spain', 'Italy' => 'Italy'),
+      'America' => array('USA' => 'USA', 'Canada' => 'Canada', 'Brazil' => 'Brazil'),
+    );
+
+    $w = new sfWidgetFormChoice(array('choices' => $choices));
+
+![選択グループ](/images/forms_book/en/A_choice_group.png)
+
+`expanded` と `multiple` オプションも期待どおりに機能します:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'expanded' => true,
+    ));
+
+![展開された選択グループ](/images/forms_book/en/A_choice_group_expanded.png)
+
+レンダラウィジェットに使われるレイアウトもカスタマイズできます:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'expanded' => true,
+      'renderer_options' => array('template' => '<strong>%group%</strong> %options%'),
+    ));
+
+![展開されカスタムテンプレートを持つ選択グループ](/images/forms_book/en/A_choice_group_expanded_template.png)
+
+オプションの組み合わせの例は次のとおりです:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'multiple' => true,
+    ));
+
+![複数の選択グループ](/images/forms_book/en/A_choice_group_multiple.png)
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'  => $choices,
+      'multiple' => true,
+      'expanded' => true,
+      'renderer_options' => array('template' => '<strong>%group%</strong> %options%'),
+    ));
+
+![展開された複数の選択グループ](/images/forms_book/en/A_choice_group_multiple_expanded.png)
+
+>**NOTE**
+>ウィジェットがプレーンな `select` タグでレンダリングされるとき、標準の `optgroup` タグが使われます。
+
+### サポートされるオプション
+
+ウィジェット用にサポートされるすべてのオプションのリストは次のとおりです:
+
+| オプション         | 説明
+| ------------------ | -----------
+| `choices`          | 可能な選択肢の配列 (必須)
+| `multiple`         | 選択タグが複数の選択肢を許可しなければならない場合は `true` にする
+| `expanded`         | 展開されたウィジェットを表示するには `true` にする
+| `renderer_class`   | デフォルトの代わりに使うクラス
+| `renderer_options` | レンダラのコンストラクタに渡されるオプション
+| `renderer`         | レンダラウィジェット (`expanded` と `renderer_options` オプションを上書きする)
+|                    | `choices` オプションは次のとおり: `new sfCallable($thisWidgetInstance, 'getChoices')`
+
+`sfWidgetFormSelectCheckbox` と `sfWidgetFormSelectRadio` ウィジェットは次のオプションをサポートします:
+
+| オプション         | 説明
+| ------------------ | ---------------------------------------------------------------------------------
+| `label_separator`  | 入力チェックボックス/ラジオボタンとラベルの間で使用する区切り文字
+| `class`            | メインの `<ul>` タグ用のクラス
+| `separator`        | それぞれの入力チェックボックス/ラジオボタンの間で使用する区切り文字
+| `formatter`        | チェックボックスの選択をフォーマットするために呼び出す callable
+|                    | callable なフォーマッターは引数としてウィジェットと入力の配列を受け取る
+| `template`         | オプションをグループに分類する際に使用するテンプレート (`%group% %options%`)
+
+
+### 二重リストの表現
+
+ユーザーが複数のオプションを選べるとき、別のボックスで選ばれたオプションを表示する方が良い場合があります。
+
+セレクトウィジェットを二重リストとしてレンダリングするために ~`sfWidgetFormSelectDoubleList`~ ウィジェットを使うことができます:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'        => array('PHP', 'symfony', 'Doctrine', 'Propel', 'model'),
+      'renderer_class' => 'sfWidgetFormSelectDoubleList',
+    ));
+
+![二重リスト](/images/forms_book/en/A_double_list.png)
+
+>**CAUTION**
+>このウィジェットは symfony の `sfFormExtraPlugin` プラグインの一部です。
+
+-
+
+>**NOTE**
+>このウィジェットはカスタムの JavaScript を使います。
+>ウィジェットの `getJavaScripts()` メソッドを呼び出すことでこれらのパスを読み取ることができます:
+>
+>     [php]
+>     $files = $w->getJavascripts();
+
+| オプション           | 説明(訳注：associatedとunassociatedは図を参照)
+| -------------------- | -----------------------------------------------
+| `choices`            | 可能な選択肢の配列 (必須)
+| `class`              | ウィジェットのメインクラス
+| `class_select`       | 2つの select タグ用のクラス
+| `label_unassociated` | unassociated 用のラベル
+| `label_associated`   | associated 用のラベル
+| `unassociate`        | unassociate リンク用の HTML
+| `associate`          | associate リンク用の HTML
+| `template`           | このウィジェットをレンダリングするために使用する HTML テンプレート。
+|                      | 利用可能なプレースホルダ: `%label_associated%`, `%label_unassociated%`, `%associate%`, `%unassociate%`, `%associated%`, `%unassociated%`, `%class%`
+
+### 自動入力補完
+
+ユーザーがたくさんの要素の中から選択を行えるようにしたいとき、これらすべての一覧をセンタボックスの中で表示することが不可能になります。
+~`sfWidgetFormJQueryAutocompleter`~  はシンプルな `input` タグを自動入力セレクトボックスに変換することでこの問題を解決します。
+
+>**CAUTION**
+>このウィジェットは symfony の `sfFormExtraPlugin` プラグインの一部です。
+>JQuery と JQuery UI は `sfFormExtraPlugin` には搭載されていないので、手動でインストールしてインクルードする必要があります。
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'choices'          => array(),
+      'renderer_class'   => 'sfWidgetFormJQueryAutocompleter',
+      'renderer_options' => array('url' => '/autocomplete_script'),
+    ));
+
+>**NOTE**
+>このウィジェットは適切に動作するカスタムの JavaScript とスタイルシートを使用します。
+>ウィジェットの `getJavaScripts()` と `getStylesheets()` メソッドを呼び出すことでこれらのパスを読み取ることができます。
+
+`url` オプションはユーザーの入力に基づいた選択を投入するためにウィジェットが呼び出す URL です。
+URL は2つのパラメータを受け取ります:
+
+ * `q`:     ユーザーが入力した文字列
+ * `limit`: 返す項目の最大数
+
+スクリプトは選択の配列の有効な JSON 表記を返さなければなりません(配列を JSON に変換する PHP 組み込みの `json_encode()` 関数を使います)。
+
+| オプション       | 説明
+| ---------------- | ------------------------------------------------------------
+| `url`            | 使用する選択を取得するために呼び出す URL (必須)
+| `config`         | JQuery 自動入力補完ウィジェットを設定する JavaScript の配列
+| `value_callback` | 表示される前に値を変換するコールバック
+
+選択が Propel のモデルに関連したものであれば、`sfWidgetFormPropelJQueryAutocompleter` ウィジェットは外部キーの検索用に最適化されます:
+
+    [php]
+    $w = new sfWidgetFormChoice(array(
+      'renderer_class'   => 'sfWidgetFormPropelJQueryAutocompleter',
+      'renderer_options' => array(
+        'model' => 'Article',
+        'url'   => '/autocomplete_script',
+      ),
+    ));
+
+| オプション       | 説明
+| ---------------- | --------------------------------------------------------------------
+| `model`          | モデルクラス (必須)
+| `method`         | オブジェクトを文字列に変換するメソッド (デフォルトでは `__toString()`)
+
+### Propel モデルにバインドされる選択
+
+選択が Propel モデルにバインドされる場合(通常はユーザーが外部キーを変更することを許可するとき)、 ~`sfWidgetFormPropelChoice`~ ウィジェットを使うことができます:
+
+    [php]
+    $w = new sfWidgetFormPropelChoice(array(
+      'model'     => 'Article',
+      'add_empty' => false,
+    ));
+
+あなたが渡した `model` クラスに従って `choices` はウィジェットによって自動的に読み取られます。
+専用オプションのセットをとおしてウィジェットは細かく設定されます:
+
+| オプション    | 説明
+| ------------- | ------------------------------------------------------------------------------
+| `model`       | Propel のモデルクラス (必須)
+| `add_empty`   | 最初に空の値を追加するかどうか (デフォルトは `false`)
+|               | オプションがブール値でなければ、値はテキストの値として使われる
+| `method`      | オブジェクトの値を表示するために使うメソッド (デフォルトは `__toString`)
+| `key_method`  | オブジェクトのキーを表示するために使うメソッド (デフォルトは `getPrimaryKey`)
+| `order_by`    | 2つのフィールドで構成された配列:
+|               |  * 結果によって並べ替えられるカラム (`PhpName` フォーマットでなければならない)
+|               |  * `asc` もしくは `desc`
+| `criteria`    | オブジェクトを読み取るときに使う基準
+| `connection`  | 使用する Propel の接続名(デフォルトは `null`)
+| `multiple`    | select タグが複数の選択を許可しなければならないときは `true`
+| `peer_method` | オブジェクトを得るために使うピアメソッド
+
+### Doctrine モデルにバインドされた選択
+
+選択が Doctrine モデルにバインドされる場合(通常はユーザーが外部キーを変更することを許可するとき)、
+~`sfWidgetFormDoctrineChoice`~ ウィジェットを使うことができます:
+
+    [php]
+    $w = new sfWidgetFormDoctrineChoice(array(
+      'model'     => 'Article',
+      'add_empty' => false,
+    ));
+
+あなたが渡した `model` クラスに従ってウィジェットが `choices` を自動的に読み取ります。
+専用オプションのセットをとおしてウィジェットの高度な設定が可能です:
+
+| オプション     | 説明
+| -------------- | -----------------------------
+| `model`        | モデルクラス (必須)
+| `add_empty`    | 最初に空の値を追加するかどうか (デフォルトは `false`)
+|                | オプションがブール値ではない場合、値はテキストの値として使われる
+| `method`       | オブジェクトの値を表示するために使うメソッド (デフォルトは `__toString`)
+| `key_method`   | オブジェクトのキーを表示するために使うメソッド (デフォルトは `getPrimaryKey`)
+| `order_by`     | 2つのフィールドで構成された配列:
+|                |  * 結果によって並べ替えされるカラム (`PhpName` フォーマットでなければならない)
+|                |  * `asc` もしくは `desc`
+| `query`        | オブジェクトを読み取る際に使うクエリ
+| `connection`   | 使用する Doctrine の接続 (デフォルトでは `null`)
+| `multiple`     | 選択タグが複数の選択を許可する場合は `true`
+| `table_method` | オブジェクトを得るために使うメソッド
+
+日付ウィジェット
+----------------
+
+日付、時間、もしくは日付と時間に対していくつかの select ボックスを提供することで日付ウィジェットは日付の入力作業を簡単にするために使われます。
+symfony のすべての日付ウィジェットはいくつかの HTML タグによって表現されます。
+これらはユーザーカルチャに従ってカスタマイズすることも可能です。
+
+>**NOTE**
+>すべての select ボックスを避けることでユーザーが日付をより速く入力できることから日付用にシンプルな `input` タグを使うことを好む人がいます。
+>もちろん、日付の書式はバリデータによってサーバーサイドで強制されます。
+>ありがたいことに、symfony の日付バリデータは理解と解析ができる日付フォーマットを自在に扱える強力なバリデータを提供します。
+
+### ~`sfWidgetFormDate`~
+
+`sfWidgetFormDate` は日付ウィジェットを表します:
+
+![日付ウィジェット](/images/forms_book/en/A_date.png)
+
+ユーザーによって投稿された値はウィジェットの名前の配列に保存されます:
+
+    [php]
+    $w = new sfWidgetFormDate();
+    $w->render('date');
+
+    # 投稿された値は`date`配列になる:
+    # array(
+    #   'date' => array(
+    #     'day'   => 15,
+    #     'month' => 10,
+    #     'year'  => 2005,
+    #   ),
+    # );
+
+ウィジェットのふるまいは多くのオプションでカスタマイズできます:
+
+| オプション     | 説明
+| -------------- | ------------------------------------------------------------------------------
+| `format`       | 日付書式の文字列 (デフォルトは `%month%/%day%/%year%`)
+| `years`        | 年の select タグ の years の配列 (オプション)
+| `months`       | 月の select タグの months の配列 (オプション)
+| `days`         | 日にちの select タグの days の配列 (オプション)
+| `can_be_empty` | ウィジェットが空の値を受け取るかどうか (デフォルトは`true`)
+| `empty_values` | 空の文字列に使う値の配列 (デフォルトは `year`、`month` と `day` に対して空の文字列)
+
+`format` オプションを使用すればデフォルトタグの並びのカスタマイズが可能になります
+(`render()` メソッドが呼び出されるとき、`%year%`、`%month%` と `%day%` プレースホルダは対応する `select` タグに置き換えられます):
+
+    [php]
+    $w = new sfWidgetFormDate(
+      array('format' => '%year% - %month% - %day%')
+    );
+
+![カスタマイズされた書式を持つ日付ウィジェット](/images/forms_book/en/A_date_format.png)
+
+デフォルトでは、現在の年から10年前後の `year` select タグが投入されます。
+これは `years` オプションを使うことで変更できます:
+
+    [php]
+    $years = range(2009, 2020);
+    $w = new sfWidgetFormDate(
+      array('years' => array_combine($years, $years))
+    );
+
+`years`、`months` と `days` オプションは配列を受け取ります。
+キーは `option` タグの値で値はユーザーに表示される文字列です。
+
+### ~`sfWidgetFormTime`~
+
+`sfWidgetFormTime` は時間ウィジェットを表します:
+
+![時間ウィジェット](/images/forms_book/en/A_time.png)
+
+ユーザーによって投稿された値はウィジェットの名前の配列に保存されます:
+
+    [php]
+    $w = new sfWidgetFormTime();
+    $w->render('time');
+
+    # 投稿された値は配列 `time` になる:
+    # array(
+    #   'time' => array(
+    #     'hour'    => 12,
+    #     'minute'  => 13,
+    #     'second'  => 14,
+    #   ),
+    # );
+
+ウィジェットのふるまいは多くのオプションでカスタマイズできます:
+
+| オプション               | 説明
+| ------------------------ | -----------
+| `format`                 | 時間書式の文字列 (`%hour%:%minute%:%second%`)
+| `format_without_seconds` | 秒無しの時間書式の文字列 (`%hour%:%minute%`)
+| `with_seconds`           | 秒に対して選択を含めるか (デフォルトは `false`)
+| `hours`                  | 時間の select タグ用の時間の配列 (オプション)
+| `minutes`                | 分の select タグ用の分の配列 (オプション)
+| `seconds`                | 2番目の select タグ用の秒数の配列 (オプション)
+| `can_be_empty`           | ウィジェットが空の値を受け取るかどうか (デフォルトは `true`)
+| `empty_values`           | 空の値に使う値の配列
+|                          | (デフォルトは `hours`、`minutes`、と `seconds` 用の空の文字列)
+
+デフォルトでは、ウィジェットは秒の選択を許可しません。
+`with_seconds` オプションを `true` に設定することでこれを変更できます:
+
+    [php]
+    $w = new sfWidgetFormTime(array('with_seconds' => true));
+
+`format` オプションを使うすることで `format_without_seconds` オプションはデフォルトタグの並びをカスタマイズできます
+(`render()` メソッドが呼び出されるとき `%hour%`、`%minute%` と `%second%` プレースホルダは対応する `select` タグに置き換えられます):
+
+    [php]
+    $w = new sfWidgetFormTime(array(
+      'with_seconds' => true,
+      'format'       => '%hour% : %minute% : %second%',
+    ));
+
+![カスタマイズされた書式を持つ時間ウィジェット](/images/forms_book/en/A_time_format.png)
+
+すべての分もしくは秒を表示したくなければ、3つのタグそれぞれに対して独自の値を提供できます:
+
+    [php]
+    $seconds = array(0, 15, 30, 45);
+    $w = new sfWidgetFormTime(array(
+      'with_seconds' => true,
+      'seconds'      => array_combine($seconds, $seconds),
+    ));
+
+![カスタマイズされたタグを持つ時間ウィジェット](/images/forms_book/en/A_time_seconds.png)
+
+`hours`、`minutes`、と`seconds`オプションは配列を受け取ります。
+キーは`option`タグの配列で値はユーザーに表示される文字列です。
+
+### ~`sfWidgetFormDateTime`~
+
+`sfWidgetFormDateTime` ウィジェットは2つのサブウィジェット:
+`sfWidgetFormDate` ウィジェットと `sfWidgetFormTime` ウィジェットをレンダリングするウィジェットです:
+
+    [php]
+    $w = new sfWidgetFormDateTime();
+
+![datetime ウィジェット](/images/forms_book/en/A_date_time.png)
+
+| オプション  | 説明
+| ----------- | ---------------------------------------------------------------
+| `date`      | 日付ウィジェット用のオプション (`sfWidgetFormDate` を参照)
+| `time`      | 時間ウィジェット用のオプション (`sfWidgetFormTime` を参照)
+| `with_time` | 時間を含めるかどうか (デフォルトでは `true`)
+| `format`    | 日付と時間ウィジェット用の書式文字列
+|             | (デフォルトは `%date% %time%`)
+
+>**TIP**
+>デフォルトでは、日付と時間ウィジェットのそれぞれに対してウィジェットは `sfWidgetFormDate` と `sfWidgetFormTime` のインスタンスを作成します。
+>`getDateWidget()` と `getTimeWidget()` メソッドをオーバーライドすることでウィジェットによって使用されるクラスを変更できます。
+
+### ~`sfWidgetFormI18nDate`~
+
+`sfWidgetFormI18nDate` は標準の `sfWidgetFormDate` ウィジェットを拡張します。
+標準ウィジェットが月を数字として表示するのに対して、国際化ウィジェットはカルチャにしたがってこれらをローカライズされた文字列として表示します:
+
+    [php]
+    $w = new sfWidgetFormI18nDate(array('culture' => 'fr'));
+
+![国際化日付ウィジェット](/images/forms_book/en/A_date_i18n.png)
+
+月の文字列のフォーマッティングは `month_format` オプションで調整できます。
+このウィジェットは3つの値: `name` (デフォルト)、`short_name` と `number` を受け取ります。
+
+    [php]
+    $w = new sfWidgetFormI18nDate(array(
+      'culture'      => 'fr',
+      'month_format' => 'short_name',
+    ));
+
+![ショートネームとしての国際化日付ウィジェット](/images/forms_book/en/A_date_i18n_short.png)
+
+カルチャに従って、ウィジェットは3つの異なる select ボックスの順序とそれらの間で使う区切り文字も知っています。
+
+>**CAUTION**
+>このウィジェットは symfony の国際化サブフレームワークに依存します。
+
+### ~`sfWidgetFormI18nTime`~
+
+`sfWidgetFormI18nTime` は標準の `sfWidgetFormTime` ウィジェットを拡張します。
+
+オプションとして渡される `culture` に従って、ウィジェットは3つの異なる select ボックスとそれらの間で使用する区切り文字を知っています:
+
+    [php]
+    $w = new sfWidgetFormI18nTime(array('culture' => 'ar'));
+
+![国際化時間ウィジェット](/images/forms_book/en/A_time_i18n.png)
+
+>**CAUTION**
+>このウィジェットは symfony の国際化サブフレームワークに依存します。
+
+### ~`sfWidgetFormI18nDateTime`~
+
+`sfWidgetFormI18nDateTime` は2つのサブウィジェット: `sfWidgetFormI18nDate` ウィジェットと `sfWidgetFormI18nTime` ウィジェットをレンダリングするウィジェットです。
+
+>**CAUTION**
+>このウィジェットは symfony の国際化サブフレームワークに依存します。
+
+### ~`sfWidgetFormDateRange`~
+
+`sfWidgetFormDateRange` ウィジェットは日付範囲の選択を表現します:
+
+    [php]
+    $w = new sfWidgetFormDateRange(array(
+      'from_date' => new sfWidgetFormDate(),
+      'to_date'   => new sfWidgetFormDate(),
+    ));
+
+![日付範囲ウィジェット](/images/forms_book/en/A_date_range.png)
+
+| オプション  | 説明
+| ----------- | -----------
+| `from_date` | 変換元の日付ウィジェット (必須)
+| `to_date`   | 変換先の日付ウィジェット (必須)
+| `template`  | ウィジェットをレンダリングするテンプレート
+|             | (利用可能なプレースホルダ: `%from_date%`、`%to_date%`)
+
+ウィジェットをレンダリングするために使用されるテンプレートは `template` オプションでカスタマイズできます:
+
+    [php]
+    $w = new sfWidgetFormDateRange(array(
+      'from_date' => new sfWidgetFormDate(),
+      'to_date'   => new sfWidgetFormDate(),
+      'template'  => 'Begin at: %from_date%<br />End at: %to_date%',
+    ));
+
+![カスタマイズされた日付範囲ウィジェット](/images/forms_book/en/A_date_range_customized.png)
+
+>**NOTE**
+>このウィジェットはより洗練された `sfWidgetFormFilterDate` ウィジェット用の基底クラスです。
+
+### ~`sfWidgetFormJQueryDate`~
+
+`sfWidgetFormJQueryDate` は JQuery UI でレンダリングされる日付ウィジェットを表します:
+
+    [php]
+    $w = new sfWidgetFormJQueryDate(array(
+      'culture' => 'en',
+    ));
+
+>**CAUTION**
+>このウィジェットは symfony の `sfFormExtraPlugin` プラグインの一部です。
+>JQuery と JQuery UI は `sfFormExtraPlugin` に搭載されていないのでこれらを手動でインストールして含める必要があります。
+
+| オプション  | 説明
+| ----------- | --------------------------------------------------------
+| `image`     | ウィジェットを表現する画像パス (デフォルトは `false`)
+| `config`    | JQuery 日付ウィジェットを設定する JavaScript の配列
+| `culture`   | ユーザーカルチャ
+
+国際化ウィジェット
+------------------
+
+>**CAUTION**
+>このセクションのウィジェットは symfony の国際化サブフレームワークに依存します。
+
+### ~`sfWidgetFormI18nChoiceCountry`~
+
+`sfWidgetFormI18nChoiceCountry` ウィジェットは国の選択を表します:
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
+
+![国際化された国のリスト](/images/forms_book/en/A_i18n_countries.png)
+
+| オプション  | 説明
+| ----------- | -----------
+| `culture`   | 国際化された文字列に使われるカルチャ (必須)
+| `countries` | 使用する国コードの配列 (ISO 3166)
+| `add_empty` | 最初に空の値を追加するかどうか (デフォルトは `false`)
+|             | オプションがブール値でなければ、値はテキストの値として使われる
+
+### ~`sfWidgetFormI18nChoiceLanguage`~
+
+`sfWidgetFormI18nChoiceLanguage` は言語の選択を表します:
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'fr'));
+
+![国際化された言語のリスト](/images/forms_book/en/A_i18n_languages.png)
+
+| オプション  | 説明
+| ----------- | -------------------------------------------------------------------
+| `culture`   | 国際化された文字列用に使用するカルチャ (必須)
+| `languages` | 使用する言語コードの配列
+| `add_empty` | 最初に空の値を追加するかどうか (デフォルトは `false`)
+|             | オプションがブール値でなければ、値はテキストの値として使われる。
+
+### ~`sfWidgetFormI18nChoiceCurrency`~
+
+`sfWidgetFormI18nChoiceCurrency` は通貨の選択を表します:
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceCurrency(array('culture' => 'fr'));
+
+![国際化された通貨のリスト](/images/forms_book/en/A_i18n_currencies.png)
+
+| オプション   | 説明
+| ------------ | -----------
+| `culture`    | 国際化された文字列に使うカルチャ (必須)
+| `currencies` | 使用する通貨コードの配列
+| `add_empty`  | 最初に空の値を追加するかどうか (デフォルトは `false`)
+|              | オプションがブール値でなければ、値はテキストの値として使われる。
+
+### ~`sfWidgetFormI18nChoiceTimezone`~
+
+`sfWidgetFormI18nChoiceTimezone` はタイムゾーンのチョイスを表します。
+
+    [php]
+    $w = new sfWidgetFormI18nChoiceTimezone(array('culture' => 'fr'));
+
+| オプション   | 説明
+| ------------ | -----------
+| `culture`    | 国際対応している文字列に対して使われるカルチャ (デフォルトの値は `en`)
+| `add_empty`  | 最初の空の値を追加するかどうか (デフォルトでは `false`)
+|              | オプションの値がブール値でなければ、値はテキストの値として使われます。
+
+Captcha ウィジェット
+---------------------
+
+`sfFormExtraPlugin`プラグインは[ReCaptcha プロジェクト](http://recaptcha.net/) をベースとするキャプチャウィジェットの `sfWidgetFormReCaptcha` を備えています:
+
+    [php]
+    $w = new sfWidgetFormReCaptcha(array(
+      'public_key' => 'RECAPTCHA_PUBLIC_KEY'
+    ));
+
+| オプション       | 説明
+| ---------------- | ----------------------------------------------------------
+| `public_key`     | ReCaptcha の公開鍵
+| `use_ssl`        | SSL を使用するかどうか (デフォルトは `false`)
+| `server_url`     | HTTP API 用の URL
+| `server_url_ssl` | HTTPS API 用の URL (`use_ssl` が `true` のときのみ使われる)
+
+`public_key` は ReCaptcha の公開鍵です。
+[API キー](http://recaptcha.net/api/getkey)は無料で入手できます。
+
+>**TIP**
+>[ReCaptcha API](http://recaptcha.net/apidocs/captcha/) に関する詳細な情報はオンラインで見つかります。
+
+ReCaptcha フィールドの名前を変更することはできないので、HTTP リクエストからフォームをバインドするときこれらを手動で追加しなければなりません。
+
+たとえば、フォームが `contact[%s]` ネームフォーマットを持つ場合、キャプチャ情報が残りのフォームに投稿された値にマージされることを保証するために必要なコードは次のとおりです:
+
+    [php]
+    $captcha = array(
+      'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+      'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+    );
+    $submittedValues = array_merge(
+      $request->getParameter('contact'),
+      array('captcha' => $captcha)
+    );
+
+このウィジェットは `sfValidatorReCatpcha` バリデータと一緒に使われます。
+
+フィルタウィジェット
+--------------------
+
+フィルタウィジェットはフィルタとしてふるまうフォームをレンダリングするために使うことができる特別なウィジェットです。
+
+### ~`sfWidgetFormFilterInput`~
+
+`sfWidgetFormFilterInput`はテキスト用のフィルタを表します。
+デフォルトでは、ユーザーが空のテキストを検索できるようにするためにこのウィジェットはチェックボックスを含みます。
+
+| オプション    | 説明
+| ------------- | ----------------------------------------------------------------------------
+| `with_empty`  | 空のチェックボックスを追加するかどうか (デフォルトでは `true`)
+| `empty_label` | 空のチェックボックスを利用する際に使うラベル
+| `template`    | ウィジェットをレンダリングするために使うテンプレート
+|               | 利用可能なプレースホルダ: `%input%`、`%empty_checkbox%`、`%empty_label%`
+
+### ~`sfWidgetFormFilterDate`~
+
+`sfWidgetFormFilterDate` は日付の範囲をフィリタリングするウィジェットを表します。
+デフォルトでは、ユーザーが空の日付を検索できるようにするためにこのウィジェットはチェックボックスを含みます。
+
+| オプション    | 説明
+| ------------- | --------------------------------------------------------------------------------
+| `with_empty`  | 空のチェックボックスを追加するかどうか (デフォルトでは `true`)
+| `empty_label` | 空のチェックボックス利用時に使用するラベル
+| `template`    | ウィジェットをレンダリングするために使うテンプレート
+|               | 利用可能なプレースホルダ: `%date_range%`、`%empty_checkbox%`、`%empty_label%`
+
+~`sfWidgetFormSchema`~
+----------------------
+
+`sfWidgetFormSchema` ウィジェットはいくつかのフィールドで構成されるウィジェットを表します。
+フィールドは名前つきのシンプルなウィジェットです:
+
+    [php]
+    $w = new sfWidgetFormSchema(array(
+      'name'    => new sfWidgetFormInputText(),
+      'country' => new sfWidgetFormI18nChoiceCountry(),
+    ));
+
+>**NOTE**
+>フォームは `sfWidgetFormSchema` クラスのウィジェットスキーマで定義されます。
+
+`sfWidgetFormSchema` コンストラクタはオプションとして5つの引数をとります:
+
+ * フィールドの配列
+ * オプションの配列
+ * HTML属性の配列
+ * 埋め込みウィジェット用のラベルの配列
+ * 埋め込みウィジェット用のヘルプメッセージの配列
+
+利用可能なオプションは次のとおりです:
+
+| オプション       | 説明
+| ---------------- | -----------
+| `name_format`    | 入力名用の `sprintf` パターン (デフォルトでは `%s`)
+| `form_formatter` | フォームフォーマッターの名前 (`table` と `list` が搭載されており、`table` がデフォルト)
+
+すべてのフォームに対してデフォルトのフォーマッターを変更したい場合、`setDefaultFormFormatterName()` メソッドで設定できます:
+
+    [php]
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
+
+`sfWidgetFormSchema` クラスは `sfWidgetForm` クラスを継承するので、すべてのメソッドとふるまいを継承します。
+
+>**CAUTION**
+>`sfWidgetFormSchema` オブジェクトはコンテナータグではなくウィジェットの「rows」だけをレンダリングします (`table` フォーマッターに対して `table`、もしくは `list` に対して `ul`):
+>
+>     [php]
+>     <Table>
+>       <?php echo $ws->render('') ?>
+>     </table>
+
+埋め込みのウィジェットにアクセスするために `sfWidgetFormSchema` を配列として使うことができます:
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $nameWidget = $ws['name'];
+
+    unset($ws['name']);
+
+>**CAUTION**
+>ウィジェットフォームスキーマがフォームに埋め込まれるとき、フォームはウィジェット自身ではなく、テンプレート内のバインドされるフィールドにアクセスする権限をあなたに与えます。
+>詳細はフォームのリファレンスの章をご参照ください。
+
+他のスキーマのように、ウィジェットスキーマは入れ子にできます:
+
+    [php]
+    $ws = new sfWidgetFormSchema(array(
+      'title'  => new sfWidgetFormInputText(),
+      'author' => new sfWidgetFormSchema(array(
+        'first_name' => new sfWidgetFormInputText(),
+        'last_name'  => new sfWidgetFormInputText(),
+      )),
+    ));
+
+配列記法を利用することで埋め込みのウィジェットスキーマにアクセスできます:
+
+    [php]
+    $ws['author']['first_name']->setLabel('First Name');
+
+下記において、ウィジェットスキーマクラスのメインメソッドが説明されていますが、すべてのメソッドのリストに関しては、オンラインのAPIドキュメントをご参照ください。
+
+### `setLabel()`、`getLabel()`、`setLabels()`、`getLabels()`
+
+`setLabel()`、`getLabel()`、`setLabels()` と `getLabels()` メソッドは埋め込みウィジェット用のラベルを管理します。
+これらはウィジェットの `getLabel()` と `setLabel()` メソッドのプロキシメソッドです。
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setLabel('name', 'Fabien');
+
+    // 上記は下記と同等
+
+    $ws['name']->setLabel('Fabien');
+
+    // もしくは
+
+    $ws->setLabels(array('name' => 'Fabien'));
+
+`setLabels()` メソッドは既存の値に渡された値をマージします。
+
+### `setDefault()`、`getDefault()`、`setDefaults()`、`getDefaults()`
+
+`setDefault()`、`getDefault()`、`setDefaults()` と `getDefaults()` メソッドは埋め込みウィジェット用のデフォルトの値を管理します。
+これらはウィジェットの `getDefault()` と `setDefault()` メソッドのプロキシメソッドです。
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setDefault('name', 'Fabien');
+
+    // 上記は下記のものと同等
+
+    $ws['name']->setDefault('Fabien');
+
+    // もしくは
+
+    $ws->setDefaults(array('name' => 'Fabien'));
+
+`setDefaults()` メソッドは渡された値を既存の値にマージします。
+
+### `setHelp()`、`setHelps()`、`getHelps()`、`getHelp()`
+
+`setHelp()`、`setHelps()`、`getHelps()`  `getHelp()` メソッドは埋め込みウィジェットに関連したヘルプメッセージを管理します:
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $ws->setHelp('name', 'Fabien');
+
+    // は下記と同等
+
+    $ws->setHelps(array('name' => 'Fabien'));
+
+`setHelps()` メソッドは受け取った値を既存の値にマージします。
+
+### `getPositions()`、`setPositions()`、`moveField()`
+
+ウィジェットスキーマに含まれるフィールドの並べ替えが行われます。
+順序は `moveField()` メソッドで変更できます:
+
+    [php]
+    $ws = new sfWidgetFormSchema(array(
+      'first_name' => new sfWidgetFormInputText(),
+      'last_name' => new sfWidgetFormInputText()
+    ));
+
+    $ws->moveField('first_name', sfWidgetFormSchema::AFTER, 'last_name');
+
+定数は次のとおりです:
+
+ * `sfWidgetFormSchema::FIRST`
+ * `sfWidgetFormSchema::LAST`
+ * `sfWidgetFormSchema::BEFORE`
+ * `sfWidgetFormSchema::AFTER`
+
+`setPositions()` メソッドですべての位置を変更することも可能です:
+
+    [php]
+    $ws->setPositions(array('last_name', 'first_name'));
+
+### ~`sfWidgetFormSchemaDecorator`~
+
+`sfWidgetFormSchemaDecorator` ウィジェットは任意の HTML スニペット内部のフォームスキーマウィジェットをラップするプロキシウィジェットスキーマです:
+
+    [php]
+    $ws = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
+
+    $wd = new sfWidgetFormSchemaDecorator($ws, '<table>%content%</table>');
+
+>**NOTE**
+>フォームが別のフォームに埋め込まれるときこのウィジェットが symfony の内部で使われます。

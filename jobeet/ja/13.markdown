@@ -134,13 +134,13 @@
       }
     }
 
-すべての必要条件を考慮するようにもコードを変更しました:
+すべての必要条件を考慮するようにもコードを変更しました。
 
   * `!in_array($job->getId(), $ids)`: 求人は重複して履歴に保存されない
 
   * `array_slice($ids, 0, 3)`: 最新の3つの求人のみがユーザーに表示されます。
 
-レイアウト内で、`$sf_content` の出力の前に次のコードを追加します:
+レイアウト内で、`$sf_content` の出力の前に次のコードを追加します。
 
     [php]
     // apps/frontend/templates/layout.php
@@ -159,7 +159,7 @@
       <?php echo $sf_content ?>
     </div>
 
-レイアウトは現在の求人履歴を取得するため新しい `getJobHistory()` メソッドを使います:
+レイアウトは現在の求人履歴を取得するため新しい `getJobHistory()` メソッドを使います。
 
     [php]
     // apps/frontend/lib/myUser.class.php
@@ -195,17 +195,17 @@
     }
 
 <propel>
-`getJobHistory()` メソッドは 1 回の呼び出しで複数の `JobeetJob` オブジェクトを取得するために、 Propel の `retrieveByPKs()` メソッドを使います。
+`getJobHistory()` メソッドは1回の呼び出しで複数の `JobeetJob` オブジェクトを取得するために、 Propel の `retrieveByPKs()` メソッドを使います。
 </propel>
 <doctrine>
-`getJobHistory()` メソッドは 1 回の呼び出しで複数の `JobeetJob` オブジェクトを取得するために、 カスタム Doctrine_Query オブジェクトを使います。
+`getJobHistory()` メソッドは1回の呼び出しで複数の `JobeetJob` オブジェクトを取得するために、 Doctrine_Query のカスタムオブジェクトを使います。
 </doctrine>
 
 ![求人履歴](http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png)
 
 ### sfParameterHolder
 
-求人履歴の API を完全にするために、履歴をリセットするメソッドを追加しましょう:
+求人履歴の API を完全にするために、履歴をリセットするメソッドを追加しましょう。
 
     [php]
     // apps/frontend/lib/myUser.class.php
@@ -229,7 +229,7 @@
 
 ### 認証
 
-他の多くの symfony の機能のように、セキュリティは YAML ファイルの `security.yml` で管理されます。たとえば、デフォルトコンフィギュレーションはバックエンドアプリケーションの `config/` ディレクトリで見つかります:
+ほかの多くの機能と同じように、セキュリティは YAML ファイルの `security.yml` ファイルで管理されます。たとえば、デフォルトのコンフィギュレーションはバックエンドアプリケーションの `config/` ディレクトリで見つかります。
 
     [yml]
     # apps/backend/config/security.yml
@@ -243,11 +243,11 @@
 >**TIP**
 >YAML ファイルにおいて、ブール値は `true` と `false` の文字列で表わされます。
 
-Web デバッグツールバーのログを見ると、ページにアクセスしようとするたびに `defaultActions` クラスの `executeLogin()` メソッドが呼び出されることに気が付くでしょう。
+Web デバッグツールバーのログを見ると、ページにアクセスしようとするたびに `defaultActions` クラスの `executeLogin()` メソッドが呼び出されることがわかります。
 
 ![Web デバッグツールバー](http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png)
 
-認証されていないユーザーがセキュアなアクションにアクセスしようとすると、symfony は `settings.yml` で設定される `login` アクションにリクエストを転送します:
+認証されていないユーザーがセキュアなアクションにアクセスしようとすると、symfony は `settings.yml` ファイルで設定される `login` アクションにリクエストを転送します。
 
     [yml]
     all:
@@ -261,7 +261,7 @@ Web デバッグツールバーのログを見ると、ページにアクセス�
 -
 
 >**TIP**
->4日目で見たように、同じ設定ファイルを複数の場所で定義できます。これは `security.yml` にもあてはまります。単独のアクションもしくはモジュール全体をセキュアにするかしないかのみであれば、モジュールの `config/` ディレクトリで `security.yml` を作ります:
+>4日目で見たように、同じ設定ファイルを複数の場所で定義できます。これは `security.yml` ファイルにもあてはまります。単独のアクションもしくはモジュール全体をセキュアにするかしないかのみであれば、モジュールの `config/` ディレクトリで `security.yml` ファイルを作ります。
 >
 >     [yml]
 >     index:
@@ -271,7 +271,7 @@ Web デバッグツールバーのログを見ると、ページにアクセス�
 >       is_secure: true
 
 デフォルトで、`myUser` クラスは `sfUser` ではなく、 [`sfBasicSecurityUser`](http://www.symfony-project.org/api/1_4/sfBasicSecurityUser) を継承します。`sfBasicSecurityUser` はユーザーの認証と認可を管理するための追加メソッドを提供します。
-ユーザー認証を管理するために、`isAuthenticated()` と `setAuthenticated()` メソッドを使います:
+ユーザー認証を管理するために、`isAuthenticated()` と `setAuthenticated()` メソッドを使います。
 
     [php]
     if (!$this->getUser()->isAuthenticated())
@@ -281,7 +281,7 @@ Web デバッグツールバーのログを見ると、ページにアクセス�
 
 ### 認証
 
-ユーザーが認証されるとき、アクションへのアクセスは**クレデンシャル (資格)** を定義することでより制限できます。ユーザーはページにアクセスするために要求されるクレデンシャルがなければなりません:
+ユーザーが認証されるとき、アクションへのアクセスは**クレデンシャル (資格)** を定義することでより制限できます。ユーザーはページにアクセスするために要求されるクレデンシャルがなければなりません。
 
     [yml]
     default:
@@ -293,15 +293,15 @@ symfony のクレデンシャルシステムはとてもシンプルで強力で
 >**SIDEBAR**
 >複雑なクレデンシャル
 >
->複雑なクレデンシャルの要件を記述するために `security.yml` の `credentials` エントリはブール値オペレーションをサポートします。
+>複雑なクレデンシャルの要件を記述するために `security.yml` ファイルの `credentials` エントリはブール値の演算をサポートします。
 >
->ユーザーがクレデンシャル A **と** B をもたなければならない場合、クレデンシャルを角かっこで囲みます:
+>ユーザーがクレデンシャル A **と** B をもたなければならない場合、クレデンシャルを角かっこで囲みます。
 >
 >     [yml]
 >     index:
 >       credentials: [A, B]
 >
->ユーザーがクレデンシャル A **もしくは** B をもたなければならない場合、クレデンシャルを2つの角かっこの組で囲みます:
+>ユーザーがクレデンシャル A **もしくは** B をもたなければならない場合、クレデンシャルを2つの角かっこの組で囲みます。
 >
 >     [yml]
 >     index:
@@ -309,41 +309,41 @@ symfony のクレデンシャルシステムはとてもシンプルで強力で
 >
 >いくつのクレデンシャルでも任意に要否を記述するためにかっこを組み合わせることもできます。
 
-ユーザークレデンシャルを管理するために、`sfBasicSecurityUser` はいくつかのメソッドを提供します:
+ユーザークレデンシャルを管理するために、`sfBasicSecurityUser` はいくつかのメソッドを提供します。
 
     [php]
-    // 1つもしくは複数のクレデンシャルを追加する
+    // 1つもしくは複数のクレデンシャルを追加します
     $user->addCredential('foo');
     $user->addCredentials('foo', 'bar');
 
-    // ユーザーがクレデンシャルをもつかチェックする
+    // ユーザーがクレデンシャルをもっているかチェックします
     echo $user->hasCredential('foo');                      =>   true
 
-    // ユーザーが両方のクレデンシャルをもつかチェックする
+    // ユーザーが両方のクレデンシャルをもっているかチェックします
     echo $user->hasCredential(array('foo', 'bar'));        =>   true
 
-    // ユーザーがクレデンシャルの1つをもつかチェックする
+    // ユーザーがクレデンシャルの1つをもっているかチェックします
     echo $user->hasCredential(array('foo', 'bar'), false); =>   true
 
-    // クレデンシャルを削除する
+    // クレデンシャルを削除します
     $user->removeCredential('foo');
     echo $user->hasCredential('foo');                      =>   false
 
-    // すべてのクレデンシャルを削除する (ログアウト処理の際に便利)
+    // すべてのクレデンシャルを削除します (ログアウト処理の際に便利です)
     $user->clearCredentials();
     echo $user->hasCredential('bar');                      =>   false
 
-Jobeet バックエンドでは、、プロファイルは1つ: admin しかないのでクレデンシャルは使いません。
+Jobeet バックエンドでは、プロファイルは1つ: admin しかないのでクレデンシャルは使いません。
 
 プラグイン
 ----------
 
 車輪の再発明をしたくないので、スクラッチでログインアクションを開発しません。代わりに、**プラグイン**をインストールします。
 
-symfony フレークワークの大きな強みの1つは[プラグインエコシステム](http://www.symfony-project.org/plugins/)です。来る日に行いますが、プラグインを作るのはとても簡単です。プラグインはコンフィギュレーションからモジュールとアセットまで何でも格納できるのでとても強力です。
+symfony フレークワークの大きな強みの1つは[プラグインエコシステム](http://www.symfony-project.org/plugins/)です。来る日に行いますが、プラグインを作るのはとてもかんたんです。プラグインはコンフィギュレーションからモジュールとアセットまで何でも格納できるのでとても強力です。
 
 <propel>
-今日は、バックエンドアプリケーションをセキュアにするために [~`sfGuardPlugin`~](http://www.symfony-project.org/plugins/sfGuardPlugin) をインストールします:
+今日は、バックエンドアプリケーションをセキュアにするために [~`sfGuardPlugin`~](http://www.symfony-project.org/plugins/sfGuardPlugin) をインストールします。
 
     $ php symfony plugin:install sfGuardPlugin
 </propel>
@@ -353,7 +353,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
     $ php symfony plugin:install sfDoctrineGuardPlugin
 </doctrine>
 
-`plugin:install` タスクは名前からプラグインをインストールします。すべてのプラグインは `plugins/` ディレクトリの下に保存され、それぞれのプラグインはプラグインの名前による専用のディレクトリを持ちます。
+`plugin:install` タスクは名前からプラグインをインストールします。すべてのプラグインは `plugins/` ディレクトリの下に保存され、それぞれのプラグインにはプラグインの名前による専用のディレクトリが用意されています。
 
 >**NOTE**
 >`plugin:install` タスクを動くようにするために PEAR をインストールしなければなりません。
@@ -373,7 +373,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 プラグインはディレクトリに格納されており、symfony 公式サイトから[パッケージをダウンロード](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_installation)して展開することも可能で、もしくは代わりに [Subversion リポジトリ](http://svn.symfony-project.com/plugins/sfDoctrineGuardPlugin)への `svn:externals` リンクからダウンロードできます。
 </doctrine>
 
-`plugin:install` タスクは `ProjectConfiguration.class.php` ファイルを自動的に更新することでインストールするプラグインを自動的に有効にします。しかし Subversion を通して、またはアーカイブをダウンロードしてプラグインをインストールする場合、`ProjectConfiguration.class.php` で手動で有効にする必要があります:
+`plugin:install` タスクは `ProjectConfiguration.class.php` ファイルを自動的に更新することでインストールするプラグインを自動的に有効にします。しかし Subversion を通して、またはアーカイブをダウンロードしてプラグインをインストールする場合、`ProjectConfiguration.class.php` で手動で有効にする必要があります。
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -403,7 +403,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 それぞれのプラグインには設定方法を説明している[README](http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme)ファイルがあります。
 </doctrine>
 
-新しいプラグインの設定方法を見てみましょう。ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります:
+新しいプラグインの設定方法を見てみましょう。ユーザー、グループとパーミッションを管理する新しいモデルクラスを提供するので、モデルをリビルドする必要があります。
 
 <propel>
     $ php symfony propel:build --all --and-load --no-confirmation
@@ -422,10 +422,10 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 </doctrine>
 
 <propel>
-`sfGuardPlugin` はユーザークラスにいくつかのメソッドを追加するので、`myUser` の基底クラスを `sfGuardSecurityUser` に変更する必要があります:
+`sfGuardPlugin` はユーザークラスにいくつかのメソッドを追加するので、`myUser` の基底クラスを `sfGuardSecurityUser` に変更する必要があります。
 </propel>
 <doctrine>
-`sfDoctrineGuardPlugin` はユーザークラスにいくつかのメソッドを追加するので、`myUser` の基底クラスを`sfGuardSecurityUser` に変更する必要があります:
+`sfDoctrineGuardPlugin` はユーザークラスにいくつかのメソッドを追加するので、`myUser` の基底クラスを`sfGuardSecurityUser` に変更する必要があります。
 </doctrine>
 
     [php]
@@ -441,7 +441,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 `sfDoctrineGuardPlugin` はユーザーを認証する `signin` アクションを `sfGuardAuth` モジュールに提供します。
 </doctrine>
 
-ログインページに使われるデフォルトのアクションを変更するために ~`settings.yml`~ ファイルを編集します:
+ログインページに使われるデフォルトのアクションを変更するために ~`settings.yml`~ ファイルを編集します。
 
     [yml]
     # apps/backend/config/settings.yml
@@ -461,24 +461,24 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 
 ![sfGuardPlugin のログイン](http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png)
 
-最後のステップは admin ユーザーを作ることです:
+最後のステップは admin ユーザーを作ることです。
 
     $ php symfony guard:create-user fabien SecretPass
     $ php symfony guard:promote fabien
 
 <doctrine>
 >**TIP**
->Subversion のトランクから `sfDoctrineGuardPlugin` をインストールしたのであれば、ユーザーを作って昇格させることを一度に行うために次のコマンドを実行する必要があります:
+>Subversion のトランクから `sfDoctrineGuardPlugin` をインストールしたのであれば、ユーザーを作って昇格させることを一度に行うために次のコマンドを実行する必要があります。
 >
 >     $ php symfony guard:create-user fabien@example.com fabien SecretPass Fabien Potencier
 </doctrine>
 
 >**TIP**
->`sfGuardPlugin` はコマンドラインからユーザー、グループとパーミッションを管理するタスクを提供します。`guard` 名前空間に所属するすべてのタスクの一覧を表示するには `list` タスクを使います:
+>`sfGuardPlugin` はコマンドラインからユーザー、グループとパーミッションを管理するタスクを提供します。`guard` 名前空間に所属するすべてのタスクの一覧を表示するには `list` タスクを使います。
 >
 >     $ php symfony list guard
 
-ユーザーが認証されていないとき、メニューバーを隠す必要があります:
+ユーザーが認証されていないとき、メニューバーを隠す必要があります。
 
     [php]
     // apps/backend/templates/layout.php
@@ -491,7 +491,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
       </div>
     <?php endif ?>
 
-ユーザーが認証されたとき、メニューにログアウトリンクを追加する必要があります:
+ユーザーが認証されたとき、メニューにログアウトリンクを追加する必要があります。
 
     [php]
     // apps/backend/templates/layout.php
@@ -507,7 +507,7 @@ symfony フレークワークの大きな強みの1つは[プラグインエコ�
 >`sfDoctrineGuardPlugin` から提供されるすべてのルートの一覧を表示するには、`app:routes`  タスクを使います。
 </doctrine>
 
-Jobeet バックエンドにさらに磨きをかけるために、管理者ユーザーを管理する新しいモジュールを追加しましょう。ありがたいことに、`sfGuardPlugin` はそのようなモジュールを提供してくれます。`sfGuardAuth` モジュールに関して、`settings.yml` でこれを有効にする必要があります:
+Jobeet バックエンドにさらに磨きをかけるために、管理者ユーザーを管理する新しいモジュールを追加しましょう。ありがたいことに、`sfGuardPlugin` はそのようなモジュールを提供してくれます。`sfGuardAuth` モジュールに関して、`settings.yml` ファイルでこれを有効にする必要があります。
 
     [yml]
     // apps/backend/config/settings.yml
@@ -515,7 +515,7 @@ Jobeet バックエンドにさらに磨きをかけるために、管理者ユ�
       .settings:
         enabled_modules: [default, sfGuardAuth, sfGuardUser]
 
-リンクをメニューに追加します:
+リンクをメニューに追加します。
 
     [php]
     // apps/backend/templates/layout.php
@@ -530,7 +530,7 @@ Jobeet バックエンドにさらに磨きをかけるために、管理者ユ�
 
 ユーザーのテストの話をしていないので13日目は終わっていません。symfony ブラウザは Cookie をシミュレートするので、組み込みの [`sfTesterUser`](http://symfony-project.org/api/1_4/sfTesterUser) テスターによって使うユーザーのふるまいのテストはとても簡単です。
 
-今までに追加したメニュー機能用の機能テストを更新しましょう。`job` モジュールの機能テストの末尾に次のコードを追加します:
+今までに追加したメニュー機能用の機能テストを更新しましょう。`job` モジュールの機能テストの末尾に次のコードを追加します。
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -556,7 +556,7 @@ Jobeet バックエンドにさらに磨きをかけるために、管理者ユ�
       end()
     ;
 
-テストを楽にするために、まずフィクスチャデータをリロードして、クリーンなセッションで始めるためにブラウザを再起動します。
+テストを楽にするために、まずフィクスチャのデータをリロードして、クリーンなセッションで始めるためにブラウザを再起動します。
 `isAttribute()` メソッドは渡されたユーザー属性をチェックします。
 
 >**NOTE**
