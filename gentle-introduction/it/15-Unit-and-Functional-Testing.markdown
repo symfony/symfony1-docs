@@ -49,24 +49,24 @@ Bisognerebbe scrivere i test unitari, eseguirli e vedere il loro fallimento. Suc
 In un'applicazione costruita con la metodologia test-driven, la quantità di codice dedicato ai test raggiunge quasi il codice dell'applicazione vera e propria. Poiché non si vuole spendere tempo nelle operazioni debugging dei test è bene mantenere il loro codice semplice.
 
 >**NOTA**
->Rifattorizzare un metodo può creare nuovi bug che non erano apparsi prima. Questo è il motivo per il quale è sempre una buona pratica eseguire tutti i test prima di rilasciare una nuova caratteristica dell'applicazione in produzione -- questo tipo di test è chiamato test di regressione. 
+>Rifattorizzare un metodo può creare nuovi bug che non erano apparsi prima. Questo è il motivo per il quale è sempre una buona pratica eseguire tutti i test prima di rilasciare una nuova caratteristica dell'applicazione in produzione: questo tipo di test è chiamato test di regressione. 
 
 ### Il framework di test Lime
 
-Ci sono molti framework di test unitari nel mondo del PHP, il più conosciuto è PHPUnit. Symfony ha il suo, si chiama lime. È basato sulla libreria Perl `Test::More` ed è conforme al TAP che significa che il risultato dei test è mostrato come specificato nel Protocollo Test Anything Protocol, disegnato per una migliore leggibilità degli output dei test.
+Ci sono molti framework di test unitari nel mondo del PHP, il più conosciuto è PHPUnit. Symfony ha il suo, si chiama lime. È basato sulla libreria Perl `Test::More` ed è conforme al TAP, che significa che il risultato dei test è mostrato come specificato nel protocollo Test Anything Protocol, disegnato per una migliore leggibilità degli output dei test.
 
 Lime supporta i test unitari. È molto leggero in confronto agli altri framework di test in PHP e ha diversi vantaggi:
 
-  * Lancia file di test in una sandbox per evitare strani effetti collaterali tra un test e l'altro. Non tutti i framework di test sono in grado di garantire un ambiente pulito per ogni test.
-  * I test di lime sono molto leggibili, così come l'output. Su sistemi compatibili, lime utilizza output colorato in modo da distinguere le informazioni importanti. 
+  * Lancia file di test in una sandbox, per evitare strani effetti collaterali tra un test e l'altro. Non tutti i framework di test sono in grado di garantire un ambiente pulito per ogni test.
+  * I test di lime sono molto leggibili, così come l'output. Su sistemi compatibili, lime utilizza output colorato, in modo da distinguere le informazioni importanti. 
   * Symfony stesso usa lime per i test di regressione, quindi molti esempi di test unitari e funzionali possono essere trovati nel codice sorgente di symfony.
-  * Lo stesso core di Lime è validato con test unitari
+  * Lo stesso nucleo di Lime è validato con test unitari
   * È scritto in php, è veloce, scritto bene e non ha dipendenze.
   
 I vari test descritti di seguito usano la sintassi di lime. Funzionano in ogni installazione di symfony.
 
 >**NOTA**
->Non si suppone che test unitari e funzionali siano avviati in produzione. Sono dei strumenti di sviluppo e come tali devono essere avviati nei computer degli sviluppatori e non nei server host.
+>Non si suppone che test unitari e funzionali siano avviati in produzione. Sono degli strumenti di sviluppo e come tali devono essere avviati nei computer degli sviluppatori e non nei server host.
 
 Test unitari
 ----------
@@ -142,7 +142,7 @@ Metodo                                        | Descrizione
 `like($string, $regexp[, $msg])`              | Verifica che una stringa aderisca a una espressione regolare
 `unlike($string, $regexp[, $msg])`            | Verifica che una stringa non aderisca a una espressione regolare
 `cmp_ok($value1, $operator, $value2[, $msg])` | Confronta due valori con un operatore
-`isa_ok($variable, $type[, $msg])`            | Verifica il tipo di un argomento
+`isa_ok($variable, $type[, $msg])`            | Verifica il tipo di un parametro
 `isa_ok($object, $class[, $msg])`             | Verifica la classe di un oggetto
 `can_ok($object, $method[, $msg])`            | Verifica la disponibilità di un metodo per un oggetto o una classe
 `is_deeply($array1, $array2[, $msg])`         | Verifica che due array abbiano gli stessi valori
@@ -648,7 +648,7 @@ Listato 15-18 - Testare direttamente con `sfTestFunctional`
 
 Ogni metodo proxy fa parte del gruppo dei tester. L'utilizzo di un gruppo di tester è abilitato utilizzando le chiamate tra i metodi `with()` e `end()`. Il metodo `with()` stabilisce il tester del gruppo ( come `request` e `response`  ).
 
-Il codice di ritorno 200 è quello di default che viene utilizzato con il metodo `isStatusCode()` quando viene chiamato senza argomenti.
+Il codice di ritorno 200 è quello di default che viene utilizzato con il metodo `isStatusCode()` quando viene chiamato senza parametri.
 
 Un altro vantaggio dei metodi proxy è che non è necessario specificare un testo di output come si farebbe con i metodi di `lime_test`. I messaggi sono generati automaticamente dai metodi proxy e il testo di output è chiaro e leggibile.
 
@@ -728,7 +728,7 @@ Listato 15-22 - Il Browser test fornisce acceso agli elementi della risposta con
       end()
     ;
 
-Il comportamento del metodo `checkElement()` dipendono dal tipo del secondo argomento che può essere:
+Il comportamento del metodo `checkElement()` dipendono dal tipo del secondo parametro, che può essere:
 
   * Se si tratta di un booleano, controlla che esista un corrispondente selettore CSS.
   * Se si tratta di un intero, verifica che il selettore CSS restituisca il numero dei risultati.
@@ -810,7 +810,7 @@ Listato 15-28 - Impostare il browser con un hostname e un IP
 
 ### Il task `test:functional`
 
-Il task `test: functional`  può eseguire uno o più test funzionali a seconda del numero di argomenti che riceve. Le regole sono molto simili a quelle del task `test: unit`, salvo che i task del test funzionale si aspetta sempre il nome di un'applicazione come primo argomento, come mostrato nella listato 15-29.
+Il task `test: functional`  può eseguire uno o più test funzionali a seconda del numero di parametri che riceve. Le regole sono molto simili a quelle del task `test: unit`, salvo che i task del test funzionale si aspetta sempre il nome di un'applicazione come primo parametro, come mostrato nella listato 15-29.
 
 Listato 15-29 - Sintassi del task dei test funzionali
 

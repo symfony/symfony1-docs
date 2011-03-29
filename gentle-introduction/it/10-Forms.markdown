@@ -594,7 +594,7 @@ Per inserire i dati della richiesta nel form e collegarli, si usa il metodo 'sfF
 
 ### Utilizzo di dati form puliti
 
-Nell'elenco precedente, non abbiamo definito i dati della richiesta ricevuti dal form durante il processo di bind. Il problema è che la richiesta non contiene solo i dati del form. Essa contiene anche header, cookie, parametri passati come argomenti `GET`, e tutto questo potrebbe inquinare il processo di bind. Una buona pratica è di passare solo i dati del form al metodo `bind()`.
+Nell'elenco precedente, non abbiamo definito i dati della richiesta ricevuti dal form durante il processo di bind. Il problema è che la richiesta non contiene solo i dati del form. Essa contiene anche header, cookie, parametri passati come parametri `GET`, e tutto questo potrebbe inquinare il processo di bind. Una buona pratica è di passare solo i dati del form al metodo `bind()`.
 
 Fortunatamente, symfony offre un modo per denominare tutti gli input del form usando un array. Si può definire il formato dell'attributo nome con il metodo `setNameFormat()` nell'azione quando si definisce il form, come segue:
 
@@ -708,7 +708,7 @@ In un form tutti i campi devono avere un validatore e per default tutti i campi 
       'message' => new sfValidatorString(array('min_length' => 4))
     ));
 
-Si può applicare più di un validatore a un singolo campo. Ad esempio, si può voler controllare che il campo `email` soddisfi sia il validatore `sfValidatorEmail` che quello `sfValidatorString` con una dimensione minima di 4 caratteri. In tal caso, si usa il validatore `sfValidatorAnd` per combinare i due validatori, passandogli come argomenti i due validatori `sfValidatorEmail` e `sfValidatorString`:
+Si può applicare più di un validatore a un singolo campo. Ad esempio, si può voler controllare che il campo `email` soddisfi sia il validatore `sfValidatorEmail` che quello `sfValidatorString` con una dimensione minima di 4 caratteri. In tal caso, si usa il validatore `sfValidatorAnd` per combinare i due validatori, passandogli come parametri i due validatori `sfValidatorEmail` e `sfValidatorString`:
 
     [php]
     $this->form->setValidators(array(
@@ -771,7 +771,7 @@ Il validatore `sfValidatorSchemaCompare` è uno speciale validatore multiplo che
 Validatori
 ----------
 
-Symfony un gran numero di validatori. Si ricordi che ogni validatore accetta un array di opzioni e un array di errori come argomenti, dei quali è necessario personalizzare almeno i messaggi di errore `required` e `invalid`.
+Symfony ha un gran numero di validatori. Si ricordi che ogni validatore accetta un array di opzioni e un array di errori come parametri, dei quali è necessario personalizzare almeno i messaggi di errore `required` e `invalid`.
 
     [php]
     // validatore stringa

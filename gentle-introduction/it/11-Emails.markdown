@@ -49,7 +49,7 @@ L'invio di un'email è semplice, utilizzando il metodo ~`sfAction::composeAndSen
       'Body'
     );
 
-Il metodo `composeAndSend()` richiede quattro argomenti:
+Il metodo `composeAndSend()` richiede quattro parametri:
 
  * l'indirizzo del mittente (`from`);
  * l'indirizzo del/i destinatario/i (`to`);
@@ -231,7 +231,7 @@ vengono passati al costruttore della classe stessa. Di seguito vengono mostrate 
     * Il nome della colonna utilizzata per memorizzare il messaggio (`message` come predefinito)
 
     * Il metodo da chiamare per ottenere il messaggio da inviare (opzionale). 
-      Riceve le opzione della coda come argomento.
+      Riceve le opzione della coda come parametro.
 
  * `Swift_PropelSpool`:
 
@@ -240,7 +240,7 @@ vengono passati al costruttore della classe stessa. Di seguito vengono mostrate 
     * Il nome della colonna da utilizzare per memorizzare  il messaggio (`message` come predefinito)
 
     * Il metodo da chiamare per ottenere il messaggio da inviare (opzionale). 
-      Riceve le opzione della coda come argomento.
+      Riceve le opzione della coda come parametro.
     
 Di seguito una classica configurazione per Doctrine:
 
@@ -439,7 +439,7 @@ e ~`checkBody()`~ :
       end()
     ;
 
-Il secondo argomento di `checkHeader()` e il primo argomento di `checkBody()`
+Il secondo parametro di `checkHeader()` e il primo parametro di `checkBody()`
 può essere uno dei seguenti:
 
  * una stringa per controllare un'esatta corrispondenza;
@@ -551,7 +551,7 @@ Ovviamente può risultare conveniente aggiungere una classe base per centralizza
     }
 
 Qualora un messaggio dipendesse da oggetti del modello, è possibile passarli
-come argomenti al costruttore:
+come parametri al costruttore:
 
     [php]
     // lib/email/ProjectConfirmationMessage.class.php
