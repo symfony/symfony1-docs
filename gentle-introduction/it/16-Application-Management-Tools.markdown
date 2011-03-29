@@ -169,7 +169,7 @@ Al contrario, quando la modalità debug è disattivata, l'elaborazione viene ges
   * Per eseguire una rielaborazione della configuazione, è necessario cancellare manualmente la cache della configurazione.
   * Un errore durante l'elaborazione della richiesta restituisce una risposta con codice 500 (errore interno del server), senza nessuna spiegazione su quale possa essere la causa del problema.
 
-La modalità debug è attivata per applicazione nel front controller. Viene gestita dal valore del terzo argomento passato nella chiamata del metodo `getApplicationConfiguration()`, come mostrato nel listato 16-8.
+La modalità debug è attivata per applicazione nel front controller. Viene gestita dal valore del terzo parmatro passato nella chiamata del metodo `getApplicationConfiguration()`, come mostrato nel listato 16-8.
 
 Listato 16-8 - Esempio di front controller con la modalità di debug attivata, in `web/frontend_dev.php`
 
@@ -188,7 +188,7 @@ Listato 16-8 - Esempio di front controller con la modalità di debug attivata, i
 
 Quando si verifica un'eccezione nella modalità di debug, symfony mostra un'utile informazione dull'eccezione che contiene tutto quello di cui si ha bisogno per trovare la causa del problema.
 
-I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in figura 16-1. È possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati gli argomenti che sono stati passati ai metodi.
+I messaggi con le eccezioni sono scritti in modo chiaro e indicano la causa più probabile del problema. Spesso forniscono una possibile soluzione per risolvere il problema e per la maggior parte dei problemi più comuni, la pagina con l'eccezione può contenere un link a una pagina del sito di symfony con maggiori dettagli sull'eccezione. La pagina dell'eccezione mostra dove è avvenuto l'errore nel codice PHP (con evidenziazione colorata della sintassi), insieme allo stack completo delle chiamate di metodoto, come mostrato in figura 16-1. È possibile seguire il trace alla prima chiamata che ha causato il problema. Sono anche indicati i parametri che sono stati passati ai metodi.
 
 >**NOTE**
 >Symfony si basa proprio sulle eccezioni PHP per la segnalazione degli errori. Ad esempio, l'errore 404 può essere lanciato da un `sfError404Exception`.
@@ -338,7 +338,7 @@ Figura 16-7 - Un messaggio di log personalizzato visualizzato nella sezione "log
 Usare symfony fuori dal contesto web
 ------------------------------------
 
-Si può volere eseguire uno script da riga di comando (o tramite cron) che abbia accesso a tutte le classi e le caratteristiche di symfony, ad esempio per inviare e-mail in batch e per aggiornare periodicamente il modello tramite una elaborazione intensiva. Il modo più semplice per farlo è quello di creare uno script PHP che riproduca i primi passi di un front controller, in modo che symfony possa venire correttamente inizializzato. È inoltre possibile utilizzare il sistema a riga di comando di symfony, per trarre vantaggio del parse degli argomenti e dell'inizializzazione automatizzata del database.
+Si può volere eseguire uno script da riga di comando (o tramite cron) che abbia accesso a tutte le classi e le caratteristiche di symfony, ad esempio per inviare e-mail in batch e per aggiornare periodicamente il modello tramite una elaborazione intensiva. Il modo più semplice per farlo è quello di creare uno script PHP che riproduca i primi passi di un front controller, in modo che symfony possa venire correttamente inizializzato. È inoltre possibile utilizzare il sistema a riga di comando di symfony, per trarre vantaggio dell'analisi dei parametri e dell'inizializzazione automatizzata del database.
 
 ### File batch
 
@@ -369,9 +369,9 @@ Per eseguire il codice, basta chiamare lo script dalla riga di comando:
 
 ### Task personalizzati
 
-Un modo alternativo per creare script personalizzati a riga di comando è scrivere un **task symfony**. Proprio come i task `cache:clear` e `propel:build-model`, è possibile lanciare i propri task personalizzati dalla linea di comando con `php symfony`. I task personalizzati traggono vantaggio della capacità di analizzare argomenti e opzioni della linea di comando, possono incorporare i promi messaggi di aiuto e possono estendere task esistenti.
+Un modo alternativo per creare script personalizzati a riga di comando è scrivere un **task symfony**. Proprio come i task `cache:clear` e `propel:build-model`, è possibile lanciare i propri task personalizzati dalla linea di comando con `php symfony`. I task personalizzati traggono vantaggio della capacità di analizzare parametri e opzioni della linea di comando, possono incorporare i propri messaggi di aiuto e possono estendere task esistenti.
 
-Un task personalizzato è solo una classe che estende `sfBaseTask` situata in una cartella `lib/task/`, o sotto la root del progetto, o in una cartella di un plugin. Il nome del file deve terminare con 'Task.class.php'. Il listato 16-13 mostra un esempio di task presonalizzato.
+Un task personalizzato è solo una classe che estende `sfBaseTask`, situata in una cartella `lib/task/` o sotto la radice del progetto o in una cartella di un plugin. Il nome del file deve terminare con 'Task.class.php'. Il listato 16-13 mostra un esempio di task presonalizzato.
 
 Listato 16-13 - Esempio di task, in `lib/task/testCiaoTask.class.php`
 
@@ -406,7 +406,7 @@ Invece che scrivere manualmente lo scheletro del task, si può usare il task sym
 
     $ php symfony help generate:task
 
-I task possono accettare argomenti (parametri obbligatori, in un ordine predefinito) e opzioni (parametri opzionali non ordinati). Il listato 16-14 mostra un task più completo, che sfrutta tutte queste caratteristiche.
+I task possono accettare parametri (obbligatori, in un ordine predefinito) e opzioni (parametri opzionali non ordinati). Il listato 16-14 mostra un task più completo, che sfrutta tutte queste caratteristiche.
 
 Listato 16-14 - Un esempio di task più completo, in `lib/task/mioSecondoTask.class.php`
 
@@ -444,7 +444,7 @@ Listato 16-14 - Un esempio di task più completo, in `lib/task/mioSecondoTask.cl
 >
 >    $databaseManager = new sfDatabaseManager($this->configuration);
 >
->Se la configurazione del task definisce un argomento `application` e `env`, questi vengono automaticamente considerati quando viene creata la configurazione del task, quindi un task può utilizzare una qualunque delle connessioni a database definite nel file `databases.yml`. Per impostazione predefinita, gli scheletri generati dalla chiamata a `generate:task` comprendono questa inizializzazione.
+>Se la configurazione del task definisce un parametro `application` e `env`, questi vengono automaticamente considerati quando viene creata la configurazione del task, quindi un task può utilizzare una qualunque delle connessioni a database definite nel file `databases.yml`. Per impostazione predefinita, gli scheletri generati dalla chiamata a `generate:task` comprendono questa inizializzazione.
 
 Per ulteriori esempi sulle capacità del sistema dei task, si possono guaradre i sorgenti dei task esistenti di symfony.
 

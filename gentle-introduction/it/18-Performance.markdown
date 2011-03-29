@@ -503,7 +503,7 @@ Tutti e due questi metodi sono molto efficaci e, anche se sono applicabili solo 
 
 ### Mettere in cache il risultato di una chiamata a una funzione
 
-Se una funzione non utilizza valori dipendenti dal contesto o non casuali, chiamandola due volte con gli stessi parametri dovrebbe fornire lo stesso risultato. Questo significa che la seconda chiamata potrebbe davvero essere evitata nel caso un cui si fosse memorizzato il primo risultato. Questo è esattamente ciò che la classe `sfFunctionCache` si occupa di fare. Questa classe ha un metodo `call()` che si aspetta un callable e un array di parametri come argomenti. Quando invocato questo metodo crea un hash md5 con tutti gli argomenti e cerca nella cache una chiave denominata con quell'hash. Se la chiave viene trovata la funzione restituisce il risultato memorizzato nella cache. Altrimenti `sfFunctionCache` esegue la funzione, memorizza il risultato nella cache e lo restituisce. In questo modo la seconda esecuzione del listato 18-16 sarà più veloce della prima.
+Se una funzione non utilizza valori dipendenti dal contesto o non casuali, chiamandola due volte con gli stessi parametri dovrebbe fornire lo stesso risultato. Questo significa che la seconda chiamata potrebbe davvero essere evitata nel caso un cui si fosse memorizzato il primo risultato. Questo è esattamente ciò che la classe `sfFunctionCache` si occupa di fare. Questa classe ha un metodo `call()` che si aspetta un callable e un array di parametri. Quando invocato questo metodo crea un hash md5 con tutti i parametri e cerca nella cache una chiave denominata con quell'hash. Se la chiave viene trovata, la funzione restituisce il risultato memorizzato nella cache. Altrimenti, `sfFunctionCache` esegue la funzione, memorizza il risultato nella cache e lo restituisce. In questo modo, la seconda esecuzione del listato 18-16 sarà più veloce della prima.
 
 Listato 18-16 - Mettere in cache il risultato di una funzione
 
@@ -513,7 +513,7 @@ Listato 18-16 - Mettere in cache il risultato di una funzione
     $result1 = $fc->call('cos', array(M_PI));
     $result2 = $fc->call('preg_replace', array('/\s\s+/', ' ', $input));
 
-Il costruttore della classe `sfFunctionCache` si aspetta un oggetto di tipo cache. Il primo argomento del metodo `call()` deve essere un callable, quindi può essere il nome di una funzione, un array contenente il nome di una classe e il nome di un metodo statico oppure un array con il nome di un oggetto e il nome di un metodo pubblico. Lo stesso vale per l'altro parametro del metodo `call()`, si tratta di un array  di argomenti che verranno passati al callable.
+Il costruttore della classe `sfFunctionCache` si aspetta un oggetto di tipo cache. Il primo parametro del metodo `call()` deve essere un callable, quindi può essere il nome di una funzione, un array contenente il nome di una classe e il nome di un metodo statico oppure un array con il nome di un oggetto e il nome di un metodo pubblico. Lo stesso vale per l'altro parametro del metodo `call()`, si tratta di un array di parametri che verranno passati al callable.
 
 >**CAUTION**
 >Se si utilizza un oggetto cache basato su file come nell'esempio è consigliabile utilizzare una cartella all'interno della cartella `cache/`, così facendo verrà svuotata automaticamente dal task `cache:clear`. Se si memorizza la cache della funzione da qualche altra parte non verrà rimossa automaticamente quando si svuoterà la cache utilizzando la linea di comando.

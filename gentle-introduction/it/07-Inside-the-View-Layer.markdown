@@ -243,9 +243,9 @@ Listato 7-7 - Includere un partial in un template del modulo `miomodulo`
     // si può omettere il nome del modulo
     <?php include_partial('miopartial1') ?>
 
-    // Include il partial frontend/modules/foobar/templates/_mypartial2.php
+    // Include il partial frontend/modules/pippo/templates/_mypartial2.php
     // In questo caso il nome del modulo è obbligatorio
-    <?php include_partial('foobar/miopartial2') ?>
+    <?php include_partial('pippo/miopartial2') ?>
 
     // Include il partial frontend/templates/_mypartial3.php
     // È considerato parte del modulo 'global'

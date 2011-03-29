@@ -27,7 +27,7 @@ Listato 17-1 - Registrare un ascoltatore di eventi
       // fa qualcosa con la cultura dell'utente
     }
 
-Tutti gli eventi e le registrazioni degli ascoltatori sono gestiti da un oggetto speciale chiamato *dispatcher di eventi*. Questo oggetto è disponibile ovunque in symfony attraverso l'istanza di `ProjectConfiguration` e la maggior parte degli oggetti di symfony offrono un metodo `getEventDispatcher()` per accedervi direttamente. Utilizzando il metodo `connect()` del dispatcher, è possibile registrare qualsiasi callable PHP (o un metodo di classe o una funzione) da chiamare quando si verifica un evento. Il primo argomento di `connect()` è l'identificatore dell'evento, che è una stringa composta da uno spazio nomi e da un nome. Il secondo argomento è un callable PHP.
+Tutti gli eventi e le registrazioni degli ascoltatori sono gestiti da un oggetto speciale chiamato *dispatcher di eventi*. Questo oggetto è disponibile ovunque in symfony attraverso l'istanza di `ProjectConfiguration` e la maggior parte degli oggetti di symfony offrono un metodo `getEventDispatcher()` per accedervi direttamente. Utilizzando il metodo `connect()` del dispatcher, è possibile registrare qualsiasi callable PHP (o un metodo di classe o una funzione) da chiamare quando si verifica un evento. Il primo parametro di `connect()` è l'identificatore dell'evento, che è una stringa composta da uno spazio nomi e da un nome. Il secondo parametro è un callable PHP.
 
 >**Note**
 >Recuperare il dispatcher degli eventi da un qualsiasi punto dell'applicazione:
@@ -82,7 +82,7 @@ Listato 17-2 - Notificare un ascoltatore di eventi
       }
     }
 
-Il metodo `notify()` del dispatcher di eventi si aspetta un oggetto `sfEvent` come argomento; è l'oggetto stesso che viene passato agli ascoltatori di eventi. Questo oggetto porta sempre un riferimento al notificatore (è per questo che l'istanza dell'evento viene inizializzata con `this`) e un identificativo di evento. Facoltativamente, accetta un array associativo di parametri, dando agli ascoltatori un modo per interagire con la logica del notificante.
+Il metodo `notify()` del dispatcher di eventi si aspetta un oggetto `sfEvent` come parametro; è l'oggetto stesso che viene passato agli ascoltatori di eventi. Questo oggetto porta sempre un riferimento al notificatore (è per questo che l'istanza dell'evento viene inizializzata con `this`) e un identificativo di evento. Facoltativamente, accetta un array associativo di parametri, dando agli ascoltatori un modo per interagire con la logica del notificante.
 
 ### Notifica di un evento al dispatcher finché un ascoltatore lo prende in carico
 
@@ -204,11 +204,11 @@ Listato 17-5 - Notifica e gestione di un evento filtro
 
 ### Eventi predefiniti
 
-Molte classi di symfony hanno eventi predefiniti, che permettono si estendere il framework senza modificare necessariamente le classi stesse. La Tabella 17-1 elenca questi eventi, insieme ai loro tipi e argomenti.
+Molte classi di symfony hanno eventi predefiniti, che permettono si estendere il framework senza modificare necessariamente le classi stesse. La Tabella 17-1 elenca questi eventi, insieme ai loro tipi e i loro parametri.
 
 Tabella 17-1 - Gli eventi di symfony
 
-| **Nome dell'evento** (**Tipo**)                | **Notificatori**              | **Argomenti**               |
+| **Nome dell'evento** (**Tipo**)                | **Notificatori**              | **Parametri**               |
 | ---------------------------------------------- | ----------------------------- | --------------------------- |
 | application.log (notify)                       | numerose classi               | priority                    |
 | application.throw_exception (notifyUntil)      | sfException                   | -                           |
@@ -436,7 +436,7 @@ Listato 17-12 - Installare un plugin con alcune opzioni
     $ php symfony plugin:install --install-deps nomePlugin
 
 >**TIP**
->Come per ogni task di symfony, si può avere una spiegazione completa delle opzioni e degli argomenti di `plugin:install` lanciando `php symfony help plugin:install`.
+>Come per ogni task di symfony, si può avere una spiegazione completa delle opzioni e dei parametri di `plugin:install` lanciando `php symfony help plugin:install`.
 
 #### Plugin come archivio di file
 
@@ -566,8 +566,8 @@ Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin
 
     propel:
       _attributes:    { package: plugins.mioPlugin.lib.model }
-      my_plugin_foobar:
-        _attributes:    { phpName: mioPluginFoobar }
+      mio_plugin_pippo:
+        _attributes:    { phpName: mioPluginPippo }
           id:
           name:           { type: varchar, size: 255, index: unique }
           ...
@@ -607,7 +607,7 @@ Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin
 
 Ci sono alcuni elementi che il task `plugin:install` non può gestire da solo e che richiedono una impostazione manuale durante l'installazione:
 
-  * Configurazione personalizzate dell'applicazione possono essere utilizzate nel codice del plugin (ad esempio, utilizzando `sfConfig::get('app_myplugin_foo')`), ma non si possono mettere i valori predefiniti in un file `app.yml` che si trova nella cartella `config/` del plugin. Per gestire i valori predefiniti, si usa il secondo argomento del metodo `sfConfig::get()`. Le impostazioni possono comunque essere sovrascritte a livello di applicazione (vedere il listato 17-25 per un esempio).
+  * Configurazione personalizzate dell'applicazione possono essere utilizzate nel codice del plugin (ad esempio, utilizzando `sfConfig::get('app_myplugin_foo')`), ma non si possono mettere i valori predefiniti in un file `app.yml` che si trova nella cartella `config/` del plugin. Per gestire i valori predefiniti, si usa il secondo parametro del metodo `sfConfig::get()`. Le impostazioni possono comunque essere sovrascritte a livello di applicazione (vedere il listato 17-25 per un esempio).
   * Le regole personalizzate delle rotte devono essere aggiunte manualmente nel file `routing.yml` dell'applicazione.
   * I filtri personalizzati devono essere aggiunti manualmente nel file `filters.yml` dell'applicazione.
   * I factory personalizzati devono essere aggiunti manualmente nel file `factories.yml` dell'applicazione.
@@ -697,7 +697,7 @@ Listato 17-21 - Personalizzare l'azione di un plugin
 >Nome originale dello schema             | Nome dello schema personalizzato
 >--------------------------------------- | --------------------------------
 >config/schema.yml                       | schema.custom.yml
->config/foobar_schema.yml                | foobar_schema.custom.yml
+>config/pippo_schema.yml                 | pippo_schema.custom.yml
 >plugins/mioPlugin/config/schema.yml     | mioPlugin-schema.custom.yml
 >plugins/mioPlugin/config/foo_schema.yml | mioPlugin_foo-schema.custom.yml
 >
