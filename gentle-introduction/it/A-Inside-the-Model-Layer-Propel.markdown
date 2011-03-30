@@ -502,7 +502,7 @@ Questa configurazione può inoltre essere sovrascritta per ogni applicazione. Pe
 
     $ php symfony configure:database --app=frontend "mysql:host=localhost;dbname=blog" root mYsEcret
 
-Per ogni ambiente, si possono definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione predefinita si chiama `propel` e si riferisce allo schema `propel` nel listato 8-3. L'opzione `name` consente di creare un altra connessione:
+Per ogni ambiente, si possono definire differenti connessioni. Ogni connessione si riferisce allo schema chiamato con lo stesso nome. La connessione predefinita si chiama `propel` e si riferisce allo schema `propel` nel listato 8-3. L'opzione `name` consente di creare un'altra connessione:
 
     $ php symfony configure:database --name=main "mysql:host=localhost;dbname=example" root mYsEcret
 

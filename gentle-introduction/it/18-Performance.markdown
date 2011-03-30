@@ -388,9 +388,9 @@ La differenza inizia a farsi vedere quando una pagina include alcune dozzine di 
 
 ### Ignorare il template
 
-Solitamente una risposta è composta da un insieme di intestazioni e di contenuti. Alcune risposte però non necessitano di contenuto. Per esempio alcune interazioni Ajax richiedono solo alcune porzioni di dati dal server per alimentare un programma JavaScript che si occupa di aggiornare diverse parti di una pagina. Per questo tipo di risposte brevi un solo insieme di intestazioni è più veloce da trasmettere. Come visto nel capitolo 11 un azione può restiture anche solo un intestazione JSON. listato 18-12 propone un esempio dal capitolo 11.
+Solitamente una risposta è composta da un insieme di intestazioni e di contenuti. Alcune risposte però non necessitano di contenuto. Per esempio, alcune interazioni Ajax richiedono solo alcune porzioni di dati dal server, per alimentare un programma JavaScript che si occupa di aggiornare diverse parti di una pagina. Per questo tipo di risposte brevi, un solo insieme di intestazioni è più veloce da trasmettere. Come visto nel capitolo 11, un'azione può restiture anche solo un'intestazione JSON. Il listato 18-12 propone un esempio dal capitolo 11.
 
-Listato 18-12 - Esempio di azione che restituisce un intestazione JSON
+Listato 18-12 - Esempio di azione che restituisce un'intestazione JSON
 
     [php]
     public function executeRefresh()
@@ -401,9 +401,9 @@ Listato 18-12 - Esempio di azione che restituisce un intestazione JSON
       return sfView::HEADER_ONLY;
     }
 
-Questo esclude il template e il layout, la risposta può essere inviata singolarmente. Dato che contiene solamente intestazioni è più leggera e richiederà meno tempo per essere trasmessa all'utente.
+Questo esclude il template e il layout: la risposta può essere inviata singolarmente. Dato che contiene solamente intestazioni, è più leggera e richiederà meno tempo per essere trasmessa all'utente.
 
-Il capitolo 6 ha mostrato un altro modo per evitare il caricamento del template restituendo del testo come contenuto dall'azione. Questo infrange la separazione MVC ma può aumentare la velocità di risposta di un'azione in modo drastico. Verificare listato 18-13 per un esempio.
+Il capitolo 6 ha mostrato un altro modo per evitare il caricamento del template, restituendo del testo come contenuto dall'azione. Questo infrange la separazione MVC, ma può aumentare la velocità di risposta di un'azione in modo drastico. Verificare il listato 18-13 per un esempio.
 
 Listato 18-13 - Esempio di azione che restituisce direttamente testo come contenuto
 
@@ -416,18 +416,18 @@ Listato 18-13 - Esempio di azione che restituisce direttamente testo come conten
 Ottimizzare la cache
 --------------------
 
-Il capitolo 12 ha già descritto come mettere in cache porzioni di una risposta o la risposta completa. L'utilizzo della cache per le risposte rappresenta una miglioria sostanziale per le prestazioni e dovrebbe essere una delle prime ottimizzazioni da considerare. Per ottenere il massimo dal sistema della cache si consiglia di continuare la lettura, questa sezione svelerà alcuni accorgimenti a cui non si penserebbe.
+Il capitolo 12 ha già descritto come mettere in cache porzioni di una risposta o la risposta completa. L'utilizzo della cache per le risposte rappresenta una miglioria sostanziale per le prestazioni e dovrebbe essere una delle prime ottimizzazioni da considerare. Per ottenere il massimo dal sistema della cache, si consiglia di continuare la lettura: questa sezione svelerà alcuni accorgimenti a cui non si penserebbe.
 
 ### Invalidare selettivamente porzioni di cache
 
-Durante lo sviluppo di un'applicazione è necessario ripulire la cache in diverse situazioni:
+Durante lo sviluppo di un'applicazione, è necessario ripulire la cache in diverse situazioni:
 
   * Quando si crea una nuova classe: aggiungere una classe a una delle cartelle soggette ad auto-caricamento (una delle cartelle `lib/` del progetto) non è abbastanza perché symfony possa individuarla automaticamente in ambienti non di sviluppo. È necessario svuotare la cache della configurazione dell'auto-caricamento, in modo che symfony analizzi nuovamente tutte le cartelle indicate dal file `autoload.yml` e referenzi la posizione delle classi include le nuove.
   * Quando si cambia la configurazione in produzione: la configurazione viene processata solo durante la prima richiesta in produzione. Le richieste successive utilizzano invece la versione memorizzata in cache. Quindi una modifica nella configurazione dell'ambiente di produzione (o qualunque ambiente in cui il debug è impostato a `false`) non ha effetto fino alla cancellazione della versione memorizzata in cache del file.
   * Quando si modifica un template in un ambiente dove la cache per i template è abilitata: i template validi dalla cache vengono sempre utilizzati al posto dei template in produzione, quindi una modifica a un template viene ignorata fino a quando la cache non viene cancellata o diventa obsoleta.
   * Quando si aggiorna un'applicazione con il comando `project:deploy`: questo caso solitamente comprende le tre modifiche appena viste.
 
-Il problema della cancellazione dell'intera cache è rappresentato dal fatto che la richiesta successiva richiederà un tempo più lungo per essere processata perché la cache della configurazione deve essere rigenerata. Inoltre i template non modificati verranno anch'essi rimossi dalla cache perdendo i benefici delle richieste precedenti.
+Il problema della cancellazione dell'intera cache è rappresentato dal fatto che la richiesta successiva richiederà un tempo più lungo per essere processata, perché la cache della configurazione deve essere rigenerata. Inoltre i template non modificati verranno anch'essi rimossi dalla cache, perdendo i benefici delle richieste precedenti.
 
 Questo significa che è una buona idea rimuovere dalla cache solamente i file che realmente necessitano di essere rigenerati. Utilizzare le opzioni del task `cache:clear` per definire un sottoinsieme di file della cache da rimuovere come dimostrato nel listato 18-14.
 
@@ -442,22 +442,22 @@ Listato 18-14 - Rimuovere solo parti specifiche della cache
     // Rimuovere solo la cache dei file di configurazione dell'applicazione frontend
     $ php symfony cache:clear frontend config
 
-Si possono rimuovere i file anche manualmente nella cartella `cache/` o eliminare i file di cache dei template selettivamente dall'azione con il metodo `$cacheManager->remove()` come descritto nel capitolo 12.
+Si possono rimuovere i file anche manualmente nella cartella `cache/` o eliminare i file di cache dei template selettivamente dall'azione, con il metodo `$cacheManager->remove()`, come descritto nel capitolo 12.
 
 Tutte queste tecniche minimizzeranno l'impatto negativo sulle prestazioni di ognuna delle modifiche elencate precedentemente.
 
 >**TIP**
->Quando si aggiorna symfony la cache viene rimossa automaticamente senza intervento manuale (se il parametro `check_symfony_version` è impostato a `true` nel file `settings.yml`).
+>Quando si aggiorna symfony, la cache viene rimossa automaticamente senza intervento manuale (se il parametro `check_symfony_version` è impostato a `true` nel file `settings.yml`).
 
 ### Generare pagine in cache
 
-Quando si mette in produzione una nuova applicazione la cache dei template è vuota. È necessario aspettare che gli utenti visitino una pagina perché essa venga inserita in cache. Nei rilasci più critici, l'overhead del processo di una pagina non è accettabile e i benefici della cache devono essere disponibili già alla prima richiesta.
+Quando si mette in produzione una nuova applicazione, la cache dei template è vuota. È necessario aspettare che gli utenti visitino una pagina perché essa venga inserita in cache. Nei rilasci più critici, l'overhead del processo di una pagina non è accettabile e i benefici della cache devono essere disponibili già alla prima richiesta.
 
 La soluzione è rappresentata dalla visita delle pagine dell'applicazione nell'ambiente di stage (dove la configurazione è simile a quella di produzione) per generare la cache dei template e poi trasferire l'applicazione con la cache in produzione.
 
-Per visitare le pagine in modo automatico un'opzione è creare uno script di shell che analizza una lista di URL esterni con un browser (curl per esempio). Esiste però una soluzione migliore e più veloce: uno script PHP che utilizza l'oggetto `sfBrowser` già visto al capitolo 15.  Si tratta di un browser interno scritto in PHP (e utilizzato da `sfTestFunctional` per i test funzionali). Accetta un URL esterno e restituisce una risposta, ma la cosa interessante è che scatena la creazione della cache del template proprio come un browser tradizionale. Dato che inizializza symfony solamente una volta e non utilizza lo strato di trasporto HTTP questo metodo risulta molto veloce.
+Per visitare le pagine in modo automatico, un'opzione è quella di creare uno script di shell che analizza una lista di URL esterni con un browser (curl per esempio). Esiste però una soluzione migliore e più veloce: uno script PHP che utilizza l'oggetto `sfBrowser` già visto al capitolo 15.  Si tratta di un browser interno scritto in PHP (e utilizzato da `sfTestFunctional` per i test funzionali). Accetta un URL esterno e restituisce una risposta, ma la cosa interessante è che scatena la creazione della cache del template, proprio come un browser tradizionale. Dato che inizializza symfony solamente una volta e non utilizza lo strato di trasporto HTTP, questo metodo risulta molto veloce.
 
-Listato 18-15 mostra uno script d'esempio utilizzato per generare cache dei template nell'ambiente di stage. Avviarlo chiamando `php generate_cache.php`.
+Il listato 18-15 mostra uno script d'esempio utilizzato per generare cache dei template nell'ambiente di stage. Avviarlo chiamando `php generate_cache.php`.
 
 Listato 18-15 - Generare la cache dei template, in `generate_cache.php`
 
