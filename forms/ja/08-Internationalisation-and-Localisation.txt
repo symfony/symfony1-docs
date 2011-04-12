@@ -1,17 +1,15 @@
 第8章 - 国際化とローカライゼーション
 ===================================
 
-人気のある Web アプリケーションの多くはさまざまな言語で利用可能で、ときにはユーザーカルチャに基づいてカスタマイズされます。
-symfony はこれらの機能の管理を楽にする組み込みのフレームワークを搭載しています (symfony book の[「国際化とローカライゼーション」](http://www.symfony-project.org/gentle-introduction/1_4/ja/13-I18n-and-L10n)の章を参照)。
+人気のある Web アプリケーションの多くはさまざまな言語で利用可能で、ときにはユーザーカルチャにもとづいてカスタマイズされます。
+symfony はこれらの機能の管理を楽にする組み込みのフレームワークを搭載しています (「A Gentle Introduction to symfony」 の[「国際化とローカライゼーション」](http://www.symfony-project.org/gentle-introduction/1_4/ja/13-I18n-and-L10n)の章をご参照ください)。
 
-フォームフレームワークはユーザーのインターフェイス用の組み込みサポートを備えており国際化オブジェクトの管理を楽にする方法を提供します。
+フォームフレームワークはユーザーインターフェイス用の組み込みサポートを備えており国際化オブジェクトの管理を楽にする方法を提供します。
 
 フォームの国際化
 ----------------
 
-symfony のフォームはデフォルトで国際化が可能です。
-翻訳ファイルを編集することで**ラベル**、**ヘルパーテキスト**と**エラーメッセージ**を翻訳できます。
-これらは `XLIFF`、`gettext` もしくは symfony がサポートするその他のフォーマットです。
+symfony のフォームはデフォルトで国際化に対応しています。翻訳ファイルを編集して**ラベル**、**ヘルパーテキスト**と**エラーメッセージ**を翻訳できます。これらは `XLIFF`、`gettext` もしくは symfony がサポートするその他のフォーマットです。
 
 リスト8-1は以前の章で開発した問い合わせフォームを示します。
 
@@ -28,12 +26,12 @@ symfony のフォームはデフォルトで国際化が可能です。
           'body'  => new sfWidgetFormTextarea(), // デフォルトのラベルは "Body"
         ));
 
-        // email ウィジェットのラベルを変更する
+        // email ウィジェットのラベルを変更します
         $this->widgetSchema->setLabel('email', 'Email address');
       }
     }
 
-リスト8-2で示されるようにラベルのフランス語訳を `XLIFF` で定義します。
+リスト8-2で示されるようにラベルのフランス語訳を XLIFF ファイルで定義します。
 
 リスト8-2 - XLIFF 翻訳ファイル
 
@@ -59,11 +57,10 @@ symfony のフォームはデフォルトで国際化が可能です。
       </file>
     </xliff>
 
-### 翻訳のために使うカタログを指定する
+### 翻訳カタログを指定する
 
-symfony の国際化フレームワークの機能を利用する場合 (`http://www.symfony-project.org/book/1_2/13-I18n-and-L10n#chapter_13_sub_managing_dictionaries`)、フォームを特定のカタログにバインドできます。
-リスト8-3において、`ContactForm` フォームを `contact_form` カタログに関連づけします。
-ですので、フォーム要素の翻訳は `contact_form.fr.xml` ファイルで捜索されます。
+symfony の国際化フレームワークの機能を利用する場合、フォームを特定のカタログにバインドできます(カタログは「A Gentle Introduction to symfony」の[「国際化とローカライゼーションの章」](http://www.symfony-project.org/gentle-introduction/1_4/ja/13-I18n-and-L10n#chapter_13_sub_8bd6c1b11847c9e0e272379d70f25cc0531e7261)をご参照ください) 。
+リスト8-3において、`ContactForm` フォームを `contact_form` カタログに関連づけます。ですので、フォーム要素の翻訳は `contact_form.fr.xml` ファイルで捜索されます。
 
 リスト8-3 - 翻訳カタログのカスタマイズ
 
@@ -74,19 +71,19 @@ symfony の国際化フレームワークの機能を利用する場合 (`http:/
       {
         // ...
 
-        $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('contact_form');
+        $this->widgetSchema->getFormFormatter()
+          ->setTranslationCatalogue('contact_form');
       }
     }
 
 >**Note**
->カタログを利用することでたとえばフォームごとに1つのファイルを使用する翻訳の編成がよりベターになります。
+>カタログを使うことで、たとえばフォームごとに1つのファイルを使った翻訳の組織化が改善されます。
 
 ### エラーメッセージの国際化
 
-ときどき、エラーメッセージにはユーザーによって投稿された値が埋め込まれます(たとえば、
-「メールアドレスのuser@domainは有効ではありません。」)。
-これをフォームクラスの中でカスタマイズされたエラーメッセージを定義してユーザーが投稿した値を簡単に利用できることを2章ですでに見ました。
-これらの参照は `%parameter_name%` のパターンに従います。
+ときどき、エラーメッセージにはユーザーによって投稿された値が埋め込まれます (たとえば、
+「メールアドレスの user@domain は有効ではありません。」)。
+これをフォームクラスのなかでカスタマイズされたエラーメッセージを定義してユーザーが投稿した値をかんたんに利用できることを2章ですでに見ました。これらの参照は `%parameter_name%` パターンにしたがいます。
 
 リスト8-4はこの原則を問い合わせフォームの `name` フィールドに適用する方法を示しています。
 
@@ -110,7 +107,7 @@ symfony の国際化フレームワークの機能を利用する場合 (`http:/
 
 リスト8-5で示されるように XLIFF ファイルを編集することでこれらのエラーメッセージを翻訳できます。
 
-リスト8-5 - エラーメッセージ用の XLIFF 翻訳ファイル
+リスト8-5 - エラーメッセージの XLIFF 翻訳ファイル
 
     [xml]
     <trans-unit>
@@ -127,21 +124,20 @@ symfony の国際化フレームワークの機能を利用する場合 (`http:/
 
 symfony の国際化フレームワークなしで symfony のフォームフレームワークを使いたい場合、*翻訳オブジェクト*を提供する必要があります。
 
-翻訳オブジェクトは PHP の単なる *callable* です。これは次の3つのものの1つです:
+翻訳オブジェクトは PHP の単なる *callable* です。これは次の3つのうちの1つです。
 
-  * `my_function` のような関数の名前を表す文字列
+  * `my_function` のような関数の名前をあらわす文字列
 
-  * `array($anObject, 'oneOfItsMethodsName')` のような、クラスのインスタンスとメソッドの1つの名前への参照を伴う配列
+  * `array($anObject, 'oneOfItsMethodsName')` のような、クラスのインスタンスとメソッドの1つの名前への参照をともなう配列
 
   * `sfCallable` インスタンス。このカプセルは一貫した方法で PHP の callable をカプセル化します。
 
 >**Note**
->PHP の callable は関数もしくはメソッドのインスタンスへの参照です。
->これは `is_callable()` 関数に渡されるときに `true` を返す PHP 変数でもあります。
+>PHP の callable は関数もしくはメソッドのインスタンスへの参照です。これは `is_callable()` 関数に渡されるときに `true` を返す PHP 変数でもあります。
 
-リスト8-6で示されるクラスによって提供される独自の国際化メカニズムをすでに持つプロジェクトをマイグレートしなければならない場合を考えてみましょう。
+リスト8-6で示されるクラスによって提供される独自の国際化メカニズムをすでにもっているプロジェクトをマイグレートしなければならない場合を考えてみましょう。
 
-リスト8-6 - カスタムの国際化クラス
+リスト8-6 - 国際化クラスのカスタマイズ
 
     [php]
     class myI18n
@@ -170,12 +166,12 @@ symfony の国際化フレームワークなしで symfony のフォームフレ
     $myI18n = new myI18n();
 
     $_SESSION['culture'] = 'en';
-    echo $myI18n->translateText('Subject'); // => "Subject"を表示する
+    echo $myI18n->translateText('Subject'); // => 「Subject」を表示します
 
     $_SESSION['culture'] = 'fr';
-    echo $myI18n->translateText('Subject'); // => "Sujet"を表示する
+    echo $myI18n->translateText('Subject'); // => 「Suject」を表示します
 
-リスト8-7で示されるようにそれぞれのフォームはフォームの要素の国際化を管理する独自のcallableを定義できます。
+リスト8-7で示されるようにそれぞれのフォームはフォームの要素の国際化を管理する独自の callable を定義できます。
 
 リスト8-7 - フォームのための国際化メソッドをオーバーライドする
 
@@ -189,27 +185,27 @@ symfony の国際化フレームワークなしで symfony のフォームフレ
       }
     }
 
-### パラメータとして受容できる翻訳の callable
+### パラメータとして受け入れられる翻訳の callable
 
-翻訳の callable は3つの引数を取ります:
+翻訳の callable は3つの引数をとります。
 
   * **翻訳するテキスト**;
 
-  * オリジナルのテキストの範囲で置き換える引数の**連想配列**。よくあるのはこの章で以前見たように動的な引数を置き換えるため;
+  * オリジナルのテキストの範囲で置き換える引数の**連想配列**。よくある目的はこの章で以前見たように動的な引数を置き換えるためです。
 
-  * テキストを翻訳するときに使う**カタログの名前**。
+  * テキストを翻訳するときに使われる**カタログの名前**。
 
-下記のコードは翻訳の callable を呼び出すために `sfFormWidgetSchemaFormatter::translate()` メソッドによって使われる呼び出しです:
+下記のコードは翻訳の callable を呼び出すために `sfFormWidgetSchemaFormatter::translate()` メソッドによって使われる呼び出しです。
 
     [php]
     return call_user_func(self::$translationCallable, $subject, $parameters, $catalogue);
 
-`self::$translationCallable` は翻訳の callable への参照です。ですので、以前のコードは下記のものと同等です:
+`self::$translationCallable` は翻訳の callable への参照です。ですので、以前のコードは下記のものと同等です。
 
     [php]
     $myI18n->translateText($subject, $parameters, $catalogue);
 
-下記のコードはこれらの追加の引数をサポートする `MyI18n` クラスのアップデートされたバージョンです:
+下記のコードはこれらの追加の引数をサポートする `MyI18n` クラスのアップデートされたバージョンです。
 
     [php]
     class myI18n
@@ -241,14 +237,12 @@ symfony の国際化フレームワークなしで symfony のフォームフレ
 >**SIDEBAR**
 >翻訳処理をカスタマイズするのになぜ `sfWidgetFormSchemaFormatter` を使うのか？
 >
->2章で見てきたように、フォームフレームワークは MVC アーキテクチャに基づき `sfWidgetFormSchemaFormatter` クラスはビューレイヤーに所属します。
->このクラスはすべてのテキストのレンダリングに関与するので、すべてのテキストの文字列をインターセプトしてこれらを即時に翻訳します。
+>2章で見てきたように、フォームフレームワークは MVC アーキテクチャにもとづき `sfWidgetFormSchemaFormatter` クラスはビューレイヤーに所属します。このクラスはすべてのテキストのレンダリングに関与するので、すべてのテキストの文字列をインターセプトしてこれらを即時に翻訳します。
 
 Propel のオブジェクトの国際化
 ------------------------------
 
-フォームフレームワークは国際化された Propel オブジェクト用の組み込みサポート機能を持ちます。
-これが動作する方法を説明するために国際化されたモデルの例を見てみましょう:
+フォームフレームワークは国際化された Propel オブジェクト用の組み込みサポート機能をもちます。これが動作する方法を説明するために国際化されたモデルの例を見てみましょう。
 
     propel:
       article:
@@ -259,12 +253,12 @@ Propel のオブジェクトの国際化
         title:      varchar(255)
         content:    longvarchar
 
-次のコマンドで Propel のクラスと関連するフォームクラスを生成できます:
+次のコマンドで Propel のクラスと関連するフォームクラスを生成できます。
 
     $ php symfony build:model
     $ php symfony build:forms
 
-これらのコマンドはsymfonyのプロジェクトディレクトリの中で次のようなファイルを生成します:
+これらのコマンドは symfony のプロジェクトディレクトリのなかで次のようなファイルを生成します。
 
     lib/
       form/
@@ -302,17 +296,17 @@ Propel のオブジェクトの国際化
 
 ![国際化対応の Propel フォーム](/images/forms_book/en/08_01.png "国際化された Propel フォーム")
 
-これでお終いです。フォームオブジェクトの `save()` メソッドを呼び出すとき、関連する Propel オブジェクトと国際化オブジェクトは自動的に保存されます。
+これでお終いです。フォームオブジェクトの `save()` メソッドを呼び出すと、関連する Propel オブジェクトと国際化オブジェクトは自動的に保存されます。
 
 >**SIDEBAR**
 >ユーザーカルチャをフォームに渡す方法は？
 >
->フォームを現在のユーザーカルチャにバインドしたい場合、フォームを作るときに追加の `culture` オプションを渡すことができます:
+>フォームを現在のユーザーカルチャにバインドしたい場合、フォームを作るときに追加の `culture` オプションを渡すことができます。
 >
 >     [php]
 >     class articleActions extends sfActions
 >     {
->       public function executeCreate($request)
+>       public function executeCreate(sfWebRequest $request)
 >       {
 >         $this->form = new ArticleForm(null, array('culture' => $this->getUser()->getCulture()));
 >
@@ -323,7 +317,7 @@ Propel のオブジェクトの国際化
 >       }
 >     }
 >
->`ArticleForm` クラスにおいて、`options` の配列から値を取得できます:
+>`ArticleForm` クラスにおいて、`options` の配列から値を取得できます。
 >
 >     [php]
 >     class ArticleForm extends BaseArticleForm
@@ -342,43 +336,41 @@ Propel のオブジェクトの国際化
 ローカライズされたウィジェット
 ------------------------------
 
-symfony のフォームフレームワークは国際化を「認識する」(aware) いくつかのウィジェットを搭載しています。
-ユーザーカルチャに従ってウィジェットをローカライズするためにこれらを使うことができます。
+symfony のフォームフレームワークは国際化を「認識する」(aware) いくつかのウィジェットを搭載しています。ユーザーカルチャにしたがってウィジェットをローカライズするためにこれらのウィジェットを使うことができます。
 
 ### 日付セレクタ
 
-日付をローカライズするために利用できるウィジェットは下記のとおりです:
+日付をローカライズするために利用できるウィジェットは次のとおりです。
 
-  * `sfWidgetFormI18nDate` ウィジェットは日付用の入力を表示します(日にち、月、年):
+  * `sfWidgetFormI18nDate` ウィジェットは日付用の入力を表示します (日にち、月、年)。
 
         [php]
         $this->widgetSchema['published_on'] = new sfWidgetFormI18nDate(array('culture' => 'fr'));
 
-    3つの異なる値を受け取る `month_format` オプションのおかげで、月の表示フォーマットも定義できます:
+    3つの異なる値を受け取る `month_format` オプションのおかげで、月の表示フォーマットも定義できます。
 
      * 月の名前を表示するための `name`(デフォルト)
      * 月の短縮名を表示するための `short_name`
      * 月の番号を表示するための `number`(1から12)
 
-  * `sfWidgetFormI18nTime` ウィジェットは時間用の入力を表示します (時、分、と秒):
+  * `sfWidgetFormI18nTime` ウィジェットは時刻の入力を表示します (時、分、秒)。
 
         [php]
         $this->widgetSchema['published_on'] = new sfWidgetFormI18nTime(array('culture' => 'fr'));
 
-  * `sfWidgetFormI18nDateTime` ウィジェットは日付と時間用の入力を表示します:
+  * `sfWidgetFormI18nDateTime` ウィジェットは日付と時刻の入力を表示します。
 
         [php]
         $this->widgetSchema['published_on'] = new sfWidgetFormI18nDateTime(array('culture' => 'fr'));
 
-### 国セレクタ
+### カントリ (国コード) セレクタ
 
-`sfWidgetFormI18nChoiceCountry` ウィジェットは国のリストで満たされたセレクトボックスを表示します。
-国の名前は指定された言語に翻訳されます:
+`sfWidgetFormI18nChoiceCountry` ウィジェットは国コードのリストで満たされたセレクトボックスを表示します。国コードの名前は指定された言語に翻訳されます。
 
     [php]
     $this->widgetSchema['country'] = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
 
-`countries` オプションのおかげで、セレクトボックス内の国を制限することもできます:
+`countries` オプションのおかげで、セレクトボックス内の国コードを制限することもできます。
 
     [php]
     $countries = array('fr', 'en', 'es', 'de', 'nl');
@@ -387,8 +379,7 @@ symfony のフォームフレームワークは国際化を「認識する」(aw
 
 ### カルチャセレクタ
 
-`sfWidgetFormI18nChoiceLanguage` ウィジェットは言語の一覧で満たされたセレクトボックスを表示します。
-言語の名前は指定された言語に翻訳されます:
+`sfWidgetFormI18nChoiceLanguage` ウィジェットは言語コードの一覧で満たされたセレクトボックスを表示します。言語コードの名前は指定された言語に翻訳されます。
 
     [php]
     $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'fr'));
@@ -399,7 +390,6 @@ symfony のフォームフレームワークは国際化を「認識する」(aw
     $languages = array('fr', 'en', 'es', 'de', 'nl');
     $this->widgetSchema['language'] = new sfWidgetFormI18nChoiceLanguage(array('culture'   => 'fr',
                                                                                'languages' => $languages));
-                                                                               
                                                                                ### タイムゾーンセレクタ
 
 `sfWidgetFormI18nChoiceTimezone` ウィジェットはタイムゾーンで満たされたセレクトボックスを表示します。
