@@ -167,7 +167,7 @@ i [log](#chapter_22_sub_log), il [routing](#chapter_05_configurazione_del_routin
 
 Questi oggetti principali sono gestiti dall'oggetto
 [`sfContext`](#chapter_16_sidebar_la_classe_code_sfcontext_code_) e sono
-configurati tramite i [factory](#chapter_16_sub_factories).
+configurati tramite i [factory](#chapter_16_sub_factories_factory).
 
 La classe `user` gestisce l'[autenticazione](#chapter_13_sub_autenticazione) degli
 utenti, l'[autorizzazione](#chapter_13_sub_autorizzazione), i [flash](#chapter_13_flash_utente),
@@ -329,7 +329,7 @@ convertitore di tempo o di valuta, qualunque cosa... Sceglierne uno e iniziare a
 con le conoscenze attuali. Usare i messaggi di aiuto dei task per imparare le differenti
 opzioni, guardare il codice generato da symfony, usare un editor di testi che abbia il supporto
 all'auto-completamento del PHP, come [Eclipse](http://www.eclipse.org/), e andare a vedere
-nella [guida di riferimento](http://www.symfony-project.org/reference/1_4/) tutte le
+nella [guida di riferimento](http://www.symfony-project.org/reference/1_4/it/) tutte le
 configurazioni previste dal framework.
 
 Fruire di tutto il materiale gratuito che si ha a disposizione per imparare di più
@@ -340,14 +340,14 @@ su symfony.
 Prima di lasciarci, vorrei dire un'ultima cosa su symfony. Il framework ha
 un sacco di grandi feature e molta documentazione libera. Ma una delle
 più grandi risorse preziose che un progetto Open Source può avere è la
-sua community. E symfony ha una delle più incredibili e attive community
+sua comunità. E symfony ha una delle più incredibili e attive comunità
 del mondo. Se iniziate a usare symfony per i vostri progetti, considerate
-di unirvi alla community di symfony:
+di unirvi alla comunità di symfony:
 
   * Iscrivendovi alla [mailing list degli utenti](http://groups.google.com/group/symfony-users)
   * Iscrivendovi alla [mailing list italiana](http://groups.google.com/group/symfony-it)
   * Iscrivendovi al [feed del blog ufficiale](http://feeds.feedburner.com/symfony/blog)
   * Iscrivendovi al [feed di symfony planet](http://feeds.feedburner.com/symfony/planet)
-  * Chattando sul canale[IRC #symfony](irc://irc.freenode.net/symfony) su freenode
+  * Chattando sul canale [IRC #symfony](irc://irc.freenode.net/symfony) su freenode
 
 __ORM__

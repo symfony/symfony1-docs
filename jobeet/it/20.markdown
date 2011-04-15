@@ -63,10 +63,18 @@ codice che abbiamo scritto per Jobeet in un `sfJobeetPlugin`. La configurazione 
 verrà utilizzata è la seguente:
 
     sfJobeetPlugin/
+<propel>      
       config/
         sfJobeetPluginConfiguration.class.php // Inizializzazione dei plugin
-        schema.yml                            // Schema del database 
+        schema.yml                            // Schema del database
         routing.yml                           // Rotte
+<doctrine>
+      config/
+        sfJobeetPluginConfiguration.class.php // Inizializzazione dei plugin
+        routing.yml                           // Rotte
+        doctrine/
+          schema.yml                          // Schema del database
+</doctrine>
       lib/
         Jobeet.class.php                      // Classi
         helper/                               // Helper
@@ -123,10 +131,21 @@ Occorre quindi attivare `sfJobeetPlugin` in `config/ProjectConfiguration.class.p
 
 ### Il modello
 
-Innanzitutto, spostate il file `config/schema.yml` in `plugins/sfJobeetPlugin/config/`:
+<propel>
+Innanzitutto, spostare il file `config/schema.yml` in `plugins/sfJobeetPlugin/config/`:
+</propel>
+<doctrine>
+Innanzitutto, spostare il file `config/doctrine/schema.yml` in `plugins/sfJobeetPlugin/config/`:
+</doctrine>
 
     $ mkdir plugins/sfJobeetPlugin/config/
+<propel>
     $ mv config/schema.yml plugins/sfJobeetPlugin/config/schema.yml
+</propel>
+<doctrine>
+    $ mkdir plugins/sfJobeetPlugin/config/doctrine
+    $ mv config/doctrine/schema.yml plugins/sfJobeetPlugin/config/doctrine/schema.yml
+</doctrine>
 
 >**NOTE**
 >Tutti i comandi sono per ambienti di tipo Unix. Chi usa Windows, può spostare
@@ -140,6 +159,21 @@ Spostare i file dei modelli, dei form e dei filtri in `plugins/sfJobeetPlugin/li
     $ mv lib/model/ plugins/sfJobeetPlugin/lib/
     $ mv lib/form/ plugins/sfJobeetPlugin/lib/
     $ mv lib/filter/ plugins/sfJobeetPlugin/lib/
+
+<propel>
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/sfDoctrineGuardPlugin
+</propel>
+<doctrine>
+    $ rm -rf plugins/sfJobeetPlugin/lib/model/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/form/doctrine/sfDoctrineGuardPlugin
+    $ rm -rf plugins/sfJobeetPlugin/lib/filter/doctrine/sfDoctrineGuardPlugin
+</doctrine>
+
+Rimuovere il file `plugins/sfJobeetPlugin/lib/form/BaseForm.class.php`.
+
+    $ rm plugins/sfJobeetPlugin/lib/form/BaseForm.class.php
 
 <doctrine>
 Dopo aver spostato modelli, form e filtri, le classi devono essere rinominate,
@@ -263,7 +297,7 @@ sovrascrivendo i metodi `setTableDefinition()` e `setUp()`.
 <propel>
 Se si dovesse lanciare il task `propel:build --model` ora, symfony genererebbe
 ancora i file sotto `lib/model/`, il che non è quello che vogliamo. La cartella
-in output di Propel può essere configurata con l'aggiunta dell'opzione `package`. Aprire
+di output di Propel può essere configurata con l'aggiunta dell'opzione `package`. Aprire
 il file `schema.yml` e aggiungere la seguente configurazione:
 
     [yml]
