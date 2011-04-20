@@ -279,7 +279,7 @@ Si può personalizzare lo schema e aggiungere colonne, aggiungere relazioni
 sovrascrivendo i metodi `setTableDefinition()` e `setUp()`.
 
 >**NOTE**
->Quando si spostano le classi dei form, assicurarsi di cambiare il metodo
+>Quando si spostano le classi di form e filtri, assicurarsi di cambiare il metodo
 >`configure()` in un metodo `setup()` e richiamare `parent::setup()`.
 >Ecco un esempio.
 >
