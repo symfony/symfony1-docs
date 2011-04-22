@@ -1092,7 +1092,7 @@ Le opzioni disponibili sono:
 | Opzione          | Descrizione
 | ---------------- | -----------
 | `name_format`    | Lo schema `sprintf` da usare per i nomi degli input (`%s` di default)
-| `form_formatter` | Il nomer del formatter del form (`table` e `list` sono inclusi, `table` è il default)
+| `form_formatter` | Il nome del formatter del form (`table` e `list` sono inclusi, `table` è il default)
 
 Se si vuole cambiare il formatter per tutti i form, lo si può
 impostare nel metodo `setDefaultFormFormatterName()`:
