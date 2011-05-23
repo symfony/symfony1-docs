@@ -1,6 +1,14 @@
 翻訳者の紹介
 ============
 
+お問い合わせ
+------------
+
+この翻訳ドキュメントに関するお問い合わせは日本 Symfony ユーザー会のサイトもしくはメーリングリストにお寄せいただくようお願いします。
+
+**Web サイト**: *http://symfony.gr.jp/about*
+**メーリングリスト**: *https://groups.google.com/forum/#!forum/symfony-users-ja*
+
 Shin Ohno
 ---------
 
