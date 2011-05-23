@@ -906,7 +906,7 @@ YAML ファイルが `config/doctrine` ディレクトリに作られます。
 
     ./symfony doctrine:generate-module --generate-in-cache frontend article Article
 
-`--theme` オプションを指定すれば、カスタマイズずみのテーマが使われます。
+`--theme` オプションを指定すれば、カスタマイズ済みのテーマが使われます。
 
     ./symfony doctrine:generate-module --theme="custom" frontend article Article
 
@@ -1377,7 +1377,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
 ### ~`plugin::list`~
 
-`plugin::list` タスクはインストールずみのプラグインの一覧を表示します。
+`plugin::list` タスクはインストール済みのプラグインの一覧を表示します。
 
     $ php symfony plugin:list  
 
@@ -1387,7 +1387,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
 
 
-`plugin:list` タスクはインストールずみのプラグインの一覧を表示します。
+`plugin:list` タスクはインストール済みのプラグインの一覧を表示します。
 
     ./symfony plugin:list
 
@@ -1408,7 +1408,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
 | <span style="white-space: nowrap">オプション (ショートカット)</span> | <span style="white-space: nowrap">デフォルト</span> | 説明
 | -------------------------- | --------- | -------------------------------------------------------------
-| `--core-only`              | `-`       | セットされていれば、コアプラグインのみがアセットを公開します
+| `--core-only`              | `-`       | セットされていれば、コアプラグインだけがアセットを公開します
 
 
 `plugin:publish-assets` タスクはすべてのプラグインからサイトのアセットを公開します。
@@ -1682,7 +1682,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 | -------------------------- | --------- | --------------------
 | `--application`   | `1`    | アプリケーションの名前
 | `--env`           | `dev`  | 環境
-| `--message-limit` | `0`    | 送信するメッセージの最大数
+| `--message-limit` | `0`    | 送信するメッセージの最大件数
 | `--time-limit`    | `0`    | メッセージ送信の時間制限 (秒単位)
 
 
@@ -1884,7 +1884,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
     ./symfony propel:build-filters
 
-このタスクはプロジェクトとインストールずみのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
+このタスクはプロジェクトとインストール済みのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
 
 このタスクは `config/` ディレクトリの `databases.yml` ファイルのなかで定義されている `propel` コネクションを利用します。`--connection` オプションを指定すれば、別のコネクションを利用することができます。
 
@@ -1917,7 +1917,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
     ./symfony propel:build-forms
 
-このタスクはプロジェクトとインストールずみのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
+このタスクはプロジェクトとインストール済みのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
 
 このタスクは `config/` ディレクトリの `databases.yml` ファイルのなかで定義されている `propel` コネクションを利用します。`--connection` オプションを指定すれば、別のコネクションを利用できます。
 
@@ -1946,7 +1946,7 @@ PEAR パッケージがホストされている Web サイトの URL を直接�
 
     ./symfony propel:build-model
 
-このタスクはプロジェクトとインストールずみのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
+このタスクはプロジェクトとインストール済みのすべてのプラグインから `config/` ディレクトリの `*schema.xml` かつ/もしくは `*schema.yml` ファイルの情報を読み込みます。
 
 YAML と XML ファイルを組み合わせることができます。このタスクは Propel タスクを呼び出す前に YAML を XML に変換します。
 
@@ -2179,7 +2179,7 @@ XML フォーマットは YAML よりも多くの情報を格納できます。
 
     ./symfony propel:generate-module --generate-in-cache frontend article Article
 
-`--theme` オプションを指定すれば、カスタマイズずみのテーマが使われます。
+`--theme` オプションを指定すれば、カスタマイズ済みのテーマが使われます。
 
     ./symfony propel:generate-module --theme="custom" frontend article Article
 

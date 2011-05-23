@@ -230,7 +230,7 @@ routing.yml 設定ファイル
 
 `actions` オプションはルートに許可されるアクションの配列を定義します。アクションは利用可能なすべてのアクションの部分集合に含まれていなければなりません (`list`、`new`、`create`、`edit`、`update`、`delete` そして `show`)。
 
-このオプションと `with_show` オプションの両方に `false` がセットされている場合、`show` アクション以外のすべてのアクションが利用可能になります (下記をご参照ください)。
+このオプションと `with_show` オプションの両方に `false` がセットされている場合、`show` アクション以外のすべてのアクションが利用可能になります (下記の説明をご参照ください)。
 
 ### ~`module`~
 
@@ -318,9 +318,9 @@ routing.yml 設定ファイル
 ~`sfPropelRouteCollection`~
 ---------------------------
 
-`sfPropelRouteCollection` ルートクラスは `sfRouteCollection` 基底クラスを継承し、デフォルトのルートクラスを `sfPropelRoute` に変更します (上記の `route_class` オプションをご参照ください)。
+`sfPropelRouteCollection` ルートクラスは `sfRouteCollection` 基底クラスを継承し、デフォルトのルートクラスを `sfPropelRoute` に変更します (上記の `route_class` オプションの説明をご参照ください)。
 
 ~`sfDoctrineRouteCollection`~
 -----------------------------
 
-`sfDoctrineRouteCollection` ルートクラスは `sfRouteCollection` 基底クラスを継承し、デフォルトのルートクラスを `sfDoctrineRoute` に変更します (上記の `route_class` オプションをご参照ください)。
+`sfDoctrineRouteCollection` ルートクラスは `sfRouteCollection` 基底クラスを継承し、デフォルトのルートクラスを `sfDoctrineRoute` に変更します (上記の `route_class` オプションの説明をご参照ください)。
