@@ -228,7 +228,7 @@ Jobeet のゴールの1つはよりターゲットを絞った求人を見つけ
     // apps/frontend/config/routing.yml
     category:
       url:     /category/:slug.:sf_format
-      class:   sf<propel>Propel</propel><doctrine>Doctrine</doctrine>Route
+      class:   sfPropelRoute
       param:   { module: category, action: show, sf_format: html }
       options: { model: JobeetCategory, type: object }
       requirements:
