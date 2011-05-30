@@ -241,12 +241,13 @@ Or via Subversion with the following command:
     $  svn co http://svn.symfony-project.org/plugins/sfFormExtraPlugin/branches/1.3/ plugins/sfFormExtraPlugin
 
 プラグインのクラスがロードされるようにするには、次のように `config/ProjectConfiguration.class.php` のなかで `sfFormExtraPlugin` を有効にしなければなりません。
+
     [php]
     // config/ProjectConfiguration.class.php
     public function setup()
     {
       $this->enablePlugins(array(
-        'sfDoctrinePlugin', 
+        'sfDoctrinePlugin',
         'sfDoctrineGuardPlugin',
         'sfFormExtraPlugin'
       ));
