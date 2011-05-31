@@ -8,7 +8,7 @@ e autorizzazione per un'applicazione symfony.
 >Le informazioni di configurazione del file `security.yml` sono usate dalla
 >classe factory [`user`](#chapter_05_user) (predefinita `sfBasicSecurityUser`).
 >L'esecuzione dell'autenticazione e dell'autorizzazione è
->fatta da `security` [filter](#chapter_12_security).
+>fatta dal [filtro](#chapter_12_security) `security`.
 
 Quando un'applicazione è creata, symfony genera un file predefinito
 `security.yml`, nella cartella dell'applicazione `config/`, che descrive la sicurezza per
@@ -19,7 +19,7 @@ l'intera applicazione (sotto la chiave `default`):
       is_secure: false
 
 Come discusso in sede di introduzione, il file `security.yml` trae benefici dal
- [**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata)
+[**meccanismo di configurazione a cascata**](#chapter_03_configurazione_a_cascata)
 e può includere [**costanti**](#chapter_03_costanti).
 
 La configurazione predefinita dell'applicazione può essere sovrascritta per un modulo,
