@@ -1,14 +1,14 @@
 Capitolo 2 - Validazione di form
 ================================
 
-Nel Capitolo 1 abbiamo imparato come creare e visualizzare un semplice
+Nel capitolo 1 abbiamo imparato come creare e visualizzare un semplice
 form di contatto. In questo capitolo impareremo a gestire la
 validazione dei form.
 
 Prima di iniziare
 -----------------
 
-il form di contatto creato nel Capitolo 1 non è ancora pienamente
+Il form di contatto creato nel capitolo 1 non è ancora pienamente
 funzionale. Che succede se un utente inserisce un indirizzo email
 non valido o un messaggio vuoto? In questi casi, ci piacerebbe
 mostrare dei messaggi di errore per chiedere all'utente di
@@ -36,7 +36,7 @@ Ecco le regole di validazione da implementare per il form di contatto:
 >strumenti come l'estensione Web Developer di Firefox, oppure
 >simulando una richiesta con strumenti come `curl` o `wget`.
 
-Il Listato 2-1 mostra il template che abbiamo usato nel Capitolo 1.
+Il Listato 2-1 mostra il template che abbiamo usato nel capitolo 1.
 
 Listato 2-1 - Il template del form di contatto
 
@@ -67,7 +67,7 @@ Validatori
 ----------
 
 Un form in symfony è fatto di campi. Ciascun campo può essere
-identificato da un nome univoco, come osservato nel Capitolo 1.
+identificato da un nome univoco, come osservato nel capitolo 1.
 Abbiamo connesso un widget a ogni campo per poterlo mostrare
 all'utente, ora vediamo come possiamo applicare le regole di
 validazione a ciascun campo.
@@ -248,15 +248,15 @@ informazioni sul file. Vedremo più avanti in questo capitolo
 come usare questo validatore.
 
 >**TIP**
->Il metodo `getValues()` restituisce un'array di tutti i dati
+>Il metodo `getValues()` restituisce un array di tutti i dati
 >validati e puliti. Ma se serve recuperare un solo valore, c'è
 >anche il metodo `getValue()`: `$email = $this->form->getValue('email')`.
 
-### Form non valida
+### Form non valido
 
 Ogni volta che ci sono campi non validi nel form, viene mostrato
-il template `indexSuccess`. La Figura 2-4 mostra cosa otteniamo
-quando inviamo un form con dati non validi.
+il template `indexSuccess`. La Figura 2-4 mostra cosa si ottiene
+inviando un form con dati non validi.
 
 Figura 2-4 - Form non valido
 
@@ -272,14 +272,14 @@ azioni:
 
   * Il processo di validazione viene eseguito
   * I messaggi di errore sono memorizzati nel form per essere disponibili al template
-  * I valodi predefiniti del form sono sostituiti con quelli inviati dall'utente, puliti
+  * I valori predefiniti del form sono sostituiti con quelli inviati dall'utente, puliti
 
 L'informazione necessaria a visualizzare i messaggi di errore o i
-dati utente sono facilmente disponibili usando la variabile `form`
+dati utente sono facilmente disponibili, usando la variabile `form`
 nel template.
 
 >**CAUTION**
->Come visto nel Capitolo 1, possiamo passare dei valori predefiniti
+>Come visto nel capitolo 1, si possono passare dei valori predefiniti
 >al costruttore della classe. Dopo l'invio di un form non valido,
 >tali valori predefiniti sono sovrascritti dai valori inviati, in
 >modo che l'utente possa correggere i suoi errori. Quindi non vanno
@@ -606,7 +606,7 @@ Listato 2-10 - Disabilitare la protezione `filter_extra_fields`
 Si dovrebbe ora poter validare il form e recuperare il valore
 inviato nella pagina di ringraziamento.
 
-Nel Capitolo 4 vedremo che queste protezioni possono essere usate
+Nel capitolo 4 vedremo che queste protezioni possono essere usate
 per serializzare in sicurezza degli oggetti Propel da valori del
 form.
 
