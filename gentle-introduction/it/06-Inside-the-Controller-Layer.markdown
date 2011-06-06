@@ -27,7 +27,7 @@ Il front controller si occupa di distribuire le richieste, questo però signific
 
   1. Carica la classe con la configurazione del progetto e le librerie di symfony.
   2. Crea la configurazione dell'applicazione e il contesto di symfony.
-  3. Carica e inizializza le classi del core del framework.
+  3. Carica e inizializza le classi del nucleo del framework.
   4. Carica la configurazione.
   5. Interpreta l'URL della richiesta per determinare l'azione da eseguire e i parametri della richiesta. 
   6. Se l'azione non esiste redirige all'azione d'errore 404.
@@ -172,7 +172,7 @@ Listato 6-6 - File azione singolo, in `frontend/modules/miomodulo/actions/listAc
 
 ### Recuperare informazioni nell'azione
 
-La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del core di symfony. Il listato 6-7 mostra come utilizzarli.
+La classe azione mette a disposizione dei modi di accesso alle informazioni relative al controller e agli oggetti del nucleo di symfony. Il listato 6-7 mostra come utilizzarli.
 
 Listato 6-7 - Metodi comuni `sfActions`
 
@@ -223,7 +223,7 @@ Listato 6-7 - Metodi comuni `sfActions`
 >
 >`sfDatabaseConnection`: La connessione al database (`->getDatabaseConnection()`)
 >
->Tutti questi oggetti del core sono disponibili tramite il singleton `sfContext::getInstance()` in ogni parte del codice. Tuttavia è una pratica disdicevole perché crea dipendenze così forti in grado di rendere il codice davvero difficile da testare, riutilizzare e mantenere. In questo libro si potrà imparare come evitare l'utilizzo di `sfContext::getInstance()`.
+>Tutti questi oggetti del nucleo sono disponibili tramite il singleton `sfContext::getInstance()` in ogni parte del codice. Tuttavia è una pratica disdicevole perché crea dipendenze così forti in grado di rendere il codice davvero difficile da testare, riutilizzare e mantenere. In questo libro si potrà imparare come evitare l'utilizzo di `sfContext::getInstance()`.
 
 ### Terminare l'azione
 
@@ -329,9 +329,9 @@ La classe azione mette a disposizione due metodi per eseguire un'altra azione:
 >**NOTE**
 >Il codice situato dopo un forward o un redirect in un'azione non viene mai eseguito. Chiamate di questo tipo possono essere considerate come un `return`. Essi sollevano un `sfStopException` per bloccare l'esecuzione di un'azione; questa eccezione è colta successivamente da symfony e semplicemente ignorata.
 
-La scelta tra un redirect e un forward a volte può essere difficoltosa. Per scegliere la soluzione migliore va ricordato che un forward è interno all'applicazione e totalmente trasparente per l'utente. Fintanto che l'utente è interessato l'URL visualizzato sarà uguale a quello richiesto. Al contrario un redirect è un messaggio al browser dell'utente e coinvolge una nuova richiesta da esso con conseguente cambio di URL finale.
+La scelta tra un redirect e un forward a volte può essere difficoltosa. Per scegliere la soluzione migliore, va ricordato che un forward è interno all'applicazione e totalmente trasparente per l'utente. Per quanto riguarda l'utente, l'URL visualizzato sarà uguale a quello richiesto. Al contrario, un redirect è un messaggio al browser dell'utente e coinvolge una nuova richiesta, con conseguente cambio di URL finale.
 
-Se l'azione è chiamata da un form inviato con `method="post"` sarà necessario ricorrere **sempre** a un redirect. Il vantaggio principale è che se l'utente rinfresca la pagina con la risposta il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
+Se l'azione è chiamata da un form inviato con `method="post"`, sarà necessario ricorrere **sempre** a un redirect. Il vantaggio principale è che, se l'utente aggiorna la pagina con la risposta, il form non verrà inviato nuovamente; inoltre il pulsante indietro si comporterà come previsto, visualizzando il form e non un avviso che chiede all'utente se vuole inviare nuovamente una richiesta POST.
 
 Esiste un tipo particolare di forward usato molto spesso. Il metodo `forward404()` inoltra a un'azione "pagina non trovata". Questo metodo viene chiamato spesso quando un parametro necessario all'esecuzione dell'azione non è presente nella richiesta (individuando così un URL errato). Il listato 6-11 mostra un esempio di azione `show` che si aspetta un parametro `id`.
 
@@ -356,7 +356,7 @@ Listato 6-11 - Utilizzo del metodo `forward404()`
 >Se siete in cerca dell'azione e del template per l'errore 404, sappiate che si trova nella cartella `$sf_symfony_ lib_dir/controller/default/`. 
 >È possibile personalizzare questa pagina creando un nuovo modulo `default` nell'applicazione, sovrascrivendo quella proposta dal framework e definendo al suo interno un'azione `error404` e un template error404Success. Altrimenti è possibile impostare le costanti `error_404_module` e `error_404_action` nel file `settings.yml` per utilizzare un'azione esistente.
 
-L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()` e `redirectUnless()`. Questi parametri prendono semplicemente un parametro aggiuntivo che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel listato 6-12.
+L'esperienza insegna che, la maggior parte delle volte, un'azione esegue un redirect o un forward dopo aver verificato qualcosa, come nel listato 6-12. Questo è il motivo per cui la classe `sfActions` ha alcuni metodi aggiuntivi chiamati `forwardIf()`, `forwardUnless()`, `forward404If()`, `forward404Unless()`, `redirectIf()` e `redirectUnless()`. Questi parametri accettano semplicemente un parametro aggiuntivo, che rappresenta una condizione in grado di scatenare l'esecuzione se verificato positivamente (per i metodi `xxxIf()`) o negativamente (per i metodi `xxxUnless()`), come illustrato nel listato 6-12.
 
 Listato 6-12 - Utilizzo del metodo `forward404If()`
 
@@ -417,25 +417,25 @@ Listato 6-13 - Utilizzo di `preExecute()`, `postExecute()` e metodi personalizza
       protected function myCustomMethod()
       {
         // È possibile aggiungere i propri metodi, ammesso che non inizino con "execute"
-        // In questo caso è consigliabile dichiararli come protected o private
+        // In questo caso è consigliabile dichiararli protetti o privati
         ...
       }
     }
 
 >**TIP**
->Dato che i metodi pre/post esecuzione vengono invocati per **ogni** azione del modulo corrente è necessario assicurarsi di aver realmente bisogno di eseguire questo codice per **tutte** le azioni per evitare inattesi side-effect.
+>Dato che i metodi pre/post esecuzione vengono invocati per **ogni** azione del modulo corrente, è necessario assicurarsi di aver realmente bisogno di eseguire questo codice per **tutte** le azioni, per evitare effetti collaterali inattesi.
 
 Accedere alla richiesta
 -----------------------
 
-Il primo parametro passato a ogni metodo di un'azione è l'oggetto della richiesta che in symfony si chiama `sfWebRequest`. Si è gia visto il metodo  `getParameter('myparam')` usato per recuperare il valore di un parametro della richiesta usando il suo nome. La Tabella 6-1 elenca i metodi  `sfWebRequest` più utili.
+Il primo parametro passato a ogni metodo di un'azione è l'oggetto della richiesta, che in symfony si chiama `sfWebRequest`. Si è gia visto il metodo `getParameter('myparam')`, usato per recuperare il valore di un parametro della richiesta usando il suo nome. La Tabella 6-1 elenca i metodi  `sfWebRequest` più utili.
 
 Table 6-1 - Metodi dell'oggetto `sfWebRequest`
 
 Nome                             | Funzione                             |  Output d'esempio
 -------------------------------- | ------------------------------------ | -------------------------------------------------------
 **Informazioni della richiesta** |                                      |
-`isMethod($method)`              | È una post o una get?                | true o false
+`isMethod($method)`              | È una post o una get?                | `true` o `false`
 `getMethod()`                    | Nome del metodo della richiesta      | `'POST'`
 `getHttpHeader('Server')`        | Valore di un'intestazione HTTP       | `'Apache/2.0.59 (Unix) DAV/2 PHP/5.1.6'`
 `getCookie('foo')`               | Valore di un cookie                  | `'bar'`
@@ -454,13 +454,13 @@ Nome                             | Funzione                             |  Outpu
 **Informazioni Client Browser**  |                                      |
 `getLanguages()`                 | Array delle lingue accettate         | `Array( [0] => fr [1] => fr_FR [2] => en_US [3] => en )`
 `getCharsets()`                  | Array dei charset accettati          | `Array( [0] => ISO-8859-1 [1] => UTF-8 [2] => * )`
-getAcceptableContentTypes()      | Array dei content type accettati     | `Array( [0] => text/xml [1] => text/html`
+getAcceptableContentTypes()      | Array dei content type accettati     | `Array( [0] => text/xml [1] => text/html )`
 
 `*` *Funziona con prototype, Prototype, Mootools e jQuery*
 
 `**` *A volte bloccato dai proxy*
 
-Non sarà necessario preoccuparsi del fatto che i propri server supportino le variabili `$_SERVER` o `$_ENV`, oppure dei valori predefiniti o di problemi di compatibilità a livello server--i metodi `sfWebRequest` si occuperanno di tutto. Inoltre i loro nomi sono così espliciti da fare in modo che non sia più necessario controllare la documentazione di PHP per vedere come recuperare dei dati dalla richiesta.
+Non sarà necessario preoccuparsi del fatto che i propri server supportino le variabili `$_SERVER` o `$_ENV`, oppure dei valori predefiniti o di problemi di compatibilità a livello server: i metodi `sfWebRequest` si occuperanno di tutto. Inoltre, i loro nomi sono così espliciti da fare in modo che non sia più necessario controllare la documentazione di PHP per vedere come recuperare dei dati dalla richiesta.
 
 Sessione utente
 ---------------
@@ -469,7 +469,7 @@ Symfony gestisce automaticamente le sessioni utente ed è in grado di mantenere 
 
 ### Accedere alla sessione utente
 
-L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente come mostrato nel listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente anche nel caso in qui questo non fosse identificato.
+L'oggetto di sessione per l'utente corrente è accessibile nell'azione grazie al metodo `getUser()` ed è un'istanza della classe `sfUser`. Tale classe mette a disposizione un contenitore di parametri, che offre la possibilità di memorizzare ogni attributo dell'utente al suo interno. Questi dati saranno disponibili per le altre richieste fino alla fine della sessione utente, come mostrato nel listato 6-14. Gli attributi dell'utente possono memorizzare ogni tipo di dato (stringhe, array, array associativi). Essi possono essere impostati per ogni singolo utente, anche nel caso in qui questo non fosse identificato.
 
 Listato 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati tra le richieste
 
@@ -492,7 +492,7 @@ Listato 6-14 - L'oggetto `sfUser` può contenere attributi utenti personalizzati
     }
 
 >**CAUTION**
->È possibile memorizzare oggetti nella sessione utente ma è una pratica fermamente sconsigliata. Questo perché l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti" nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
+>È possibile memorizzare oggetti nella sessione utente, ma è una pratica fermamente sconsigliata. Questo perché l'oggetto sessione viene serializzato tra le richieste. Quando l'oggetto viene deserializzato, la classe degli oggetti memorizzati deve essere ancora caricata e spesso non è così. Inoltre potrebbero esserci degli oggetti "scaduti", nel caso in cui si fossero memorizzati oggetti di Propel o Doctrine.
 
 Come molti altri getter in symfony, il metodo `getAttribute()` accetta un secondo parametro per specificare il valore predefinito, da utilizzare nel caso in cui l'attributo non fosse definito. Per verificare che un attributo sia stato definito per un utente, si può usare il metodo `hasAttribute()`. Gli attributi sono memorizzati in un contenitore di parametri, a cui si può accedere con il metodo `getAttributeHolder()`. Questo permette una semplice pulizia degli attributi degli utenti con i soliti metodi dei contenitori di parametri, come mostrato nel listato 6-15.
 
@@ -584,13 +584,13 @@ Listato 6-18 - Cambiare modalità di memorizzazione della sessione, in `apps/fro
           db_table:    session              # Nome della tabella che contiene le sessioni
           database:    propel               # Nome della connessione al database da usare
           # Optional parameters
-          db_id_col:   sess_id              # Nome della colonna che contiene l'id di dessione
+          db_id_col:   sess_id              # Nome della colonna che contiene l'id di sessione
           db_data_col: sess_data            # Nome della colonna che contiene i dati di sessione
           db_time_col: sess_time            # Nome della colonna che contiene il timestamp di sessione
 
 L'impostazione `database` definisce quale connessione al database utilizzare. Symfony userà così `databases.yml` (vedere capitolo 8) per determinare i parametri di connessione (host, nome database, utente e password).
 
-La classi disponibili per la memorizzazione della sessione sono `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage` e `sfPDOSessionStorage`; l'ultima è quella da preferire. Per disabilitare totalmente il session storage si può utilizzaree la classe `sfNoStorage`.
+La classi disponibili per la memorizzazione della sessione sono `sfCacheSessionStorage`, `sfMySQLSessionStorage`, `sfMySQLiSessionStorage`, `sfPostgreSQLSessionStorage` e `sfPDOSessionStorage`; l'ultima è quella da preferire. Per disabilitare totalmente la memorizzazione della sessione, si può utilizzare la classe `sfNoStorage`.
 
 Le sessioni scadono automaticamente dopo 30 minuti. Questa impostazione predefinita può essere modificata per ogni ambiente nello stesso file di configurazione `factories.yml`, questa volta però nel factory `user`, come mostrato nel listato 6-19.
 
@@ -800,7 +800,7 @@ Listato 6-27 - Catena dei filtri predefinita, in `frontend/config/filters.yml`
     cache:     ~
     execution: ~
 
-Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel core di symfony. Nel core symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
+Queste dichiarazioni non hanno parametri (il carattere tilde `~` significa "null" in YAML) perché ereditano i parametri definiti nel nucleo di symfony. Nel nucleo symfony definisce le impostazioni `class` e `param` per ognuno di questi filtri. Per esempio il listato 6-28 mostra i parametri predefiniti per il filtro `rendering`.
 
 Listato 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get('sf_symfony_lib_dir')/config/config/filters.yml`
 
@@ -809,7 +809,7 @@ Listato 6-28 - Parametri predefiniti per il filtro rendering, in `sfConfig::get(
       param:                     # Parametri dei filtri
         type: rendering
 
-Lasciando il valore nullo (`~`) nel file `filters.yml` dell'applicazione, si comunica a symfony l'intenzione di volere applicare il filtro con le impostazioni predefinite dal core.
+Lasciando il valore nullo (`~`) nel file `filters.yml` dell'applicazione, si comunica a symfony l'intenzione di volere applicare il filtro con le impostazioni predefinite dal nucleo.
 
 La catena dei filtri può essere personalizzata in varie maniere:
 
