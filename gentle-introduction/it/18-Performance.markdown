@@ -1,9 +1,9 @@
 Capitolo 18 - Prestazioni
 =========================
 
-Se ci si aspetta che il proprio sito web possa attirare molte visite i problemi di prestazioni e di ottimizzazione dovrebbero essere argomenti trattati a fondo durante la fase di sviluppo. State sicuri che quella delle prestazioni è stata sempre una delle principali preoccupazioni per gli sviluppatori del core di symfony.
+Se ci si aspetta che il proprio sito web possa attirare molte visite i problemi di prestazioni e di ottimizzazione dovrebbero essere argomenti trattati a fondo durante la fase di sviluppo. State sicuri che quella delle prestazioni è stata sempre una delle principali preoccupazioni per gli sviluppatori del nucleo di symfony.
 
-Mentre i vantaggi ottenuti dall'accelerazione del processo di sviluppo comportano un piccolo overhead, gli sviluppatori del core di symfony sono sempre stati a conoscenza dei requisiti relativi alle prestazioni. Proprio per questo ogni classe e ogni metodo son stati analizzati e ottimizzati per essere più veloci possibile. Il piccolo overhead, che può essere misurato confrontando il tempo necessario a visualizzare un "hello, world" con e senza symfony, è minimo. Conseguentemente il framework è scalabile e reagisce positivamente agli stress test. Come ultima prova alcuni siti a [estremamente](http://sf-to.org/answers) [alto](http://sf-to.org/delicious) [traffico](http://sf-to.org/dailymotion) (questo significa, siti web con milioni di utenti attivi e molti server che erogano interazioni Ajax) usano symfony e sono molto soddisfatti delle sue prestazioni.
+Mentre i vantaggi ottenuti dall'accelerazione del processo di sviluppo comportano un piccolo overhead, gli sviluppatori del team di symfony sono sempre stati a conoscenza dei requisiti relativi alle prestazioni. Proprio per questo ogni classe e ogni metodo son stati analizzati e ottimizzati per essere più veloci possibile. Il piccolo overhead, che può essere misurato confrontando il tempo necessario a visualizzare un "hello, world" con e senza symfony, è minimo. Conseguentemente il framework è scalabile e reagisce positivamente agli stress test. Come ultima prova alcuni siti a [estremamente](http://sf-to.org/answers) [alto](http://sf-to.org/delicious) [traffico](http://sf-to.org/dailymotion) (questo significa, siti web con milioni di utenti attivi e molti server che erogano interazioni Ajax) usano symfony e sono molto soddisfatti delle sue prestazioni.
 
 Tuttavia i siti ad alto traffico molte volte si possono permettere di espandere la propria server farm e di fare upgrade hardware man mano che le risorse vengono utilizzate. Quando non si hanno le risorse per agire in questo modo, o quando si vuole essere certi di avere a disposizione l'intera potenza del framework, esistono degli accorgimenti per rendere ulteriormente più veloce la propria applicazione symfony. Questo capitolo elenca alcune delle ottimizzazioni raccomandate per le prestazioni a tutti i livelli del framework che sono principalmente per utenti avanzati. Alcuni di essi sono già stati citati nei capitoli precedenti, è utile tuttavia averli tutti assieme in un unico posto.
 
@@ -35,7 +35,7 @@ In symfony lo strato del modello ha la reputazione di essere la parte più lenta
 
 ### Ottimizzare l'integrazione di Propel o Doctrine
 
-L'inizializzazione dello strato del modello (le classi del core dell'ORM) richiede un po' di tempo per la necessità di caricare alcune classi e creare diversi oggetti. Comunque, grazie a come symfony integra tutti e due gli ORM, questo processo di inizializzazione si verifica solo quando un'azione necessita realmente del modello e questo viene fatto più tardi possibile. Le classi dell'ORM vengono inizializzate solo quando un oggetto del modello auto generato è oggetto di auto-caricamento.
+L'inizializzazione dello strato del modello (le classi del nucleo dell'ORM) richiede un po' di tempo per la necessità di caricare alcune classi e creare diversi oggetti. Comunque, grazie a come symfony integra tutti e due gli ORM, questo processo di inizializzazione si verifica solo quando un'azione necessita realmente del modello e questo viene fatto più tardi possibile. Le classi dell'ORM vengono inizializzate solo quando un oggetto del modello auto generato è oggetto di auto-caricamento.
 
 Se l'intera applicazione non richiede l'utilizzo dello strato del modello è possibile evitare l'inizializzazione del `sfDatabaseManager` disabilitando completamente lo strato in `settings.yml`:
 
@@ -592,15 +592,15 @@ Ottimizzare il proprio codice
 
 È possibile rendere più performante un'applicazione ottimizzandone il codice. Questa sezione offre alcuni spunti su come fare ciò.
 
-### Compilazione del core
+### Compilazione del nucleo
 
 Caricare dieci file richiede più operazioni di I/O rispetto al caricamento di un grande file, specialmente su dischi lenti. Caricare un file molto grande richiede più risorse rispetto a caricarne uno più piccolo, specialmente se grossa parte del contenuto del file non è di alcun interesse per il parser PHP, è il caso dei commenti.
 
-Quindi fondere un grosso numero di file eliminandone i commenti contenuti è un'operazione che migliora le prestazioni. Symfony esegue già tale ottimizzazione, si chiama compilazione del core. All'inizio della prima richiesta (o dopo aver svuotato la cache) un'applicazione symfony concatena tutte le classi del core del framework (`sfActions`, `sfRequest`, `sfView` e così via) in un unico file, riduce la dimensione del file rimuovendo commenti e doppi spazi e salva tutto nella cache in un file chiamato `config_core_compile.yml.php`. Ogni richiesta seguente caricherà solamente questo singolo file ottimizzato invece che i 30 file che lo compongono.
+Quindi fondere un grosso numero di file eliminandone i commenti contenuti è un'operazione che migliora le prestazioni. Symfony esegue già tale ottimizzazione, si chiama compilazione del nucleo. All'inizio della prima richiesta (o dopo aver svuotato la cache) un'applicazione symfony concatena tutte le classi del nucleo del framework (`sfActions`, `sfRequest`, `sfView` e così via) in un unico file, riduce la dimensione del file rimuovendo commenti e doppi spazi e salva tutto nella cache in un file chiamato `config_core_compile.yml.php`. Ogni richiesta seguente caricherà solamente questo singolo file ottimizzato invece che i 30 file che lo compongono.
 
-Se l'applicazione ha classi che devono essere caricare ogni volta, specialmente se sono classi grandi con molti commenti, può essere un vantaggio aggiungerle al file compilato del core. Per fare questo basta aggiungere un file `core_compile.yml` nella cartella `config/` dell'applicazione in cui si elencheranno le classi che si vogliono aggiungere come nel listato 18-21.
+Se l'applicazione ha classi che devono essere caricare ogni volta, specialmente se sono classi grandi con molti commenti, può essere un vantaggio aggiungerle al file compilato del nucleo. Per fare questo basta aggiungere un file `core_compile.yml` nella cartella `config/` dell'applicazione in cui si elencheranno le classi che si vogliono aggiungere come nel listato 18-21.
 
-Listato 18-21 - Aggiungere le proprie classi al file compilato del core, in `frontend/config/core_compile.yml`
+Listato 18-21 - Aggiungere le proprie classi al file compilato del nucleo, in `frontend/config/core_compile.yml`
 
     - %SF_ROOT_DIR%/lib/myClass.class.php
     - %SF_ROOT_DIR%/apps/frontend/lib/myToolkit.class.php

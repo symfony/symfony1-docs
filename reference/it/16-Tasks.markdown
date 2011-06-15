@@ -1729,7 +1729,7 @@ Il task `plugin::publish-assets` pubblica gli elementi web per tutti i plugin:
 
 | Opzione (Scorciatoia) | Predefinito | Descrizione
 | --------------------- | ----------- | -----------
-| `--core-only` | `-` | Se assegnato verranno pubblicati gli elementi web solo per i core plugin
+| `--core-only` | `-` | Se assegnato verranno pubblicati gli elementi web solo per i plugin del nucleo
 
 
 Il task `plugin:publish-assets` pubblicherà gli elementi web per tutti i plugin.

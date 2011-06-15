@@ -1,7 +1,7 @@
 Il file di configurazione factories.yml
 =======================================
 
-I factory sono oggetti del core necessari al framework durante la vita di ogni richiesta.
+I factory sono oggetti del nucleo necessari al framework durante la vita di ogni richiesta.
 Sono inizializzati nel file di configurazione `factories.yml` e sempre accessibili tramite l'oggetto
 `sfContext`:
 
@@ -41,7 +41,7 @@ per configurare i corrispettivi oggetti:
       param: { ARRAY DI PARAMETRI }
 
 La possibilità di modificare i factory significa che è possibile usare una classe
-personalizzata per istanziare un oggetto del core di symfony, piuttosto che la classe 
+personalizzata per istanziare un oggetto del nucleo di symfony, piuttosto che la classe 
 predefinita. È inoltre possibile cambiare il comportamento di queste classi,
 modificando i parametri inviati alle stesse.
 

@@ -811,7 +811,7 @@ Il task `plugin:install` abilita automaticamente i plugin che installa (e
 `plugin:uninstall` li disabilita). Se si installa un plugin tramite
 Subversion, occorre abilitarlo a mano.
 
-Se si vuole usare un plugin del core, come `sfProtoculousPlugin` o
+Se si vuole usare un plugin del nucleo, come `sfProtoculousPlugin` o
 `sfCompat10Plugin`, basta aggiungere il corrispondente comando `enablePlugins()`
 nella classe `ProjectConfiguration`.
 

@@ -3,7 +3,7 @@ Utilizzo avanzato delle rotte
 
 *di Ryan Weaver*
 
-Nel core, il framework delle rotte è la mappa che collega ogni url a una specifica
+Nel nucleo, il framework delle rotte è la mappa che collega ogni url a una specifica
 ubicazione interna di un progetto symfony e viceversa. Si possono facilmente
 creare dei meravigliosi URL che rimangono completamente indipendenti dalla
 logica dell'applicazione. Grazie ai progressi che ha compiuto nelle sue versioni
@@ -20,8 +20,8 @@ abbastanza semplice.
 Preparazione del progetto: un CMS per molti clienti
 ---------------------------------------------------
 
-In questo progetto, una società immaginaria - Sympal Builder - vuole creare un
-CMS in modo che i suoi clienti possano costruire siti web come sottodomini di
+In questo progetto una società immaginaria, Sympal Builder, vuole creare un
+CMS, in modo che i suoi clienti possano costruire siti web come sottodomini di
 `sympalbuilder.com`. In particolare, il cliente XXX può vedere il suo sito su
 `xxx.sympalbuilder.com` e usare l'area admin su `xxx.sympalbuilder.com/backend.php`.
 

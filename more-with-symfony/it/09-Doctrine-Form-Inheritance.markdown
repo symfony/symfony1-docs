@@ -264,7 +264,7 @@ Di conseguenza, gli sviluppatori che avevano bisogno di usare l'ereditarietà er
 forzati a modificare form e filtri ed erano costretti a sovrascrivere molti metodi
 per ottenere il comportamento dell'ereditarietà.
 
-Grazie al feedback della comunità, il team del core di symfony ha migliorato form e
+Grazie al feedback della comunità, il team di symfony ha migliorato form e
 filtri in symfony 1.3, in modo da supportare facilmente e integralmente
 l'ereditarietà delle tabelle di Doctrine.
 
@@ -735,7 +735,7 @@ nel file `data/fixtures.yml` del progetto symfony.
         priority:       "major"
         assigned_to:    "Kris Wallsmith"
       sfTodoItem_4:
-        name:           "Scrivere la documentazione per le API del core di Lime 2"
+        name:           "Scrivere la documentazione per le API del nucleo di Lime 2"
         priority:       "medium"
         assigned_to:    "Bernard Schussek"
 

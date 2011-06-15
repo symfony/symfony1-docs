@@ -134,7 +134,7 @@ Filtraggio delle variabili del template
 La prima sfida è quella di trovare un punto di aggancio in symfony, che
 permetta di filtrare ogni variabile del form passata al template, attraverso
 questa configurazione. Per fare questo, si usa l'evento `template.filter_parameters`,
-che è chiamato dal core di symfony, appena prima di visualizzare un template o
+che è chiamato dal nucleo di symfony, appena prima di visualizzare un template o
 il partial di un template.
 
     [php]

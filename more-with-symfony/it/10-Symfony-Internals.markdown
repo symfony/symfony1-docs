@@ -254,7 +254,7 @@ istanziata e legata ai relativi parametri.
 Una volta che tutti i factory sono stati caricati e configurati correttamente,
 l'evento `context.load_factories` viene attivato. Questo evento è importante,
 perché è il primo evento nel framework in cui lo sviluppatore ha accesso a tutti
-gli oggetti del factory del core di symfony (request, response, user, logging,
+gli oggetti del factory del nucleo di symfony (request, response, user, logging,
 database, ecc.).
 
 È il momento di connettersi anche a un altro evento molto utile:

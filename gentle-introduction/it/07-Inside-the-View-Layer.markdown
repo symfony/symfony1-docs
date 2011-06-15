@@ -57,7 +57,7 @@ Molte volte, gli helper sono intelligenti e fanno risparmiare codice:
 Gli helper facilitano il processo di scrittura dei template e generano il miglior codice HTML possibile in quanto a prestazioni e accessibilità. Si può sempre utilizzare il semplice HTML, ma gli helper in genere sono più veloci da scrivere.
 
 >**TIP**
->Ci si potrebbe chiedere perché gli helper sono nominati utilizzando la convenzione dell'underscore piuttosto che quella camelCase, utilizzata ovunque in symfony. Il motivo è che gli helper sono funzioni e tutte le funzioni PHP del core usano la convenzione dell'underscore.
+>Ci si potrebbe chiedere perché gli helper sono nominati utilizzando la convenzione del trattino basso piuttosto che quella camelCase, utilizzata ovunque in symfony. Il motivo è che gli helper sono funzioni e tutte le funzioni native di PHP usano la convenzione del trattino basso.
 
 #### Dichiarare gli helper
 
@@ -186,7 +186,7 @@ Il template globale può essere completamente personalizzato per ciascuna applic
 
 ### Scorciatoie nei template
 
-Nei template, alcune variabili symfony sono sempre disponibili. Queste scorciatoie forniscono l'accesso alla maggior parte delle informazioni necessarie nei template, attraverso oggetti del core di symfony:
+Nei template, alcune variabili symfony sono sempre disponibili. Queste scorciatoie forniscono l'accesso alla maggior parte delle informazioni necessarie nei template, attraverso oggetti del nucleo di symfony:
 
   * `$sf_context`: L'intero oggetto context (`istanza di sfContext`)
   * `$sf_request`: L'oggetto request(`istanza di sfRequest`)
