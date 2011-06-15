@@ -114,7 +114,7 @@ incluso l'intero livello di compatibilità, sono state rimosse. Questa versione 
 più pulita e anche leggermente più veloce di symfony 1.3. Un altro grosso
 vantaggio derivante dall'utilizzo di symfony 1.4 è il suo supporto a lungo
 termine. Essendo una release con Supporto a Lungo Termine (LTS), verrà mantenuta dal 
-core team di symfony per tre anni (fino a novembre 2012).
+team di symfony per tre anni (fino a novembre 2012).
 
 Certamente è possibile migrare i propri progetti a symfony 1.3 e poi pian piano
 aggiornare il codice per rimuovere le funzionalità deprecate e alla fine

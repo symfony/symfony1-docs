@@ -116,7 +116,7 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 >L'oggetto ~`sfContext`~ contiene riferimenti a oggetti di symfony come
 >request, response, user, ecc. Dal momento che `sfContext` agisce come un
 >singleton, si può utilizzare `sfContext::getInstance()`
->da qualsiasi parte e quindi avere accesso a qualsiasi oggetto del core di symfony:
+>da qualsiasi parte e quindi avere accesso a qualsiasi oggetto del nucleo di symfony:
 >
 >     [php]
 >     $mailer = sfContext::getInstance()->getMailer();
@@ -135,7 +135,7 @@ un oggetto `sfWebResponse` e passa l'opzione `send_http_headers` come parametro.
 
 ### ~Strategia di consegna~
 
-Come molti altri oggetti del core di symfony, il mailer è un factory. Quindi è
+Come molti altri oggetti del nucleo di symfony, il mailer è un factory. Quindi è
 configurato nel file di configurazione `factories.yml`. La configurazione
 predefinita è la seguente:
 

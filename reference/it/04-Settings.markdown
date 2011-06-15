@@ -194,7 +194,7 @@ Il più delle volte il valore predefinito va bene.
 *Predefinito*: `[default]`
 
 L'impostazione `enabled_modules` è un array dei nomi dei moduli da abilitare
-per la specifica applicazione. Moduli definiti in plugin o nel core di symfony 
+per la specifica applicazione. Moduli definiti in plugin o nel nucleo di symfony 
 non sono abilitati in modo predefinito e devono quindi essere elencati in questa 
 impostazione per essere accessibili.
 
@@ -377,7 +377,7 @@ azionato da alcuni task come `cache:clear` e `project:disable`.
 
 Se impostato a `true` tutte le richieste verso applicazioni disabilitate verranno
 automaticamente redirette alla pagina `lib/exception/data/unavailable.php`
-messa a disposizione dal core di symfony.
+messa a disposizione dal nucleo di symfony.
 
 >**TIP**
 >È possibile sovrascrivere il template predefinito aggiungendo un file 

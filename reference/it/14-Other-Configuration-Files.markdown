@@ -53,7 +53,7 @@ consente di sovrascrivere la configurazione predefinita.
 
 >**TIP**
 >Come si può vedere, la cartella `lib/vendor/symfony/` è esclusa per impostazione predefinita,
->dal momento che symfony utilizza un diverso meccanismo di autocaricamento per le classi del core.
+>dal momento che symfony utilizza un diverso meccanismo di autocaricamento per le classi del nucleo.
 
 Diverse chiavi possono essere usate per personalizzare il comportamento dell'autocaricamento:
 

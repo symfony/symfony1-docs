@@ -74,12 +74,12 @@ contatto con utenti e sviluppatori di symfony. Se state lavorando con symfony
 e siete in cerca di aiuto per un problema incontrato, la mailinglist
 [symfony-users](http://groups.google.com/group/symfony-users) è il posto giusto.
 I lettori di questa mailinglist sono un mix di normali utenti di symfony, utenti 
-alle prime armi e gran parte del core team di symfony. Per ogni domanda posta lì,
+alle prime armi e gran parte del team di symfony. Per ogni domanda posta lì,
 c'è qualcuno in grado di dare una risposta. Esistono anche molte altre liste con
 altri obiettivi:
 
  * [symfony-devs](http://groups.google.com/group/symfony-devs): Per argomenti
-   riguardanti lo sviluppo del core di symfony (*non per supporto!*)
+   riguardanti lo sviluppo del nucleo di symfony (*non per supporto!*)
 
  * [symfony-docs](http://groups.google.com/group/symfony-docs): Per argomenti
    riguardanti la documentazione di symfony
@@ -266,7 +266,7 @@ sviluppatori questo è il modo più divertente per dare il proprio contributo al
 comunità. Esistono molti modi per offrire il proprio codice. Di seguito una lista
 di modalità per farlo.
 
-#### Patch al core
+#### Patch al nucleo
 
 È possibile che lavorando con symfony si incontri un bug. Oppure semplicemente
 c'è bisogno di fare qualcosa che attualmente symfony non offre, attraverso 
@@ -294,7 +294,7 @@ Il passo successivo è quello di andare sul
 [bugtracker di symfony](http://trac.symfony-project.org). Dopo aver effettuato
 il login è possibile creare un nuovo ticket. Creando un nuovo ticket assicurarsi
 di compilare quanti più campi possibili, per rendere più semplice il compito del 
-core team nel riprodurre il bug, o per far capire quali parti di symfony sono
+team nel riprodurre il bug, o per far capire quali parti di symfony sono
 affette da esso.
 
 Nel riquadro "Ticket Properties" fare molta attenzione a selezionare la versione
@@ -309,16 +309,16 @@ marcare il checkbox che indica la presenza di una patch allegata al nuovo ticket
 
 #### Contribuire ai plugin
 
-Lavorare sul core del framework non è per tutti. Ma gli utenti di symfony 
+Lavorare sul nucleo del framework non è per tutti. Ma gli utenti di symfony 
 lavorano su progetti che contengono funzionalità sviluppate ad hoc. Qualche
 funzionalità è molto specifica per il progetto, per questo non sarebbe molto 
-utile renderla disponibile per l'utilizzo da parte di alti utenti, spesso però 
-un progetto contiene codice piuttosto generico che può tornare utile ad altri 
-utenti. È una best practice inserire gran parte della logica dell'applicazione 
+utile renderla disponibile per l'utilizzo da parte di alti utenti. Spesso però 
+un progetto contiene codice piuttosto generico, che può tornare utile ad altri 
+utenti. È una buona pratica inserire gran parte della logica dell'applicazione 
 nei plugin, per essere in grado di riutilizzarla in modo semplice almeno
 internamente alla propria organizzazione. Ma dato che il codice è stato 
-raggruppato in un plugin, è anche possibile renderlo Open-Source, facendolo
-diventare disponibile a tutti gli utenti di symfony.
+raggruppato in un plugin, è anche possibile renderlo open source, rendendolo
+disponibile a tutti gli utenti di symfony.
 
 Contribuire alla comunità di symfony con un plugin è abbastanza semplice. È 
 possibile 
@@ -338,9 +338,9 @@ ai loro progetti per installare il plugin.
 
 ### Documentazione
 
-Uno dei punti di forza di symfony è la documentazione. Il core team ha scritto
+Uno dei punti di forza di symfony è la documentazione. Il team ha scritto
 molta della documentazione su come utilizzare symfony, ma una grossa fetta è
-disponibile anche grazie alla comunità. Ci sono anche sforzi congiunti tra il core
+disponibile anche grazie alla comunità. Ci sono anche sforzi congiunti tra il 
 team e la comunità, come per esempio il lavoro sul tutorial Jobeet. La
 documentazione aiuta i nuovi sviluppatori a imparare a utilizzare symfony,
 oltre a essere una guida sempre presente per gli sviluppatori più esperti; è 
@@ -506,19 +506,19 @@ sul sito in spagnolo. Il sito offre inoltre molta documentazione in spagnolo,
 rappresentando così un ottimo punto per gli sviluppatori della Spagna per imparare
 symfony e restare aggiornati sui nuovi sviluppi relativi al framework.
 
-### Diventare parte del core team
+### Diventare parte del team
 
-Il core team è a tutti gli effetti, parte della comunità. Le persone che lo 
-compongono hanno tutte iniziato come semplici utenti del framework e grazie
+Il team è, a tutti gli effetti, parte della comunità. Le persone che lo 
+compongono hanno tutte iniziato come semplici utenti del framework e, grazie
 alla loro propensione a partecipare, in un modo o nell'altro sono diventate
-parte del core team. Symfony è 
+parte del team. Symfony è 
 [meritocratico](http://it.wikipedia.org/wiki/Meritocrazia), questo significa 
 che se si dà prova del proprio talento e delle proprie capacità, si dimostra di 
-essere in grado di entrare a far parte del core team.
+essere in grado di entrare a far parte del team.
 
 Abbiamo l'esempio
 [dell'ingresso di Bernhard Schussek](http://www.symfony-project.org/blog/2009/08/27/bernhard-schussek-joins-the-core-team).
-Bernard è entrato a far parte del core team dopo il suo fantastico lavoro 
+Bernard è entrato a far parte del team dopo il suo fantastico lavoro 
 sulla seconda versione del framework dei test Lime e per aver proposto 
 patch interessanti per un lungo periodo di tempo.
 

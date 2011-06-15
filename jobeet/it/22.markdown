@@ -252,12 +252,12 @@ In questo caso, si possono spostare queste cartelle da qualche altra parte:
 Come per il metodo `setWebDir()`, `setCacheDir()` e `setLogDir()` accettano
 un percorso assoluto rispettivamente alle cartelle `cache/` e `log/`.
 
-Personalizzazione degli oggetti core di symfony (i factory)
------------------------------------------------------------
+Personalizzazione degli oggetti del nucleo di symfony (i factory)
+-----------------------------------------------------------------
 
 Durante il giorno 16, abbiamo parlato dei factory di symfony. Essere in grado di
 personalizzare i factory significa avere la possibilità di utilizzare una classe personalizzata
-per gli oggetti del core di symfony, al posto di quella predefinita. È inoltre possibile
+per gli oggetti del nucleo di symfony, al posto di quella predefinita. È inoltre possibile
 modificare il comportamento predefinito di queste classi, modificando i parametri da inviare loro.
 
 Diamo uno sguardo ad alcune classiche personalizzazioni che potreste

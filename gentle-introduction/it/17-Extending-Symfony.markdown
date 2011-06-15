@@ -1,7 +1,7 @@
 Capitolo 17 - Estendere symfony
 ===============================
 
-A volte è necessario modificare il comportamento di symfony. Può accadere di dover modificare il modo in cui una certa classe si comporta o aggiungere delle caratteristiche personalizzate e ciò avverrà inevitabilmente perché ogni cliente ha esigenze specifiche che nessun framework può prevedere. In realtà, questa situazione è così comune che symfony fornisce un meccanismo per estendere classi esistenti in fase di runtime, al di là della semplice ereditarietà delle classi. È anche possibile sostituire le classi del core di symfony modificando le impostazioni di fabbrica. Una volta si è scrita una estensione, si può facilmente pacchettizzarla come plug-in, in modo che possa essere riutilizzata in altre applicazioni, o da altri utenti di symfony.
+A volte è necessario modificare il comportamento di symfony. Può accadere di dover modificare il modo in cui una certa classe si comporta o aggiungere delle caratteristiche personalizzate e ciò avverrà inevitabilmente perché ogni cliente ha esigenze specifiche che nessun framework può prevedere. In realtà, questa situazione è così comune che symfony fornisce un meccanismo per estendere classi esistenti in fase di runtime, al di là della semplice ereditarietà delle classi. È anche possibile sostituire le classi del nucleo di symfony modificando le impostazioni di fabbrica. Una volta si è scrita una estensione, si può facilmente pacchettizzarla come plug-in, in modo che possa essere riutilizzata in altre applicazioni, o da altri utenti di symfony.
 
 Eventi
 ------
@@ -296,7 +296,7 @@ I plugin (vedere sotto) possono registrare i propri ascoltatori di eventi. Dovre
 Factory
 -------
 
-Factory è la definizione di una classe per un determinato compito. Symfony per le sue caratteristiche del core, come la gestione del controllore e della sessione, si basa su factory. Ad esempio, quando il framework deve creare un oggetto per un nuova richiesta, cerca nella definizione del factory il nome della classe da utilizzare a tale scopo. La definizione predefinita del factory per le richieste è `sfWebRequest`, quindi symfony crea un oggetto di questa classe, al fine di gestire le richieste. Il grande vantaggio di utilizzare una definizione del factory è che è molto facile alterare le caratteristiche core del framework: basta cambiare la definizione del factory e symfony userà la classe personalizzata per la richiesta, invece della sua.
+Factory è la definizione di una classe per un determinato compito. Symfony per le sue caratteristiche del nucleo, come la gestione del controllore e della sessione, si basa su factory. Ad esempio, quando il framework deve creare un oggetto per un nuova richiesta, cerca nella definizione del factory il nome della classe da utilizzare a tale scopo. La definizione predefinita del factory per le richieste è `sfWebRequest`, quindi symfony crea un oggetto di questa classe, al fine di gestire le richieste. Il grande vantaggio di utilizzare una definizione del factory è che è molto facile alterare le caratteristiche principali del framework: basta cambiare la definizione del factory e symfony userà la classe personalizzata per la richiesta, invece della sua.
 
 Le definizioni dei factory sono memorizzate nel file di configurazione `factories.yml`. Il listato 17-7 mostra il file con le definizioni predefinite dei factory. Ogni definizione è costituita dal nome di una classe autocaricata e (opzionalmente) da un insieme di parametri. Per esempio, il factory per la memorizzazione delle sessioni (impostata sotto la chiave `storage:`), utilizza un parametro `session_name` per dare un nome al cookie creato sul computer client, che consente le sessioni persistenti.
 
@@ -370,7 +370,7 @@ Probabilmente capiterà di dover riutilizzare parte di codice che si è sviluppa
 
 I plugin offrono un modo per pacchettizzare il codice sparso su più file e di riutilizzarlo su diversi progetti. In un plugin, è possibile inserire classi, filtri, ascoltatori di eventi, helper, configurazioni, task, moduli, schemi ed estensioni del modello, fixture, le risorse web, ecc. I plugin sono facili da installare, aggiornare e disinstallare. Possono essere distribuiti come un archivio .tgz`, un pacchetto PEAR, o un semplice checkout da un repository di codice. I plugin con pacchetti PEAR hanno il vantaggio di gestire le dipendenze, essere più facili da aggiornare e sono rilevati automaticamente. I meccanismi di caricamento di symfony tengono in considerazione i plugin e le funzionalità offerte da un plugin sono disponibili nel progetto come se il codice del plugin facesse parte del framework.
 
-Quindi, fondamentalmente, un plugin è una estensione pacchettizzata per un progetto symfony. Con i plugin, non solo è possibile riutilizzare il proprio codice tra le applicazioni, ma si possono anche riutilizzare sviluppi fatti da altri contributori e aggiungere estensioni di terze parti al core di symfony.
+Quindi, fondamentalmente, un plugin è una estensione pacchettizzata per un progetto symfony. Con i plugin, non solo è possibile riutilizzare il proprio codice tra le applicazioni, ma si possono anche riutilizzare sviluppi fatti da altri contributori e aggiungere estensioni di terze parti al nucleo di symfony.
 
 ### Cercare i plugin di symfony
 
@@ -380,7 +380,7 @@ Il sito web del progetto symfony ha una sezione dedicata ai plugin che è access
 
 Ciascun plugin elencato ha la propria pagina, con dettagliate istruzioni per l'installazione e documentazione sull'utilizzo.
 
-Alcuni di questi plugin sono stati creati dalla comunità, mentre altri provengono dagli sviluppatori del core di symfony. Tra questi ultimi, ci sono i seguenti:
+Alcuni di questi plugin sono stati creati dalla comunità, mentre altri provengono dagli sviluppatori del nucleo di symfony. Tra questi ultimi, ci sono i seguenti:
 
   * `sfFeed2Plugin`: Automatizza la manipolazione dei feed RSS e Atom
   * `sfThumbnailPlugin`: Crea miniature, ad esempio per le immagini caricate da web
@@ -987,8 +987,8 @@ I plugin devono sempre includere un file `LICENSE` che descrive le condizioni di
 Riepilogo
 ---------
 
-Le classi di symfony notificano eventi che danno loro la possibilità di essere modificati a livello di applicazione. Il meccanismo degli eventi permette l'ereditarietà multipla e la sovrascrittura delle classi in fase di runtime, anche se le limitazioni di PHP lo impedirebbero. Quindi le funzionalità di symfony si possono estendere facilmente, anche quando è necessario modificare le classi core: la configurazione dei factory è qui per questo.
+Le classi di symfony notificano eventi che danno loro la possibilità di essere modificati a livello di applicazione. Il meccanismo degli eventi permette l'ereditarietà multipla e la sovrascrittura delle classi in fase di runtime, anche se le limitazioni di PHP lo impedirebbero. Quindi le funzionalità di symfony si possono estendere facilmente, anche quando è necessario modificare le classi del nucleo: la configurazione dei factory è qui per questo.
 
 Molte estensioni esistono già, sono pacchettizzate come plugin, per essere installate facilmente, aggiornate e disinstallate tramite la riga di comando di symfony. Creare un plugin è facile come creare un pacchetto PEAR e fornisce riutilizzabilità tra le applicazioni.
 
-La sezione plugin del sito di symfony contiene molti plugin e si possono anche aggiungere i propri. Quindi, ora che si sa come fare, speriamo che si aggiungano al core di symfony un sacco di estensioni utili!
+La sezione plugin del sito di symfony contiene molti plugin e si possono anche aggiungere i propri. Quindi, ora che si sa come fare, speriamo che si aggiungano al nucleo di symfony un sacco di estensioni utili!

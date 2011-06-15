@@ -124,7 +124,7 @@ Listato 5-7 - Sintassi dei commenti e allineamento dei valori in YAML
       contact:   contact@example.com
       admin:     admin@example.com # gli spazi aggiuntivi permettono un migliore allineamento dei valori
 
-In qualche file di configurazione di symfony capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione predefinita, ereditata da altri file YAML che si trovano nel core, è ripetuta in linee commentate nella propria applicazione per pura informazione. Se si vuole cambiare uno di tali parametri, occorre innanzitutto scommentare la linea, come mostrato nel listato 5-8.
+In qualche file di configurazione di symfony capiterà di trovare delle linee che cominciano con un cancelletto (per cui ignorate dal parser YAML) e che assomigliano a normali linee di impostazioni. Questa è una convenzione di symfony: la configurazione predefinita, ereditata da altri file YAML che si trovano nel nucleo, è ripetuta in linee commentate nella propria applicazione per pura informazione. Se si vuole cambiare uno di tali parametri, occorre innanzitutto scommentare la linea, come mostrato nel listato 5-8.
 
 Listato 5-8 - La configurazione predefinita è mostrata commentata
 

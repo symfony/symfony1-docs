@@ -7,7 +7,7 @@ e i task che sono stati deprecati o rimossi in symfony 1.3.
 Plugin del Core
 ---------------
 
-I seguenti plugin del core sono stati deprecati in symfony 1.3 e saranno
+I seguenti plugin del nucleo sono stati deprecati in symfony 1.3 e saranno
 rimossi in symfony 1.4:
 
   * `sfCompat10Plugin`: Deprecando questo plugin, si deprecano anche tutti gli

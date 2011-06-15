@@ -32,7 +32,7 @@ e l'architetto software a [CentreSource](http://www.centresource.com).
 Oggi lavora in [Sensio Labs](http://www.sensiolabs.com), dove ci sono i creatori
 del framework MVC symfony. Le sue responsabilità principali sono
 la formazione di altri sviluppatori, nonché lavorare sui progetti open source
-symfony e Doctrine. È un collaboratore core di symfony ed è alla guida del
+symfony e Doctrine. È un collaboratore importante di symfony ed è alla guida del
 progetto Doctrine.
 
 **Sito web**: *http://www.jwage.com/*
@@ -60,9 +60,9 @@ Kris Wallsmith
 --------------
 
 Kris Wallsmith è uno sviluppatore web freelance di Portland, Oregon.
-Trascorre i suoi giorni nella foresta di silicone, seguendo la nascita di startup
+Trascorre i suoi giorni nella foresta di silicio, seguendo la nascita di startup
 web, giocando a calcio e prendendo in braccio i suoi due figli piccoli. Kris è
-anche relatore a conferenze internazionali, membro del core team di symfony e
+anche relatore in conferenze internazionali, membro del team di symfony e
 Release Manager per le versioni 1.3 e 1.4.
 
 **Sito web**: *http://kriswallsmith.net*
