@@ -14,9 +14,9 @@ Iniziare più velocemente: personalizzare il processo di creazione del progetto
 ------------------------------------------------------------------------------
 
 Grazie allo strumento CLI di symfony, la creazione di un nuovo progetto symfony
-è veloce come può esserlo digitare il seguente comando:
+è veloce, basta digitare il seguente comando:
 
-    $ php /path/to/symfony generate-project foo --orm=Doctrine
+    $ php /path/to/symfony generate:project foo --orm=Doctrine
 
 Il task `generate:project` genera la struttura predefinita delle cartelle per
 il nuovo progetto e crea i file di configurazione con valori predefiniti. Ora
@@ -36,21 +36,21 @@ e automatizzato.
 >è eseguito, non esiste ancora nessun progetto e così non esiste un modo semplice
 >per personalizzarlo.
  
-Il task `generate:project` prende una opzione `--installer` che è uno script PHP
+Il task `generate:project` accetta un'opzione `--installer`, che è uno script PHP
 che verrà eseguito durante il processo di creazione del progetto:
 
-    $ php /path/to/symfony generate:project --installer=/somewhere/my_installer.php
+    $ php /path/to/symfony generate:project --installer=/percorso/mio_installer.php
 
-Lo script `/somewhere/my_installer.php` verrà eseguito nel contesto dell'istanza
-di `sfGenerateProjectTask`, quindi ha accesso a tutti i metodi che gli permettono
+Lo script `/percorso/mio_installer.php` verrà eseguito nel contesto dell'istanza
+di `sfGenerateProjectTask`, quindi avrà accesso a tutti i metodi che gli permettono
 di eseguire il proprio lavoro (richiamandoli tramite l'oggetto `$this`). Le
 seguenti sezioni descrivono tutti i metodi disponibili che si possono utilizzare
 per personalizzare il processo di creazione del progetto.
 
 >**TIP**
->Se nel `php.ini` si attiva l'accesso URL ai file per la funzione `include()`,
->si può anche passare una URL come programma di installazione (naturalmente
->è necessario stare molto attenti quando si fa questo con uno script di cui non si sa nulla):
+>Se in `php.ini` si attiva l'accesso URL ai file per la funzione `include()`,
+>si può anche passare un URL come programma di installazione (naturalmente
+>è necessario stare molto attenti quando lo si fa con uno script di cui non si sa nulla):
 >
 >      $ symfony generate:project
 >      --installer=http://example.com/sf_installer.php
@@ -65,7 +65,7 @@ sottocartelle e file) nel progetto appena creato:
 
 ### `runTask()`
 
-Il metodo `runTask()` esegue un task. Prende il nome del task e una stringa
+Il metodo `runTask()` esegue un task. Accetta il nome del task e una stringa
 che rappresenta i parametri e le opzioni che si desiderano passare a esso
 come parametri:
 
@@ -222,10 +222,10 @@ documentazione specifica.
 
 #### Aiutare l'IDE
 
-Negli IDE, l'autocompletamento del PHP funziona solo per i metodi che sono definiti
-esplicitamente nel codice PHP. Ma se il codice utilizza i metodi
-`__call()` o `__get()` "magic", gli IDE non hanno modo di capire i metodi o le proprietà
-disponibili. La buona notizia è che si può aiutare l'IDE fornendo i metodi e/o le proprietà
+Negli IDE, l'autocompletamento di PHP funziona solo per i metodi che sono definiti
+esplicitamente nel codice PHP. Ma se il codice utilizza i metodi magici
+`__call()` o `__get()`, gli IDE non hanno modo di capire i metodi o le proprietà
+disponibili. La buona notizia è che si può aiutare l'IDE, fornendo i metodi e/o le proprietà
 in un blocco PHPDoc (utilizzando rispettivamente le annotazioni `@method` e `@property`).
 
 Supponiamo di avere una classe `Message` con una proprietà dinamica (`message`) e
@@ -312,7 +312,7 @@ gli strumenti esistenti per trovare le risposte il più velocemente possibile.
 ### API online
 
 Il modo più veloce per trovare la documentazione di una classe o di un metodo è
-quello di navigare online nelle [API](http://www.symfony-project.org/api/1_3/).
+quello di navigare online nelle [API](http://www.symfony-project.org/api/1_4/).
 
 Di maggiore interesse è il motore di ricerca integrato nelle API. Esso consente
 di trovare rapidamente una classe o un metodo con poche battiture sulla tastiera.
@@ -351,16 +351,16 @@ per aggiungerle nella casella di ricerca del browser.
 >**NOTE**
 >Nel [blog](http://www.symfony-project.org/blog/2009/02/24/opensearch-support-for-the-symfony-api) di symfony,
 >si può dare un'occhiata a uno screencast che mostra come il motore di ricerca
->delle API si symfony ben si integri con Firefox.
+>delle API di symfony ben si integri con Firefox.
 
 ### Cheat Sheet
 
 Se può interessare avere alcuni fogli sintetici sulle principali parti del framework,
-si possono scaricare molti [cheat sheets](http://trac.symfony-project.org/wiki/CheatSheets):
+si possono scaricare molti [cheat sheet](http://trac.symfony-project.org/wiki/CheatSheets):
 
  * [Struttura delle cartelle e CLI](http://andreiabohner.files.wordpress.com/2007/03/cheatsheetsymfony001_enus.pdf)
- * [View](http://andreiabohner.files.wordpress.com/2007/08/sfviewfirstpartrefcard.pdf)
- * [View: partial, componenti, slot e componenti slot](http://andreiabohner.files.wordpress.com/2007/08/sfviewsecondpartrefcard.pdf)
+ * [Vista](http://andreiabohner.files.wordpress.com/2007/08/sfviewfirstpartrefcard.pdf)
+ * [Vista: partial, component, slot e component slot](http://andreiabohner.files.wordpress.com/2007/08/sfviewsecondpartrefcard.pdf)
  * [Lime: test unitari e funzionali](http://trac.symfony-project.com/attachment/wiki/LimeTestingFramework/lime-cheat.pdf?format=raw)
  * [ORM](http://andreiabohner.files.wordpress.com/2007/08/sform_enus.pdf)
  * [Propel](http://andreiabohner.files.wordpress.com/2007/08/sfmodelfirstpartrefcard.pdf)
@@ -414,8 +414,8 @@ risparmiare una enormità di tempo quando si fa il debug.
 >l'impostazione `sf_file_link_format`.
 
 Per impostazione predefinita, `sf_file_link_format` è vuoto e symfony si rifà al
-alore della [`xdebug.file_link_format`](http://xdebug.org/docs/all_settings#file_link_format)
-configurazione PHP se esiste (l'impostazione `xdebug.file_link_format` nel
+valore della [`xdebug.file_link_format`](http://xdebug.org/docs/all_settings#file_link_format)
+configurazione PHP, se esiste (l'impostazione `xdebug.file_link_format` in
 `php.ini` permette alle versioni recenti di XDebug di aggiungere link a tutti i
 nomi dei file presenti nello stack trace).
 
@@ -481,7 +481,7 @@ Alla fine, attivare il plugin nella classe `sfProjectConfiguration`:
       }
     }
 
-Siccome il plugin usa la barra degli strumenti web del debug come principale
+Siccome il plugin usa la web debug toolbar come principale
 interfaccia utente, bisogna essere sicuri che sia abilitata (questo è il caso
 dell'ambiente di sviluppo, per impostazione predefinita).
 Appena abilitato, viene reso disponibile un nuovo menu chiamato "Functional Test".
