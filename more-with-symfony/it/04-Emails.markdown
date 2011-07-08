@@ -120,7 +120,7 @@ ulteriore flessibilità:
 >ufficiale di SwiftMailer descrivono tutto quello che è necessario sapere per
 >la creazione dei messaggi.
 
-### Usare le viste di Symfony
+### Usare le viste di symfony
 
 Inviare le email dalle azioni permetterà di sfruttare la flessibilità dei partial
 e dei component abbastanza facilmente.

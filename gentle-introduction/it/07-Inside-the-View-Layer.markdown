@@ -154,7 +154,7 @@ Listatog 7-5 - Layout predefinito, in `myproject/apps/frontend/templates/layout.
       </body>
     </html>
 
-Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempio nel listato 7-1 la view elaborata è simile a quanto si vede nel listato 7-6.
+Gli helper chiamati nella sezione `<head>` recuperano le informazioni dall'oggetto response e dalla configurazione view. Il tag `<body>` mostra il risultato del template. Con questo layout, la configurazione predefinita e il template di esempio nel listato 7-1 la vista elaborata è simile a quanto si vede nel listato 7-6.
 
 Listato 7-6 - Il Layout, la configurazione View e il template assemblato.
 
@@ -182,7 +182,7 @@ Listato 7-6 - Il Layout, la configurazione View e il template assemblato.
       </body>
     </html>
 
-Il template globale può essere completamente personalizzato per ciascuna applicazione. Aggiungerlo in ogni codice HTML in cui se ne ha bisogno. Questo layout spesso è usato per mantenere la navigazione del sito, i logo e altro. Si può anche avere più di un layout e decidere quale layout dovrebbe essere usato per ciascuna azione. Per ora non preoccuparsi delle inclusioni di JavaScript e fogli di stile; La sezione "Configurazione della View" mostrerà più avanti come ottenere ciò.
+Il template globale può essere completamente personalizzato per ciascuna applicazione. Aggiungerlo in ogni codice HTML in cui se ne ha bisogno. Questo layout spesso è usato per mantenere la navigazione del sito, i logo e altro. Si può anche avere più di un layout e decidere quale layout dovrebbe essere usato per ciascuna azione. Per ora non preoccuparsi delle inclusioni di JavaScript e fogli di stile; La sezione "Configurazione della vista" mostrerà più avanti come ottenere ciò.
 
 ### Scorciatoie nei template
 
@@ -900,20 +900,20 @@ Questo, per impostazione predefinita, aggiungerà `htmlspecialchars()` nell'outp
     [php]
     $this->test = '<script>alert(document.cookie)</script>';
 
-Con l'escape dell'output a on, facendo l'echo di questa variabile nel template verranno mostrati i dati sott escape:
+Con l'escape dell'output attivato, l'echo di questa variabile nel template mostrerà i dati sotto escape:
 
     [php]
     echo $test;
      => &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
-Inoltre, ogni template ha accesso a una variabile $sf_data` che è un contenitore di oggetti che fa riferimento a tutte le variabili sotto escape. Quindi si può anche visualizzare la variabile test in questo modo:
+Inoltre, ogni template ha accesso a una variabile `$sf_data`, che è un contenitore di oggetti riferito a tutte le variabili sotto escape. Quindi si può anche visualizzare la variabile test in questo modo:
 
     [php]
     echo $sf_data->get('test');
     => &lt;script&gt;alert(document.cookie)&lt;/script&gt;
 
 >**TIP**
->L'oggetto $sf_data object implementa l'interfaccia Array, quindi invece di usare `$sf_data->get('miavariabile')`, si possono recuperare i valori sotto escape chiamando `$sf_data['myvariable']`. Ma non è un array reale, quindi le funzioni tipo `print_r()` non funzioneranno come ci si attende.
+>L'oggetto `$sf_data object` implementa l'interfaccia Array, quindi invece di usare `$sf_data->get('miavariabile')`, si possono recuperare i valori sotto escape chiamando `$sf_data['myvariable']`. Ma non è un array reale, quindi le funzioni tipo `print_r()` non funzioneranno come ci si attende.
 
 `$sf_data` fornisce anche l'accesso ai dati non sotto escape, detti anche "raw". Questo è utile quando una variabile memorizza codice HTML che deve essere interpretato dal browser, a condizione che vi "fidiate" di questa variabile. Richiamare il metodo `getRaw()` quando si vogliono visualizzare dati raw.
 
