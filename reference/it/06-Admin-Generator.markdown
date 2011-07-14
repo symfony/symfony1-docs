@@ -329,7 +329,7 @@ L'opzione `attributes` definisce gli attributi HTML da passare al widget:
 *Predefinito*: nessuno
 
 L'opzione `credentials` definisce le credenziali che l'utente deve avere perché i campi
-siano visualizzati. Le credenziali sono forzate solo per l'oggetto list.
+siano visualizzati. Le credenziali sono applicabili solo alla lista.
 
     [yml]
     config:
@@ -348,7 +348,7 @@ siano visualizzati. Le credenziali sono forzate solo per l'oggetto list.
 L'opzione `renderer` definisce un callback PHP per eseguire la visualizzazione del campo. Se
 definita, sovrascrive ogni altra cosa come partial o componenti.
 
-Il callback è chiamato con il valore del campo e i parametri definiti
+Il callback è richiamato con il valore del campo e i parametri definiti
 dall'opzione `renderer_arguments`.
 
 ### ~`renderer_arguments`~
@@ -372,7 +372,7 @@ virtuale, si può sovrascrivere il tipo `Text` predefinito con uno dei tipi vali
   * `Date`
   * `Time`
   * `Text`
-  * `Enum` (only available for Doctrine)
+  * `Enum` (disponibile solo per Doctrine)
 
 ### ~`date_format`~
 
@@ -406,7 +406,7 @@ Per il formato, possono essere utilizzati i seguenti token:
 ---------
 
 Il framework definisce alcune azioni incorporate. Queste sono tutte prefissate da un
-trattino di sottolineatura (`_`). Ciascuna azione può essere personalizzata con le opzioni descritte in
+trattino basso (`_`). Ciascuna azione può essere personalizzata con le opzioni descritte in
 questa sezione. Le stesse opzioni possono essere usate quando si definisce una azione nelle
 voci `list`, `edit`, o `new`.
 
@@ -439,7 +439,7 @@ che deve essere visualizzata.
 
 ### ~`title`~
 
-*Predefinito*: Il nome della classe del modello umanizzato e preceduto da "List"
+*Predefinito*: Il nome della classe del modello umanizzato e seguito da "List"
 
 L'opzione `title` definisce il titolo della pagina elenco.
 
@@ -493,7 +493,7 @@ Con l'impaginazione `stacked`, ciascun oggetto è rappresentato da una singola s
 che è definita dall'opzione `params` (vedere sotto).
 
 >**NOTE**
->L'opzione `display` è nuovamente necessaria quando si usa l'impaginazione `stacked` dal
+>L'opzione `display` è ancora necessaria quando si usa l'impaginazione `stacked`, dal
 >momento che definisce le colonne che saranno ordinabili dall'utente.
 
 ### ~`params`~
@@ -501,7 +501,7 @@ che è definita dall'opzione `params` (vedere sotto).
 *Valore predefinito*: nessuno
 
 L'opzione `params` è usata per definire lo schema di stringhe HTML da usare quando
-si utilizza l'impaginazione `stacked`. Questa stringa può contenere segnaposti nell'oggetto del modello:
+si utilizza l'impaginazione `stacked`. Questa stringa può contenere segnaposti dell'oggetto del modello:
 
     [yml]
     config:
@@ -545,14 +545,14 @@ un elenco.
 L'opzione `batch_actions` definisce l'elenco di azioni che possono essere eseguite
 per una selezione di oggetti in un elenco.
 
-Se non si definisce una `action`, il generatore di admin cercherà per un metodo
-chiamato con il nome avente la prima lettera maiuscola preceduto da `executeBatch`.
+Se non si definisce una `action`, il generatore di admin cercherà un metodo
+con nome avente la prima lettera maiuscola preceduto da `executeBatch`.
 
 Il metodo eseguito riceve le chiavi primarie degli oggetti selezionati tramite il
 parametro `ids` di richiesta.
 
 >**TIP**
->Il funzionamento delle azioni batch può essere disabilitato impostando l'opzione a un
+>Le azioni batch possono essere disabilitate, impostando l'opzione a un
 >array vuoto: `{}`
 
 ### ~`object_actions`~
@@ -562,11 +562,11 @@ parametro `ids` di richiesta.
 L'opzione `object_actions` definisce l'elenco delle azioni che possono essere eseguite
 su ciascun oggetto dell'elenco.
 
-Se non viene definita una azione `action`, il generatore di admin cercherà per un metodo
-chiamato con il nome avente la prima lettera maiuscola preceduto da `executeList`.
+Se non viene definita una azione `action`, il generatore di admin cercherà un metodo
+con nome avente la prima lettera maiuscola preceduto da `executeList`.
 
 >**TIP**
->Il funzionamento delle azioni dell'oggetto può essere disabilitato impostando l'opzione a un
+>le azioni dell'oggetto possono essere disabilitate, impostando l'opzione a un
 >array vuoto: `{}`
 
 ### ~`actions`~
@@ -576,11 +576,11 @@ chiamato con il nome avente la prima lettera maiuscola preceduto da `executeList
 L'opzione `actions` definisce azioni che non prendono oggetti, come la creazione
 di un nuovo oggetto.
 
-Se non viene definita una `action`,  il generatore di admin cercherà per un metodo
-chiamato con il nome avente la prima lettera maiuscola preceduto da `executeList`.
+Se non viene definita una `action`,  il generatore di admin cercherà un metodo
+con nome avente la prima lettera maiuscola preceduto da `executeList`.
 
 >**TIP**
->Il funzionamento delle azioni dell'oggetto può essere disabilitato impostando l'opzione a un
+>Le azioni dell'oggetto possono essere disabilitate, impostando l'opzione a un
 >array vuoto: `{}`
 
 ### ~`peer_method`~
@@ -641,7 +641,7 @@ con il quale sono stati definiti
 L'opzione `display` definisce l'elenco ordinato dei campi da visualizzare.
 
 >**TIP**
->Essendo che i campi dei filtri sono sempre opzionali, non c'è la necessità di sovrascrivere la
+>Essendo i campi dei filtri sempre opzionali, non c'è la necessità di sovrascrivere la
 >classe del filtro del form per configurare i campi che devono essere visualizzati.
 
 ### ~`class`~
