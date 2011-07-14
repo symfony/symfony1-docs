@@ -1555,12 +1555,12 @@ Il task `i18n:find` trova le stringhe non internazionalizzate incorporate nei te
 
     ./symfony i18n:find frontend
 
-Questo task è capace di trovare le stringhe non internazionalizzate nell'HTML puro e nel codice PHP:
+Questo task è in grado di trovare le stringhe non internazionalizzate nell'HTML puro e nel codice PHP:
 
     <p>Testo non i18n</p>
     <p><?php echo 'Test' ?></p>
 
-Essendo che il task restituisce tutte le stringhe incorporate nel PHP, si possono avere alcuni falsi positivi (soprattutto
+Poiché il task restituisce tutte le stringhe incorporate nel PHP, si possono avere alcuni falsi positivi (soprattutto
 se si usa la sintassi stringa per i parametri degli helper).
 
 `log`

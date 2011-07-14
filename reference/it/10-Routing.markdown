@@ -113,10 +113,10 @@ L'impostazione `class` consente di cambiare la classe route da usare per la rott
 
 *Predefinito*: `/`
 
-L'impostazione `url` è il pattern che deve confrontare una URL entrante con la rotta
+L'impostazione `url` è lo schema che deve confrontare un URL entrante con la rotta
 che deve essere usata per la richiesta corrente.
 
-Il pattern è costituito da segmenti:
+Lo schema è costituito da segmenti:
 
  * variabili (una parola con prefisso [due punti `:`](#chapter_05_sub_variable_prefixes))
  * costanti
