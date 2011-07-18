@@ -470,7 +470,7 @@ L'opzione `hide` definisce le colonne da nascondere da un elenco. Invece di
 specificare le colonne che devono essere visualizzate tramite l'opzione `display`,
 a volte è più veloce nascondere alcune colonne:
 
-    [php]
+    [yml]
     config:
       list:
         hide: [created_at, updated_at]

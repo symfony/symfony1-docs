@@ -916,9 +916,9 @@ Listato 15-33 - Lanciare un insieme di test
     unit/foo/barTest.php               0      2      2  62 63
     Failed 1/3 test scripts, 66.66% okay. 2/53 subtests failed, 96.22% okay.
 
-I test sono eseguiti allo stesso modo di quando sono chiamati singolarmente, solo l'output è sintetico per maggiore utilità. In particolare, il resoconto finale focalizza su i test che hanno fallito e aiuta a trovarli.
+I test sono eseguiti allo stesso modo di quando sono chiamati singolarmente, solo l'output è sintetico per maggiore utilità. In particolare, il resoconto finale focalizza sui test che hanno fallito e aiuta a trovarli.
 
-Si possono lanciare tutti i test con una sola chiamata utilizzando il task `test:all` come mostrato nel listato 15-34. Questa attività andrebbe fatta ogni volta che si trasferiscono i file all'ambiente di produzione per garantire che non ci siano comparsi errori di regressione dopo l'ultima release
+Si possono lanciare tutti i test con una sola chiamata, utilizzando il task `test:all`, come mostrato nel listato 15-34. Questa attività andrebbe fatta ogni volta che si trasferiscono i file all'ambiente di produzione, per garantire che non ci siano comparsi errori di regressione dopo l'ultimo rilascio.
 
 Listato 15-34 - Lanciare tutti i test del progetto
 
@@ -926,7 +926,7 @@ Listato 15-34 - Lanciare tutti i test del progetto
 
 ### Accesso al database
 
-I test unitari spesso hanno necessità di accedere al database. La connessione al database è automaticamente instanziato quando si chiama `sfBrowser::get()` per la prima volta. Comunque, se si vuole l'accesso al database anche prima dell'utilizzo di `sfBrowser` è necessario inizializzare manualmente l'oggetto `sfDabataseManager` come mostrato nel listato 15-35
+I test unitari spesso hanno necessità di accedere al database. La connessione al database è automaticamente instanziata quando si chiama `sfBrowser::get()` per la prima volta. Comunque, se si vuole l'accesso al database anche prima dell'utilizzo di `sfBrowser` è necessario inizializzare manualmente l'oggetto `sfDabataseManager`, come mostrato nel listato 15-35
 
 Listato 15-35 - Inizializzazione del database in un test
 
