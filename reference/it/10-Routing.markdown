@@ -289,7 +289,7 @@ L'opzione `module` definisce il nome del modulo.
 
 *Predefinito*: `/` seguito dal nome della rotta
 
-L'opzione `prefix_path` definisce un prefisso da anteporre a tutti i modelli delle `url`.
+L'opzione `prefix_path` definisce un prefisso da anteporre a tutti i modelli degli `url`.
 Può essere un qualunque modello valido e può contenere variabili e diversi segmenti.
 
 ### ~`column`~
@@ -352,26 +352,40 @@ per l'insieme.
 
 *Predefinito*: Un array vuoto
 
-Lìopzione `collection_actions` definisce un array di azioni aggiuntive
-disponibili per l'insieme di rotte.
+L'opzione `collection_actions` definisce un array di azioni aggiuntive
+disponibili per l'insieme di rotte. Le chiavi sono i nomi delle azioni e i valori
+sono metodi validi per quelle azioni:
+
+    [yml]
+    articles:
+      options:
+        collection_actions: { filter: post, filterBis: [post, get] }
+        # ...
 
 ### ~`object_actions`~
 
 *Predefinito*: Un array vuoto
 
 L'opzione `object_actions` definisce un array di azioni aggiuntive disponibili
-per l'oggetto delle rotte.
+per l'oggetto delle rotte. Le chiavi sono i nomi delle azioni e i valori
+sono metodi validi per quelle azioni:
+
+    [yml]
+    articles:
+      options:
+        object_actions: { publish: put, publishBis: [post, put] }
+        # ...
 
 ~`sfPropelRouteCollection`~
 ---------------------------
 
 La classe per la rotta `sfPropelRouteCollection` estende `sfRouteCollection` e
-cambia la classe predefinita della rotta a `sfPropelRoute` (vedere sopra
+cambia la classe predefinita della rotta in `sfPropelRoute` (vedere sopra
 l'opzione `route_class`).
 
 ~`sfDoctrineRouteCollection`~
 -----------------------------
 
 La classe per la rotta `sfDoctrineRouteCollection` estende `sfRouteCollection`,
-e cambia la classe predefinita della rotta a `sfDoctrineRoute` (vedere sopra
+e cambia la classe predefinita della rotta in `sfDoctrineRoute` (vedere sopra
 l'opzione `route_class`).

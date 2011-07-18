@@ -109,16 +109,16 @@ che sono segnalate come deprecate durante lo sviluppo di symfony 1.3 sono
 disponibili. Questo significa che l'aggiornamento è facile, semplice e sicuro.
 
 Se si inizia un nuovo progetto oggi, invece, bisognerebbe utilizzare symfony 1.4. 
-Questa versione ha le stesse funzionalità di symfony 1.3 ma quelle deprecate,
+Questa versione ha le stesse funzionalità di symfony 1.3, ma quelle deprecate,
 incluso l'intero livello di compatibilità, sono state rimosse. Questa versione è
 più pulita e anche leggermente più veloce di symfony 1.3. Un altro grosso
 vantaggio derivante dall'utilizzo di symfony 1.4 è il suo supporto a lungo
-termine. Essendo una release con Supporto a Lungo Termine (LTS), verrà mantenuta dal 
+termine. Essendo un rilascio con Supporto a Lungo Termine (LTS), verrà mantenuto dal 
 team di symfony per tre anni (fino a novembre 2012).
 
 Certamente è possibile migrare i propri progetti a symfony 1.3 e poi pian piano
 aggiornare il codice per rimuovere le funzionalità deprecate e alla fine
-passare a symfony 1.4 per beneficiare del supporto a lungo termine. Si ha molto
+passare a symfony 1.4, per beneficiare del supporto a lungo termine. Si ha molto
 tempo per pianificare il passaggio a symfony 1.3, visto che verrà supportato
 per un anno (fino novembre 2010).
 

@@ -857,9 +857,8 @@ Dichiarando una dipendenza con un altro plugin è anche possibile:
     </package>
 
 Il tag `<changelog>` è facoltativo, ma fornisce utili informazioni su ciò che
-è cambiato fra le release. Questa informazione è disponibile sotto la scheda "Changelog"
-e anche nel
-[feed dei plugin](http://www.symfony-project.org/plugins/recently.rss).
+è cambiato tra un rilascio e un altro. Questa informazione è disponibile sotto la scheda "Changelog"
+e anche nel [feed dei plugin](http://www.symfony-project.org/plugins/recently.rss).
 
     [xml]
     <changelog>
