@@ -89,7 +89,7 @@ prima che qualsiasi validatore sia caricato, ad esempio nel metodo `setup()`:
     [php]
     public function setup()
     {
-      sfValidatorBase::setDefaultMessage('require', 'Questo valore è obbligatorio.');
+      sfValidatorBase::setDefaultMessage('required', 'Questo valore è obbligatorio.');
       sfValidatorBase::setDefaultMessage('invalid', 'Questo valore non è valido.');
       parent::setup();
     }
@@ -102,7 +102,7 @@ Ogni messaggio di errore può, inoltre, definire un segnaposto specifico.
 
 >**NOTE**
 >Nella seguente sezione, il segnaposto predefinito `%value%` non
->è menzionato in quanto è sempre disponibile.
+>è menzionato, in quanto è sempre disponibile.
 
 Per alcuni validatori è necessario sapere qual è il set di caratteri utilizzato dai
 valori grezzi. Normalmente il set di caratteri usato è `UTF-8`, ma può essere
@@ -116,7 +116,7 @@ sostituito usando il metodo `setCharset()`:
 >il set di caratteri è configurato automaticamente con quello definito nel file
 >`settings.yml`.
 
-### Validatori Schema
+### Validatori schema
 
 Un validatore schema è un contenitore di validatori che può ospitare
 uno o più validatori differenti.
@@ -167,7 +167,7 @@ Validatori semplici
 
 ### `sfValidatorString`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorString` controlla che una variabile grezza
 sia una stringa e la restituisce come tale.
@@ -192,7 +192,7 @@ sia una stringa e la restituisce come tale.
 
 ### `sfValidatorRegex`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorRegex` controlla che una stringa verifichi
 una certa espressione regolare.
@@ -204,14 +204,14 @@ una certa espressione regolare.
 
 ### `sfValidatorEmail`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorEmail` può controllare gli indirizzi email
 ed eredita da `sfValidatorRegex`.
 
 ### `sfValidatorUrl`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorUrl` può validare indirizzi, URL HTTP
 e URL FTP. Eredita da `sfValidatorRegex`.
@@ -222,7 +222,7 @@ e URL FTP. Eredita da `sfValidatorRegex`.
 
 ### `sfValidatorInteger`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorInteger` controlla che il valore immesso
 sia di tipo intero e lo converte come tale.
@@ -242,7 +242,7 @@ not an integer.`.
 
 ### `sfValidatorNumber`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorNumber` controlla un numero (o una stringa
 che PHP possa tradurre tramite la funzione [`floatval()`](www.php.net/floatval))
@@ -262,7 +262,7 @@ Il messaggio di errore predefinito per `invalid` è `"%value%" is not a number.`
 
 ### `sfValidatorBoolean`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorBoolean` controlla che il dato inserito sia
 di tipo booleano e restituisce i valori `true` o `false`.
@@ -274,7 +274,7 @@ di tipo booleano e restituisce i valori `true` o `false`.
 
 ### `sfValidatorChoice`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorChoice` controlla se i valori inseriti
 appartengono a una lista di valori definiti.
@@ -292,14 +292,14 @@ appartengono a una lista di valori definiti.
 
 ### `sfValidatorPass`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorPass` è un validatore fittizio che restituisce
 i valori di input così come sono.
 
 ### `sfValidatorCallback`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorCallback` delega il controllo a un callback
 di PHP.
@@ -333,7 +333,7 @@ Validatori di date
 
 ### `sfValidatorDate`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorDate` controlla date semplici e con orari (le
 date con orari sono abilitate con l'opzione `with_time`). 
@@ -374,7 +374,7 @@ specificato nei parametri `date_output` o `datetime_output`.
 
 ### `sfValidatorTime`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorTime` controlla i formati orario.
 
@@ -404,7 +404,7 @@ nei parametri `date_output` o `datetime_output`.
 
 ### `sfValidatorDateTime`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorDateTime` controlla le date con gli orari.
 
@@ -415,7 +415,7 @@ Il validatore `sfValidatorDateTime` controlla le date con gli orari.
 
 ### `sfValidatorDateRange`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorDateTime` controlla intervalli di date.
 
@@ -435,7 +435,7 @@ Validatore di file
 
 ### `sfValidatorFile`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorFile` controlla i file caricati.
 
@@ -489,7 +489,7 @@ Validatori logici
 
 ### `sfValidatorAnd`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorAnd` controlla se un valore grezzo passa una lista di validatori.
 
@@ -522,7 +522,7 @@ La lista di validatori inclusi può essere inoltre gestita usando i metodi
 
 ### `sfValidatorOr`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorOr` controlla un valore grezzo se passa almeno un validatore
 in una lista.
@@ -549,7 +549,7 @@ La lista di validatori inclusi può essere inoltre gestita usando i metodi
 
 ### `sfValidatorSchema`
 
-*Validatore schema**: Sì
+*Validatore schema*: Sì
 
 Il validatore `sfValidatorSchema` rappresenta un validatore composto da diversi campi.
 Un campo è semplicemente un validatore a cui è assegnato un nome:
@@ -607,7 +607,7 @@ array:
 
 ### `sfValidatorSchemaCompare`
 
-*Validatore schema**: Sì
+*Validatore schema*: Sì
 
 Il validatore `sfValidatorSchemaCompare` compara diversi valori dell'array di dati grezzi
 passato:
@@ -641,7 +641,7 @@ Il messaggio di errore `invalid` accetta i seguenti valori: `%left_field%`,
 
 ### `sfValidatorSchemaFilter`
 
-*Validatore schema**: Sì
+*Validatore schema*: Sì
 
 Il validatore `sfValidatorSchemaFilter` converte un validatore di tipo non-schema
 a un validatore di tipo schema. A volte è utile nell'ambito dei post validatori:
@@ -657,7 +657,7 @@ Validatori I18n
 
 ### `sfValidatorI18nChoiceCountry`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorI18nChoiceCountry` controlla che un valore grezzo rientri
 in un codice paese valido secondo ISO 3166.
@@ -668,7 +668,7 @@ in un codice paese valido secondo ISO 3166.
 
 ### `sfValidatorI18nChoiceLanguage`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorI18nChoiceLanguage` controlla che un valore grezzo rientri
 tra le lingue valide.
@@ -679,7 +679,7 @@ tra le lingue valide.
 
 ### `sfValidatorI18nChoiceTimezone`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il vadlidator `sfValidatorI18nChoiceTimezone` verifica che il valore
 grezzo sia un fuso orario valido.
@@ -693,7 +693,7 @@ Validatori Propel
 
 ### `sfValidatorPropelChoice`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorPropelChoice` controlla che un valore grezzo sia nella
 lista di record di un dato modello Propel.
@@ -716,7 +716,7 @@ cambiato utilizzando l'opzione `column`.
 
 ### `sfValidatorPropelUnique`
 
-*Validatore schema**: Sì
+*Validatore schema*: Sì
 
 Il validatore `sfValidatorPropelUnique` controlla l'unicità di una colonna o di un
 gruppo di colonne (opzione `column`) per un modello Propel.
@@ -738,7 +738,7 @@ Validatori Doctrine
 
 ### `sfValidatorDoctrineChoice`
 
-*Validatore schema**: No
+*Validatore schema*: No
 
 Il validatore `sfValidatorDoctrineChoice` controlla che un valore grezzo sia nella
 lista di record di un dato modello Doctrine.
@@ -761,7 +761,7 @@ cambiato utilizzando l'opzione `column`.
 
 ### `sfValidatorDoctrineUnique`
 
-*Validatore schema**: Sì
+*Validatore schema*: Sì
 
 Il validatore `sfValidatorDoctrineUnique` controlla l'unicità di una colonna o di un
 gruppo di colonne (opzione `column`) per un modello Doctrine.

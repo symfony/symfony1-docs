@@ -1018,7 +1018,7 @@ di Doctrine come istanze di oggetti DateTime di PHP.
     echo $article->getDateTimeObject('created_at')
       ->format('m/d/Y');
 
-Si posson anche impostare dei valori di date semplicemente richiamando il
+Si possono anche impostare dei valori di date semplicemente richiamando il
 metodo `setDateTimeObject` e pasando un'istanza valida `DateTime`.
 
     [php]
@@ -1257,7 +1257,7 @@ Due parametri sono disponibili in `factories.yml`:
 ### Più cache
 
 Il gestore della cache delle viste non rifiuta più di mettere in cache
-in presenza di valori in `$_GET` o `$_POST`.La logica ora conferma solo
+in presenza di valori in `$_GET` o `$_POST`. La logica ora conferma solo
 che la richiesta corrente ha il metodo GET prima di verificare `cache.yml`.
 Questo vuol dire che le seguenti pagine ora possono andare in cache:
 

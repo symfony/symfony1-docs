@@ -158,7 +158,7 @@ espressioni regolari a cui i valori della variabile devono corrispondere.
 >**TIP**
 >L'espressione regolare sarà inclusa in un'altra espressione
 >regolare, questo vuol dire che non c'è bisogno di racchiuderla tra
->separatori e non c'è bisogno di delimitarla con `^` o `$` per fare
+>separatori e non c'è bisogno di delimitarla con `^` o `$` per far
 >corrispondere l'intero valore.
 
 ### ~`type`~
