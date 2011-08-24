@@ -221,7 +221,7 @@ symfony の内部にご興味がなければ、フロントコントローラー
 >
 >`sfMailer`: メーラーオブジェクト (`->getMailer()`)
 >
->`sfI18N`: 国際化オブジェクト (`->getI18N()`)
+>`sfI18N`: 国際化オブジェクト (`->getI18N()`)
 >
 >`sfLogger`: loggerオブジェクト (`->getLogger()`)
 >
