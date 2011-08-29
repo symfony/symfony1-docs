@@ -963,7 +963,7 @@ Listato 6-33 - Filtro per comunicazione sicura
       }
     }
 
-I filtri vengono utilizzati in modo massivo nel plug-in visto che permettono di estendere le funzionalità di un'applicazione in modo completo. Fare riferimento al capitolo 17 per saperne di più sui plugin.
+I filtri vengono utilizzati in modo massivo nel plugin visto che permettono di estendere le funzionalità di un'applicazione in modo completo. Fare riferimento al capitolo 17 per saperne di più sui plugin.
 
 Configurazione dei moduli
 -------------------------

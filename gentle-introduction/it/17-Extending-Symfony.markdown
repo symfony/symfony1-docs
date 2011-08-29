@@ -1,7 +1,7 @@
 Capitolo 17 - Estendere symfony
 ===============================
 
-A volte è necessario modificare il comportamento di symfony. Può accadere di dover modificare il modo in cui una certa classe si comporta o aggiungere delle caratteristiche personalizzate e ciò avverrà inevitabilmente perché ogni cliente ha esigenze specifiche che nessun framework può prevedere. In realtà, questa situazione è così comune che symfony fornisce un meccanismo per estendere classi esistenti in fase di runtime, al di là della semplice ereditarietà delle classi. È anche possibile sostituire le classi del nucleo di symfony modificando le impostazioni di fabbrica. Una volta si è scrita una estensione, si può facilmente pacchettizzarla come plug-in, in modo che possa essere riutilizzata in altre applicazioni, o da altri utenti di symfony.
+A volte è necessario modificare il comportamento di symfony. Può accadere di dover modificare il modo in cui una certa classe si comporta o aggiungere delle caratteristiche personalizzate e ciò avverrà inevitabilmente perché ogni cliente ha esigenze specifiche che nessun framework può prevedere. In realtà, questa situazione è così comune che symfony fornisce un meccanismo per estendere classi esistenti in fase di runtime, al di là della semplice ereditarietà delle classi. È anche possibile sostituire le classi del nucleo di symfony modificando le impostazioni di fabbrica. Una volta si è scrita una estensione, si può facilmente pacchettizzarla come plugin, in modo che possa essere riutilizzata in altre applicazioni, o da altri utenti di symfony.
 
 Eventi
 ------
@@ -478,7 +478,7 @@ Listato 17-15 - Attivazione del modulo di un plugin, in `frontend/config/setting
       .settings:
         enabled_modules:  [default, sfMyPluginModule]
 
-Questo per evitare una situazione in cui il modulo di un plugin è erroneamente reso disponibile per una applicazione che non lo richiede, che potrebbe aprire un buco nella sicurezza. Pensiamo a un plug-in che fornisce i moduli `frontend` e `backend`. Sarà necessario abilitare il modulo `frontend` solo nell'applicazione `frontend` e il modulo `backend` solo nell'applicazione `backend`. Questo è il motivo per cui i moduli dei plug-in, nella modalità predefinita non sono attivati.
+Questo per evitare una situazione in cui il modulo di un plugin è erroneamente reso disponibile per una applicazione che non lo richiede, che potrebbe aprire un buco nella sicurezza. Pensiamo a un plugin che fornisce i moduli `frontend` e `backend`. Sarà necessario abilitare il modulo `frontend` solo nell'applicazione `frontend` e il modulo `backend` solo nell'applicazione `backend`. Questo è il motivo per cui i moduli dei plugin, nella modalità predefinita non sono attivati.
 
 >**TIP**
 >Il modulo default è l'unico modulo che viene abilitato in modalità predefinita. In realtà non è un vero modulo di plugin, perché risiede nel framework, in `sfConfig::get('sf_symfony_lib_dir')/controller/default/`. È il modulo che fornisce le pagine di congratulazioni e le pagine di errore predefinite per gli errori 404 e la richiesta credenziali. Se non si desidera utilizzare le pagine predefinite di symfony, è sufficiente rimuovere il modulo dall'impostazione `enabled_modules`.
@@ -560,7 +560,7 @@ Listato 17-18 - La strutura dei file di un plugin
 
 I plugin possono contenere molte cose. Il loro contenuto è automaticamente preso in considerazione dall'applicazione in fase di runtime e quando si chiamano i task tramite riga di comando. Ma perché i plugin funzionino correttamente, è necessario rispettare alcune convenzioni:
 
-  * Gli schemi per il database vengono rilevati dai task `propel-`. Quando nel proprio progetto si chiamano `propel:build --classes` o `doctrine:build --classes`, si ricreano i modelli del progetto e con esso tutti i modelli dei plug-in. Si noti che lo schema di un plugin Propel deve sempre avere un attributo package sotto forma di `plugins.nomePlugin`. `lib.model`, come mostrato nel listato 17-19. Se si utilizza Doctrine, il task di genererà automaticamente le classi nella cartella dei plugin.
+  * Gli schemi per il database vengono rilevati dai task `propel-`. Quando nel proprio progetto si chiamano `propel:build --classes` o `doctrine:build --classes`, si ricreano i modelli del progetto e con esso tutti i modelli dei plugin. Si noti che lo schema di un plugin Propel deve sempre avere un attributo package sotto forma di `plugins.nomePlugin`. `lib.model`, come mostrato nel listato 17-19. Se si utilizza Doctrine, il task di genererà automaticamente le classi nella cartella dei plugin.
 
 Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin, in `mioPlugin/config/schema.yml`
 
@@ -572,15 +572,15 @@ Listato 17-19 - Esempio della dichiarazione di uno schema di Propel in un plugin
           name:           { type: varchar, size: 255, index: unique }
           ...
 
-  * La configurazione del plug-in deve essere presente nella classe di configurazione del plug-in (`NomePluginConfiguration.class.php`). Questo file viene eseguito dopo la configurazione dell'applicazione e del progetto, in modo da symfony a quel punto sia già inizializzato. È possibile utilizzare questo file, per esempio, per estendere classi esistenti con ascoltatori di eventi e comportamenti.
+  * La configurazione del plugin deve essere presente nella classe di configurazione del plugin (`NomePluginConfiguration.class.php`). Questo file viene eseguito dopo la configurazione dell'applicazione e del progetto, in modo da symfony a quel punto sia già inizializzato. È possibile utilizzare questo file, per esempio, per estendere classi esistenti con ascoltatori di eventi e comportamenti.
   * I file con le fixture che si trovano nella cartella `data/fixtures/` del plugin vengono analizzati dai task `propel:data-load` o `doctrine:data-load`.
   * Le classi personalizzate sono autocaricate proprio come quelle che si mettono nelle cartelle `lib/` del proprio progetto.
   * Gli helper vengono trovati automaticamente quando si chiama `use_helper()` nei template. Essi devono essere in una sotto cartella `helper/` di una delle cartelle `lib/` del plugin.
-  * Se si usa Propel, le classi del modello in `myplugin/lib/model/` specializzano le classi del modello generate dal generatore di Propel (in `myplugin/lib/model/om/` and `myplugin/lib/model/map/`) . Essi sono, ovviamente, caricate automaticamente. Bisogna essere a conoscenza che non è possibile sovrascrivere le classi del modello generato di un plug-in, nelle cartelle del proprio progetto.
+  * Se si usa Propel, le classi del modello in `myplugin/lib/model/` specializzano le classi del modello generate dal generatore di Propel (in `myplugin/lib/model/om/` and `myplugin/lib/model/map/`) . Essi sono, ovviamente, caricate automaticamente. Bisogna essere a conoscenza che non è possibile sovrascrivere le classi del modello generato di un plugin, nelle cartelle del proprio progetto.
   * Se si usa Doctrine, l'ORM genera le classi base dei plugin in `myplugin/lib/model/Plugin*. class.php` e le classi reali in `lib/model/myplugin/`. Questo significa che si possono sovrascrivere facilmente le classi del modello nella propria applicazione.
-  * I task sono immediatamente disponibili per la riga di comando di symfony non appena il plug-in viene installato. Un plugin può aggiungere nuovi task o sovrascriverne uno esistente. È buona pratica usare il nome del plugin come spazio dei nomi per il task. Digitare `php symfony` per visualizzare l'elenco dei task disponibili, inclusi quelli aggiunti dai plugin.
+  * I task sono immediatamente disponibili per la riga di comando di symfony non appena il plugin viene installato. Un plugin può aggiungere nuovi task o sovrascriverne uno esistente. È buona pratica usare il nome del plugin come spazio dei nomi per il task. Digitare `php symfony` per visualizzare l'elenco dei task disponibili, inclusi quelli aggiunti dai plugin.
   * I moduli forniscono nuove azioni accessibili dall'esterno, a condizione che li si dichiari impostandoli in `enabled_modules` nell'applicazione.
-  * Le risorse web (immagini, script, fogli di stile, ecc) sono messe a disposizione del server. Quando si installa un plug-in tramite la riga di comando, symfony crea un link simbolico alla cartella `web/` del progetto, se il sistema lo consente, o copia il contenuto della cartella `web/` del modulo nel progetto. Se il plugin è installato da un archivio o un repository di controllo della versione, è necessario copiare la cartella `web/` del plugin a mano (come dovrebbe indicare il file `README` incluso nel plug-in).
+  * Le risorse web (immagini, script, fogli di stile, ecc) sono messe a disposizione del server. Quando si installa un plugin tramite la riga di comando, symfony crea un link simbolico alla cartella `web/` del progetto, se il sistema lo consente, o copia il contenuto della cartella `web/` del modulo nel progetto. Se il plugin è installato da un archivio o un repository di controllo della versione, è necessario copiare la cartella `web/` del plugin a mano (come dovrebbe indicare il file `README` incluso nel plugin).
 		  
 
 
@@ -616,7 +616,7 @@ In generale, tutta la configurazione che dovrebbe finire in uno dei file di conf
 
 #### Personalizzare un plugin per una applicazione
 
-Ogni volta che si desidera personalizzare un plug-in, non modificare mai il codice che si trova nella cartella `plugins/`. Se lo si fa, quando si aggiorna il plugin si perderanno tutte le modifiche. Per esigenze di personalizzazione, i plugin forniscono impostazioni personalizzate e supportano la sovrascrittura del codice.
+Ogni volta che si desidera personalizzare un plugin, non modificare mai il codice che si trova nella cartella `plugins/`. Se lo si fa, quando si aggiorna il plugin si perderanno tutte le modifiche. Per esigenze di personalizzazione, i plugin forniscono impostazioni personalizzate e supportano la sovrascrittura del codice.
 
 I plugin ben progettati permettono di usare impostazioni che possono essere modificate nel file `app.yml` dell'applicazione, come dimostra il listato 17-20.
 
@@ -624,7 +624,7 @@ Listato 17-20 - Personalizzazione di un plugin che usa la configurazione dell'ap
 
     [php]
     // esempio di codice del plugin
-    $foo = sfConfig::get('app_my_plugin_foo', 'bar');
+    $foo = sfConfig::get('app_mio_plugin_foo', 'bar');
 
     // Cambiare il valore di 'foo' predefinito ('bar') nel file app.yml dell'applicazione
     all:
@@ -640,8 +640,8 @@ D'altra parte, se un plugin vuole mettere a disposizione un modulo che abbia la 
 Listato 17-21 - Personalizzare l'azione di un plugin
 
     [php]
-    // In mioPlugin/modules/mymodule/lib/mioPluginmymoduleActions.class.php
-    class mioPluginmymoduleActions extends sfActions
+    // In mioPlugin/modules/mymodule/lib/mioPluginMioModuloeActions.class.php
+    class mioPluginMioModuloActions extends sfActions
     {
       public function executeIndex()
       {
@@ -649,17 +649,17 @@ Listato 17-21 - Personalizzare l'azione di un plugin
       }
     }
 
-    // In mioPlugin/modules/mymodule/actions/actions.class.php
+    // In mioPlugin/modules/miomodulo/actions/actions.class.php
 
-    require_once dirname(__FILE__).'/../lib/mioPluginmymoduleActions.class.php';
+    require_once dirname(__FILE__).'/../lib/mioPluginMioModuloActions.class.php';
 
-    class mymoduleActions extends mioPluginmymoduleActions
+    class mioModuloActions extends mioPluginiMioModuloActions
     {
       // Niente
     }
 
-    // In frontend/modules/mymodule/actions/actions.class.php
-    class mymoduleActions extends mioPluginmymoduleActions
+    // In frontend/modules/miomodulo/actions/actions.class.php
+    class miomoduloActions extends mioPluginiMioModuloActions
     {
       public function executeIndex()
       {
@@ -891,11 +891,11 @@ Nel tag `<contents>` bisogna descrivere la struttura dei file del plugin. In que
 
 #### Dipendenze del plugin
 
-I plug-in sono progettati per funzionare con un dato insieme di versioni di PHP, PEAR, symfony, pacchetti PEAR, o altri plugin. Dichiarare queste dipendenze nel tag <dependencies>` chiede a PEAR di verificare che i pacchetti richiesti siano già installati e di sollevare un'eccezione in caso contrario.
+I plugin sono progettati per funzionare con un dato insieme di versioni di PHP, PEAR, symfony, pacchetti PEAR, o altri plugin. Dichiarare queste dipendenze nel tag <dependencies>` chiede a PEAR di verificare che i pacchetti richiesti siano già installati e di sollevare un'eccezione in caso contrario.
 
 È sempre necessario dichiarare le dipendenze da PHP, PEAR e symfony, almeno quelle corrispondenti alla propria installazione, come requisito minimo. Se non si sa cosa mettere, aggiungere un requisito per PHP 5.2.4, PEAR 1.4 e symfony 1.3.
 
-Si raccomanda inoltre di aggiungere un numero massimo di versione symfony per ogni plugin. Ciò causerà un messaggio di errore quando si tenta di utilizzare un plugin con una versione più avanzata del framework e questo obbligherà l'autore del plugin ad assicurarsi che il plug-in funzioni correttamente con questa versione prima del nuovo rilascio. È meglio avere una segnalazione e scaricare un aggiornamento piuttosto che avere un plugin che fallisce silenziosamente.
+Si raccomanda inoltre di aggiungere un numero massimo di versione symfony per ogni plugin. Ciò causerà un messaggio di errore quando si tenta di utilizzare un plugin con una versione più avanzata del framework e questo obbligherà l'autore del plugin ad assicurarsi che il plugin funzioni correttamente con questa versione prima del nuovo rilascio. È meglio avere una segnalazione e scaricare un aggiornamento piuttosto che avere un plugin che fallisce silenziosamente.
 
 Se si specificano plugin come dipendenze, gli utenti saranno in grado di installare il plugin e tutte le sue dipendenze con un singolo comando:
 
