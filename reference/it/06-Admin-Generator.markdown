@@ -596,9 +596,9 @@ da visualizzare nell'elenco.
 
 ### ~`table_method`~
 
-*Valore predefinito*: `doSelect`
+*Valore predefinito*: `null`
 
-L'opzione `table_method` definisce il metodo da chiamare per recuperare gli oggetti
+L'opzione `table_method` definisce un metodo da chiamare per recuperare gli oggetti
 da visualizzare nell'elenco.
 
 >**CAUTION**
