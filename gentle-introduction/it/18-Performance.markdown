@@ -26,7 +26,7 @@ D'altro canto ci si deve assicurare di aver disattivato qualsiasi strumento di d
 -
 
 >**TIP**
->Quando un server non è abbastanza è sempre possibile aggiungerne un secondo e utilizzare un sistema di bilanciamento del carico. Ammesso che la cartella `uploads/` sia condivisa tra le macchine e si utilizzi il database per lo storage delle sessioni, symfony risponderà allo stesso modo in un'architettura bilanciata.
+>Quando un server non basta, è sempre possibile aggiungerne un secondo e utilizzare un sistema di bilanciamento del carico. Ammesso che la cartella `uploads/` sia condivisa tra le macchine e si utilizzi il database per lo storage delle sessioni, symfony risponderà allo stesso modo in un'architettura bilanciata.
 
 Ottimizzare il modello
 ----------------------
@@ -46,7 +46,7 @@ Se l'intera applicazione non richiede l'utilizzo dello strato del modello è pos
         
 #### Miglioramenti di Propel
 
-Le classi generate del modello (in `lib/model/om/`) sono già ottimizzate non contengono commenti, beneficiano del sistema di auto-caricamento. Fare affidamento sull'auto-caricamento invece che sull'inclusione manuale dei file significa che le classi vengono caricate solo se realmente necessarie. Quindi nel caso in cui una classe del modello non fosse necessario l'auto-caricamento permette di risparmiare tempo di esecuzione, cosa non permessa dal metodo alternativo in cui si utilizza `include`. Stesso discorso per i commenti, documentano l'utilizzo dei metodi generati ma allungano i file del modello risultando in un minore overhead su dischi lenti. Dato che i nomi dei metodi generati sono piuttosto espliciti, i commenti sono disabilitati per impostazione predefinita.
+Le classi generate del modello (in `lib/model/om/`) sono già ottimizzate: non contengono commenti e beneficiano del sistema di auto-caricamento. Fare affidamento sull'auto-caricamento invece che sull'inclusione manuale dei file significa che le classi vengono caricate solo se realmente necessarie. Quindi nel caso in cui una classe del modello non fosse necessario l'auto-caricamento permette di risparmiare tempo di esecuzione, cosa non permessa dal metodo alternativo in cui si utilizza `include`. Stesso discorso per i commenti, documentano l'utilizzo dei metodi generati ma allungano i file del modello risultando in un minore overhead su dischi lenti. Dato che i nomi dei metodi generati sono piuttosto espliciti, i commenti sono disabilitati per impostazione predefinita.
 
 Queste due ottimizzazioni sono specifiche per symfony, è possibile tornare sui valori predefiniti di Propel modificando due impostazioni nel file `propel.ini` come segue:
 
@@ -68,18 +68,18 @@ Listato 18-1 - Limitare il numero di risultati restituito da un Criteria
     [php]
     $c = new Criteria();
     $c->setOffset(10);  // Offset del primo record restituito
-    $c->setLimit(10);   // Numero di record restituito
+    $c->setLimit(10);   // Numero di record restituiti
     $articles = ArticlePeer::doSelect($c);
 
 Questo può essere automatizzato utilizzando un sistema di paginazione. L'oggetto `sfPropelPager` gestisce automaticamente l'offset e il limite di una query di Propel per idratare solamente gli oggetti richiesti da una pagina specifica.
 
-### Minimizzare il numero di query con le Join
+### Minimizzare il numero di query con le join
 
 Durante lo sviluppo di un'applicazione è bene tenere sott'occhio il numero delle query inviate al database da ogni singola richiesta. La web debug toolbar visualizza il numero delle query per ogni pagina, cliccando sulla piccola icona del database è possibile analizzare il codice SQL di tutte queste query. Se il numero delle query cresce in modo anomalo è giunto il momento di valutare l'utilizzo di alcune Join.
 
-Prima di analizzare i metodi di Join rivediamo cosa accade quando si itera su un array di oggetti usando un getter di Propel per ottenere i dettagli di una classe relazionata come nel listato 18-2. Questo esempio suppone che lo schema descriva una tabella `article` con una chiave esterna a una tabella `author`.
+Prima di analizzare i metodi di join rivediamo cosa accade quando si itera su un array di oggetti usando un getter di Propel per ottenere i dettagli di una classe relazionata come nel listato 18-2. Questo esempio suppone che lo schema descriva una tabella `article` con una chiave esterna a una tabella `author`.
 
-Listato 18-2 - Recuperare dettagli su un classe relazionata in un loop
+Listato 18-2 - Recuperare dettagli su un classe relazionata in un ciclo
 
     [php]
     // Nell'azione con Propel
@@ -114,7 +114,7 @@ Listato 18-3 - Getter su chiavi esterne richiedono una query a database
 
 Quindi la pagina del listato 18-2 richiederà in totale 11 query: una necessaria alla creazione dell'array di oggetti `Article` più le dieci query necessarie per creare un oggetto `Author` alla volta. Si tratta di molte query per la sola visualizzazione di una lista di articoli con i relativi autori.
 
-####Come ottimizzare le query con Propel
+#### Come ottimizzare le query con Propel
 
 Se si stesse usando semplice SQL non dovrebbe essere molto difficile ridurre il numero di query a una sola recuperando le colonne della tabella `article` e quelle della tabella `author` nello stesso momento. Questo è esattamente il comportamento del metodo `doSelectJoinAuthor()` della classe `ArticlePeer`. Questo metodo invoca una query leggermente più complessa della semplice chiamata `doSelect()`, le colonne aggiuntive del result set permettono a Propel di idratare sia gli oggetti `Article` che gli oggetti `Author` relazionati. Il codice del listato 18-4 mostra esattamente lo stesso risultato del listato 18-2 ma richiede una singola query al database invece che 11 risultando così più veloce.
 
@@ -192,7 +192,7 @@ Anche utilizzando Propel gli oggetti vengono già idratati, quindi non c'è ness
 Listato 18-6 - Preparare un array nell'azione è superfluo se già se ne possiede uno
 
     [php]
-    // In the action
+    // Nell'azione
     $articles = ArticlePeer::doSelect(new Criteria());
     $titles = array();
     foreach ($articles as $article)
@@ -201,7 +201,7 @@ Listato 18-6 - Preparare un array nell'azione è superfluo se già se ne possied
     }
     $this->titles = $titles;
 
-    // In the template
+    // Nel template
     <ul>
     <?php foreach ($titles as $title): ?>
       <li><?php echo $title ?></li>
@@ -213,12 +213,12 @@ Il problema relativo a questo codice è dato dal fatto che l'idratazione è già
 Listato 18-7 - Utilizzare un array di oggetti esonera dalla creazione di un array temporaneo
 
     [php]
-    // In the action
+    // Nell'azione
     $this->articles = ArticlePeer::doSelect(new Criteria());
-    // With Doctrine
+    // Con Doctrine
     $this->articles = Doctrine::getTable('Article')->findAll();
 
-    // In the template
+    // Nel template
     <ul>
     <?php foreach ($articles as $article): ?>
       <li><?php echo $article->getTitle() ?></li>
@@ -230,21 +230,21 @@ Se realmente si ha la necessità di costruire un array temporaneo perché è nec
 Listato 18-8 - Utilizzare un metodo custom per costruire un array temporaneo
 
     [php]
-    // In the action
+    // Nell'azione
     $this->articles = ArticlePeer::getArticleTitlesWithNbComments();
 
-    // In the template
+    // Nel template
     <ul>
     <?php foreach ($articles as $article): ?>
       <li><?php echo $article['title'] ?> (<?php echo $article['nb_comments'] ?> comments)</li>
     <?php endforeach; ?>
     </ul>
 
-Sta poi allo sviluppatore costruire un metodo `getArticleTitlesWithNbComments()` performante nel modello, magari bypassando l'intero strato di astrazione dell'ORM e del database.
+Sta poi allo sviluppatore costruire un metodo `getArticleTitlesWithNbComments()` performante nel modello, magari aggirando l'intero strato di astrazione dell'ORM e del database.
 
-### Bypassare l'ORM
+### Aggirare l'ORM
 
-Quando realmente non si ha bisogno di oggetti ma solo di alcune colonne da varie tabelle, come nell'esempio precedente, si possono creare metodi specifici nel modello per bypassare completamente lo strato dell'ORM. Si può interrogare il database direttamente con PDO, per esempio, e restituire un array costruito sulla base delle proprie esigenze. listato 18-9 illustra quest'idea.
+Quando realmente non si ha bisogno di oggetti ma solo di alcune colonne da varie tabelle, come nell'esempio precedente, si possono creare metodi specifici nel modello per aggirare completamente lo strato dell'ORM. Si può interrogare il database direttamente con PDO, per esempio, e restituire un array costruito sulla base delle proprie esigenze. listato 18-9 illustra quest'idea.
 
 Listato 18-9 - Accesso diretto tramite PDO per metodi ottimizzati nel modello, in `lib/model/ArticlePeer.php`
 
@@ -327,7 +327,7 @@ Dopo aver aggiunto un indice allo schema andrà aggiunto anche al database stess
 >**TIP**
 >L'utilizzo degli indici tende a rendere più veloci le query di tipo `SELECT` mentre saranno più lente `INSERT`, `UPDATE` e `DELETE`. Inoltre i motori dei database utilizzano solo un indice a interrogazione e lo scelgono a ogni query basandosi su un'euristica interna. Aggiungere un indice a volte può essere controproducente in termini di prestazioni, è bene quindi verificarne il risultato.
 
-Se non diversamente specificato, in symfony ogni richiesta utilizza una singola connessione al database che viene chiusa alla fine della richiesta stessa. Si possono attivare le connessioni persistenti al database per utilizzare un pool di connessioni che restino aperte tra una query e l'altra impostando il parametro `persistent: true` nel file `databases.yml` come mostrato nel listato 18-11.
+Se non diversamente specificato, in symfony ogni richiesta utilizza una singola connessione al database, che viene chiusa alla fine della richiesta stessa. Si possono attivare le connessioni persistenti al database per utilizzare un pool di connessioni che restino aperte tra una query e l'altra impostando il parametro `persistent: true` nel file `databases.yml` come mostrato nel listato 18-11.
 
 Listato 18-11 - Abilitare il supporto per le connessioni persistenti al database, in `config/databases.yml`
 
@@ -340,14 +340,14 @@ Listato 18-11 - Abilitare il supporto per le connessioni persistenti al database
           password:    password
           persistent:  true      # Utilizza connessioni persistenti
 
-Questo può o meno migliorare le prestazioni generali del database in funzione di molti fattori. La documentazione sull'argomento è abbondante e facilmente reperibile su Internet. Anche qui è opportuno testare le prestazioni dell'applicazione prima e dopo il cambio di questa impostazione per verificarne l'impatto.
+Questo può o meno migliorare le prestazioni generali del database, in funzione di molti fattori. La documentazione sull'argomento è abbondante e facilmente reperibile su Internet. Anche qui è opportuno testare le prestazioni dell'applicazione prima e dopo il cambio di questa impostazione, per verificarne l'impatto.
 
 >**SIDEBAR**
 >Suggerimenti specifici per MySQL
 >
 >Molte impostazioni della configurazione di MySQL, situate nel file my.cnf, possono alterare le prestazioni del database. Assicurarsi di aver letto la [documentazione online](http://dev.mysql.com/doc/refman/5.0/en/option-files.html) su questo argomento.
 >
->Uno degli strumenti offerti da MySQL è il log delle query lente. Tutte le interrogazioni SQL che richiedono più tempo in secondi di `long_query_time` per essere eseguite (questa è un'impostazione che può essere modificata in `my.cnf`) vengono registrate in un file che è abbastanza difficile da analizzare manualmente ma che grazie al comando `mysqldumpslow` genera un sommario molto utile. Si tratta di un ottimo strumento per individuare le query che necessitano di ottimizzazione.
+>Uno degli strumenti offerti da MySQL è il log delle query lente. Tutte le interrogazioni SQL che richiedono più tempo in secondi di `long_query_time` per essere eseguite (questa è un'impostazione che può essere modificata in `my.cnf`) vengono registrate in un file che è abbastanza difficile da analizzare manualmente, ma che grazie al comando `mysqldumpslow` genera un sommario molto utile. Si tratta di un ottimo strumento per individuare le query che necessitano di ottimizzazione.
 
 Mettere a punto la vista
 ------------------------
@@ -495,7 +495,7 @@ I benefici offerti dall'utilizzo dello storage SQLite per la cache dei template 
 
 ### Aggirare symfony
 
-Forse il modo migliore per velocizzare symfony è quello di aggirarlo completamente... questo è solo in parte per scherzo. Alcune pagine non cambiano e non hanno la necessità di essere riprocessate dal framework a ogni richiesta. La cache dei template viene già utilizzata per accelerare la consegna delle pagine, ma si basa ancora su symfony.
+Forse il modo migliore per velocizzare symfony è quello di aggirarlo completamente... questo è solo in parte uno scherzo. Alcune pagine non cambiano e non hanno la necessità di essere riprocessate dal framework a ogni richiesta. La cache dei template viene già utilizzata per accelerare la consegna delle pagine, ma si basa ancora su symfony.
 
 Un paio di suggerimenti descritti nel capitolo 12 permettono di aggirare symfony totalmente per alcune pagine. Il primo coinvolge l'utilizzo delle intestazioni HTTP 1.1 per chiedere ai proxy e ai browser client di mettere in cache le pagine in modo autonomo, così non le richiederanno la prossima volta che la pagina sarà necessaria. Il secondo suggerimento è la super fast cache (automatizzata dal plugin `sfSuperCachePlugin`), che consiste nel memorizzare una copia della risposta nella cartella `web/`, modificando le regole di rewrite per fare in modo che Apache cerchi una versione in cache prima di inoltrare la richiesta a symfony.
 
@@ -617,4 +617,4 @@ Per vedere le strategie di ottimizzazione utilizzate nel task basta dare un'occh
 
 Sommario
 --------
-Symfony è già un framework molto ottimizzato e in grado di gestire siti ad alto traffico senza problemi. Ma se davvero si avesse la necessità di ottimizzare ulteriormente le prestazioni della propria applicazione, mettere a punto la configurazione (che sia la configurazione del server, di PHP o le impostazioni dell'applicazione) può fornire un piccolo miglioramento. È consigliabile seguire le best practice per scrivere metodi del modello efficienti; e dato che il database rappresenta sempre un collo di bottiglia per le applicazioni web su di esso andrà riposta particolare attenzione. I template possono beneficiare anch'essi di alcune ottimizzazioni, ma i miglioramenti più evidenti arriveranno dall'utilizzo del sistema della cache. Infine non si esiti nell'analizzare plugin esistenti dato che alcuni di essi mettono a disposizione tecniche innovative per aumentare ulteriormente la consegna delle pagine web (`sfSuperCache`, `project:optimize`).
+Symfony è già un framework molto ottimizzato e in grado di gestire siti ad alto traffico senza problemi. Ma se davvero si avesse la necessità di ottimizzare ulteriormente le prestazioni della propria applicazione, mettere a punto la configurazione (che sia la configurazione del server, di PHP o le impostazioni dell'applicazione) può fornire un piccolo miglioramento. È consigliabile seguire le best practice per scrivere metodi del modello efficienti; e dato che il database rappresenta sempre un collo di bottiglia per le applicazioni web, su di esso andrà riposta particolare attenzione. I template possono beneficiare anch'essi di alcune ottimizzazioni, ma i miglioramenti più evidenti arriveranno dall'utilizzo del sistema della cache. Infine non si esiti nell'analizzare plugin esistenti, dato che alcuni di essi mettono a disposizione tecniche innovative per aumentare ulteriormente la consegna delle pagine web (`sfSuperCache`, `project:optimize`).

@@ -620,9 +620,9 @@ Figura 12-5 - Identificazione di un elemento in cache
 HTTP 1.1 e cache lato client
 ----------------------------
 
-Il protocollo HTTP 1.1 definisce una manciata di header che possono essere di grande utilizzo per incrementare la velocità di un applicazione controllando il sistema di cache del browser.
+Il protocollo HTTP 1.1 definisce una manciata di header che possono essere di grande utilizzo per incrementare la velocità di un'applicazione, controllando il sistema di cache del browser.
 
-Le specifiche HTTP 1.1 del World Wide Web Consortium (W3C, [http://www. w3.org/Protocols/rfc2616/rfc2616-sec14.html]) descrivono tali header in dettaglio. 
+Le specifiche HTTP 1.1 del World Wide Web Consortium (W3C, [http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html]) descrivono tali header in dettaglio. 
 Se un'azione ha la cache abilitata e usa l'opzione `with_layout`, può utilizzare uno o più meccanismi descritti in questa sezione.
 
 Anche se alcuni browser degli utenti che utilizzassero l'applicazione non supportassero HTTP 1.1, non vi è alcun rischio nell'utilizzo  delle funzionalità di cache del protocollo. 
