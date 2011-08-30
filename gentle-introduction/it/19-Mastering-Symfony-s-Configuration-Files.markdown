@@ -53,7 +53,7 @@ Figura 19-1 - Pagina di errore 404 predefinita
 
 Si possono sovrascrivere le pagine predefinite in due modi:
 
-  * Creando un proprio modulo default nella cartella `modules/` della propria applicaizone,
+  * Creando un proprio modulo default nella cartella `modules/` della propria applicazione,
     ridefinendo tutte le azioni definite in `settings.yml` (`index`, `error404`, `login`,
     `secure`, `disabled`) e i relativi template (`indexSuccess.php`, `error404Success.php`,
     `loginSuccess.php`, `secureSuccess.php`, `disabledSuccess.php`).
@@ -257,9 +257,9 @@ La vista non è l'unica parte a poter usare una cache. Sia il factory `routing` 
 come per la vista. Ad esempio, il listato 19-1 mostra come il routing usi la cache
 dei file per accelerare, ma la si può cambiare.
 
-#### Impostazioni di log
+#### Impostazioni dei log
 
-Ci sono due impostazioni di log (vedere capitolo 16) in `settings.yml`:
+Ci sono due impostazioni dei log (vedere capitolo 16) in `settings.yml`:
 
   * `error_reporting` specifica quali eventi inserire nei log di PHP. La sua impostazione
     predefinita è `E_PARSE | E_COMPILE_ERROR | E_ERROR | E_CORE_ERROR | E_USER_ERROR` per

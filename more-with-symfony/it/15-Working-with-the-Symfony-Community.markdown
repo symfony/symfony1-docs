@@ -230,7 +230,7 @@ contributo.
 
 Come già visto in precedenza, i forum e le mailinglist sono posti dove ricevere
 supporto. Ricevere risposte alle proprie domande, suggerimenti su come risolvere
-problemi, o feedback su un'approccio particolare utilizzato per il proprio
+problemi, o feedback su un approccio particolare utilizzato per il proprio
 progetto. Anche se si è appena iniziato a utilizzare symfony, man mano che
 viene accumulata dell'esperienza, si sarà in grado di rispondere alle domande più semplici
 di altri utenti agli inizi. Quando si diventerà più esperti si potranno rispondere a 

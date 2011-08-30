@@ -213,7 +213,7 @@ Tabella 17-1 - Gli eventi di symfony
 | application.log (notify)                       | numerose classi               | priority                    |
 | application.throw_exception (notifyUntil)      | sfException                   | -                           |
 | autoload.filter_config (filter)                | sfAutoloadConfigHandler       | -                           |
-| command.log (notify)                           | sfCommand* classes            | priority                    |
+| command.log (notify)                           | classi sfCommand*             | priority                    |
 | command.pre_command (notifyUntil)              | sfTask                        | arguments, options          |
 | command.post_command (notify)                  | sfTask                        | -                           |
 | command.filter_options (filter)                | sfTask                        | command_manager             |
@@ -358,7 +358,7 @@ Listato 17-8 - Sovrascrivere i factory
       // Codice qui
     }
 
-    // Dechiarare questa classe come factory per la request in factories.yml
+    // Dichiarare questa classe come factory per la request in factories.yml
     all:
       request:
         class: myRequest
@@ -440,7 +440,7 @@ Listato 17-12 - Installare un plugin con alcune opzioni
 
 #### Plugin come archivio di file
 
-Alcuni plugin escono come semplici archivi di file. Per installarli, basta scompattare l'archivio nella cartella `plugins/` del progetto. Se il plugin contiene una sotto cartella `web/`, non dimenticarsi di lanciare il comando `plugin:publish-assets` per creare il corrispondente link simbolico sotto la cartella principale `web/` come mostrato nel listato 17-13. In ultimo cancellare la cache.
+Alcuni plugin sono distribuiti come semplici archivi di file. Per installarli, basta scompattare l'archivio nella cartella `plugins/` del progetto. Se il plugin contiene una sotto cartella `web/`, non dimenticarsi di lanciare il comando `plugin:publish-assets` per creare il corrispondente link simbolico sotto la cartella principale `web/`, come mostrato nel listato 17-13. In ultimo cancellare la cache.
 
 Listato 17-13 - Installare un plugin da un archivio
 
@@ -454,7 +454,7 @@ Listato 17-13 - Installare un plugin da un archivio
 
 I plugin a volte hanno il loro repository per il controllo di versione del codice sorgente. Si può installarli facendo un semplice checkout nella cartella `plugins/`, ma questo può essere un problema se anche il progetto stesso e sotto controllo di versione.
 
-In alternativa, si può dichiarare il plugin come dipendenza esterna, così che ogni aggiornamento del codice sorgente del proprio progetto, aggiorni anche il codice sorgente del plugin. Ad esempio, Subversion memorizza le dipendenze esterne  nella proprietà `svn:externals`. Quindi si può aggiungere un plugin, modificando questa proprietà e aggiornando in seguito il proprio codice sorgente, come illustra il listato 17-14.
+In alternativa, si può dichiarare il plugin come dipendenza esterna, così che ogni aggiornamento del codice sorgente del proprio progetto aggiorni anche il codice sorgente del plugin. Ad esempio, Subversion memorizza le dipendenze esterne nella proprietà `svn:externals`. Quindi si può aggiungere un plugin modificando questa proprietà e aggiornando in seguito il proprio codice sorgente, come illustra il listato 17-14.
 
 Listato 17-14 - Installare un plugin da un repository per il versionamento del codice sorgente
 
@@ -466,7 +466,7 @@ Listato 17-14 - Installare un plugin da un repository per il versionamento del c
     $ php symfony cc
 
 >**NOTE**
->Se il plugin contiene una cartella `web/`, deve essere lanciato il comando di symfony `plugin:publish-assets` in modo da generare il corrispondente link simbolico sotto la cartella `web/` principale del progetto.
+>Se il plugin contiene una cartella `web/`, deve essere lanciato il comando di symfony `plugin:publish-assets`, in modo da generare il corrispondente link simbolico sotto la cartella `web/` principale del progetto.
 
 #### Attivare il modulo di un plugin
 

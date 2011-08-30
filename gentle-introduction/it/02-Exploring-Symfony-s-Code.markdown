@@ -364,7 +364,7 @@ che contengono solamente il codice del controllore specifico di una pagina.
 
 Uno dei grandi vantaggi nell'avere un front controller è che viene offerto un unico punto di accesso per tutto l'applicativo.
 Qualora si decidesse di rendere inaccessibile l'applicativo, basterà semplicemente modificare lo script del front controller.
-In un'applicativo sprovvisto di front controller, si dovrebbe intervenire su ogni singolo controllore per poter ottenere lo stesso effetto.
+In un applicativo sprovvisto di front controller, si dovrebbe intervenire su ogni singolo controllore per poter ottenere lo stesso effetto.
 
 #### Orientamento agli oggetti
 
