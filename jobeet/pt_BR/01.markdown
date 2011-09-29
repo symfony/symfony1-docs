@@ -383,61 +383,61 @@ diretório `apps/frontend/`:
 
 ### Permissões na Estrutura de Diretórios
 
-Before trying to access your newly created project, you need to set the write
-permissions on the `cache/` and `log/` directories to the appropriate levels, so
-that your web server can write to them:
+Antes de tentar acessar seu projeto recentemente criado, você precisar configurar as permissões
+de escrita nos diretórios `cache/` e `log/` para os níveis apropriados, assim
+o servidor web poderá escrever neles:
 
     $ chmod 777 cache/ log/
 
 >**SIDEBAR**
->Tips for People using a SCM Tool
+>Dicas para as pessoas usando uma ferramenta SCM
 >
->symfony only ever writes in two directories of a symfony project,
->`cache/` and `log/`. The content of these directories should be ignored
->by your SCM (by editing the `svn:ignore` property if you use Subversion
->for instance).
+>o symfony só escreve em dois diretórios de um projeto symfony,
+>`cache/` e `log/`. O conteúdo desses diretórios deve ser ignorado
+>pelo seu SCM (editando a propriedade `svn:ignore` se você estiver usando o Subversion
+>por exemplo).
 
-~Web Server~ Configuration: The ugly Way
-----------------------------------------
+Configuração do Servidor Web: O jeito feio
+------------------------------------------
 
-If you have created the project directory it somewhere under the web root
-directory of your web server, you can already access the project in a web
-browser.
+Se você já criou o diretório do projeto em algum lugar dentro do diretório web root
+do seu servidor web, você já pode acessar o projeto em um navegador.
 
-Of course, as there is no configuration, it is very fast to set up, but try to
-access the `config/databases.yml` file in your browser to understand the bad
-consequences of such a lazy attitude. If the user knows that your website is
-developed with symfony, he will have access to a lot of sensitive files.
+É claro que como ele não foi teve nenhuma configuração, é muito rápido para configurar, mas tente
+acessar o arquivo `config/databases.yml` no seu navegador para entender as consequências ruins de uma
+atitude tão preguiçosa. Se o usuário souber que o seu site é
+desenvolvido com o symfony, ele terá acesso a uma série de arquivos confidenciais.
 
-**Never ever use this setup on a production server**, and read the next section
-to learn how to configure your web server properly.
+**Nunca use essa configuração num servidor de produção**, e leia a seguinte seção para aprender
+como configurar seu servidor web adequadamente.
 
-Web Server Configuration: The secure Way
-----------------------------------------
 
-A good web practice is to put under the web root directory only the files that
-need to be accessed by a web browser, like stylesheets, JavaScripts and images.
-By default, we recommend to store these files under the `web/` sub-directory of
-a symfony project.
+Configuração do Servidor Web: O modo seguro
+-------------------------------------------
 
-If you have a look at this directory, you will find some sub-directories for web
-~assets|Assets~ (`css/` and `images/`) and the two front controller files. The
-front controllers are the only PHP files that need to be under the web root
-directory. All other PHP files can be hidden from the browser, which is a good
-idea as far as ~security|Security~ is concerned.
+Uma boa prática na web é colocar no seu diretório web root apenas os arquivos
+necessários para serem acessados pelo um navegador, como folhas de estilo, JavaScripts e imagens.
+Por padrão, nós recomendamos colocar esses arquivos dentro do sub-diretório `web/` do
+projeto symfony.
 
-### Web Server Configuration
+Se você der uma olhada nesse diretório, você vai encontrar alguns sub-diretórios para
+web assets (`css/` and `images/`) e dois arquivos front controller. Os 
+front controllers são os únicos arquivos PHP que precisam ficar dentro do diretório 
+web root. Todos os outros arquivos PHP podem ficar escondidos do navegador, o que é uma boa
+ideia contando que diz respeito à segurança.
 
-Now it is time to change your ~Apache~ configuration, to make the new project
-accessible to the world.
+### Configuração do Servidor Web
 
-Locate and open the `httpd.conf` configuration file and add the following
-configuration at the end:
+Agora é hora de mudar sua configuração do Apache para fazer com que o novo
+projeto fique acessível para o mundo.
 
-    # Be sure to only have this line once in your configuration
+Localize e abra o arquivo de configuração `httpd.conf` e adicione as seguintes
+configurações no final:
+
+    # Garanta que você só tem está linha uma vez na sua configuração
     NameVirtualHost 127.0.0.1:8080
 
-    # This is the configuration for your project
+    # Esta é a configuração para seu projeto
     Listen 127.0.0.1:8080
 
     <VirtualHost 127.0.0.1:8080>
@@ -455,79 +455,79 @@ configuration at the end:
       </Directory>
     </VirtualHost>
 
->**NOTE**
->The `/sf` ~alias|Alias (Apache)~ gives you access to images and javascript files needed
->to properly display ~default symfony pages|Default symfony Pages~ and the ~web debug toolbar~|Web Debug Toolbar.
+>**NOTA**
+>O alias do Apache `/sf` dá acesso as imagens e arquivos javascript necessários
+>para mostrar adequadamento as páginas padrões do symfony e a Web Debug Toolbar.
 >
->On ~Windows~, you need to replace the `Alias` line with something like:
+>No Windows, você precisa trocar a linha `Alias` por algo como:
 >
 >     Alias /sf "c:\dev\sfprojects\jobeet\lib\vendor\symfony\data\web\sf"
 >
->And `/home/sfprojects/jobeet/web` should be replaced with:
+>E `/home/sfprojects/jobeet/web` deve ser substituído por:
 >
 >     c:\dev\sfprojects\jobeet\web
 
-This configuration makes Apache listen to port `8080` on your machine, so,
-after restarting apache, the website will be accessible at the following URL:
+Está configuração faz o Apache escutar a porta `8080` da sua máquina, assim, 
+depois de reiniciar o Apache, o site estará acessível na seguinte URL:
 
-    http://~localhost~:8080/
+    http://localhost:8080/
 
-You can change `8080` to any number, but favour numbers greater than `1024` as
-they do not require administrator rights.
+Você pode mudar `8080` por qualquer número, mas são favoráveis números maiores que `1024` pois
+eles não necessitam privilégios de administrador
 
 >**SIDEBAR**
->Configure a dedicated ~Domain Name~
+>Configure um Domain Name dedicado
 >
->If you are an administrator on your machine, it is better to setup
->~virtual hosts|Virtual Host~ instead of adding a new port each time you start a new
->project. Instead of choosing a port and add a `Listen` statement,
->choose a domain name (for instance the real domain name with
->`.localhost` added at the end) and add a `ServerName` statement:
+>Se você for o administrador da sua máquina, é melhor configurar
+>um Virtual Host em vez de adicionar um nova porta cada vez que você iniciar um novo
+>projeto. Em vez de escolher a porta e adicionar uma declaração `Listen`,
+>escolha um domain name (por exemplo o domain name real com
+>`.localhost` adicionado no fim) e inclua uma declaração `ServerName`:
 >
->     # This is the configuration for your project
+>     # Esta é a configuração para seu projeto
 >     <VirtualHost 127.0.0.1:80>
 >       ServerName www.jobeet.com.localhost
->       <!-- same configuration as before -->
+>       <!-- mesma configuração de antes -->
 >     </VirtualHost>
 >
->The domain name `www.jobeet.com.localhost` used in the Apache configuration
->has to be declared locally. If you run a Linux system, it has to be
->done in the `/etc/hosts` file. If you run Windows XP, this file is
->located in the `C:\WINDOWS\system32\drivers\etc\` directory.
+>O domain name `www.jobeet.com.localhost` usado na configuração do Apache
+>tem que ser declarada localmente. Se você está num sistema Linux, isso precisa ser
+>feito no arquivo `/etc/hosts`. Se você roda Windows XP, este arquivo está
+>localizado no diretório `C:\WINDOWS\system32\drivers\etc\`.
 >
->Add in the following line:
+>Inclua a seguinte linha::
 >
 >     127.0.0.1 www.jobeet.com.localhost
 
-### Test the New Configuration
+### Teste a nova configuração
 
-Restart Apache, and check that you now have access to the new application by
-opening a browser and typing `http://localhost:8080/index.php/`, or
-`http://www.jobeet.com.localhost/index.php/` depending on the Apache
-configuration you chose in the previous section.
+Reinicie o Apache, e verifique se você tem acesso para a nova aplicação
+abrindo o navegador e digitando `http://localhost:8080/index.php/`, or
+`http://www.jobeet.com.localhost/index.php/` dependendo da configuração 
+do Apache que você escolheu na seção anterior.
 
-![Congratulations](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
+![Parabéns](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
 
->**TIP**
->If you have the Apache `mod_rewrite` module installed, you can remove
->the `index.php/` part of the URL. This is possible thanks to the
->rewriting rules configured in the `web/.htaccess` file.
+>**DICA**
+>Se você tiver o instalado o módulo do Apache `mod_rewrite`, você pode remover
+>a parte `index.php/` da URL. Isso é possível graças as
+>regras de rewriting configuradas no arquivo `web/.htaccess`.
 
-You should also try to access the application in the development environment
-(see the next section for more information about environments). Type in the
-following URL:
+Você deveria também tentar acessar a aplicação no ambiente de desenvolvimento
+(veja a próxima seção para mais informações sobre ambientes). Digite 
+a seguinte URL:
 
     http://www.jobeet.com.localhost/frontend_dev.php/
-
-The web debug toolbar should show in the top right corner, including small icons
-proving that your `sf/` alias configuration is correct.
+    
+A web debug toolbar deve ser mostrada no canto superior direito, incluindo pequenos ícones
+confirmando que sua configuração do alias `sf/` está correta.
 
 ![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
->**Note**
->The setup is a little different if you want to run symfony on an IIS server in
->a Windows environment. Find how to configure it in the
->[related tutorial](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
+>**Nota**
+>A configuração é um pouco diferente se você quiser rodar o symfony num servidor IIS
+>num ambiente Windows. Ache que configurá-lo neste
+>[tutorial relacionado](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
 
 The ~Environments~
 ------------------
