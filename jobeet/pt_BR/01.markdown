@@ -4,283 +4,281 @@ Dia 1: Iniciando o Projeto
 Introdução
 ------------
 
-O [symfony](http://www.symfony-project.org/) ~framework|Framework~ vem sendo
-projeto ~Open-Source~ por mais de quatro anos e se tornou um dos mais
+O [symfony](http://www.symfony-project.org/) vem sendo um
+projeto Open-Source por mais de quatro anos e se tornou um dos mais
 populares frameworks PHP graças aos seus ótimos recursos e excelente documentação.
 
-This book describes the creation of a web application with the symfony
-framework, step-by-step from the specifications to the implementation. It is
-targeted at beginners who want to learn symfony, understand how it works, and
-also learn about the best web development practices.
+Este livro descreve a criação de uma aplicação web com o symfony,
+passo-a-passo a partir das especificações até a implementação. Ele é direcionado
+para os iniciantes que querem aprender a usar o symfony, entender como ele funciona, e
+também aprender sobre as melhores práticas de desenvolvimento web.
 
-The application to be designed could have been yet another blog engine. But we
-want to use symfony on a useful project. The goal is to demonstrate that symfony
-can be used to develop professional applications with style and little effort.
+A aplicação a ser montada poderia ser outra relacionada a blog. Mas nós
+queremos usar o symfony num projeto útil. O objetivo é demonstrar que o symfony
+pode ser usado para desenvolver aplicações profissionais com estilo e pouco esforço.
 
-We will keep the content of the project secret for another day as we already
-have much for now. However, let's give it a name: **Jobeet**.
+Nós iremos manter o conteúdo do projeto secreto por mais um dia pois já
+temos bastante por enquanto. No entanto, vamos dara para ele um nome: **Jobeet**.
 
-Each day of this book is meant to last between one and two hours, and will
-be the occasion to learn symfony by coding a real website, from start to finish.
-Every day, new features will be added to the application, and we'll take
-advantage of this development to introduce you to new symfony functionalities as
-well as good practices in symfony web development.
+Cada dia desse livro é feito para durar entre uma e duas horas, e 
+será a oportunidade para aprender symfony programando um site de verdade, do início ao fim.
+Todo dia novas funcionalidades serão adicionadas à aplicação e nós
+vamos aproveitar esse desenvolvimento para apresentar você para tanto para os novos recursos do symfony
+quanto as melhores práticas no desenvolvimento web com symfony.
 
-This Book is different
+Este Livro é diferente
 ----------------------
 
-Remember the early days of PHP4. Ah, la [Belle
-Epoque](http://en.wikipedia.org/wiki/Belle_Époque)! PHP was one of the first
-languages dedicated to the web and one of the easiest to learn.
+Lembra dos tempos iniciais do PHP4. Ah, la [Belle
+Epoque](http://en.wikipedia.org/wiki/Belle_Époque)! PHP foi uma das primeiras
+linguagens dedicadas para a web e uma das mais fáceis de aprender.
 
-But as web technologies evolve at a very fast pace, web developers need to keep
-up with the latest best practices and tools. The best way to learn is of course
-by reading blogs, tutorials, and books. We have read a lot of these, be they
-written for PHP, Python, Java, Ruby, or Perl, and many of them fall short when
-the author starts giving snippets of codes as examples.
+Mas como as tecnologias web evoluem muito rápido, os desenvolvedores precisam
+se manter atualizados com as últimas melhores práticas e ferramentas. A melhor forma de aprender é com certeza
+lendo blogs, tutoriais e livros. Nós lemos um bocado desses, sejam escritos para
+PHP, Python, Java, Ruby or Perl, e muitos deles se mostram insuficientes quando
+o autor começa a fornecer exemplos de trechos de código.
 
-You are probably used to reading warnings like:
+Você provavelmente está acostumado a ler avisos do tipo:
 
-  "For a real application, don't forget to add validation and proper error handling."
+  "Numa aplicação real não esqueça de adicionar validação e tratamento de erros apropriado."
+  
+ou
 
-or
+  "A segurança é deixada como um exercício para o leitor."
+  
+ou
 
-  "Security is left as an exercise to the reader."
+  "Você terá, é claro, que escrever testes"
 
-or
+O quê? Essas coisas são um negócio sério. Elas talvez sejam a parte mais importante
+de qualquer pedaço de código. E, como um leitor, você foi deixado sozinho. Sem essas
+preocupações sendo analisadas, os exemplos se são muito menos úteis. Você não pode
+usá-los como um bom ponto de partida. Isso é péssimo. Por quê? Porque segurança, validação,
+tratamento de erros e testes, apenas listando alguns, zelam para um código correto.
 
-  "You will of course need to write tests."
+Neste livro você nunca irá ver declarações como essas pois nós vamos escrever testes,
+tratamento de erros, validação do código,  e ter certeza que nós desenvolvemos uma aplicação segura.
+Isso porque symfony é sobre programar, mas também sobre melhores práticas e como desenvolver
+aplicações profissionais para empresas. Nós podemos nós dar esse luxo porque o symfony
+provê todas essas ferramentas para programar esses aspectos facilmente e sem
+escrever muito código.
 
-What? These things are serious business. They are perhaps the most important
-part of any piece of code. And as a reader, you are left alone. Without these
-concerns taken into account, the examples are much less useful. You cannot use
-them as a good starting point. That's bad! Why? Because security, validation,
-error handling, and tests, just to name a few, take care to code right.
+Validação, tratamento de erros, segurança e testes são cidadões de primeira-classe no
+symfony, então isso não nos tomará muito tempo para explicações. Está é apenas uma das razões porque
+usar um framework para projetos "de verdade".
 
-In this book, you will never see statements like those as we will write tests,
-error handling, validation code, and be sure we develop a secure application.
-That's because symfony is about code, but also about best practices and how to
-develop professional applications for the enterprise. We will be able to afford
-this luxury because symfony provides all the tools needed to code these aspects
-easily without writing too much code.
+Todo o código que você ler neste livro é código que você poderá usar em um projeto real.
+Nós encorajamos que você copie e cole trechos de código ou mesmo roubar pedaços inteiros.
 
-Validation, error handling, security, and tests are first-class citizens in
-symfony, so it won't take us too long to explain. This is just one of many
-reasons why to use a framework for "real life" projects.
-
-All the code you will read in this book is code you could use for a real
-project. We encourage you to copy and paste snippets of code or steal whole
-chunks.
-
-What for Today?
+O Que Temos para Hoje?
 ---------------
 
-We won't write PHP code. But even without writing a single line of code, you
-will start understanding the benefits of using a framework like symfony, just by
-bootstrapping a new project.
+Nós não iremos escrever código PHP. Mas mesmo sem escrever uma única linha de código, você
+vai começar a entender os benefícios de usar um framework como o symfony, apenas por
+inicializar um novo projeto.
 
-The objective of this day is to setup the development environment and
-display a page of the application in a web browser. This includes installation
-of symfony, creation of an application, and web server configuration.
+O objetivo desse dia é configurar o ambiente de desenvolvimento e
+mostrar uma página da aplicação no seu navegador. Isso inclui a instalação
+do symfony, a criação da aplicação e a configuração do servidor web.
 
-As this book will mostly focus on the symfony framework, we will assume that you
-already have a solid knowledge of PHP 5 and Object Oriented programming.
+Como esse livro se focará principalmente no symfony framework, nós iremos assumir que você
+já tem um conhecimento sólido de PHP 5 e programação orientada a objetos.
 
-Prerequisites
+Pré-requisitos
 -------------
 
-Before installing symfony, you need to check that your computer has everything
-installed and configured correctly. Take the time to conscientiously read this
-day and follow all the steps required to check your configuration, as it may
-save your day further down the road.
+Antes de instalar o symfony, você precisa verificar se seu computador tem tudo
+instalado e configurado corretamente. Leve o tempo que for para ler conscientemente
+este dia e siga todos os passos necessários para validar sua sua configuração pois
+isso pode salvar sua pele mais para a frente.
 
-### Third-Party Software
+### Software de Terceiros
 
-First of all, you need to check that your computer has a friendly working
-environment for web development. At a minimum, you need a web server (Apache,
-for instance), a database engine (MySQL, PostgreSQL, SQLite, or any
-[PDO](http://www.php.net/PDO)-compatible database engine), and PHP 5.2.4 or
-later.
+Antes de tudo, você precisar verificar se seu computador tem um ambiente amigável de
+desenvolvimento web funcionando. No mínimo você precisa de um servidor web (Apache,
+por exemplo), um banco de dados (MySQL, PostgreSQL, SQLite, ou qualquer banco
+compatível com [PDO](http://www.php.net/PDO)) e PHP 5.2.4 ou posterior.
 
-### Command Line Interface
+### Interface de Linha de Comando
 
-The symfony framework comes bundled with a command line tool that automates a
-lot of work for you. If you are a Unix-like OS user, you will feel right at
-home. If you run a Windows system, it will also work fine, but you will just
-have to type a few commands at the `cmd` prompt.
+O symfony framework vem com uma ferrament de linha de comando que automatiza
+um monte de trabalho para você. Se você é um usúario de sistema operacional
+Unix-like vai se sentir em casa. Se você rodar um sistema Windows ele também funcionará bem,
+mas você só terá que digitar alguns comandos no prompt `cmd`.
 
->**Note**
->Unix shell commands can come in handy in a ~Windows~ environment.
->If you would like to use tools like `tar`, `gzip` or `grep` on Windows, you
->can install [Cygwin](http://cygwin.com/).
->The adventurous may also like to try Microsoft's
->[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx).
+>**Nota**
+>Os comandos do Unix shell podem ser úteis num ambiente Windows.
+>Se você gostaria de usar ferramentas como `tar`, `gzip` or `grep` no Windows, você
+>pode instalar o [Cygwin](http://cygwin.com/).
+>Os mais aventureiros podem gostar de tentar também o 
+>[Windows Services for Unix](http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx) da Microsoft.
 
-### ~PHP Configuration~
+### Configuração do PHP
 
-As PHP configurations can vary a lot from one OS to another, or even between
-different Linux distributions, you need to check that your PHP configuration
-meets the symfony minimum requirements.
+Como as configurações do PHP podem variar bastante de um SO para outro, ou mesmo entre
+diferentes distribuições do Linux, você precisa verificar se a sua configuração atende
+os requisitos mínimos do symfony.
 
-First, ensure that you have PHP 5.2.4 at a minimum installed by using the
-`phpinfo()` built-in function or by running `php -v` on the command line. Be
-aware that on some configurations, you might have two different PHP versions
-installed: one for the command line, and another for the web.
+Primeiro, assegure que você tenha pelo menos o PHP 5.2.4 instalado usando a funcão
+embutida `phpinfo()` or rodando `php -v` na linha de comando. Fique atento que em
+algumas configurações você pode ter instaladas duas versões diferentes do PHP: uma para
+a linha de comando e outra para a web.
 
-Then, download the symfony configuration checker script at the following URL:
+Então, faça o download do script symfony para verificar a configuração na seguinte URL:
 
     http://sf-to.org/1.4/check.php
 
-Save the script somewhere under your current web root directory. Launch the
-configuration checker script from the command line:
+Salve o script em algum lugar na raiz do seu diretório web atual. Inicie o 
+script pela linha de comando:
 
     $ php check_configuration.php
+    
+Se houver algum problema com sua configuração do PHP, a saída da comando
+dará dicas do que e como corrigi-lo.
 
-If there is a problem with your PHP configuration, the output of the command
-will give you hints on what to fix and how to fix it.
+Você deveria também executar o verificador a partir de um navegador e corrigir
+os problemas que possa descobrir. Isso se deve ao PHP tem um arquivo de configuração
+`php.ini` distinto para esses dois ambientes, com diferentes configurações.
 
-You should also execute the checker from a browser and fix the issues it might
-discover. That's because PHP can have a distinct `php.ini` configuration file
-for these two environments, with different settings.
+>**NOTA**
+>Não esqueça de remover posteriormente esse arquivo da raiz do seu diretório web.
 
->**NOTE**
->Don't forget to remove the file from your web root directory afterwards.
-
-Symfony ~Installation~
+Instalação do Symfony
 ----------------------
 
-### Initializing the Project Directory
+### Inicializando o Diretório do Projeto
 
-Before installing symfony, you first need to create a directory that will host
-all the files related to Jobeet:
+Antes de instalar o symfony, você precisa criar um diretório que vai hospedar
+todos os arquivos relacionados ao Jobeet:
 
     $ mkdir -p /home/sfprojects/jobeet
     $ cd /home/sfprojects/jobeet
 
-Or on Windows:
+Ou no Windows:
 
     c:\> mkdir c:\development\sfprojects\jobeet
     c:\> cd c:\development\sfprojects\jobeet
 
->**NOTE**
->Windows users are advised to run symfony and to setup their new project in a 
->path which contains no spaces. Avoid using the `Documents and Settings` 
->directory, including anywhere under `My Documents`.
+>**NOTA**
+>Os usuários de Windows são alertados que para rodar o symfony e configurar seu novo projeto em uma
+>pasta que não contenha espaços. Tente não usar o diretório `Documents and Settings` 
+>incluindo qualquer lugar dentro dos `Meus Documentos`.
 
 -
 
->**TIP**
->If you create the symfony project directory under the web root directory, you 
->won't need to configure your web server.  Of course, for production 
->environments, we strongly advise you to configure your web server as explained 
->in the web server configuration section.
+>**DICA**
+>Se você criar o diretório do projeto symfony dentro do seu web root, você
+>não precisará de configurar seu servidor web. É claro que ambientes
+>de produção, nós encorajamos fortemente que você configure seus servidor web como
+>explicado na seção configuração do servidor web.
 
-### Choosing the Symfony Version
+### Escolhendo a Versão do Symfony
 
-Now, you need to install symfony. As the symfony framework has several stable
-versions, you need to choose the one you want to install by reading the
-[installation page](http://www.symfony-project.org/installation) on the symfony
-website.
+Agora você precisa instalar o symfony. Como ele tem várias versões estáveis,
+você precisa escolher a que você quer lendo a 
+[página de instalação](http://www.symfony-project.org/installation) no
+site do symfony
 
-This book assumes you want to install symfony 1.3 or symfony 1.4.
+O livro supõe que você quer instalar a o symfony 1.3 ou 1.4.
 
-### Choosing the Symfony Installation Location
+### Escolhendo o Local para Instalar o Symfony
 
-You can install symfony globally on your machine, or embed it into each of your
-project. The latter is the recommended one as projects will then be totally
-independent from each others. Upgrading your locally installed symfony won't
-break some of your projects unexpectedly. It means you will be able to have
-projects on different versions of symfony, and upgrade them one at a time as you
-see fit.
+Você pode instalar o symfony globalmente na sua máquina, ou incomporá-lo em cada um dos seus
+projetos. A última opção é recomendada pois seus projetos ficarão serão totalmente
+independentes dos outros. Atualizar seu symfony instalado localmente não irá
+quebrar um dos seus projetos de forma inesperada. Isso significa que você poderá possuir
+projetos com diferentes versões do symfony e atualizar um de cada vez como você precisar.
 
-As a best practice, many people install the symfony framework files in the `lib/vendor` project directory. So, first, create this directory:
+Como uma melhor prática muitas pessoas instalam os arquivos do symfony framework no diretório `lib/vendor` do projeto.
+Então, primeiramente, crie esse diretório:
 
     $ mkdir -p lib/vendor
 
-### Installing Symfony
+### Instalando o Symfony
 
-#### Installing from an Archive
+#### Instalando a partir de um Arquivo
 
-The easiest way to install symfony is to download the archive for the version
-you choose from the symfony website. Go to the installation page for the version
-you have just chosen, symfony
-[1.4](http://www.symfony-project.org/installation/1_4) for instance.
+O modo mais fácil e instalar o symfony é baixar o arquivo da versão que
+você escolheu do site do symfony. Vá para a página de instalação para a versão
+escolhida, symfony
+[1.4](http://www.symfony-project.org/installation/1_4) por exemplo.
 
-Under the "**Source Download**" section, you will find the archive in `.tgz` or
-in `.zip` format. Download the archive, put it under the freshly created
-`lib/vendor/` directory, un-archive it, and rename the directory to `symfony`:
+Embaixo da seção "**Source Download**", você vai encontrar o arquivo nos formatos `.tgz` ou
+`.zip`. Faça o download do arquivo, coloque dentro do seu diretório recém-criado `lib/vendor`,
+descompacte-o e renomei o diretório para `symfony`:
 
     $ cd lib/vendor
     $ tar zxpf symfony-1.4.0.tgz
     $ mv symfony-1.4.0 symfony
     $ rm symfony-1.4.0.tgz
 
-Under Windows, unzipping the zip file can be achieved using Windows Explorer.
-After you rename the directory to `symfony`, there should be a directory
-structure similar to `c:\dev\sfprojects\jobeet\lib\vendor\symfony`.
+No Windows, você pode descompactar o arquivo zip pelo Windows Explorer.
+Depois de renomear o diretório para `symfony`, deve existir uma estrutura
+de diretório parecida com `c:\dev\sfprojects\jobeet\lib\vendor\symfony`.
 
-#### Installing from Subversion (recommended)
+#### Instalando a partir do Subversion (recomendado)
 
-If you use Subversion, it is even better to use the `svn:externals` property to
-embed symfony into your project in the `lib/vendor/` directory:
+Se você usa o Subversion, é até melhor usar a propriedade `svn:externals` para incorporar
+o symfony no seu projeto no diretório `lib/vendor`:
 
     $ svn pe svn:externals lib/vendor/
 
->**NOTE**
->Importing your project in a new Subversion repository is explained at the end 
->of this day.
+>**NOTa**
+>A importação do seu projeto em um novo repositório Subversion é explicado no fim
+>deste dia.
 
-If everything goes well, this command will run your favorite editor to give you
-the opportunity to configure the external Subversion sources.
+Se tudo correr bem, esse comando irá abrir seu editor preferido e dar a você
+a oportunidade de configurar as fontes externas do Subversion.
 
->**TIP**
->On Windows, you can use tools like [TortoiseSVN](http://tortoisesvn.net/)
->to do everything without the need to use the console.
+>**DICA**
+>No Windows você pode usar ferramentas como o [TortoiseSVN](http://tortoisesvn.net/)
+>para fazer tudo sem usar o console.
 
-If you are conservative, tie your project to a specific release (a subversion
-tag):
+Se você for conservador, aponte seu projeto para um release específico (uma tag
+do subversion):
 
     symfony http://svn.symfony-project.com/tags/RELEASE_1_4_0
 
-Whenever a new release comes out (as announced on the symfony
-[blog](http://www.symfony-project.org/blog/)), you will need to change the URL
-to the new version.
+Sempre que um novo release for lançado (como anunciado no
+[blog](http://www.symfony-project.org/blog/) do symfony), você terá que mudar a URL
+para a nova versão.
 
-If you want to go the bleeding-edge route, use the 1.4 branch:
+Se você quiser quiser o caminho mais instável, use o branch 1.4:
 
     symfony http://svn.symfony-project.com/branches/1.4/
 
-Using the branch makes your project benefits from the bug fixes automatically
-whenever you run a `svn update`.
+Usando esse branch faz com que seu projeto se beneficie da correção de bugs automaticamente
+sempre que você rodar um `svn update`.
 
-#### Installation Verification
+#### Verificação da Instalação
 
-Now that symfony is installed, check that everything is working by using the
-symfony command line to display the symfony version (note the capital `V`):
+Agora que o symfony está instalado, verifique que tudo está funcionando usando a 
+linha de comando do symfony para mostrar a versão do symfone (note que é um `V` maiúsculo):
 
     $ cd ../..
     $ php lib/vendor/symfony/data/bin/symfony -V
 
-On Windows:
+No Windows:
 
     c:\> cd ..\..
     c:\> php lib\vendor\symfony\data\bin\symfony -V
 
->**TIP**
->If you are curious about what this command line tool can do for you, type
->`symfony` to list the available options and tasks:
+>**DICA**
+>Se você estiver curioso sobre o que esta ferramenta de linha de comando pode fazer por você, digite
+>`symfony` para listar as opções e tarefas disponíveis:
 >
 >     $ php lib/vendor/symfony/data/bin/symfony
 >
->On Windows:
+>No Windows:
 >
 >     c:\> php lib\vendor\symfony\data\bin\symfony
 >
->The symfony command line is the developer's best friend. It provides a lot of
->utilities that improve your productivity for day-to-day activities like
->cleaning the cache, generating code, and much more.
+>A linha de comando do symfony é a melhor amiga do desenvolvedor. Ela provê vários
+>utilitários que aumentam sua produtividade para as atividades do dia-a-dia como
+>limpar o cache, geração de código e muito mais.
 
-Project Setup
+Configuraçao do Projeto
 -------------
 
 In symfony, **~applications|Applications~** sharing the same data model are
