@@ -86,7 +86,7 @@ Como esse livro se focará principalmente no symfony framework, nós iremos assu
 já tem um conhecimento sólido de PHP 5 e programação orientada a objetos.
 
 Pré-requisitos
--------------s
+--------------
 
 Antes de instalar o symfony, você precisa verificar se seu computador tem tudo
 instalado e configurado corretamente. Leve o tempo que for para ler conscientemente
@@ -133,6 +133,8 @@ Salve o script em algum lugar na raiz do seu diretório web atual. Inicie o
 script pela linha de comando:
 
     $ php check_configuration.php
+    
+![Confirmar a Configuracão](http://www.symfony-project.org/images/jobeet/1_4/01/configuration_check.png)
     
 Se houver algum problema com sua configuração do PHP, a saída da comando
 dará dicas do que e como corrigi-lo.
@@ -224,7 +226,7 @@ o symfony no seu projeto no diretório `lib/vendor`:
 
     $ svn pe svn:externals lib/vendor/
 
->**NOTa**
+>**NOTA**
 >A importação do seu projeto em um novo repositório Subversion é explicado no fim
 >deste dia.
 
@@ -310,7 +312,7 @@ A tarefa `generate:project` gera a estrutura padrão de diretórios e arquivos n
 para um projeto symfony.
 
  | Diretório   | Descrição
- | ----------- | ------------------------------------------------
+ | ----------- | ----------------------------------
  | `apps/`     | Armazena todas as aplicações do projeto
  | `cache/`    | Os arquivos armazenados em cache pelo framework
  | `config/`   | Os arquivos de configuração do projeto
@@ -355,7 +357,7 @@ criada a estrutura padrão de diretórios necessária para a aplicação dentro 
 diretório `apps/frontend/`:
 
  | Diretório    | Descrição
- | ------------ | ----------------------------------------
+ | ------------ | ----------------------------------
  | `config/`    | Os arquivos de configuração da aplicação
  | `lib/`       | As classes e bibliotecas da aplicação
  | `modules/`   | O código da aplicação (MVC)
@@ -522,61 +524,62 @@ a seguinte URL:
 A web debug toolbar deve ser mostrada no canto superior direito, incluindo pequenos ícones
 confirmando que sua configuração do alias `sf/` está correta.
 
-![web debug toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
+![web debug
+toolbar](http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png)
 
 >**Nota**
 >A configuração é um pouco diferente se você quiser rodar o symfony num servidor IIS
->num ambiente Windows. Ache que configurá-lo neste
->[tutorial relacionado](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
+>num ambiente Windows. Ache como configurá-lo neste
+>[tutorial](http://www.symfony-project.com/cookbook/1_0/web_server_iis).
 
-The ~Environments~
-------------------
+Os Ambientes
+------------
 
-If you have a look at the `web/` directory, you will find two PHP files:
-`index.php` and `frontend_dev.php`. These files are called **front
-controllers**; all requests to the application are made through them. But why do
-we have two ~front controllers|Front Controller~ for each application?
+Se você der uma olhada no diretório `web/`, encontrará dois arquivos PHP:
+`index.php` e `frontend_dev.php`. Esses arquivos são chamados **front
+controllers**; todas as requisições para a aplicação são feitas através deles. Mas por que
+nós temos dois front controllers para cada aplicação?
 
-Both files point to the same application but for different **environments**.
-When you develop an application, except if you develop directly on the
-production server, you need several environments:
+Ambos arquivos apontam para a mesma aplicação mas por diferentes **ambientes**.
+Quando você desenvolve uma aplicação, exceto se você desenvolve diretamente no
+servidor de produção, você precisa de alguns ambientes:
 
-  * The **development environment**: This is the environment used by **web
-    developers** when they work on the application to add new features, fix
+  * O **ambiente de desenvolvimento**: Esse é o ambiente usado pelos **desenvolvedores
+    web** quando eles trabalham na aplicação para adicionar funcionalidades, corrigir
     bugs, ...
+    
+  * O **ambiente de teste**: Esse ambiente é usado para automaticamente testar
+    a aplicação.
 
-  * The **test environment**: This environment is used to automatically test
-    the application.
+  * O **ambiente de staging**: Esse ambiente é usado pelo **cliente**
+    para testar a aplicação e reportar bugs e funcionalidades ausentes.
 
-  * The **staging environment**: This environment is used by the **customer**
-    to test the application and report bugs or missing features.
+  * O **ambiente de produção**: Esse é o ambiente que os **usuários finais**
+    interagem.
 
-  * The **production environment**: This is the environment **end users**
-    interact with.
+O que torna um ambiente único? No ambiente de desenvolvimento, por exemplo,
+a aplicação precisa de logar todos os detalhes de uma requisição para facilitar o debug,
+mas o sistema de cache precisa ser desabilitado pois todas as mudanças feitas no código
+precisam ser levadas em conta de imediato. Assim o ambiente de desenvolvimento precisa
+ser otimizado para o desenvolvedor. O melhor exemplo certamente é quando acontece
+um Exception Handling. Para ajudar o desenvolvedor a debugar o problema rapidamente, o
+symfony mostra a excepton com toda a informação que ele consegue sobre a requisição atual
+diretamente no navegador:
 
-What makes an environment unique? In the development environment for instance,
-the application needs to log all the details of a request to ease debugging, but
-the cache system must be disabled as all changes made to the code must be taken
-into account right away. So, the development environment must be optimized for
-the developer. The best example is certainly when an ~exception|Exception
-Handling~ occurs. To help the developer debug the issue faster, symfony displays
-the exception with all the information it has about the current request right
-into the browser:
+![Uma exception no ambiente de
+desenvolvimento](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
 
-![An exception in the dev
-environment](http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png)
+Mas no ambiente de produção, a camada de cache precisa ser habilitada e, é claro,
+a aplicação precisa mostrar mensagens de erro customizadas em vez de exceptions
+cruas. Por isso o ambiente de produção precisa ser otimizado para performance e a
+experiência de uso.
 
-But on the production environment, the cache layer must be activated and, of
-course, the application must display customized error messages instead of raw
-exceptions. So, the production environment must be optimized for performance and
-the user experience.
+![Uma exception no ambiente de
+produção](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
 
-![An exception in the prod
-environment](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png)
-
->**TIP**
->If you open the front controller files, you will see that their content is
->the same except for the environment setting:
+>**DICA**
+>Se você abrir os arquivos de front controller, você verá que seu conteúdo são
+>os mesmos, exceto pela configuração do ambiente:
 >
 >     [php]
 >     // web/index.php
@@ -587,11 +590,11 @@ environment](http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.
 >     $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
 >     sfContext::createInstance($configuration)->dispatch();
 
-The web debug toolbar is also a great example of the usage of environment. It is
-present on all pages in the development environment and gives you access to a
-lot of information by clicking on the different tabs: the current application
-configuration, the logs for the current request, the SQL statements executed on
-the database engine, memory information, and time information.
+A web debug toolbar também é um excelente exemplo do uso de um ambiente. Ela está
+presente em todas as páginas no ambiente de desenvolvimento e fornece acesso a
+várias informações clicando nas diferentes abas: configuração da aplicação atual,
+os logs da requisição atual, os comandos SQL executados no banco de dados,
+informação sobre a memória e sobre o tempo.
 
 ~Subversion~
 ------------
