@@ -1,8 +1,8 @@
 Dia 1: Iniciando o Projeto
-==============================
+==========================
 
 Introdução
-------------
+----------
 
 O [symfony](http://www.symfony-project.org/) vem sendo um
 projeto Open-Source por mais de quatro anos e se tornou um dos mais
@@ -15,10 +15,10 @@ também aprender sobre as melhores práticas de desenvolvimento web.
 
 A aplicação a ser montada poderia ser outra relacionada a blog. Mas nós
 queremos usar o symfony num projeto útil. O objetivo é demonstrar que o symfony
-pode ser usado para desenvolver aplicações profissionais com estilo e pouco esforço.
+pode ser usado para desenvolver aplicações profissionais com estilo e pouco esforço.
 
 Nós iremos manter o conteúdo do projeto secreto por mais um dia pois já
-temos bastante por enquanto. No entanto, vamos dara para ele um nome: **Jobeet**.
+temos bastante por enquanto. No entanto, vamos dar para ele um nome: **Jobeet**.
 
 Cada dia desse livro é feito para durar entre uma e duas horas, e 
 será a oportunidade para aprender symfony programando um site de verdade, do início ao fim.
@@ -72,7 +72,7 @@ Todo o código que você ler neste livro é código que você poderá usar em um
 Nós encorajamos que você copie e cole trechos de código ou mesmo roubar pedaços inteiros.
 
 O Que Temos para Hoje?
----------------
+----------------------
 
 Nós não iremos escrever código PHP. Mas mesmo sem escrever uma única linha de código, você
 vai começar a entender os benefícios de usar um framework como o symfony, apenas por
@@ -86,7 +86,7 @@ Como esse livro se focará principalmente no symfony framework, nós iremos assu
 já tem um conhecimento sólido de PHP 5 e programação orientada a objetos.
 
 Pré-requisitos
--------------
+-------------s
 
 Antes de instalar o symfony, você precisa verificar se seu computador tem tudo
 instalado e configurado corretamente. Leve o tempo que for para ler conscientemente
@@ -145,7 +145,7 @@ os problemas que possa descobrir. Isso se deve ao PHP tem um arquivo de configur
 >Não esqueça de remover posteriormente esse arquivo da raiz do seu diretório web.
 
 Instalação do Symfony
-----------------------
+---------------------
 
 ### Inicializando o Diretório do Projeto
 
@@ -278,17 +278,17 @@ No Windows:
 >utilitários que aumentam sua produtividade para as atividades do dia-a-dia como
 >limpar o cache, geração de código e muito mais.
 
-Configuraçao do Projeto
--------------
+Configuração do Projeto
+-----------------------
 
-In symfony, **~applications|Applications~** sharing the same data model are
-regrouped into **~projects|Projects~**. For most projects, you will have two
-different applications: a ~frontend|Frontend~ and a ~backend|Backend~.
+No symfony, as **aplicações** compartilhando o mesmo modelo de dados são 
+reagrupados em **projetos**. Para a maioria dos projetos, você terá duas
+aplicações diferentes: um Frontend e um Backend.
 
-### Project Creation
+### Criação do Projeto
 
-From the `sfprojects/jobeet` directory, run the symfony `generate:project` task
-to actually create the symfony project:
+A partir do diretório `sfprojects/jobeet`, rode a tarefa symfony `generate:project`
+para criar de fato o projeto symfony:
 
 <doctrine>
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet
@@ -297,7 +297,7 @@ to actually create the symfony project:
     $ php lib/vendor/symfony/data/bin/symfony generate:project jobeet --orm=Propel
 </propel>
 
-On Windows:
+No Windows:
 
 <doctrine>
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet
@@ -306,82 +306,82 @@ On Windows:
     c:\> php lib\vendor\symfony\data\bin\symfony generate:project jobeet --orm=Propel
 </propel>
 
-The `generate:project` task generates the default structure of directories and
-files needed for a symfony project:
+A tarefa `generate:project` gera a estrutura padrão de diretórios e arquivos necessários
+para um projeto symfony.
 
- | Directory   | Description
- | ----------- | ----------------------------------
- | `apps/`     | Hosts all project applications
- | `cache/`    | The files cached by the framework
- | `config/`   | The project configuration files
- | `lib/`      | The project libraries and classes
- | `log/`      | The framework log files
- | `plugins/`  | The installed plugins
- | `test/`     | The unit and functional test files
- | `web/`      | The web root directory (see below)
+ | Diretório   | Descrição
+ | ----------- | ------------------------------------------------
+ | `apps/`     | Armazena todas as aplicações do projeto
+ | `cache/`    | Os arquivos armazenados em cache pelo framework
+ | `config/`   | Os arquivos de configuração do projeto
+ | `lib/`      | As classes e bibliotecas do projeto
+ | `log/`      | Os arquivos de log do framework
+ | `plugins/`  | Os plugins instalados
+ | `test/`     | Os arquivos de testes unitários e funcionais
+ | `web/`      | O diretório web root (veja mais abaixo)
 
->**NOTE**
->Why does symfony generate so many files? One of the main benefits of using
->a full-stack framework is to standardize your developments. Thanks to
->symfony's default structure of files and directories, any developer with
->some symfony knowledge can take over the maintenance of any symfony project.
->In a matter of minutes, he will be able to dive into the code, fix bugs,
->and add new features.
+>**NOTA**
+>Por que o symfony cria tantos arquivos? Um dos maiores benefícios de usar
+>um framework full-stack é para padronizar seus desenvolvimentos. Graças a
+>estrutura padrão de arquivos e diretórios do symfony, qualquer desenvolvedor com
+>algum conhecimento em symfony pode assumir a manutenção de um projeto symfony.
+>Em questão de minutos, ele estará apto a se aprofundar no código, consertar bugs
+>e adicionar novas funcionalidades.
 
-The `generate:project` task has also created a `symfony` shortcut in the project
-root directory to shorten the number of characters you have to write when
-running a task.
+O comando `generate:project` também criou um atalho `symfony` na raiz do diretório
+do projeto para diminuir o número de caracteres que você precisa escrever quando
+roda um comando.
 
-So, from now on, instead of using the fully qualified path to the symfony
-program, you can use the `symfony` shortcut.
+Então, a partir de agora, em vez de usar o caminho completo para o program symfony,
+você pode usar o atalho `symfony`.
 
-### Application Creation
+### Criação da Aplicação
 
-Now, create the frontend application by running the `generate:app` task:
+Agora, crie a aplicação Frontend rodando o comando `generate:app`:
 
     $ php symfony generate:app frontend
 
->**TIP**
->Because the symfony shortcut file is executable, Unix users can replace all
->occurrences of '`php symfony`' by '`./symfony`' from now on.
+>**DICA**
+>Devido ao atalho do symfony ser executável, os usuários de Unix podem trocar
+>todas as chamadas de '`php symfony`'por '`./symfony`' a partir de agora.
 >
->On Windows you can copy the '`symfony.bat`' file to your project and use
->'`symfony`' instead of '`php symfony`':
+>No Windows você poe copiar o arquivo '`symfony.bat`' para seu projeto e usar
+>'`symfony`' em vez de '`php symfony`':
 >
 >     c:\> copy lib\vendor\symfony\data\bin\symfony.bat .
 
-Based on the application name given as an *argument*, the `generate:app` task
-creates the default directory structure needed for the application under the
-`apps/frontend/` directory:
+Baseado no nome da aplicação dado como um *argumento*, o comando `generate:app`
+criada a estrutura padrão de diretórios necessária para a aplicação dentro do
+diretório `apps/frontend/`:
 
- | Directory    | Description
- | ------------ | -------------------------------------
- | `config/`    | The application configuration files
- | `lib/`       | The application libraries and classes
- | `modules/`   | The application code (MVC)
- | `templates/` | The global template files
+ | Diretório    | Descrição
+ | ------------ | ----------------------------------------
+ | `config/`    | Os arquivos de configuração da aplicação
+ | `lib/`       | As classes e bibliotecas da aplicação
+ | `modules/`   | O código da aplicação (MVC)
+ | `templates/` | Os arquivos de template globais
 
 >**SIDEBAR**
->Security
+>Segurança
 >
->By default, the `generate:app` task has secured our application from the two
->most widespread vulnerabilities found on the web. That's right, symfony
->automatically takes ~security|Security~ measures on our behalf.
+>Por padrão, o comando `generate:app` deixou sua aplicação segura das duas
+>vunerabilidades mais difundidas na web. É certo, o symfony
+>automaticamente toma medidas de segurança em nosso nome.
 >
->To prevent ~XSS~ attacks, output escaping has been enabled; and to prevent
->~CSRF~ attacks, a random CSRF secret has been generated.
+>Para prevenir ataques de XSS, o output escaping foi habilitado; e para prevenir
+>ataques CSRF, uma chave CSRF randômica foi gerada.
 >
->Of course, you can tweak these settings thanks to the following *options*:
+>É claro que você pode ajustar essas configurações com as seguints *opções*:
 >
->  * `--escaping-strategy`: Enables or disables output escaping
->  * `--csrf-secret`: Enables session tokens in forms
+>  * `--escaping-strategy`: Habilita ou desabilita o output escaping
+>  * `--csrf-secret`: Habilita os session tokens nos formulários
 >
->If you know nothing about
->[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) or
->[CSRF](http://en.wikipedia.org/wiki/CSRF), take the time to learn more these
->security vulnerabilities.
+>Se você não sabe nada sobre
+>[XSS](http://en.wikipedia.org/wiki/Cross-site_scripting) ou
+>[CSRF](http://en.wikipedia.org/wiki/CSRF), tire um tempo para aprender mais sobre
+>essas vunerabilidades de segurança.
 
-### Directory Structure Rights
+### Permissões na Estrutura de Diretórios
 
 Before trying to access your newly created project, you need to set the write
 permissions on the `cache/` and `log/` directories to the appropriate levels, so
