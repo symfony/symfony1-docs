@@ -596,97 +596,109 @@ várias informações clicando nas diferentes abas: configuração da aplicaçã
 os logs da requisição atual, os comandos SQL executados no banco de dados,
 informação sobre a memória e sobre o tempo.
 
-~Subversion~
-------------
+Subversion
+----------
 
-It is a good practice to use source version control when developing a web
-application. Using a source version control allows us to:
+É uma boa prática usar controle de versão de código-fonte quando estiver desenvolvendo uma
+aplicação web. Usar um controle de versão nos permite que:
 
- * work with confidence
- * revert to a previous version if a change breaks something
- * allow more than one person to work efficiently on the project
- * have access to all the successive versions of the application
+ * trabalhemos com confiança
+ * revertamos para uma versão anterior se uma mudança quebrar algo
+ * mais de uma pessoa trabalhe eficientemente no projeto
+ * tenhamos acesso a todas as versões sucessivas da aplicação
 
-In this section, we will describe how to use
-[Subversion](http://subversion.tigris.org/) with symfony. If you use another
-source code control tool, it must be quite easy to adapt what we describe for
-Subversion.
+Nessa seção, descreveremos como usar o 
+[Subversion](http://subversion.tigris.org/) com o symfony. Se você usa outra
+ferramenta de controle de versão, deve ser muito fácil adaptar o que descrevemos para
+o Subversion
 
-We assume you have already access to a Subversion server and can access it via
+Nós pressupomos que você já tenha acesso a um servidor Subversion e pode acessá-lo via
 HTTP.
 
->**TIP**
->If you don't have a Subversion server at your disposal, you can create a
->repository for free on [Google Code](http://code.google.com/hosting/) or
->just type "free subversion repository" in Google to have a lot more options.
+>**DICA**
+>Se você não tiver um servidor Subversion à sua disposição, você pode criar um
+>repositório de graça no [Google Code](http://code.google.com/hosting/) ou
+>simplesmente digite "free subversion repository" no Google para ter várias opções.
 
-First, create a repository for the `jobeet` project on the repository server:
+Primeiro, crie um repositório para o projeto `jobeet` no servidor de repositórios:
 
     $ svnadmin create /path/to/jobeet/repository
 
-On your machine, create the basic directory structure:
+Na sua máquina, crie a estrutura de diretórios básica:
 
-    $ svn mkdir -m "created default directory structure"
+    $ svn mkdir -m "criada estrutura de diretórios básica"
     ➥ http://svn.example.com/jobeet/trunk
     ➥ http://svn.example.com/jobeet/tags
     ➥ http://svn.example.com/jobeet/branches
 
-And checkout the empty `trunk/` directory:
+E faça um checkout do diretório vazio `trunk/`:
 
     $ cd /home/sfprojects/jobeet
     $ svn co http://svn.example.com/jobeet/trunk/ .
 
-Then, remove the content of the `cache/` and `log/` directories as we don't want
-to put them into the repository.
+Então, remova o conteúdo dos diretórios `cache/` e `log/` pois não queremos
+colocá-los no repositório.
 
     $ rm -rf cache/* log/*
 
-Now, make sure to set the write permissions on the cache and logs directories to
-the appropriate levels so that your web server can write to them:
+Agora, garanta a configurar das permissões de escrita nos diretórios cache e log
+para os níveis apropriados para que o servidor web possa escrever neles:
 
     $ chmod 777 cache/ log/
 
-Now, import all the files and directories:
+Agora, importe todos os arquivos e diretórios:
 
     $ svn add *
 
-As we will never want to commit files located in the `cache/` and `log/`
-directories, you need to specify an ignore list:
+Como nunca iremos fazer commit dos arquivos localizados nos diretórios
+`cache/` e `log/`, você precisa especificar uma ignore list:
 
     $ svn propedit svn:ignore cache
 
-The default text editor configured for SVN should launch. Subversion must ignore
-all the content of this directory:
+O editor de texto padrão que está configurado para o SVN deve abrir. O Subversion deve
+ignorar todo o conteúdo deste diretório:
 
     *
 
-Save and quit. You're done.
+Salve e saia. Tudo feito.
 
-Repeat the procedure for the `log/` directory:
+Repita o procedimento para o diretório `log/`:
 
     $ svn propedit svn:ignore log
 
-And enter:
+E digite:
 
     *
 
-Finally, commit these changes to the repository:
+Finalmente, faça um commit dessas mudanças para o repositório:
 
-    $ svn import -m "made the initial import" .
+    $ svn import -m "feito o import inicial" .
       ➥ http://svn.example.com/jobeet/trunk
 
->**Tip**
->~Windows~ users can use the great [TortoiseSVN](http://tortoisesvn.tigris.org/)
-client to manage their subversion repository.
+>**Dica**
+>Usuários de Windows podem usar o excelente
+>[TortoiseSVN](http://tortoisesvn.tigris.org/) para gerenciar seus repositórios Subversion.
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-Well, time is over! Even if we have not yet started talking about symfony, we
-have setup a solid development environment, we have talked about web development
-best practices, and we are ready to start coding.
+Bem, o tempo passa! Mesmo ainda não tendo começado a falar sobre o symfony, nós
+configuramos um ambiente de desenvolvimento sólido, falamos sobre melhores práticas
+de desenvolvimento web e agora estamos prontos para começar a programar.
 
-Tomorrow, we will reveal what the application will do and talk about
-the requirements we need to implement for Jobeet.
+Amanhã revelaremos o que a aplicação fará e iremos falar sobre os requisitos que
+precisamos para implementar o Jobeet.
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
 
 __ORM__
