@@ -691,8 +691,8 @@ Listato 9-26 - Utilizzare `sfController` per trasformare un URI interno
     $url = $this->getController()->genUrl($uri, true);
     => http://myapp.example.com/article/21
 
-Sommario
---------
+Riepilogo
+---------
 
 Il routing è un meccanismo bidirezionale pensato per permettere la formattazione di URL esterni in modo che siano più comprensibili e intuitive. 
 La riscrittura degli URL è necessaria per permettere l'omissione del nome del front controller nell'URL di una delle applicazioni di ogni progetto. 

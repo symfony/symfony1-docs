@@ -832,8 +832,8 @@ Se la classe verrà trovata, verrà inclusa automaticamente.
 Collocando le proprie classi all'interno delle cartelle `lib/' non sarà più necessario includerle.
 Questo è il motivo per il quale solitamente i progetti symfony non contengono direttive `include_once` o `require_once`.
 
-Sommario
---------
+Riepilogo
+---------
 
 L'utilizzo di un framework MVC obbliga lo sviluppatore a organizzare il codice in accordo con le convenzioni del framework stesso.
 Il codice di presentazione appartiene alla vista, la manipolazione dei dati appartiene al modello e la logica della richiesta appartiene al controllore.

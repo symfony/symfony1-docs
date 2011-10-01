@@ -615,6 +615,7 @@ Symfony mette a disposizione anche un altro strumento di ottimizzazione, il task
 
 Per vedere le strategie di ottimizzazione utilizzate nel task basta dare un'occhiata al suo codice sorgente.
 
-Sommario
---------
+Riepilogo
+---------
+
 Symfony è già un framework molto ottimizzato e in grado di gestire siti ad alto traffico senza problemi. Ma se davvero si avesse la necessità di ottimizzare ulteriormente le prestazioni della propria applicazione, mettere a punto la configurazione (che sia la configurazione del server, di PHP o le impostazioni dell'applicazione) può fornire un piccolo miglioramento. È consigliabile seguire le best practice per scrivere metodi del modello efficienti; e dato che il database rappresenta sempre un collo di bottiglia per le applicazioni web, su di esso andrà riposta particolare attenzione. I template possono beneficiare anch'essi di alcune ottimizzazioni, ma i miglioramenti più evidenti arriveranno dall'utilizzo del sistema della cache. Infine non si esiti nell'analizzare plugin esistenti, dato che alcuni di essi mettono a disposizione tecniche innovative per aumentare ulteriormente la consegna delle pagine web (`sfSuperCache`, `project:optimize`).
