@@ -986,8 +986,8 @@ Il parametro `view_class` definisce la classe della vista. Deve ereditare da `sf
 
 Il parametro `partial_view_class` definisce la classe della vista utilizzata per i partial del modulo in questione. Deve ereditare da `sfPartialView`.
 
-Sommario
---------
+Riepilogo
+---------
 
 In symfony il livello del controllore è diviso in due parti: il front controller, l'unico punto d'accesso per l'applicazione in un dato ambiente, e le azioni che contengono la logica delle pagine. Un'azione ha l'abilità di determinare come verrà eseguita la sua vista restituendo una delle costanti `sfView`. All'interno di un'azione si possono manipolare i diversi elementi del context, inclusi l'oggetto della richiesta (`sfRequest`) e l'oggetto della sessione utente corrente (`sfUser`).
 

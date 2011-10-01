@@ -720,8 +720,8 @@ Un ultimo header può essere spedito tramite symfony: `Expires`.
 >La conseguenza principale dell'abilitazione del meccanismo `Cache-Control` è che il server non mostrerà tutte le richieste eseguite dagli utenti, 
 >ma solo quelle ricevute effettivamente. Se le prestazioni migliorassero, l'apparente popolarità del sito potrebbe diminuire nelle statistiche.
 
-Sommario
---------
+Riepilogo
+---------
 
 Il sistema di cache fornisce accelerazioni variabili delle prestazioni a seconda del tipo di cache scelta. Dal maggior guadagno al minimo, i tipi di cache sono i seguenti:
 
