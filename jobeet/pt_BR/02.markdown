@@ -1,0 +1,156 @@
+Dia 2: O projeto
+===================
+Não escrevemos ainda nem uma linha de PHP, mas no primeiro dia configuramos o ambiente, criamos um projeto symfony vazio e garantimos um início com alguns bons padrões de segurança. Se você seguiu tudo, deve estar olhando maravilhado desde então para uma tela que mostra a página padrão do symfony para as novas aplicações.
+
+![Congratulation page](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
+
+Mas você quer mais. Quer aprender todos os mínimos detalhes do desenvolvimento de aplicações com o symfony. Sendo assim, vamos continuar nossa viagem ao nirvana do desenvolvimento symfony.
+
+Agora vamos usar um tempo para descrever os requisitos do projeto Jobeet com alguns mockups básicos.
+
+Lançamento do Projeto
+-------------------
+Todo mundo está falando sobre a crise atualmente. O desemprego está crescendo mais uma vez.
+
+Sei que os desenvolvedores symfony não estão realmente preocupados e é por isso que você quer aprender symfony em primeiro lugar, certo? Mesmo assim é um pouco complicado encontrar bons desenvolvedores symfony.
+
+Onde eu posso encontrar um desenvolvedor symfony? Onde você pode anunciar suas habilidades com ele?
+
+É preciso encontrar um bom mural de empregos. Você disse Catho? Pense melhor. Você precisa de um mural de empregos focado. Um onde seja possível encontrar as melhores pessoas, os especialistas. Um onde seja fácil, rápido e até divertido buscar um emprego, ou então anunciar um.
+
+Pare de procurar. Jobeet é o lugar. **Jobeet é um software Open-Source de mural de empregos** que faz apenas uma coisa, mas faz bem. Ele é fácil de usar, personalizar, estender e embutir no seu site. Ele suporta múltiplas linguagens de fábrica e é lógico que vem com as útlimas tecnologias da Web 2.0 para elevar a experiência de uso. Ele também fornece feeds e uma API para interagir de forma programática com ele.
+
+Isso já existe? Como usuário você pode encontrar vários murais como o Jobeet na internet. No entanto, tente encontrar um que seja open-source e cheio de funcionalidades como o que oferecemos aqui.
+
+>**NOTA**
+> Se você estiver realmente procurando com um emprego ou quiser contratar um desenvolvedor >symfony, você pode ir no site [symfonians](http://symfonians.net/).
+
+
+User Stories do Projeto
+-----------------------
+Antes de entrarmos de cabeça no código, vamos descrever o projeto mais um pouco. As próximas seções descrever as funcionalidades que queremos implementar na primeira versão/interação do projeto com algumas simples stories.
+
+O site Jobeet tem 4 tipos de usuários:
+
+ * **admin**: É o dono do site e tem poderes mágicos
+ * **user**: Visita o site para procurar empregos
+ * **poster**: Visita o site para anunciar empregos
+ * **affiliate**: Re-publica alguns empregos no site dele
+
+O projeto tem duas aplicações: o **frontend** (stories F1 a F7, abaixo), onde os usuários interagem com o site e o **backend** (stories B1 a B3), onde o admin administra o site.
+
+A aplicação backend é protegida e necessita de credenciais para ser acessada.
+
+### Story F1: Na página inicial, o usuário enxerga os últimos empregos ativos
+
+Quando um usuário vai ao site do Jobeet, ele vê uma lista dos empregos ativos. Os empregos são ordenados por categoria e depois pela data de publicação (primeiro os empregos ativos). Para cada emprego são mostradas a localização, o cargo e a empresa.
+
+Para cada categoria, a lista mostra os 10 primeiros empregos e um link permite listar todos os empregos daquela categoria (*Story F2*).
+
+Na página inicial, o usuário pode filtrar a lista de empregos (*Story F3*), ou anunciar um emprego novo (*Story F5*).
+
+![Homepage Mockup](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png)
+
+### Story F2: Um usuário pode pedir para listar todos os empregos de uma determinada categoria
+
+Quando um usuário clica no nome de uma categoria ou no link "mais empregos" na página inicial, ele visualiza todos os empregos daquela categoria ordenados por data.
+
+A lista é paginda com 20 empregos por página.
+
+![The Category Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png)
+
+### Story F3: Um usuário filtra a lista com algumas palavras-chave
+
+O usuário pode digitar algumas palavras-chave para filtrar a pesquisa. As palavras-chave podem ser palavras encontradas nos campos localização, cargo, categoria ou empresa.
+
+### Story F4: Um usuário clica no emprego para ver informações mais detalhadas
+
+O usuário pode selecionar um emprego da lista para ver informações mais detalhadas.
+
+![The Job Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png)
+
+### Story F5: Um usuário anuncia um emprego
+
+Um usuário pode anunciar um emprego. Um empregos é composto de algumas informações:
+
+  * Empresa
+  * Tipo (full-time, part-time, ou freelance)
+  * Logo (opcional)
+  * URL (opcional)
+  * Cargo
+  * Localização
+  * Categoria (usuário escolhe numa lista de categorias possíveis)
+  * Descrição do emprego (As URLs e os emails são automaticamente linkados)
+  * Como se candidatar (As URLs e os emails são automaticamente linkados)
+  * Público (se o emprego pode ser publicado nos sites afiliados)
+  * Email (email do anunciante)
+
+Não há necessidade de criar uma conta para anunciar um emprego.
+
+O processo é simples com apenas dois passos: primeiro o usuário preenche o formulário com todas as informações ncessárias para descrever o emprego e então valida a informação pré-visualizando a página final do emprego.
+
+Mesmo se o usuário não tiver uma conta o emprego pode ser modificado posteriormente graças a uma URL específica (protegida por um token fornecido ao usuário quando o emprego é criado).
+
+Cada anúncio de emprego fica online por 30 dias (isso é configurável pelo admin -ver *Story B2*). Um usuário pode retornar para reativar ou aumentar a validade do emprego por 30 dias adicionais mas apenas quando o emprego expirar em menos de 5 dias.
+
+![The Job Creation Page](http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png)
+
+### Story F6: Um usuário se candidata para se tornar um afiliado
+
+Um usuário precisa se candidatar para se tornar um afiliado e ser autorizado a usar a API do Jobeet. Para se candidatar ele precisar fornecer a seguinte informação:
+
+  * Nome
+  * Email
+  * URL do site dele
+
+A conta do afiliado precisa ser ativado pelo admin (*Story B3*). Uma vez ativada, o afiliado recebe por email um token para usar com a API.
+
+Quando se candidata, o afiliado pode escolher pegar os empregos de apenas uma parte das categorias disponíveis.
+
+### Story F7: Um afiliado obtém a lista dos empregos ativos
+
+Um afiliado pode obter a lista dos empregos ativos chamando a API com seu token de afiliado. A lista pode ser retornado nos formatos XML, JSON ou YAML.
+
+A lista contém a informação pública disponível de um emprego.
+
+O afiliado pode limitar o número de empregos a ser retornado e filtrar sua busca especificando uma categoria.
+
+### Story B1: Um admin configura o site
+
+Um admin pode editar as categorias disponíveis no site.
+
+### Story B2: Um admin administra os empregos
+
+Um admin pode editar e remover qualquer emprego anunciado.
+
+### Story B3: Um admin administra os afiliados
+
+O admin pode criar ou editar afiliados. Ele é responsável por ativar um afiliado e também pode desabilitar um deles.
+
+Quando o admin ativa um novo afiliado o sistema cria um token único a ser usado pelo afiliado.
+
+
+Considerações finais
+--------------
+
+Como em qualquer desenvolvimento web, nunca começamos codificando no primeiro dia. Precisamos primeiro coletar os requisitos e trabalhar na criação de um mockup. Foi isso que fizémos aqui.
+
+As for any web development, you never start coding the first day. You need to
+gather the requirements first and work on a mockup design. That's what we have
+done here.
+
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
+
+
+__ORM__
