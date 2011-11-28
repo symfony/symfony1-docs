@@ -82,16 +82,16 @@ O objetivo desse dia é configurar o ambiente de desenvolvimento e
 mostrar uma página da aplicação no seu navegador. Isso inclui a instalação
 do symfony, a criação da aplicação e a configuração do servidor web.
 
-Como esse livro se focará principalmente no symfony framework, nós iremos assumir que você
+Como esse livro irá focar principalmente o framework Symfony, nós iremos assumir que você
 já tem um conhecimento sólido de PHP 5 e programação orientada a objetos.
 
 Pré-requisitos
 --------------
 
-Antes de instalar o symfony, você precisa verificar se seu computador tem tudo
+Antes de instalar o Symfony, você precisa verificar se seu computador tem tudo
 instalado e configurado corretamente. Leve o tempo que for para ler conscientemente
 este dia e siga todos os passos necessários para validar sua sua configuração pois
-isso pode salvar sua pele mais para a frente.
+isso pode salvar sua pele mais à frente.
 
 ### Software de Terceiros
 
@@ -103,7 +103,7 @@ compatível com [PDO](http://www.php.net/PDO)) e PHP 5.2.4 ou posterior.
 ### Interface de Linha de Comando
 
 O symfony framework vem com uma ferrament de linha de comando que automatiza
-um monte de trabalho para você. Se você é um usúario de sistema operacional
+um monte de serviços para você. Se você é um usúario de sistema operacional
 Unix-like vai se sentir em casa. Se você rodar um sistema Windows ele também funcionará bem,
 mas você só terá que digitar alguns comandos no prompt `cmd`.
 
@@ -137,7 +137,7 @@ script pela linha de comando:
 ![Confirmar a Configuracão](http://www.symfony-project.org/images/jobeet/1_4/01/configuration_check.png)
     
 Se houver algum problema com sua configuração do PHP, a saída da comando
-dará dicas do que e como corrigi-lo.
+dará dicas sobre o que corrigir e como corrigi-lo.
 
 Você deveria também executar o verificador a partir de um navegador e corrigir
 os problemas que possa descobrir. Isso se deve ao PHP tem um arquivo de configuração
