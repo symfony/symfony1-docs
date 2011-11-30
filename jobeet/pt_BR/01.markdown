@@ -102,7 +102,7 @@ compatível com [PDO](http://www.php.net/PDO)) e PHP 5.2.4 ou posterior.
 
 ### Interface de Linha de Comando
 
-O framework symfony vem com uma ferrament de linha de comando que automatiza
+O framework symfony vem com uma ferramenta de linha de comando que automatiza
 um monte de serviços para você. Se você é um usúario de sistema operacional
 Unix-like vai se sentir em casa. Se você rodar um sistema Windows ele também funcionará bem,
 mas você só terá que digitar alguns comandos no prompt `cmd`.
@@ -426,7 +426,7 @@ Se você der uma olhada nesse diretório, você vai encontrar alguns sub-diretó
 web assets (`css/` and `images/`) e dois arquivos front controller. Os 
 front controllers são os únicos arquivos PHP que precisam ficar dentro do diretório 
 web root. Todos os outros arquivos PHP podem ficar escondidos do navegador, o que é uma boa
-idéia contando que diz respeito à segurança.
+ideia contando que diz respeito à segurança.
 
 ### Configuração do Servidor Web
 
