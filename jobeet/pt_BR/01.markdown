@@ -82,13 +82,13 @@ O objetivo desse dia é configurar o ambiente de desenvolvimento e
 mostrar uma página da aplicação no seu navegador. Isso inclui a instalação
 do symfony, a criação da aplicação e a configuração do servidor web.
 
-Como esse livro irá focar principalmente o framework Symfony, nós iremos assumir que você
+Como esse livro irá focar principalmente o framework symfony, nós iremos assumir que você
 já tem um conhecimento sólido de PHP 5 e programação orientada a objetos.
 
 Pré-requisitos
 --------------
 
-Antes de instalar o Symfony, você precisa verificar se seu computador tem tudo
+Antes de instalar o symfony, você precisa verificar se seu computador tem tudo
 instalado e configurado corretamente. Leve o tempo que for para ler conscientemente
 este dia e siga todos os passos necessários para validar sua sua configuração pois
 isso pode salvar sua pele mais à frente.
@@ -102,7 +102,7 @@ compatível com [PDO](http://www.php.net/PDO)) e PHP 5.2.4 ou posterior.
 
 ### Interface de Linha de Comando
 
-O symfony framework vem com uma ferrament de linha de comando que automatiza
+O framework symfony vem com uma ferramenta de linha de comando que automatiza
 um monte de serviços para você. Se você é um usúario de sistema operacional
 Unix-like vai se sentir em casa. Se você rodar um sistema Windows ele também funcionará bem,
 mas você só terá que digitar alguns comandos no prompt `cmd`.
@@ -140,8 +140,8 @@ Se houver algum problema com sua configuração do PHP, a saída da comando
 dará dicas sobre o que corrigir e como corrigi-lo.
 
 Você deveria também executar o verificador a partir de um navegador e corrigir
-os problemas que possa descobrir. Isso se deve ao PHP tem um arquivo de configuração
-`php.ini` distinto para esses dois ambientes, com diferentes configurações.
+os problemas que possa descobrir. Isso se deve ao PHP possuir um arquivo de configuração
+`php.ini` distinto para esses dois ambientes, com configurações diferentes.
 
 >**NOTA**
 >Não esqueça de remover posteriormente esse arquivo da raiz do seu diretório web.
@@ -163,15 +163,15 @@ Ou no Windows:
     c:\> cd c:\development\sfprojects\jobeet
 
 >**NOTA**
->Os usuários de Windows são alertados que para rodar o symfony e configurar seu novo projeto em uma
->pasta que não contenha espaços. Tente não usar o diretório `Documents and Settings` 
->incluindo qualquer lugar dentro dos `Meus Documentos`.
+>Os usuários de Windows são alertados a rodar o symfony e configurar seu novo projeto em uma
+>pasta que não contenha espaços. Tente não usar o diretório `Documents and Settings`, 
+>isso inclui qualquer lugar dentro dos `Meus Documentos`.
 
 -
 
 >**DICA**
 >Se você criar o diretório do projeto symfony dentro do seu web root, você
->não precisará de configurar seu servidor web. É claro que ambientes
+>não precisará configurar seu servidor web. É claro que em ambientes
 >de produção, nós encorajamos fortemente que você configure seus servidor web como
 >explicado na seção configuração do servidor web.
 
@@ -186,10 +186,10 @@ O livro supõe que você quer instalar a o symfony 1.3 ou 1.4.
 
 ### Escolhendo o Local para Instalar o Symfony
 
-Você pode instalar o symfony globalmente na sua máquina, ou incomporá-lo em cada um dos seus
-projetos. A última opção é recomendada pois seus projetos ficarão serão totalmente
+Você pode instalar o symfony globalmente na sua máquina, ou incorporá-lo em cada um dos seus
+projetos. A última opção é recomendada, pois seus projetos serão totalmente
 independentes dos outros. Atualizar seu symfony instalado localmente não irá
-quebrar um dos seus projetos de forma inesperada. Isso significa que você poderá possuir
+quebrar alguns dos seus projetos de forma inesperada. Isso significa que você poderá possuir
 projetos com diferentes versões do symfony e atualizar um de cada vez como você precisar.
 
 Como uma melhor prática muitas pessoas instalam os arquivos do symfony framework no diretório `lib/vendor` do projeto.
@@ -399,13 +399,13 @@ o servidor web poderá escrever neles:
 >pelo seu SCM (editando a propriedade `svn:ignore` se você estiver usando o Subversion
 >por exemplo).
 
-Configuração do Servidor Web: O jeito feio
+Configuração do Servidor Web: O modo feio
 ------------------------------------------
 
 Se você já criou o diretório do projeto em algum lugar dentro do diretório web root
 do seu servidor web, você já pode acessar o projeto em um navegador.
 
-É claro que como ele não foi teve nenhuma configuração, é muito rápido para configurar, mas tente
+É claro que, assim como ele não foi configurado, é muito rápido para configurá-lo, mas tente
 acessar o arquivo `config/databases.yml` no seu navegador para entender as consequências ruins de uma
 atitude tão preguiçosa. Se o usuário souber que o seu site é
 desenvolvido com o symfony, ele terá acesso a uma série de arquivos confidenciais.
@@ -512,7 +512,7 @@ do Apache que você escolheu na seção anterior.
 
 >**DICA**
 >Se você tiver o instalado o módulo do Apache `mod_rewrite`, você pode remover
->a parte `index.php/` da URL. Isso é possível graças as
+>a parte `index.php/` da URL. Isso é possível graças às
 >regras de rewriting configuradas no arquivo `web/.htaccess`.
 
 Você deveria também tentar acessar a aplicação no ambiente de desenvolvimento
@@ -641,7 +641,7 @@ colocá-los no repositório.
 
     $ rm -rf cache/* log/*
 
-Agora, garanta a configurar das permissões de escrita nos diretórios cache e log
+Agora, garanta a configuração das permissões de escrita nos diretórios cache e log
 para os níveis apropriados para que o servidor web possa escrever neles:
 
     $ chmod 777 cache/ log/
@@ -682,7 +682,7 @@ Finalmente, faça um commit dessas mudanças para o repositório:
 Considerações Finais
 --------------------
 
-Bem, o tempo passa! Mesmo ainda não tendo começado a falar sobre o symfony, nós
+Bem, o tempo passa! Mesmo ainda não começando a falar sobre o symfony, nós
 configuramos um ambiente de desenvolvimento sólido, falamos sobre melhores práticas
 de desenvolvimento web e agora estamos prontos para começar a programar.
 
