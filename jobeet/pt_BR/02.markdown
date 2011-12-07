@@ -1,5 +1,6 @@
 Dia 2: O projeto
 ===================
+
 Não escrevemos ainda nem uma linha de PHP, mas no primeiro dia configuramos o ambiente, criamos um projeto symfony vazio e garantimos um início com alguns bons padrões de segurança. Se você seguiu tudo, deve estar olhando maravilhado desde então para uma tela que mostra a página padrão do symfony para as novas aplicações.
 
 ![Congratulation page](http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png)
