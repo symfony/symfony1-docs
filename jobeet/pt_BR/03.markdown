@@ -1,5 +1,6 @@
 Dia 3: O Modelo de Dados
 =======================
+
 Aqueles de vocês que estão loucos para abrir o editor de texto e escrever um pouco de PHP ficarão felizes de saber que o dia de hoje nos levará a desenvolver alguma coisa. Iremos definir o modelo de dados do Jobeet, usar um ORM para interagir com o banco de dados e criar o primeiro módulo da aplicação. Apesar disso como o symfony faz um monte de trabalho para nós, teremos um módulo web totalmente funcional sem escrever muito código PHP.
 
 O Modelo Relacional
