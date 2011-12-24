@@ -1,4 +1,4 @@
-Dia 7: Mais com o Model
+Dia 6: Mais com o Model
 =======================
 
 O dia de ontem foi excelente. Você aprendeu com criar URLs amigáveis e como
