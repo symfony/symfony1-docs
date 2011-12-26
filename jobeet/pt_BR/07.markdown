@@ -1,20 +1,20 @@
-Day 7: Playing with the Category Page
-======================================
+Dia 7: Brincando com a Página da Categoria
+==========================================
 
-Yesterday, you expanded your knowledge of symfony in a lot of different areas:
-querying with ##ORM##, fixtures, routing, debugging, and custom configuration.
-And we finished with a little challenge to start today.
+Ontem, você aumentou seu conhecimento do symfony em várias áreas diferentes:
+fazendo buscas com o ##ORM##, fixtures, rotas, depuração e configurações
+personalizadas. E terminamos com um pequeno desafio para começarmos hoje.
 
-We hope you worked on the Jobeet category page as today will then be much more
-valuable for you.
+Esperamos que você tenha trabalhado no página da categoria do Jobeet assim o
+dia de hoje será muito mais valioso para você.
 
-Ready? Let's talk about a possible implementation.
+Pronto, vamos falar sobre uma possível implementação.
 
-The Category Route
-------------------
+A Rota da Categoria
+-------------------
 
-First, we need to add a route to define a pretty URL for the category page. Add
-it at the beginning of the routing file:
+Primeiro, precisamos adicionar uma rota que defina uma URL amigável para a
+página da categoria. Coloque-a no início do arquivo de roteamento:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -25,15 +25,15 @@ it at the beginning of the routing file:
       options:  { model: JobeetCategory, type: object }
 
 >**TIP**
->Whenever you start implementing a new feature, it is a good practice to first
->think about the ~URL~ and create the associated ~route|Route~. And it is 
->mandatory if you removed the default routing rules.
+>Sempre que você começar a implementação de uma nova funcionalidade, é uma boa
+>prática pensar sobre a URL e criar a rota associada. E isso é obrigatório se
+>tiver removido as regras de roteamento padrões.
 
-A route can use any column from its related object as a parameter. It can also
-use any other value if there is a related accessor defined in the object class.
-Because the `slug` parameter has no corresponding column in the `category`
-table, we need to add a virtual accessor in `JobeetCategory` to make the route
-works:
+Uma rota pode usar qualquer coluna de seu objeto relacionado como um parâmetro.
+Ela também pode usar qualquer outro valor se existir um método "accessor"
+relacionado definido na classe do objeto. Devido ao parâmetro `slug` não ter
+nenhuma coluna correspondente na tabela `category`, precisamos adicionar um
+"accessor" virtual em `JobeetCategory` para fazer com que a rota funcione:
 
     [php]
 <propel>
@@ -47,20 +47,20 @@ works:
       return Jobeet::slugify($this->getName());
     }
 
-The Category Link
------------------
+O Link Categoria
+----------------
 
-Now, edit the `indexSuccess.php` template of the `job` module to add the link to
-the category page:
+Agora, edite o template `indexSuccess.php` do módulo `job` para adicionar um
+link para a página da categoria:
 
     [php]
-    <!-- some HTML code -->
+    <!-- algum código HTML -->
 
             <h1>
               <?php echo link_to($category, 'category', $category) ?>
             </h1>
 
-    <!-- some HTML code -->
+    <!-- algum código HTML -->
 
           </table>
 
@@ -75,9 +75,10 @@ the category page:
       <?php endforeach; ?>
     </div>
 
-We only add the link if there are more than 10 jobs to display for the current
-category. The link contains the number of jobs not displayed. For this template
-to work, we need to add the `countActiveJobs()` method to `JobeetCategory`:
+Nós adicionaremos links apenas se existirem mais de 10 empregos para mostrar na
+categoria atual. O link contém o número de empregos não mostrados. Para esse
+template funcionar, precisamos adicionar o método `countActiveJobs()` em
+`JobeetCategory`:
 
 <propel>
     [php]
@@ -90,9 +91,9 @@ to work, we need to add the `countActiveJobs()` method to `JobeetCategory`:
       return JobeetJobPeer::countActiveJobs($criteria);
     }
 
-The `countActiveJobs()` method uses a `countActiveJobs()` method that does not
-exist yet in `JobeetJobPeer`. Replace the content of the `JobeetJobPeer.php`
-file with the following code:
+O método `countActiveJobs()` usa um método `countActiveJobs()` que não existe
+ainda em `JobeetJobPeer`. Substitua o conteúdo do arquivo `JobeetJobPeer.php`
+com o seguinte código:
 </propel>
 <doctrine>
     [php]
@@ -106,9 +107,9 @@ file with the following code:
       return Doctrine_Core::getTable('JobeetJob')->countActiveJobs($q);
     }
 
-The `countActiveJobs()` method uses a `countActiveJobs()` method that does not
-exist yet in `JobeetJobTable`. Replace the content of the `JobeetJobTable.php`
-file with the following code:
+O método `countActiveJobs()` usa um método `countActiveJobs()` que não existe
+ainda em `JobeetJobTable`. Substitua o conteúdo do arquivo `JobeetJobTable.php`
+com o seguinte código:
 </doctrine>
 
 <propel>
@@ -145,9 +146,9 @@ file with the following code:
       }
     }
 
-As you can see for yourself, we have refactored the whole code of
-`JobeetJobPeer` to introduce a new shared `addActiveJobsCriteria()` method to
-make the code more [~DRY~ (Don't Repeat
+Como você mesmo pode ver, refatoramos todo o código de `JobeetJobPeer` para
+introduzir um novo método compartilhado `addActiveJobsCriteria()` para deixar
+o código mais [DRY(Don't Repeat
 Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </propel>
 <doctrine>
@@ -187,60 +188,63 @@ Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
       }
     }
 
-As you can see for yourself, we have refactored the whole code of
-`JobeetJobTable` to introduce a new shared `addActiveJobsQuery()` method to make
-the code more [~DRY~ (Don't Repeat
+Como você mesmo pode ver, refatoramos todo o código de `JobeetJobTable` para
+introduzir um novo método compartilhado `addActiveJobsCriteria()` para deixar
+o código mais [DRY(Don't Repeat
 Yourself)](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 </doctrine>
 
 >**TIP**
->The first time a piece of code is re-used, copying the code may be sufficient.
->But if you find another use for it, you need to refactor all uses to a shared
->function or a method, as we have done here.
+>Na primeira vez que um trecho de código é reutilizado, copiar o código pode
+>ser suficiente. Mas se você encontrar outro uso para ele, você precisará
+>refatorar, todos as utilizações para uma função ou método compartilhado,
+>como fizemos aqui.
 
 <propel>
-In the `countActiveJobs()` method, instead of using `doSelect()` and then count
-the number of results, we have used the much faster `doCount()` method.
+No método `countActiveJobs()`, em vez de usar `doSelect()` e depois contar o
+número de resultados, usamos o método `doCount()` que é muito mais rápido.
 </propel>
 <doctrine>
-In the `countActiveJobs()` method, instead of using `execute()` and then count
-the number of results, we have used the much faster `count()` method.
+No método `countActiveJobs()`, em vez de usar `execute()` e depois contar o
+número de resultados, usamos o método `count()` que é muito mais rápido.
 </doctrine>
 
-We have changed a lot of files, just for this simple feature. But each time we
-have added some code, we have tried to put it in the right layer of the
-application and we have also tried to make the code reusable. In the process, we
-have also refactored some existing code. That's a typical workflow when working
-on a symfony project. In the following screenshot we are showing 5 jobs to keep
-it short, you should see 10 (the `max_jobs_on_homepage` setting):
+Mudamos vários dos arquivos, apenas para essa simples funcionalidade. Mas cada
+vez que adicionamos algum código tentamos colocá-lo na camada correta da
+aplicação e também tentamos deixar o código reutilizável. Nesse processo,
+também refatoramos alguns códigos existentes. Esse é o fluxo de trabalho típico
+quando trabalhamos num projeto symfony. Na próxima cópia de tela estamos
+mostrando 5 empregos para deixá-lo curto, você deve visualizar 10 (veja a
+configuração `max_jobs_on_homepage`):
 
-![Homepage](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
+![Página Inicial](http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png)
 
-Job Category Module Creation
-----------------------------
+Criação do Módulo Categoria do Emprego
+--------------------------------------
 
-It's time to create the `category` ~module|Module~:
+É hora de criar o módulo `category`:
 
     $ php symfony generate:module frontend category
 
-If you have created a module, you have probably used the
-`propel:generate-module`. That's fine but as we won't need 90% of the generated
-code, I have used the `generate:module` which creates an empty module.
+Se você criou um módulo, você provavelmente usou o comando
+`propel:generate-module`. Ele até funciona mas como não vamos precisar de 90%
+do código gerado, eu usei o comando `generate:module` que cria um módulo
+vazio.
 
 >**TIP**
->Why not add a `category` action to the `job` module? We could, but as the
->main subject of the category page is a category, it feels more natural to
->create a dedicated `category` module.
+>Porque não adicionar uma action `category` no módulo `job`? Nós poderíamos,
+>mas como o assunto principal da página categoria é uma categoria, parece mais
+>natural criar um módulo `category` dedicado.
 
-When accessing the category page, the `category` route will have to find the
-category associated with the request `slug` variable. But as the ~slug|Slug~ is
-not stored in the database, and because we cannot deduce the category name from
-the slug, there is no way to find the category associated with the slug.
+Quando acessar a página da categoria, a rota `category` terá que encontrar a
+categoria associada com a variável `slug` da requisição. Mas como o slug não é
+guardado no banco de dados e como não podemos deduzir o nome da categoria a
+partir do slug, não tem jeito de encontrar a categoria associada com o slug.
 
-Update the Database
--------------------
+Atualize o Banco de Dados
+-------------------------
 
-We need to add a `slug` column for the `category` table:
+Nós precisamos adicionar a coluna `slug` na tabela `category`:
 
 <propel>
     [yml]
@@ -252,9 +256,9 @@ We need to add a `slug` column for the `category` table:
         slug:         { type: varchar(255), required: true, index: unique }
 </propel>
 <doctrine>
-This `slug` column can be taken care of by a Doctrine behavior named
-`Sluggable`. We simply need to enable the behavior on our `JobeetCategory` model
-and it will take care of everything for you.
+A coluna `slug` pode ser tratada por um behavior do Doctrine chamado
+`Sluggable`. Nós simplesmente precisamos habilitar o behavior no nosso model
+`JobeetCategory` e ele irá tomar conta de tudo para você.
 
     [yml]
     # config/doctrine/schema.yml
@@ -270,12 +274,12 @@ and it will take care of everything for you.
 
 </doctrine>
 
-Now that `slug` is a real column, you need to remove the `getSlug()` method from
-`JobeetCategory`.
+Agora que `slug` é uma coluna de verdade, você tem que remover o método
+`getSlug()` de `JobeetCategory`.
 
 <propel>
-Each time the `category` name changes, we need to compute and change the `slug`
-as well. Let's override the `setName()` method:
+Cada vez que o nome da `category` muda, também precisamos computar e mudar o
+`slug`. Vamos sobrescrever o método `setName()`:
 
     [php]
     // lib/model/JobeetCategory.php
@@ -288,18 +292,18 @@ as well. Let's override the `setName()` method:
 </propel>
 <doctrine>
 >**NOTE**
->The setting of the slug column is taken care of automatically when you save a
->record. The slug is built using the value of the `name` field and set to the 
->object.
+>A configuração da coluna slug é tratada automaticamente quando você salva um
+>registro. O slug é montado usando o valor do campo `name` e colocado no
+>objeto.
 </doctrine>
 
-Use the `propel:build --all --and-load` task to update the database tables, and
-repopulate the database with our fixtures:
+Use o comando `propel:build --all --and-load` para atualizar as tabelas do
+banco de dados e repopular o banco com nossos fixtures:
 
     $ php symfony propel:build --all --and-load --no-confirmation
 
-We have now everything in place to create the `executeShow()` method. Replace
-the content of the `category` actions file with the following code:
+Agora nós temos tudo no lugar para criar o método `executeShow()`. Substitua
+o conteúdo do arquivo de actions `category` com o seguinte código:
 
     [php]
     // apps/frontend/modules/category/actions/actions.class.php
@@ -312,11 +316,11 @@ the content of the `category` actions file with the following code:
     }
 
 >**NOTE**
->Because we have removed the generated `executeIndex()` method, you can also
->remove the automatically generated `indexSuccess.php` template
+>Como nós removemos o método gerado `executeIndex()`, você também pode remover
+>o template gerado automaticamente `indexSuccess.php`
 >(`apps/frontend/modules/category/templates/indexSuccess.php`).
 
-The last step is to create the `showSuccess.php` template:
+O último passo é criar o template `showSuccess.php`:
 
     [php]
     // apps/frontend/modules/category/templates/showSuccess.php
@@ -347,17 +351,17 @@ The last step is to create the `showSuccess.php` template:
       <?php endforeach; ?>
     </table>
 
-~Partials|Partial Templates~
-----------------------------
+Templates Parciais
+------------------
 
-Notice that we have copied and pasted the `<table>` tag that create a list of
-jobs from the job `indexSuccess.php` template. That's bad. Time to learn a new
-trick. When you need to reuse some portion of a template, you need to create a
-**~partial|Partial Templates~**. A partial is a snippet of ~template|Templates~
-code that can be shared among several templates. A partial is just another
-template that starts with an underscore (`_`).
+Perceba que nós copiamos e colamos a tag `<table>` que cria uma lista de
+empregos no template de empregos `indexSuccess.php`. Isso é ruim. Hora de
+aprender um novo truque. Quando você precisar de alguma parte de um template,
+você tem que criar um **Template Parcial**. Um parcial é um trecho de código de
+um template que pode ser compartilhado entre vários templates. Um parcial é
+apenas mais um template que inicia com um sublinhado (`_`).
 
-Create the `_list.php` file:
+Crie o arquivo `_list.php`:
 
     [php]
     // apps/frontend/modules/job/templates/_list.php
@@ -377,21 +381,21 @@ Create the `_list.php` file:
       <?php endforeach; ?>
     </table>
 
-You can include a partial by using the ~`include_partial()`~ helper:
+Você pode incluir um parcial usando o helper `include_partial()`:
 
     [php]
     <?php include_partial('job/list', array('jobs' => $jobs)) ?>
 
-The first argument of `include_partial()` is the partial name (made of the
-module name, a `/`, and the partial name without the leading `_`). The second
-argument is an array of variables to pass to the partial.
+O primeiro argumento no `include_partial()` é o nome do parcial (o nome do
+módulo, uma `/` e o nome do parcial sem o `_` inicial). O segundo argumento é
+um array de variáveis a serem passadas ao parcial.
 
 >**NOTE**
->Why not use the PHP built-in `include()` method instead of the
->`include_partial()` helper? The main difference between the two is the
->built-in cache support of the `include_partial()` helper.
+>Por que não usar o método `include()` do PHP em vez do helper
+>`include_partial()`? A principal diferença entre os dois é o suporte a cache
+>embutido no helper `include_partial()`.
 
-Replace the `<table>` HTML code from both templates with the call to
+Substitua o código HTML `<table>` de ambos os templates pela chamada à
 `include_partial()`:
 
     [php]
@@ -401,17 +405,18 @@ Replace the `<table>` HTML code from both templates with the call to
     // in apps/frontend/modules/category/templates/showSuccess.php
     <?php include_partial('job/list', array('jobs' => $category->getActiveJobs())) ?>
 
-List ~Pagination~
------------------
+Paginação da Lista
+------------------
 
-From the second day's requirements:
+Dos requisitos do segundo dia:
 
-  "The list is paginated with 20 jobs per page."
-
-To paginate a list of ##ORM## objects, symfony provides a dedicated class:
-[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager). In the
-`category` action, instead of passing the job objects to the `showSuccess`
-template, we pass a pager:
+  "A lista é paginada com 20 empregos por página."
+  
+Para paginar uma lista de objetos ##ORM##, o symfony fornece uma classe
+dedicada:
+[`sfPropelPager`](http://www.symfony-project.org/api/1_4/sfPropelPager). Na
+action `category`, em vez de passar os objetos emprego para o template
+`showSuccess`, passamos um paginador:
 
     [php]
     // apps/frontend/modules/category/actions/actions.class.php
@@ -434,12 +439,13 @@ template, we pass a pager:
     }
 
 >**TIP**
->The `sfRequest::getParameter()` method takes a default value as a second
->argument. In the action above, if the `page` request parameter does not
->exist, then `getParameter()` will return `1`.
+>O método `sfRequest::getParameter()` recebe um valor padrão como segundo
+>argumento. Na action acima, se o parâmetro `page` da requisição não existir
+>então `getParameter()` retornará `1`.
 
-The `sfPropelPager` constructor takes a model class and the maximum number of
-items to return per page. Add the latter value to your configuration file:
+O construtor `sfPropelPager` recebe uma classe model e o número máximo de itens
+para retornar por página. Adicione o último valor no seu arquivo de
+configuração:
 
     [yml]
     # apps/frontend/config/app.yml
@@ -449,19 +455,19 @@ items to return per page. Add the latter value to your configuration file:
       max_jobs_on_category: 20
 
 <propel>
-The `sfPropelPager::setCriteria()` method takes a `Criteria` object to use when
-selecting the items from the database.
+O método `sfPropelPager::setCriteria()` recebe um objeto `Criteria` para usar
+quando estiver selecionando itens do banco de dados.
 </propel>
 <doctrine>
-The `sfDoctrinePager::setQuery()` method takes a `Doctrine_Query` object to use
-when selecting items from the database.
+O método `sfDoctrinePager::setQuery()` recebe um objeto `Doctrine_Query` para
+usar quando estiver selecionando itens do banco de dados.
 </doctrine>
 
 <propel>
-Add the `getActiveJobsCriteria()` method:
+Adicione o método `getActiveJobsCriteria()`:
 </propel>
 <doctrine>
-Add the `getActiveJobsQuery()` method:
+Adicione o método `getActiveJobsQuery()`:
 </doctrine>
 
 <propel>
@@ -489,12 +495,12 @@ Add the `getActiveJobsQuery()` method:
 </doctrine>
 
 <propel>
-Now that we have defined the `getActiveJobsCriteria()` method, we can refactor
-other `JobeetCategory` methods to use it:
+Agora que você definiu o método `getActiveJobsCriteria()`, podemos refatorar
+outros métodos `JobeetCategory` para usá-lo:
 </propel>
 <doctrine>
-Now that we have defined the `getActiveJobsQuery()` method, we can refactor
-other `JobeetCategory` methods to use it:
+Agora que você definiu o método `getActiveJobsQuery()`, podemos refatorar
+outros métodos `JobeetCategory` para usá-lo:
 </doctrine>
 
 <propel>
@@ -532,7 +538,7 @@ other `JobeetCategory` methods to use it:
     }
 </doctrine>
 
-Finally, let's update the template:
+Finalmente, vamos atualizar o template:
 
     [php]
     <!-- apps/frontend/modules/category/templates/showSuccess.php -->
@@ -585,35 +591,49 @@ Finally, let's update the template:
       <?php endif; ?>
     </div>
 
-Most of this code deals with the links to other pages. Here are the list of
-`sfPropelPager` methods used in this template:
+A maior parte desse código lida com links para outras páginas. Aqui vai uma
+lista dos métodos `sfPropelPager` usados no template:
 
-  * `getResults()`: Returns an array of ##ORM## objects for the current page
-  * `getNbResults()`: Returns the total number of results
-  * `haveToPaginate()`: Returns `true` if there is more than one page
-  * `getLinks()`: Returns a list of page links to display
-  * `getPage()`: Returns the current page number
-  * `getPreviousPage()`: Returns the previous page number
-  * `getNextPage()`: Returns the next page number
-  * `getLastPage()`: Returns the last page number
+  * `getResults()`: Retorna um array de objetos ##ORM## para a página atual
+  * `getNbResults()`: Retorna o número total de resultados
+  * `haveToPaginate()`: Retorna `true` se existir mais de uma página
+  * `getLinks()`: Retorna a lista de links de páginas a mostrar
+  * `getPage()`: Retorna o número da página atual
+  * `getPreviousPage()`: Retorna o número da página anterior
+  * `getNextPage()`: Retorna o número da próxima página
+  * `getLastPage()`: Retorna o número da última página
 
-As `sfPropelPager` also implements the `Iterator` and `Countable` interfaces,
-you can use `count()` function to get the number of results instead of the
-`getNbResults()` method.
+Como o `sfPropelPager` também implementa as interfaces `Iterator` e
+`Countable`, você pode usar a função `count()` para pegar o número de
+resultados em vez do método `getNbResults()`.
 
-![Pagination](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
+![Paginação](http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png)
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-If you worked on your own implementation in day 6 and feel that you didn't
-learn much here, it means that you are getting used to the symfony philosophy.
-The process to add a new feature to a symfony website is always the same: think
-about the URLs, create some actions, update the model, and write some templates.
-And, if you can apply some good development practices to the mix, you will
-become a symfony master very fast.
+Se você trabalhou na sua própria implementação no dia 6 e sentiu que não
+aprendeu muito aqui, isso significa que você está se acostumando com a filosofia
+do symfony. O processo de adicionar uma nova funcionalidade em um site feito em
+symfony é sempre o mesmo: pense sobre as URLs, cria algumas actions, atualize
+o model e escreva alguns templates. E, se puder aplicar algumas boas
+práticas de desenvolvimento nessa mistura, você se tornará um mestre no symfony
+bem rápido.
 
-Tomorrow will be the start of a new week for Jobeet. To celebrate, we will talk
-about a brand new topic: automated tests.
+Amanhã será o início de uma nova semana para o Jobeet. Para celebrar, iremos
+falar sobre um tópico novo: testes automatizados.
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
+
 
 __ORM__
