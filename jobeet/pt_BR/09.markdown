@@ -1,63 +1,66 @@
-Day 9: The Functional Tests
-============================
+Dia 9: Os Testes Funcionais
+===========================
 
-Yesterday, we saw how to unit test our Jobeet classes using the lime testing
-library packaged with symfony. Today, we will write functional tests for the
-features we have already implemented in the `job` and `category` modules.
+Ontem nós vimos como testar unitariamente nossas classes do Jobeet usando a
+biblioteca lime que vem embutida no symfony. Hoje, iremos escrever testes
+funcionais para as funcionalidades que já implementamos nos módulos `job` e
+`category`.
 
-Functional Tests
-----------------
+Testes Funcionais
+-----------------
 
-~Functional tests~ are a great tool to test your application from end to end:
-from the request made by a browser to the response sent by the server. They
-~test|Testing~ all the layers of an application: the routing, the model, the
-actions, and the templates. They are very similar to what you probably already
-do manually: each time you add or modify an action, you need to go to the
-browser and check that everything works as expected by clicking on links and
-checking elements on the rendered page. In other words, you run a scenario
-corresponding to the use case you have just implemented.
+Os testes funcionais são uma excelente ferramenta para testar sua aplicação de
+ponta a ponta: desde a requisição feita pelo navegador até a resposta enviada
+pelo servidor. Eles testam todas as camadas da aplicação: as rotas, os models,
+as actions e os templates. Eles se parecem bastante com o que você
+provavelmente já faz manualmente: toda vez que você adiciona ou modifica uma
+action, você precisa ir no navegador e verificar se tudo funciona como o
+esperado clicando nos links e verificando os elementos na página renderizada.
+Em outras palavras, você roda um cenário correspondente ao caso de uso que
+você acabou de implementar.
 
-As the process is manual, it is tedious and error prone. Each time you change
-something in your code, you must step through all the scenarios to ensure that
-you did not break something. That's insane. Functional tests in symfony provide
-a way to easily describe scenarios. Each scenario can then be played
-automatically over and over again by simulating the experience a user has in a
-browser. Like unit tests, they give you the confidence to code in peace.
+Como o processo é manual, ele é tedioso e sujeito a erros. Cada vez que você
+muda algo no código, você precisa percorrer todos os cenários para garantir
+que o que você fez não quebrou nada. Isso é insano. Os testes funcionais no
+symfony fornecem uma maneira fácil de descrever cenários. Cada um dos
+cenários pode ser rodado automaticamente várias vezes simulando a experiência
+de um usuário no navegador. Assim como os testes unitários, eles te dão
+confiança para codificar em paz.
 
 >**NOTE**
->The functional test framework does not replace tools like
->"[~Selenium~](http://selenium.seleniumhq.org/)". Selenium runs directly in
->the browser to automate testing across many platforms and browsers and as
->such, it is able to test your application's JavaScript.
+>O framework de testes funcionais não substitui ferramentas como o
+>"[~Selenium~](http://selenium.seleniumhq.org/)". O Selenium roda diretamente
+>no navegador para automatizar testes através de várias plataformas e
+>navegadores, além de poder testar o JavaScript da aplicação.
 
-The `sfBrowser` class
----------------------
+A classe `sfBrowser`
+--------------------
 
-In symfony, functional tests are run through a special ~browser|Browser~,
-implemented by the
-[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_4/sfBrowser) class.
-It acts as a browser tailored for your application and directly connected to it,
-without the need for a web server. It gives you access to all symfony objects
-before and after each request, giving you the opportunity to introspect them and
-do the checks you want programatically.
+No symfony, os testes funcionais são executados através de um navegador
+especial implementado pela classe
+[~`sfBrowser`|Browser~](http://www.symfony-project.org/api/1_4/sfBrowser).
+Ele age como um navegador adaptado para sua aplicação que fica conectado
+diretamente nele, sem a necessidade de um servidor web. Ele te dá acesso a
+todos os objetos do symfony antes e depois de cada requisição, dando a
+oportunidade de analisá-los e verificá-los programaticamente.
 
-`sfBrowser` provides methods that simulates navigation done in a classic
-browser:
+`sfBrowser` fornece métodos que simulam a navegação feita em um navegador
+clássico:
 
- | Method       | Description
- | ------------ | -------------------------------------------------
- | `get()`      | Gets a URL
- | `post()`     | Posts to a URL
- | `call()`     | Calls a URL (used for `PUT` and `DELETE` methods)
- | `back()`     | Goes back one page in the history
- | `forward()`  | Goes forward one page in the history
- | `reload()`   | Reloads the current page
- | `click()`    | Clicks on a link or a button
- | `select()`   | selects a radiobutton or checkbox
- | `deselect()` | deselects a radiobutton or checkbox
- | `restart()`  | Restarts the browser
+ | Método       | Descrição
+ | ------------ | ------------------------------------------------------
+ | `get()`      | Faz uma requisição GET em uma URL
+ | `post()`     | Faz uma requisição POST em uma URL
+ | `call()`     | Chama uma URL (usado para os métodos `PUT` e `DELETE`)
+ | `back()`     | Volta uma página no histórico
+ | `forward()`  | Avança uma página no histórico
+ | `reload()`   | Recarrega a página atual
+ | `click()`    | Clica em um link ou botão
+ | `select()`   | Seleciona um radiobutton ou checkbox
+ | `deselect()` | Desmarca um radiobutton ou checkbox
+ | `restart()`  | Reinicia o navegador
 
-Here are some usage examples of the `sfBrowser` methods:
+Aqui estão alguns exemplos de uso dos métodos de `sfBrowser`:
 
     [php]
     $browser = new sfBrowser();
@@ -70,36 +73,39 @@ Here are some usage examples of the `sfBrowser` methods:
       post('search', array('keywords' => 'php'))
     ;
 
-`sfBrowser` contains additional methods to configure the browser behavior:
+`sfBrowser` contém métodos adicionais para configurar o comportamento do
+navegador:
 
- | Method             | Description
+ | Método             | Descrição
  | ------------------ | -------------------------------------------------
- | `setHttpHeader()`  | Sets an HTTP header
- | `setAuth()`        | Sets the basic authentication credentials
- | `setCookie()`      | Set a cookie
- | `removeCookie()`   | Removes a cookie
- | `clearCookies()`   | Clears all current cookies
- | `followRedirect()` | Follows a redirect
+ | `setHttpHeader()`  | Define um cabeçalho HTTP
+ | `setAuth()`        | Define credenciais de autenticação básica
+ | `setCookie()`      | Define um cookie
+ | `removeCookie()`   | Remove um cookie
+ | `clearCookies()`   | Limpa todos os cookies atuais
+ | `followRedirect()` | Segue um redirecionamento
 
-The `sfTestFunctional` class
-----------------------------
+A classe `sfTestFunctional`
+---------------------------
 
-We have a browser, but we need a way to introspect the symfony objects to do the
-actual testing. It can be done with lime and some `sfBrowser` methods like
-`getResponse()` and `getRequest()` but symfony provides a better way.
+Nós temos um navegador, mas precisamos de uma maneira de verificar
+internamente os objetos do symfony para fazer os testes de verdade. Isso poderia
+ser feito com o lime e alguns métodos de `sfBrowser` como `getResponse()` e
+`getRequest()`, mas o symfony fornece uma maneira melhor.
 
-The test methods are provided by another class,
-[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional)
-that takes a `sfBrowser` instance in its constructor. The `sfTestFunctional`
-class delegates the tests to **~tester|Testers~** objects. Several testers are
-bundled with symfony, and you can also create your own.
+Os métodos de teste são fornecidos por outra classe, 
+[`sfTestFunctional`](http://www.symfony-project.org/api/1_4/sfTestFunctional),
+que recebe uma instância de `sfBrowser` em seu construtor. A classe
+`sfTestFunctional` delega os os testes para objetos testadores. Muitos
+testadores são embutidos no symfony, e você também pode criar os seus
+próprios.
 
-As we saw in day 8, functional tests are stored under the `test/functional/`
-directory. For Jobeet, tests are to be found in the `test/functional/frontend/`
-sub-directory as each application has its own subdirectory. This directory
-already contains two files: `categoryActionsTest.php`, and `jobActionsTest.php`
-as all tasks that generate a module automatically create a basic functional test
-file:
+Como vimos no dia 8, os testes funcionais são guardados dentro do diretório
+`test/functional/`. Para o Jobeet, os testes serão colocados no sub-diretório
+`test/functional/frontend/` pois cada aplicação tem o seu próprio
+sub-diretório. Esse diretório já contém dois arquivos: `categoryActionsTest.php`
+e `jobActionsTest.php`, isso porque todos os comandos que geram módulos criam
+um arquivo básico de teste funcional:
 
     [php]
     // test/functional/frontend/categoryActionsTest.php
@@ -121,10 +127,11 @@ file:
       end()
     ;
 
-At first sight, the script above may look a bit strange to you. That's because
-methods of `sfBrowser` and `sfTestFunctional` implement a [~fluent interface|Fluent Interface~](http://en.wikipedia.org/wiki/Fluent_interface) by
-always returning `$this`. It allows you to chain method calls for better
-readability. The above snippet is equivalent to:
+À primeira vista, o script acima pode parecer um pouco estranho. Isso acontece
+porque os métodos de `sfBrowser` e `sfTestFunctional` implementam uma
+[interface fluente](http://en.wikipedia.org/wiki/Fluent_interface) que sempre
+retorna `$this`. Isso permite que você encadeie chamadas de métodos melhorando
+a legibilidade. O trecho acima é equivalente a:
 
     [php]
     // test/functional/frontend/categoryActionsTest.php
@@ -143,8 +150,9 @@ readability. The above snippet is equivalent to:
     $browser->checkElement('body', '!/This is a temporary page/');
     $browser->end();
 
-Tests are run within a tester block context. A tester block context begins with
-`with('TESTER NAME')->begin()` and ends with `end()`:
+Os testes são rodados dentre de um bloco de contexto de teste. Um bloco de
+contexto de teste começa com `with('TESTER NAME')->begin()` e termina com
+`end()`:
 
     [php]
     $browser->
@@ -154,66 +162,71 @@ Tests are run within a tester block context. A tester block context begins with
       end()
     ;
 
-The code tests that the request parameter `module` equals `category` and
-`action` equals `index`.
+O código testa se o parâmetro da requisição `module` é igual a `category` e
+se `action` é igual a `index`.
 
 >**TIP**
->When you only need to call one test method on a tester, you don't need to
->create a block: `with('request')->isParameter('module', 'category')`.
+>Quando você precisar chamar apenas um método de teste em um testador, você
+>não precisa criar um bloco: 
+>`with('request')->isParameter('module', 'category')`.
 
-### The Request Tester
+### O Testador de Requisição
 
-The **~request tester|HTTP Request (Test)~** provides tester methods to
-introspect and test the `sfWebRequest` object:
+O **testador de requisições HTTP** fornece métodos testadores para analisar
+internamente e testar o objeto `sfWebRequest`:
 
- | Method             | Description
+ | Método             | Descrição
  | ------------------ | ------------------------------------------------
- | `isParameter()`    | Checks a request parameter value
- | `isFormat()`       | Checks the format of a request
- | `isMethod()`       | Checks the method
- | `hasCookie()`      | Checks whether the request has a cookie with the
- |                    | given name
- | `isCookie()`       | Checks the value of a cookie
+ | `isParameter()`    | Verifica o valor de um parâmetro da requisição
+ | `isFormat()`       | Verifica o formato de uma requisição
+ | `isMethod()`       | Verifica o método
+ | `hasCookie()`      | Verifica se a requisição tem um cookie com um
+ |                    | nome determinado
+ | `isCookie()`       | Verifica o valor de um cookie
 
-### The Response Tester
+### O Testador de Reposta
 
-There is also a **~response tester|HTTP Response (Test)~** class that provides
-tester methods against the `sfWebResponse` object:
+Existe também uma classe **testadora de respostas HTTP** que fornece métodos
+testadores direcionados ao objeto `sfWebResponse`:
 
- | Method             | Description
+ | Método             | Descrição
  | ------------------ | -----------------------------------------------------
- | `checkElement()`   | Checks if a response CSS selector match some criteria
- | `checkForm()`      | Checks an `sfForm` form object
- | `debug()`          | Prints the response output to ease debug
- | `matches()`        | Tests a response against a regexp
- | `isHeader()`       | Checks the value of a header
- | `isStatusCode()`   | Checks the response status code
- | `isRedirected()`   | Checks if the current response is a redirect
- | `isValid()`        | Checks if a response is well-formed XML (you also validate the response again its document type be passing `true` as an argument)
+ | `checkElement()`   | Verifica se o seletor CSS de uma resposta casa com
+ |					  | algum critério
+ | `checkForm()`      | Verifica um objeto formulário `sfForm`
+ | `debug()`          | Imprime a saída da resposta facilitando a depuração
+ | `matches()`        | Testa uma resposta com uma expressão regular
+ | `isHeader()`       | Verifica o valor do cabeçalho
+ | `isStatusCode()`   | Verifica o código de status da resposta
+ | `isRedirected()`   | Verifica se a página atual é um redirecionamento
+ | `isValid()`        | Verifica se uma resposta é um XLM bem-formado
+ |					  | (você também pode validar a resposta novamente no
+ |					  |  seu documento passando `true` como um argumento)
 
 >**NOTE**
->We will describe more testers classes in the coming days 
->(for forms, user, cache, ...).
+>Descreveremos mais classes testadoras nos próximos dias
+>(para formulários, usuário, cache, ...)
 
-Running Functional Tests
-------------------------
+Rodando Testes Funcionais
+-------------------------
 
-As for unit tests, launching functional tests can be done by executing the test
-file directly:
+Assim como nos testes unitários, rodar os testes funcionais pode ser feito
+executando o arquivo de teste diretamente:
 
     $ php test/functional/frontend/categoryActionsTest.php
 
-Or by using the `test:functional` task:
+Ou então usando o comando `test:functional`:
 
     $ php symfony test:functional frontend categoryActions
 
-![Tests on the command line](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
+![Testes na linha de comando](http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png)
 
-Test Data
----------
+Dados de Teste
+--------------
 
-As for ##ORM## unit tests, we need to load test data each time we launch a
-functional test. We can reuse the code we have written previously:
+Assim como nos testes unitários do ##ORM##, precisamos carregar dados de teste
+toda vez que iniciamos um teste funcional. Podemos reutilizar o código que
+escrevemos anteriormente:
 
     [php]
     include(dirname(__FILE__).'/../../bootstrap/functional.php');
@@ -227,12 +240,12 @@ functional test. We can reuse the code we have written previously:
     Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 </doctrine>
 
-Loading data in a functional test is a bit easier than in unit tests as the
-database has already been initialized by the bootstrapping script.
+Carregar dados em um teste funcional é um pouco mais fácil do que nos testes
+funcionais pois o banco de dados já foi inicializado pelo script bootstrap.
 
-As for unit tests, we won't copy and paste this snippet of code in each test
-file, but we will rather create our own functional class that inherits from
-`sfTestFunctional`:
+Como nos testes unitários, não iremos copiar e colar esse trecho de código em
+cada arquivo de teste, em vez disso criaremos nossas próprias classes
+funcionais que herdam da `sfTestFunctional`:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -252,16 +265,16 @@ file, but we will rather create our own functional class that inherits from
       }
     }
 
-Writing Functional Tests
-------------------------
+Escrevendo Testes Funcionais
+----------------------------
 
-Writing functional tests is like playing a scenario in a browser. We already
-have written all the scenarios we need to test as part of the day 2 stories.
+Escrever testes funcionais é como rodar um cenário em um navegador. Nós já
+escrevemos todos os cenários que precisamos testar nas stories do dia 2.
 
-First, let's test the Jobeet homepage by editing the `jobActionsTest.php` test
-file. Replace the code with the following one:
+Primeiro, vamos testar a página inicial do Jobeet editando o arquivo de teste
+`jobActionsTest.php`. Substitua o código com o seguinte:
 
-### Expired jobs are not listed
+### Empregos expirados não devem ser listados
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -282,21 +295,22 @@ file. Replace the code with the following one:
       end()
     ;
 
-As with `lime`, an informational message can be inserted by calling the `info()`
-method to make the output more readable. To verify the exclusion of expired jobs
-from the homepage, we check that the ~CSS selector~ 
-`.jobs td.position:contains("expired")` does not match anywhere in the response
-HTML content (remember that in the fixture files, the only expired job we have
-contains "expired" in the position). When the second argument of the
-`checkElement()` method is a Boolean, the method tests the existence of nodes
-that match the CSS selector.
+Como no `lime`, uma mensagem informacional pode ser inserida chamando o método
+`info()` para deixar a saída mais legível. Para verificar a exclusão dos
+empregos expirados da página inicial, verificamos se o seletor CSS
+`.jobs td.position:contains("expired")` não casa com nada no conteúdo HTML da
+resposta (lembre-se que nos arquivos fixtures, o único emprego expirado que
+criamos contém "expired" no campo cargo). Quando o segundo argumento do método
+`checkElement()` for um Boolean, o método testa a existência de nós que casem
+com o seletor CSS.
 
 >**TIP**
->The `checkElement()` method is able to interpret most valid CSS3 selectors.
+>O método `checkElement()` é capaz de interpretar a maioria dos seletores
+CSS3 válidos.
 
-### Only n jobs are listed for a category
+### Apenas n empregos são listados para uma categoria
 
-Add the following code at the end of the test file:
+Adicione o seguinte código no fim do arquivo de teste:
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -309,10 +323,10 @@ Add the following code at the end of the test file:
         checkElement('.category_programming tr', $max)
     ;
 
-The `checkElement()` method can also check that a CSS selector matches 'n' nodes
-in the document by passing an integer as its second argument.
+O método `checkElement()` também pode verificar se o seletor CSS casa 'n' nós
+no documento passando um inteiro como seu segundo argumento.
 
-### A category has a link to the category page only if too many jobs
+### Uma categoria tem um link para a página da categoria apenas se tiver muitos empregos
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -325,12 +339,12 @@ in the document by passing an integer as its second argument.
       end()
     ;
 
-In these tests, we check that there is no "more jobs" link for the design
-category (`.category_design .more_jobs` does not exist), and that there is a
-"more jobs" link for the programming category (`.category_programming
-.more_jobs` does exist).
+Nesses testes, podemos verificar se não existe o link "mais empregos" para a
+categoria design (`.category_design .more_jobs` não existe), e se existe
+um link "mais empregos" para a categoria programming
+(`.category_programming .more_jobs` existe).
 
-### Jobs are sorted by date
+### Os empregos são ordenados por data
 
     [php]
 <propel>
@@ -366,17 +380,18 @@ category (`.category_design .more_jobs` does not exist), and that there is a
       end()
     ;
 
-To test if jobs are actually sorted by date, we need to check that the first job
-listed on the homepage is the one we expect. This can be done by checking that
-the URL contains the expected ~primary key|Primary Key~. As the primary key can
-change between runs, we need to get the ##ORM## object from the database first.
+Para testar se os empregos estão realmente ordenados por data, precisamos
+verificar se o primeiro emprego listado na página inicial é o que esperamos.
+Isso pode ser feito verificando se a URL contém a chave primária esperada.
+Como a chave primária pode mudar entre as execuções, precisamos primeiro pegar
+o objeto ##ORM## do banco de dados.
 
-Even if the test works as is, we need to refactor the code a bit, as getting the
-first job of the programming category can be reused elsewhere in our tests. We
-won't move the code to the Model layer as the code is test specific. Instead, we
-will move the code to the `JobeetTestFunctional` class we have created earlier.
-This class acts as a Domain Specific ~functional tester class|Testers~ for
-Jobeet:
+Mesmo se o teste funcionar dessa forma, precisamos refatorar o código um pouco,
+assim se pegarmos o primeiro emprego da categoria programming podemos
+reutilizá-lo em qualquer lugar nos nossos testes. Nós não moveremos o código
+para a camada Model pois o código é específico para os testes. Em vez disso,
+iremos mover o código para a classe `JobeetTestFunctional` que criamos mais
+cedo. Essa classe funciona com um Testador Específico de Domínio do Jobeet:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -412,7 +427,7 @@ Jobeet:
       // ...
     }
 
-You can now replace the previous test code by the following one:
+Agora você pode substituir o código do teste anterior com o seguinte:
 
     [php]
     // test/functional/frontend/jobActionsTest.php
@@ -425,7 +440,7 @@ You can now replace the previous test code by the following one:
       end()
     ;
 
-### Each job on the homepage is clickable
+### Todo emprego na página inicial é clicável
 
     [php]
     $job = $browser->getMostRecentProgrammingJob();
@@ -445,18 +460,19 @@ You can now replace the previous test code by the following one:
       end()
     ;
 
-To test the job link on the homepage, we simulate a click on the "Web Developer"
-text. As there are many of them on the page, we have explicitly to asked the
-browser to click on the first one (`array('position' => 1)`).
+Para testar o link do emprego na página inicial, simulamos um clique no texto
+"Web Developer". Como existem muitos deles na página, dizemos explicitamente
+para o navegador clicar no primeiro (`array('position' => 1)`).
 
-Each request parameter is then tested to ensure that the routing has done its
-job correctly.
+Cada parâmetro da requisição é então testado para garantir que o roteamento
+foi feito corretamente para o emprego.
 
-Learn by the Example
+Aprenda pelo Exemplo
 --------------------
 
-In this section, we have provided all the code needed to test the job and
-category pages. Read the code carefully as you may learn some new neat tricks:
+Nessa seção, nós fornecemos todo o código necessário para testar as páginas de
+emprego e categoria. Leia o código cuidadosamente para que você possa aprender
+alguns truques novos e elegantes:
 
     [php]
     // lib/test/JobeetTestFunctional.class.php
@@ -628,76 +644,94 @@ category pages. Read the code carefully as you may learn some new neat tricks:
       with('response')->checkElement('.pagination_desc', '#page 2/2#')
     ;
 
-Debugging Functional Tests
---------------------------
+Depurando Testes Funcionais
+---------------------------
 
-Sometimes a functional test fails. As symfony simulates a browser without any
-graphical interface, it can be hard to diagnose the problem. Thankfully, symfony
-provides the `~debug|Debug~()` method to output the response header and content:
+Às vezes um teste funcional falha. Como o symfony simula um navegador sem
+nenhuma interface gráfica, pode ser difícil para diagnosticar o problema.
+Pensando nisso o symfony fornece o método `~debug|Debug~()` para mostrar a
+saída do cabeçalho e conteúdo da resposta.
 
     [php]
     $browser->with('response')->debug();
 
-The `debug()` method can be inserted anywhere in a `response` tester block and
-will halt the script execution.
+O método `debug()` pode ser inserido em qualquer lugar de um bloco testador
+`response` e irá parar a execução do script.
 
 Functional Tests Harness
 ------------------------
 
-The `test:functional` task can also be used to launch all functional tests for
-an application:
+O comando `test:functional` também pode ser usado para iniciar todos os testes
+funcionais de uma aplicação:
 
     $ php symfony test:functional frontend
 
-The task outputs a single line for each test file:
+A saída do comando é uma única linha para cada um dos arquivos de teste:
 
 ![Functional tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png)
 
 Tests Harness
 -------------
 
-As you may expect, there is also a task to launch all tests for a project (unit
-and functional):
+Como você pode esperar, existe também um comando para iniciar todos os testes
+de um projeto (unitários e funcionais):
 
     $ php symfony test:all
 
 ![Tests harness](http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png)
 
-When you have a large suite of tests, it can be very time consuming to launch
-all tests every time you make a change, especially if some tests fail. That's
-because each time you fix a test, you should run the whole test suite again to
-ensure that you have not break something else. But as long as the failed tests
-are not fixed, there is no point in re-executing all other tests. The `test:all`
-tasks have a `--only-failed` option that forces the task to only re-execute
-tests that failed during the previous run:
+Quando você tem um conjunto grande de testes, pode ser bem demorado para
+iniciar todos os testes cada vez que você fizer uma mudança, especialmente se
+alguns dos testes falharem. Isso porque, cada vez que você arruma um teste, você
+deve rodar o conjunto de testes inteiro novamente para garantir que você não
+quebrou nenhuma outra parte. Mas até que os testes falhados não forem
+arrumados, não faz sentido re-executar todos os outros testes. O comando
+`test:all` tem uma opção `--only-failed` que força o comando para re-executar
+apenas os testes que falharam durante a última execução:
 
     $ php symfony test:all --only-failed
 
-The first time you run the task, all tests are run as usual. But for subsequent
-test runs, only tests that failed last time are executed. As you fix your code,
-some tests will pass, and will be removed from subsequent runs. When all tests
-pass again, the full test suite is run... you can then rinse and repeat.
+A primeira vez que você roda o comando, todos os testes são rodados como de
+costume. Mas para as execuções subsequentes, apenas os testes que falharam
+na última vez serão executados. Assim que você consertar seu código, alguns testes
+passarão, e serão removidos das execuções subsequentes. Quando todos os testes
+passarem novamente, o conjunto de testes completo é executado... e isso se
+repete várias vezes.
 
 >**TIP**
->If you want to integrate your test suite in a continuous integration process,
->use the `--xml` option to force the `test:all` task to generate a JUnit
->compatible XML output.
+>Se você quiser integrar seu conjunto de testes em um processo de integração
+>contínua, use a opção `--xml` para forçar que o comando `test:all` gere uma
+>saída XML compatível com o JUnit.
 >
 >      $ php symfony test:all --xml=log.xml
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-That wraps up our tour of the symfony test tools. You have no excuse anymore to
-not test your applications! With the lime framework and the functional test
-framework, symfony provides powerful tools to help you write tests with little
-effort.
+Aqui termina nossa viagem pelas ferramentas de teste do symfony. Você não tem
+mais desculpa para não testar suas aplicações! Com o framework lime e o
+framework de testes funcionais, o symfony fornece ferramentas poderosas para
+te ajudar a escrever testes com pouco esforço.
 
-We have just scratched the surface of functional tests. From now on, each time
-we implement a feature, we will also write tests to learn more features of the
-test framework.
+Nós demos apenas uma pincelada nos testes funcionais. A partir de agora, toda
+vez que implementar uma funcionalidade, também escreveremos testes para
+aprender mais funcionalidades do framework de teste.
 
-Tomorrow, we will talk about yet another great feature of symfony: the **form
-framework**.
+Amanhã, falaremos sobre outra excelente funcionalidade do symfony: o
+**framework de formulários**.
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
+
 
 __ORM__
+
