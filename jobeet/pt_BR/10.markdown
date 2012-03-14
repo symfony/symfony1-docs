@@ -1,39 +1,41 @@
-Day 10: The Forms
-=================
+Dia 10: Os Formulários
+======================
 
-Previous day of this Jobeet tutorial got off to a flying start with the
-introduction of the symfony test framework. We will continue today with the form
-framework.
+No dia anterior desse tutorial do Jobeet tivemos um bom início com a introdução
+do framework de teste do symfony. Hoje vamos continuar com o framework de
+formulários.
 
-The Form Framework
-------------------
+O Framework de Formulários
+--------------------------
 
-Any website has ~forms|Forms~; from the simple contact form to the complex ones
-with lots of fields. Writing forms is also one of the most complex and tedious
-task for a web developer: you need to write the HTML form, implement validation
-rules for each field, process the values to store them in a database, display
-error messages, repopulate fields in case of errors, and much more...
+Todo site tem formulários; desde o simples formulário de contato até aqueles
+bem complexos com vários campos. Escrever formulários também é uma das tarefas
+mais complexas e tediosas para um desenvolvedor web: você precisa escrever o
+HTML do formulário, implementar regras de validação para cada um dos campos,
+processar os valores para guardá-los no banco de dados, mostrar mensagens de
+erro, repopular campos em caso de erros e muito mais...
 
-Of course, instead of reinventing the wheel over and over again, symfony
-provides a framework to ease form management. The form framework is made of
-three parts:
+É claro, em vez de reinventar a roda mais uma vez, o symfony fornece um
+framework que facilita o gerenciamento de formulários. O framework de
+formulários é composto de três partes:
 
-  * **validation**: The ~validation|Validation~ sub-framework provides classes 
-                    to validate inputs (integer, string, email address, ...)
+  * **validação**:   O sub-framework de validação fornece classes para validar
+                     entradas (inteiro, string, endereço de e-mail, ...)
 
-  * **widgets**:    The ~widget|Widgets~ sub-framework provides classes to 
-                    output HTML fields (input, textarea, select, ...)
+  * **widgets**:     O sub-framework de widgets fornece classes para criar
+  					 campos HTML (input, textarea, select, ...)
 
-  * **forms**:      The ~form|Forms~ classes represent forms made of widgets and
-                    validators and provide methods to help manage the form.
-                    Each form field has its own validator and widget.
+  * **formulários**: As classes de formulário representam formulários feitos
+  					 de widgets e validadores. Elas fornecem métodos para
+  					 ajudar a gerenciar o formulário. Cada um dos campos do
+  					 formulário tem seus próprios validadores e widgets.
+  					 
+Formulários
+-----------
 
-Forms
------
-
-A symfony form is a class made of fields. Each field has a name, a
-~validator|Validators~, and a ~widget|Widgets~. A simple `ContactForm` can be
-defined with the following class:
+Um formulário do symfony é uma classe composta de campos. Cada campo tem um
+nome, um validador e um widget. Um simples `ContactForm` pode ser definido com
+a classe a seguir:
 
     [php]
     class ContactForm extends sfForm
@@ -52,50 +54,50 @@ defined with the following class:
       }
     }
 
-Form fields are configured in the `configure()` method, by using the
-`setValidators()` and `setWidgets()` methods.
+Os campos dos formulários são configurados no método `configure()`, usando os
+métodos `setValidators()` e `setWidgets()`.
 
 >**TIP**
->The form framework comes bundled with a lot of
->[widgets](http://www.symfony-project.org/api/1_4/widget) and
->[validators](http://www.symfony-project.org/api/1_4/validator). The API
->describes them quite extensively with all the options, errors, and default
->error messages.
+>O framework de formulários vem com uma série de
+>[widgets](http://www.symfony-project.org/api/1_4/widget) e
+>[validadores](http://www.symfony-project.org/api/1_4/validator). A API
+>os descreve de forma extensiva com todas as opções, erros e mensagens de erro
+>padrões.
 
-The widget and validator class names are quite explicit: the `email` field will
-be rendered as an HTML `<input>` tag (`sfWidgetFormInputText`) and validated as
-an email address (`sfValidatorEmail`). The `message` field will be rendered as a
-`<textarea>` tag (`sfWidgetFormTextarea`), and must be a string of no more than
-255 characters (`sfValidatorString`).
+Os nomes das classes dos widgets e dos validadores são bem explícitas: o campo
+`email` será renderizado com uma tag HTML `<input>` (`sfWidgetFormInputText`)
+e validado como um endereço de e-mail (`sfValidatorEmail`). O campo `message`
+será renderizado como uma tag `<textarea>` (`sfWidgetFormTextarea`), e deverá
+ser uma string de no máximo 255 caracteres (`sfValidatorString`).
 
-By default all fields are ~required|Required Form Fields~, as the default value
-for the `required` option is `true`. So, the validation definition for `email`
-is equivalent to `new sfValidatorEmail(array('required' => true))`.
+Por padrão todos os campos são obrigatórios, pois o valor da opção `required`
+é `true`. Assim, a definição para `email` é equivalente a
+`new sfValidatorEmail(array('required' => true))`.
 
 >**TIP**
->You can merge a form in another one by using the `mergeForm()` method, or
->embed one by using the `embedForm()` method:
+>Você pode mesclar um formulário em outro usando o método `mergeForm()`, ou
+>embutir um formulário usando o método `embedForm()`:
 >
 >     [php]
 >     $this->mergeForm(new AnotherForm());
 >     $this->embedForm('name', new AnotherForm());
 
-##ORM## Forms
--------------
+##ORM## Formulários
+-------------------
 
-Most of the time, a form has to be serialized to the database. As symfony
-already knows everything about your database model, it can automatically
-generate forms based on this information. In fact, when you launched the
-`propel:build --all` task during day 3, symfony automatically called the
-`propel:build --forms` task:
+Na maior parte das vezes, um formulário tem que ser serializado no banco de
+dados. Como o symfony já conhece o modelo do banco de dados, ele pode gerar
+automaticamente formulários baseados nessa informação. Na verdade, quando
+você rodou o comando `propel:build --all` no dia 3, o symfony automaticamente
+chamou o comando `propel:build --forms`:
 
     $ php symfony propel:build --forms
 
-The `propel:build --forms` task generates form classes in the `lib/form/`
-directory. The organization of these generated files is similar to that of
-`lib/model/`. Each model class has a related form class (for instance
-`JobeetJob` has `JobeetJobForm`), which is empty by default as it inherits from
-a base class:
+O comando `propel:build --forms` gera classes de formulário no diretório
+`lib/form/`. A organização desses arquivos gerados é similar a de `lib/model/`.
+Cada classe model tem uma classe formulário relacionada (por exemplo,
+`JobeetJob` tem `JobeetJobForm`), que por padrão é vazia e herda de uma classe
+base:
 
     [php]
 <propel>
@@ -113,28 +115,28 @@ a base class:
 
 <propel>
 >**TIP**
->By browsing the generated files under the `lib/form/base/` sub-directory, you
->will see a lot of great usage examples of symfony built-in widgets and
->validators.
+>Ao navegar pelos arquivos gerados no sub-diretório `lib/form/base/`, você verá
+>uma série de ótimos exemplos de uso de widgets e validadores embutidos no
+>symfony.
 </propel>
 <doctrine>
 >**TIP**
->By browsing the generated files under the `lib/form/doctrine/base/`
->sub-directory, you will see a lot of great usage examples of symfony built-in
->widgets and validators.
+>Ao navegar pelos arquivos gerados no sub-diretório `lib/form/doctrine/base/`,
+>você verá uma série de ótimos exemplos de uso de widgets e validadores
+>embutidos no symfony.
 </doctrine>
 
 -
 
 <doctrine>
 >**TIP**
->You can disable form generation on certain models by passing parameters to
->the `symfony` Doctrine behavior:
+>Você pode desabilitar a geração de formulários em determinados models passando
+>parâmetros para o behavior `symfony` do Doctrine:
 </doctrine>
 <propel>
 >**TIP**
->You can disable form generation on certain models by passing parameters to
->the `symfony` Propel behavior:
+>Você pode desabilitar a geração de formulários em determinados models passando
+>parâmetros para o behavior `symfony` do Propel:
 </propel>
 >
 <propel>
@@ -155,21 +157,22 @@ a base class:
 >           filter: false
 </doctrine>
 
-### Customizing the Job Form
+### Personalizando o Formulário de Emprego
 
-The job form is a perfect example to learn ~form customization|Forms
-(Customization)~. Let's see how to customize it, step by step.
+O formulário de emprego é um exemplo perfeito para aprender sobre a
+personalização de formulários. Vamos ver como personalizá-lo passo-a-passo.
 
-First, change the "Post a Job" link in the layout to be able to check changes
-directly in your browser:
+Primeiro, mude o link "Post a Job" no layout para que se possa verificar as
+mudanças diretamente no seu navegador:
 
     [php]
     <!-- apps/frontend/templates/layout.php -->
     <a href="<?php echo url_for('job_new') ?>">Post a Job</a>
 
-By default, a ##ORM## form displays fields for all the table columns. But for
-the job form, some of them must not be editable by the end user. Removing fields
-from a form is as simple as unsetting them:
+Por padrão, um formulário ##ORM## mostra campos para todas as colunas das
+tabelas. Mas para o formulário de emprego, algumas colunas não podem ser
+editadas pelo usuário final. Remover campos de um formulário é simplesmente
+desativá-los:
 
     [php]
 <propel>
@@ -189,10 +192,12 @@ from a form is as simple as unsetting them:
       }
     }
 
-Unsetting a field means that both the field widget and validator are removed.
+Desativar um campo significa que todos os widgets e validadores do campo serão
+removidos.
 
-Instead of unsetting the fields you don't want to display, you can also
-explicitly list the fields you want by using the `useFields()` method:
+Em vez de desativar os campos que você não quer mostrar, você também pode
+listar explicitamente os campos que você quer mostrar usando o método
+`useFields()`:
 
     [php]
 <propel>
@@ -211,18 +216,20 @@ explicitly list the fields you want by using the `useFields()` method:
       }
     }
 
-The `useFields()` method does two things automatically for you: it adds the
-hidden fields and the array of fields is used to change the fields order.
+O método `useFields()` faz duas coisas automaticamente para você: adiciona os
+campos escondidos e o array de campos é usado para alterar a ordem dos campos.
 
 >**TIP**
->Explicitly listing the form fields you want to display means that when adding
->new fields to a base form, they won't automagically appear in your form
->(think of a model form where you add a new column to the related table).
+>Listar explicitamente os campos do formulário que você quer mostrar significa
+>que quando você adicionar novos campos em um formulário base, eles não irão
+>aparecer automagicamente no seu formulário (pense num formulário modelo onde
+>você adiciona um nova coluna na tabela relacionada).
 
-The form configuration must sometimes be more precise than what can be
-introspected from the database schema. For example, the `email` column is a
-`varchar` in the schema, but we need this column to be validated as an email.
-Let's change the default `sfValidatorString` to a `sfValidatorEmail`:
+A configuração do formulário às vezes precisa ser mais precisa do que é
+conseguida pela instrospecção do esquema do banco de dados. Por exemplo, a
+coluna `email` é um `varchar` no esquema, mas precisamos que essa coluna seja
+validada como um e-mail. Vamos mudar o padrão `sfValidatorString` para
+`sfValidatorEmail`:
 
     [php]
 <propel>
@@ -238,11 +245,11 @@ Let's change the default `sfValidatorString` to a `sfValidatorEmail`:
       $this->validatorSchema['email'] = new sfValidatorEmail();
     }
 
-Replacing the default validator is not always the best solution, as the default
-validation rules introspected from the database schema are lost (`new
-sfValidatorString(array('max_length' => 255))`). It is almost always better to
-add the new validator to the existing ones by using the special `sfValidatorAnd`
-validator:
+Substituir o validador padrão nem sempre é a melhor solução, pois as regras de
+validação que foram introspectadas do esquema do banco de dados são perdidas
+(`new sfValidatorString(array('max_length' => 255))`). É quase sempre melhor
+adicionar os novos validadores aos existentes usando o validador especial
+`sfValidatorAnd`:
 
     [php]
 <propel>
@@ -261,21 +268,21 @@ validator:
       ));
     }
 
-The `sfValidatorAnd` validator takes an array of validators that must pass for
-the value to be valid. The trick here is to reference the current validator
-(`$this->validatorSchema['email']`), and to add the new one.
+O validador `sfValidatorAnd` recebe um array de validadores passados por valor
+para serem válidos. O truque aqui é referenciar o validador atual
+(`$this->validatorSchema['email']`) e então adicionar um novo sobre ele.
 
 >**NOTE**
->You can also use the `sfValidatorOr` validator to force a value to
->pass at least one validator. And of course, you can mix and match
->`sfValidatorAnd` and `sfValidatorOr` validators to create complex
->boolean based validators.
+>Você também pode usar o validador `sfValidatorOr` para forçar que seja
+>passado o valor de pelo menos um validador. E é claro, você pode misturar e
+>combinar validadores `sfValidatorAnd` e `sfValidatorOr` para criar
+>validadores complexos baseados em booleanos.
 
-Even if the `type` column is also a `varchar` in the schema, we want its value
-to be restricted to a list of choices: full time, part time, or freelance.
+Mesmo se a coluna `type` for também um `varchar` no esquema, queremos que esse
+valor seja restrito a uma lista de opções: full time, part time ou freelance.
 
 <propel>
-First, let's define the possible values in `JobeetJobPeer`:
+Primeiro, vamos definir os valores possíveis em `JobeetJobPeer`:
 
     [php]
     // lib/model/JobeetJobPeer.php
@@ -291,7 +298,7 @@ First, let's define the possible values in `JobeetJobPeer`:
     }
 </propel>
 <doctrine>
-First, let's define the possible values in `JobeetJobTable`:
+Primeiro, vamos definir os valores possíveis em `JobeetJobTable`:
 
     [php]
     // lib/model/doctrine/JobeetJobTable.class.php
@@ -312,7 +319,7 @@ First, let's define the possible values in `JobeetJobTable`:
     }
 </doctrine>
 
-Then, use `sfWidgetFormChoice` for the `type` widget:
+Depois, use `sfWidgetFormChoice` para o widget `type`:
 
     [php]
     $this->widgetSchema['type'] = new sfWidgetFormChoice(array(
@@ -325,23 +332,24 @@ Then, use `sfWidgetFormChoice` for the `type` widget:
       'expanded' => true,
     ));
 
-`sfWidgetFormChoice` represents a ~choice widget~ which can be rendered by a
-different widget according to some configuration options (`expanded` and
-`multiple`):
+O `sfWidgetFormChoice` representa um widget escolhido que pode ser renderizado
+por um widget diferente de acordo com alguns opções de configuração (`expanded
+e `multiple`):
 
- * Dropdown list (`<select>`): `array('multiple' => false, 'expanded' => false)`
- * Dropdown box (`<select multiple="multiple">`): `array('multiple' => true, 'expanded' => false)`
- * List of radio buttons: `array('multiple' => false, 'expanded' => true)`
- * List of checkboxes: `array('multiple' => true, 'expanded' => true)`
+ * Lista dropdown (`<select>`): `array('multiple' => false, 'expanded' => false)`
+ * Caixa dropdown (`<select multiple="multiple">`): `array('multiple' => true, 'expanded' => false)`
+ * Lista de botões radio: `array('multiple' => false, 'expanded' => true)`
+ * Lista de checkboxes: `array('multiple' => true, 'expanded' => true)`
 
 >**NOTE**
->If you want one of the radio button to be selected by default (`full-time`
->for instance), you can change the default value in the database schema.
+>Se você quiser que um dos botões radio seja selecionado por padrão
+>(`full-time` por exemplo), você pode mudar o valor padrão no esquema do banco.
 
-Even if you think nobody can submit a non-valid value, a hacker can easily
-bypass the widget choices by using tools like [curl](http://curl.haxx.se/) or
-the [Firefox Web Developer Toolbar](http://chrispederick.com/work/web-developer/). Let's change the
-validator to restrict the possible choices:
+Mesmo se você achar que ninguém possa submeter um valor inválido, um hacker
+pode facilmente evitar a escolha dos widgets usando ferramentas como o
+[curl](http://curl.haxx.se/) ou o 
+[Firefox Web Developer Toolbar](http://chrispederick.com/work/web-developer/).
+Vamos alterar o validador para restringir as opções possíveis:
 
 <propel>
     [php]
@@ -356,20 +364,19 @@ validator to restrict the possible choices:
     ));
 </doctrine>
 
-As the `logo` column will store the filename of the logo associated with the
-job, we need to change the widget to a ~file input|File Input~ tag:
+Como a coluna `logo` irá guardar o nome do arquivo do logo associado com o
+emprego, precisamos mudar o widget para uma tag ~file input|File Input~:
 
     [php]
     $this->widgetSchema['logo'] = new sfWidgetFormInputFile(array(
       'label' => 'Company logo',
     ));
 
-For each field, symfony automatically generates a ~label|Form Labels~ (which
-will be used in the rendered `<label>` tag). This can be changed with the
-`label` option.
+Para cada um dos campos, o symfony automaticamente cria um rótulo (que será
+usado no tag `<label>`). Isso pode ser alterado com a opção `label`.
 
-You can also change labels in a batch with the `setLabels()` method of the
-widget array:
+Você também pode alterar vários rótulos de uma vez com o método `setLabels()`
+do array de widgets:
 
     [php]
     $this->widgetSchema->setLabels(array(
@@ -378,7 +385,7 @@ widget array:
       'how_to_apply'   => 'How to apply?',
     ));
 
-We also need to change the default validator:
+Também precisamos mudar o validador padrão:
 
     [php]
     $this->validatorSchema['logo'] = new sfValidatorFile(array(
@@ -387,37 +394,37 @@ We also need to change the default validator:
       'mime_types' => 'web_images',
     ));
 
-`sfValidatorFile` is quite interesting as it does a number of things:
+O `sfValidatorFile` é bem interessante e faz um grande número de coisas:
 
- * Validates that the uploaded file is an image in a web format (`mime_types`)
- * Renames the file to something unique
- * Stores the file in the given `path`
- * Updates the `logo` column with the generated name
+ * Valida se o arquivo carregado é uma imagem em um formato web (`mime_types`)
+ * Renomeia o arquivo para um nome único
+ * Armazena o arquivo no `path` indicado
+ * Atualiza a coluna `logo` com o nome gerado
 
 >**NOTE**
->You need to create the logo directory (`web/uploads/jobs/`) and check that it
->is writable by the web server.
+>Você precisa criar o diretório de logos (`web/uploads/jobs/`) e verificar se
+>o servidor web tem permissão de escrita nele.
 
-As the validator only saves the filename in the database, change the path
-used in the `showSuccess` template:
+Como o validador apenas salva o nome do arquivo no banco de dados, altere o
+caminho usado no template `showSuccess`:
 
     [php]
     // apps/frontend/modules/job/templates/showSuccess.php
     <img src="/uploads/jobs/<?php echo $job->getLogo() ?>" alt="<?php echo $job->getCompany() ?> logo" />
 
 >**TIP**
->If a `generateLogoFilename()` method exists in the model, it will be called
->by the validator and the result will override the default generated `logo`
->filename. The method takes the `sfValidatedFile` object as an argument.
+>Se o método `generateLogoFilename()` existir no model, ele será chamado pelo
+>validador e o resultado irá sobrescrever o padrão gerado pelo nome do arquivo
+>`logo`. O método recebe como argumento o objeto `sfValidatedFile`.
 
-Just as you can override the generated label of any field, you can also define a
-~help message|Forms (Help)~. Let's add one for the `is_public` column to better
-explain its significance:
+Da mesma forma que você pode sobrescrever o rótulo gerado de cada um dos
+campos, você também pode definir uma mensagem de ajuda. Vamos adicionar uma
+para a coluna `is_public` para explicar melhor seu significado:
 
     [php]
     $this->widgetSchema->setHelp('is_public', 'Whether the job can also be published on affiliate websites or not.');
 
-The final `JobeetJobForm` class reads as follows:
+A classe `JobeetJobForm` finalizada fica assim:
 
     [php]
 <propel>
@@ -478,12 +485,12 @@ The final `JobeetJobForm` class reads as follows:
       }
     }
 
-### The Form Template
+### O Template do Formulário
 
-Now that the form class has been customized, we need to display it. The
-~template|Templates~ for the form is the same whether you want to create a new
-job or edit an existing one. In fact, both `newSuccess.php` and
-`editSuccess.php` templates are quite similar:
+Agora que a classe do formulário foi personalizada, precisamos mostrá-la. O
+template para o formulário é o mesmo para quando você está criando um novo
+emprego ou editando ou já existente. Na verdade, tanto o template
+`newSuccess.php` quanto o `editSuccess.php` são bem similares:
 
     [php]
     <!-- apps/frontend/modules/job/templates/newSuccess.php -->
@@ -494,11 +501,11 @@ job or edit an existing one. In fact, both `newSuccess.php` and
     <?php include_partial('form', array('form' => $form)) ?>
 
 >**NOTE**
->If you have not added the `job` stylesheet yet, it is time to do so in both
->templates (`<?php use_stylesheet('job.css') ?>`).
+>Se você ainda não tiver adicionado a folha de estilos `job`, essa é a hora de
+>fazer isso em ambos os templates (`<?php use_stylesheet('job.css') ?>`).
 
-The form itself is rendered in the `_form` ~partial|Partial Templates~. Replace
-the content of the generated `_form` partial with the following code:
+O formulário é renderizado no partial `_form`. Substitua o conteúdo do partial
+`_form` gerado com o código a seguir:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_form.php -->
@@ -520,82 +527,86 @@ the content of the generated `_form` partial with the following code:
       </table>
     </form>
 
-The `use_javascripts_for_form()` and `use_stylesheets_for_form()` helpers
-include JavaScript and stylesheet dependencies needed for the form widgets.
+Os helpers `use_javascripts_for_form()` e `use_stylesheets_for_form()` incluem
+as dependências de JavaScripts e folhas de estilos necessárias aos widgets dos
+formulários.
 
 >**TIP**
->Even if the job form does not need any JavaScript or stylesheet file, it is a
->good habit to keep these helper calls "just in case". It can save your day
->later if you decide to change a widget that needs some ~JavaScript~ or a
->specific ~stylesheet|Stylesheets~.
+>Mesmo que o formulário de emprego não precise de nenhum arquivo de JavaScript
+>ou de folha de estilos, é uma boa prática manter essas chamadas aos helpers
+>para garantia. Isso pode salvar o seu dia mais para a frente se você decidir
+>alterar um widget que precisa de algum JavaScript ou de um folha de estilos
+>específica.
 
-The ~`form_tag_for()` helper~ generates a `<form>` ~tag|Forms (HTML)~ for the
-given form and route and changes the ~HTTP methods|HTTP Method~ to ~`POST`|POST
-(HTTP Method)~ or ~`PUT`|PUT (HTTP Method)~ depending on whether the object is
-new or not. It also takes care of the ~`multipart|Forms (Multipart)`~ attribute
-if the form has any file input tags.
+O helper `form_tag_for()` cria uma tag `<form>` para o formulário informado e
+faz o roteamento e muda o método HTTP para `POST` ou `PUT` dependendo se o
+objeto for novo ou não. Ele também trata do atributo
+~`multipart|Forms (Multipart)`~ se o formulário tiver alguma tag de entrada de
+arquivos.
 
-Eventually, the `<?php echo $form ?>` renders the form widgets.
+Por fim, `<?php echo $form ?>` renderiz os widgets do formulário.
 
 >**SIDEBAR**
->Customizing the Look and Feel of a Form
+>Personalizando a Aparência e o Comportamento de um Formulário
 >
->By default, the `<?php echo $form ?>` renders the form widgets as table rows.
+>Por padrão, `<?php echo $form ?>` renderiza os widgets de formulário como
+>linhas de tabelas.
 >
->Most of the time, you will need to customize the layout of your
->forms. The form object provides many useful methods for this 
-> ~customization|Customization~:
+>Na maioria das vezes, você precisará personalizar o leiaute de seus
+>formulários. O objeto formulário fornece vários métodos úteis para essa
+>personalização:
 >
-> | Method                 | Description
+> | Método                 | Descrição
 > | ---------------------- | -------------------------------------------------
-> | `render()`             | Renders the form (equivalent to the output of
+> | `render()`             | Renderiza o formulário (equivalente a saída de
 > |                        | `echo $form`)
-> | `renderHiddenFields()` | Renders the hidden fields
-> | `hasErrors()`          | Returns `true` if the form has some errors
-> | `hasGlobalErrors()`    | Returns `true` if the form has global errors
-> | `getGlobalErrors()`    | Returns an array of global errors
-> | `renderGlobalErrors()` | Renders the global errors
+> | `renderHiddenFields()` | Renderiza os campos escondidos
+> | `hasErrors()`          | Retorna `true` se o formulário tiver algum erro
+> | `hasGlobalErrors()`    | Retorna `true` se o formulário tem erros globais
+> | `getGlobalErrors()`    | Retorna um array de erros globais
+> | `renderGlobalErrors()` | Renderiza os erros globais
 >
->The form also behaves like an array of fields. You can access the
->`company` field with `$form['company']`. The returned object provides methods
->to render each element of the field:
+>O formulário também se comporta como um array de campos. Você pode acessar o
+>campo `company` com `$form['company']`. O objeto retornado fornece métodos
+>para renderizar cada elemento do campo:
 >
-> | Method          | Description
-> | --------------- | ---------------------------------------
-> | `renderRow()`   | Renders the field row
-> | `render()`      | Renders the field widget
-> | `renderLabel()` | Renders the field label
-> | `renderError()` | Renders the field error messages if any
-> | `renderHelp()`  | Renders the field help message
+> | Método          | Descrição
+> | --------------- | ---------------------------------------------------
+> | `renderRow()`   | Renderiza a linha do campo
+> | `render()`      | Renderiza o widget do campo
+> | `renderLabel()` | Renderiza a etiqueta do campo
+> | `renderError()` | Renderiza, se houver, a mensagem de erro do campo
+> | `renderHelp()`  | Renderiza a mensagem de ajuda do campo
 >
->The `echo $form` statement is equivalent to:
+>A declaração `echo $form` equivale a:
 >
 >     [php]
 >     <?php foreach ($form as $widget): ?>
 >       <?php echo $widget->renderRow() ?>
 >     <?php endforeach ?>
 
-### The Form Action
+### A Action do Formulário
 
-We now have a form class and a template that renders it. Now, it's time to
-actually make it work with some ~action|Action~s.
+Agora nós temos uma classe de formulário e um template que o renderiza. Chegou
+a hora de realmente fazê-lo funcionar com algumas actions.
 
-The job form is managed by five methods in the `job` module:
+O formulário de emprego é gerenciado por cinco método no módulo `job`:
 
-  * **new**:         Displays a blank form to create a new job
-  * **edit**:        Displays a form to edit an existing job
-  * **create**:      Creates a new job with the user submitted values
-  * **update**:      Updates an existing job with the user submitted values
-  * **processForm**: Called by `create` and `update`, it processes the form
-                     (validation, form repopulation, and serialization to
-                     the database)
+  * **new**:         Mostra um formulário em branco para criar um novo emprego
+  * **edit**:        Mostra um formulário para editar um emprego existente
+  * **create**:      Cria um novo emprego com os valores enviados pelo usuário
+  * **update**:      Atualiza um emprego existente como os valores enviados
+  					 pelo usuário
+  * **processForm**: Chamado por `create` e `update`, ele processa o formulário
+                     (validation, repopulação do formulário e serialização
+                     para o banco de dados)
 
-All forms have the following life-cycle:
+Todos os formulários tem o seguinte ciclo de vida:
 
-![Form flow](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
+![Fluxo do formulário](http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png)
 
-As we have created a ##ORM## route collection 5 days sooner for the `job`
-module, we can simplify the code for the form management methods:
+Como criamos uma coleção de rotas ##ORM## 5 dias atrás para o módulo `job`,
+podemos simplificar o código dos métodos de gerenciamento do formulário:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -648,36 +659,37 @@ module, we can simplify the code for the form management methods:
       }
     }
 
-When you browse to the `/job/new` page, a new ~form|Forms~ instance is created
-and passed to the template (`new` action).
+Quando você navega na página `/job/new`, uma nova instância do formulário é
+criada e passada para o template (action `new`).
 
-When the user submits the form (`create` action), the form is bound (`bind()`
-method) with the user submitted values and the validation is triggered.
+Assim que o usuário faz o envio (action `create`), o formulário é vinculado
+(método `bind()`) com os valores enviados e a validação é acionada.
 
-Once the form is bound, it is possible to check its validity using the
-`isValid()` method: If the form is valid (returns `true`), the job is saved to
-the database (`$form->save()`), and the user is ~redirected|Redirection~ to the
-job preview page; if not, the `newSuccess.php` template is displayed again with
-the user submitted values and the associated error messages.
+Uma vez que o formulário está vinculado, é possível verificar sua validade
+usando o método `isValid()`: Se o formulário for valido (retorna `true`), o
+emprego é salvo no banco de dados (`$form->save()`), e o usuário é
+redirecionado para a página de visualização do emprego; se o formulário
+não for válido, o template `newSuccess.php` é mostrado novamente com os valores
+enviados pelo usuário e com s mensagens de erro associadas.
 
 >**TIP**
->The `setTemplate()` method changes the ~template|Templates~ used for a given 
->action. If the submitted form is not valid, the `create` and `update` methods 
->use the same template as the `new` and `edit` action respectively to re-display 
->the form with error messages.
+>O método `setTemplate()` altera o template usado por uma action determinada.
+>Se o formulário enviado não for válido, os métodos `create` e `update` usam o
+>mesmo template com as respectivas actions `new` e `edit` para mostrar
+>novamente o formulário com as mensagens de erro.
 
-The modification of an existing job is quite similar. The only difference
-between the `new` and the `edit` action is that the job object to be modified is
-passed as the first argument of the form constructor. This object will be used
-for default widget values in the template (default values are an object for
-##ORM## forms, but a plain array for simple forms).
+A modificação de um emprego existente é bem parecida. A única diferença entre
+a action `new` e a `edit` é que o objeto emprego a ser modificado é passado
+como o primeiro argumento do construtor do formulário. Esse objeto será usado
+para os valores padrões do widget no template (valores padrões são objetos nos
+formulários ##ORM## e um array comum para formulário simples).
 
-You can also define default values for the creation form. One way is to declare
-the values in the database schema. Another one is to pass a pre-modified `Job`
-object to the form constructor.
+Você também pode definir valores padrões para a criação de um formulário. Uma
+forma de fazer isso é declarar os valores no esquema do banco de dados. Outra
+forma é passar um objeto `Job` pré-modificado para o construtor do formulário.
 
-Change the `executeNew()` method to define `full-time` as the default value for
-the `type` column:
+Altere método `executeNew()` para definir `full-time` como o valor padrão da
+coluna `type`:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -690,18 +702,19 @@ the `type` column:
     }
 
 >**NOTE**
->When the form is bound, the default values are replaced with the user
->submitted ones. The user submitted values will be used for form repopulation
->when the form is redisplayed in case of validation errors.
+>Quando o formulário é vinculado, os valores padrão são trocados pelos enviados
+>pelo usuário. O valores enviados pelo usuário serão usados na repopulação do
+>formulário caso ele precise ser mostrado novamente se tiver erros de validação.
 
-### Protecting the Job Form with a Token
+### Protegendo o Formulário de Emprego com um Token
 
-Everything must work fine by now. As of now, the user must enter the token for
-the job. But the job token must be generated automatically when a new job is
-created, as we don't want to rely on the user to provide a unique token.
+Agora tudo deve estar funcionando corretamente. A partir desse momento o
+usuário pode inserir o token do emprego. Mas o token do emprego precisa ser
+gerado automaticamente quando um novo emprego é criado pois não queremos
+depender do usuário para receber um token único.
 
-Update the `save()` method of `JobeetJob` to add the logic that generates the
-token before a new job is saved:
+Atualize o método `save()` de `JobeetJob` para adicionar a lógica que gera o
+token antes de salvar um novo emprego:
 
     [php]
 <propel>
@@ -728,7 +741,7 @@ token before a new job is saved:
 </doctrine>
     }
 
-You can now remove the `token` field from the form:
+Agora você pode remover o campo `token` do formulário:
 
     [php]
 <propel>
@@ -753,13 +766,14 @@ You can now remove the `token` field from the form:
       // ...
     }
 
-If you remember the user stories from day 2, a job can be edited only if the
-user knows the associated token. Right now, it is pretty easy to edit or delete
-any job, just by guessing the URL. That's because the edit URL is like
-`/job/ID/edit`, where `ID` is the ~primary key|Primary Key~ of the job.
+Se você lembrar das user stories do dia 2, um emprego pode ser editado apenas
+se o usuário souber o token associado. No momento, é bem fácil editar ou apagar
+qualquer emprego, apenas adivinhando a URL. Isso porque a URL de edição é
+parecida com `/job/ID/edit`, onde `ID` é a chave primária do emprego.
 
-By default, a ~`sfPropelRouteCollection`~ route generates URLs with the primary
-key, but it can be changed to any unique column by passing the `column` option:
+Por padrão, uma rota ~`sfPropelRouteCollection`~ gera URLs com a chave
+primária, mas isso pode ser alterado para qualquer coluna única passando
+a opção `column`:
 
     [yml]
     # apps/frontend/config/~routing|Routing~.yml
@@ -768,30 +782,32 @@ key, but it can be changed to any unique column by passing the `column` option:
       options:      { model: JobeetJob, column: token }
       requirements: { token: \w+ }
 
-Notice that we have also changed the `token` parameter requirement to match any
-string as the symfony default requirements is `\d+` for the unique key.
+Perceba que nós também alteramos o requisito do parâmetro `token` para casar
+com qualquer string pois o padrão do symfony para os requisitos é `\d+` para
+uma chave única.
 
-Now, all routes related to the jobs, except the `job_show_user` one, embed the
-token. For instance, the route to edit a job is now of the following pattern:
+Agora todas as rotas relacionadas aos empregos, exceto a `job_show_user`,
+embutem o token. Por exemplo, a rota para editar um emprego agora segue o
+seguinte padrão:
 
     http://www.jobeet.com.localhost/job/TOKEN/edit
 
-You will also need to change the "Edit" link in the `showSuccess` template:
+Você também precisará alterar o link "Edit" no template `showSuccess`:
 
     [php]
     <!-- apps/frontend/modules/job/templates/showSuccess.php -->
     <a href="<?php echo url_for('job_edit', $job) ?>">Edit</a>
 
-The Preview Page
-----------------
+A Página de Visualização
+------------------------
 
-The preview page is the same as the job page display. Thanks to the
-~routing|Routing~, if the user comes with the right token, it will be accessible
-in the `token` request parameter.
+A página de visualização é a mesma que é mostrada na página de emprego. Graças
+ao roteamento, se o usuário fornecer o token correto, ela será acessada no
+parâmetro `token` da requisição.
 
-If the user comes in with the tokenized URL, we will add an admin bar at the
-top. At the beginning of the `showSuccess` template, add a partial to host the
-admin bar and remove the `edit` link at the bottom:
+Se o usuário fornecer a URL tokenizada, adicionaremos uma barra de
+administração no topo. No início do template `showSuccess`, inclua uma partial
+para receber a barra de administração e remova o link `edit` da parte inferior:
 
     [php]
     <!-- apps/frontend/modules/job/templates/showSuccess.php -->
@@ -799,7 +815,7 @@ admin bar and remove the `edit` link at the bottom:
       <?php include_partial('job/admin', array('job' => $job)) ?>
     <?php endif ?>
 
-Then, create the `_admin` partial:
+Depois, crie a partial `_admin`:
 
     [php]
     <!-- apps/frontend/modules/job/templates/_admin.php -->
@@ -831,10 +847,10 @@ Then, create the `_admin` partial:
       </ul>
     </div>
 
-There is a lot of code, but most of the code is simple to understand.
+Tem bastante código aí, mas a maioria dele é simples de entender.
 
-To make the template more readable, we have added a bunch of shortcut methods in
-the `JobeetJob` class:
+Para deixar o template mais legível, adicionamos um punhado de métodos de
+atalho na classe `JobeetJob`:
 
     [php]
 <propel>
@@ -874,21 +890,22 @@ the `JobeetJob` class:
 </doctrine>
     }
 
-The admin bar displays the different actions depending on the job status:
+A barra de administração mostra actions diferentes dependendo da situação do
+emprego:
 
-![Not activated job](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
+![Emprego inativo](http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png)
 
-![Activated job](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
+![Emprego ativo](http://www.symfony-project.org/images/jobeet/1_4/10/activated.png)
 
 >**NOTE**
->You will be able to see the "activated" bar after the next section.
+>Você poderá ver a barra "activated" depois da próxima seção.
 
-Job Activation and Publication
-------------------------------
+Ativação e Publicação de Empregos
+---------------------------------
 
-In the previous section, there is a link to publish the job. The link needs to
-be changed to point to a new `publish` action. Instead of creating a new
-~route|Route~, we can just configure the existing `job` route:
+Na seção anterior há um link para publicar o emprego. O link precisa ser
+alterado para apontar para uma nova action `publish`. Em vez de criar uma nova
+rota, você pode configurar a rota `job` existente:
 
     [yml]
     # apps/frontend/config/routing.yml
@@ -901,8 +918,8 @@ be changed to point to a new `publish` action. Instead of creating a new
       requirements:
         token: \w+
 
-The `object_actions` takes an array of additional actions for the given object.
-We can now change the link of the "Publish" link:
+`object_actions` recebe um array de actions adicionais para o objeto informado.
+Agora nós podemos alterar o caminho do link "Publish":
 
     [php]
     <!-- apps/frontend/modules/job/templates/_admin.php -->
@@ -910,7 +927,7 @@ We can now change the link of the "Publish" link:
       <?php echo link_to('Publish', 'job_publish', $job, array('method' => 'put')) ?>
     </li>
 
-The last step is to create the `publish` action:
+O último passo é criar a action `publish`:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -926,16 +943,16 @@ The last step is to create the `publish` action:
       $this->redirect('job_show_user', $job);
     }
 
-The astute reader will have noticed that the "Publish" link is submitted with
-the HTTP put method. To simulate the put method, the link is automatically
-converted to a form when you click on it.
+O leitor mais esperto terá notado que o link "Publish" é enviado com o método
+HTTP put. Para simular o método put, o link é automaticamente convertido para
+um formulário quando você clica nele.
 
-And because we have enabled the ~CSRF~ protection, the `link_to()` helper embeds
-a CSRF token in the link and the `checkCSRFProtection()` method of the request
-object checks the validity of it on submission.
+E como habilitamos a proteção de ~CSRF~, o helper `link_to()` embute um token
+CSRF no link e o método `checkCSRFProtection()` do objeto da requisição
+verifica a validade do token no envio.
 
-The `executePublish()` method uses a new `publish()` method that can be defined
-as follows:
+O método `executePublish()` usa um novo método publish()` que pode ser definido
+assim:
 
     [php]
 <propel>
@@ -950,21 +967,21 @@ as follows:
       $this->save();
     }
 
-You can now test the new publish feature in your browser.
+Agora você pode testar a nova funcionalidade de publicação no seu navegador.
 
 <propel>
-But we still have something to fix. The non-activated jobs must not be
-accessible, which means that they must not show up on the Jobeet homepage, and
-must not be accessible by their URL. As we have created an
-`addActiveJobsCriteria()` method to restrict a `Criteria` to active jobs, we can
-just edit it and add the new requirements at the end:
+Mas nós ainda temos algo a arrumar. Os empregos inativos não pode ser
+acessados, o que significa que eles não podem ser mostrados na página inicial
+do Jobeet e nem acessíveis pelas suas URLs. Como criamos um método
+`addActiveJobsCriteria()` para restringir um `Criteria` para os empregos
+ativos, podemos apenas editá-lo e adicionar os novos requisitos no fim:
 </propel>
 <doctrine>
-But we still have something to fix. The non-activated jobs must not be
-accessible, which means that they must not show up on the Jobeet homepage, and
-must not be accessible by their URL. As we have created an
-`addActiveJobsQuery()` method to restrict a `Doctrine_Query` to active jobs, we
-can just edit it and add the new requirements at the end:
+Mas nós ainda temos algo a arrumar. Os empregos inativos não pode ser
+acessados, o que significa que eles não podem ser mostrados na página inicial
+do Jobeet e nem acessíveis pelas suas URLs. Como criamos um método
+`addActiveJobsQuery()` para restringir um `Doctrine_Query` para os empregos
+ativos, podemos apenas editá-lo e adicionar os novos requisitos no fim:
 </doctrine>
 
 <propel>
@@ -992,25 +1009,26 @@ can just edit it and add the new requirements at the end:
     }
 </doctrine>
 
-That's all. You can test it now in your browser. All non-activated jobs have
-disappeared from the homepage; even if you know their URLs, they are not
-accessible anymore. They are, however, accessible if one knows the job's token
-URL. In that case, the job preview will show up with the admin bar.
+Isso é tudo. Você pode testá-lo no seu navegador. Todos os empregos inativos
+sumiram da página inicial; mesmo que você souber as URLs, eles não estão
+mais disponíveis. No entanto eles estão acessíveis se alguém souber o URL com
+o token do emprego. Nesse caso, a visualização do emprego irá mostrar a barra
+administrativa.
 
-That's one of the great advantages of the MVC pattern and the refactorization we
-have done along the way. Only a single change in one method was needed to add
-the new requirement.
+Essa é uma das grandes vantagens do padrão MVC e da refatoração que fomos
+fazendo pelo caminho. Uma única alteração em um método foi necessária para
+adicionar um novo requisito.
 
 >**NOTE**
 <propel>
->When we created the `getWithJobs()` method, we forgot to use the
->`addActiveJobsCriteria()` method. So, we need to edit it and add the new
->requirement:
+>Quando criamos o método `getWithJobs()`, nós esquecemos de usar o método
+>`addActiveJobsCriteria()`. Assim, precisamos editá-lo e adicionar o novo
+>requisito:
 </propel>
 <doctrine>
->When we created the `getWithJobs()` method, we forgot to use the
->`addActiveJobsQuery()` method. So, we need to edit it and add the new
->requirement:
+>Quando criamos o método `getWithJobs()`, nós esquecemos de usar o método
+>`addActiveJobsQuery()`. Assim, precisamos editá-lo e adicionar o novo
+>requisito:
 </doctrine>
 >
 <propel>
@@ -1040,14 +1058,29 @@ the new requirement.
 >       }
 </doctrine>
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-Today was packed with a lot of new information, but hopefully you now have a
-better understanding of symfony's form framework.
+O dia de hoje foi cheio de novas informações, mas esperamos que agora você
+tenha um melhor entendimento do framework de formulários do symfony.
 
-We know that some of you noticed that we forgot something here... We have not
-implemented any test for the new features. Because writing tests is an important
-part of developing an application, this is the first thing we will do tomorrow.
+Sabemos que alguns de vocês notaram que esquecemos alguma coisa... Nós não
+implementamos nenhum teste para as novas funcionalidades. Como a escrita de
+testes é uma parte importante do desenvolvimento de uma aplicação, essa será
+a primeira coisa que faremos amanhã.
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
+
 
 __ORM__
+
