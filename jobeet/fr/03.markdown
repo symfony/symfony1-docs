@@ -85,7 +85,7 @@ la base de données Jobeet, nous allons créer le fichier du schéma à la main 
         id:           ~
         url:          { type: varchar(255), required: true }
         email:        { type: varchar(255), required: true, index: unique }
-        token:        { type: varchar(255), required: true }
+        token:        { type: varchar(255), required: true, index: unique }
         is_active:    { type: boolean, required: true, default: 0 }
         created_at:   ~
 
@@ -134,7 +134,7 @@ la base de données Jobeet, nous allons créer le fichier du schéma à la main 
       columns:
         url:       { type: string(255), notnull: true }
         email:     { type: string(255), notnull: true, unique: true }
-        token:     { type: string(255), notnull: true }
+        token:     { type: string(255), notnull: true, unique: true }
         is_active: { type: boolean, notnull: true, default: 0 }
       relations:
         JobeetCategories:
