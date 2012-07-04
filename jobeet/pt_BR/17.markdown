@@ -1,77 +1,82 @@
-Day 17: Search
+Dia 17: Busca
 ===============
 
-In day 14, we added some feeds to keep Jobeet users up-to-date with new job
-posts. Today will help you to improve the user experience by implementing the
-latest main feature of the Jobeet website: the ~search engine|Search Engine~.
+No dia 14, adicionamos alguns feeds para manter os usuários do Jobeet
+atualizados com as novas ofertas de emprego. Hoje vamos ajudar você a melhorar
+a experiência do usuário implementando a última das funcionalidades principais
+do site do Jobeet: o motor de busca.
 
-The Technology
---------------
+A Tecnologia
+------------
 
-Before we jump in head first, let's talk a bit about the history of symfony. We
-advocate a lot of ~best practices|Best Practices~, like tests and refactoring,
-and we also try to apply them to the framework itself. For instance, we like the
-famous "Don't reinvent the wheel" motto.
+Antes entrarmos de cabeça no assunto, vamos falar um pouco sobre a história do
+symfony. Defendemos muito as melhores práticas, como os testes e a
+refatoração e nós também tentamos aplicá-las ao framework. Por exemplo, gostamos
+do famoso lema "Não reinventar a roda".
 
-As a matter of fact, the symfony framework started its life four years ago as
-the glue between two existing Open-Source softwares: Mojavi and Propel. And
-every time we need to tackle a new problem, we look for an existing library that
-does the job well before coding one ourself from scratch.
+Na realidade, o symfony framework iniciou sua vida quatro anos atrás como sendo
+a cola entre dois softwares Open-Source existentes: Mojavi e Propel. E todas as
+vezes que precisávamos resolver um novo problema, procurávamos uma biblioteca
+que já existia e que fizésse bem o trabalho antes de codificarmos nós mesmos
+um do zero.
 
-Now, we want to add a search engine to Jobeet, and the Zend Framework provides a
-great library, called [~Zend Lucene~](http://framework.zend.com/manual/en/zend.search.lucene.html), which is
-a port of the well-know Java Lucene project. Instead of creating yet another
-search engine for Jobeet, which is quite a complex task, we will use Zend
-Lucene.
+Agora, queremos adicionar um motor de busca no Jobeet, e o Zend Framework
+fornece uma excelente biblioteca, chamada
+[Zend Lucene](http://framework.zend.com/manual/en/zend.search.lucene.html),
+que é uma versão do projeto bastante conhecido Java Lucene. Em vez de criarmos
+outro motor de busca para o Jobeet, que seria uma tarefa bem complexa, vamos
+usar o Zend Lucene.
 
-On the Zend Lucene documentation page, the library is described as follows:
+Na página da documentação do Zend Lucene, a biblioteca é descrita assim:
 
->... a general purpose text search engine written entirely in PHP 5. Since
->it stores its index on the filesystem and does not require a database
->server, it can add search capabilities to almost any PHP-driven website.
->Zend_Search_Lucene supports the following features:
+>... um motor de busca de texto de uso geral escrita completamente em PHP 5.
+>Como ele armazena seu índice no sistema de arquivos e não precisa de um
+>servidor de banco de dados, ele pode fornecer capacidades de busca para quase
+>toda site baseado em PHP. O Zend_Search_Lucene tem suporte as seguintes
+>funções:
 >
->  * Ranked searching - best results returned first
->  * Many powerful query types: phrase queries, boolean queries, wildcard
->    queries, proximity queries, range queries and many others
->  * Search by specific field (e.g., title, author, contents)
+>  * Busca classificada - melhores resultados são retornados primeiramente
+>  * Vários tipos poderosos de pesquisa: pesquisas por frase, pesquisas
+>    booleanas, pesquisas com curingas, pesquisas por proximidade, pesquisas
+     por intervalos e muitas outras
+>  * Busca por campo específico (e.g. título, autor, conteúdo)
 
 -
 
 >**NOTE**
->Today is not a tutorial about the Zend Lucene library, but how to integrate it 
->into the Jobeet website; or more generally, how to integrate
->~third-party libraries|Third-Party Libraries~ into a symfony project. If you 
->want more information about this technology, please refer to the
->[Zend Lucene documentation](http://framework.zend.com/manual/en/zend.search.lucene.html).
+>O dia de hoje não é um tutorial sobre a biblioteca Zend Lucene, mas sim sobre
+>como integrá-la no site do Jobeet; ou de modo geral, como integrar bibliotecas
+>de terceiros em um projeto symfony. Se você quiser mais informações sobre essa
+>tecnologia, consulte a
+>[documentação do Zend Lucene](http://framework.zend.com/manual/en/zend.search.lucene.html).
 
-Installing and Configuring the Zend Framework
----------------------------------------------
+Instalando e Configurando o Zend Framework
+------------------------------------------
 
-The Zend Lucene ~library|Third-Party Libraries~ is part of the Zend Framework.
-We will only install the Zend Framework into the `lib/vendor/` directory,
-alongside the symfony framework itself.
+A biblioteca Zend Lucene é parte do Zend Framework. Nós iremos instalar o
+Zend Framework no diretório `lib/vendor/`, juntamente com o próprio symfony
+framework.
 
-First, download the [Zend Framework](http://framework.zend.com/download/overview) and un-archive the files
-so that you have a `lib/vendor/Zend/` directory.
+Primeiro, baixamos o
+[Zend Framework](http://framework.zend.com/download/overview) e descompactamos
+os arquivos, assim ficamos com um diretório `lib/vendor/Zend/`.
 
 >**NOTE**
->The following explanations have been tested with the 1.10.3 version of
->the Zend Framework.
+>As explicações a seguir foram testadas na versão 1.10.3 do Zend Framework.
 
 -
 
 >**TIP**
->You can clean up the directory by removing everything but the following files
->and directories:
+>Você pode limpar o diretório removendo tudo exceto os seguintes arquivos
+>e diretórios:
 >
 >  * `Exception.php`
 >  * `Loader/`
 >  * `Autoloader.php`
 >  * `Search/`
 
-Then, add the following code to the `ProjectConfiguration` class to provide a
-simple way to register the Zend autoloader:
+Depois, adicione o seguinte código à classe `ProjectConfiguration` para
+proporcionar uma maneira simples de registrar o autoloader do Zend:
 
     [php]
     // config/ProjectConfiguration.class.php
@@ -95,23 +100,23 @@ simple way to register the Zend autoloader:
       // ...
     }
 
-Indexing
---------
+Indexando
+---------
 
-The Jobeet search engine should be able to return all jobs matching keywords
-entered by the user. Before being able to search anything, an ~index|Index
-(Search Engine)~ has to be built for the jobs; for Jobeet, it will be stored in
-the `data/` directory.
+O motor de busca do Jobeet deve ser capaz de retornar todos os empregos que
+corresponderem as palavras-chave informadoas pelo usuário. Antes de poder
+buscar algo, um índice precisa ser criado para os empregos; para o Jobeet, ele
+será armazenado no diretório `data/`.
 
 <propel>
-Zend Lucene provides two methods to retrieve an index depending whether one
-already exists or not. Let's create a helper method in the `JobeetJobPeer` class
-that returns an existing index or creates a new one for us:
+O Zend Lucene fornece dois métodos para recuperar um índice dependendo se um
+já existe ou não. Vamos criar um método helper na classe `JobeetJobPeer` que
+retorna um índice existente ou cria um novo para a gente:
 </propel>
 <doctrine>
-Zend Lucene provides two methods to retrieve an index depending whether one
-already exists or not. Let's create a helper method in the `JobeetJobTable`
-class that returns an existing index or creates a new one for us:
+O Zend Lucene fornece dois métodos para recuperar um índice dependendo se um
+já existe ou não. Vamos criar um método helper na classe `JobeetJobTable` que
+retorna um índice existente ou cria um novo para nós:
 </doctrine>
 
     [php]
@@ -138,10 +143,11 @@ class that returns an existing index or creates a new one for us:
       return sfConfig::get('sf_data_dir').'/job.'.sfConfig::get('sf_environment').'.index';
     }
 
-### The `save()` method
+### O método `save()`
 
-Each time a job is created, updated, or deleted, the index must be updated. Edit
-`JobeetJob` to update the index whenever a job is serialized to the database:
+Toda vez que um emprego é criado, atualizado ou excluído, o índice precisa ser
+atualizado. Altere `JobeetJob` para atualizar o índice sempre que um emprego
+for serializado no banco de dados:
 
 <propel>
     [php]
@@ -171,7 +177,7 @@ Each time a job is created, updated, or deleted, the index must be updated. Edit
     }
 </doctrine>
 
-And create the `updateLuceneIndex()` method that does the actual work:
+E crie o método `updateLuceneIndex()` que faz o trabalho em si:
 
     [php]
 <propel>
@@ -189,13 +195,13 @@ And create the `updateLuceneIndex()` method that does the actual work:
       $index = JobeetJobTable::getLuceneIndex();
 </doctrine>
 
-      // remove existing entries
+      // remove as entradas existentes
       foreach ($index->find('pk:'.$this->getId()) as $hit)
       {
         $index->delete($hit->id);
       }
 
-      // don't index expired and non-activated jobs
+      // não indexa os empregos expirados nem os inativos
       if ($this->isExpired() || !$this->getIsActivated())
       {
         return;
@@ -203,36 +209,36 @@ And create the `updateLuceneIndex()` method that does the actual work:
 
       $doc = new Zend_Search_Lucene_Document();
 
-      // store job primary key to identify it in the search results
+      // armazena a chave primária do emprego para identificá-lo nos resultados da busca
       $doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $this->getId()));
 
-      // index job fields
+      // indexa os campos do emprego
       $doc->addField(Zend_Search_Lucene_Field::UnStored('position', $this->getPosition(), 'utf-8'));
       $doc->addField(Zend_Search_Lucene_Field::UnStored('company', $this->getCompany(), 'utf-8'));
       $doc->addField(Zend_Search_Lucene_Field::UnStored('location', $this->getLocation(), 'utf-8'));
       $doc->addField(Zend_Search_Lucene_Field::UnStored('description', $this->getDescription(), 'utf-8'));
 
-      // add job to the index
+      // adiciona o emprego no índice
       $index->addDocument($doc);
       $index->commit();
     }
 
-As Zend Lucene is not able to update an existing entry, it is removed first if
-the job already exists in the index.
+Como o Zend Lucene não é capaz de atualizar uma entrada existente, ela primeiro
+é removida se o emprego já existe no índice.
 
-Indexing the job itself is simple: the primary key is stored for future
-reference when searching jobs and the main columns (`position`, `company`,
-`location`, and `description`) are indexed but not stored in the index as we
-will use the real objects to display the results.
+Indexar o próprio emprego é simples: a chave primária é armazenada para
+referência futura quando estivermos buscando empregos e as colunas principais
+(`position`, `company`, `location` e `description`) são indexados mas não
+armazenados no índice pois usaremos os objetos reais para mostrar os resultados.
 
-### ##ORM## ~Transactions~
+### Transações do ##ORM##
 
-What if there is a problem when indexing a job or if the job is not saved into
-the database? Both ##ORM## and Zend Lucene will throw an exception. But under
-some circumstances, we might have a job saved in the database without the
-corresponding indexing. To prevent this from happening, we can wrap the two
-updates in a transaction and ~rollback|Rollback (Database Transaction)~ in case
-of an error:
+E se houver um problema na indexação de um emprego, ou se o emprego não for
+salvo no banco de dados? Tanto o ##ORM## quanto o Zend Lucene irão lançar uma
+exceção. Mas em algumas circunstâncias, poderemos ter um emprego salvo no banco
+de dados sem um índice correspondente. Para prevenir que isso acontece, podemos
+envolver as duas atualizações dentro de uma transação e fazer um roolback em
+caso de erro:
 
 <propel>
     [php]
@@ -293,8 +299,8 @@ of an error:
 
 ### `delete()`
 
-We also need to override the `delete()` method to remove the entry of the
-deleted job from the index:
+Também precisamos sobrescrever o método `delete()` para remover do índice a
+entrada referente ao emprego excluído:
 
 <propel>
     [php]
@@ -328,12 +334,12 @@ deleted job from the index:
 </doctrine>
 
 <propel>
-### Mass delete
+### Exclusão em Massa
 
-Whenever you load the ~fixtures|Fixtures (Loading)~ with the `propel:data-load`
-task, symfony removes all the existing job records by calling the
-`JobeetJobPeer::doDeleteAll()` method. Let's override the default behavior to
-also delete the index altogether:
+Sempre que carregamos as fixtures com o comando `propel:data-load`, o symfony
+remove todos os registros de emprego chamando o método
+`JobeetJobPeer::doDeleteAll()`. Vamos sobrescrever o comportamento padrão para
+também apagar o índice completamente:
 
     [php]
     // lib/model/JobeetJobPeer.php
@@ -349,36 +355,36 @@ also delete the index altogether:
     }
 </propel>
 
-Searching
----------
+Buscando
+--------
 
-Now that we have everything in place, you can reload the fixture data to index
-them:
+Agora que temos tudo no seu lugar, você pode recarregar os dados do fixture
+para indexá-los:
 
     $ php symfony propel:data-load
 
 >**TIP**
->For Unix-like users: as the index is modified from the command line and also
->from the web, you must change the index directory permissions accordingly
->depending on your configuration: check that both the command line user you
->use and the web server user can write to the index directory.
+>Para usuários Unix-like: como o índice é modificado pela linha de comando e
+>também pela web, você precisa alterar as permissões do dirétorio index
+>adequadamente de acordo com sua configuração: verifique se tanto o usuário
+>que você usa na linha de comando quanto o usuário do servidor web possam
+>escrever no diretório index.
 
 -
 
 >**NOTE**
->You might have some warnings about the `ZipArchive` class if you don't have
->the `zip` extension compiled in your PHP. It's a known bug of the
->`Zend_Loader` class.
+>Você pode estar recebendo alguns alertas de erro sobre a classe `ZipArchive`
+>se você não tiver a extensão `zip` compilada no seu PHP. Esse é um bug
+>conhecido da classe `Zend_Loader`.
 
-Implementing the search in the frontend is a piece of cake. First, create a
-route:
+A implementação da busca no frontend é muito fácil. Primeiro, crie uma rota:
 
     [yml]
     job_search:
       url:   /search
       param: { module: job, action: search }
 
-And the corresponding action:
+E a action correspondente:
 
     [php]
     // apps/frontend/modules/job/actions/actions.class.php
@@ -401,17 +407,17 @@ And the corresponding action:
     }
 
 >**NOTE**
->The new `forwardUnless()` method forwards the user to the `index` action of the 
->`job` module if the `query` request parameter does not exist or is empty.
+>O novo método `forwardUnless()` encaminha o usuário para a action `index` do
+>módulo `job` se a parâmetro `query` da requisição não existir ou for vazio.
 >
->It's just an alias for the following longer statement:
+>Ele é apenas um atalho para a seguinte declaração mais longa:
 >
 >    if (!$query = $request->getParameter('query'))
 >    {
 >      $this->forward('job', 'index');
 >    }
 
-The template is also quite straightforward:
+O template também é bastante simples:
 
     [php]
     // apps/frontend/modules/job/templates/searchSuccess.php
@@ -421,7 +427,7 @@ The template is also quite straightforward:
       <?php include_partial('job/list', array('jobs' => $jobs)) ?>
     </div>
 
-The search itself is delegated to the `getForLuceneQuery()` method:
+A própria busca é delegada para o método `getForLuceneQuery()`:
 
 <propel>
     [php]
@@ -471,10 +477,10 @@ The search itself is delegated to the `getForLuceneQuery()` method:
     }
 </doctrine>
 
-After we get all results from the Lucene index, we filter out the inactive jobs,
-and limit the number of results to `20`.
+Depois de pegarmos todos os resultados do índice do Lucene, excluímos os
+empregos inativos e limitamos em `20` o número de resultados.
 
-To make it work, update the layout:
+Para fazer isso funcionar, atualize o layout:
 
     [php]
     // apps/frontend/templates/layout.php
@@ -488,20 +494,20 @@ To make it work, update the layout:
     </form>
 
 >**NOTE**
->Zend Lucene defines a rich query language that supports operations like
->Booleans, wildcards, fuzzy search, and much more. Everything is documented
->in the
->[Zend Lucene manual](http://framework.zend.com/manual/en/zend.search.lucene.query-api.html)
+>O Zend Lucene define um linguagem de pesquisa rica que suporta operações como
+>Booleanos, caracteres curinga, pesquisa fuzzy e muito mais. Tudo está
+>documentado no
+>[manual do Zend Lucene](http://framework.zend.com/manual/en/zend.search.lucene.query-api.html)
 
-~Unit Tests|Unit Testing~
--------------------------
+Testes Unitários
+----------------
 
-What kind of unit tests do we need to create to test the search engine? We
-obviously won't test the Zend Lucene library itself, but its integration with
-the `JobeetJob` class.
+Que tipo de testes unitários precisamos criar para testar o motor de busca?
+Obviamente não iremos testar a própria biblioteca Zend Lucene, mas sim sua
+integração com a classe `JobeetJob`.
 
-Add the following tests at the end of the `JobeetJobTest.php` file and don't
-forget to update the number of tests at the beginning of the file to `7`:
+Adicione os seguintes testes no fim do arquivo `JobeetJobTest.php` e não
+esqueça de atualizar o número de testes no ínicio do arquivo para `7`:
 
     [php]
     // test/unit/model/JobeetJobTest.php
@@ -536,16 +542,17 @@ forget to update the number of tests at the beginning of the file to `7`:
 </doctrine>
     $t->is(count($jobs), 0, '::getForLuceneQuery() does not return deleted jobs');
 
-We test that a non activated job, or a deleted one does not show up in the
-search results; we also check that jobs matching the given criteria do show up
-in the results.
+Testamos para que um emprego inativo ou um deletado não seja mostrado nos
+resultados da busca; nós também verificamos para que os empregos que
+correspondam ao critério informado apareçam nos resultados.
 
-~Tasks~
--------
+Comandos
+--------
 
-Eventually, we need to create a task to cleanup the index from stale entries
-(when a job expires for example) and optimize the index from time to time. As we
-already have a cleanup task, let's update it to add those features:
+Por fim, temos que criar um comando para limpar do índice as entradas obsoletas
+(por exemplo quando o emprego expira) e otimizar o índice de tempos em tempos.
+Como já temos um comando para limpeza, vamos atualizá-lo para adicionar essas
+funcionalidades:
 
     [php]
     // lib/task/JobeetCleanupTask.class.php
@@ -554,7 +561,7 @@ already have a cleanup task, let's update it to add those features:
       $databaseManager = new sfDatabaseManager($this->configuration);
 
 <propel>
-      // cleanup Lucene index
+      // limpeza do índice do Lucene
       $index = JobeetJobPeer::getLuceneIndex();
 
       $criteria = new Criteria();
@@ -562,7 +569,7 @@ already have a cleanup task, let's update it to add those features:
       $jobs = JobeetJobPeer::doSelect($criteria);
 </propel>
 <doctrine>
-      // cleanup Lucene index
+      // limpeza do índice do Lucene
       $index = JobeetJobTable::getLuceneIndex();
 
       $q = Doctrine_Query::create()
@@ -583,7 +590,7 @@ already have a cleanup task, let's update it to add those features:
 
       $this->logSection('lucene', 'Cleaned up and optimized the job index');
 
-      // Remove stale jobs
+      // Remove empregos obsoletos
 <propel>
       $nb = JobeetJobPeer::cleanup($options['days']);
 
@@ -596,25 +603,44 @@ already have a cleanup task, let's update it to add those features:
 </doctrine>
     }
 
-The task removes all expired jobs from the index and then optimizes it thanks to
-the Zend Lucene built-in `optimize()` method.
+Esse comando remove todos os empregos expirados do índice e depois faz a
+otimização dele graças ao método `optimize()` embutido no Zend Lucene.
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-Along this day, we implemented a full search engine with many features in less
-than an hour. Every time you want to add a new feature to your projects, check
-that it has not yet been solved somewhere else.
+Ao longo do dia, implementamos um motor de busca completo com várias
+funcionalidades em menos de uma hora. Toda vez que você quiser adicionar uma
+nova funcionalidade nos seus projetos, verifique se essa solução já não existe
+pronta em algum lugar.
 
-First, check if something is not implemented natively in the 
-[symfony framework](http://www.symfony-project.org/api/1_4/). Then, check the 
-[symfony plugins](http://www.symfony-project.org/plugins/). And don't forget to 
-check the [Zend Framework libraries](http://framework.zend.com/manual/en/) and 
-the [ezComponent](http://ezcomponents.org/docs) ones too.
+Primeiro, verifique se o que precisa já não é implementado nativamente no 
+[symfony framework](http://www.symfony-project.org/api/1_4/). Depois, verifique
+os [plugins do symfony](http://www.symfony-project.org/plugins/). E não se
+esqueça de verificar as
+[bibliotecas do Zend Framework](http://framework.zend.com/manual/en/) e também
+as do [ezComponent](http://ezcomponents.org/docs).
+
+Amanhã iremos usar alguns JavaScripts não obstrusivos para melhorar a
+responsividade do motor de busca, atualizando os resultados em tempo real
+enquanto o usuário estiver digitando na caixa de busca. É claro, será o momento
+de falarmos sobre AJAX com o symfony.
 
 Tomorrow we will use some unobtrusive JavaScripts to enhance the responsiveness
 of the search engine by updating the results in real-time as the user types in
 the search box. Of course, this will be the occasion to talk about how to use
 AJAX with symfony.
+
+Feedback
+--------
+>**Dica - pt_BR**
+>Este capítulo foi traduzido por **Rogerio Prado de Jesus**. 
+>Se encontrar algum erro que deseja corrigir ou quiser fazer algum comentário
+>não deixe de enviar um e-mail para **rogeriopradoj [at] gmail.com**
+
+>**Tip - en**
+>This chapter was translated by **Rogerio Prado Jesus**.
+>If you find any errors to be corrected or you have any comments
+>do not hesitate to send an email to **rogeriopradoj [at] gmail.com**
 
 __ORM__
