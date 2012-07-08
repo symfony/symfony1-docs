@@ -305,10 +305,10 @@ la logique pour traiter les valeurs a été refactorisée dans la méthode
           'description'  => $this->getDescription(),
           'how_to_apply' => $this->getHowToApply(),
 <propel>
-          'expires_at'   => $this->getCreatedAt('c'),
+          'expires_at'   => $this->getExpiresAt('c'),
 </propel>
 <doctrine>
-          'expires_at'   => $this->getCreatedAt(),
+          'expires_at'   => $this->getExpiresAt(),
 </doctrine>
         );
       }
